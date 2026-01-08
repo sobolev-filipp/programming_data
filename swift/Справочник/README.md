@@ -2,6 +2,7 @@
 
 <h2>Оглавление</h2>
 <p><a href="#create_app">Первое знакомство с интерфейсом Xcode</a></p>
+<p><a href="#let_const">Переменные и константы</a></p>
 
 <h2 id="create_app">Первое знакомство с интерфейсом Xcode</h2>
 <img width="300" height="300" src="https://terminalroot.com/assets/img/programming/swift.jpg" />
@@ -19,3 +20,7 @@
   + <b>Use Core Data</b> / <b>Include Unit Tests </b>/ <b>Include UI Tests</b>: отключите эти опции.
 7.	Нажмите <b>“Next”</b> и выберите папку для сохранения проекта. Нажмите “Create”.
 
+<h2 id="let_const">Переменные и константы</h2>
+Переменные и константы служат для хранения данных в программе.
+
+<h3>Константы (const)</h3>
