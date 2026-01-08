@@ -11,11 +11,11 @@
 3.	В открывшемся окне выберите категорию <b>“Application”</b> слева и шаблон <b>“Application”</b> справа.
 4.	Нажмите кнопку “Next”.
 5.	Заполните параметры проекта:
-•	Product Name: придумайте короткое и запоминающееся название (например FirstApp).
-•	Team: оставьте пустым, если у вас нет учётной записи разработчика Apple.
-•	Organization Identifier: введите обратный домен (например, com.example).
-•	Interface: выберите Storyboard.
-•	Language: выберите Swift.
-•	Use Core Data / Include Unit Tests / Include UI Tests: отключите эти опции.
-6.	Нажмите “Next” и выберите папку для сохранения проекта. Нажмите “Create”.
+  •	Product Name: придумайте короткое и запоминающееся название (например FirstApp).
+  •	Team: оставьте пустым, если у вас нет учётной записи разработчика Apple.
+  •	Organization Identifier: введите обратный домен (например, com.example).
+  •	Interface: выберите Storyboard.
+  •	Language: выберите Swift.
+  •	Use Core Data / Include Unit Tests / Include UI Tests: отключите эти опции.
+7.	Нажмите “Next” и выберите папку для сохранения проекта. Нажмите “Create”.
 
