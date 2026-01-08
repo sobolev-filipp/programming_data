@@ -4,6 +4,7 @@
 <ol>
 <li><a href="#create_app">Первое знакомство с интерфейсом Xcode</a></li>
 <li><a href="#let_const">Переменные и константы</a></li>
+<li><a href="#type_date">Типы данных в Swift</li>
 </ol>
 
 <h2 id="create_app">Первое знакомство с интерфейсом Xcode</h2>
@@ -29,7 +30,38 @@
 <p>Константы объявляются с помощью ключевого слова let и не могут быть изменены после присвоения значения.</p>
 
 <p>Пример:</p>
-```python
-print("Привет, мир!")
+
+```swift
+let pi = 3.14
+pi = 3.15 // Ошибка! Нельзя изменить значение константы.
 ```
 
+<h2>Переменные (var)</h2>
+
+```swift
+var age = 12
+age += 1 // Теперь возраст равен 13
+```
+
+<h2 id="type_date">Типы данных в Swift</h2>
+<p>Swift поддерживает широкий спектр встроенных типов данных:</p>
+
+<ul>
+  <li><b>Int</b>: целые числа</li>
+  <li><b>Double</b> или <b>Float</b>: дробные числа</li>
+  <li><b>Bool</b>: логические значения</li>
+  <li><b>String</b>: строки</li>
+  <li><b>Array</b>: массивы</li>
+  <li><b>Dictionary</b>: словари</li>
+  <li><b>Set</b>: множества</li>
+</ul>
+
+<p>Примеры объявлений:</p>
+
+```swift
+//let имя_переменной: тип_данных = значение
+let integerValue: Int = 10
+let doubleValue: Double = 3.14
+let booleanValue: Bool = true
+let stringValue: String = "Привет"
+```
