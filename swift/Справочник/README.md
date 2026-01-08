@@ -2,12 +2,12 @@
 
 <h2>Оглавление</h2>
 <ol>
-<li><a href="#create_app">Первое знакомство с интерфейсом Xcode</a></li>
+<li><a href="#create_app">Создание первого IOS приложения</a></li>
 <li><a href="#let_const">Переменные и константы</a></li>
 <li><a href="#type_date">Типы данных в Swift</li>
 </ol>
 
-<h2 id="create_app">Первое знакомство с интерфейсом Xcode</h2>
+<h2 id="create_app">Создание первого IOS приложения</h2>
 <img width="300" height="300" src="https://terminalroot.com/assets/img/programming/swift.jpg" />
 
 1.	Запустите Xcode.
