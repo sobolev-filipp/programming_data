@@ -1,8 +1,10 @@
-<img width="484" height="75" alt="image" src="https://github.com/user-attachments/assets/733dcc1d-1d0e-483a-8c67-7776f1f3537f" /><h1>Справочник SWIFT</h1>
+<h1>Справочник SWIFT</h1>
 
 <h2>Оглавление</h2>
-<p><a href="#create_app">Первое знакомство с интерфейсом Xcode</a></p>
-<p><a href="#let_const">Переменные и константы</a></p>
+<ol>
+<li><a href="#create_app">Первое знакомство с интерфейсом Xcode</a></li>
+<li><a href="#let_const">Переменные и константы</a></li>
+</ol>
 
 <h2 id="create_app">Первое знакомство с интерфейсом Xcode</h2>
 <img width="300" height="300" src="https://terminalroot.com/assets/img/programming/swift.jpg" />
@@ -25,8 +27,9 @@
 
 <h3>Константы (const)</h3>
 <p>Константы объявляются с помощью ключевого слова let и не могут быть изменены после присвоения значения.</p>
+
 <p>Пример:</p>
-<markdown>
-	let pi = 3.14
-  pi = 3.15 // Ошибка! Нельзя изменить значение константы.
-</markdown>
+```python
+print("Привет, мир!")
+```
+
