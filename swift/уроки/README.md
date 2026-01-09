@@ -2,6 +2,6 @@
 
 <br/>
 <ul>
-  <li><a href="swift/уроки/Lesson%202/README.md">Урок 2: Основы Swift (часть 1)</a></li>
+  <li><a href="programming_data/blob/main/swift/уроки/Lesson%202/README.md">Урок 2: Основы Swift (часть 1)</a></li>
 </ul>
 
