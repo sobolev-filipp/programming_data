@@ -5,6 +5,7 @@
 <li><a href="#create_app">Создание первого IOS приложения</a></li>
 <li><a href="#let_const">Переменные и константы</a></li>
 <li><a href="#type_date">Типы данных в Swift</li>
+<li><a href="#operator">Операторы в Swift</a></li>
 </ol>
 
 <h2 id="create_app">Создание первого IOS приложения</h2>
@@ -64,4 +65,54 @@ let integerValue: Int = 10
 let doubleValue: Double = 3.14
 let booleanValue: Bool = true
 let stringValue: String = "Привет"
+```
+
+<h2 id="operator">Операторы в Swift</h2>
+<p>Операторы выполняют стандартные математические и логические операции.</p>
+
+<h3>Арифметические операторы:</h3>
+<ul>
+  <li><b>+</b> - сложение</li>
+  <li><b>-</b> - вычитание</li>
+  <li><b>*</b> - умножение</li>
+  <li><b>/</b> - деление</li>
+  <li><b>%</b> - остаток от  деления</li>
+</ul>
+
+<p>Пример:</p>
+
+```swift
+let sum = 5 + 3 // Результат: 8
+let remainder = 10 % 3 // Остаток: 1
+```
+
+<h3>Операторы сравнения:</h3>
+<ul>
+  <li><b>==</b> - равно</li>
+  <li><b>!=</b> - не равно</li>
+  <li><b><</b> - меньше</li>
+  <li><b>></b> - больше</li>
+  <li><b><=</b> - меньше или равно</li>
+  <li><b>>=</b> - больше или равно</li>
+</ul>
+
+<p>Пример:</p>
+
+```swift
+let isEqual = 5 == 5 // Истина
+let notEqual = 5 != 3 // Истина
+```
+
+<h3>Логические операторы:</h3>
+<ul>
+  <li><b>&&</b> - логическое <b></b>И</b></li>
+  <li><b>||/b> - логическое <b>ИЛИ</b></li>
+  <li><b>!</b> - отрицание</li>
+</ul>
+
+<p>Пример:</p>
+
+```swift
+let result = true && false // Ложь
+let anotherResult = !false || true // Истина
 ```
