@@ -280,3 +280,46 @@ for index in array.indices {
 ```
   
 </ul>
+
+<h5>Изменение порядка элементов</h5>
+<ul>
+  <li><b>reverse()</b> - переворачивает порядок элементов:</li>
+
+```swift
+let reversedArray = array.reversed()
+```
+  
+  <li><b>sort(by:)</b> - сортирует элементы по заданному критерию:</li>
+
+```swift
+let sortedArray = array.sorted { $0 < $1 }
+```
+  
+</ul>
+
+<h5>Поиск элемента</h5>
+<ul>
+  <li><b>contains()</b> - проверяет наличие элемента:</li>
+
+```swift
+if array.contains(3) {
+    print("Есть!")
+}
+```
+  
+  <li><b>filter()</b> - фильтрует элементы по условию:</li>
+
+```swift
+let filteredArray = array.filter { $0 > 2 }
+```
+  
+</ul>
+
+<h2>Словари (Dictionary):</h2>
+<p>Хранят пары ключ-значение.</p>
+<p>Пример:</p>
+
+```swift
+var studentGrades = ["Иван": 5, "Марина": 4]
+studentGrades["Сергей"] = 3 // Добавляет новую оценку
+```
