@@ -315,6 +315,54 @@ var studentGrades = ["Иван": 5, "Марина": 4]
 studentGrades["Сергей"] = 3 // Добавляет новую оценку
 ```
 
+<h2>Мини-проект: Камень/Ножницы/Бумага</h2>
+
+```swift
+import UIKit
+
+class ViewController: UIViewController {
+
+    @IBOutlet weak var win: UILabel!
+
+    enum items{
+        case rock
+        case paper
+        case scissors}
+        
+    override func viewDidLoad() {
+        super.viewDidLoad()
+    }
+
+func bot_answer() -> items{
+    var choices=[items.rock, items.paper, items.scissors]
+    var item_number=Int.random(in: 0..<choices.count)
+    return choices[item_number]
+    }
+
+    @IBAction func rock(_ sender: Any) {
+        winner(user_choice: .rock)
+    }
+    @IBAction func paper(_ sender: Any) {
+        winner(user_choice: .paper)
+    }
+    @IBAction func scissors(_ sender: Any) {
+        winner(user_choice: .scissors)
+    }
+
+    func winner(user_choice: items){
+     var bot_choice=bot_answer()
+        if user_choice == .paper && bot_choice == .rock ||
+            user_choice == .scissors && bot_choice == .paper ||
+            user_choice == .rock && bot_choice == .scissors
+        {
+            win.text="You win!"
+            
+        }
+        else{win.text="The bot wins!"}
+    }
+}
+```
+
 <br/>
 <p>Домашнее задание:</p>
 <ul>
