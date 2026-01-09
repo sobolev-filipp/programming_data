@@ -8,6 +8,7 @@
   <li><a href="#operator">Операторы в Swift</a></li>
   <li><a href="#controls">Контроль потока выполнения (ветвления)</a></li>
   <li><a href="#functions">Функции в Swift</a></li>
+  <li><a href="#collections">Коллекции в Swift</a></li>
 </ol>
 
 <h2 id="create_app">Создание первого IOS приложения</h2>
@@ -178,3 +179,104 @@ func addNumbers(a: Int, b: Int) -> Int {
 let result = addNumbers(a: 5, b: 3) // Результат: 8
 ```
 
+<h2 id="collections">Коллекции в Swiftd</h2>
+<p>Коллекции позволяют хранить группы данных.</p>
+
+<h3>Массивы (Array):</h3>
+<p>Хранят упорядоченные последовательности элементов одного типа.</p>
+
+<p>Пример:</p>
+
+```swift
+var numbers = [1, 2, 3, 4, 5]
+numbers.append(6) // Добавляет элемент в конец массива
+```
+
+<h4>Основные операции</h4>
+<h5>Создание массива</h5>
+
+```swift
+let array = [1, 2, 3]
+```
+
+<p>или пустой массив определенного типа:</p>
+
+```swift
+var emptyArray: [Int] = []
+```
+
+<h5>Добавление элементов</h5>
+<ul>
+  <li><b>append</b> - добавляет элемент в конец массива:</li>
+
+```swift
+array.append(4)
+```
+  
+  <li><b>insert(at)</b> - вставляет элемент в указанную позицию:</li>
+
+```swift
+array.insert(0, аи: 0)
+```
+
+</ul>
+
+<h5>Удаление элементов</h5>
+<ul>
+  <li><b>removeLast()</b> - удаляет последний элемент:</li>
+
+```swift
+array.removeLast()
+```
+  
+  <li><b>removeFirst()</b> - удаляет первый элемент:</li>
+
+```swift
+array.removeFirst()
+```
+  
+  <li><b>remove(at)</b> - удаляет элемент по индексу:</li>
+
+```swift
+array.remove(at: 1)
+```
+  
+</ul>
+
+<h5>Доступ к элементам</h5>
+<ul>
+  <li><b>first</b>,<b>last</b> - доступ к первому и последнему элементам соответственно:</li>
+
+```swift
+if let firstElement = array.first {
+    print(firstElement)
+}
+```
+  
+  <li><b>count</b> - возвращает количество элементов в массиве:</li>
+
+```swift
+print(array.count)
+```
+  
+</ul>
+
+<h5>Обход элементов</h5>
+<ul>
+  <li>Через цикл <b>for</b>:</li>
+
+```swift
+for element in array {
+    print(element)
+}
+```
+  
+  <li>Использование индексов:</li>
+
+```swift
+for index in array.indices {
+    print("Index: $index), Value: $array[index])")
+}
+```
+  
+</ul>
