@@ -9,6 +9,7 @@
   <li><a href="#controls">Контроль потока выполнения (ветвления)</a></li>
   <li><a href="#functions">Функции в Swift</a></li>
   <li><a href="#collections">Коллекции в Swift</a></li>
+  <li><a href="#dictionary">Словари (Dictionary)</a></li>
 </ol>
 
 <h2 id="create_app">Создание первого IOS приложения</h2>
@@ -315,7 +316,7 @@ let filteredArray = array.filter { $0 > 2 }
   
 </ul>
 
-<h2>Словари (Dictionary):</h2>
+<h2 id="dictionary">Словари (Dictionary):</h2>
 <p>Хранят пары ключ-значение.</p>
 <p>Пример:</p>
 
