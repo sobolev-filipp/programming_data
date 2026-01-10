@@ -2,12 +2,12 @@
 
 <h2>Оглавление</h2>
 <ul>
-    <li><a href="../../../swift%20guide/README.md#cycle">Циклы в Swift</a></li>
-    <li><a href="../../../swift%20guide/README.md#optional">Работа с опционалами и специальными символами</a></li>
-    <li><a href="../../../swift%20guide/README.md#generation">Генерация</a></li>
-    <li><a href="../../../swift%20guide/README.md#interpolation">Строковая интерполяция</a></li>
-    <li><a href="../../../swift%20guide/README.md#guard">guard оператор</a></li>
-    <li><a href="../../../swift%20guide/README.md#picker">UIPickerView</a></li>
+    <li><a target="_blank" href="../../../swift%20guide/README.md#cycle">Циклы в Swift</a></li>
+    <li><a target="_blank" href="../../../swift%20guide/README.md#optional">Работа с опционалами и специальными символами</a></li>
+    <li><a target="_blank" href="../../../swift%20guide/README.md#generation">Генерация</a></li>
+    <li><a target="_blank" href="../../../swift%20guide/README.md#interpolation">Строковая интерполяция</a></li>
+    <li><a target="_blank" href="../../../swift%20guide/README.md#guard">guard оператор</a></li>
+    <li><a target="_blank" href="../../../swift%20guide/README.md#picker">UIPickerView</a></li>
     <li><a href="#practika">Практический проект: "Генератор случайных историй"</a></li>
 </ul>
 
