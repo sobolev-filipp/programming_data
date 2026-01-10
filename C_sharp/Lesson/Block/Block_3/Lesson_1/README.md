@@ -116,9 +116,9 @@ namespace Notes.Data
 </ul>
 
 <br>
-<h4>ИНТЕРФЕЙС — MainPage.xaml</h4>
+<h3>ИНТЕРФЕЙС — MainPage.xaml</h3>
 
-```c#
+```xaml
     <ScrollView>
         <VerticalStackLayout Padding="20" Spacing="15">
 
@@ -138,3 +138,8 @@ namespace Notes.Data
         </VerticalStackLayout>
     </ScrollView>
 ```
+
+> Editor → ввод текста
+> Button → сохранить
+> ScrollView → прокрутка
+> NotesLayout → сюда добавляются заметки
