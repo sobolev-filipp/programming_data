@@ -564,7 +564,7 @@ guard let variableName = optionalVariable else {
 ```
 
 <br/>
-<h2 id="picker">Что такое UIPickerView и зачем он нужен?</h2>
+<h2 id="picker" name="picker">Что такое UIPickerView и зачем он нужен?</h2>
 <p><b>UIPickerView</b> — это компонент интерфейса, который позволяет пользователю выбирать значения из списка. Он удобен для выбора из большого количества вариантов и часто используется в приложениях для iOS.</p>
 
 <br/>
