@@ -19,6 +19,7 @@
 <p>Класс контроллера должен соответствовать протоколам <b><mark>UIPickerViewDelegate</mark></b> и <b><mark>UIPickerViewDataSource</mark></b>:</p>
 
 ```swift
+class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource
 ```
 
 <br/>
