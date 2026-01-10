@@ -114,3 +114,27 @@ namespace Notes.Data
     </li>
     <p>✔️ Безопасно вызывать каждый раз</p>
 </ul>
+
+<br>
+<h4>ИНТЕРФЕЙС — MainPage.xaml</h4>
+
+```c#
+    <ScrollView>
+        <VerticalStackLayout Padding="20" Spacing="15">
+
+            <Label Text="📝 Мои заметки"
+                   FontSize="28"
+                   HorizontalOptions="Center"/>
+
+            <Entry x:Name="NoteEntry"
+                   Placeholder="Введите заметку"/>
+
+            <Button Text="Добавить заметку"
+                    Clicked="OnAddClicked"/>
+
+            <VerticalStackLayout x:Name="NotesLayout"
+                                 Spacing="10"/>
+
+        </VerticalStackLayout>
+    </ScrollView>
+```
