@@ -1,0 +1,5 @@
+# Исключить данные Visual Studio
+.vs/
+*.slnx
+*.vsidx
+*.vscode

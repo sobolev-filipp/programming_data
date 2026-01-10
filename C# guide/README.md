@@ -42,6 +42,7 @@
     <li>можно добавлять, удалять, изменять записи</li>
 </ul>
 
+<br>
 <h4>Понятие модели</h4>
 <p><b>Model</b> — это класс, который описывает:</p>
 <il>
@@ -102,7 +103,9 @@ using SQLite;
 <p>Для этого:</p>
 <ol>
     <li>Нажмите <b>ПКМ</b> по проекту</li>
-    <li>Выберите <b>Manage NuGet Packages</b></li>
+    <li>Выберите <b>Управление пакетами NuGet для решения...</b></li>
     <li>Найдите <b>sqlite-net-pcl</b></li>
     <li>Установите его</li>
 </ol>
+
+<video src="./image/Block_3/Lesson_1/nuget_sqlite.mkv"></video>
