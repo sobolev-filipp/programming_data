@@ -126,6 +126,7 @@ using SQLite;
 <p> - Создаёт таблицу в базе данных</p>
 
 <br>
-<div style="border-left: 2px dashed gold; padding-left: 8px;">
-В MAUI мы делаем это <b>один раз</b>, обычно автоматически.
-</div>
+
+```markdown
+> В MAUI мы делаем это <b>один раз</b>, обычно автоматически.
+```
