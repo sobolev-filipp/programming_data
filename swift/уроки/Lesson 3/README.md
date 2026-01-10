@@ -7,7 +7,7 @@
     <li><a href="https://github.com/sobolev-filipp/programming_data/blob/main/swift%20guide/README.md#generation">Генерация</a></li>
     <li><a href=https://github.com/sobolev-filipp/programming_data/blob/main/swift%20guide/README.md"#interpolation">Строковая интерполяция</a></li>
     <li><a href="https://github.com/sobolev-filipp/programming_data/blob/main/swift%20guide/README.md#guard">guard оператор</a></li>
-    <li><a href="https://github.com/sobolev-filipp/programming_data/blob/main/swift%20guide/README.md#picker">UIPickerView</a></li>
+    <li><a href="../../../swift guide/README.md/#picker">UIPickerView</a></li>
     <li><a href="#practika">Практический проект: "Генератор случайных историй"</a></li>
 </ul>
 
