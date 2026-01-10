@@ -139,12 +139,13 @@ namespace Notes.Data
     </ScrollView>
 ```
 <ul>
-    <li>Editor → ввод текста</li>
-    <li>Button → сохранить</li>
-    <li>ScrollView → прокрутка</li>
-    <li>NotesLayout → сюда добавляются заметки</li>
+    <li><b>Editor</b> → ввод текста</li>
+    <li><b>Button</b> → сохранить</li>
+    <li><b>ScrollView</b> → прокрутка</li>
+    <li><b>NotesLayout</b> → сюда добавляются заметки</li>
 </ul>
 
+<br>
 <h3>ЛОГИКА СТРАНИЦЫ — MainPage.xaml.cs</h3>
 
 ```c#
