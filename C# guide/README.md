@@ -245,25 +245,25 @@ database.Update(note);
 SELECT * FROM Note WHERE Text = 'Привет';
 ```
 
-    <p>Показывает только подходящие строки</p>
+<p>Показывает только подходящие строки</p>
 
     </li>
     <li><b>ORDER BY</b> — сортировка
     
-    ```sql
-    SELECT * FROM Note ORDER BY Id DESC;
-    ```
+```sql
+SELECT * FROM Note ORDER BY Id DESC;
+```
 
-    <p>Сортирует строки таблицы</p>
+<p>Сортирует строки таблицы</p>
 
     </li>
     <li><b>LIMIT</b> — ограничение
     
-    ```sql
-    SELECT * FROM Note LIMIT 5;
-    ```
+```sql
+SELECT * FROM Note LIMIT 5;
+```
 
-    <p>Выводит только 5 записей из таблицы</p>
+<p>Выводит только 5 записей из таблицы</p>
     
     </li>
 </ul>
