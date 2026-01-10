@@ -19,4 +19,4 @@ Notes
 ```
 
 <br>
-<p>Далее необходимо <a href="/C# guide/README.md/#sql_command">установить SQLite</a></p>
+<p>Далее необходимо <a href="../../../../../C# guide/README.md#sql_command">установить SQLite</a></p>
