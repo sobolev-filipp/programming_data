@@ -241,9 +241,9 @@ database.Update(note);
 <ul>
     <li><b>WHERE</b> — фильтр
     
-    ```sql
-    SELECT * FROM Note WHERE Text = 'Привет';
-    ```
+```sql
+SELECT * FROM Note WHERE Text = 'Привет';
+```
 
     <p>Показывает только подходящие строки</p>
 
