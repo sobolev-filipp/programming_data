@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Notes.MainPage">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="20" Spacing="15">
+
+            <Label Text="📝 Мои заметки"
+                   FontSize="28"
+                   HorizontalOptions="Center"/>
+
+            <Entry x:Name="NoteEntry"
+                   Placeholder="Введите заметку"/>
+
+            <Button Text="Добавить заметку"
+                    Clicked="OnAddClicked"/>
+
+            <VerticalStackLayout x:Name="NotesLayout"
+                                 Spacing="10"/>
+
+        </VerticalStackLayout>
+    </ScrollView>
+
+</ContentPage>
