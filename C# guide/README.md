@@ -108,4 +108,4 @@ using SQLite;
     <li>Установите его</li>
 </ol>
 
-[Смотреть видео](nuget_sqlite.mp4)
+<img src="./image/Block_3/Lesson_1/nuget_sqlite.gif" alt="">
