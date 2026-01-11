@@ -70,6 +70,7 @@ SELECT * FROM User LIMIT 1
     
 <li><b>Данные между страницами</b>
 > Задание: Сохрани данные на одной странице, прочитай на другой.
+<br>
 </li>
     
 <li><b>Сохранение состояния</b>
@@ -87,6 +88,7 @@ Application.Current.UserAppTheme = AppTheme.Light
 Application.Current.UserAppTheme = AppTheme.Dark
 ```
 
+<br>
 </li>
     <li><b></b></li>
     <li><b></b></li>
