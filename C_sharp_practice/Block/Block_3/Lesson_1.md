@@ -10,7 +10,7 @@
     <li>поле LaunchCount</li>
 </ul>
     
-    </li>
+</li>
 
     <li><b></b></li>
     <li><b></b></li>
