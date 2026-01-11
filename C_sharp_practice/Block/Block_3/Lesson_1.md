@@ -9,10 +9,15 @@
     <li>таблица AppInfo</li>
     <li>поле LaunchCount</li>
 </ul>
-    
+<br>    
 </li>
 
-    <li><b></b></li>
+<li><b>Имя пользователя</b>
+
+> 💡 Подсказка:SELECT * FROM User LIMIT 1
+<br>
+</li>
+
     <li><b></b></li>
     <li><b></b></li>
     <li><b></b></li>
