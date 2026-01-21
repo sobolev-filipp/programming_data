@@ -1,0 +1,22 @@
+AppBundleName=To_Do_App_DB
+ApplicationDisplayVersion=1.0
+ApplicationId=com.companyname.to_do_app_db
+ApplicationTitle=To_Do_App_DB
+ApplicationVersion=1
+AppManifest=Platforms/MacCatalyst/Info.plist
+CompiledAppManifest=obj/Debug/net10.0-maccatalyst/AppManifest.plist
+DefaultSdkVersion=26.2
+FontFilesToRegister=
+GenerateApplicationManifest=true
+IsAppExtension=false
+MinSupportedOSPlatformVersion=15.0
+PartialAppManifests=obj/Debug/net10.0-maccatalyst/resizetizer/f/MauiInfo.plist
+ProjectDir=/Users/sobolevfilipp/Yandex.Disk.localized/Компьютер FILIPP/Работа/GitHub/programming_data/C_sharp/Project/Block/Block_3/Lesson_2/To_Do_App_DB
+ResourcePrefix=Platforms/MacCatalyst/Resources
+ResourceRules=
+SdkIsSimulator=False
+SdkVersion=26.2
+SupportedOSPlatformVersion=15.0
+TargetArchitectures=ARM64
+TargetFrameworkMoniker=.NETCoreApp,Version=v10.0,Profile=maccatalyst
+Validate=true

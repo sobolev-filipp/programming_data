@@ -1,0 +1,33 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="To_Do_App_DB.MainPage">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="20" Spacing="10">
+
+            <!-- Ввод задачи -->
+            <Entry x:Name="TaskEntry"
+                   Placeholder="Введите задачу" />
+
+            <Button Text="Добавить"
+                    Clicked="OnAddClicked"/>
+
+            <!-- Фильтры -->
+            <HorizontalStackLayout Spacing="10">
+                <Button Text="Все"
+                        Clicked="OnShowAll"/>
+                <Button Text="Выполнено"
+                        Clicked="OnShowDone"/>
+                <Button Text="Не выполнено"
+                        Clicked="OnShowNotDone"/>
+            </HorizontalStackLayout>
+
+            <!-- Список задач -->
+            <VerticalStackLayout x:Name="TasksLayout"
+                                 Spacing="10"/>
+
+        </VerticalStackLayout>
+    </ScrollView>
+
+</ContentPage>

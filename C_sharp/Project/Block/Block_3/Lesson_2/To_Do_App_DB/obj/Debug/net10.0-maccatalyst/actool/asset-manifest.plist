@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>com.apple.actool.compilation-results</key>
+	<dict>
+		<key>output-files</key>
+		<array>
+			<string>/Users/sobolevfilipp/Yandex.Disk.localized/Компьютер FILIPP/Работа/GitHub/programming_data/C_sharp/Project/Block/Block_3/Lesson_2/To_Do_App_DB/obj/Debug/net10.0-maccatalyst/actool/bundle/Assets.car</string>
+			<string>/Users/sobolevfilipp/Yandex.Disk.localized/Компьютер FILIPP/Работа/GitHub/programming_data/C_sharp/Project/Block/Block_3/Lesson_2/To_Do_App_DB/obj/Debug/net10.0-maccatalyst/actool/bundle/appicon.icns</string>
+			<string>/Users/sobolevfilipp/Yandex.Disk.localized/Компьютер FILIPP/Работа/GitHub/programming_data/C_sharp/Project/Block/Block_3/Lesson_2/To_Do_App_DB/obj/Debug/net10.0-maccatalyst/actool/partial-info.plist</string>
+		</array>
+	</dict>
+</dict>
+</plist>
