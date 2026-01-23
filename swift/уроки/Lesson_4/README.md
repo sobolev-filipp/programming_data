@@ -105,6 +105,7 @@ class ViewController: UIViewController,AddAnimalDelegate {
     <li><b>UIButton</b> с надписью <i>"+"</i></li>
 </ul>
 
+<br>
 <h5>Создание словаря для хранения информации о животных</h5>
 
 ```swift
@@ -117,3 +118,43 @@ var animal: [String : [String]] = [
 
 > var animal: [String : [String]] 
 <p>Данная запись говорит нам о том, что был создан словарь в котором <b>ключи хранятся ввиде строк</b> и в <b>каждом из его ключей также хранятся строки</b></p>
+
+<br>
+<h5>Создание связей с кодом</h5>
+<p>Создайте <b>outlet</b> и <b>action</b> для кнопки <i>"Дальше"</i>:</p>
+
+```swift
+    @IBOutlet weak var AnimalNamelabel: UILabel!
+    @IBOutlet weak var AnimalImage: UIImageView!
+    @IBOutlet weak var AnimalDescLabel: UILabel!
+
+    @IBAction func NextDataButton(_ sender: Any) {
+        //Code
+    }
+```
+
+<br>
+<h5>Загрузка хранящихся данных из словаря на экран</h5>
+
+```swift
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        //Скругляем углы у картинки и у Label с именем животного
+        AnimalNamelabel.layer.cornerRadius = 10
+        AnimalImage.layer.cornerRadius = 10
+        
+        LoadData()
+    }
+
+    func LoadData(){
+        AnimalNamelabel.text = animal["name"]?[index]
+        AnimalImage.image = UIImage(data: try! Data(contentsOf: URL(string: animal["image"]?[index] ?? "")!))
+        AnimalDescLabel.text = animal["description"]?[index]
+    }
+```
+
+<p>В данном блоке нужно разобрать как мы вставляем изображение в <b>UIImageView</b>. Посмотрите об этом в <a href="../../../swift guide/README.md#UIImageView">методичке</a>.</p>
+
+<br>
+<h5>Реализация логики смены животного</h5>

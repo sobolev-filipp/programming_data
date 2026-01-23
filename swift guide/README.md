@@ -16,6 +16,7 @@
   <li><a href="#interpolation">Строковая интерполяция</a></li>
   <li><a href="#guard">guard оператор</a></li>
   <li><a href="#picker">UIPickerView</a></li>
+  <li><a href="#UIImageView">UIImageView</a></li>
 </ol>
 
 <br/>
@@ -622,3 +623,64 @@ func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent c
 
 </ol>
 
+<br>
+<a name="UIImageView"></a>
+<h2>UIImageView</h2>
+
+<p><b>UIImageView</b> — это компонент <s>UIKit</s>, используемый для отображения изображений в приложениях</p>
+<p>Этот класс позволяет загружать и показывать статичные или анимированные изображения в интерфейсе приложения.</p>
+
+<h3>Основные свойства UIImageView</h3>
+<ul>
+  <li><b>image:</b> свойство, которое хранит само изображение</li>
+  <li><b>highlightedImage:</b> альтернативное изображение, показываемое при выделенном состоянии кнопки (если UIImageView используется внутри UIButton)</li>
+  <li><b>contentMode:</b> режим заполнения изображения в рамках UIImageView (например, масштабирование или центрирование)</li>
+  <li><b>isHighlighted:</b> показывает состояние выделения компонента</li>
+  <li><b>animationImages:</b> массив анимационных кадров (для воспроизведения анимации)</li>
+  <li><b>animationDuration:</b> длительность одной полной последовательности анимаци</li>
+  <li><b>animationRepeatCount:</b> количество повторений анимации</li>
+</ul>
+
+<br>
+<h3>Как добавить изображение в UIImageView?</h3>
+
+<h4>Способ 1</h4>
+<ol>
+  <li>Откройте ваш проект в Xcode и перейдите в Storyboard.</li>
+  <li>Перетащите объект <b>UIImageView</b> на экран контроллера <b>ViewController</b>.</li>
+  <li>Установите нужные размеры и положение UIView (используя <b>Autolayout</b>).</li>
+  <li>Выберите ваше изображение в библиотеке активов проекта (<b>"Assets.xcassets"</b>).</li>
+  <li>Убедитесь, что изображение появилось в атрибутах <b>UIImageView</b>.</li>
+</ol>
+
+<h4>Способ 2</h4>
+<ol>
+<li>Импорт библиотеки UIKit
+
+```swift
+import UIKit
+```
+
+</li>
+<li>Создаем экземпляр UIImageView и задаём необходимые настройки
+<p>Создадим UIImageView вручную и назначим ему изображение:</p>
+
+```swift
+// Создаем UIImageView
+let imageView = UIImageView()
+
+// Устанавливаем изображение
+if let image = UIImage(named: "example") {
+    imageView.image = image
+}
+
+// Настраиваем размер и позицию
+imageView.frame = CGRect(x: 50, y: 100, width: 200, height: 200)
+
+// Масштабируем изображение по размеру UIImageView
+imageView.contentMode = .scaleAspectFit // изображение будет сохранять пропорции и помещено внутрь рамки
+```
+
+</li>
+<li></li>
+</ol>
