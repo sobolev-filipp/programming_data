@@ -81,12 +81,12 @@ else
     <li>Используй <b>VerticalStackLayout</b></li>
     <li>Используй <b>foreach</b></li>
     <li>Используй это в модели:
-        
+
 ```c#
 public string Name { get; set; }
-``
+```
 
-    </li>
+</li>
 </ul>
 
 
