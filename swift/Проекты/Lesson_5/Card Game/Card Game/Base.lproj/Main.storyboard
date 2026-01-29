@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="24506" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+    <device id="retina6_9" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="24504"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--View Controller-->
+        <scene sceneID="tne-QT-ifu">
+            <objects>
+                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="Card_Game" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
+                        <rect key="frame" x="0.0" y="0.0" width="440" height="956"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="fWL-Hb-xkc">
+                                <rect key="frame" x="15" y="174" width="410" height="567.66666666666663"/>
+                            </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="p2M-q8-cs6">
+                                <rect key="frame" x="16" y="791.66666666666663" width="402" height="34.333333333333371"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" relation="lessThanOrEqual" constant="200" id="fgv-go-Hta"/>
+                                </constraints>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="gray" title="Нажми"/>
+                                <connections>
+                                    <action selector="Add_Score:" destination="BYZ-38-t0r" eventType="touchUpInside" id="VrZ-Kd-gqc"/>
+                                </connections>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Счет:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="r8t-g5-RDn">
+                                <rect key="frame" x="30" y="876" width="380" height="30"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="25"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="fWL-Hb-xkc" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="15" id="4VA-R3-QQz"/>
+                            <constraint firstItem="r8t-g5-RDn" firstAttribute="top" secondItem="p2M-q8-cs6" secondAttribute="bottom" constant="50" id="53i-Jq-LqX"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="r8t-g5-RDn" secondAttribute="trailing" constant="30" id="5vi-Hk-CTZ"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="p2M-q8-cs6" secondAttribute="trailing" constant="22" id="AiJ-fU-5jg"/>
+                            <constraint firstItem="p2M-q8-cs6" firstAttribute="top" secondItem="fWL-Hb-xkc" secondAttribute="bottom" constant="50" id="CaV-OQ-bLc"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="fWL-Hb-xkc" secondAttribute="trailing" constant="15" id="Exv-xm-W6g"/>
+                            <constraint firstItem="p2M-q8-cs6" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="16" id="Hxu-8H-5O9"/>
+                            <constraint firstItem="fWL-Hb-xkc" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="JUo-j5-06v"/>
+                            <constraint firstItem="r8t-g5-RDn" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="Nej-7j-fdn"/>
+                            <constraint firstAttribute="bottom" secondItem="r8t-g5-RDn" secondAttribute="bottom" constant="50" id="aNa-sU-1s8"/>
+                            <constraint firstItem="fWL-Hb-xkc" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="topMargin" constant="50" id="dSA-M4-9Px"/>
+                            <constraint firstItem="fWL-Hb-xkc" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="kR0-Fh-GCA"/>
+                            <constraint firstItem="p2M-q8-cs6" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="n0L-No-fg0"/>
+                            <constraint firstItem="p2M-q8-cs6" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="rot-HI-rrf"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="Card" destination="fWL-Hb-xkc" id="qvk-e7-XpY"/>
+                        <outlet property="Score_Label" destination="r8t-g5-RDn" id="CX2-Ut-2CR"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="49.253731343283576" y="110.52631578947367"/>
+        </scene>
+    </scenes>
+    <resources>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
+</document>
