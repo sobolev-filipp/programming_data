@@ -1,276 +1,250 @@
-# Урок 1.1. Практика на занятии
+# Урок 1.3. Практика на занятии (вместе с преподавателем)
 
-> Все задания делаем в **одной тетрадке Jupyter** (или Colab). В конце урока — расшарим тетрадку всем.
-
-Файл тетрадки назвать: `lesson-1-1-python-refresh.ipynb`.
+> Тетрадка: `lesson-1-3-utilities.ipynb`. Все задания пишем вместе на проекторе, ученики повторяют.
 
 ---
 
-## Разогрев: «кто как напишет» (10 минут)
+## Задание 1. `zip` и `enumerate` (13 минут)
 
-**Задача на доске:**
-> Дано число N. Посчитать сумму квадратов всех чисел от 1 до N, **которые делятся на 3 без остатка**.
-
-Дайте 3 минуты подумать. Потом 2–3 ученика записывают свои решения на доске.
-
-### Варианты решений
-
-**Самый длинный:**
-```python
-N = 20
-total = 0
-for x in range(1, N + 1):
-    if x % 3 == 0:
-        total += x ** 2
-print(total)   # 9 + 36 + 81 + 144 + 225 + 324 = 819
-```
-
-**Короче:**
-```python
-total = sum(x ** 2 for x in range(1, N + 1) if x % 3 == 0)
-```
-
-**Самый короткий (генератор):**
-```python
-total = sum(x ** 2 for x in range(3, N + 1, 3))
-```
-
-Обсудите: первый понятнее новичку, третий короче и быстрее. **В ML предпочитаем второй стиль** — компактный, но читаемый.
-
----
-
-## Задание 1. Переписать через comprehensions (15 минут)
-
-Дан кусок кода. Перепиши **каждый цикл в одну строку** через comprehension.
-
-### 1.1.
-
-```python
-numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
-
-# Возведение в куб всех чисел
-result = []
-for n in numbers:
-    result.append(n ** 3)
-print(result)
-```
-
-**Решение:**
-```python
-result = [n ** 3 for n in numbers]
-```
-
-### 1.2.
-
-```python
-words = ["мама", "мыла", "раму", "и", "пол"]
-
-# Длина каждого слова, если оно длиннее 2 символов
-result = []
-for w in words:
-    if len(w) > 2:
-        result.append(len(w))
-print(result)
-```
-
-**Решение:**
-```python
-result = [len(w) for w in words if len(w) > 2]
-```
-
-### 1.3.
+### 1.1. Простой `zip`
 
 ```python
 students = ["Иван", "Мария", "Пётр", "Ольга"]
-ages = [15, 14, 16, 15]
+grades = [4, 5, 3, 5]
 
-# Словарь «имя → возраст»
-result = {}
-for i in range(len(students)):
-    result[students[i]] = ages[i]
-print(result)
+for name, grade in zip(students, grades):
+    print(f"{name}: {grade}")
 ```
 
-**Решение:**
-```python
-result = {name: age for name, age in zip(students, ages)}
-```
-
-### 1.4. (со звёздочкой)
+### 1.2. `zip` с тремя списками
 
 ```python
-matrix = [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
+students = ["Иван", "Мария", "Пётр"]
+grades = [4, 5, 3]
+subjects = ["алгебра", "информатика", "химия"]
 
-# Развернуть матрицу в один длинный список
-result = []
-for row in matrix:
-    for x in row:
-        result.append(x)
-print(result)
+for name, grade, subj in zip(students, grades, subjects):
+    print(f"{name} получил {grade} по {subj}")
 ```
 
-**Решение:**
+### 1.3. Построить словарь через `zip`
+
 ```python
-result = [x for row in matrix for x in row]
+keys = ["name", "age", "grade"]
+values = ["Иван", 15, 5]
+
+profile = dict(zip(keys, values))
+# {'name': 'Иван', 'age': 15, 'grade': 5}
 ```
 
-> Это **вложенный comprehension**. Порядок такой же, как во вложенном цикле: сначала внешний `for row`, потом внутренний `for x`.
+### 1.4. `enumerate` — индекс + значение
+
+```python
+languages = ["Python", "JavaScript", "Rust", "Go"]
+
+for i, lang in enumerate(languages):
+    print(f"{i}: {lang}")
+```
+
+**А с другого индекса?**
+```python
+for i, lang in enumerate(languages, start=1):
+    print(f"{i}. {lang}")
+# 1. Python
+# 2. JavaScript
+# 3. Rust
+# 4. Go
+```
+
+### 1.5. Комбинация `enumerate` + `zip`
+
+```python
+students = ["Иван", "Мария", "Пётр"]
+grades = [4, 5, 3]
+
+for i, (name, grade) in enumerate(zip(students, grades), start=1):
+    print(f"{i}. {name} — {grade}")
+```
+
+**Подсветить:** скобки `(name, grade)` обязательны, потому что `enumerate` отдаёт пары `(индекс, элемент)`, а элемент здесь — уже пара.
 
 ---
 
-## Задание 2. Чтение CSV без pandas (10 минут)
+## Задание 2. Агрегации: `sorted`, `sum`, `min`, `max`, `all`, `any` (15 минут)
 
-Создаём файл `students.csv` в Colab:
-
-```python
-csv_content = """name,age,grade
-Иван,15,4
-Мария,14,5
-Пётр,16,3
-Ольга,15,4
-"""
-
-with open("students.csv", "w", encoding="utf-8") as f:
-    f.write(csv_content)
-```
-
-Теперь читаем:
+### 2.1. Дан список оценок
 
 ```python
-data = []
-with open("students.csv", "r", encoding="utf-8") as f:
-    header = f.readline().strip().split(",")
-    for line in f:
-        values = line.strip().split(",")
-        record = dict(zip(header, values))
-        data.append(record)
+grades = [4, 5, 3, 5, 4, 4, 5, 2, 3, 4]
 
-print(data)
+print("Кол-во оценок:", len(grades))
+print("Сумма:", sum(grades))
+print("Средняя:", sum(grades) / len(grades))
+print("Минимум:", min(grades))
+print("Максимум:", max(grades))
+print("Двойки есть?", 2 in grades)
+print("Сколько пятёрок:", grades.count(5))
 ```
 
-**Что должно вывестись:**
-```python
-[{'name': 'Иван', 'age': '15', 'grade': '4'},
- {'name': 'Мария', 'age': '14', 'grade': '5'},
- {'name': 'Пётр', 'age': '16', 'grade': '3'},
- {'name': 'Ольга', 'age': '15', 'grade': '4'}]
-```
-
-### Обсудить с классом:
-- Почему `age` — это строка `"15"`, а не число? (потому что мы читаем текст, и Python не догадывается, что это число).
-- Как сделать `age` числом? Через comprehension:
+### 2.2. `sorted` с ключом
 
 ```python
-for record in data:
-    record["age"] = int(record["age"])
-    record["grade"] = int(record["grade"])
+books = [
+    {"title": "Война и мир",        "pages": 1225, "year": 1869},
+    {"title": "Гарри Поттер",       "pages": 332,  "year": 1997},
+    {"title": "1984",               "pages": 328,  "year": 1949},
+    {"title": "Мастер и Маргарита", "pages": 480,  "year": 1967},
+]
+
+# По годам, от старых к новым
+by_year = sorted(books, key=lambda b: b["year"])
+for b in by_year:
+    print(b["year"], b["title"])
 ```
 
-Или сразу при чтении:
+### 2.3. `max` / `min` с ключом
+
 ```python
-data = []
-with open("students.csv", "r", encoding="utf-8") as f:
-    header = f.readline().strip().split(",")
-    for line in f:
-        values = line.strip().split(",")
-        record = {
-            "name": values[0],
-            "age": int(values[1]),
-            "grade": int(values[2]),
-        }
-        data.append(record)
+longest = max(books, key=lambda b: b["pages"])
+print("Самая толстая:", longest["title"])
+
+oldest = min(books, key=lambda b: b["year"])
+print("Самая старая:", oldest["title"])
 ```
 
-> С Модуля 2 (Pandas) это будет одна строка: `pd.read_csv("students.csv")`. Но понимать, как оно «под капотом» — полезно.
+### 2.4. `all` и `any` — проверки коллекции
+
+```python
+nums = [5, 8, 12, 3, 7]
+
+print("Все положительные?", all(x > 0 for x in nums))     # True
+print("Есть чётные?", any(x % 2 == 0 for x in nums))      # True
+print("Все больше 10?", all(x > 10 for x in nums))        # False
+print("Есть отрицательные?", any(x < 0 for x in nums))    # False
+```
+
+**Реальный пример: проверка валидности оценок.**
+```python
+def is_valid(grades):
+    return all(2 <= g <= 5 for g in grades)
+
+print(is_valid([4, 5, 3, 4]))      # True
+print(is_valid([4, 5, 10, 4]))     # False
+```
+
+### 2.5. Подвох: `all([])` = `True`
+
+```python
+print(all([]))    # True   (!!)
+print(any([]))    # False
+
+print(is_valid([]))   # True — но оценок-то нет!
+```
+
+**Как защититься:**
+```python
+def is_valid(grades):
+    return bool(grades) and all(2 <= g <= 5 for g in grades)
+```
 
 ---
 
-## Задание 3. Простой класс `Student` (15 минут)
+## Задание 3. Методы строк (15 минут)
 
-Реализуем класс `Student`:
-
-```python
-class Student:
-    def __init__(self, name: str, age: int):
-        self.name = name
-        self.age = age
-        self.grades: list[int] = []
-
-    def add_grade(self, grade: int) -> None:
-        if 2 <= grade <= 5:
-            self.grades.append(grade)
-        else:
-            print(f"Оценка {grade} некорректна, не добавлена")
-
-    def average(self) -> float:
-        if not self.grades:
-            return 0.0
-        return sum(self.grades) / len(self.grades)
-
-    def __repr__(self) -> str:
-        return f"Student(name={self.name!r}, age={self.age}, avg={self.average():.2f})"
-```
-
-**Используем:**
-```python
-ivan = Student("Иван", 15)
-ivan.add_grade(5)
-ivan.add_grade(4)
-ivan.add_grade(5)
-ivan.add_grade(10)        # некорректная — не добавится
-print(ivan)               # сработает __repr__
-print(ivan.average())     # 4.67
-```
-
-### Объясните на уроке:
-- Что такое `__init__` — конструктор.
-- Что такое `self` — «текущий объект».
-- Что такое `__repr__` — как объект показывается при `print` или в Jupyter.
-- Зачем type hints — попросите учеников навести курсор в VS Code/Colab на функцию `add_grade` — увидите подсказку.
-
-### Усложнение (если есть время):
-
-Сделать класс `Class` (то есть «школьный класс»), который хранит **список студентов** и умеет считать средний балл всего класса.
+### 3.1. Парсинг строки с CSV-данными
 
 ```python
-class SchoolClass:
-    def __init__(self, name: str):
-        self.name = name
-        self.students: list[Student] = []
+line = "Иван,15,Москва,Python,5.0"
 
-    def add_student(self, student: Student) -> None:
-        self.students.append(student)
+parts = line.split(",")
+print(parts)
+# ['Иван', '15', 'Москва', 'Python', '5.0']
 
-    def average(self) -> float:
-        if not self.students:
-            return 0.0
-        return sum(s.average() for s in self.students) / len(self.students)
-
-
-class_9a = SchoolClass("9А")
-class_9a.add_student(ivan)
-class_9a.add_student(Student("Мария", 14))
-class_9a.students[1].add_grade(5)
-class_9a.students[1].add_grade(5)
-print(class_9a.average())
+name, age, city, lang, rating = parts
+print(name, int(age), city, lang, float(rating))
 ```
 
-Обратите внимание: внутри `SchoolClass.average()` мы используем **comprehension с генератором** `sum(s.average() for s in self.students)`. Это эффективно — не создаёт промежуточный список.
+### 3.2. Чистка пользовательского ввода
+
+```python
+user_input = "   Привет, Мир!   \n"
+
+cleaned = user_input.strip()
+print(repr(cleaned))   # 'Привет, Мир!'
+
+# В нижний регистр
+print(cleaned.lower())   # 'привет, мир!'
+```
+
+### 3.3. Сборка из частей
+
+```python
+parts = ["2026", "06", "10"]
+date = "-".join(parts)
+print(date)             # '2026-06-10'
+
+words = ["я", "учу", "Python"]
+sentence = " ".join(words)
+print(sentence)         # 'я учу Python'
+```
+
+### 3.4. Замена
+
+```python
+text = "Я люблю Python. Python — это здорово!"
+
+# Заменить все вхождения
+print(text.replace("Python", "ML"))
+
+# Заменить только первое
+print(text.replace("Python", "ML", 1))
+```
+
+### 3.5. Проверки и фильтры
+
+```python
+filenames = ["model.pkl", "data.csv", "notebook.ipynb", "image.jpg", "log.txt"]
+
+# Все CSV-файлы
+csvs = [f for f in filenames if f.endswith(".csv")]
+print(csvs)
+
+# Все «модельные» файлы (.pkl, .pth, .h5, .onnx)
+model_exts = [".pkl", ".pth", ".h5", ".onnx"]
+models = [f for f in filenames if any(f.endswith(ext) for ext in model_exts)]
+print(models)
+```
+
+> Обратите внимание — здесь сразу всё в куче: генератор списка, методы строк, `any`, `endswith`. Это и есть «реальный код».
+
+### 3.6. f-строки с форматом числа
+
+```python
+average = 4.3576
+print(f"Средний балл: {average:.2f}")     # 4.36
+
+# Процент
+ratio = 0.857
+print(f"Точность: {ratio * 100:.1f}%")    # 85.7%
+
+# Выравнивание (для таблицы)
+for name, grade in [("Иван", 5), ("Мария", 4), ("Пётр", 3)]:
+    print(f"{name:<10} | {grade}")
+# Иван       | 5
+# Мария      | 4
+# Пётр       | 3
+```
 
 ---
 
-## Тайминг урока (90 минут)
+## Тайминг (90 минут, без самостоятельной части)
 
 | Время | Блок |
 |------:|------|
-| 0–5 | Введение |
-| 5–15 | Разогрев |
-| 15–25 | Списки и словари — теория с примерами |
-| 25–40 | Задание 1 (comprehensions) |
-| 40–50 | Функции, lambda, args/kwargs — теория |
-| 50–60 | Задание 2 (CSV) |
-| 60–75 | Задание 3 (класс Student) |
-| 75–85 | Type hints — теория + демо в IDE |
-| 85–90 | ДЗ, вопросы |
-
-> Если задание 1 идёт быстро — добавьте задачу 1.5 (со звёздочкой). Если медленно — пропустите 1.4.
+| 0–12 | Повторение (см. `review.md`) |
+| 12–22 | Быстрая база (`theory.md` §1) |
+| 22–35 | Задание 1 (`zip`, `enumerate`) |
+| 35–50 | Задание 2 (агрегации) |
+| 50–65 | Задание 3 (методы строк) |
+| 65–85 | Самостоятельная работа (см. `homework.md`) |
+| 85–90 | Подведение итогов |
