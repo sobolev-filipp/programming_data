@@ -43,6 +43,17 @@ df = pd.read_csv('https://example.com/data.csv')
 df.to_csv('output.csv', index=False)
 ```
 
+### Готовые датасеты для практики
+
+Эти CSV открыты, и `pd.read_csv(URL)` загрузит их прямо в Colab — ничего скачивать не надо:
+
+| Датасет | URL |
+|---------|-----|
+| **California Housing** (жильё в Калифорнии, 20640 строк) | `https://raw.githubusercontent.com/ageron/handson-ml2/master/datasets/housing/housing.csv` |
+| **Titanic** (пассажиры, 891 строка) | `https://raw.githubusercontent.com/datasciencedojo/datasets/master/titanic.csv` |
+| **Iris** (цветы ирисов, 150 строк) | `https://raw.githubusercontent.com/mwaskom/seaborn-data/master/iris.csv` |
+| **Boston Housing** (жильё в Бостоне, 506 строк) | `https://raw.githubusercontent.com/selva86/datasets/master/BostonHousing.csv` |
+
 ### Просмотр
 
 ```python
