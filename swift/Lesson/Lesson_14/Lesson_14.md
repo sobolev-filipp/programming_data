@@ -369,7 +369,7 @@ func setupAsteroid() {
     crater2.position = CGPoint(x: 12, y: -10)
     asteroid.addChild(crater2)
 
-    asteroid.position = CGPoint(x: size.width + 50, y: size.height / 2)
+    asteroid.position = CGPoint(x: size.width / 2, y: size.height + 50)
     addChild(asteroid)
 }
 
@@ -381,9 +381,12 @@ func startFlying() {
 }
 
 func flyAcrossScreen() {
-    let randomY = CGFloat.random(in: 80...(size.height - 80))
-    asteroid.position = CGPoint(x: size.width + 50, y: randomY)
-    let fly   = SKAction.moveTo(x: -50, duration: asteroidSpeed)
+    // Случайная позиция по X, стартуем сверху
+    let randomX = CGFloat.random(in: 40...(size.width - 40))
+    asteroid.position = CGPoint(x: randomX, y: size.height + 50)
+
+    // Летим вниз за пределы экрана
+    let fly   = SKAction.moveTo(y: -50, duration: asteroidSpeed)
     let reset = SKAction.run { self.flyAcrossScreen() }
     asteroid.run(SKAction.sequence([fly, reset]), withKey: "fly")
 }
