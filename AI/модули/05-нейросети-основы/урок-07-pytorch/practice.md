@@ -1,0 +1,256 @@
+# Урок 5.7. Практика (вместе с преподавателем)
+
+> Тетрадка: `lesson-5-7-pytorch.ipynb`.
+> **Работаем в Google Colab** — там PyTorch уже установлен.
+
+---
+
+## Что мы будем делать на уроке
+
+**Сегодня — пересаживаемся на профессиональный инструмент:**
+
+1. **Задание 1:** познакомимся с **тензорами** — массивами PyTorch.
+2. **Задание 2:** увидим **autograd** — PyTorch сам считает градиент (магия!).
+3. **Задание 3:** перепишем **нашу сеть** (рак груди) на PyTorch и сравним с NumPy-версией из 5.6.
+
+> Мы всё это уже понимаем изнутри. Сегодня просто учимся писать то же самое **профессионально**.
+
+---
+
+## Импорты
+
+```python
+import torch
+import torch.nn as nn
+import numpy as np
+import matplotlib.pyplot as plt
+
+print("PyTorch версия:", torch.__version__)    # должно напечататься без ошибок
+```
+
+> Если `import torch` упал — ты не в Colab. Установи: `pip install torch`.
+
+---
+
+## Задание 1. Тензоры — NumPy с суперсилой (10 минут)
+
+### Что мы хотим сделать
+
+Убедиться, что тензоры PyTorch работают почти как массивы NumPy.
+
+### 1.1. Создаём и считаем
+
+```python
+a = torch.tensor([1.0, 2.0, 3.0])
+b = torch.tensor([4.0, 5.0, 6.0])
+
+print("Сумма:    ", a + b)        # tensor([5., 7., 9.])
+print("Произвед.:", a * b)        # tensor([4., 10., 18.])
+print("Скалярное:", a @ b)        # tensor(32.)
+print("Среднее:  ", a.mean())     # tensor(2.)
+```
+
+**Что замечаем:** всё **как в NumPy** (`+`, `*`, `@`, `.mean()`)! Если знаешь NumPy (Урок 1.4) — тензоры тебе понятны.
+
+### 1.2. Из NumPy в тензор и обратно
+
+```python
+arr = np.array([1.0, 2.0, 3.0])
+t = torch.tensor(arr, dtype=torch.float32)    # numpy → тензор
+print(t)
+
+back = t.numpy()                               # тензор → numpy
+print(back)
+```
+
+> **`dtype=torch.float32`** — нейросети работают с числами float32 (так быстрее и достаточно точно). Это частая деталь: при создании тензоров из данных указываем тип.
+
+### Итог Задания 1
+
+1. Тензоры работают почти как массивы NumPy.
+2. Легко конвертировать numpy ↔ тензор.
+
+---
+
+## Задание 2. Autograd — градиент сам (12 минут)
+
+### Что мы хотим показать
+
+Главную суперсилу PyTorch: он **сам** считает градиенты (то, что мы писали руками в 1.7 и 5.5).
+
+### 2.1. Простой пример — производная функции
+
+```python
+x = torch.tensor(3.0, requires_grad=True)    # «следи за градиентом»
+y = x**2 + 2*x                                # функция y = x² + 2x
+
+y.backward()                                  # ПОСЧИТАЙ ГРАДИЕНТ!
+print("Градиент в точке x=3:", x.grad)        # tensor(8.)
+```
+
+#### Что произошло
+
+- **`requires_grad=True`** — просим PyTorch следить за этим тензором.
+- **`y.backward()`** — PyTorch **сам** посчитал производную `y` по `x`.
+- **`x.grad`** — результат: для `y = x² + 2x` производная `2x + 2`, при `x=3` это **8**. ✅
+
+> **В Уроке 1.7 мы считали такую производную численно (через `(f(x+h)−f(x−h))/2h`).** PyTorch посчитал её **точно и сам**, проследив операции. Это и есть autograd.
+
+### 2.2. Проверим на другой точке
+
+```python
+x = torch.tensor(5.0, requires_grad=True)
+y = x**2 + 2*x
+y.backward()
+print("Градиент в точке x=5:", x.grad)        # tensor(12.) — это 2·5+2
+```
+
+**Что увидим:** при `x=5` градиент = `2·5+2 = 12`. PyTorch снова посчитал сам, мгновенно и точно.
+
+> **Вот почему PyTorch так любят:** не надо выводить производные или писать backward. Для **любой** функции (и для сети из миллионов весов) — одна команда `.backward()`, и все градиенты готовы. Это убирает самую трудную часть нашей работы из 5.5.
+
+### Итог Задания 2
+
+1. `requires_grad=True` + `.backward()` → PyTorch считает градиент **сам**.
+2. Это заменяет ручной backprop (5.5) и численный градиент (1.7).
+3. Работает для любой функции и любой сети.
+
+---
+
+## Задание 3. Наша сеть на PyTorch (18 минут)
+
+### Что мы хотим сделать
+
+Переписать **нашу** сеть для рака груди (из 5.6) на PyTorch — короче и профессиональнее.
+
+### 3.1. Данные → тензоры
+
+```python
+from sklearn.datasets import load_breast_cancer
+from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import StandardScaler
+
+X, y = load_breast_cancer(return_X_y=True)
+X_train, X_test, y_train, y_test = train_test_split(
+    X, y, test_size=0.2, random_state=42, stratify=y)
+
+scaler = StandardScaler()                      # стандартизация (как всегда!)
+X_train = scaler.fit_transform(X_train)
+X_test = scaler.transform(X_test)
+
+# Превращаем в тензоры
+X_train_t = torch.tensor(X_train, dtype=torch.float32)
+y_train_t = torch.tensor(y_train, dtype=torch.float32).reshape(-1, 1)
+X_test_t = torch.tensor(X_test, dtype=torch.float32)
+```
+
+> Та же подготовка, что в 5.6 (стандартизация!), плюс перевод в тензоры. `reshape(-1, 1)` — делаем `y` столбцом (как раньше).
+
+### 3.2. Строим сеть через nn.Module
+
+```python
+class Net(nn.Module):
+    def __init__(self):
+        super().__init__()
+        self.fc1 = nn.Linear(30, 16)        # 30 признаков → 16 нейронов
+        self.fc2 = nn.Linear(16, 1)         # 16 → 1 выход
+
+    def forward(self, x):
+        x = torch.relu(self.fc1(x))         # скрытый слой + ReLU
+        x = torch.sigmoid(self.fc2(x))      # выход + sigmoid (вероятность)
+        return x
+
+torch.manual_seed(42)
+net = Net()
+print(net)
+```
+
+#### Сравни с нашим классом из 5.6
+
+- `nn.Linear(30, 16)` = наш `self.W1` (30×16) + `self.b1` — но PyTorch создаёт их сам!
+- `self.fc1(x)` = наш `X @ self.W1 + self.b1`.
+- `torch.relu`, `torch.sigmoid` = готовые активации (мы писали свои).
+- `forward` — наш метод, всё как в 5.6.
+
+> **Та же сеть, что мы писали в 5.6 — только короче.** `nn.Linear` держит веса за нас. Заметь: в скрытом слое мы взяли **ReLU** (Урок 5.2 — для скрытых слоёв лучше), а на выходе sigmoid (для вероятности).
+
+### 3.3. Цикл обучения
+
+```python
+loss_fn = nn.BCELoss()                                    # cross-entropy (готовая)
+optimizer = torch.optim.Adam(net.parameters(), lr=0.01)   # умный оптимизатор
+
+losses = []
+for epoch in range(300):
+    optimizer.zero_grad()         # 1. обнулить старые градиенты
+    out = net(X_train_t)          # 2. FORWARD
+    loss = loss_fn(out, y_train_t)# 3. LOSS
+    loss.backward()               # 4. BACKWARD (autograd сам!)
+    optimizer.step()              # 5. UPDATE (оптимизатор сам)
+    losses.append(loss.item())
+
+print(f"Потеря в конце: {losses[-1]:.4f}")
+```
+
+#### Что происходит — сравни с нашим циклом из 5.6
+
+| Шаг | Наш код (5.6) | PyTorch |
+|-----|---------------|---------|
+| forward | `self.forward(X)` | `net(X_train_t)` |
+| loss | формула вручную | `loss_fn(out, y)` |
+| **backward** | **dW1, dW2 руками** | **`loss.backward()`** ⭐ |
+| update | `self.W1 -= lr*dW1` | `optimizer.step()` |
+
+> **Самое трудное (backward) — теперь одна строка `loss.backward()`!** Весь наш ручной backprop PyTorch сделал сам. А `optimizer.step()` обновил веса. Не забудь `zero_grad()` в начале — иначе градиенты накопятся неправильно.
+
+### 3.4. Кривая потерь и точность
+
+```python
+plt.plot(losses); plt.xlabel("эпоха"); plt.ylabel("потеря")
+plt.title("Обучение PyTorch-сети"); plt.grid(); plt.show()
+
+with torch.no_grad():                          # без слежки за градиентом (быстрее)
+    preds = (net(X_test_t) > 0.5).int().numpy().ravel()
+accuracy = (preds == y_test).mean()
+print(f"Точность PyTorch-сети: {accuracy:.3f}")    # ~0.956
+```
+
+**Что увидим:** точность **~0.956 (95.6%)**!
+
+> **`torch.no_grad()`** — при проверке (не обучении) градиенты не нужны, эта обёртка их отключает → быстрее. Хорошая привычка для предсказаний.
+
+### 3.5. Сравнение со всеми нашими моделями
+
+```python
+print("Наша NumPy-сеть (5.6):  0.947")
+print(f"PyTorch-сеть:           {accuracy:.3f}")   # ~0.956
+print("sklearn MLP:            0.965")
+```
+
+#### Что это значит
+
+- **PyTorch-сеть (0.956) лучше нашей NumPy-сети (0.947)** — за счёт **Adam** (умный оптимизатор) и **ReLU**. То самое преимущество, которого нам не хватало в 5.6!
+- Почти догнала sklearn MLP.
+- И код **короче и понятнее** — backward пишет PyTorch.
+
+> **Вот выгода фреймворка:** меньше кода, лучше результат (умные оптимизаторы), и можно на видеокарту. А мы при этом **понимаем каждую строчку** — потому что построили всё руками.
+
+### Итог Задания 3
+
+1. Переписали нашу сеть на PyTorch — **короче** (backward не пишем!).
+2. Получили **95.6%** — лучше нашей NumPy-версии (за счёт Adam + ReLU).
+3. Поняли: PyTorch = наш код, но профессиональнее.
+
+---
+
+## Тайминг (90 минут)
+
+| Время | Блок |
+|------:|------|
+| 0–10 | Повторение (`review.md`) |
+| 10–50 | PyTorch, тензоры, autograd, nn.Module (теория) |
+| 50–60 | Задание 1 (тензоры) |
+| 60–72 | Задание 2 (autograd) |
+| 72–84 | Задание 3 (наша сеть на PyTorch) |
+| 80–86 | Самостоятельная (`homework.md`) |
+| 86–90 | Итоги (`summary.md`) |

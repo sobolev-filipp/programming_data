@@ -1,0 +1,227 @@
+# Урок 5.6. Практика (вместе с преподавателем)
+
+> Тетрадка: `lesson-5-6-numpy-nn.ipynb`.
+
+---
+
+## Что мы будем делать на уроке
+
+**Сегодня — финал пути «с нуля»: соберём нейросеть в класс и обучим на реальной задаче.**
+
+1. **Задание 1:** напишем **класс `NeuralNetwork`** — с методами `__init__`, `forward`, `train`, `predict`. Как настоящая библиотека!
+
+2. **Задание 2:** обучим её на **реальных медицинских данных** (рак груди, 30 признаков), получим ~95% точности и сравним со sklearn.
+
+> Всё, что нужно, мы уже умеем (5.3–5.5). Сегодня **упаковываем** это в красивый код. Только NumPy + ООП из Урока 1.1.
+
+---
+
+## Импорты
+
+```python
+import numpy as np
+import matplotlib.pyplot as plt
+from sklearn.datasets import load_breast_cancer
+from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import StandardScaler
+```
+
+---
+
+## Задание 1. Пишем класс нейросети (22 минуты)
+
+### Что мы хотим сделать
+
+Собрать всё (forward, loss, backward) в **класс** с удобным интерфейсом `.train()` / `.predict()`.
+
+### 1.1. Каркас класса и конструктор
+
+```python
+class NeuralNetwork:
+    def __init__(self, n_input, n_hidden, lr=0.5, seed=42):
+        rng = np.random.default_rng(seed)
+        # Веса: случайные, небольшие
+        self.W1 = rng.standard_normal((n_input, n_hidden)) * 0.5   # вход → скрытый
+        self.b1 = np.zeros(n_hidden)
+        self.W2 = rng.standard_normal((n_hidden, 1)) * 0.5         # скрытый → выход
+        self.b2 = np.zeros(1)
+        self.lr = lr
+```
+
+#### Что делает конструктор
+
+- **`self.W1, self.b1, ...`** — сохраняем веса **в объекте** (через `self`, как учили в Уроке 1.1).
+- Веса **случайные** (помним из 5.5: не нули!), умножаем на 0.5 — стартуем с маленьких значений.
+- `n_input` — число признаков, `n_hidden` — нейронов в скрытом слое, `lr` — скорость обучения.
+
+### 1.2. Метод forward (из Урока 5.3)
+
+```python
+    def _sigmoid(self, z):
+        return 1 / (1 + np.exp(-z))
+
+    def forward(self, X):
+        self.H = self._sigmoid(X @ self.W1 + self.b1)        # скрытый слой
+        self.out = self._sigmoid(self.H @ self.W2 + self.b2)  # выход
+        return self.out
+```
+
+> **`self.H` и `self.out` сохраняем в объекте** — они понадобятся методу `train` для backward (backprop использует выходы слоёв). `_sigmoid` с подчёркиванием — «внутренний» метод-помощник.
+
+### 1.3. Метод train (из Уроков 5.4 + 5.5)
+
+```python
+    def train(self, X, y, epochs=500):
+        y = y.reshape(-1, 1)                      # столбцом
+        losses = []
+        for epoch in range(epochs):
+            # 1. FORWARD
+            out = self.forward(X)
+            # 2. LOSS (cross-entropy)
+            loss = -np.mean(y*np.log(out+1e-9) + (1-y)*np.log(1-out+1e-9))
+            losses.append(loss)
+            # 3. BACKWARD (backprop из 5.5)
+            d_out = (out - y) / len(y)
+            dW2 = self.H.T @ d_out
+            db2 = d_out.sum(axis=0)
+            d_H = (d_out @ self.W2.T) * self.H * (1 - self.H)    # ошибка назад
+            dW1 = X.T @ d_H
+            db1 = d_H.sum(axis=0)
+            # 4. UPDATE
+            self.W1 -= self.lr * dW1;  self.b1 -= self.lr * db1
+            self.W2 -= self.lr * dW2;  self.b2 -= self.lr * db2
+        return losses
+```
+
+> Это **тот же цикл обучения**, что в Уроке 5.5 — только теперь он **метод класса** и работает с `self.W1, self.W2, ...`. Ничего нового, просто упаковали.
+
+### 1.4. Метод predict (из Урока 5.1)
+
+```python
+    def predict(self, X):
+        return (self.forward(X) > 0.5).astype(int).ravel()    # порог 0.5
+```
+
+### 1.5. Проверяем на XOR — наш класс работает!
+
+```python
+X_xor = np.array([[0,0],[0,1],[1,0],[1,1]], dtype=float)
+y_xor = np.array([0, 1, 1, 0])
+
+net = NeuralNetwork(n_input=2, n_hidden=4, lr=0.5)
+net.train(X_xor, y_xor, epochs=5000)
+print("XOR:", net.predict(X_xor))      # [0 1 1 0]
+```
+
+**Что увидим:** `[0 1 1 0]` — наш класс решает XOR! Теперь это **3 строки**: создал, обучил, предсказал.
+
+> **Красота ООП:** вся сложность спрятана в классе. Снаружи — как у sklearn: `net.train(...)`, `net.predict(...)`. Мы написали свою библиотеку нейросетей!
+
+### Итог Задания 1
+
+1. Собрали **класс `NeuralNetwork`** (`__init__`, `forward`, `train`, `predict`).
+2. Веса — в `self`, методы работают с ними (ООП из 1.1).
+3. Класс решает XOR в 3 строки.
+
+---
+
+## Задание 2. Обучаем на реальных данных (16 минут)
+
+### Что мы хотим сделать
+
+Применить **нашу** сеть к настоящей задаче — диагностике рака груди (30 признаков). И сравнить со sklearn.
+
+### 2.1. Данные (с стандартизацией!)
+
+```python
+data = load_breast_cancer()
+X, y = data.data, data.target          # 30 признаков, классы 0/1
+
+X_train, X_test, y_train, y_test = train_test_split(
+    X, y, test_size=0.2, random_state=42, stratify=y)
+
+# Стандартизация — нейросети ОБЯЗАТЕЛЬНА (клуб расстояний!)
+scaler = StandardScaler()
+X_train = scaler.fit_transform(X_train)
+X_test = scaler.transform(X_test)
+```
+
+> **Не забываем стандартизацию** (Уроки 3.5, 5.2): нейросеть работает с суммами `w·x`, и большие признаки её «ослепляют». Без стандартизации сеть учится плохо.
+
+### 2.2. Создаём и обучаем НАШУ сеть
+
+```python
+net = NeuralNetwork(n_input=30, n_hidden=16, lr=0.5)
+losses = net.train(X_train, y_train, epochs=500)
+
+print(f"Потеря в начале: {losses[0]:.3f}")
+print(f"Потеря в конце:  {losses[-1]:.4f}")
+```
+
+**Что увидим:** потеря падает с **~0.75** до **~0.04** — сеть выучилась на медицинских данных!
+
+### 2.3. Кривая потерь и точность
+
+```python
+plt.plot(losses)
+plt.xlabel("эпоха"); plt.ylabel("потеря")
+plt.title("Обучение нашей сети на данных рака груди")
+plt.grid(); plt.show()
+
+accuracy = (net.predict(X_test) == y_test).mean()
+print(f"Точность НАШЕЙ сети: {accuracy:.3f}")     # ~0.947
+```
+
+**Что увидим:** падающую кривую и точность **~0.95 (95%)**!
+
+> 🎉 **Наша самодельная нейросеть диагностирует рак с точностью 95%!** Мы написали её **полностью сами** — каждую матрицу, каждый градиент. И она работает на настоящих медицинских данных. Это не игрушка XOR — это реальная задача.
+
+### 2.4. Сравниваем со sklearn
+
+```python
+from sklearn.neural_network import MLPClassifier
+from sklearn.linear_model import LogisticRegression
+
+mlp = MLPClassifier(hidden_layer_sizes=(16,), max_iter=2000, random_state=42)
+mlp.fit(X_train, y_train)
+
+logreg = LogisticRegression(max_iter=5000).fit(X_train, y_train)
+
+print(f"Наша сеть:        {(net.predict(X_test) == y_test).mean():.3f}")   # ~0.947
+print(f"sklearn MLP:      {(mlp.predict(X_test) == y_test).mean():.3f}")    # ~0.965
+print(f"Логрег (1 нейрон):{(logreg.predict(X_test) == y_test).mean():.3f}") # ~0.982
+```
+
+#### Что увидим и как это понять
+
+```
+Наша сеть:         0.947
+sklearn MLP:       0.965    ← чуть лучше нас
+Логрег:            0.982    ← и логрег тут хорош!
+```
+
+**Что это значит:**
+- **Наша сеть (0.95) почти догнала** профессиональный sklearn MLP (0.96)! Для кода «с нуля» — отлично.
+- sklearn чуть лучше — у него больше **оптимизаций** (умная инициализация, продвинутый оптимизатор Adam, ранняя остановка). Мы их не писали — но можем!
+- На **этих** данных даже логрег силён (0.98) — задача почти линейная (No Free Lunch из Модуля 3).
+
+> **Главное:** наша самодельная сеть **работает на уровне профессиональных инструментов** — и мы понимаем в ней **каждую строчку**. sklearn чуть лучше за счёт инженерных хитростей, но **суть та же**, что в нашем коде.
+
+### Итог Задания 2
+
+1. Обучили **нашу** сеть на реальных данных рака груди → **95%**.
+2. Почти догнали sklearn MLP (96.5%).
+3. Поняли: наша сеть = та же суть, что профессиональные, только проще.
+
+---
+
+## Тайминг (90 минут)
+
+| Время | Блок |
+|------:|------|
+| 0–10 | Повторение (`review.md`) |
+| 10–36 | Зачем класс, структура, методы (теория) |
+| 36–62 | Задание 1 (пишем класс) |
+| 62–78 | Задание 2 (реальные данные + сравнение) |
+| 78–84 | Самостоятельная (`homework.md`) |
+| 84–90 | Итоги (`summary.md`) |

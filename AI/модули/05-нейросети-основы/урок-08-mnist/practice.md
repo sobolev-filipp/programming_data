@@ -1,0 +1,279 @@
+# Урок 5.8. Практика (вместе с преподавателем)
+
+> Тетрадка: `lesson-5-8-mnist.ipynb`.
+> **Работаем в Google Colab** (PyTorch + torchvision уже установлены). Включи **GPU** для скорости.
+
+---
+
+## Что мы будем делать на уроке
+
+**Сегодня — финал модуля: научим сеть читать рукописные цифры!**
+
+1. **Задание 1:** загрузим **MNIST** и посмотрим на цифры (картинка = числа).
+2. **Задание 2:** построим и обучим сеть **784 → 128 → 10**, получим **~97%** точности.
+3. **Задание 3:** посмотрим, что сеть предсказывает, и где **ошибается**.
+
+> Никаких новых принципов — та же сеть на PyTorch, что в 5.7. Только вход 784 (пиксели) и выход 10 (цифры).
+
+---
+
+## Импорты
+
+```python
+import torch
+import torch.nn as nn
+from torch.utils.data import DataLoader
+from torchvision import datasets, transforms
+import matplotlib.pyplot as plt
+
+device = "cuda" if torch.cuda.is_available() else "cpu"
+print("Устройство:", device)        # cuda (если включил GPU) или cpu
+```
+
+> **`device`** — если включил GPU в Colab, будет `cuda` (быстро). Иначе `cpu` (тоже работает, просто дольше).
+
+---
+
+## Задание 1. Знакомимся с MNIST (12 минут)
+
+### Что мы хотим сделать
+
+Загрузить датасет и **увидеть** цифры — понять, что картинка это числа.
+
+### 1.1. Загружаем MNIST
+
+```python
+transform = transforms.ToTensor()      # картинка → тензор, пиксели в [0, 1]
+
+train_data = datasets.MNIST(root='./data', train=True, download=True, transform=transform)
+test_data = datasets.MNIST(root='./data', train=False, download=True, transform=transform)
+
+print("Картинок для обучения:", len(train_data))    # 60000
+print("Картинок для проверки:", len(test_data))     # 10000
+```
+
+**Что произошло:** PyTorch скачал MNIST (первый раз ~11 МБ). `ToTensor()` превратил картинки в тензоры и нормировал пиксели в диапазон [0, 1].
+
+### 1.2. Смотрим на одну цифру
+
+```python
+image, label = train_data[0]        # первая картинка и её метка
+print("Форма картинки:", image.shape)    # torch.Size([1, 28, 28]) — 1 канал, 28×28
+print("Это цифра:", label)               # например, 5
+
+plt.imshow(image.squeeze(), cmap='gray')
+plt.title(f"Метка: {label}")
+plt.show()
+```
+
+**Что увидим:** картинку рукописной цифры и её метку. `image.shape = [1, 28, 28]` — один канал (серый), 28×28 пикселей.
+
+### 1.3. Картинка — это числа!
+
+```python
+print("Кусочек картинки как числа (строки 8-12, столбцы 8-15):")
+print(image.squeeze()[8:13, 8:16].round(decimals=1))
+# увидим таблицу чисел: 0.0 там где фон, ближе к 1.0 — где линия цифры
+```
+
+> **Вот доказательство:** картинка для компьютера — **таблица чисел яркости**. Где 0 — фон (чёрное), где близко к 1 — линия цифры (белое). Сеть «увидит» именно эти числа.
+
+### 1.4. Смотрим сразу много цифр
+
+```python
+fig, axes = plt.subplots(2, 5, figsize=(10, 4))
+for i, ax in enumerate(axes.flat):
+    img, lbl = train_data[i]
+    ax.imshow(img.squeeze(), cmap='gray')
+    ax.set_title(f"{lbl}"); ax.axis('off')
+plt.show()
+```
+
+**Что увидим:** 10 разных рукописных цифр. Заметь, **какой разный почерк** — сети надо узнать цифру несмотря на это.
+
+### Итог Задания 1
+
+1. Загрузили MNIST (60k + 10k цифр).
+2. Картинка — это **таблица чисел** яркости (28×28).
+3. Почерк разный → задача не такая простая.
+
+---
+
+## Задание 2. Обучаем сеть читать цифры (18 минут)
+
+### Что мы хотим сделать
+
+Построить сеть 784→128→10 и обучить её на мини-батчах до ~97%.
+
+### 2.1. DataLoader — нарезаем на батчи
+
+```python
+train_loader = DataLoader(train_data, batch_size=64, shuffle=True)
+test_loader = DataLoader(test_data, batch_size=1000)
+```
+
+> `train_loader` будет выдавать по **64 картинки** за раз (мини-батч), перемешивая каждую эпоху. Подавать 60 000 сразу — слишком много.
+
+### 2.2. Строим сеть
+
+```python
+class DigitNet(nn.Module):
+    def __init__(self):
+        super().__init__()
+        self.fc1 = nn.Linear(784, 128)      # 784 пикселя → 128 нейронов
+        self.fc2 = nn.Linear(128, 10)       # 128 → 10 цифр
+
+    def forward(self, x):
+        x = x.view(x.size(0), -1)           # 28×28 → 784 (вытягиваем картинку!)
+        x = torch.relu(self.fc1(x))         # скрытый слой + ReLU
+        x = self.fc2(x)                     # выход (БЕЗ softmax — он в loss!)
+        return x
+
+net = DigitNet().to(device)
+print(net)
+```
+
+#### Что важно
+
+- **`x.view(x.size(0), -1)`** — «вытягиваем» картинку 28×28 в строку из 784 (раздел 2 теории).
+- **Выход — 10 нейронов** (по цифре), **без softmax** (его добавит `CrossEntropyLoss`).
+- **`.to(device)`** — отправляем сеть на GPU (если есть).
+
+### 2.3. Потеря и оптимизатор
+
+```python
+loss_fn = nn.CrossEntropyLoss()                       # для многих классов (softmax внутри)
+optimizer = torch.optim.Adam(net.parameters(), lr=0.001)
+```
+
+### 2.4. Цикл обучения (с батчами!)
+
+```python
+for epoch in range(3):
+    net.train()
+    for x_batch, y_batch in train_loader:             # по 64 картинки
+        x_batch, y_batch = x_batch.to(device), y_batch.to(device)
+        optimizer.zero_grad()       # обнулить градиенты
+        out = net(x_batch)          # forward
+        loss = loss_fn(out, y_batch)# loss
+        loss.backward()             # backward (autograd)
+        optimizer.step()            # update
+
+    # Проверка точности на тесте после эпохи
+    net.eval()
+    correct = total = 0
+    with torch.no_grad():
+        for x_batch, y_batch in test_loader:
+            x_batch, y_batch = x_batch.to(device), y_batch.to(device)
+            preds = net(x_batch).argmax(dim=1)        # предсказание = argmax
+            correct += (preds == y_batch).sum().item()
+            total += len(y_batch)
+    print(f"Эпоха {epoch+1}: точность на тесте {correct/total:.4f}")
+```
+
+#### Что происходит
+
+- **Внешний цикл** — эпохи (проходы по всем данным).
+- **Внутренний цикл** — мини-батчи (по 64 картинки), на каждом обычные 5 шагов PyTorch (5.7).
+- **`argmax(dim=1)`** — предсказание: нейрон с максимумом = цифра.
+- После каждой эпохи проверяем точность на тесте.
+
+**Что увидим (примерно):**
+```
+Эпоха 1: точность на тесте 0.9451
+Эпоха 2: точность на тесте 0.9626
+Эпоха 3: точность на тесте 0.9699
+```
+
+> 🎉 **97% точности!** Наша сеть **читает рукописные цифры** почти как человек. Из картинки 784 пикселей она научилась узнавать, какая это цифра — на 10 000 примеров, которых **не видела** при обучении. Это твоя первая система компьютерного зрения!
+
+### Итог Задания 2
+
+1. Построили сеть 784→128→10.
+2. Обучили на мини-батчах за 3 эпохи.
+3. Получили **~97%** — сеть читает цифры!
+
+---
+
+## Задание 3. Смотрим предсказания и ошибки (8 минут)
+
+### Что мы хотим сделать
+
+Увидеть **глазами**: вот цифра, вот что сказала сеть. И найти, где она ошибается.
+
+### 3.1. Предсказания на нескольких цифрах
+
+```python
+net.eval()
+images, labels = next(iter(test_loader))          # берём батч тестовых картинок
+images_d = images.to(device)
+with torch.no_grad():
+    preds = net(images_d).argmax(dim=1).cpu()
+
+fig, axes = plt.subplots(2, 5, figsize=(12, 5))
+for i, ax in enumerate(axes.flat):
+    ax.imshow(images[i].squeeze(), cmap='gray')
+    correct = (preds[i] == labels[i])
+    ax.set_title(f"Сеть: {preds[i]} ({'✓' if correct else '✗ ' + str(labels[i].item())})",
+                 color='green' if correct else 'red')
+    ax.axis('off')
+plt.show()
+```
+
+**Что увидим:** 10 цифр с подписью, что сказала сеть. Почти все ✓ (зелёные) — сеть угадала!
+
+### 3.2. Находим ошибки сети
+
+```python
+# Ищем картинки, где сеть ошиблась
+errors = []
+with torch.no_grad():
+    for x_batch, y_batch in test_loader:
+        preds = net(x_batch.to(device)).argmax(dim=1).cpu()
+        wrong = preds != y_batch
+        for img, true, pred in zip(x_batch[wrong], y_batch[wrong], preds[wrong]):
+            errors.append((img, true.item(), pred.item()))
+        if len(errors) >= 10:
+            break
+
+fig, axes = plt.subplots(2, 5, figsize=(12, 5))
+for ax, (img, true, pred) in zip(axes.flat, errors[:10]):
+    ax.imshow(img.squeeze(), cmap='gray')
+    ax.set_title(f"Правда: {true}, Сеть: {pred}", color='red')
+    ax.axis('off')
+plt.show()
+```
+
+**Что увидим:** цифры, на которых сеть ошиблась. И часто… **их и человек бы не разобрал!** Кривые, размазанные, похожие на другие цифры (4 похожа на 9, 3 на 8).
+
+> **Важный вывод:** сеть ошибается там, где **трудно даже людям** — на криво написанных, неоднозначных цифрах. 97% — это очень хорошо, а оставшиеся 3% часто объективно сложные. Это показывает, что сеть учится **разумно**, а не случайно.
+
+### Итог Задания 3
+
+1. Увидели предсказания сети глазами (почти все верные).
+2. Ошибки — на «трудных» цифрах (кривых, неоднозначных).
+3. Сеть учится осмысленно.
+
+---
+
+## 💡 Если MNIST не загружается (офлайн-вариант)
+
+Если в классе нет интернета для MNIST — возьми встроенный `load_digits` (8×8 цифры, та же суть):
+```python
+from sklearn.datasets import load_digits
+X, y = load_digits(return_X_y=True)       # 1797 цифр 8×8 = 64 пикселя
+# дальше: сеть 64 → 32 → 10, обучение как обычно. Точность ~97%.
+```
+
+---
+
+## Тайминг (90 минут)
+
+| Время | Блок |
+|------:|------|
+| 0–10 | Повторение (`review.md`) |
+| 10–48 | Картинка как данные, многоклассы, батчи (теория) |
+| 48–60 | Задание 1 (знакомство с MNIST) |
+| 60–78 | Задание 2 (обучаем сеть) |
+| 78–86 | Задание 3 (предсказания и ошибки) |
+| 86–90 | Итоги Модуля 5 (`summary.md`) |
