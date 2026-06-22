@@ -1,0 +1,214 @@
+# Урок 6.4. Практика (вместе с преподавателем)
+
+> Тетрадка: `lesson-6-4-cifar.ipynb`. Работаем в Google Colab. **Обязательно включи GPU!**
+
+---
+
+## Что мы будем делать на уроке
+
+**Сегодня — первая настоящая CV-задача: цветные объекты.**
+
+1. **Задание 1:** загрузим **CIFAR-10** и посмотрим на реальные объекты (цветные!).
+2. **Задание 2:** адаптируем CNN под цвет (3 канала), обучим → ~**70%** и поймём, почему не 99%.
+
+> Архитектура CNN знакома (6.3). Главное новое — **3 канала** на входе и более трудные данные.
+
+---
+
+## Импорты
+
+```python
+import torch
+import torch.nn as nn
+from torch.utils.data import DataLoader
+from torchvision import datasets, transforms
+import matplotlib.pyplot as plt
+import numpy as np
+
+device = "cuda" if torch.cuda.is_available() else "cpu"
+print("Устройство:", device)        # ВАЖНО: должно быть cuda!
+```
+
+---
+
+## Задание 1. Знакомимся с CIFAR-10 (12 минут)
+
+### Что мы хотим сделать
+
+Загрузить датасет и **увидеть** реальные цветные объекты.
+
+### 1.1. Загружаем CIFAR-10
+
+```python
+transform = transforms.ToTensor()
+train_data = datasets.CIFAR10(root='./data', train=True, download=True, transform=transform)
+test_data = datasets.CIFAR10(root='./data', train=False, download=True, transform=transform)
+
+print("Картинок для обучения:", len(train_data))     # 50000
+print("Классы:", train_data.classes)
+# ['airplane', 'automobile', 'bird', 'cat', 'deer', 'dog', 'frog', 'horse', 'ship', 'truck']
+```
+
+**Что увидим:** 50 000 обучающих картинок и 10 классов реальных объектов.
+
+### 1.2. Смотрим на картинки
+
+```python
+classes = train_data.classes
+
+fig, axes = plt.subplots(2, 5, figsize=(12, 5))
+for i, ax in enumerate(axes.flat):
+    img, label = train_data[i]
+    ax.imshow(img.permute(1, 2, 0))      # (C,H,W) → (H,W,C) для показа
+    ax.set_title(classes[label])
+    ax.axis('off')
+plt.show()
+```
+
+#### Что важно
+
+- **`img.permute(1, 2, 0)`** — PyTorch хранит картинку как `(3, 32, 32)` (каналы первые), а matplotlib ждёт `(32, 32, 3)`. `permute` переставляет оси. (Помнишь порядок (C,H,W) из теории?)
+
+**Что увидим:** **цветные** фото — самолёты, машины, коты, лягушки. Маленькие (32×32) и **размытые** — даже нам иногда трудно понять, что это! Сравни с чёткими цифрами MNIST.
+
+### 1.3. Проверим форму
+
+```python
+img, label = train_data[0]
+print("Форма картинки:", img.shape)      # torch.Size([3, 32, 32]) — 3 канала!
+print("Класс:", classes[label])
+```
+
+**Что увидим:** `[3, 32, 32]` — **3 канала** (цвет!), 32×32 пикселя. Вот главное отличие от MNIST (там было `[1, 28, 28]`).
+
+### Итог Задания 1
+
+1. CIFAR-10: цветные фото реальных объектов.
+2. Форма `(3, 32, 32)` — 3 канала.
+3. Картинки маленькие и трудные (не то что чёткие цифры).
+
+---
+
+## Задание 2. Обучаем CNN на цвете (18 минут)
+
+### Что мы хотим сделать
+
+Адаптировать CNN под 3 канала и обучить на CIFAR.
+
+### 2.1. CNN для цветных картинок
+
+```python
+train_loader = DataLoader(train_data, batch_size=128, shuffle=True)
+test_loader = DataLoader(test_data, batch_size=1000)
+
+class CNN(nn.Module):
+    def __init__(self):
+        super().__init__()
+        self.conv1 = nn.Conv2d(3, 32, 3, padding=1)    # 3 КАНАЛА на входе!
+        self.conv2 = nn.Conv2d(32, 64, 3, padding=1)
+        self.pool = nn.MaxPool2d(2)
+        self.fc1 = nn.Linear(64 * 8 * 8, 128)          # 32→16→8
+        self.fc2 = nn.Linear(128, 10)
+
+    def forward(self, x):
+        x = self.pool(torch.relu(self.conv1(x)))        # 32→16
+        x = self.pool(torch.relu(self.conv2(x)))        # 16→8
+        x = x.view(x.size(0), -1)                        # 64×8×8 = 4096
+        x = torch.relu(self.fc1(x))
+        return self.fc2(x)
+
+net = CNN().to(device)
+print("Параметров:", sum(p.numel() for p in net.parameters()))
+```
+
+> **Единственное важное отличие от 6.3** — `Conv2d(3, 32, ...)`: **3 канала** на входе (цвет). И размеры 32→16→8 (картинка 32×32). Остальное то же.
+
+### 2.2. Обучаем (цикл тот же!)
+
+```python
+loss_fn = nn.CrossEntropyLoss()
+optimizer = torch.optim.Adam(net.parameters(), lr=0.001)
+
+for epoch in range(10):
+    net.train()
+    for x_batch, y_batch in train_loader:
+        x_batch, y_batch = x_batch.to(device), y_batch.to(device)
+        optimizer.zero_grad()
+        loss = loss_fn(net(x_batch), y_batch)
+        loss.backward()
+        optimizer.step()
+
+    net.eval()
+    correct = total = 0
+    with torch.no_grad():
+        for x_batch, y_batch in test_loader:
+            x_batch, y_batch = x_batch.to(device), y_batch.to(device)
+            preds = net(x_batch).argmax(dim=1)
+            correct += (preds == y_batch).sum().item()
+            total += len(y_batch)
+    print(f"Эпоха {epoch+1}: точность {correct/total:.4f}")
+```
+
+> Цикл обучения **тот же**, что для MNIST. Меняются только данные. (Без GPU будет медленно — наберись терпения или возьми меньше эпох.)
+
+**Что увидим (примерно):**
+```
+Эпоха 1:  точность 0.55
+Эпоха 5:  точность 0.68
+Эпоха 10: точность 0.71
+```
+
+### 2.3. ~70% — это нормально!
+
+```python
+print(f"Точность CNN на CIFAR: {correct/total:.2f}")
+print()
+print("Сравни:")
+print("  Наугад (10 классов): 0.10")
+print("  Наша CNN:           ~0.70")
+print("  MNIST (цифры):       0.99")
+print()
+print("70% << 99%, НО это в 7 раз лучше угадывания!")
+print("CIFAR объективно труднее: цвет, фон, ракурсы, 32×32.")
+```
+
+> **Не пугайся 70%!** Это **честная** цифра для простой CNN на реальных объектах. Вспомни: наугад из 10 классов — 10%, а наша сеть — 70%. Она **реально научилась** различать кошек, машины, самолёты! Просто реальный мир труднее чистых цифр. На следующих уроках мы поднимем это до 90%+ (аугментация, готовые сети).
+
+### 2.4. Где CNN ошибается
+
+```python
+net.eval()
+images, labels = next(iter(test_loader))
+with torch.no_grad():
+    preds = net(images.to(device)).argmax(dim=1).cpu()
+
+fig, axes = plt.subplots(2, 5, figsize=(13, 5))
+for i, ax in enumerate(axes.flat):
+    ax.imshow(images[i].permute(1, 2, 0))
+    ok = preds[i] == labels[i]
+    ax.set_title(f"{classes[preds[i]]}\n({'верно' if ok else 'надо: '+classes[labels[i]]})",
+                 color='green' if ok else 'red')
+    ax.axis('off')
+plt.show()
+```
+
+**Что увидим:** предсказания CNN. Ошибки — часто на **похожих** классах: кот↔собака, олень↔лошадь, машина↔грузовик. Логично — они и правда похожи в 32×32!
+
+### Итог Задания 2
+
+1. Адаптировали CNN под цвет (`Conv2d(3, ...)`).
+2. Получили ~70% — **нормально** для CIFAR (в 7 раз лучше наугад).
+3. Ошибки — на похожих классах (кот/собака).
+
+---
+
+## Тайминг (90 минут)
+
+| Время | Блок |
+|------:|------|
+| 0–10 | Повторение (`review.md`) |
+| 10–48 | CIFAR-10, сложность, CNN для цвета (теория) |
+| 48–60 | Задание 1 (знакомство с CIFAR) |
+| 60–80 | Задание 2 (обучаем CNN) |
+| 80–86 | Самостоятельная (`homework.md`) |
+| 86–90 | Итоги (`summary.md`) |
