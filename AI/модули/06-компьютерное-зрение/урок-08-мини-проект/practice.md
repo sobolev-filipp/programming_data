@@ -1,0 +1,368 @@
+# Урок 6.8. Практика — собираем проект (вместе с преподавателем)
+
+> Тетрадка: `lesson-6-8-project.ipynb`. Работаем в Google Colab. **Включи GPU.**
+
+---
+
+## Что мы будем делать на уроке
+
+**Сегодня — собираем «обучаемую машину» из 5 шагов и добавляем 2 бонуса:**
+
+1. **Шаг 1–2:** данные (камень/ножницы/бумага) + аугментация.
+2. **Шаг 3–4:** модель (transfer learning) + обучение.
+3. **Шаг 5:** оценка — точность и **матрица ошибок**.
+4. **Бонус A:** играем против нейросети.
+5. **Бонус B:** детекция YOLO.
+
+> Каждый шаг — кубик, который ты уже знаешь. Сегодня складываем их вместе. В итоге — **работающий ИИ-проект**.
+
+---
+
+## Импорты
+
+```python
+import torch
+import torch.nn as nn
+from torch.utils.data import DataLoader
+from torchvision import datasets, transforms, models
+import matplotlib.pyplot as plt
+
+device = "cuda" if torch.cuda.is_available() else "cpu"
+print("Устройство:", device)
+```
+
+> ### 🖥️ Как включить GPU в Google Colab (один раз, ~20 секунд)
+>
+> 1. Меню Colab → **«Среда выполнения»** (*Runtime*) → **«Сменить среду выполнения»** (*Change runtime type*).
+> 2. В поле **«Аппаратный ускоритель»** выбери **«T4 GPU»** → **«Сохранить»**.
+> 3. Проверка: запусти ячейку выше — должно напечататься **`Устройство: cuda`**. Если `cpu` — повтори.
+> ⚠️ После включения Colab перезапустит среду — запусти ячейки заново сверху.
+> 💡 Сегодня GPU особенно полезен: картинки 224×224, обучение тяжелее обычного.
+
+> 📥 **Всё скачается само:**
+> - **Датасет** «камень-ножницы-бумага» — скачаем командой ниже (~190 МБ train + 28 МБ test).
+> - **Веса ResNet18** (~45 МБ) — скачаются при `models.resnet18(weights=...)`.
+> - Искать ничего вручную не нужно.
+
+---
+
+## Шаг 1. Данные: загружаем и смотрим (10 минут)
+
+### Что мы хотим сделать
+
+Скачать датасет жестов, разложенный по папкам, и посмотреть на картинки.
+
+### 1.1. Скачиваем и распаковываем
+
+```python
+# Скачиваем train и test (датасет Laurence Moroney, фото рук на белом фоне)
+!wget -q https://storage.googleapis.com/download.tensorflow.org/data/rps.zip
+!wget -q https://storage.googleapis.com/download.tensorflow.org/data/rps-test-set.zip
+!unzip -q rps.zip
+!unzip -q rps-test-set.zip
+
+import os
+print("Папки train:", os.listdir('rps'))
+for c in os.listdir('rps'):
+    print(f"  {c}: {len(os.listdir('rps/'+c))} картинок")
+```
+
+**Что произошло:** датасет уже **разложен по папкам** — `rps/rock`, `rps/paper`, `rps/scissors`. Имя папки = класс. Это стандартный формат для `ImageFolder`.
+
+**Что увидим:**
+```
+Папки train: ['paper', 'rock', 'scissors']
+  paper: 840 картинок
+  rock: 840 картинок
+  scissors: 840 картинок
+```
+
+> **Что это значит:** по **840** картинок на класс, всего **2520** для обучения. Классы **сбалансированы** (поровну) — это хорошо. Картинки — фото рук на белом фоне.
+
+### 1.2. Смотрим на картинки
+
+```python
+raw = datasets.ImageFolder('rps')         # без transform — просто посмотреть
+print("Классы:", raw.classes)             # ['paper', 'rock', 'scissors']
+
+plt.figure(figsize=(9, 3))
+for i, idx in enumerate([0, 840, 1680]):  # по одной из каждого класса
+    img, label = raw[idx]
+    plt.subplot(1, 3, i+1)
+    plt.imshow(img); plt.title(raw.classes[label]); plt.axis('off')
+plt.show()
+```
+
+**Что увидим:** три руки — раскрытая ладонь (paper), кулак (rock), два пальца (scissors).
+
+> ⚠️ **Важно:** `ImageFolder` сортирует классы по алфавиту, поэтому порядок — `['paper', 'rock', 'scissors']` (бумага=0, камень=1, ножницы=2). Запомним этот порядок — он понадобится для матрицы ошибок и игры.
+
+---
+
+## Шаг 2. Аугментация (часть Шага 1, ~3 минуты)
+
+### Что мы хотим сделать
+
+Задать преобразования: для **train** — с аугментацией и в формате ImageNet; для **test** — без аугментации.
+
+```python
+# TRAIN: формат ImageNet (224 + нормализация) + аугментация (только train!)
+train_tf = transforms.Compose([
+    transforms.Resize((224, 224)),                # под готовую сеть
+    transforms.RandomHorizontalFlip(),            # аугментация: отражение
+    transforms.RandomRotation(15),                # аугментация: поворот
+    transforms.ToTensor(),
+    transforms.Normalize([0.485, 0.456, 0.406], [0.229, 0.224, 0.225])
+])
+
+# TEST: тот же формат, но БЕЗ аугментации (честная оценка!)
+test_tf = transforms.Compose([
+    transforms.Resize((224, 224)),
+    transforms.ToTensor(),
+    transforms.Normalize([0.485, 0.456, 0.406], [0.229, 0.224, 0.225])
+])
+
+train_data = datasets.ImageFolder('rps', transform=train_tf)
+test_data  = datasets.ImageFolder('rps-test-set', transform=test_tf)
+
+train_loader = DataLoader(train_data, batch_size=64, shuffle=True)
+test_loader  = DataLoader(test_data, batch_size=64)
+
+print("Train:", len(train_data), " Test:", len(test_data))
+```
+
+**Что увидим:**
+```
+Train: 2520  Test: 372
+```
+
+> **Собрали два кубика сразу:** формат под готовую сеть (224 + нормализация, из 6.6) и аугментацию **только на train** (из 6.5). Тест — честный, без аугментации.
+
+---
+
+## Шаг 3. Собираем модель: transfer learning (8 минут)
+
+### Что мы хотим сделать
+
+Взять готовую ResNet18, заморозить её и заменить голову под наши **3** класса.
+
+```python
+from torchvision.models import ResNet18_Weights
+
+net = models.resnet18(weights=ResNet18_Weights.IMAGENET1K_V1)  # готовые веса ImageNet
+
+for p in net.parameters():       # замораживаем тело
+    p.requires_grad = False
+
+net.fc = nn.Linear(512, 3)       # новая голова: 512 → 3 класса
+net = net.to(device)
+
+trainable = sum(p.numel() for p in net.parameters() if p.requires_grad)
+print("Обучаемых параметров:", trainable)   # только голова
+```
+
+**Что увидим:**
+```
+Обучаемых параметров: 1539
+```
+
+> **Что это значит:** обучается всего **1539** параметров (512×3 + 3) — только новая голова. Тело ResNet (11+ млн параметров) заморожено и работает как готовый «извлекатель признаков». Это в точности рецепт из урока 6.6 — теперь применяем его к своей задаче.
+
+---
+
+## Шаг 4. Обучение (часть Шага 3, ~10 минут)
+
+### Что мы хотим сделать
+
+Обучить **только голову** несколько эпох и следить за точностью на тесте.
+
+```python
+loss_fn = nn.CrossEntropyLoss()
+optimizer = torch.optim.Adam(net.fc.parameters(), lr=0.001)   # учим только голову
+
+for epoch in range(3):
+    net.train()
+    for x_batch, y_batch in train_loader:
+        x_batch, y_batch = x_batch.to(device), y_batch.to(device)
+        optimizer.zero_grad()
+        loss = loss_fn(net(x_batch), y_batch)
+        loss.backward()
+        optimizer.step()
+
+    # оценка на тесте
+    net.eval()
+    correct = total = 0
+    with torch.no_grad():
+        for x_batch, y_batch in test_loader:
+            x_batch, y_batch = x_batch.to(device), y_batch.to(device)
+            preds = net(x_batch).argmax(dim=1)
+            correct += (preds == y_batch).sum().item()
+            total += len(y_batch)
+    print(f"Эпоха {epoch+1}: точность {correct/total:.4f}")
+```
+
+**Что увидим (примерно):**
+```
+Эпоха 1: точность 0.8387
+Эпоха 2: точность 0.9328
+Эпоха 3: точность 0.9382
+```
+
+> 🎉 **Уже ~94%** за 3 эпохи! И цикл обучения — **тот же самый**, что в уроках 5.8 и 6.6. Мы просто подставили новые данные и новую голову. Наугад было бы 33% (3 класса) — а у нас 94%. Готовая сеть + аугментация делают своё дело.
+>
+> ⚠️ **Честно:** на GPU и при большем числе эпох (5–10) точность дойдёт до ~98–99%. На CPU за 3 эпохи ~94% — уже отлично для проекта.
+
+---
+
+## Шаг 5. Оцениваем модель: метрики (10 минут)
+
+### Что мы хотим сделать
+
+Понять не только **сколько** процентов, но и **где** модель ошибается — построить **матрицу ошибок**.
+
+### 5.1. Строим матрицу ошибок
+
+```python
+import torch
+
+net.eval()
+classes = train_data.classes            # ['paper', 'rock', 'scissors']
+cm = torch.zeros(3, 3, dtype=torch.int) # строки = истина, столбцы = предсказание
+
+with torch.no_grad():
+    for x_batch, y_batch in test_loader:
+        preds = net(x_batch.to(device)).argmax(dim=1).cpu()
+        for true_label, pred_label in zip(y_batch, preds):
+            cm[true_label, pred_label] += 1
+
+print("Классы:", classes)
+print("Матрица ошибок (строки=истина, столбцы=предсказание):")
+print(cm)
+```
+
+**Что увидим (примерно):**
+```
+Классы: ['paper', 'rock', 'scissors']
+Матрица ошибок (строки=истина, столбцы=предсказание):
+tensor([[103,   2,  19],
+        [  0, 124,   0],
+        [  2,   0, 122]])
+```
+
+#### Что это значит — читаем матрицу
+
+> Строка = **настоящий** класс, столбец = что **предсказала** модель. На **диагонали** — верные ответы:
+> - **rock** (камень): 124 из 124 — **идеально**! Кулак ни с чем не путается.
+> - **scissors** (ножницы): 122 верно, 2 раза приняты за бумагу.
+> - **paper** (бумага): 103 верно, но **19 раз принята за ножницы**!
+>
+> 👀 **Вот что даёт матрица:** мы **видим**, что модель путает **бумагу с ножницами** (19 ошибок). И это логично — оба жеста «раскрытая рука», похожи. Камень (кулак) — другой формы, поэтому распознаётся идеально. **Просто "94%" этого бы не показало!**
+
+### 5.2. Красивая матрица ошибок (картинкой)
+
+```python
+plt.figure(figsize=(5, 5))
+plt.imshow(cm, cmap='Blues')
+plt.xticks([0,1,2], classes); plt.yticks([0,1,2], classes)
+plt.xlabel("Предсказано"); plt.ylabel("Истина")
+for i in range(3):
+    for j in range(3):
+        plt.text(j, i, cm[i,j].item(), ha='center', va='center')
+plt.title("Матрица ошибок"); plt.colorbar(); plt.show()
+```
+
+> Тёмные клетки **на диагонали** — модель права. Тёмная клетка **вне** диагонали — там путаница (у нас — бумага→ножницы).
+
+### 5.3. Проверяем на своём фото (инференс)
+
+```python
+from PIL import Image
+
+def predict(path):
+    img = Image.open(path).convert('RGB')
+    x = test_tf(img).unsqueeze(0).to(device)   # тот же формат, что у теста; +батч-размерность
+    net.eval()
+    with torch.no_grad():
+        idx = net(x).argmax(dim=1).item()
+    return classes[idx]
+
+# Загрузи своё фото руки в Colab (значок папки слева) и укажи имя:
+# print("Это:", predict("my_hand.jpg"))
+```
+
+> **Это инференс** — применение обученной модели к новой картинке. Сделай фото руки **на светлом фоне** (как в датасете) — так модель сработает точнее. Попробуй все три жеста!
+
+### Итог практической части
+
+1. Собрали **весь конвейер**: данные → аугментация → transfer learning → обучение → оценка.
+2. Точность **~94%** на 3 классах (наугад 33%).
+3. **Матрица ошибок** показала: модель путает бумагу и ножницы (похожи), камень — идеально.
+4. Научились делать **предсказание** на своём фото.
+
+---
+
+## Бонус A. Играем против нейросети (камень-ножницы-бумага)
+
+### Что мы хотим сделать
+
+Соединить нашу модель с обычной Python-логикой: модель распознаёт твой жест → компьютер делает случайный ход → определяем победителя.
+
+```python
+import random
+
+def who_wins(player, computer):
+    if player == computer:
+        return "Ничья!"
+    beats = {"rock": "scissors", "scissors": "paper", "paper": "rock"}  # кто кого бьёт
+    return "Ты выиграл!" if beats[player] == computer else "Компьютер выиграл!"
+
+def play(path):
+    player = predict(path)                          # нейросеть распознаёт твой жест
+    computer = random.choice(["rock", "paper", "scissors"])  # ход компьютера
+    print(f"Твой жест (распознан ИИ): {player}")
+    print(f"Ход компьютера:          {computer}")
+    print(who_wins(player, computer))
+
+# play("my_hand.jpg")
+```
+
+> **Что произошло:** мы **соединили нейросеть с игрой**! Нейросеть — «глаза» (распознаёт жест), а `who_wins` — «правила». Это и есть настоящие приложения ИИ: модель плюс обычный код вокруг неё. Здесь пригодились навыки из Модулей 1–2 (словари, функции, `random`).
+
+---
+
+## Бонус B. Детекция YOLO (что и где)
+
+### Что мы хотим сделать
+
+Вспомнить урок 6.7: наш классификатор говорит «что» (один жест на фото). А детектор YOLO найдёт **все** объекты и скажет, **где** они.
+
+```python
+!pip install ultralytics -q
+from ultralytics import YOLO
+
+model = YOLO("yolov8n.pt")                # готовый детектор (скачается ~6 МБ)
+results = model("https://ultralytics.com/images/bus.jpg")
+r = results[0]
+print("Найдено объектов:", len(r.boxes))
+
+import matplotlib.pyplot as plt
+plt.figure(figsize=(7,7))
+plt.imshow(r.plot()[:, :, ::-1]); plt.axis('off'); plt.show()  # BGR → RGB
+```
+
+> **Два разных инструмента в одном проекте:** наш **классификатор** (transfer learning) отвечает «что на фото», а **детектор** YOLO — «что и **где**». Вместе — это почти весь арсенал базового компьютерного зрения!
+
+---
+
+## Тайминг (90 минут)
+
+| Время | Блок |
+|------:|------|
+| 0–10 | Повторение модуля (`review.md`) |
+| 10–20 | Карта проекта (`theory.md`) |
+| 20–38 | Шаг 1–2: данные + аугментация |
+| 38–58 | Шаг 3–4: модель + обучение |
+| 58–70 | Шаг 5: оценка + свои фото |
+| 70–80 | Бонусы (игра, YOLO) |
+| 80–86 | Самостоятельная (`homework.md`) |
+| 86–90 | Итоги модуля (`summary.md`) |
