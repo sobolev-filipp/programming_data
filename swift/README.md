@@ -17,7 +17,7 @@
   <li><a href="./Lesson/Lesson_13/Lesson_13.md">Урок 13 — Теория: SpriteKit с нуля</a></li>
   <li><a href="./Lesson/Lesson_14/Lesson_14.md">Урок 14: Движение и анимация спрайтов</a></li>
   <li><a href="./Lesson/Lesson_15/Lesson_15.md">Урок 15: Физика — гравитация и столкновения</a></li>
-  <li><a href="#">Урок 16: Управление игроком и касания</a></li>
+  <li><a href="./Lesson/Lesson_16/Lesson_16.md">Урок 16: Управление игроком и касания</a></li>
   <li><a href="#">Урок 17: Враги, счёт и жизни</a></li>
   <li><a href="#">Урок 18: Звуки и частицы в игре</a></li>
   <li><a href="#">Урок 19: Рекорды и меню</a></li>
