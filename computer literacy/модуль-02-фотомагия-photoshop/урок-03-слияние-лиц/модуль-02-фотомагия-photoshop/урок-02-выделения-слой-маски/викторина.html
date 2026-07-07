@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Викторина — Выделения и слой-маски</title>
+<style>
+  :root{
+    --bg1:#0f2f2b; --bg2:#0e7c66; --card:#ffffff; --ink:#1e293b;
+    --accent:#0e9f6e; --ok:#16a34a; --bad:#dc2626; --soft:#e6f7f0;
+  }
+  *{box-sizing:border-box;font-family:"Segoe UI",system-ui,sans-serif}
+  body{margin:0;min-height:100vh;display:flex;align-items:center;justify-content:center;
+    background:linear-gradient(135deg,var(--bg1),var(--bg2));padding:20px;color:var(--ink)}
+  .app{background:var(--card);width:min(760px,100%);border-radius:24px;
+    box-shadow:0 25px 60px rgba(0,0,0,.35);padding:34px 34px 28px;position:relative;overflow:hidden}
+  h1{margin:0 0 6px;font-size:26px;text-align:center}
+  .sub{text-align:center;color:#64748b;margin-bottom:22px;font-size:15px}
+  .bar{height:10px;background:var(--soft);border-radius:99px;overflow:hidden;margin-bottom:18px}
+  .bar>i{display:block;height:100%;width:0;background:var(--accent);transition:.4s}
+  .meta{display:flex;justify-content:space-between;font-size:14px;color:#64748b;margin-bottom:14px}
+  .q{font-size:22px;font-weight:700;margin:6px 0 20px;line-height:1.3}
+  .opts{display:grid;gap:12px}
+  .opt{border:2px solid #e2e8f0;background:#fff;border-radius:14px;padding:15px 18px;font-size:18px;
+    text-align:left;cursor:pointer;transition:.15s;display:flex;align-items:center;gap:12px}
+  .opt:hover{border-color:var(--accent);background:var(--soft);transform:translateY(-2px)}
+  .opt b{background:var(--soft);color:var(--accent);width:30px;height:30px;border-radius:8px;
+    display:flex;align-items:center;justify-content:center;font-size:15px;flex:0 0 auto}
+  .opt.ok{border-color:var(--ok);background:#dcfce7}
+  .opt.ok b{background:var(--ok);color:#fff}
+  .opt.bad{border-color:var(--bad);background:#fee2e2}
+  .opt.bad b{background:var(--bad);color:#fff}
+  .opt:disabled{cursor:default;transform:none}
+  .fb{margin-top:16px;padding:14px 16px;border-radius:12px;font-size:16px;display:none;line-height:1.4}
+  .fb.show{display:block}
+  .fb.good{background:#dcfce7;color:#166534}
+  .fb.no{background:#fee2e2;color:#991b1b}
+  .btn{margin-top:18px;width:100%;padding:15px;border:0;border-radius:14px;background:var(--accent);
+    color:#fff;font-size:18px;font-weight:700;cursor:pointer;display:none}
+  .btn.show{display:block}
+  .btn:hover{filter:brightness(1.08)}
+  .center{text-align:center}
+  .score{font-size:64px;font-weight:800;margin:10px 0}
+  .emoji{font-size:70px}
+  .hint{color:#94a3b8;font-size:13px;text-align:center;margin-top:14px}
+</style>
+</head>
+<body>
+<div class="app" id="app"></div>
+<script>
+const QUESTIONS = [
+  {q:"Что делает ЧЁРНЫЙ цвет на слой-маске?",
+   a:["Показывает пиксель","Прячет пиксель (делает невидимым)","Красит в чёрный","Удаляет слой"],c:1,
+   e:"🖤 Чёрное прячет, 🤍 белое показывает. И это обратимо — ничего не удаляется!"},
+  {q:"Что делает БЕЛЫЙ цвет на слой-маске?",
+   a:["Прячет пиксель","Показывает пиксель","Стирает навсегда","Меняет цвет"],c:1,
+   e:"🤍 Белое = видно. Закрасил белым — вернул то, что было спрятано."},
+  {q:"Каким инструментом удобнее всего вручную обвести человека?",
+   a:["Ластиком","«Быстрое выделение» (умная кисть по краям)","Текстом","Рамкой"],c:1,
+   e:"«Быстрое выделение» — красишь по объекту, оно само растёт до краёв. Alt — убрать лишнее."},
+  {q:"Как убрать лишнее из выделения кистью «Быстрое выделение»?",
+   a:["Просто провести","Зажать Alt и провести","Нажать Enter","Сохранить"],c:1,
+   e:"Alt + мазок = убрать из выделения. Без Alt — добавить."},
+  {q:"Почему слой-маска лучше, чем стереть фон ластиком?",
+   a:["Красивее","Спрятанное можно вернуть — всё обратимо","Быстрее","Меньше весит"],c:1,
+   e:"Ластик стирает навсегда, маска — прячет. Профи не стирают, а прячут маской."},
+  {q:"Где лучше всего вытягивают тонкие ВОЛОСЫ?",
+   a:["Ластиком","В окне «Выделение и маска» («Уточнить края»)","Волшебной палочкой","Текстом"],c:1,
+   e:"«Выделение и маска» → инструмент «Уточнить края»: проводишь по волосам, и ПК вытягивает пряди."},
+  {q:"Как называют бегущий пунктир вокруг выделения?",
+   a:["Светлячки","Марширующие муравьи","Гусеница","Пиксели"],c:1,
+   e:"«Марширующие муравьи» 🐜 — граница области, с которой можно работать."},
+  {q:"Вокруг вырезанных волос остался светлый ореол. Что поможет?",
+   a:["Увеличить резкость","«Сместить край» в минус / «Очистить цвета»","Сохранить в JPG","Ничего"],c:1,
+   e:"Сдвиг края внутрь убирает кайму старого фона. Ещё помогает «Очистить цвета»."},
+  {q:"Как понять, что ты рисуешь ПО МАСКЕ, а не по картинке?",
+   a:["Никак","У миниатюры маски — белая рамочка","По звуку","По цвету кисти"],c:1,
+   e:"Активная миниатюра (слой или маска) обведена белой рамкой. Ошибка №1 — рисовать не туда."},
+  {q:"Что делает Ctrl+I, если стоишь на маске?",
+   a:["Сохраняет","Меняет спрятанное и видимое местами (инверсия)","Увеличивает","Печатает"],c:1,
+   e:"Инверсия маски: чёрное ↔ белое. Спасает, если выделил наоборот."},
+  {q:"В каком формате сохранятся маски и корректирующие слои?",
+   a:["JPG","PNG","PSD","GIF"],c:2,
+   e:"Только PSD хранит слои и маски. JPG/PNG — уже «склеенная» картинка."},
+
+  {q:"😄 Вырезал друга, но забыл его ухо. Всё пропало?",
+   a:["Да, начинай заново","Нет: закрась ухо белым на маске — вернётся","Пусть будет без уха","Позови маму"],c:1,
+   e:"Маска всё прощает. Белым по маске — ухо на месте. Никакой паники 😄"},
+  {q:"😄 Ты залил ВСЮ маску чёрным. Что теперь видно на слое?",
+   a:["Весь слой","Ничего — всё спрятано","Только уши","Красный квадрат"],c:1,
+   e:"Чёрное прячет всё. Теперь можно белой кистью «проявлять» только нужное."},
+  {q:"😄 Ластик и слой-маска поспорили, кто круче. Кто прав?",
+   a:["Ластик — стирает навсегда","Маска — прячет, но всегда вернёт","Оба едят пиксели","Коврик для мыши"],c:1,
+   e:"Маска: контроль и обратимость. Ластик обижается и уходит 😅"},
+
+  {q:"🤔 Человек вырезан идеально, но коллаж выглядит фальшиво. Почему чаще всего?",
+   a:["Экран старый","Не совпали свет, цвет и масштаб с фоном","Мало слоёв","Не та кисть"],c:1,
+   e:"Глаз верит, когда сходятся масштаб + направление света + оттенок. Их и подгоняем."},
+  {q:"🤔 Портрет снят днём, фон — тёмный космос. Как «вписать» человека?",
+   a:["Ничего не делать","Затемнить его обтравочной коррекцией под свет фона","Увеличить резкость","Сменить формат"],c:1,
+   e:"Обтравочная коррекция (Кривые) только на человеке подружит его со светом сцены."},
+  {q:"🤔 Ты выделил человека, но между рукой и телом осталась «дырка» фона. Что делать?",
+   a:["Начать заново","Зажать Alt и убрать лишнее кистью","Сохранить как есть","Стереть ластиком"],c:1,
+   e:"Выделение всегда чистят по частям: Alt + мазок убирает лишнее, без Alt — добавляет."},
+];
+
+let i=0, score=0, locked=false;
+const app=document.getElementById('app');
+
+function shuffle(){for(let k=QUESTIONS.length-1;k>0;k--){const j=Math.floor(Math.random()*(k+1));[QUESTIONS[k],QUESTIONS[j]]=[QUESTIONS[j],QUESTIONS[k]];}}
+shuffle();
+
+function render(){
+  const Q=QUESTIONS[i];
+  app.innerHTML=`
+    <h1>✂️🎭 Выделения и маски</h1>
+    <div class="sub">Викторина по уроку «Телепорт» (со смешными вопросами!)</div>
+    <div class="bar"><i style="width:${(i/QUESTIONS.length)*100}%"></i></div>
+    <div class="meta"><span>Вопрос ${i+1} из ${QUESTIONS.length}</span><span>⭐ Очки: ${score}</span></div>
+    <div class="q">${Q.q}</div>
+    <div class="opts" id="opts">
+      ${Q.a.map((t,n)=>`<button class="opt" data-n="${n}"><b>${n+1}</b><span>${t}</span></button>`).join('')}
+    </div>
+    <div class="fb" id="fb"></div>
+    <button class="btn" id="next">${i===QUESTIONS.length-1?'Показать результат →':'Следующий вопрос →'}</button>
+    <div class="hint">Можно отвечать клавишами 1–4</div>`;
+  locked=false;
+  document.querySelectorAll('.opt').forEach(b=>b.onclick=()=>choose(+b.dataset.n));
+  document.getElementById('next').onclick=next;
+}
+
+function choose(n){
+  if(locked) return; locked=true;
+  const Q=QUESTIONS[i];
+  const opts=[...document.querySelectorAll('.opt')];
+  opts.forEach(b=>b.disabled=true);
+  opts[Q.c].classList.add('ok');
+  const fb=document.getElementById('fb');
+  if(n===Q.c){ score++; fb.className='fb show good'; fb.textContent='✅ Верно! '+Q.e; }
+  else { opts[n].classList.add('bad'); fb.className='fb show no'; fb.textContent='❌ Не совсем. '+Q.e; }
+  document.querySelector('.meta').children[1].textContent='⭐ Очки: '+score;
+  document.getElementById('next').classList.add('show');
+}
+
+function next(){ i++; if(i<QUESTIONS.length) render(); else result(); }
+
+function result(){
+  const pct=Math.round(score/QUESTIONS.length*100);
+  let em,msg;
+  if(pct===100){em='🏆';msg='Идеально! Ты мастер маски — фон дрожит от страха! 🎭';}
+  else if(pct>=70){em='🎉';msg='Отлично! Вырежешь кого угодно и телепортируешь куда угодно.';}
+  else if(pct>=40){em='👍';msg='Неплохо! Повтори правило «чёрное прячет, белое показывает» — и готово.';}
+  else {em='💪';msg='Начало есть! Нажми Ctrl+Z на ошибки, перечитай про маски — и снова в бой!';}
+  app.innerHTML=`
+    <div class="center">
+      <div class="emoji">${em}</div>
+      <h1>Готово!</h1>
+      <div class="score">${score} / ${QUESTIONS.length}</div>
+      <div class="sub">${msg}</div>
+      <button class="btn show" id="again">🔁 Пройти заново</button>
+    </div>`;
+  document.getElementById('again').onclick=()=>{i=0;score=0;shuffle();render();};
+}
+
+document.addEventListener('keydown',e=>{
+  if(['1','2','3','4'].includes(e.key)){ const b=document.querySelector(`.opt[data-n="${+e.key-1}"]`); if(b&&!b.disabled) choose(+e.key-1); }
+  if(e.key==='Enter'){ const nb=document.getElementById('next'); if(nb&&nb.classList.contains('show')) next(); }
+});
+
+render();
+</script>
+</body>
+</html>
