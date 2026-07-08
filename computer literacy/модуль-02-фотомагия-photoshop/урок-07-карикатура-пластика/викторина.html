@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Викторина — Карикатура (Пластика)</title>
+<style>
+  :root{
+    --bg1:#7c2d12; --bg2:#d97706; --card:#ffffff; --ink:#1e293b;
+    --accent:#ea580c; --ok:#16a34a; --bad:#dc2626; --soft:#ffedd5;
+  }
+  *{box-sizing:border-box;font-family:"Segoe UI",system-ui,sans-serif}
+  body{margin:0;min-height:100vh;display:flex;align-items:center;justify-content:center;
+    background:linear-gradient(135deg,var(--bg1),var(--bg2));padding:20px;color:var(--ink)}
+  .app{background:var(--card);width:min(760px,100%);border-radius:24px;
+    box-shadow:0 25px 60px rgba(0,0,0,.35);padding:34px 34px 28px;position:relative;overflow:hidden}
+  h1{margin:0 0 6px;font-size:26px;text-align:center}
+  .sub{text-align:center;color:#64748b;margin-bottom:22px;font-size:15px}
+  .bar{height:10px;background:var(--soft);border-radius:99px;overflow:hidden;margin-bottom:18px}
+  .bar>i{display:block;height:100%;width:0;background:var(--accent);transition:.4s}
+  .meta{display:flex;justify-content:space-between;font-size:14px;color:#64748b;margin-bottom:14px}
+  .q{font-size:22px;font-weight:700;margin:6px 0 20px;line-height:1.3}
+  .opts{display:grid;gap:12px}
+  .opt{border:2px solid #e2e8f0;background:#fff;border-radius:14px;padding:15px 18px;font-size:18px;
+    text-align:left;cursor:pointer;transition:.15s;display:flex;align-items:center;gap:12px}
+  .opt:hover{border-color:var(--accent);background:var(--soft);transform:translateY(-2px)}
+  .opt b{background:var(--soft);color:var(--accent);width:30px;height:30px;border-radius:8px;
+    display:flex;align-items:center;justify-content:center;font-size:15px;flex:0 0 auto}
+  .opt.ok{border-color:var(--ok);background:#dcfce7}
+  .opt.ok b{background:var(--ok);color:#fff}
+  .opt.bad{border-color:var(--bad);background:#fee2e2}
+  .opt.bad b{background:var(--bad);color:#fff}
+  .opt:disabled{cursor:default;transform:none}
+  .fb{margin-top:16px;padding:14px 16px;border-radius:12px;font-size:16px;display:none;line-height:1.4}
+  .fb.show{display:block}
+  .fb.good{background:#dcfce7;color:#166534}
+  .fb.no{background:#fee2e2;color:#991b1b}
+  .btn{margin-top:18px;width:100%;padding:15px;border:0;border-radius:14px;background:var(--accent);
+    color:#fff;font-size:18px;font-weight:700;cursor:pointer;display:none}
+  .btn.show{display:block}
+  .btn:hover{filter:brightness(1.08)}
+  .center{text-align:center}
+  .score{font-size:64px;font-weight:800;margin:10px 0}
+  .emoji{font-size:70px}
+  .hint{color:#94a3b8;font-size:13px;text-align:center;margin-top:14px}
+</style>
+</head>
+<body>
+<div class="app" id="app"></div>
+<script>
+const QUESTIONS = [
+  {q:"Где открыть фильтр «Пластика»?",
+   a:["Файл → Открыть","Меню «Фильтр» → «Пластика…»","Панель слоёв","Редактирование → Копировать"],c:1,
+   e:"«Пластика» живёт в меню «Фильтр» вверху. Откроется отдельное большое окно."},
+  {q:"Какой инструмент «Пластики» РАЗДУВАЕТ (для больших глаз)?",
+   a:["Сморщивание","Вздутие","Заморозить маску","Рука"],c:1,
+   e:"«Вздутие» раздувает под кистью — идеально для мультяшных глаз."},
+  {q:"Какой инструмент СТЯГИВАЕТ, уменьшает (например, нос)?",
+   a:["Вздутие","Сморщивание","Деформация","Реконструировать"],c:1,
+   e:"«Сморщивание» стягивает пиксели к центру кисти — деталь уменьшается."},
+  {q:"Чем растянуть улыбку (толкнуть уголок рта)?",
+   a:["Деформацией (палец)","Вздутием","Заморозкой","Масштабом"],c:0,
+   e:"«Деформация» толкает пиксели туда, куда ведёшь, — тянем уголок рта вверх."},
+  {q:"Как защитить глаз, чтобы он не «уехал», пока лепишь рядом?",
+   a:["Удалить глаз","«Заморозить маску» (закрасить красным)","Сохранить","Уменьшить кисть"],c:1,
+   e:"Замороженная (красная) область не деформируется. Потом «Разморозить»."},
+  {q:"Как вернуть исходную форму под кистью, если ошибся?",
+   a:["Никак","«Реконструировать» (или «Восстановить всё»)","Сохранить в JPG","Сменить фото"],c:1,
+   e:"«Реконструировать» возвращает оригинал под кистью; «Восстановить всё» — целиком."},
+  {q:"Главное правило хорошего шаржа?",
+   a:["Преувеличить всё подряд","Преувеличить 1–2 черты, сохранив узнаваемость","Сделать страшно","Убрать глаза"],c:1,
+   e:"Смешно и узнаваемо: акцент на 1–2 чертах, остальное почти не трогаем, по-доброму."},
+  {q:"Какого размера брать кисть в «Пластике»?",
+   a:["Максимальную","Чуть больше черты (глаза, рта)","Самую маленькую","Не важно"],c:1,
+   e:"Кисть под размер черты. Слишком большая раздует пол-лица, маленькая — «пузырёк»."},
+  {q:"Чтобы «Пластику» можно было переоткрыть и ослабить позже, слой делают…",
+   a:["Фоном","Смарт-объектом","Чёрным","Скрытым"],c:1,
+   e:"Фильтр на смарт-объекте — «умный»: дважды кликнул и поправил силу."},
+  {q:"Как проверить, что лицо не перекошено?",
+   a:["Никак","Включить «Показать сетку»","Сохранить","Увеличить размер"],c:1,
+   e:"По сетке сразу видно, если одна половина уехала сильнее другой."},
+
+  {q:"😄 Раздувал глаз и держал кнопку 5 секунд. Что вышло?",
+   a:["Красиво","Глаз-пузырь, «лопнул» — надо было 2–3 клика","Ничего","ПК завис"],c:1,
+   e:"«Вздутие» коротко: 2–3 клика. Долгое нажатие превращает глаз в шар."},
+  {q:"😄 Сделал шарж — лицо вообще не узнать. В чём перебор?",
+   a:["Ни в чём","Преувеличил слишком много черт — надо 1–2","Мало слоёв","Не сохранил"],c:1,
+   e:"Узнаваемость важнее гротеска. Выбираем 1–2 главные черты."},
+  {q:"😄 Лепил щёку — уехал соседний глаз. Как было избежать?",
+   a:["Никак","Заморозить глаз перед работой","Удалить глаз","Кричать на ПК"],c:1,
+   e:"«Заморозить маску» на глаз — и он останется на месте."},
+
+  {q:"🤔 Одна половина лица уехала сильнее. Почему и как чинить?",
+   a:["Монитор кривой","Разное число действий на парных чертах — считать + сетка","Мало памяти","Формат не тот"],c:1,
+   e:"Делай одинаковое число движений слева и справа, проверяй сеткой."},
+  {q:"🤔 Хочешь потом ОСЛАБИТЬ эффект «Пластики», не переделывая. Что нужно было сделать?",
+   a:["Сохранить в JPG","Применить фильтр к смарт-объекту","Ничего","Добавить слоёв"],c:1,
+   e:"Смарт-фильтр можно переоткрыть и уменьшить силу в любой момент."},
+  {q:"🤔 «Пластику» используют не только для смеха. Где ещё?",
+   a:["Нигде","Тонкая бьюти-коррекция пропорций в ретуши","Для звука","Для текста"],c:1,
+   e:"Ретушёры еле заметно правят пропорции. Разница с шаржем — в силе."},
+];
+
+let i=0, score=0, locked=false;
+const app=document.getElementById('app');
+
+function shuffle(){for(let k=QUESTIONS.length-1;k>0;k--){const j=Math.floor(Math.random()*(k+1));[QUESTIONS[k],QUESTIONS[j]]=[QUESTIONS[j],QUESTIONS[k]];}}
+shuffle();
+
+function render(){
+  const Q=QUESTIONS[i];
+  app.innerHTML=`
+    <h1>🤪 Карикатура (Пластика)</h1>
+    <div class="sub">Викторина по уроку «Шарж на себя»</div>
+    <div class="bar"><i style="width:${(i/QUESTIONS.length)*100}%"></i></div>
+    <div class="meta"><span>Вопрос ${i+1} из ${QUESTIONS.length}</span><span>⭐ Очки: ${score}</span></div>
+    <div class="q">${Q.q}</div>
+    <div class="opts" id="opts">
+      ${Q.a.map((t,n)=>`<button class="opt" data-n="${n}"><b>${n+1}</b><span>${t}</span></button>`).join('')}
+    </div>
+    <div class="fb" id="fb"></div>
+    <button class="btn" id="next">${i===QUESTIONS.length-1?'Показать результат →':'Следующий вопрос →'}</button>
+    <div class="hint">Можно отвечать клавишами 1–4</div>`;
+  locked=false;
+  document.querySelectorAll('.opt').forEach(b=>b.onclick=()=>choose(+b.dataset.n));
+  document.getElementById('next').onclick=next;
+}
+
+function choose(n){
+  if(locked) return; locked=true;
+  const Q=QUESTIONS[i];
+  const opts=[...document.querySelectorAll('.opt')];
+  opts.forEach(b=>b.disabled=true);
+  opts[Q.c].classList.add('ok');
+  const fb=document.getElementById('fb');
+  if(n===Q.c){ score++; fb.className='fb show good'; fb.textContent='✅ Верно! '+Q.e; }
+  else { opts[n].classList.add('bad'); fb.className='fb show no'; fb.textContent='❌ Не совсем. '+Q.e; }
+  document.querySelector('.meta').children[1].textContent='⭐ Очки: '+score;
+  document.getElementById('next').classList.add('show');
+}
+
+function next(){ i++; if(i<QUESTIONS.length) render(); else result(); }
+
+function result(){
+  const pct=Math.round(score/QUESTIONS.length*100);
+  let em,msg;
+  if(pct===100){em='🏆';msg='Идеально! Ты карикатурист — лепишь лица как пластилин! 🎨';}
+  else if(pct>=70){em='🎉';msg='Отлично! Вздутие, Деформация и Заморозка — под контролем.';}
+  else if(pct>=40){em='👍';msg='Неплохо! Запомни: 1–2 черты, симметрия, короткие клики.';}
+  else {em='💪';msg='Начало есть! Перечитай про инструменты «Пластики» и правило шаржа.';}
+  app.innerHTML=`
+    <div class="center">
+      <div class="emoji">${em}</div>
+      <h1>Готово!</h1>
+      <div class="score">${score} / ${QUESTIONS.length}</div>
+      <div class="sub">${msg}</div>
+      <button class="btn show" id="again">🔁 Пройти заново</button>
+    </div>`;
+  document.getElementById('again').onclick=()=>{i=0;score=0;shuffle();render();};
+}
+
+document.addEventListener('keydown',e=>{
+  if(['1','2','3','4'].includes(e.key)){ const b=document.querySelector(`.opt[data-n="${+e.key-1}"]`); if(b&&!b.disabled) choose(+e.key-1); }
+  if(e.key==='Enter'){ const nb=document.getElementById('next'); if(nb&&nb.classList.contains('show')) next(); }
+});
+
+render();
+</script>
+</body>
+</html>

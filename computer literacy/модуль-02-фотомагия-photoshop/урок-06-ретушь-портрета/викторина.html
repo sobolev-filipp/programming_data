@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Викторина — Ретушь портрета</title>
+<style>
+  :root{
+    --bg1:#831843; --bg2:#be185d; --card:#ffffff; --ink:#1e293b;
+    --accent:#db2777; --ok:#16a34a; --bad:#dc2626; --soft:#fce7f3;
+  }
+  *{box-sizing:border-box;font-family:"Segoe UI",system-ui,sans-serif}
+  body{margin:0;min-height:100vh;display:flex;align-items:center;justify-content:center;
+    background:linear-gradient(135deg,var(--bg1),var(--bg2));padding:20px;color:var(--ink)}
+  .app{background:var(--card);width:min(760px,100%);border-radius:24px;
+    box-shadow:0 25px 60px rgba(0,0,0,.35);padding:34px 34px 28px;position:relative;overflow:hidden}
+  h1{margin:0 0 6px;font-size:26px;text-align:center}
+  .sub{text-align:center;color:#64748b;margin-bottom:22px;font-size:15px}
+  .bar{height:10px;background:var(--soft);border-radius:99px;overflow:hidden;margin-bottom:18px}
+  .bar>i{display:block;height:100%;width:0;background:var(--accent);transition:.4s}
+  .meta{display:flex;justify-content:space-between;font-size:14px;color:#64748b;margin-bottom:14px}
+  .q{font-size:22px;font-weight:700;margin:6px 0 20px;line-height:1.3}
+  .opts{display:grid;gap:12px}
+  .opt{border:2px solid #e2e8f0;background:#fff;border-radius:14px;padding:15px 18px;font-size:18px;
+    text-align:left;cursor:pointer;transition:.15s;display:flex;align-items:center;gap:12px}
+  .opt:hover{border-color:var(--accent);background:var(--soft);transform:translateY(-2px)}
+  .opt b{background:var(--soft);color:var(--accent);width:30px;height:30px;border-radius:8px;
+    display:flex;align-items:center;justify-content:center;font-size:15px;flex:0 0 auto}
+  .opt.ok{border-color:var(--ok);background:#dcfce7}
+  .opt.ok b{background:var(--ok);color:#fff}
+  .opt.bad{border-color:var(--bad);background:#fee2e2}
+  .opt.bad b{background:var(--bad);color:#fff}
+  .opt:disabled{cursor:default;transform:none}
+  .fb{margin-top:16px;padding:14px 16px;border-radius:12px;font-size:16px;display:none;line-height:1.4}
+  .fb.show{display:block}
+  .fb.good{background:#dcfce7;color:#166534}
+  .fb.no{background:#fee2e2;color:#991b1b}
+  .btn{margin-top:18px;width:100%;padding:15px;border:0;border-radius:14px;background:var(--accent);
+    color:#fff;font-size:18px;font-weight:700;cursor:pointer;display:none}
+  .btn.show{display:block}
+  .btn:hover{filter:brightness(1.08)}
+  .center{text-align:center}
+  .score{font-size:64px;font-weight:800;margin:10px 0}
+  .emoji{font-size:70px}
+  .hint{color:#94a3b8;font-size:13px;text-align:center;margin-top:14px}
+</style>
+</head>
+<body>
+<div class="app" id="app"></div>
+<script>
+const QUESTIONS = [
+  {q:"Зачем дублировать слой (Ctrl+J) перед ретушью?",
+   a:["Для красоты","Чтобы можно откатить и сравнить «до/после», а оригинал цел","Чтобы быстрее","Чтобы удалить фон"],c:1,
+   e:"Ретушь портит пиксели. Работаем на копии — оригинал остаётся нетронутым."},
+  {q:"Чем убрать прыщик почти одним кликом?",
+   a:["Ластиком","Точечной восстанавливающей кистью (J)","Текстом","Рамкой"],c:1,
+   e:"Точечная восстанавливающая (J) сама заменяет пятно соседней чистой кожей."},
+  {q:"Как «взять образец» обычной Восстанавливающей кистью или Штампом?",
+   a:["Просто кликнуть","Зажать Alt и кликнуть по чистой коже рядом","Нажать Enter","Сохранить"],c:1,
+   e:"Alt+клик — берёшь образец. Потом закрашиваешь дефект этим образцом."},
+  {q:"Как разгладить кожу, но оставить ГЛАЗА резкими?",
+   a:["Размыть всё фото","Размытие на копии → чёрная маска → белым красить только по коже","Ластиком","Никак"],c:1,
+   e:"Чёрная маска прячет размытие, а белой кистью открываешь его лишь на щеках/лбу."},
+  {q:"Главное правило ретуши?",
+   a:["Чем больше, тем лучше","Не переборщить — должно быть естественно","Всё размыть","Сделать белее"],c:1,
+   e:"Хорошая ретушь незаметна. Убираем временное, характер оставляем."},
+  {q:"Как отбелить зубы?",
+   a:["Кистью белым","Выделить Лассо → «Цветовой тон/Насыщенность» (убрать жёлтое, чуть светлее)","Ластиком","Штампом"],c:1,
+   e:"Убираем желтизну (канал «Жёлтые») и слегка поднимаем яркость — но без «неона»."},
+  {q:"Что при ретуши обычно ОСТАВЛЯЮТ, а не убирают?",
+   a:["Прыщики","Родинки и веснушки (характер)","Блики","Крошки"],c:1,
+   e:"Родинки/веснушки — часть человека. Убираем временное, не характер."},
+  {q:"Чем оживить глаза?",
+   a:["Затемнителем всё","Осветлителем (O) мягко по радужке","Размытием","Штампом"],c:1,
+   e:"Осветлитель на средних тонах, малая экспозиция, пара проходов по радужке."},
+  {q:"Кожа получилась «пластиковой». Как исправить?",
+   a:["Ещё размыть","Убавить «Непрозр.» слоя разглаживания (проступит текстура)","Удалить глаза","Сохранить"],c:1,
+   e:"60–80% непрозрачности вернут настоящую текстуру кожи — не «пластик»."},
+  {q:"Как быстро сравнить «до/после»?",
+   a:["Перезапустить ПК","Выключить/включить глазик 👁 слоя ретуши","Сохранить","Ctrl+P"],c:1,
+   e:"Глазик слоя ретуши мгновенно показывает, что изменилось."},
+
+  {q:"😄 Отретушировал так, что человек — как пластиковая кукла. Что делать?",
+   a:["Оставить, это стиль","Убавить непрозрачность / убрать перебор","Сменить человека","Добавить ещё размытия"],c:1,
+   e:"Перебор откатывают: меньше размытия, больше текстуры — станет живым."},
+  {q:"😄 Убрал другу все веснушки, а он обиделся. Урок какой?",
+   a:["Веснушки — характер, их обычно оставляют","Друзья странные","Надо было больше","Никакой"],c:0,
+   e:"Спрашивай, что убирать. Родинки/веснушки — часть человека."},
+  {q:"😄 Точечная кисть у края лица «намазала» фон на щёку. Почему?",
+   a:["Кисть проклята","Взяла образец с фона — у края бери обычную кисть с Alt-образцом","ПК устал","Мало слоёв"],c:1,
+   e:"У границ точечная путается. Бери Восстанавливающую/Штамп и сам указывай образец (Alt)."},
+
+  {q:"🤔 Зачем перед сильным разглаживанием убавляют «Непрозр.» слоя до 60–80%?",
+   a:["Для веса файла","Чтобы проступила настоящая текстура кожи — не «пластик»","Быстрее","Случайно"],c:1,
+   e:"Немного оригинальной кожи сквозь разглаживание = естественный результат."},
+  {q:"🤔 Боишься испортить оригинал. Как ретушировать безопасно?",
+   a:["Прямо по фото","На копии или пустом слое — всё можно откатить","Не ретушировать вообще","Сразу в JPG"],c:1,
+   e:"Неразрушающая ретушь: копия слоя или пустой слой с «Образец со всех слоёв»."},
+  {q:"🤔 Зубы отбелил в чистый белый — фальшиво. Что важнее белизны?",
+   a:["Ничего","Убрать желтизну и чуть яркости, но естественно","Сделать ещё белее","Синий оттенок"],c:1,
+   e:"Чистые ≠ неоново-белые. Уводим желтизну, лёгкая яркость — и достаточно."},
+];
+
+let i=0, score=0, locked=false;
+const app=document.getElementById('app');
+
+function shuffle(){for(let k=QUESTIONS.length-1;k>0;k--){const j=Math.floor(Math.random()*(k+1));[QUESTIONS[k],QUESTIONS[j]]=[QUESTIONS[j],QUESTIONS[k]];}}
+shuffle();
+
+function render(){
+  const Q=QUESTIONS[i];
+  app.innerHTML=`
+    <h1>💄 Ретушь портрета</h1>
+    <div class="sub">Викторина «Обложка журнала»</div>
+    <div class="bar"><i style="width:${(i/QUESTIONS.length)*100}%"></i></div>
+    <div class="meta"><span>Вопрос ${i+1} из ${QUESTIONS.length}</span><span>⭐ Очки: ${score}</span></div>
+    <div class="q">${Q.q}</div>
+    <div class="opts" id="opts">
+      ${Q.a.map((t,n)=>`<button class="opt" data-n="${n}"><b>${n+1}</b><span>${t}</span></button>`).join('')}
+    </div>
+    <div class="fb" id="fb"></div>
+    <button class="btn" id="next">${i===QUESTIONS.length-1?'Показать результат →':'Следующий вопрос →'}</button>
+    <div class="hint">Можно отвечать клавишами 1–4</div>`;
+  locked=false;
+  document.querySelectorAll('.opt').forEach(b=>b.onclick=()=>choose(+b.dataset.n));
+  document.getElementById('next').onclick=next;
+}
+
+function choose(n){
+  if(locked) return; locked=true;
+  const Q=QUESTIONS[i];
+  const opts=[...document.querySelectorAll('.opt')];
+  opts.forEach(b=>b.disabled=true);
+  opts[Q.c].classList.add('ok');
+  const fb=document.getElementById('fb');
+  if(n===Q.c){ score++; fb.className='fb show good'; fb.textContent='✅ Верно! '+Q.e; }
+  else { opts[n].classList.add('bad'); fb.className='fb show no'; fb.textContent='❌ Не совсем. '+Q.e; }
+  document.querySelector('.meta').children[1].textContent='⭐ Очки: '+score;
+  document.getElementById('next').classList.add('show');
+}
+
+function next(){ i++; if(i<QUESTIONS.length) render(); else result(); }
+
+function result(){
+  const pct=Math.round(score/QUESTIONS.length*100);
+  let em,msg;
+  if(pct===100){em='🏆';msg='Идеально! Ты ретушёр глянца — чисто, но по-настоящему! ✨';}
+  else if(pct>=70){em='🎉';msg='Отлично! Кожа, зубы, глаза — всё в меру. Обложка готова.';}
+  else if(pct>=40){em='👍';msg='Неплохо! Запомни правило «не переборщи» — и станет профессионально.';}
+  else {em='💪';msg='Начало есть! Перечитай про восстанавливающую кисть и разглаживание.';}
+  app.innerHTML=`
+    <div class="center">
+      <div class="emoji">${em}</div>
+      <h1>Готово!</h1>
+      <div class="score">${score} / ${QUESTIONS.length}</div>
+      <div class="sub">${msg}</div>
+      <button class="btn show" id="again">🔁 Пройти заново</button>
+    </div>`;
+  document.getElementById('again').onclick=()=>{i=0;score=0;shuffle();render();};
+}
+
+document.addEventListener('keydown',e=>{
+  if(['1','2','3','4'].includes(e.key)){ const b=document.querySelector(`.opt[data-n="${+e.key-1}"]`); if(b&&!b.disabled) choose(+e.key-1); }
+  if(e.key==='Enter'){ const nb=document.getElementById('next'); if(nb&&nb.classList.contains('show')) next(); }
+});
+
+render();
+</script>
+</body>
+</html>
