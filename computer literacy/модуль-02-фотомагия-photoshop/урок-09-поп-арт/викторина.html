@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Викторина — Поп-арт</title>
+<style>
+  :root{
+    --bg1:#9d174d; --bg2:#ea580c; --card:#ffffff; --ink:#1e293b;
+    --accent:#db2777; --ok:#16a34a; --bad:#dc2626; --soft:#fce7f3;
+  }
+  *{box-sizing:border-box;font-family:"Segoe UI",system-ui,sans-serif}
+  body{margin:0;min-height:100vh;display:flex;align-items:center;justify-content:center;
+    background:linear-gradient(135deg,var(--bg1),var(--bg2));padding:20px;color:var(--ink)}
+  .app{background:var(--card);width:min(760px,100%);border-radius:24px;
+    box-shadow:0 25px 60px rgba(0,0,0,.35);padding:34px 34px 28px;position:relative;overflow:hidden}
+  h1{margin:0 0 6px;font-size:26px;text-align:center}
+  .sub{text-align:center;color:#64748b;margin-bottom:22px;font-size:15px}
+  .bar{height:10px;background:var(--soft);border-radius:99px;overflow:hidden;margin-bottom:18px}
+  .bar>i{display:block;height:100%;width:0;background:var(--accent);transition:.4s}
+  .meta{display:flex;justify-content:space-between;font-size:14px;color:#64748b;margin-bottom:14px}
+  .q{font-size:22px;font-weight:700;margin:6px 0 20px;line-height:1.3}
+  .opts{display:grid;gap:12px}
+  .opt{border:2px solid #e2e8f0;background:#fff;border-radius:14px;padding:15px 18px;font-size:18px;
+    text-align:left;cursor:pointer;transition:.15s;display:flex;align-items:center;gap:12px}
+  .opt:hover{border-color:var(--accent);background:var(--soft);transform:translateY(-2px)}
+  .opt b{background:var(--soft);color:var(--accent);width:30px;height:30px;border-radius:8px;
+    display:flex;align-items:center;justify-content:center;font-size:15px;flex:0 0 auto}
+  .opt.ok{border-color:var(--ok);background:#dcfce7}
+  .opt.ok b{background:var(--ok);color:#fff}
+  .opt.bad{border-color:var(--bad);background:#fee2e2}
+  .opt.bad b{background:var(--bad);color:#fff}
+  .opt:disabled{cursor:default;transform:none}
+  .fb{margin-top:16px;padding:14px 16px;border-radius:12px;font-size:16px;display:none;line-height:1.4}
+  .fb.show{display:block}
+  .fb.good{background:#dcfce7;color:#166534}
+  .fb.no{background:#fee2e2;color:#991b1b}
+  .btn{margin-top:18px;width:100%;padding:15px;border:0;border-radius:14px;background:var(--accent);
+    color:#fff;font-size:18px;font-weight:700;cursor:pointer;display:none}
+  .btn.show{display:block}
+  .btn:hover{filter:brightness(1.08)}
+  .center{text-align:center}
+  .score{font-size:64px;font-weight:800;margin:10px 0}
+  .emoji{font-size:70px}
+  .hint{color:#94a3b8;font-size:13px;text-align:center;margin-top:14px}
+</style>
+</head>
+<body>
+<div class="app" id="app"></div>
+<script>
+const QUESTIONS = [
+  {q:"Сколько уровней Постеризации нужно для поп-арта?",
+   a:["10–15","3–4","1","100"],c:1,
+   e:"3–4 уровня превращают плавное фото в плоские пятна. Много уровней = обычное фото."},
+  {q:"Что делает корректирующий слой «Карта градиента»?",
+   a:["Размывает","Красит изображение по светлоте (тёмное — один цвет, светлое — другой)","Удаляет фон","Добавляет текст"],c:1,
+   e:"«Карта градиента» назначает цвета по яркости — вся палитра меняется одним движением."},
+  {q:"Как убрать цвет перед постеризацией?",
+   a:["Ластиком","Изображение → Коррекция → Обесцветить","Сохранить в PNG","Стилем слоя"],c:1,
+   e:"Обесцветить (Shift+Ctrl+U) делает ч/б — работаем со светлотой, цвет вернём Картой градиента."},
+  {q:"Как сделать 4 плитки РАЗНОГО цвета?",
+   a:["Перекрасить кистью","Сгруппировать плитку, дублировать и менять её «Карту градиента»","Сохранить 4 раза","Никак"],c:1,
+   e:"Группа + дубли + своя Карта градиента в каждой копии = сетка Уорхола."},
+  {q:"Что даёт корректирующий слой «Порог» (Threshold)?",
+   a:["Плавные тона","Жёсткое чёрно-белое (трафарет)","Размытие","Свечение"],c:1,
+   e:"«Порог» делит на чистое чёрное и белое — хлёсткий плакатный трафарет."},
+  {q:"Где живут «Цветные полутона» (точки поп-арта)?",
+   a:["Стиль слоя","Фильтр → Оформление → Цветные полутона","Файл → Экспорт","Панель слоёв"],c:1,
+   e:"Фильтр «Цветные полутона» покрывает картинку круглыми точками, как в комиксах."},
+  {q:"Чем удобны корректирующие слои (Постеризация, Карта градиента)?",
+   a:["Ничем","Неразрушаемо: можно менять, выключать, не портя фото","Быстрее сохраняют","Меньше весят"],c:1,
+   e:"Правишь эффект в любой момент, не трогая исходное фото."},
+  {q:"Как держать 4 плитки ровно в сетке?",
+   a:["На глаз","Линейки (Ctrl+R) + направляющие","Никак","Сохранить"],c:1,
+   e:"Направляющие делят холст на равные части — плитки к ним «прилипают»."},
+  {q:"По какому принципу «Карта градиента» кладёт цвета?",
+   a:["По размеру","По яркости (светлоте) пикселей","По алфавиту","Случайно"],c:1,
+   e:"Тёмные места — левый цвет градиента, светлые — правый. Всё по светлоте."},
+  {q:"Как собрать слои плитки в одну папку?",
+   a:["Ctrl+S","Ctrl+G (сгруппировать)","Ctrl+P","Alt+клик"],c:1,
+   e:"Ctrl+G складывает выделенные слои в группу-папку — удобно дублировать целиком."},
+
+  {q:"😄 Поставил Постеризацию 15 уровней — вышло обычное фото. Что не так?",
+   a:["Всё ок","Слишком много уровней — надо 3–4","Мало памяти","Не сохранил"],c:1,
+   e:"Поп-арт живёт на упрощении. Меньше уровней — плоские пятна."},
+  {q:"😄 Взял серый + коричневый — постер как грязь. Совет?",
+   a:["Так и надо","Бери яркие контрастные пары (розовый+бирюза)","Добавь ещё серого","Удали"],c:1,
+   e:"Поп-арт = кислотные, смелые цвета. Мутные пары его убивают."},
+  {q:"😄 «Цветные полутона» серые и не жмутся. Почему?",
+   a:["Проклятие","Слой не пиксельный — объедини плитку (Ctrl+E)","ПК устал","Мало слоёв"],c:1,
+   e:"Фильтр работает по пиксельному слою. Сведи плитку в один слой — станет активен."},
+
+  {q:"🤔 Хочешь серию из 4 плиток, а не пёстрый хаос. Как подобрать цвета?",
+   a:["Каждой случайные","Один градиент, в копиях сдвигать оттенки — выйдет серия","Все одинаковые","Только серый"],c:1,
+   e:"Единый градиент со сдвигом оттенков даёт гармоничную серию, а не свалку."},
+  {q:"🤔 «Карта градиента» покрасила лицо тёмным, фон светлым — наоборот. Что сделать?",
+   a:["Начать заново","Поменять порядок цветов / включить «Инверсия»","Удалить слой","Сменить фото"],c:1,
+   e:"Она красит по светлоте — поменяй концы градиента или включи «Инверсия»."},
+  {q:"🤔 Почему для поп-арта берут КОНТРАСТНОЕ фото?",
+   a:["Так модно","Из ясных света и тени получаются чёткие цветные пятна","Меньше весит","Быстрее"],c:1,
+   e:"Контраст = понятные зоны света/тени, а значит красивые плоские цветные блоки."},
+];
+
+let i=0, score=0, locked=false;
+const app=document.getElementById('app');
+
+function shuffle(){for(let k=QUESTIONS.length-1;k>0;k--){const j=Math.floor(Math.random()*(k+1));[QUESTIONS[k],QUESTIONS[j]]=[QUESTIONS[j],QUESTIONS[k]];}}
+shuffle();
+
+function render(){
+  const Q=QUESTIONS[i];
+  app.innerHTML=`
+    <h1>🎨 Поп-арт (Уорхол)</h1>
+    <div class="sub">Викторина по уроку «Постер Уорхола»</div>
+    <div class="bar"><i style="width:${(i/QUESTIONS.length)*100}%"></i></div>
+    <div class="meta"><span>Вопрос ${i+1} из ${QUESTIONS.length}</span><span>⭐ Очки: ${score}</span></div>
+    <div class="q">${Q.q}</div>
+    <div class="opts" id="opts">
+      ${Q.a.map((t,n)=>`<button class="opt" data-n="${n}"><b>${n+1}</b><span>${t}</span></button>`).join('')}
+    </div>
+    <div class="fb" id="fb"></div>
+    <button class="btn" id="next">${i===QUESTIONS.length-1?'Показать результат →':'Следующий вопрос →'}</button>
+    <div class="hint">Можно отвечать клавишами 1–4</div>`;
+  locked=false;
+  document.querySelectorAll('.opt').forEach(b=>b.onclick=()=>choose(+b.dataset.n));
+  document.getElementById('next').onclick=next;
+}
+
+function choose(n){
+  if(locked) return; locked=true;
+  const Q=QUESTIONS[i];
+  const opts=[...document.querySelectorAll('.opt')];
+  opts.forEach(b=>b.disabled=true);
+  opts[Q.c].classList.add('ok');
+  const fb=document.getElementById('fb');
+  if(n===Q.c){ score++; fb.className='fb show good'; fb.textContent='✅ Верно! '+Q.e; }
+  else { opts[n].classList.add('bad'); fb.className='fb show no'; fb.textContent='❌ Не совсем. '+Q.e; }
+  document.querySelector('.meta').children[1].textContent='⭐ Очки: '+score;
+  document.getElementById('next').classList.add('show');
+}
+
+function next(){ i++; if(i<QUESTIONS.length) render(); else result(); }
+
+function result(){
+  const pct=Math.round(score/QUESTIONS.length*100);
+  let em,msg;
+  if(pct===100){em='🏆';msg='Идеально! Ты поп-арт-художник — Уорхол бы одобрил! 🎨';}
+  else if(pct>=70){em='🎉';msg='Отлично! Постеризация и Карта градиента — под контролем.';}
+  else if(pct>=40){em='👍';msg='Неплохо! Запомни: 3–4 уровня + яркие контрастные цвета.';}
+  else {em='💪';msg='Начало есть! Перечитай про Постеризацию и Карту градиента.';}
+  app.innerHTML=`
+    <div class="center">
+      <div class="emoji">${em}</div>
+      <h1>Готово!</h1>
+      <div class="score">${score} / ${QUESTIONS.length}</div>
+      <div class="sub">${msg}</div>
+      <button class="btn show" id="again">🔁 Пройти заново</button>
+    </div>`;
+  document.getElementById('again').onclick=()=>{i=0;score=0;shuffle();render();};
+}
+
+document.addEventListener('keydown',e=>{
+  if(['1','2','3','4'].includes(e.key)){ const b=document.querySelector(`.opt[data-n="${+e.key-1}"]`); if(b&&!b.disabled) choose(+e.key-1); }
+  if(e.key==='Enter'){ const nb=document.getElementById('next'); if(nb&&nb.classList.contains('show')) next(); }
+});
+
+render();
+</script>
+</body>
+</html>
