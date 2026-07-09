@@ -140,7 +140,7 @@ const QUESTIONS = [
 ];
 
 // перемешиваем вопросы, чтобы каждый запуск был свежим
-function shuffle(){for(let k=QUESTIONS.length-1;k>0;k--){const j=Math.floor(Math.random()*(k+1));[QUESTIONS[k],QUESTIONS[j]]=[QUESTIONS[j],QUESTIONS[k]];}}
+function shuffle(){for(let k=QUESTIONS.length-1;k>0;k--){const j=Math.floor(Math.random()*(k+1));[QUESTIONS[k],QUESTIONS[j]]=[QUESTIONS[j],QUESTIONS[k]];}for(const Q of QUESTIONS){const cc=Q.a[Q.c];for(let k=Q.a.length-1;k>0;k--){const j=Math.floor(Math.random()*(k+1));[Q.a[k],Q.a[j]]=[Q.a[j],Q.a[k]];}Q.c=Q.a.indexOf(cc);}}
 shuffle();
 
 let i=0, score=0, locked=false;

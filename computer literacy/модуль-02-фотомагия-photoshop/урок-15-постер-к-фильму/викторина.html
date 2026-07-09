@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Викторина — Постер к фильму (весь Photoshop)</title>
+<style>
+  :root{
+    --bg1:#7f1d1d; --bg2:#f59e0b; --card:#ffffff; --ink:#1e293b;
+    --accent:#dc2626; --ok:#16a34a; --bad:#dc2626; --soft:#fee2e2;
+  }
+  *{box-sizing:border-box;font-family:"Segoe UI",system-ui,sans-serif}
+  body{margin:0;min-height:100vh;display:flex;align-items:center;justify-content:center;
+    background:linear-gradient(135deg,var(--bg1),var(--bg2));padding:20px;color:var(--ink)}
+  .app{background:var(--card);width:min(760px,100%);border-radius:24px;
+    box-shadow:0 25px 60px rgba(0,0,0,.35);padding:34px 34px 28px;position:relative;overflow:hidden}
+  h1{margin:0 0 6px;font-size:26px;text-align:center}
+  .sub{text-align:center;color:#64748b;margin-bottom:22px;font-size:15px}
+  .bar{height:10px;background:var(--soft);border-radius:99px;overflow:hidden;margin-bottom:18px}
+  .bar>i{display:block;height:100%;width:0;background:var(--accent);transition:.4s}
+  .meta{display:flex;justify-content:space-between;font-size:14px;color:#64748b;margin-bottom:14px}
+  .q{font-size:22px;font-weight:700;margin:6px 0 20px;line-height:1.3}
+  .opts{display:grid;gap:12px}
+  .opt{border:2px solid #e2e8f0;background:#fff;border-radius:14px;padding:15px 18px;font-size:18px;
+    text-align:left;cursor:pointer;transition:.15s;display:flex;align-items:center;gap:12px}
+  .opt:hover{border-color:var(--accent);background:var(--soft);transform:translateY(-2px)}
+  .opt b{background:var(--soft);color:var(--accent);width:30px;height:30px;border-radius:8px;
+    display:flex;align-items:center;justify-content:center;font-size:15px;flex:0 0 auto}
+  .opt.ok{border-color:var(--ok);background:#dcfce7}
+  .opt.ok b{background:var(--ok);color:#fff}
+  .opt.bad{border-color:var(--bad);background:#fee2e2}
+  .opt.bad b{background:var(--bad);color:#fff}
+  .opt:disabled{cursor:default;transform:none}
+  .fb{margin-top:16px;padding:14px 16px;border-radius:12px;font-size:16px;display:none;line-height:1.4}
+  .fb.show{display:block}
+  .fb.good{background:#dcfce7;color:#166534}
+  .fb.no{background:#fee2e2;color:#991b1b}
+  .btn{margin-top:18px;width:100%;padding:15px;border:0;border-radius:14px;background:var(--accent);
+    color:#fff;font-size:18px;font-weight:700;cursor:pointer;display:none}
+  .btn.show{display:block}
+  .btn:hover{filter:brightness(1.08)}
+  .center{text-align:center}
+  .score{font-size:64px;font-weight:800;margin:10px 0}
+  .emoji{font-size:70px}
+  .hint{color:#94a3b8;font-size:13px;text-align:center;margin-top:14px}
+</style>
+</head>
+<body>
+<div class="app" id="app"></div>
+<script>
+const QUESTIONS = [
+  {q:"Как ПРАВИЛЬНО заменить небо на постере (без ИИ)?",
+   a:["Кнопкой «Замена неба»","Небо отдельным слоем + градиентная маска по горизонту","Ластиком стереть старое","Фильтром «Облака»"],c:1,
+   e:"Matte-painting: небо поверх фона, маска + короткий градиент по линии горизонта — стык растворяется."},
+  {q:"Что связывает разные фото в ОДНУ картину?",
+   a:["Разные цвета у каждого куска","Единый цвет поверх всего (Карта градиента, teal&orange)","Больше слоёв","Яркая рамка"],c:1,
+   e:"Один цвет + свет сверху делает композит цельным, будто снят одной камерой."},
+  {q:"По какому правилу лучше ставить героя?",
+   a:["Ровно по центру","По правилу третей — на линию/треть, с воздухом перед взглядом","В самый угол","Везде одинаково"],c:1,
+   e:"Смещённый герой + простор перед ним = живая, «киношная» композиция."},
+  {q:"Зачем герою тень у ног?",
+   a:["Для красоты рамки","Чтобы «приклеить» его к земле, иначе парит","Чтобы затемнить фон","Незачем"],c:1,
+   e:"Тень (слой «Умножение», мягкая кисть) сцепляет героя со сценой."},
+  {q:"Что такое billing block на постере?",
+   a:["Название фильма","Узкий блок мелких «титров» внизу (актёры, режиссёр, студия)","Логотип студии","Слоган"],c:1,
+   e:"Тот самый мелкий текст снизу — от него постер выглядит по-настоящему киношным."},
+  {q:"Как сделать название читаемым на любом фоне?",
+   a:["Просто белым цветом","Стили слоя: обводка + тень + свечение","Крупнее холст","Курсивом"],c:1,
+   e:"Стиль слоя (урок 8) отделяет буквы от фона — читаются всегда."},
+  {q:"Чем вырезают героя из фото (вручную)?",
+   a:["Генеративной заливкой","Выделение → «Выделение и маска» → слой-маска","Обрезкой холста","Штампом"],c:1,
+   e:"Быстрое выделение → уточнить край (волосы) → вывод в слой-маску."},
+  {q:"Как сделать плавный стык земли и нового неба?",
+   a:["Резать по прямой","Короткий чёрно-белый градиент по маске на линии горизонта","Обвести пером","Осветлить небо"],c:1,
+   e:"Градиент на маске растворяет границу — как дымка у реального горизонта."},
+  {q:"Как навести порядок, когда слоёв очень много?",
+   a:["Свести всё сразу","Называть слои и складывать в группы (папки 📁)","Удалять лишние","Не важно"],c:1,
+   e:"«Назвал слой → положил в группу» — иначе на защите сам не найдёшь нужный слой."},
+  {q:"Финальный урок Photoshop заканчивается…",
+   a:["Контрольной по теории","Защитой: рассказать о фильме и приёмах","Тестом на скорость","Ничем"],c:1,
+   e:"Защита — презентация мастера: фильм, приёмы, что сложно, чем гордишься."},
+
+  {q:"😄 Твой постер выглядит как «склеенные фотки». Первая помощь?",
+   a:["Добавить ещё фоток","Карта градиента одним цветом поверх всего","Сделать ярче всё","Удалить героя"],c:1,
+   e:"Единый цвет мгновенно «спасает» разношёрстный композит."},
+  {q:"😄 Герой на постере будто левитирует над скалой. Что забыл?",
+   a:["Слоган","Тень у ног","Титры","Рамку"],c:1,
+   e:"Без тени объект «парит». Мягкая тень «Умножением» — и он на земле."},
+  {q:"😄 Учитель сказал «небо меняем сами». А ты потянулся к…",
+   a:["…градиентной маске — верно!","…кнопке «Замена неба» — нельзя, это ИИ","…выключить ПК","…позвать соседа"],c:0,
+   e:"На курсе всё вручную: небо — слой + маска, без ИИ-функций."},
+
+  {q:"🤔 Почему один цвет поверх всего важнее, чем идеально вырезать края?",
+   a:["Края не важны","Единый свет/цвет создаёт цельность — глаз прощает мелкие огрехи","Так быстрее сохранять","Для печати"],c:1,
+   e:"Мозг считывает единство по свету и цвету; идеальные края вторичны."},
+  {q:"🤔 Зачем горизонт опускают вниз, а небо делают большим?",
+   a:["Так проще","Небо — главный «актёр» настроения; больше неба = больше драмы","Чтобы уместить титры","Случайно"],c:1,
+   e:"Драматичное небо задаёт эмоцию постера, поэтому ему отдают простор."},
+  {q:"🤔 Как из плоского постера сделать «объёмный» кадр?",
+   a:["Добавить рамку","Разбить на планы: дальнее размыто, герой резкий, передний силуэт не в фокусе","Сделать ярче","Больше текста"],c:1,
+   e:"Разные планы + дымка у горизонта создают ощущение глубины пространства."},
+];
+
+let i=0, score=0, locked=false;
+const app=document.getElementById('app');
+
+function shuffle(){for(let k=QUESTIONS.length-1;k>0;k--){const j=Math.floor(Math.random()*(k+1));[QUESTIONS[k],QUESTIONS[j]]=[QUESTIONS[j],QUESTIONS[k]];}for(const Q of QUESTIONS){const cc=Q.a[Q.c];for(let k=Q.a.length-1;k>0;k--){const j=Math.floor(Math.random()*(k+1));[Q.a[k],Q.a[j]]=[Q.a[j],Q.a[k]];}Q.c=Q.a.indexOf(cc);}}
+shuffle();
+
+function render(){
+  const Q=QUESTIONS[i];
+  app.innerHTML=`
+    <h1>🏆 Постер к фильму</h1>
+    <div class="sub">Викторина по всему модулю Photoshop</div>
+    <div class="bar"><i style="width:${(i/QUESTIONS.length)*100}%"></i></div>
+    <div class="meta"><span>Вопрос ${i+1} из ${QUESTIONS.length}</span><span>⭐ Очки: ${score}</span></div>
+    <div class="q">${Q.q}</div>
+    <div class="opts" id="opts">
+      ${Q.a.map((t,n)=>`<button class="opt" data-n="${n}"><b>${n+1}</b><span>${t}</span></button>`).join('')}
+    </div>
+    <div class="fb" id="fb"></div>
+    <button class="btn" id="next">${i===QUESTIONS.length-1?'Показать результат →':'Следующий вопрос →'}</button>
+    <div class="hint">Можно отвечать клавишами 1–4</div>`;
+  locked=false;
+  document.querySelectorAll('.opt').forEach(b=>b.onclick=()=>choose(+b.dataset.n));
+  document.getElementById('next').onclick=next;
+}
+
+function choose(n){
+  if(locked) return; locked=true;
+  const Q=QUESTIONS[i];
+  const opts=[...document.querySelectorAll('.opt')];
+  opts.forEach(b=>b.disabled=true);
+  opts[Q.c].classList.add('ok');
+  const fb=document.getElementById('fb');
+  if(n===Q.c){ score++; fb.className='fb show good'; fb.textContent='✅ Верно! '+Q.e; }
+  else { opts[n].classList.add('bad'); fb.className='fb show no'; fb.textContent='❌ Не совсем. '+Q.e; }
+  document.querySelector('.meta').children[1].textContent='⭐ Очки: '+score;
+  document.getElementById('next').classList.add('show');
+}
+
+function next(){ i++; if(i<QUESTIONS.length) render(); else result(); }
+
+function result(){
+  const pct=Math.round(score/QUESTIONS.length*100);
+  let em,msg;
+  if(pct===100){em='🏆';msg='Идеально! Ты мастер Photoshop — постер в портфолио! 🎞️';}
+  else if(pct>=70){em='🎉';msg='Отлично! Композит, свет, цвет и текст — под контролем.';}
+  else if(pct>=40){em='👍';msg='Неплохо! Помни: единый свет + единый цвет + композиция на героя.';}
+  else {em='💪';msg='Начало есть! Перечитай про маску неба, единый цвет и правило третей.';}
+  app.innerHTML=`
+    <div class="center">
+      <div class="emoji">${em}</div>
+      <h1>Готово!</h1>
+      <div class="score">${score} / ${QUESTIONS.length}</div>
+      <div class="sub">${msg}</div>
+      <button class="btn show" id="again">🔁 Пройти заново</button>
+    </div>`;
+  document.getElementById('again').onclick=()=>{i=0;score=0;shuffle();render();};
+}
+
+document.addEventListener('keydown',e=>{
+  if(['1','2','3','4'].includes(e.key)){ const b=document.querySelector(`.opt[data-n="${+e.key-1}"]`); if(b&&!b.disabled) choose(+e.key-1); }
+  if(e.key==='Enter'){ const nb=document.getElementById('next'); if(nb&&nb.classList.contains('show')) next(); }
+});
+
+render();
+</script>
+</body>
+</html>
