@@ -1,0 +1,33 @@
+<svg viewBox="0 0 420 500" xmlns="http://www.w3.org/2000/svg">
+  <rect width="420" height="500" fill="#FFFDF9"/>
+  <circle cx="210" cy="215" r="180" fill="#EEF2F8"/>
+  <!-- ears -->
+  <polygon points="120,72 200,160 118,168" fill="#94A3B8" stroke="#334155" stroke-width="6" stroke-linejoin="round"/>
+  <polygon points="300,72 220,160 302,168" fill="#94A3B8" stroke="#334155" stroke-width="6" stroke-linejoin="round"/>
+  <polygon points="140,96 188,158 148,162" fill="#F6A5C0"/>
+  <polygon points="280,96 232,158 272,162" fill="#F6A5C0"/>
+  <!-- head -->
+  <circle cx="210" cy="240" r="120" fill="#94A3B8" stroke="#334155" stroke-width="6"/>
+  <!-- muzzle -->
+  <ellipse cx="210" cy="278" rx="72" ry="52" fill="#E2E8F0"/>
+  <!-- eyes -->
+  <ellipse cx="168" cy="228" rx="20" ry="26" fill="#86C34A"/>
+  <ellipse cx="252" cy="228" rx="20" ry="26" fill="#86C34A"/>
+  <ellipse cx="168" cy="230" rx="7" ry="20" fill="#1E293B"/>
+  <ellipse cx="252" cy="230" rx="7" ry="20" fill="#1E293B"/>
+  <circle cx="174" cy="220" r="4" fill="#fff"/>
+  <circle cx="258" cy="220" r="4" fill="#fff"/>
+  <!-- nose -->
+  <path d="M210,266 C220,266 223,277 210,286 C197,277 200,266 210,266 Z" fill="#F472A0"/>
+  <!-- mouth -->
+  <path d="M210,286 C210,300 196,306 186,298" fill="none" stroke="#334155" stroke-width="4" stroke-linecap="round"/>
+  <path d="M210,286 C210,300 224,306 234,298" fill="none" stroke="#334155" stroke-width="4" stroke-linecap="round"/>
+  <!-- whiskers -->
+  <g stroke="#334155" stroke-width="3" stroke-linecap="round">
+    <line x1="150" y1="272" x2="98" y2="262"/>
+    <line x1="150" y1="282" x2="100" y2="286"/>
+    <line x1="270" y1="272" x2="322" y2="262"/>
+    <line x1="270" y1="282" x2="320" y2="286"/>
+  </g>
+  <text x="210" y="452" font-family="Segoe UI, Arial, sans-serif" font-size="52" font-weight="800" fill="#64748B" text-anchor="middle" letter-spacing="6">МУРКА</text>
+</svg>

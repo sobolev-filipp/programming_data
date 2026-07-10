@@ -1,0 +1,35 @@
+<svg viewBox="0 0 900 280" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="flame" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#FBBF24"/><stop offset="1" stop-color="#F97316"/>
+    </linearGradient>
+  </defs>
+  <rect width="900" height="280" fill="#F5F3FF"/>
+  <g font-family="Segoe UI, Arial, sans-serif" font-size="18" font-weight="700" fill="#5B21B6" text-anchor="middle">
+    <text x="150" y="255">Ракета</text><text x="450" y="255">Планета</text><text x="750" y="255">Звезда</text>
+  </g>
+
+  <!-- РАКЕТА -->
+  <ellipse cx="150" cy="200" rx="15" ry="26" fill="url(#flame)"/>
+  <polygon points="126,80 174,80 174,120 126,120" fill="#F2F2F2"/>
+  <path d="M126,120 v40 a24,24 0 0,0 48,0 v-40 Z" fill="#F2F2F2"/>
+  <rect x="126" y="80" width="48" height="60" rx="0" fill="#F2F2F2"/>
+  <path d="M126,90 a24,24 0 0,1 48,0 Z" fill="#F2F2F2"/>
+  <polygon points="150,48 176,92 124,92" fill="#EF4444"/>
+  <polygon points="126,150 104,190 126,178" fill="#EF4444"/>
+  <polygon points="174,150 196,190 174,178" fill="#EF4444"/>
+  <circle cx="150" cy="120" r="16" fill="#38BDF8"/>
+  <circle cx="144" cy="114" r="5" fill="#E0F2FE"/>
+
+  <!-- ПЛАНЕТА -->
+  <ellipse cx="450" cy="140" rx="80" ry="24" fill="none" stroke="#FBBF24" stroke-width="8"/>
+  <circle cx="450" cy="130" r="52" fill="#A78BFA"/>
+  <ellipse cx="450" cy="140" rx="80" ry="24" fill="none" stroke="#FBBF24" stroke-width="8" stroke-dasharray="70 200" stroke-dashoffset="118"/>
+  <circle cx="430" cy="115" r="10" fill="#8B5CF6"/>
+  <circle cx="468" cy="140" r="7" fill="#8B5CF6"/>
+  <circle cx="452" cy="108" r="5" fill="#8B5CF6"/>
+
+  <!-- ЗВЕЗДА -->
+  <polygon points="750,72 764,111 807,112 773,137 786,177 750,154 714,177 727,137 693,112 736,111" fill="#FBBF24"/>
+  <polygon points="750,92 758,116 783,116 763,131 770,155 750,141 730,155 737,131 717,116 742,116" fill="#FCD34D"/>
+</svg>

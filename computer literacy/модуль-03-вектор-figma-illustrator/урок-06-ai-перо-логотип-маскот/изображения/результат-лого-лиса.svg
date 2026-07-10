@@ -1,0 +1,27 @@
+<svg viewBox="0 0 420 500" xmlns="http://www.w3.org/2000/svg">
+  <rect width="420" height="500" fill="#FFFDF9"/>
+  <!-- soft badge circle -->
+  <circle cx="210" cy="215" r="180" fill="#FFF3E9"/>
+  <!-- ears (outer) -->
+  <polygon points="120,80 185,168 138,182" fill="#E8703A" stroke="#2B2B2B" stroke-width="6" stroke-linejoin="round"/>
+  <polygon points="300,80 235,168 282,182" fill="#E8703A" stroke="#2B2B2B" stroke-width="6" stroke-linejoin="round"/>
+  <!-- ears inner -->
+  <polygon points="142,110 172,166 150,174" fill="#C85A2A"/>
+  <polygon points="278,110 248,166 270,174" fill="#C85A2A"/>
+  <!-- head -->
+  <path d="M132,158 C100,204 108,264 152,302 C174,322 190,336 210,344 C230,336 246,322 268,302 C312,264 320,204 288,158 C262,130 158,130 132,158 Z"
+        fill="#E8703A" stroke="#2B2B2B" stroke-width="6" stroke-linejoin="round"/>
+  <!-- white muzzle -->
+  <path d="M210,348 C172,348 156,304 164,262 C184,282 236,282 256,262 C264,304 248,348 210,348 Z" fill="#FCF3E7"/>
+  <!-- eyes -->
+  <ellipse cx="171" cy="228" rx="15" ry="19" fill="#2B2B2B"/>
+  <ellipse cx="249" cy="228" rx="15" ry="19" fill="#2B2B2B"/>
+  <circle cx="176" cy="222" r="4" fill="#ffffff"/>
+  <circle cx="254" cy="222" r="4" fill="#ffffff"/>
+  <!-- nose -->
+  <path d="M210,262 C221,262 225,275 210,285 C195,275 199,262 210,262 Z" fill="#2B2B2B"/>
+  <!-- name -->
+  <text x="210" y="452" font-family="Segoe UI, Arial, sans-serif" font-size="56" font-weight="800" fill="#E8703A" text-anchor="middle" letter-spacing="8">ЛИС</text>
+  <!-- axis hint (light dashed) -->
+  <line x1="210" y1="52" x2="210" y2="392" stroke="#F0A97C" stroke-width="1.5" stroke-dasharray="5 6" opacity="0.5"/>
+</svg>

@@ -1,0 +1,45 @@
+<svg viewBox="0 0 940 300" xmlns="http://www.w3.org/2000/svg">
+  <rect width="940" height="300" fill="#F2F8FC"/>
+  <g font-family="Segoe UI, Arial, sans-serif" font-size="18" font-weight="700" fill="#2C5A7A" text-anchor="middle">
+    <text x="130" y="270">Солнце · Соединение</text>
+    <text x="360" y="270">Туча · Соединение</text>
+    <text x="590" y="270">Дождь · Минус верхний</text>
+    <text x="820" y="270">Радуга · Разделение</text>
+  </g>
+
+  <!-- СОЛНЦЕ -->
+  <g fill="#FBBF24">
+    <g>
+      <polygon points="130,32 138,66 122,66"/>
+      <polygon points="130,198 138,164 122,164"/>
+      <polygon points="46,115 80,123 80,107"/>
+      <polygon points="214,115 180,123 180,107"/>
+      <polygon points="70,55 96,78 84,90"/>
+      <polygon points="190,55 164,78 176,90"/>
+      <polygon points="70,175 96,152 84,140"/>
+      <polygon points="190,175 164,152 176,140"/>
+    </g>
+    <circle cx="130" cy="115" r="46"/>
+  </g>
+
+  <!-- ТУЧА -->
+  <g fill="#DCE6EE" stroke="#B8C7D4" stroke-width="3">
+    <path d="M312,150 a30,30 0 0,1 8,-58 a34,34 0 0,1 64,-6 a28,28 0 0,1 26,64 Z"/>
+  </g>
+
+  <!-- ДОЖДЬ-ОБЛАКО -->
+  <path d="M542,132 a28,28 0 0,1 8,-54 a32,32 0 0,1 60,-6 a26,26 0 0,1 24,60 Z" fill="#B8C4CC" stroke="#93A2AD" stroke-width="3"/>
+  <g fill="#38BDF8">
+    <path d="M560,150 q-8,14 0,20 q8,-6 0,-20 Z"/>
+    <path d="M590,150 q-8,14 0,20 q8,-6 0,-20 Z"/>
+    <path d="M620,150 q-8,14 0,20 q8,-6 0,-20 Z"/>
+  </g>
+
+  <!-- РАДУГА -->
+  <g fill="none" stroke-width="12" stroke-linecap="round">
+    <path d="M760,175 A60,60 0 0,1 880,175" stroke="#E8524A"/>
+    <path d="M775,175 A45,45 0 0,1 865,175" stroke="#FBBF24"/>
+    <path d="M790,175 A30,30 0 0,1 850,175" stroke="#86C34A"/>
+    <path d="M805,175 A15,15 0 0,1 835,175" stroke="#38BDF8"/>
+  </g>
+</svg>

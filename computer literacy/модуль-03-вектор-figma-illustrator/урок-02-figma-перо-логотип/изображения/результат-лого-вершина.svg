@@ -1,0 +1,22 @@
+<svg viewBox="0 0 380 470" xmlns="http://www.w3.org/2000/svg">
+  <rect width="380" height="470" fill="#FFFDF9"/>
+  <defs>
+    <clipPath id="badge"><circle cx="190" cy="180" r="150"/></clipPath>
+  </defs>
+  <!-- badge base -->
+  <circle cx="190" cy="180" r="150" fill="#0F766E"/>
+  <!-- content clipped -->
+  <g clip-path="url(#badge)">
+    <circle cx="190" cy="150" r="40" fill="#FBBF24"/>
+    <polygon points="40,250 110,150 158,215 210,135 280,225 340,255 340,340 40,340" fill="#ECFEFF"/>
+    <polygon points="110,150 158,215 130,215" fill="#CBEBF0"/>
+    <polygon points="210,135 280,225 245,225" fill="#CBEBF0"/>
+    <path d="M190,235 C168,258 212,278 190,300 C172,320 208,332 190,352" fill="none" stroke="#67E8F9" stroke-width="10" stroke-linecap="round"/>
+  </g>
+  <!-- ring -->
+  <circle cx="190" cy="180" r="150" fill="none" stroke="#FDE68A" stroke-width="9"/>
+  <circle cx="190" cy="180" r="138" fill="none" stroke="#0B5A54" stroke-width="3"/>
+  <!-- name -->
+  <text x="190" y="415" font-family="Segoe UI, Arial, sans-serif" font-size="46" font-weight="800" fill="#0F766E" text-anchor="middle" letter-spacing="8">ВЕРШИНА</text>
+  <text x="190" y="445" font-family="Segoe UI, Arial, sans-serif" font-size="15" font-weight="600" fill="#94A3B8" text-anchor="middle" letter-spacing="6">MOUNTAIN CLUB</text>
+</svg>
