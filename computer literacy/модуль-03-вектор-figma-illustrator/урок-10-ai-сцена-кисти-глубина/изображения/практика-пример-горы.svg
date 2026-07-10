@@ -1,0 +1,29 @@
+<svg viewBox="0 0 700 460" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="msky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#F9B4A6"/><stop offset="0.55" stop-color="#FFD3A6"/><stop offset="1" stop-color="#FFF0D6"/>
+    </linearGradient>
+    <radialGradient id="msun" cx="0.5" cy="0.5" r="0.5"><stop offset="0" stop-color="#FFF3C4"/><stop offset="1" stop-color="#FFE196"/></radialGradient>
+  </defs>
+  <rect width="700" height="460" fill="url(#msky)"/>
+  <circle cx="360" cy="230" r="52" fill="url(#msun)"/>
+
+  <!-- hill planes: far (pale) -> near (dark) -->
+  <path d="M0,250 C120,205 220,235 340,215 C470,193 560,235 700,210 L700,460 L0,460 Z" fill="#F1C6CB"/>
+  <path d="M0,300 C130,262 250,295 360,272 C480,247 590,295 700,268 L700,460 L0,460 Z" fill="#D7A6C0"/>
+  <path d="M0,350 C140,318 240,348 360,330 C500,308 600,350 700,326 L700,460 L0,460 Z" fill="#A87FA8"/>
+  <path d="M0,398 C120,372 260,400 380,384 C520,366 610,398 700,380 L700,460 L0,460 Z" fill="#75608E"/>
+
+  <!-- foreground trees (silhouettes) -->
+  <g fill="#4A3C68">
+    <polygon points="120,432 138,388 156,432"/><polygon points="122,420 138,380 154,420"/><rect x="134" y="430" width="8" height="14"/>
+    <polygon points="560,436 582,382 604,436"/><polygon points="562,422 582,374 602,422"/><rect x="578" y="434" width="8" height="16"/>
+  </g>
+
+  <!-- birds -->
+  <g fill="none" stroke="#8A5B6B" stroke-width="2.5" stroke-linecap="round" opacity="0.7">
+    <path d="M250,120 q7,-7 14,0 q7,-7 14,0"/><path d="M460,140 q6,-6 12,0 q6,-6 12,0"/>
+  </g>
+
+  <text x="350" y="446" font-family="Segoe UI, Arial, sans-serif" font-size="17" font-weight="700" fill="#5A4468" text-anchor="middle">Горы на рассвете · планы: дальние бледные — ближние тёмные</text>
+</svg>

@@ -1,0 +1,49 @@
+<svg viewBox="0 0 500 540" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <radialGradient id="pbody" cx="0.42" cy="0.26" r="0.9">
+      <stop offset="0" stop-color="#5A5F66"/><stop offset="0.55" stop-color="#2E3238"/><stop offset="1" stop-color="#15171A"/>
+    </radialGradient>
+    <linearGradient id="pbelly" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#FFFFFF"/><stop offset="1" stop-color="#E3E1D8"/>
+    </linearGradient>
+    <linearGradient id="pbeak" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#FFC24D"/><stop offset="1" stop-color="#EC8F15"/>
+    </linearGradient>
+    <radialGradient id="pshad" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0" stop-color="#1E293B" stop-opacity="0.28"/><stop offset="1" stop-color="#1E293B" stop-opacity="0"/>
+    </radialGradient>
+    <clipPath id="pclip"><path d="M250,116 C332,116 364,208 364,300 C364,398 316,448 250,448 C184,448 136,398 136,300 C136,208 168,116 250,116 Z"/></clipPath>
+  </defs>
+  <rect width="500" height="540" fill="#EAF2F8"/>
+  <ellipse cx="250" cy="498" rx="132" ry="22" fill="url(#pshad)"/>
+
+  <!-- webbed feet -->
+  <path d="M184,456 C182,472 188,482 197,481 C201,487 209,487 213,481 C217,487 225,487 229,481 C238,482 244,472 242,456 Z" fill="url(#pbeak)"/>
+  <path d="M258,456 C256,472 262,482 271,481 C275,487 283,487 287,481 C291,487 299,487 303,481 C312,482 318,472 316,456 Z" fill="url(#pbeak)"/>
+
+  <!-- body -->
+  <path d="M250,116 C332,116 364,208 364,300 C364,398 316,448 250,448 C184,448 136,398 136,300 C136,208 168,116 250,116 Z" fill="url(#pbody)"/>
+
+  <!-- flippers -->
+  <path d="M160,238 C126,246 116,322 140,374 C152,352 162,300 170,252 Z" fill="url(#pbody)"/>
+  <path d="M340,238 C374,246 384,322 360,374 C348,352 338,300 330,252 Z" fill="url(#pbody)"/>
+
+  <!-- big white belly (clipped to body) -->
+  <g clip-path="url(#pclip)"><ellipse cx="250" cy="340" rx="104" ry="140" fill="url(#pbelly)"/></g>
+
+  <!-- blush -->
+  <ellipse cx="188" cy="238" rx="16" ry="10" fill="#F6A5C0" opacity="0.5"/>
+  <ellipse cx="312" cy="238" rx="16" ry="10" fill="#F6A5C0" opacity="0.5"/>
+
+  <!-- eyes (close-set, on black head cap) -->
+  <ellipse cx="222" cy="196" rx="25" ry="29" fill="#ffffff"/>
+  <ellipse cx="278" cy="196" rx="25" ry="29" fill="#ffffff"/>
+  <circle cx="228" cy="204" r="13" fill="#22262B"/>
+  <circle cx="272" cy="204" r="13" fill="#22262B"/>
+  <circle cx="223" cy="198" r="5" fill="#ffffff"/>
+  <circle cx="267" cy="198" r="5" fill="#ffffff"/>
+
+  <!-- beak -->
+  <path d="M250,220 L273,240 L250,266 L227,240 Z" fill="url(#pbeak)"/>
+  <path d="M250,243 L273,240 L250,266 L227,240 Z" fill="#000000" opacity="0.12"/>
+</svg>

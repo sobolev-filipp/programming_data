@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Викторина — Персонаж из фигур</title>
+<style>
+  :root{
+    --bg1:#2E3238; --bg2:#6C5FA6; --card:#ffffff; --ink:#1e293b;
+    --accent:#6C5FA6; --ok:#16a34a; --bad:#dc2626; --soft:#ede9fe;
+  }
+  *{box-sizing:border-box;font-family:"Segoe UI",system-ui,sans-serif}
+  body{margin:0;min-height:100vh;display:flex;align-items:center;justify-content:center;
+    background:linear-gradient(135deg,var(--bg1),var(--bg2));padding:20px;color:var(--ink)}
+  .app{background:var(--card);width:min(760px,100%);border-radius:24px;
+    box-shadow:0 25px 60px rgba(0,0,0,.35);padding:34px 34px 28px;position:relative;overflow:hidden}
+  h1{margin:0 0 6px;font-size:26px;text-align:center}
+  .sub{text-align:center;color:#64748b;margin-bottom:22px;font-size:15px}
+  .bar{height:10px;background:var(--soft);border-radius:99px;overflow:hidden;margin-bottom:18px}
+  .bar>i{display:block;height:100%;width:0;background:var(--accent);transition:.4s}
+  .meta{display:flex;justify-content:space-between;font-size:14px;color:#64748b;margin-bottom:14px}
+  .q{font-size:22px;font-weight:700;margin:6px 0 20px;line-height:1.3}
+  .opts{display:grid;gap:12px}
+  .opt{border:2px solid #e2e8f0;background:#fff;border-radius:14px;padding:15px 18px;font-size:18px;
+    text-align:left;cursor:pointer;transition:.15s;display:flex;align-items:center;gap:12px}
+  .opt:hover{border-color:var(--accent);background:var(--soft);transform:translateY(-2px)}
+  .opt b{background:var(--soft);color:var(--accent);width:30px;height:30px;border-radius:8px;
+    display:flex;align-items:center;justify-content:center;font-size:15px;flex:0 0 auto}
+  .opt.ok{border-color:var(--ok);background:#dcfce7}
+  .opt.ok b{background:var(--ok);color:#fff}
+  .opt.bad{border-color:var(--bad);background:#fee2e2}
+  .opt.bad b{background:var(--bad);color:#fff}
+  .opt:disabled{cursor:default;transform:none}
+  .fb{margin-top:16px;padding:14px 16px;border-radius:12px;font-size:16px;display:none;line-height:1.4}
+  .fb.show{display:block}
+  .fb.good{background:#dcfce7;color:#166534}
+  .fb.no{background:#fee2e2;color:#991b1b}
+  .btn{margin-top:18px;width:100%;padding:15px;border:0;border-radius:14px;background:var(--accent);
+    color:#fff;font-size:18px;font-weight:700;cursor:pointer;display:none}
+  .btn.show{display:block}
+  .btn:hover{filter:brightness(1.08)}
+  .center{text-align:center}
+  .score{font-size:64px;font-weight:800;margin:10px 0}
+  .emoji{font-size:70px}
+  .hint{color:#94a3b8;font-size:13px;text-align:center;margin-top:14px}
+</style>
+</head>
+<body>
+<div class="app" id="app"></div>
+<script>
+const QUESTIONS = [
+  {q:"Из чего собирают кавайного персонажа?",
+   a:["Рисуют от руки","Из простых фигур (кругов и овалов)","Из фото","Из текста"],c:1,
+   e:"Милого героя строят из фигур, а не рисуют «от руки»."},
+  {q:"Как обрезать животик ровно по телу?",
+   a:["Ластиком","Копия тела + «Пересечение»","Обводкой","Просто передвинуть"],c:1,
+   e:"Скопируй тело наверх, выдели с животиком → «Пересечение» — обрежется по силуэту."},
+  {q:"Как сделать второй глаз (крыло, лапку) точно таким же?",
+   a:["Нарисовать заново","«Отражение» (O) → «Копировать»","Скопировать и растянуть","Никак"],c:1,
+   e:"Отражение даёт идеально симметричную парную деталь."},
+  {q:"Что делает лицо героя «милым» (кавай)?",
+   a:["Мелкие глаза-точки","Большие глаза с бликом + всё круглое","Острые углы","Тёмные цвета"],c:1,
+   e:"Крупная голова, большие блестящие глаза, мягкие формы = кавай."},
+  {q:"Как вытянуть «яйцо» из овала (макушку/клюв)?",
+   a:["Инструментом Текст","«Прямым выделением» (A) потянуть точку","Обводкой","Экспортом"],c:1,
+   e:"Белой стрелкой (A) выбираешь точку и тянешь — форма меняется."},
+  {q:"Чем красят тело для объёма?",
+   a:["Плоской заливкой","Радиальным градиентом (свет→тень)","Только чёрным","Обводкой"],c:1,
+   e:"Радиальный градиент даёт округлый объём (из урока 7)."},
+  {q:"Как склеить лапку из трёх овалов-пальчиков?",
+   a:["«Пересечение»","«Соединение» (Обработка контуров)","«Разделение»","Группа"],c:1,
+   e:"«Соединение» сваривает пальчики в цельную перепончатую лапку."},
+  {q:"Что должно быть на оси и рисоваться ОДИН раз?",
+   a:["Крылья","Клюв, животик, макушка (по центру)","Глаза","Лапки"],c:1,
+   e:"Центральные детали не отражают; парные (глаза/крылья) — отражают."},
+  {q:"Как «приклеить» персонажа к поверхности?",
+   a:["Обводкой","Мягкой тенью-эллипсом под ним","Ярким фоном","Никак"],c:1,
+   e:"Тень снизу (радиальная, прозрачная) создаёт опору."},
+  {q:"Как быстро сделать набор эмоций из одного героя?",
+   a:["Рисовать каждого заново","Копия + менять только глаза/рот/бровки","Сменить цвет фона","Увеличить"],c:1,
+   e:"Стикерпак: копируешь героя и правишь только лицо."},
+
+  {q:"😄 Крылья у пингвина получились разные. Что надо было?",
+   a:["Дорисовать на глаз","Отражение → «Копировать»","Стереть одно","Сделать больше"],c:1,
+   e:"Парные детали — только отражением, тогда одинаковые."},
+  {q:"😄 Животик торчит за тело «пузом наружу». Чем убрать?",
+   a:["Уменьшить всё","Обрезать копией тела («Пересечение»)","Перекрасить","Повернуть"],c:1,
+   e:"«Пересечение» обрежет животик ровно по контуру тела."},
+  {q:"😄 Персонаж вышел «злой». В чём частая причина?",
+   a:["Мало цвета","Мелкие глаза и острые углы","Нет обводки","Большой холст"],c:1,
+   e:"Кавай = большие глаза + скруглённые формы. Увеличь глаза, скругли."},
+
+  {q:"🤔 Почему героя собирают из фигур, а не рисуют кистью?",
+   a:["Так медленнее","Фигуры дают ровные формы, симметрию и лёгкую правку","Кисти нет","Для цвета"],c:1,
+   e:"Из фигур герой аккуратный, симметричный и легко редактируется по частям."},
+  {q:"🤔 Зачем сдвигать зрачок чуть вбок/вниз?",
+   a:["Ошибка","Взгляд становится живым и «милым»","Для симметрии","Чтобы ярче"],c:1,
+   e:"Смещённый зрачок + блик дают тот самый «мимишный» взгляд."},
+  {q:"🤔 Почему копию тела держат отдельно во время работы?",
+   a:["Про запас цвета","Она — «нож» для обрезки любых деталей по силуэту","Для веса","Незачем"],c:1,
+   e:"Дубликат тела многократно используют в «Пересечении» для обрезки деталей."},
+];
+
+let i=0, score=0, locked=false;
+const app=document.getElementById('app');
+
+function shuffle(){for(let k=QUESTIONS.length-1;k>0;k--){const j=Math.floor(Math.random()*(k+1));[QUESTIONS[k],QUESTIONS[j]]=[QUESTIONS[j],QUESTIONS[k]];}for(const Q of QUESTIONS){const cc=Q.a[Q.c];for(let k=Q.a.length-1;k>0;k--){const j=Math.floor(Math.random()*(k+1));[Q.a[k],Q.a[j]]=[Q.a[j],Q.a[k]];}Q.c=Q.a.indexOf(cc);}}
+shuffle();
+
+function render(){
+  const Q=QUESTIONS[i];
+  app.innerHTML=`
+    <h1>🐧 Персонаж из фигур</h1>
+    <div class="sub">Викторина по уроку «Кавайный маскот»</div>
+    <div class="bar"><i style="width:${(i/QUESTIONS.length)*100}%"></i></div>
+    <div class="meta"><span>Вопрос ${i+1} из ${QUESTIONS.length}</span><span>⭐ Очки: ${score}</span></div>
+    <div class="q">${Q.q}</div>
+    <div class="opts" id="opts">
+      ${Q.a.map((t,n)=>`<button class="opt" data-n="${n}"><b>${n+1}</b><span>${t}</span></button>`).join('')}
+    </div>
+    <div class="fb" id="fb"></div>
+    <button class="btn" id="next">${i===QUESTIONS.length-1?'Показать результат →':'Следующий вопрос →'}</button>
+    <div class="hint">Можно отвечать клавишами 1–4</div>`;
+  locked=false;
+  document.querySelectorAll('.opt').forEach(b=>b.onclick=()=>choose(+b.dataset.n));
+  document.getElementById('next').onclick=next;
+}
+
+function choose(n){
+  if(locked) return; locked=true;
+  const Q=QUESTIONS[i];
+  const opts=[...document.querySelectorAll('.opt')];
+  opts.forEach(b=>b.disabled=true);
+  opts[Q.c].classList.add('ok');
+  const fb=document.getElementById('fb');
+  if(n===Q.c){ score++; fb.className='fb show good'; fb.textContent='✅ Верно! '+Q.e; }
+  else { opts[n].classList.add('bad'); fb.className='fb show no'; fb.textContent='❌ Не совсем. '+Q.e; }
+  document.querySelector('.meta').children[1].textContent='⭐ Очки: '+score;
+  document.getElementById('next').classList.add('show');
+}
+
+function next(){ i++; if(i<QUESTIONS.length) render(); else result(); }
+
+function result(){
+  const pct=Math.round(score/QUESTIONS.length*100);
+  let em,msg;
+  if(pct===100){em='🏆';msg='Идеально! Ты создатель персонажей! 🐧';}
+  else if(pct>=70){em='🎉';msg='Отлично! Фигуры, обрезка, симметрия и кавай — под контролем.';}
+  else if(pct>=40){em='👍';msg='Неплохо! Помни: из фигур, обрезка «Пересечением», симметрия отражением.';}
+  else {em='💪';msg='Начало есть! Перечитай про сборку из фигур и обрезку.';}
+  app.innerHTML=`
+    <div class="center">
+      <div class="emoji">${em}</div>
+      <h1>Готово!</h1>
+      <div class="score">${score} / ${QUESTIONS.length}</div>
+      <div class="sub">${msg}</div>
+      <button class="btn show" id="again">🔁 Пройти заново</button>
+    </div>`;
+  document.getElementById('again').onclick=()=>{i=0;score=0;shuffle();render();};
+}
+
+document.addEventListener('keydown',e=>{
+  if(['1','2','3','4'].includes(e.key)){ const b=document.querySelector(`.opt[data-n="${+e.key-1}"]`); if(b&&!b.disabled) choose(+e.key-1); }
+  if(e.key==='Enter'){ const nb=document.getElementById('next'); if(nb&&nb.classList.contains('show')) next(); }
+});
+
+render();
+</script>
+</body>
+</html>

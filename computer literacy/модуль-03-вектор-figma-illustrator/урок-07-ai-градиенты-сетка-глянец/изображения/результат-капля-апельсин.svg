@@ -1,0 +1,42 @@
+<svg viewBox="0 0 900 470" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <radialGradient id="water" cx="0.36" cy="0.30" r="0.85">
+      <stop offset="0" stop-color="#DCF3FF"/><stop offset="0.45" stop-color="#58B4E8"/><stop offset="1" stop-color="#1E6FA8"/>
+    </radialGradient>
+    <linearGradient id="wglow" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#ffffff" stop-opacity="0.7"/><stop offset="1" stop-color="#ffffff" stop-opacity="0"/>
+    </linearGradient>
+    <radialGradient id="orange" cx="0.36" cy="0.30" r="0.85">
+      <stop offset="0" stop-color="#FFE9B8"/><stop offset="0.35" stop-color="#F9B23A"/><stop offset="0.8" stop-color="#F5A623"/><stop offset="1" stop-color="#C8741A"/>
+    </radialGradient>
+    <radialGradient id="ohi" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0" stop-color="#FFF7E0" stop-opacity="0.9"/><stop offset="1" stop-color="#FFF7E0" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="leaf" cx="0.35" cy="0.3" r="0.8">
+      <stop offset="0" stop-color="#8ED66B"/><stop offset="1" stop-color="#3E8E3E"/>
+    </radialGradient>
+    <radialGradient id="shad" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0" stop-color="#1E293B" stop-opacity="0.28"/><stop offset="1" stop-color="#1E293B" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="900" height="470" fill="#F5FAFE"/>
+  <text x="230" y="440" font-family="Segoe UI, Arial, sans-serif" font-size="18" font-weight="700" fill="#1E6FA8" text-anchor="middle">Капля · градиенты</text>
+  <text x="665" y="440" font-family="Segoe UI, Arial, sans-serif" font-size="18" font-weight="700" fill="#C8741A" text-anchor="middle">Апельсин · Градиентная сетка</text>
+
+  <!-- КАПЛЯ -->
+  <ellipse cx="230" cy="392" rx="92" ry="17" fill="url(#shad)"/>
+  <path d="M230,95 C265,160 315,210 315,272 C315,326 278,362 230,362 C182,362 145,326 145,272 C145,210 195,160 230,95 Z" fill="url(#water)"/>
+  <ellipse cx="198" cy="215" rx="26" ry="58" fill="url(#wglow)" transform="rotate(-16 198 215)"/>
+  <circle cx="196" cy="178" r="11" fill="#ffffff" opacity="0.85"/>
+
+  <!-- АПЕЛЬСИН -->
+  <ellipse cx="665" cy="378" rx="108" ry="20" fill="url(#shad)"/>
+  <circle cx="665" cy="235" r="118" fill="url(#orange)"/>
+  <ellipse cx="618" cy="188" rx="46" ry="34" fill="url(#ohi)"/>
+  <g fill="#C8741A" opacity="0.28">
+    <circle cx="705" cy="270" r="4"/><circle cx="690" cy="300" r="4"/><circle cx="720" cy="240" r="3.5"/><circle cx="660" cy="315" r="4"/><circle cx="735" cy="285" r="3.5"/><circle cx="700" cy="210" r="3"/>
+  </g>
+  <ellipse cx="665" cy="128" rx="12" ry="7" fill="#B5670F"/>
+  <path d="M672,124 C700,108 726,116 726,116 C716,138 690,136 672,124 Z" fill="url(#leaf)"/>
+  <path d="M676,122 C696,116 716,117 716,117" fill="none" stroke="#2E6E2E" stroke-width="1.5" opacity="0.6"/>
+</svg>

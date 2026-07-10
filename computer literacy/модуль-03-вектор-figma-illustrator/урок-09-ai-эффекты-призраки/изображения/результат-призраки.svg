@@ -1,0 +1,48 @@
+<svg viewBox="0 0 700 460" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="night" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#232C52"/><stop offset="1" stop-color="#161C36"/></linearGradient>
+    <linearGradient id="ghost" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FFFFFF"/><stop offset="1" stop-color="#DDE3F0"/></linearGradient>
+    <radialGradient id="moon" cx="0.4" cy="0.35" r="0.7"><stop offset="0" stop-color="#FDF3C4"/><stop offset="1" stop-color="#F4D06A"/></radialGradient>
+    <g id="spark"><polygon points="0,-12 2.2,-2.2 12,0 2.2,2.2 0,12 -2.2,2.2 -12,0 -2.2,-2.2" fill="#FDE68A"/></g>
+  </defs>
+  <rect width="700" height="460" fill="url(#night)"/>
+  <circle cx="600" cy="90" r="52" fill="url(#moon)"/>
+  <circle cx="582" cy="78" r="12" fill="#EBC65B" opacity="0.5"/>
+  <circle cx="612" cy="108" r="8" fill="#EBC65B" opacity="0.5"/>
+
+  <!-- sparkles -->
+  <use href="#spark" transform="translate(120,90) scale(1.3)"/>
+  <use href="#spark" transform="translate(300,60) scale(0.8)"/>
+  <use href="#spark" transform="translate(470,180) scale(1.0)"/>
+  <use href="#spark" transform="translate(60,240) scale(0.7)"/>
+  <use href="#spark" transform="translate(660,300) scale(0.9)"/>
+  <use href="#spark" transform="translate(360,300) scale(0.6)"/>
+
+  <!-- GHOST 1 (big) -->
+  <g transform="translate(70,150)">
+    <path d="M12,72 C12,10 128,10 128,72 L128,150 q-14.5,24 -29,0 q-14.5,24 -29,0 q-14.5,24 -29,0 q-14.5,24 -29,0 Z" fill="url(#ghost)"/>
+    <ellipse cx="52" cy="72" rx="7" ry="11" fill="#2A2E45"/>
+    <ellipse cx="88" cy="72" rx="7" ry="11" fill="#2A2E45"/>
+    <ellipse cx="70" cy="98" rx="8" ry="10" fill="#2A2E45"/>
+    <ellipse cx="38" cy="92" rx="9" ry="6" fill="#F6A5C0" opacity="0.55"/>
+    <ellipse cx="102" cy="92" rx="9" ry="6" fill="#F6A5C0" opacity="0.55"/>
+  </g>
+
+  <!-- GHOST 2 (medium, surprised) -->
+  <g transform="translate(430,190) scale(0.82)">
+    <path d="M12,72 C12,10 128,10 128,72 L128,150 q-14.5,24 -29,0 q-14.5,24 -29,0 q-14.5,24 -29,0 q-14.5,24 -29,0 Z" fill="url(#ghost)"/>
+    <ellipse cx="52" cy="70" rx="7" ry="9" fill="#2A2E45"/>
+    <ellipse cx="88" cy="70" rx="7" ry="9" fill="#2A2E45"/>
+    <circle cx="70" cy="100" r="10" fill="#2A2E45"/>
+  </g>
+
+  <!-- GHOST 3 (small, back) -->
+  <g transform="translate(300,120) scale(0.55)">
+    <path d="M12,72 C12,10 128,10 128,72 L128,150 q-14.5,24 -29,0 q-14.5,24 -29,0 q-14.5,24 -29,0 q-14.5,24 -29,0 Z" fill="url(#ghost)" opacity="0.92"/>
+    <ellipse cx="52" cy="72" rx="7" ry="10" fill="#2A2E45"/>
+    <ellipse cx="88" cy="72" rx="7" ry="10" fill="#2A2E45"/>
+    <path d="M60,96 Q70,104 80,96" fill="none" stroke="#2A2E45" stroke-width="5" stroke-linecap="round"/>
+  </g>
+
+  <text x="350" y="440" font-family="Segoe UI, Arial, sans-serif" font-size="18" font-weight="700" fill="#C7CEEA" text-anchor="middle">Волнистый низ — эффект «Зигзаг» · искры — эффект «Втягивание»</text>
+</svg>
