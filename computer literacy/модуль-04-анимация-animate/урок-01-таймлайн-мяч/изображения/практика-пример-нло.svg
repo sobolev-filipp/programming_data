@@ -1,0 +1,37 @@
+<svg viewBox="0 0 800 400" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#1B1150"/><stop offset="1" stop-color="#2E1A6B"/></linearGradient>
+    <radialGradient id="saucer" cx="0.5" cy="0.3" r="0.8"><stop offset="0" stop-color="#CBD5E1"/><stop offset="1" stop-color="#64748B"/></radialGradient>
+    <radialGradient id="dome" cx="0.4" cy="0.3" r="0.8"><stop offset="0" stop-color="#A5F3FC"/><stop offset="1" stop-color="#22D3EE"/></radialGradient>
+    <radialGradient id="beam" cx="0.5" cy="0" r="0.9"><stop offset="0" stop-color="#67E8F9" stop-opacity="0.55"/><stop offset="1" stop-color="#67E8F9" stop-opacity="0"/></radialGradient>
+  </defs>
+  <rect width="800" height="400" fill="url(#sky)"/>
+  <!-- stars -->
+  <g fill="#E0E7FF">
+    <circle cx="120" cy="70" r="2"/><circle cx="300" cy="50" r="2.5"/><circle cx="520" cy="90" r="2"/><circle cx="680" cy="60" r="2.5"/><circle cx="220" cy="130" r="1.8"/><circle cx="600" cy="150" r="1.8"/><circle cx="740" cy="120" r="2"/>
+    <animate attributeName="opacity" values="0.6;1;0.6" dur="2.5s" repeatCount="indefinite"/>
+  </g>
+
+  <!-- UFO glides across (horizontal) with a gentle bob -->
+  <g>
+    <animateTransform attributeName="transform" type="translate" values="90 150;710 120;90 150" keyTimes="0;0.5;1" dur="6s" repeatCount="indefinite" calcMode="spline" keySplines="0.45 0 0.55 1;0.45 0 0.55 1"/>
+    <g>
+      <animateTransform attributeName="transform" type="translate" values="0 0;0 -14;0 0;0 10;0 0" dur="2s" repeatCount="indefinite"/>
+      <!-- beam -->
+      <polygon points="0,20 -70,150 70,150" fill="url(#beam)">
+        <animate attributeName="opacity" values="0.5;0.9;0.5" dur="1.2s" repeatCount="indefinite"/>
+      </polygon>
+      <!-- saucer -->
+      <ellipse cx="0" cy="14" rx="80" ry="24" fill="url(#saucer)"/>
+      <!-- dome -->
+      <path d="M-38,8 A38,30 0 0,1 38,8 Z" fill="url(#dome)"/>
+      <!-- lights -->
+      <circle cx="-52" cy="16" r="6" fill="#FDE047"><animate attributeName="opacity" values="1;0.2;1" dur="0.8s" repeatCount="indefinite"/></circle>
+      <circle cx="-18" cy="22" r="6" fill="#F472B6"><animate attributeName="opacity" values="0.2;1;0.2" dur="0.8s" repeatCount="indefinite"/></circle>
+      <circle cx="18" cy="22" r="6" fill="#FDE047"><animate attributeName="opacity" values="1;0.2;1" dur="0.8s" begin="0.2s" repeatCount="indefinite"/></circle>
+      <circle cx="52" cy="16" r="6" fill="#F472B6"><animate attributeName="opacity" values="0.2;1;0.2" dur="0.8s" begin="0.2s" repeatCount="indefinite"/></circle>
+    </g>
+  </g>
+
+  <text x="400" y="378" font-family="Segoe UI, Arial, sans-serif" font-size="18" font-weight="700" fill="#C7CEEA" text-anchor="middle">🚀 Летающий объект: символ + анимация движения по сцене</text>
+</svg>
