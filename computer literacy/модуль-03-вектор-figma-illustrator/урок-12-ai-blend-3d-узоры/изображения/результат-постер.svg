@@ -1,0 +1,56 @@
+<svg viewBox="0 0 500 650" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <pattern id="dots12" width="26" height="26" patternUnits="userSpaceOnUse">
+      <circle cx="13" cy="13" r="3" fill="#8B5CF6"/>
+    </pattern>
+    <radialGradient id="coin" cx="0.4" cy="0.35" r="0.7"><stop offset="0" stop-color="#FEF08A"/><stop offset="1" stop-color="#EAB308"/></radialGradient>
+  </defs>
+  <rect width="500" height="650" fill="#1E1B4B"/>
+  <rect width="500" height="650" fill="url(#dots12)" opacity="0.22"/>
+
+  <!-- sunburst rays (Blend look) around center (250,250) -->
+  <g fill="#FDE047" opacity="0.9">
+    <polygon points="250,250 234,-160 266,-160"/>
+    <polygon points="250,250 234,-160 266,-160" transform="rotate(30 250 250)"/>
+    <polygon points="250,250 234,-160 266,-160" transform="rotate(60 250 250)"/>
+    <polygon points="250,250 234,-160 266,-160" transform="rotate(90 250 250)"/>
+    <polygon points="250,250 234,-160 266,-160" transform="rotate(120 250 250)"/>
+    <polygon points="250,250 234,-160 266,-160" transform="rotate(150 250 250)"/>
+    <polygon points="250,250 234,-160 266,-160" transform="rotate(180 250 250)"/>
+    <polygon points="250,250 234,-160 266,-160" transform="rotate(210 250 250)"/>
+    <polygon points="250,250 234,-160 266,-160" transform="rotate(240 250 250)"/>
+    <polygon points="250,250 234,-160 266,-160" transform="rotate(270 250 250)"/>
+    <polygon points="250,250 234,-160 266,-160" transform="rotate(300 250 250)"/>
+    <polygon points="250,250 234,-160 266,-160" transform="rotate(330 250 250)"/>
+  </g>
+  <circle cx="250" cy="250" r="150" fill="#F59E0B" opacity="0.25"/>
+
+  <!-- 3D title "СТАРТ" (extrude via offset copies) -->
+  <g font-family="Arial Black, Segoe UI, sans-serif" font-weight="900" font-size="96" text-anchor="middle">
+    <text x="250" y="298" fill="#701A45">СТАРТ</text>
+    <text x="250" y="296" fill="#831843">СТАРТ</text>
+    <text x="250" y="294" fill="#9D174D">СТАРТ</text>
+    <text x="250" y="292" fill="#BE185D">СТАРТ</text>
+    <text x="250" y="290" fill="#EC4899">СТАРТ</text>
+    <text x="250" y="290" fill="none" stroke="#FCE7F3" stroke-width="1.5">СТАРТ</text>
+  </g>
+
+  <!-- coins row (Blend look) -->
+  <g stroke="#B45309" stroke-width="2">
+    <circle cx="120" cy="500" r="20" fill="url(#coin)"/>
+    <circle cx="163" cy="500" r="20" fill="url(#coin)"/>
+    <circle cx="206" cy="500" r="20" fill="url(#coin)"/>
+    <circle cx="249" cy="500" r="20" fill="url(#coin)"/>
+    <circle cx="292" cy="500" r="20" fill="url(#coin)"/>
+    <circle cx="335" cy="500" r="20" fill="url(#coin)"/>
+    <circle cx="378" cy="500" r="20" fill="url(#coin)"/>
+  </g>
+
+  <!-- stars -->
+  <g fill="#FDE047">
+    <polygon points="70,110 78,134 103,134 83,149 90,173 70,158 50,173 57,149 37,134 62,134"/>
+    <polygon points="430,150 436,168 455,168 440,179 445,197 430,186 415,197 420,179 405,168 424,168"/>
+  </g>
+
+  <text x="250" y="600" font-family="Segoe UI, Arial, sans-serif" font-size="26" font-weight="800" fill="#A5B4FC" text-anchor="middle" letter-spacing="6">PRESS START</text>
+</svg>

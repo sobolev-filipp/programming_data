@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Викторина — Переходы, 3D и узоры</title>
+<style>
+  :root{
+    --bg1:#1E1B4B; --bg2:#EC4899; --card:#ffffff; --ink:#1e293b;
+    --accent:#7c3aed; --ok:#16a34a; --bad:#dc2626; --soft:#ede9fe;
+  }
+  *{box-sizing:border-box;font-family:"Segoe UI",system-ui,sans-serif}
+  body{margin:0;min-height:100vh;display:flex;align-items:center;justify-content:center;
+    background:linear-gradient(135deg,var(--bg1),var(--bg2));padding:20px;color:var(--ink)}
+  .app{background:var(--card);width:min(760px,100%);border-radius:24px;
+    box-shadow:0 25px 60px rgba(0,0,0,.35);padding:34px 34px 28px;position:relative;overflow:hidden}
+  h1{margin:0 0 6px;font-size:26px;text-align:center}
+  .sub{text-align:center;color:#64748b;margin-bottom:22px;font-size:15px}
+  .bar{height:10px;background:var(--soft);border-radius:99px;overflow:hidden;margin-bottom:18px}
+  .bar>i{display:block;height:100%;width:0;background:var(--accent);transition:.4s}
+  .meta{display:flex;justify-content:space-between;font-size:14px;color:#64748b;margin-bottom:14px}
+  .q{font-size:22px;font-weight:700;margin:6px 0 20px;line-height:1.3}
+  .opts{display:grid;gap:12px}
+  .opt{border:2px solid #e2e8f0;background:#fff;border-radius:14px;padding:15px 18px;font-size:18px;
+    text-align:left;cursor:pointer;transition:.15s;display:flex;align-items:center;gap:12px}
+  .opt:hover{border-color:var(--accent);background:var(--soft);transform:translateY(-2px)}
+  .opt b{background:var(--soft);color:var(--accent);width:30px;height:30px;border-radius:8px;
+    display:flex;align-items:center;justify-content:center;font-size:15px;flex:0 0 auto}
+  .opt.ok{border-color:var(--ok);background:#dcfce7}
+  .opt.ok b{background:var(--ok);color:#fff}
+  .opt.bad{border-color:var(--bad);background:#fee2e2}
+  .opt.bad b{background:var(--bad);color:#fff}
+  .opt:disabled{cursor:default;transform:none}
+  .fb{margin-top:16px;padding:14px 16px;border-radius:12px;font-size:16px;display:none;line-height:1.4}
+  .fb.show{display:block}
+  .fb.good{background:#dcfce7;color:#166534}
+  .fb.no{background:#fee2e2;color:#991b1b}
+  .btn{margin-top:18px;width:100%;padding:15px;border:0;border-radius:14px;background:var(--accent);
+    color:#fff;font-size:18px;font-weight:700;cursor:pointer;display:none}
+  .btn.show{display:block}
+  .btn:hover{filter:brightness(1.08)}
+  .center{text-align:center}
+  .score{font-size:64px;font-weight:800;margin:10px 0}
+  .emoji{font-size:70px}
+  .hint{color:#94a3b8;font-size:13px;text-align:center;margin-top:14px}
+</style>
+</head>
+<body>
+<div class="app" id="app"></div>
+<script>
+const QUESTIONS = [
+  {q:"Что делает «Переход» (Blend)?",
+   a:["Меняет цвет фона","Из двух фигур рисует все промежуточные","Режет фигуру","Экспортирует"],c:1,
+   e:"Blend клонирует «между»: 2 фигуры → веер, ряд, гирлянда, свечение."},
+  {q:"Как создать Переход?",
+   a:["Ctrl+S","Выделить 2 фигуры → Объект → Переход → Создать","Двойной клик","Эффект → 3D"],c:1,
+   e:"Alt+Ctrl+B. Число элементов задаётся в «Параметрах перехода»."},
+  {q:"Какие «Интервалы» нужны для ОТДЕЛЬНЫХ лучей/монеток?",
+   a:["Плавный цвет","Заданное число шагов","Заданное расстояние = 0","Любые"],c:1,
+   e:"«Число шагов» даёт отдельные копии; «Плавный цвет» — мутный градиент."},
+  {q:"Чем сделать объёмные буквы?",
+   a:["Переходом","Эффект → 3D → Выдавливание","Узором","Обводкой"],c:1,
+   e:"3D-выдавливание добавляет буквам боковую грань — объём."},
+  {q:"Какая глубина выдавливания разумна?",
+   a:["300 (побольше)","60–90","0","1000"],c:1,
+   e:"Небольшая глубина читается; 300 — «каша». Смотри превью."},
+  {q:"Что такое узор (Pattern)?",
+   a:["Один большой рисунок","Фигура, размноженная сеткой (повтор)","Градиент","Тень"],c:1,
+   e:"Узор — плитка, повторяющаяся по всему полю; применяется как заливка."},
+  {q:"Как сделать лучи ВЕЕРОМ, а не стопкой?",
+   a:["Двигать по прямой","Копию повернуть вокруг центра, потом Переход","Больше шагов","Ярче"],c:1,
+   e:"Blend идёт между фигурами; поворот копии вокруг центра даёт дугу-веер."},
+  {q:"Каким должен быть узор-фон?",
+   a:["Ярким на весь экран","Бледным (это фон, не главное)","Чёрным","Огромным"],c:1,
+   e:"Узор — подложка; держи его тихим, чтобы не спорил с заголовком."},
+  {q:"Эффект 3D — живой или намертво?",
+   a:["Намертво","Живой (в «Внешний вид»), правится в любой момент","Только чёрный","Нельзя менять"],c:1,
+   e:"Двойной клик по эффекту в «Внешний вид» — меняешь угол/глубину."},
+  {q:"Что сделать перед экспортом со сложным 3D/узором?",
+   a:["Ничего","Разобрать оформление (надёжнее)","Удалить фон","Сменить шрифт"],c:1,
+   e:"Тогда вид в файле точно совпадёт с экраном."},
+
+  {q:"😄 Нарисовал 12 лучей вручную и устал. Как надо было?",
+   a:["Нарисовать ещё","2 луча → Переход (Blend)","Скопировать 12 раз","Забить"],c:1,
+   e:"Blend делает все промежуточные из двух фигур."},
+  {q:"😄 Лучи вышли мутным пятном вместо полосок. Что переключить?",
+   a:["Цвет","Интервалы на «Число шагов»","Размер","Шрифт"],c:1,
+   e:"«Плавный цвет» размывает; для лучей — «Число шагов»."},
+  {q:"😄 3D-буквы «взорвались» в кашу. Причина?",
+   a:["Мало цвета","Глубина 300 — уменьшить до 60–90","Мелкий шрифт","Нет узора"],c:1,
+   e:"Слишком большая глубина выдавливания. Убавь."},
+
+  {q:"🤔 Почему Blend удобнее ручного копирования для ряда?",
+   a:["Он ярче","Живой: двигаешь крайнюю фигуру — весь ряд пересчитывается","Только он умеет цвет","Быстрее грузит"],c:1,
+   e:"Меняешь 2 опорные фигуры — вся серия обновляется автоматически."},
+  {q:"🤔 Зачем узор держать бледным, а заголовок ярким?",
+   a:["Каприз","Иерархия: главное (заголовок) должно «кричать», фон — молчать","Для веса","Наоборот нужно"],c:1,
+   e:"Контраст важности ведёт взгляд к главному."},
+  {q:"🤔 Blend «Плавный цвет» между тёмной и светлой линией — что это даёт?",
+   a:["Ничего","Свечение/неон (плавный переход тона)","Ряд копий","Узор"],c:1,
+   e:"Плавный цветовой переход читается как мягкое свечение."},
+];
+
+let i=0, score=0, locked=false;
+const app=document.getElementById('app');
+
+function shuffle(){for(let k=QUESTIONS.length-1;k>0;k--){const j=Math.floor(Math.random()*(k+1));[QUESTIONS[k],QUESTIONS[j]]=[QUESTIONS[j],QUESTIONS[k]];}for(const Q of QUESTIONS){const cc=Q.a[Q.c];for(let k=Q.a.length-1;k>0;k--){const j=Math.floor(Math.random()*(k+1));[Q.a[k],Q.a[j]]=[Q.a[j],Q.a[k]];}Q.c=Q.a.indexOf(cc);}}
+shuffle();
+
+function render(){
+  const Q=QUESTIONS[i];
+  app.innerHTML=`
+    <h1>🕹️ Переходы, 3D и узоры</h1>
+    <div class="sub">Викторина по уроку «Аркадный постер»</div>
+    <div class="bar"><i style="width:${(i/QUESTIONS.length)*100}%"></i></div>
+    <div class="meta"><span>Вопрос ${i+1} из ${QUESTIONS.length}</span><span>⭐ Очки: ${score}</span></div>
+    <div class="q">${Q.q}</div>
+    <div class="opts" id="opts">
+      ${Q.a.map((t,n)=>`<button class="opt" data-n="${n}"><b>${n+1}</b><span>${t}</span></button>`).join('')}
+    </div>
+    <div class="fb" id="fb"></div>
+    <button class="btn" id="next">${i===QUESTIONS.length-1?'Показать результат →':'Следующий вопрос →'}</button>
+    <div class="hint">Можно отвечать клавишами 1–4</div>`;
+  locked=false;
+  document.querySelectorAll('.opt').forEach(b=>b.onclick=()=>choose(+b.dataset.n));
+  document.getElementById('next').onclick=next;
+}
+
+function choose(n){
+  if(locked) return; locked=true;
+  const Q=QUESTIONS[i];
+  const opts=[...document.querySelectorAll('.opt')];
+  opts.forEach(b=>b.disabled=true);
+  opts[Q.c].classList.add('ok');
+  const fb=document.getElementById('fb');
+  if(n===Q.c){ score++; fb.className='fb show good'; fb.textContent='✅ Верно! '+Q.e; }
+  else { opts[n].classList.add('bad'); fb.className='fb show no'; fb.textContent='❌ Не совсем. '+Q.e; }
+  document.querySelector('.meta').children[1].textContent='⭐ Очки: '+score;
+  document.getElementById('next').classList.add('show');
+}
+
+function next(){ i++; if(i<QUESTIONS.length) render(); else result(); }
+
+function result(){
+  const pct=Math.round(score/QUESTIONS.length*100);
+  let em,msg;
+  if(pct===100){em='🏆';msg='Идеально! Blend, 3D и узоры — твои! 🕹️';}
+  else if(pct>=70){em='🎉';msg='Отлично! Переход, объём и повтор — под контролем.';}
+  else if(pct>=40){em='👍';msg='Неплохо! Помни: Blend «Число шагов», 3D-глубина 60–90, узор бледный.';}
+  else {em='💪';msg='Начало есть! Перечитай про Переход, 3D и узоры.';}
+  app.innerHTML=`
+    <div class="center">
+      <div class="emoji">${em}</div>
+      <h1>Готово!</h1>
+      <div class="score">${score} / ${QUESTIONS.length}</div>
+      <div class="sub">${msg}</div>
+      <button class="btn show" id="again">🔁 Пройти заново</button>
+    </div>`;
+  document.getElementById('again').onclick=()=>{i=0;score=0;shuffle();render();};
+}
+
+document.addEventListener('keydown',e=>{
+  if(['1','2','3','4'].includes(e.key)){ const b=document.querySelector(`.opt[data-n="${+e.key-1}"]`); if(b&&!b.disabled) choose(+e.key-1); }
+  if(e.key==='Enter'){ const nb=document.getElementById('next'); if(nb&&nb.classList.contains('show')) next(); }
+});
+
+render();
+</script>
+</body>
+</html>

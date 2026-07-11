@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Викторина — Трассировка и поп-арт</title>
+<style>
+  :root{
+    --bg1:#DB2777; --bg2:#22D3EE; --card:#ffffff; --ink:#1e293b;
+    --accent:#c026d3; --ok:#16a34a; --bad:#dc2626; --soft:#fae8ff;
+  }
+  *{box-sizing:border-box;font-family:"Segoe UI",system-ui,sans-serif}
+  body{margin:0;min-height:100vh;display:flex;align-items:center;justify-content:center;
+    background:linear-gradient(135deg,var(--bg1),var(--bg2));padding:20px;color:var(--ink)}
+  .app{background:var(--card);width:min(760px,100%);border-radius:24px;
+    box-shadow:0 25px 60px rgba(0,0,0,.35);padding:34px 34px 28px;position:relative;overflow:hidden}
+  h1{margin:0 0 6px;font-size:26px;text-align:center}
+  .sub{text-align:center;color:#64748b;margin-bottom:22px;font-size:15px}
+  .bar{height:10px;background:var(--soft);border-radius:99px;overflow:hidden;margin-bottom:18px}
+  .bar>i{display:block;height:100%;width:0;background:var(--accent);transition:.4s}
+  .meta{display:flex;justify-content:space-between;font-size:14px;color:#64748b;margin-bottom:14px}
+  .q{font-size:22px;font-weight:700;margin:6px 0 20px;line-height:1.3}
+  .opts{display:grid;gap:12px}
+  .opt{border:2px solid #e2e8f0;background:#fff;border-radius:14px;padding:15px 18px;font-size:18px;
+    text-align:left;cursor:pointer;transition:.15s;display:flex;align-items:center;gap:12px}
+  .opt:hover{border-color:var(--accent);background:var(--soft);transform:translateY(-2px)}
+  .opt b{background:var(--soft);color:var(--accent);width:30px;height:30px;border-radius:8px;
+    display:flex;align-items:center;justify-content:center;font-size:15px;flex:0 0 auto}
+  .opt.ok{border-color:var(--ok);background:#dcfce7}
+  .opt.ok b{background:var(--ok);color:#fff}
+  .opt.bad{border-color:var(--bad);background:#fee2e2}
+  .opt.bad b{background:var(--bad);color:#fff}
+  .opt:disabled{cursor:default;transform:none}
+  .fb{margin-top:16px;padding:14px 16px;border-radius:12px;font-size:16px;display:none;line-height:1.4}
+  .fb.show{display:block}
+  .fb.good{background:#dcfce7;color:#166534}
+  .fb.no{background:#fee2e2;color:#991b1b}
+  .btn{margin-top:18px;width:100%;padding:15px;border:0;border-radius:14px;background:var(--accent);
+    color:#fff;font-size:18px;font-weight:700;cursor:pointer;display:none}
+  .btn.show{display:block}
+  .btn:hover{filter:brightness(1.08)}
+  .center{text-align:center}
+  .score{font-size:64px;font-weight:800;margin:10px 0}
+  .emoji{font-size:70px}
+  .hint{color:#94a3b8;font-size:13px;text-align:center;margin-top:14px}
+</style>
+</head>
+<body>
+<div class="app" id="app"></div>
+<script>
+const QUESTIONS = [
+  {q:"Что делает «Трассировка изображения»?",
+   a:["Печатает фото","Обводит фото и превращает его в вектор","Меняет размер","Удаляет фон нейросетью"],c:1,
+   e:"Трассировка — алгоритм обводки: из фото получаются плоские векторные пятна."},
+  {q:"Сколько тонов брать для поп-арта?",
+   a:["20 и больше","4–5 плоских тонов","1","Сколько получится"],c:1,
+   e:"Мало тонов = чёткий стиль и легко красить. 20 цветов — «каша»."},
+  {q:"Что нажать ПЕРЕД трассировкой, если фото не поддаётся?",
+   a:["Сохранить","«Встроить» (Embed) фото","Ctrl+G","Экспорт"],c:1,
+   e:"Помещённое фото надо «Встроить» — иначе трассировка не запустится."},
+  {q:"Что делает кнопка «Разобрать» (Expand)?",
+   a:["Удаляет фото","Превращает трассировку в настоящие векторные фигуры","Меняет цвет","Группирует"],c:1,
+   e:"До «Разобрать» красить нечего — фигур ещё нет."},
+  {q:"Как перекрасить ВЕСЬ тон разом?",
+   a:["По одной фигуре","Выделение → Одинаковые → Цвет заливки → новый цвет","Ластиком","Экспорт"],c:1,
+   e:"«Выделить одинаковые» соберёт все фигуры одного цвета — красим одним махом."},
+  {q:"Какой ползунок убирает мелкие пятнышки-«мусор»?",
+   a:["Цвета","Шум (Noise) — повыше","Углы","Контуры"],c:1,
+   e:"Больше «Шум» — меньше крошечных лишних фигур."},
+  {q:"Что такое сетка 2×2 (стиль Уорхола)?",
+   a:["4 разных фото","Один портрет в 4 разных палитрах","Рамка","Сетка помощи"],c:1,
+   e:"Повтор одного лица + смелые разные цвета — фирменный поп-арт-постер."},
+  {q:"Какие цвета нужны поп-арту?",
+   a:["Натуральные, блёклые","Кислотные, контрастные","Только чёрный","Пастельные"],c:1,
+   e:"Дерзкие цвета (розовый/циан/жёлтый/лайм) — суть стиля."},
+  {q:"Какое фото лучше трассировать?",
+   a:["Тусклое, ровное","Контрастное (видны свет и тень)","Размытое","Тёмное"],c:1,
+   e:"Чёткий свет/тень → читаемые тона поп-арта."},
+  {q:"Трассировка — это ИИ?",
+   a:["Да, нейросеть","Нет, честный алгоритм обводки контуров","Это фильтр Photoshop","Это кисть"],c:1,
+   e:"Трассировка просто обводит; генеративный ИИ мы не используем."},
+
+  {q:"😄 Поставил Цвета = 30, вышла «грязь» из сотни оттенков. Как надо?",
+   a:["Ещё больше","4–5 цветов","Убрать цвет","Крупнее фото"],c:1,
+   e:"Поп-арту нужно мало плоских тонов."},
+  {q:"😄 «Не могу покрасить фигуры!» Что забыл?",
+   a:["Сохранить","Нажать «Разобрать» (Expand)","Купить Ai","Обводку"],c:1,
+   e:"До «Разобрать» это ещё картинка-трассировка, а не фигуры."},
+  {q:"😄 Взял для поп-арта фото знаменитости из фильма. Проблема?",
+   a:["Нет проблем","Авторские права — бери своё/свободное фото","Мало цвета","Слишком ярко"],c:1,
+   e:"Чужие фото/кадры нельзя. Своё селфи или свободный сток — можно."},
+
+  {q:"🤔 Почему из фото с миллионом оттенков делают всего 4–5 тонов?",
+   a:["Так быстрее грузит","Плоские тоны = стиль поп-арта и лёгкая правка/печать","Цвета кончились","Случайно"],c:1,
+   e:"Ограничение палитры и есть художественный приём (и удобство)."},
+  {q:"🤔 Зачем «Выделить одинаковые» вместо покраски вручную?",
+   a:["Для красоты","Один клик — весь тон выделен, красим централизованно и ровно","Быстрее грузит","Меняет размер"],c:1,
+   e:"Экономит время и держит цвет единым по всему портрету."},
+  {q:"🤔 Что делает приём Уорхола (повтор одного лица разными цветами) сильным?",
+   a:["Ничего","Ритм повтора + смелый цвет превращают обычное фото в арт","Больше деталей","Реализм"],c:1,
+   e:"Повтор и дерзкий цвет — узнаваемый, «звучащий» образ."},
+];
+
+let i=0, score=0, locked=false;
+const app=document.getElementById('app');
+
+function shuffle(){for(let k=QUESTIONS.length-1;k>0;k--){const j=Math.floor(Math.random()*(k+1));[QUESTIONS[k],QUESTIONS[j]]=[QUESTIONS[j],QUESTIONS[k]];}for(const Q of QUESTIONS){const cc=Q.a[Q.c];for(let k=Q.a.length-1;k>0;k--){const j=Math.floor(Math.random()*(k+1));[Q.a[k],Q.a[j]]=[Q.a[j],Q.a[k]];}Q.c=Q.a.indexOf(cc);}}
+shuffle();
+
+function render(){
+  const Q=QUESTIONS[i];
+  app.innerHTML=`
+    <h1>🎭 Трассировка и поп-арт</h1>
+    <div class="sub">Викторина по уроку «Поп-арт портрет»</div>
+    <div class="bar"><i style="width:${(i/QUESTIONS.length)*100}%"></i></div>
+    <div class="meta"><span>Вопрос ${i+1} из ${QUESTIONS.length}</span><span>⭐ Очки: ${score}</span></div>
+    <div class="q">${Q.q}</div>
+    <div class="opts" id="opts">
+      ${Q.a.map((t,n)=>`<button class="opt" data-n="${n}"><b>${n+1}</b><span>${t}</span></button>`).join('')}
+    </div>
+    <div class="fb" id="fb"></div>
+    <button class="btn" id="next">${i===QUESTIONS.length-1?'Показать результат →':'Следующий вопрос →'}</button>
+    <div class="hint">Можно отвечать клавишами 1–4</div>`;
+  locked=false;
+  document.querySelectorAll('.opt').forEach(b=>b.onclick=()=>choose(+b.dataset.n));
+  document.getElementById('next').onclick=next;
+}
+
+function choose(n){
+  if(locked) return; locked=true;
+  const Q=QUESTIONS[i];
+  const opts=[...document.querySelectorAll('.opt')];
+  opts.forEach(b=>b.disabled=true);
+  opts[Q.c].classList.add('ok');
+  const fb=document.getElementById('fb');
+  if(n===Q.c){ score++; fb.className='fb show good'; fb.textContent='✅ Верно! '+Q.e; }
+  else { opts[n].classList.add('bad'); fb.className='fb show no'; fb.textContent='❌ Не совсем. '+Q.e; }
+  document.querySelector('.meta').children[1].textContent='⭐ Очки: '+score;
+  document.getElementById('next').classList.add('show');
+}
+
+function next(){ i++; if(i<QUESTIONS.length) render(); else result(); }
+
+function result(){
+  const pct=Math.round(score/QUESTIONS.length*100);
+  let em,msg;
+  if(pct===100){em='🏆';msg='Идеально! Ты превращаешь фото в арт! 🎭';}
+  else if(pct>=70){em='🎉';msg='Отлично! Трассировка, тоны и перекраска — под контролем.';}
+  else if(pct>=40){em='👍';msg='Неплохо! Помни: 4–5 тонов, Разобрать, «Выделить одинаковые».';}
+  else {em='💪';msg='Начало есть! Перечитай про трассировку и перекраску.';}
+  app.innerHTML=`
+    <div class="center">
+      <div class="emoji">${em}</div>
+      <h1>Готово!</h1>
+      <div class="score">${score} / ${QUESTIONS.length}</div>
+      <div class="sub">${msg}</div>
+      <button class="btn show" id="again">🔁 Пройти заново</button>
+    </div>`;
+  document.getElementById('again').onclick=()=>{i=0;score=0;shuffle();render();};
+}
+
+document.addEventListener('keydown',e=>{
+  if(['1','2','3','4'].includes(e.key)){ const b=document.querySelector(`.opt[data-n="${+e.key-1}"]`); if(b&&!b.disabled) choose(+e.key-1); }
+  if(e.key==='Enter'){ const nb=document.getElementById('next'); if(nb&&nb.classList.contains('show')) next(); }
+});
+
+render();
+</script>
+</body>
+</html>

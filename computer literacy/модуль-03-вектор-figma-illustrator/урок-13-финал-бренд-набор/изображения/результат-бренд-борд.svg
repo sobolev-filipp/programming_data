@@ -1,0 +1,64 @@
+<svg viewBox="0 0 900 600" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="cardg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#34A853"/><stop offset="1" stop-color="#A3E635"/></linearGradient>
+    <pattern id="leafpat" width="46" height="46" patternUnits="userSpaceOnUse">
+      <rect width="46" height="46" fill="#DCFCE7"/>
+      <ellipse cx="12" cy="12" rx="6" ry="11" fill="#34A853" transform="rotate(30 12 12)"/>
+      <ellipse cx="34" cy="34" rx="6" ry="11" fill="#34A853" transform="rotate(30 34 34)"/>
+      <circle cx="34" cy="12" r="3.5" fill="#FB923C"/>
+      <circle cx="12" cy="34" r="3.5" fill="#FB923C"/>
+    </pattern>
+  </defs>
+  <rect width="900" height="600" fill="#FFF7E6"/>
+  <text x="40" y="52" font-family="Arial Black, Segoe UI, sans-serif" font-size="30" font-weight="900" fill="#14532D">СВЕЖО · бренд-набор</text>
+  <line x1="40" y1="66" x2="860" y2="66" stroke="#D9E7C8" stroke-width="2"/>
+
+  <!-- LOGO block -->
+  <text x="40" y="96" font-family="Segoe UI, Arial, sans-serif" font-size="15" font-weight="700" fill="#5A7A4A">ЛОГОТИП</text>
+  <rect x="40" y="106" width="400" height="170" rx="18" fill="#ffffff"/>
+  <g transform="translate(120,191)">
+    <path d="M0,-52 C30,-24 30,24 0,52 C-30,24 -30,-24 0,-52 Z" fill="#34A853"/>
+    <path d="M0,-46 C0,-10 0,20 0,46" fill="none" stroke="#DCFCE7" stroke-width="4"/>
+    <path d="M0,-6 C14,-14 22,-16 26,-14 M0,10 C-14,2 -22,0 -26,2" fill="none" stroke="#DCFCE7" stroke-width="3"/>
+  </g>
+  <text x="200" y="205" font-family="Arial Black, Segoe UI, sans-serif" font-size="46" font-weight="900" fill="#14532D">СВЕЖО</text>
+
+  <!-- ICONS block -->
+  <text x="470" y="96" font-family="Segoe UI, Arial, sans-serif" font-size="15" font-weight="700" fill="#5A7A4A">ИКОНКИ</text>
+  <rect x="470" y="106" width="390" height="170" rx="18" fill="#ffffff"/>
+  <!-- cup -->
+  <circle cx="565" cy="191" r="52" fill="#ECFCCB"/>
+  <path d="M545,168 h40 l-5,52 a15,15 0 0,1 -30,0 Z" fill="#A3E635" stroke="#34A853" stroke-width="4"/>
+  <rect x="560" y="150" width="6" height="26" fill="#FB923C"/>
+  <!-- apple -->
+  <circle cx="665" cy="191" r="52" fill="#ECFCCB"/>
+  <circle cx="665" cy="196" r="30" fill="#34A853"/>
+  <rect x="662" y="160" width="6" height="14" fill="#7C4A2A"/>
+  <ellipse cx="678" cy="166" rx="12" ry="7" fill="#A3E635" transform="rotate(-30 678 166)"/>
+  <!-- leaf -->
+  <circle cx="765" cy="191" r="52" fill="#ECFCCB"/>
+  <path d="M765,161 C788,178 788,208 765,225 C742,208 742,178 765,161 Z" fill="#34A853"/>
+  <path d="M765,164 v58" stroke="#DCFCE7" stroke-width="3"/>
+
+  <!-- CARD block -->
+  <text x="40" y="316" font-family="Segoe UI, Arial, sans-serif" font-size="15" font-weight="700" fill="#5A7A4A">КАРТОЧКА</text>
+  <rect x="40" y="326" width="400" height="230" rx="18" fill="#ffffff"/>
+  <rect x="70" y="360" width="340" height="162" rx="18" fill="url(#cardg)"/>
+  <g transform="translate(112,410) scale(0.5)">
+    <path d="M0,-52 C30,-24 30,24 0,52 C-30,24 -30,-24 0,-52 Z" fill="#ffffff"/>
+  </g>
+  <text x="150" y="405" font-family="Arial Black, Segoe UI, sans-serif" font-size="26" font-weight="900" fill="#ffffff">СВЕЖО</text>
+  <text x="150" y="430" font-family="Segoe UI, Arial, sans-serif" font-size="14" fill="#ECFCCB">СМУЗИ-БАР</text>
+  <text x="384" y="500" font-family="Arial Black, Segoe UI, sans-serif" font-size="34" font-weight="900" fill="#ffffff" text-anchor="end">−20%</text>
+
+  <!-- PATTERN block -->
+  <text x="470" y="316" font-family="Segoe UI, Arial, sans-serif" font-size="15" font-weight="700" fill="#5A7A4A">УЗОР</text>
+  <rect x="470" y="326" width="230" height="230" rx="18" fill="url(#leafpat)"/>
+
+  <!-- PALETTE block -->
+  <text x="720" y="316" font-family="Segoe UI, Arial, sans-serif" font-size="15" font-weight="700" fill="#5A7A4A">ПАЛИТРА</text>
+  <rect x="720" y="326" width="140" height="230" rx="18" fill="#ffffff"/>
+  <circle cx="765" cy="376" r="22" fill="#34A853"/><circle cx="815" cy="376" r="22" fill="#A3E635"/>
+  <circle cx="765" cy="430" r="22" fill="#FB923C"/><circle cx="815" cy="430" r="22" fill="#14532D"/>
+  <text x="790" y="510" font-family="Segoe UI, Arial, sans-serif" font-size="13" fill="#5A7A4A" text-anchor="middle">4 цвета</text>
+</svg>

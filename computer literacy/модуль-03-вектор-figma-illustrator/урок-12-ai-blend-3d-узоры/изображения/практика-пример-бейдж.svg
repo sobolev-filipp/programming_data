@@ -1,0 +1,38 @@
+<svg viewBox="0 0 460 520" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <radialGradient id="bstar" cx="0.4" cy="0.32" r="0.75"><stop offset="0" stop-color="#FDE68A"/><stop offset="1" stop-color="#F59E0B"/></radialGradient>
+    <pattern id="bdots" width="24" height="24" patternUnits="userSpaceOnUse"><circle cx="12" cy="12" r="3" fill="#F59E0B"/></pattern>
+  </defs>
+  <rect width="460" height="520" fill="#FEF3C7"/>
+  <rect width="460" height="520" fill="url(#bdots)" opacity="0.25"/>
+
+  <!-- sunburst rays behind badge (Blend look), center (230,210) -->
+  <g fill="#FBBF24" opacity="0.55">
+    <polygon points="230,210 218,-120 242,-120"/>
+    <polygon points="230,210 218,-120 242,-120" transform="rotate(36 230 210)"/>
+    <polygon points="230,210 218,-120 242,-120" transform="rotate(72 230 210)"/>
+    <polygon points="230,210 218,-120 242,-120" transform="rotate(108 230 210)"/>
+    <polygon points="230,210 218,-120 242,-120" transform="rotate(144 230 210)"/>
+    <polygon points="230,210 218,-120 242,-120" transform="rotate(180 230 210)"/>
+    <polygon points="230,210 218,-120 242,-120" transform="rotate(216 230 210)"/>
+    <polygon points="230,210 218,-120 242,-120" transform="rotate(252 230 210)"/>
+    <polygon points="230,210 218,-120 242,-120" transform="rotate(288 230 210)"/>
+    <polygon points="230,210 218,-120 242,-120" transform="rotate(324 230 210)"/>
+  </g>
+
+  <!-- 3D star (extrude via offset copies) -->
+  <g>
+    <polygon points="230,100 262,178 346,184 281,238 302,320 230,274 158,320 179,238 114,184 198,178" fill="#92400E" transform="translate(8,10)"/>
+    <polygon points="230,100 262,178 346,184 281,238 302,320 230,274 158,320 179,238 114,184 198,178" fill="#B45309" transform="translate(5,6)"/>
+    <polygon points="230,100 262,178 346,184 281,238 302,320 230,274 158,320 179,238 114,184 198,178" fill="url(#bstar)" stroke="#B45309" stroke-width="3"/>
+    <polygon points="230,150 246,192 292,195 256,222 268,266 230,240 192,266 204,222 168,195 214,192" fill="#FFF3C4" opacity="0.6"/>
+  </g>
+
+  <!-- ribbon banner -->
+  <path d="M110,360 H350 L330,398 L350,436 H110 L130,398 Z" fill="#DC2626" stroke="#991B1B" stroke-width="3"/>
+  <polygon points="70,372 110,360 110,436 70,424" fill="#B91C1C"/>
+  <polygon points="390,372 350,360 350,436 390,424" fill="#B91C1C"/>
+  <text x="230" y="410" font-family="Arial Black, Segoe UI, sans-serif" font-size="40" font-weight="900" fill="#FFFFFF" text-anchor="middle" letter-spacing="4">ПОБЕДА</text>
+
+  <text x="230" y="482" font-family="Segoe UI, Arial, sans-serif" font-size="15" font-weight="700" fill="#92400E" text-anchor="middle">3D-звезда + лучи (Blend) + узор</text>
+</svg>
