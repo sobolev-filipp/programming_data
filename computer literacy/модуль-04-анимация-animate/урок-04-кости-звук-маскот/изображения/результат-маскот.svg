@@ -1,0 +1,67 @@
+<svg viewBox="0 0 500 400" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <radialGradient id="botbg" cx="0.5" cy="0.4" r="0.75"><stop offset="0" stop-color="#E7FBFF"/><stop offset="1" stop-color="#C6EEF5"/></radialGradient>
+    <linearGradient id="botbody" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#5EC8D8"/><stop offset="1" stop-color="#3FB0C2"/></linearGradient>
+  </defs>
+  <rect width="500" height="400" fill="url(#botbg)"/>
+
+  <!-- ground shadow -->
+  <ellipse cx="235" cy="352" rx="120" ry="16" fill="#000000" opacity="0.10"/>
+
+  <!-- speech bubble "Привет!" — pulses while he talks -->
+  <g>
+    <animate attributeName="opacity" values="0.15;1;1;0.15" keyTimes="0;0.15;0.7;1" dur="2.4s" repeatCount="indefinite"/>
+    <path d="M300,70 h150 a12,12 0 0 1 12,12 v40 a12,12 0 0 1 -12,12 h-118 l-20,20 v-20 h-12 a12,12 0 0 1 -12,-12 v-40 a12,12 0 0 1 12,-12 Z" fill="#ffffff" stroke="#3FB0C2" stroke-width="3"/>
+    <text x="373" y="110" font-family="Segoe UI, Arial, sans-serif" font-size="26" font-weight="800" fill="#0E7490" text-anchor="middle">Привет! 👋</text>
+  </g>
+
+  <!-- legs -->
+  <rect x="200" y="330" width="20" height="34" rx="8" fill="#3FB0C2"/>
+  <rect x="252" y="330" width="20" height="34" rx="8" fill="#3FB0C2"/>
+  <ellipse cx="200" cy="366" rx="18" ry="9" fill="#F59E0B"/>
+  <ellipse cx="272" cy="366" rx="18" ry="9" fill="#F59E0B"/>
+
+  <!-- static left arm -->
+  <line x1="182" y1="240" x2="150" y2="292" stroke="#4BB8C8" stroke-width="16" stroke-linecap="round"/>
+  <circle cx="150" cy="296" r="14" fill="#6FD0DE"/>
+
+  <!-- body -->
+  <rect x="178" y="215" width="118" height="120" rx="26" fill="url(#botbody)"/>
+  <circle cx="237" cy="258" r="10" fill="#BEF3FA"/>
+  <rect x="212" y="288" width="50" height="10" rx="5" fill="#2A93A6"/>
+
+  <!-- WAVING right arm — rotates around the shoulder (IK/bone idea) -->
+  <g>
+    <animateTransform attributeName="transform" type="rotate"
+      values="-18 292 232; 26 292 232; -18 292 232" dur="1s" repeatCount="indefinite"/>
+    <line x1="292" y1="232" x2="338" y2="168" stroke="#4BB8C8" stroke-width="16" stroke-linecap="round"/>
+    <circle cx="342" cy="162" r="15" fill="#6FD0DE"/>
+  </g>
+
+  <!-- head -->
+  <line x1="235" y1="130" x2="235" y2="108" stroke="#3FB0C2" stroke-width="4"/>
+  <circle cx="235" cy="103" r="7" fill="#F59E0B"><animate attributeName="opacity" values="0.3;1;0.3" dur="0.9s" repeatCount="indefinite"/></circle>
+  <rect x="182" y="128" width="106" height="92" rx="22" fill="#6FD0DE"/>
+  <!-- face screen -->
+  <rect x="196" y="144" width="78" height="60" rx="14" fill="#10243A"/>
+  <!-- eyes (blink) -->
+  <g fill="#67E8F9">
+    <circle cx="219" cy="165" r="8"><animate attributeName="ry" values="8;8;1;8" keyTimes="0;0.9;0.95;1" dur="3s" repeatCount="indefinite"/></circle>
+    <circle cx="251" cy="165" r="8"><animate attributeName="ry" values="8;8;1;8" keyTimes="0;0.9;0.95;1" dur="3s" repeatCount="indefinite"/></circle>
+  </g>
+  <!-- MOUTH: closed line and open ellipse swap = "talking" (lip-sync) -->
+  <line x1="222" y1="188" x2="248" y2="188" stroke="#67E8F9" stroke-width="4" stroke-linecap="round">
+    <animate attributeName="opacity" values="1;0;1;0;1" dur="0.7s" repeatCount="indefinite"/>
+  </line>
+  <ellipse cx="235" cy="189" rx="12" ry="9" fill="#67E8F9">
+    <animate attributeName="opacity" values="0;1;0;1;0" dur="0.7s" repeatCount="indefinite"/>
+  </ellipse>
+
+  <!-- little sound waves near mouth -->
+  <g fill="none" stroke="#0E7490" stroke-width="3" stroke-linecap="round">
+    <path d="M296,185 q10,4 0,8"><animate attributeName="opacity" values="0;1;0" dur="0.7s" repeatCount="indefinite"/></path>
+    <path d="M306,180 q16,9 0,18"><animate attributeName="opacity" values="0;1;0" dur="0.7s" begin="0.15s" repeatCount="indefinite"/></path>
+  </g>
+
+  <text x="250" y="396" font-family="Segoe UI, Arial, sans-serif" font-size="17" font-weight="700" fill="#0E5A6B" text-anchor="middle">🤖 Маскот на костях: машет рукой и «говорит» (рот + звук)</text>
+</svg>

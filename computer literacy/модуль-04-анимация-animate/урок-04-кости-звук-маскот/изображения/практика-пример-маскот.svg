@@ -1,0 +1,60 @@
+<svg viewBox="0 0 500 400" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <radialGradient id="pgbg" cx="0.5" cy="0.4" r="0.75"><stop offset="0" stop-color="#EAF6FF"/><stop offset="1" stop-color="#CFE7FB"/></radialGradient>
+  </defs>
+  <rect width="500" height="400" fill="url(#pgbg)"/>
+
+  <!-- ground shadow -->
+  <ellipse cx="235" cy="356" rx="105" ry="15" fill="#000000" opacity="0.10"/>
+
+  <!-- speech bubble "Пока!" — pulses while beak moves -->
+  <g>
+    <animate attributeName="opacity" values="0.15;1;1;0.15" keyTimes="0;0.15;0.7;1" dur="2.2s" repeatCount="indefinite"/>
+    <path d="M300,66 h140 a12,12 0 0 1 12,12 v40 a12,12 0 0 1 -12,12 h-108 l-20,20 v-20 h-12 a12,12 0 0 1 -12,-12 v-40 a12,12 0 0 1 12,-12 Z" fill="#ffffff" stroke="#2563EB" stroke-width="3"/>
+    <text x="368" y="106" font-family="Segoe UI, Arial, sans-serif" font-size="26" font-weight="800" fill="#1D4ED8" text-anchor="middle">Пока! 👋</text>
+  </g>
+
+  <!-- feet -->
+  <ellipse cx="205" cy="356" rx="26" ry="12" fill="#F97316"/>
+  <ellipse cx="262" cy="356" rx="26" ry="12" fill="#F97316"/>
+
+  <!-- static flipper (left) -->
+  <ellipse cx="164" cy="272" rx="16" ry="42" fill="#1E293B" transform="rotate(18 164 272)"/>
+
+  <!-- body -->
+  <ellipse cx="234" cy="252" rx="84" ry="106" fill="#1E293B"/>
+  <ellipse cx="234" cy="272" rx="54" ry="82" fill="#F8FAFC"/>
+
+  <!-- WAVING flipper (right) — rotates around the shoulder (IK/bone idea) -->
+  <g>
+    <animateTransform attributeName="transform" type="rotate"
+      values="-22 300 224; 24 300 224; -22 300 224" dur="0.95s" repeatCount="indefinite"/>
+    <ellipse cx="316" cy="188" rx="15" ry="40" fill="#1E293B"/>
+  </g>
+
+  <!-- head/face -->
+  <ellipse cx="234" cy="176" rx="56" ry="48" fill="#1E293B"/>
+  <ellipse cx="234" cy="182" rx="42" ry="38" fill="#F8FAFC"/>
+  <!-- eyes (blink) -->
+  <g fill="#1E293B">
+    <circle cx="218" cy="168" r="7"><animate attributeName="ry" values="7;7;1;7" keyTimes="0;0.9;0.95;1" dur="3s" repeatCount="indefinite"/></circle>
+    <circle cx="250" cy="168" r="7"><animate attributeName="ry" values="7;7;1;7" keyTimes="0;0.9;0.95;1" dur="3s" repeatCount="indefinite"/></circle>
+  </g>
+
+  <!-- BEAK opens/closes = "talking" (lip-sync) -->
+  <!-- upper beak fixed -->
+  <path d="M212,190 L256,190 L234,200 Z" fill="#F97316"/>
+  <!-- lower beak drops open then closes -->
+  <path fill="#EA580C">
+    <animate attributeName="d" dur="0.7s" repeatCount="indefinite"
+      values="M212,190 L256,190 L234,200 Z; M214,196 L254,196 L234,214 Z; M212,190 L256,190 L234,200 Z; M214,196 L254,196 L234,214 Z; M212,190 L256,190 L234,200 Z"/>
+  </path>
+
+  <!-- little sound waves near beak -->
+  <g fill="none" stroke="#1D4ED8" stroke-width="3" stroke-linecap="round">
+    <path d="M296,196 q10,4 0,8"><animate attributeName="opacity" values="0;1;0" dur="0.7s" repeatCount="indefinite"/></path>
+    <path d="M306,191 q16,9 0,18"><animate attributeName="opacity" values="0;1;0" dur="0.7s" begin="0.15s" repeatCount="indefinite"/></path>
+  </g>
+
+  <text x="250" y="392" font-family="Segoe UI, Arial, sans-serif" font-size="17" font-weight="700" fill="#1E3A8A" text-anchor="middle">🐧 Пример практики: пингвин машет ластом и «говорит» (свой герой из Модуля 3)</text>
+</svg>
