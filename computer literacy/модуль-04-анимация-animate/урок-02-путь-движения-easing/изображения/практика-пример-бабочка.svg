@@ -1,0 +1,39 @@
+<svg viewBox="0 0 800 420" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <defs>
+    <path id="bfp" d="M70,300 C180,180 300,320 420,220 C520,150 640,320 740,210"/>
+    <linearGradient id="mead" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#DFF3FF"/><stop offset="1" stop-color="#C7EBD1"/></linearGradient>
+  </defs>
+  <rect width="800" height="420" fill="url(#mead)"/>
+  <rect x="0" y="360" width="800" height="60" fill="#93C79B"/>
+
+  <!-- flowers at ends -->
+  <g transform="translate(70,360)"><rect x="-3" y="-40" width="6" height="40" fill="#4E9C57"/><g fill="#F472B6"><circle cx="0" cy="-46" r="10"/><circle cx="-12" cy="-40" r="10"/><circle cx="12" cy="-40" r="10"/><circle cx="-8" cy="-52" r="10"/><circle cx="8" cy="-52" r="10"/></g><circle cx="0" cy="-46" r="6" fill="#FDE047"/></g>
+  <g transform="translate(735,360)"><rect x="-3" y="-40" width="6" height="40" fill="#4E9C57"/><g fill="#A78BFA"><circle cx="0" cy="-46" r="10"/><circle cx="-12" cy="-40" r="10"/><circle cx="12" cy="-40" r="10"/><circle cx="-8" cy="-52" r="10"/><circle cx="8" cy="-52" r="10"/></g><circle cx="0" cy="-46" r="6" fill="#FDE047"/></g>
+
+  <!-- visible path -->
+  <use xlink:href="#bfp" fill="none" stroke="#7FB8A0" stroke-width="2" stroke-dasharray="5 7" opacity="0.6"/>
+
+  <!-- butterfly follows wavy path; wings flap -->
+  <g>
+    <animateMotion dur="7s" repeatCount="indefinite" calcMode="spline" keyPoints="0;1" keyTimes="0;1" keySplines="0.4 0 0.6 1">
+      <mpath xlink:href="#bfp"/>
+    </animateMotion>
+    <!-- left wings (flap via scaleX) -->
+    <g>
+      <animateTransform attributeName="transform" type="scale" values="1 1;0.28 1;1 1" dur="0.4s" repeatCount="indefinite"/>
+      <ellipse cx="-16" cy="-10" rx="16" ry="13" fill="#FB7185"/>
+      <ellipse cx="-14" cy="10" rx="13" ry="11" fill="#F9A8D4"/>
+    </g>
+    <!-- right wings -->
+    <g>
+      <animateTransform attributeName="transform" type="scale" values="1 1;0.28 1;1 1" dur="0.4s" repeatCount="indefinite"/>
+      <ellipse cx="16" cy="-10" rx="16" ry="13" fill="#FB7185"/>
+      <ellipse cx="14" cy="10" rx="13" ry="11" fill="#F9A8D4"/>
+    </g>
+    <!-- body + antennae -->
+    <ellipse cx="0" cy="0" rx="4" ry="18" fill="#3F2A55"/>
+    <path d="M-2,-16 C-6,-24 -12,-26 -14,-30 M2,-16 C6,-24 12,-26 14,-30" fill="none" stroke="#3F2A55" stroke-width="2" stroke-linecap="round"/>
+  </g>
+
+  <text x="400" y="404" font-family="Segoe UI, Arial, sans-serif" font-size="18" font-weight="700" fill="#3A6B52" text-anchor="middle">🦋 Полёт по волнистому пути + машущие крылья (вложенный символ)</text>
+</svg>

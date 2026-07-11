@@ -1,0 +1,28 @@
+<svg viewBox="0 0 500 400" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <radialGradient id="magicbg" cx="0.5" cy="0.45" r="0.7"><stop offset="0" stop-color="#F3F0FF"/><stop offset="1" stop-color="#E3DBF7"/></radialGradient>
+  </defs>
+  <rect width="500" height="400" fill="url(#magicbg)"/>
+
+  <!-- morphing shape: drop -> fish -> bird -> drop (shape + color) -->
+  <path fill="#38BDF8">
+    <animate attributeName="d" dur="4.8s" repeatCount="indefinite"
+      keyTimes="0;0.30;0.63;1" calcMode="spline" keySplines="0.4 0 0.6 1;0.4 0 0.6 1;0.4 0 0.6 1"
+      values="
+      M200,60 C230,80 250,100 250,125 C258,150 258,175 250,195 C235,220 215,232 200,232 C185,232 165,220 150,195 C142,175 142,150 150,125 C160,100 200,80 200,60 Z;
+      M200,110 C230,110 255,125 270,150 C255,175 230,190 200,190 C185,192 160,200 140,200 C158,180 178,165 170,150 C178,135 158,120 140,100 C160,100 185,108 200,110 Z;
+      M215,90 C245,95 262,105 275,120 C255,150 225,185 200,200 C180,196 150,196 130,190 C160,170 168,150 175,130 C165,110 158,100 150,95 C170,88 195,86 215,90 Z;
+      M200,60 C230,80 250,100 250,125 C258,150 258,175 250,195 C235,220 215,232 200,232 C185,232 165,220 150,195 C142,175 142,150 150,125 C160,100 200,80 200,60 Z"/>
+    <animate attributeName="fill" dur="4.8s" repeatCount="indefinite"
+      keyTimes="0;0.30;0.63;1" values="#38BDF8;#F97316;#A78BFA;#38BDF8"/>
+  </path>
+
+  <!-- sparkles -->
+  <g fill="#FBBF24">
+    <path d="M360,120 l4,10 10,4 -10,4 -4,10 -4,-10 -10,-4 10,-4 Z"><animate attributeName="opacity" values="0.2;1;0.2" dur="1.4s" repeatCount="indefinite"/></path>
+    <path d="M120,150 l3,8 8,3 -8,3 -3,8 -3,-8 -8,-3 8,-3 Z"><animate attributeName="opacity" values="1;0.2;1" dur="1.4s" repeatCount="indefinite"/></path>
+    <path d="M340,260 l3,8 8,3 -8,3 -3,8 -3,-8 -8,-3 8,-3 Z"><animate attributeName="opacity" values="0.3;1;0.3" dur="1.8s" repeatCount="indefinite"/></path>
+  </g>
+
+  <text x="250" y="378" font-family="Segoe UI, Arial, sans-serif" font-size="18" font-weight="700" fill="#5B4B8A" text-anchor="middle">🪄 Морфинг: капля → рыбка → птица (форма и цвет перетекают)</text>
+</svg>

@@ -1,0 +1,35 @@
+<svg viewBox="0 0 800 500" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <defs>
+    <path id="fp" d="M70,410 C190,410 250,300 330,270 C430,232 486,300 430,342 C384,376 322,330 356,268 C384,216 470,214 560,240 C660,268 700,200 750,110"/>
+    <linearGradient id="sky2" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#170E42"/><stop offset="1" stop-color="#2E1A6B"/></linearGradient>
+  </defs>
+  <rect width="800" height="500" fill="url(#sky2)"/>
+  <!-- stars -->
+  <g fill="#E0E7FF"><circle cx="120" cy="80" r="2"/><circle cx="300" cy="60" r="2.5"/><circle cx="520" cy="100" r="2"/><circle cx="690" cy="70" r="2.5"/><circle cx="600" cy="160" r="1.8"/><circle cx="200" cy="150" r="1.8"/>
+    <animate attributeName="opacity" values="0.5;1;0.5" dur="2.5s" repeatCount="indefinite"/></g>
+
+  <!-- visible trajectory (dashed with anchor dots) -->
+  <use xlink:href="#fp" fill="none" stroke="#8B85C0" stroke-width="2" stroke-dasharray="6 7" opacity="0.7"/>
+  <g fill="#C7C2F0"><circle cx="70" cy="410" r="4"/><circle cx="330" cy="270" r="4"/><circle cx="430" cy="342" r="4"/><circle cx="356" cy="268" r="4"/><circle cx="560" cy="240" r="4"/><circle cx="750" cy="110" r="4"/></g>
+
+  <!-- rocket flies the path, nose oriented to path -->
+  <g>
+    <animateMotion dur="6s" repeatCount="indefinite" rotate="auto" calcMode="spline" keyPoints="0;1" keyTimes="0;1" keySplines="0.4 0 0.6 1">
+      <mpath xlink:href="#fp"/>
+    </animateMotion>
+    <!-- flame (tail, left) -->
+    <polygon points="-30,-9 -60,0 -30,9" fill="#FB923C"/>
+    <polygon points="-30,-5 -48,0 -30,5" fill="#FDE047"/>
+    <!-- fins -->
+    <polygon points="-30,-16 -44,-30 -14,-16" fill="#EF4444"/>
+    <polygon points="-30,16 -44,30 -14,16" fill="#EF4444"/>
+    <!-- body -->
+    <rect x="-30" y="-16" width="58" height="32" rx="16" fill="#F2F2F2"/>
+    <!-- window -->
+    <circle cx="4" cy="0" r="9" fill="#38BDF8"/><circle cx="1" cy="-3" r="3" fill="#E0F2FE"/>
+    <!-- nose (right) -->
+    <polygon points="28,-16 58,0 28,16" fill="#EF4444"/>
+  </g>
+
+  <text x="400" y="474" font-family="Segoe UI, Arial, sans-serif" font-size="19" font-weight="700" fill="#C7CEEA" text-anchor="middle">🚀 Полёт по петле: путь движения + нос по траектории + разгон</text>
+</svg>
