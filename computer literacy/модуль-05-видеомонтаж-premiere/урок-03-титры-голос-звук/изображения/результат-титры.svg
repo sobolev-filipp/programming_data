@@ -1,0 +1,85 @@
+<svg viewBox="0 0 500 400" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <clipPath id="monG"><rect x="60" y="18" width="380" height="150" rx="8"/></clipPath>
+    <linearGradient id="roomG" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#334155"/><stop offset="1" stop-color="#1E293B"/></linearGradient>
+  </defs>
+
+  <rect width="500" height="400" fill="#1E1E1E"/>
+
+  <!-- ===== PROGRAM MONITOR ===== -->
+  <text x="66" y="12" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="700" fill="#A1A1AA">Программа · интро моего канала</text>
+  <rect x="60" y="18" width="380" height="150" rx="8" fill="#0B1220"/>
+  <g clip-path="url(#monG)">
+    <rect x="60" y="18" width="380" height="150" fill="url(#roomG)"/>
+    <circle cx="250" cy="70" r="30" fill="#475569"/><circle cx="250" cy="60" r="12" fill="#94A3B8"/><path d="M228,92 q22,-22 44,0 z" fill="#94A3B8"/>
+
+    <!-- animated intro title -->
+    <g>
+      <animate attributeName="opacity" dur="6s" repeatCount="indefinite" keyTimes="0;0.08;0.18;1" values="0;0;1;1"/>
+      <animateTransform attributeName="transform" type="translate" dur="6s" repeatCount="indefinite" keyTimes="0;0.18;1" values="0 14;0 0;0 0"/>
+      <text x="250" y="52" font-family="Segoe UI, Arial, sans-serif" font-size="26" font-weight="800" fill="#FDE047" text-anchor="middle">КАНАЛ ПИКСЕЛЬ</text>
+    </g>
+
+    <!-- lower-third name plate slides in from left -->
+    <g>
+      <animateTransform attributeName="transform" type="translate" dur="6s" repeatCount="indefinite" keyTimes="0;0.25;0.4;1" values="-240 0;-240 0;0 0;0 0"/>
+      <rect x="72" y="120" width="150" height="30" rx="5" fill="#7C3AED"/>
+      <rect x="72" y="120" width="6" height="30" fill="#FDE047"/>
+      <text x="86" y="133" font-family="Segoe UI, Arial, sans-serif" font-size="13" font-weight="700" fill="#fff">Макс</text>
+      <text x="86" y="146" font-family="Segoe UI, Arial, sans-serif" font-size="10" fill="#DDD6FE">ведущий</text>
+    </g>
+
+    <!-- subtitle -->
+    <g>
+      <animate attributeName="opacity" dur="6s" repeatCount="indefinite" keyTimes="0;0.35;0.42;1" values="0;0;1;1"/>
+      <rect x="150" y="152" width="200" height="14" rx="3" fill="#000000" opacity="0.5"/>
+      <text x="250" y="162" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="600" fill="#fff" text-anchor="middle">Привет! Это мой канал про игры 🎮</text>
+    </g>
+  </g>
+  <rect x="60" y="18" width="380" height="150" rx="8" fill="none" stroke="#3F3F46" stroke-width="2"/>
+
+  <!-- ===== TIMELINE ===== -->
+  <rect x="16" y="176" width="468" height="188" rx="8" fill="#141414"/>
+  <!-- ruler -->
+  <rect x="60" y="184" width="410" height="10" fill="#1F1F22"/>
+  <!-- track labels -->
+  <g font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="700" fill="#D4D4D8" text-anchor="middle">
+    <rect x="20" y="198" width="38" height="20" rx="3" fill="#27272A"/><text x="39" y="212">V2</text>
+    <rect x="20" y="222" width="38" height="20" rx="3" fill="#27272A"/><text x="39" y="236">V1</text>
+    <rect x="20" y="246" width="38" height="16" rx="3" fill="#27272A"/><text x="39" y="258" font-size="10">C1</text>
+    <rect x="20" y="266" width="38" height="22" rx="3" fill="#27272A"/><text x="39" y="281">A2</text>
+    <rect x="20" y="292" width="38" height="22" rx="3" fill="#27272A"/><text x="39" y="307">A3</text>
+  </g>
+
+  <!-- V2 title clip -->
+  <rect x="61" y="198" width="408" height="20" rx="3" fill="#7C3AED"/><text x="70" y="212" font-family="Segoe UI, Arial, sans-serif" font-size="10" fill="#EDE9FE">титр «КАНАЛ ПИКСЕЛЬ» + плашка-имя</text>
+  <!-- V1 video -->
+  <rect x="61" y="222" width="408" height="20" rx="3" fill="#14B8A6"/><text x="70" y="236" font-family="Segoe UI, Arial, sans-serif" font-size="10" fill="#042F2E">видео</text>
+  <!-- C1 captions -->
+  <rect x="150" y="246" width="250" height="16" rx="3" fill="#0EA5E9"/><text x="158" y="258" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#F0F9FF">субтитры (печатаем вручную)</text>
+  <!-- A2 music with DUCKING volume line -->
+  <rect x="61" y="266" width="408" height="22" rx="3" fill="#166534"/>
+  <g fill="#4ADE80">
+    <rect x="70" y="273" width="3" height="9"/><rect x="77" y="270" width="3" height="15"/><rect x="84" y="275" width="3" height="6"/><rect x="91" y="271" width="3" height="13"/><rect x="98" y="276" width="3" height="5"/><rect x="105" y="272" width="3" height="12"/><rect x="112" y="270" width="3" height="15"/><rect x="119" y="275" width="3" height="6"/><rect x="126" y="272" width="3" height="12"/><rect x="133" y="276" width="3" height="5"/><rect x="140" y="271" width="3" height="14"/><rect x="147" y="274" width="3" height="8"/><rect x="154" y="270" width="3" height="15"/><rect x="161" y="275" width="3" height="6"/><rect x="168" y="272" width="3" height="12"/><rect x="175" y="276" width="3" height="5"/><rect x="182" y="271" width="3" height="14"/><rect x="189" y="274" width="3" height="8"/><rect x="196" y="272" width="3" height="12"/><rect x="203" y="276" width="3" height="5"/><rect x="210" y="271" width="3" height="14"/><rect x="217" y="275" width="3" height="6"/><rect x="224" y="272" width="3" height="12"/><rect x="231" y="276" width="3" height="5"/><rect x="238" y="271" width="3" height="14"/><rect x="245" y="274" width="3" height="8"/><rect x="252" y="270" width="3" height="15"/><rect x="259" y="275" width="3" height="6"/><rect x="266" y="272" width="3" height="12"/><rect x="273" y="276" width="3" height="5"/><rect x="280" y="271" width="3" height="14"/><rect x="287" y="274" width="3" height="8"/><rect x="294" y="272" width="3" height="12"/><rect x="301" y="276" width="3" height="5"/><rect x="308" y="271" width="3" height="14"/><rect x="315" y="275" width="3" height="6"/><rect x="322" y="272" width="3" height="12"/><rect x="329" y="276" width="3" height="5"/><rect x="336" y="271" width="3" height="14"/><rect x="343" y="274" width="3" height="8"/><rect x="350" y="270" width="3" height="15"/><rect x="357" y="275" width="3" height="6"/><rect x="364" y="272" width="3" height="12"/><rect x="371" y="276" width="3" height="5"/><rect x="378" y="271" width="3" height="14"/><rect x="385" y="274" width="3" height="8"/><rect x="392" y="272" width="3" height="12"/><rect x="399" y="276" width="3" height="5"/><rect x="406" y="271" width="3" height="14"/><rect x="413" y="275" width="3" height="6"/><rect x="420" y="272" width="3" height="12"/><rect x="427" y="276" width="3" height="5"/><rect x="434" y="271" width="3" height="14"/><rect x="441" y="274" width="3" height="8"/><rect x="448" y="272" width="3" height="12"/><rect x="455" y="275" width="3" height="6"/><rect x="462" y="272" width="3" height="12"/>
+  </g>
+  <!-- ducking volume line: high, dips under voice, high -->
+  <polyline points="61,269 150,269 175,283 300,283 325,269 469,269" fill="none" stroke="#FDE047" stroke-width="2"/>
+  <text x="237" y="281" font-family="Segoe UI, Arial, sans-serif" font-size="8.5" font-weight="700" fill="#FDE047" text-anchor="middle">музыка тише под голос (дакинг)</text>
+
+  <!-- A3 voice -->
+  <rect x="150" y="292" width="250" height="22" rx="3" fill="#1D4ED8"/>
+  <g fill="#93C5FD">
+    <rect x="160" y="299" width="3" height="9"/><rect x="167" y="296" width="3" height="15"/><rect x="174" y="301" width="3" height="5"/><rect x="181" y="297" width="3" height="13"/><rect x="188" y="300" width="3" height="7"/><rect x="195" y="295" width="3" height="16"/><rect x="202" y="301" width="3" height="5"/><rect x="209" y="298" width="3" height="12"/><rect x="216" y="300" width="3" height="7"/><rect x="223" y="296" width="3" height="15"/><rect x="230" y="301" width="3" height="5"/><rect x="237" y="297" width="3" height="13"/><rect x="244" y="299" width="3" height="9"/><rect x="251" y="295" width="3" height="16"/><rect x="258" y="301" width="3" height="5"/><rect x="265" y="298" width="3" height="12"/><rect x="272" y="300" width="3" height="7"/><rect x="279" y="296" width="3" height="15"/><rect x="286" y="301" width="3" height="5"/><rect x="293" y="297" width="3" height="13"/><rect x="300" y="299" width="3" height="9"/><rect x="307" y="296" width="3" height="15"/><rect x="314" y="301" width="3" height="5"/><rect x="321" y="298" width="3" height="12"/><rect x="328" y="300" width="3" height="7"/><rect x="335" y="296" width="3" height="15"/><rect x="342" y="301" width="3" height="5"/><rect x="349" y="298" width="3" height="12"/><rect x="356" y="300" width="3" height="7"/><rect x="363" y="297" width="3" height="13"/><rect x="370" y="299" width="3" height="9"/><rect x="377" y="296" width="3" height="15"/><rect x="384" y="301" width="3" height="5"/><rect x="391" y="298" width="3" height="12"/>
+  </g>
+  <text x="405" y="307" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#DBEAFE">голос 🤖</text>
+
+  <!-- playhead -->
+  <g>
+    <animateTransform attributeName="transform" type="translate" values="0 0;408 0" dur="6s" repeatCount="indefinite"/>
+    <polygon points="55,180 67,180 61,190" fill="#EF4444"/>
+    <rect x="59" y="184" width="3" height="130" fill="#EF4444"/>
+  </g>
+
+  <text x="250" y="340" font-family="Segoe UI, Arial, sans-serif" font-size="15" font-weight="700" fill="#E4E4E7" text-anchor="middle">🔊✍️ Титры + плашка-имя + субтитры + голос за кадром</text>
+  <text x="250" y="358" font-family="Segoe UI, Arial, sans-serif" font-size="12.5" font-weight="600" fill="#A1A1AA" text-anchor="middle">музыка (A2) автоматически тише под голос (A3) — дакинг</text>
+</svg>

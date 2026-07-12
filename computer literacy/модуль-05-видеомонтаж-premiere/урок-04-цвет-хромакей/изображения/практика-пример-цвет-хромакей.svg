@@ -1,0 +1,51 @@
+<svg viewBox="0 0 500 400" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <clipPath id="monU"><rect x="60" y="18" width="380" height="176" rx="8"/></clipPath>
+    <linearGradient id="seaU" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0EA5E9"/><stop offset="1" stop-color="#075985"/></linearGradient>
+    <radialGradient id="vignU" cx="0.5" cy="0.5" r="0.75"><stop offset="0.55" stop-color="#000000" stop-opacity="0"/><stop offset="1" stop-color="#000000" stop-opacity="0.6"/></radialGradient>
+  </defs>
+
+  <rect width="500" height="400" fill="#1E1E1E"/>
+
+  <text x="66" y="12" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="700" fill="#A1A1AA">Программа · телепорт под воду (до / после)</text>
+  <rect x="60" y="18" width="380" height="176" rx="8" fill="#0B1220"/>
+  <g clip-path="url(#monU)">
+    <!-- LEFT half: ДО (зелёный фон, плоский цвет) -->
+    <rect x="60" y="18" width="190" height="176" fill="#22C55E"/>
+    <!-- RIGHT half: ПОСЛЕ (подводный фон + грейд) -->
+    <rect x="250" y="18" width="190" height="176" fill="url(#seaU)"/>
+    <g fill="#BAE6FD" opacity="0.6"><circle cx="290" cy="50" r="4"/><circle cx="360" cy="70" r="3"/><circle cx="410" cy="45" r="4"/><circle cx="330" cy="110" r="3"/></g>
+    <!-- fish -->
+    <g fill="#FDBA74"><path d="M300,150 q14,-10 28,0 q-14,10 -28,0 z"/><path d="M300,150 l-8,-6 0,12 z"/></g>
+    <!-- vignette on right -->
+    <rect x="250" y="18" width="190" height="176" fill="url(#vignU)"/>
+
+    <!-- character (diver) in center, spans the split -->
+    <ellipse cx="250" cy="180" rx="34" ry="9" fill="#000" opacity="0.25"/>
+    <rect x="230" y="112" width="40" height="58" rx="11" fill="#F59E0B"/>
+    <circle cx="250" cy="94" r="22" fill="#93C5FD"/><circle cx="250" cy="94" r="15" fill="#FCD9B8"/>
+    <rect x="235" y="128" width="7" height="32" rx="3" fill="#F59E0B"/><rect x="258" y="128" width="7" height="32" rx="3" fill="#F59E0B"/>
+
+    <!-- split line + labels -->
+    <line x1="250" y1="18" x2="250" y2="194" stroke="#fff" stroke-width="2" stroke-dasharray="5 4"/>
+    <text x="150" y="40" font-family="Segoe UI, Arial, sans-serif" font-size="14" font-weight="800" fill="#052E16" text-anchor="middle">ДО 🟩</text>
+    <text x="345" y="40" font-family="Segoe UI, Arial, sans-serif" font-size="14" font-weight="800" fill="#E0F2FE" text-anchor="middle">ПОСЛЕ 🌊</text>
+    <!-- moving highlight to show it's "live" -->
+    <circle cx="345" cy="150" r="6" fill="#fff" opacity="0.5"><animate attributeName="cx" values="270;420;270" dur="3s" repeatCount="indefinite"/><animate attributeName="opacity" values="0.1;0.6;0.1" dur="3s" repeatCount="indefinite"/></circle>
+  </g>
+  <rect x="60" y="18" width="380" height="176" rx="8" fill="none" stroke="#3F3F46" stroke-width="2"/>
+
+  <!-- mini timeline -->
+  <rect x="16" y="204" width="468" height="96" rx="8" fill="#141414"/>
+  <g font-family="Segoe UI, Arial, sans-serif" font-size="10" font-weight="700" fill="#D4D4D8" text-anchor="middle">
+    <rect x="20" y="214" width="34" height="20" rx="3" fill="#27272A"/><text x="37" y="228">V3</text>
+    <rect x="20" y="240" width="34" height="20" rx="3" fill="#27272A"/><text x="37" y="254">V2</text>
+    <rect x="20" y="266" width="34" height="20" rx="3" fill="#27272A"/><text x="37" y="280">V1</text>
+  </g>
+  <rect x="58" y="214" width="414" height="20" rx="3" fill="#F59E0B"/><text x="66" y="228" font-family="Segoe UI, Arial, sans-serif" font-size="10" fill="#431407">корректирующий слой · Lumetri (холодный подводный грейд + виньетка)</text>
+  <rect x="58" y="240" width="414" height="20" rx="3" fill="#7C3AED"/><text x="66" y="254" font-family="Segoe UI, Arial, sans-serif" font-size="10" fill="#EDE9FE">герой-ныряльщик · Ultra Key</text>
+  <rect x="58" y="266" width="414" height="20" rx="3" fill="#1D4ED8"/><text x="66" y="280" font-family="Segoe UI, Arial, sans-serif" font-size="10" fill="#DBEAFE">фон: подводный мир 🐠</text>
+
+  <text x="250" y="322" font-family="Segoe UI, Arial, sans-serif" font-size="14.5" font-weight="700" fill="#E4E4E7" text-anchor="middle">Пример практики: телепорт под воду — свой фон + свой грейд</text>
+  <text x="250" y="341" font-family="Segoe UI, Arial, sans-serif" font-size="12.5" font-weight="600" fill="#A1A1AA" text-anchor="middle">выбери другое место (пляж/джунгли/город) и своё настроение цвета</text>
+</svg>

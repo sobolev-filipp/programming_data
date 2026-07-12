@@ -1,0 +1,67 @@
+<svg viewBox="0 0 500 400" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <clipPath id="monR"><rect x="60" y="18" width="380" height="176" rx="8"/></clipPath>
+    <radialGradient id="adbg" cx="0.5" cy="0.45" r="0.75"><stop offset="0" stop-color="#FDE047"/><stop offset="1" stop-color="#F97316"/></radialGradient>
+  </defs>
+
+  <rect width="500" height="400" fill="#1E1E1E"/>
+
+  <text x="66" y="12" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="700" fill="#A1A1AA">Программа · реклама продукта</text>
+  <rect x="60" y="18" width="380" height="176" rx="8" fill="#0B1220"/>
+  <g clip-path="url(#monR)">
+    <rect x="60" y="18" width="380" height="176" fill="url(#adbg)"/>
+
+    <!-- product: juice bottle -->
+    <g>
+      <rect x="228" y="70" width="44" height="80" rx="10" fill="#DC2626"/>
+      <rect x="238" y="56" width="24" height="18" rx="4" fill="#7F1D1D"/>
+      <rect x="232" y="92" width="36" height="34" rx="4" fill="#FEF3C7"/>
+      <text x="250" y="114" font-family="Segoe UI, Arial, sans-serif" font-size="12" font-weight="800" fill="#DC2626" text-anchor="middle">СОК</text>
+      <!-- shine sweep -->
+      <rect x="228" y="70" width="12" height="80" fill="#ffffff" opacity="0.5">
+        <animate attributeName="x" values="220;280;220" dur="2.2s" repeatCount="indefinite"/>
+      </rect>
+    </g>
+
+    <!-- big title pop-in -->
+    <g>
+      <animateTransform attributeName="transform" type="scale" dur="2.6s" repeatCount="indefinite" keyTimes="0;0.12;0.2;1" values="0 0;0 0;1 1;1 1" additive="sum"/>
+      <animate attributeName="opacity" dur="2.6s" repeatCount="indefinite" keyTimes="0;0.12;0.2;1" values="0;0;1;1"/>
+      <text x="250" y="44" font-family="Segoe UI, Arial, sans-serif" font-size="30" font-weight="800" fill="#fff" text-anchor="middle" stroke="#B91C1C" stroke-width="1">СУПЕР-СОК!</text>
+    </g>
+
+    <!-- slogan -->
+    <text x="250" y="168" font-family="Segoe UI, Arial, sans-serif" font-size="15" font-weight="700" fill="#7C2D12" text-anchor="middle">Заряд бодрости на весь день!</text>
+
+    <!-- starburst badge -->
+    <g>
+      <animateTransform attributeName="transform" type="rotate" values="0 388 66;8 388 66;0 388 66" dur="1.2s" repeatCount="indefinite"/>
+      <path d="M388,40 l6,14 15,-4 -8,13 12,10 -15,3 2,15 -12,-9 -12,9 2,-15 -15,-3 12,-10 -8,-13 15,4 z" fill="#DC2626"/>
+      <text x="388" y="70" font-family="Segoe UI, Arial, sans-serif" font-size="13" font-weight="800" fill="#fff" text-anchor="middle">-50%</text>
+    </g>
+
+    <!-- sparkles -->
+    <g fill="#fff">
+      <path d="M120,60 l3,8 8,3 -8,3 -3,8 -3,-8 -8,-3 8,-3 z"><animate attributeName="opacity" values="0.2;1;0.2" dur="1.3s" repeatCount="indefinite"/></path>
+      <path d="M140,150 l2,6 6,2 -6,2 -2,6 -2,-6 -6,-2 6,-2 z"><animate attributeName="opacity" values="1;0.2;1" dur="1.3s" repeatCount="indefinite"/></path>
+    </g>
+  </g>
+  <rect x="60" y="18" width="380" height="176" rx="8" fill="none" stroke="#3F3F46" stroke-width="2"/>
+
+  <!-- CTA end-title bar (pulsing) -->
+  <g>
+    <animateTransform attributeName="transform" type="scale" values="1 1;1.05 1.05;1 1" dur="1s" repeatCount="indefinite" additive="sum"/>
+    <rect x="150" y="206" width="200" height="30" rx="8" fill="#16A34A"/>
+    <text x="250" y="226" font-family="Segoe UI, Arial, sans-serif" font-size="15" font-weight="800" fill="#fff" text-anchor="middle">Купи сейчас! ▶</text>
+  </g>
+
+  <!-- mini timeline: voice + music -->
+  <rect x="16" y="250" width="468" height="66" rx="8" fill="#141414"/>
+  <rect x="24" y="260" width="34" height="18" rx="3" fill="#27272A"/><text x="41" y="273" font-family="Segoe UI, Arial, sans-serif" font-size="10" font-weight="700" fill="#D4D4D8" text-anchor="middle">A3</text>
+  <rect x="62" y="260" width="410" height="18" rx="3" fill="#1D4ED8"/><text x="70" y="273" font-family="Segoe UI, Arial, sans-serif" font-size="10" fill="#DBEAFE">🤖 голос за кадром: «Новый Супер-Сок! Только сегодня!»</text>
+  <rect x="24" y="284" width="34" height="18" rx="3" fill="#27272A"/><text x="41" y="297" font-family="Segoe UI, Arial, sans-serif" font-size="10" font-weight="700" fill="#D4D4D8" text-anchor="middle">A4</text>
+  <rect x="62" y="284" width="410" height="18" rx="3" fill="#166534"/><text x="70" y="297" font-family="Segoe UI, Arial, sans-serif" font-size="10" fill="#DCFCE7">музыка + звуки: whoosh, «cha-ching» 💰, ding</text>
+
+  <text x="250" y="336" font-family="Segoe UI, Arial, sans-serif" font-size="14.5" font-weight="700" fill="#E4E4E7" text-anchor="middle">Пример практики: РЕКЛАМА — название + слоган + кнопка «Купи!» + голос</text>
+  <text x="250" y="356" font-family="Segoe UI, Arial, sans-serif" font-size="12.5" font-weight="600" fill="#A1A1AA" text-anchor="middle">продукт выдуманный (не бренд); голос за кадром — нейросеть по тексту</text>
+</svg>

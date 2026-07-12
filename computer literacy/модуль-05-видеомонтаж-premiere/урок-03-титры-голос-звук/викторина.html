@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Викторина — Голос и титры</title>
+<style>
+  :root{
+    --bg1:#F43F5E; --bg2:#FB923C; --card:#ffffff; --ink:#1f2937;
+    --accent:#E11D48; --ok:#16a34a; --bad:#dc2626; --soft:#ffe4e6;
+  }
+  *{box-sizing:border-box;font-family:"Segoe UI",system-ui,sans-serif}
+  body{margin:0;min-height:100vh;display:flex;align-items:center;justify-content:center;
+    background:linear-gradient(135deg,var(--bg1),var(--bg2));padding:20px;color:var(--ink)}
+  .app{background:var(--card);width:min(760px,100%);border-radius:24px;
+    box-shadow:0 25px 60px rgba(0,0,0,.35);padding:34px 34px 28px;position:relative;overflow:hidden}
+  h1{margin:0 0 6px;font-size:26px;text-align:center}
+  .sub{text-align:center;color:#64748b;margin-bottom:22px;font-size:15px}
+  .bar{height:10px;background:var(--soft);border-radius:99px;overflow:hidden;margin-bottom:18px}
+  .bar>i{display:block;height:100%;width:0;background:var(--accent);transition:.4s}
+  .meta{display:flex;justify-content:space-between;font-size:14px;color:#64748b;margin-bottom:14px}
+  .q{font-size:22px;font-weight:700;margin:6px 0 20px;line-height:1.3}
+  .opts{display:grid;gap:12px}
+  .opt{border:2px solid #e2e8f0;background:#fff;border-radius:14px;padding:15px 18px;font-size:18px;
+    text-align:left;cursor:pointer;transition:.15s;display:flex;align-items:center;gap:12px}
+  .opt:hover{border-color:var(--accent);background:var(--soft);transform:translateY(-2px)}
+  .opt b{background:var(--soft);color:var(--accent);width:30px;height:30px;border-radius:8px;
+    display:flex;align-items:center;justify-content:center;font-size:15px;flex:0 0 auto}
+  .opt.ok{border-color:var(--ok);background:#dcfce7}
+  .opt.ok b{background:var(--ok);color:#fff}
+  .opt.bad{border-color:var(--bad);background:#fee2e2}
+  .opt.bad b{background:var(--bad);color:#fff}
+  .opt:disabled{cursor:default;transform:none}
+  .fb{margin-top:16px;padding:14px 16px;border-radius:12px;font-size:16px;display:none;line-height:1.4}
+  .fb.show{display:block}
+  .fb.good{background:#dcfce7;color:#166534}
+  .fb.no{background:#fee2e2;color:#991b1b}
+  .btn{margin-top:18px;width:100%;padding:15px;border:0;border-radius:14px;background:var(--accent);
+    color:#fff;font-size:18px;font-weight:700;cursor:pointer;display:none}
+  .btn.show{display:block}
+  .btn:hover{filter:brightness(1.08)}
+  .center{text-align:center}
+  .score{font-size:64px;font-weight:800;margin:10px 0}
+  .emoji{font-size:70px}
+  .hint{color:#94a3b8;font-size:13px;text-align:center;margin-top:14px}
+</style>
+</head>
+<body>
+<div class="app" id="app"></div>
+<script>
+const QUESTIONS = [
+  {q:"На какой дорожке лежит титр (текст)?",
+   a:["На аудиодорожке","На видеодорожке сверху (над видео)","В экспорте","В корзине"],c:1,
+   e:"Титр кладётся на V2 — поверх видео, чтобы текст был виден."},
+  {q:"Какой панелью настраивают шрифт, обводку и фон титра?",
+   a:["«Основные графические элементы»","«Эффекты звука»","«Проект»","«Лумитри»"],c:0,
+   e:"Essential Graphics — вкладка «Правка»: шрифт, обводка, тень, плашка."},
+  {q:"Как оживить титр (чтобы он появлялся/выскакивал)?",
+   a:["Никак","Ключевыми кадрами (прозрачность/масштаб) в «Элементах управления эффектами»","Реверсом","Экспортом"],c:1,
+   e:"Секундомер ставит ключи; текст плавно проявляется и растёт."},
+  {q:"Что такое плашка-имя (lower third)?",
+   a:["Музыка","Подпись автора/имени внизу экрана","Переход","Субтитр песни"],c:1,
+   e:"Как у блогеров и в новостях: имя + роль внизу, выезжает сбоку."},
+  {q:"Как делаем субтитры по правилам курса?",
+   a:["Авто-расшифровкой речи (ИИ)","Печатаем вручную на пустой дорожке подписей","Экспортом","Реверсом"],c:1,
+   e:"Создаём пустую дорожку подписей и печатаем текст сами."},
+  {q:"Откуда берём голос за кадром без микрофона?",
+   a:["Ниоткуда","Нейросеть-озвучка по тексту (TTS) → MP3 → импорт","Из музыки","Из титра"],c:1,
+   e:"Впечатал текст на TTSMaker → скачал MP3 → положил на дорожку A3."},
+  {q:"Что такое дакинг (Ducking)?",
+   a:["Титр","Музыка автоматически становится тише под голос","Ускорение","Экспорт"],c:1,
+   e:"Музыка «расступается» под речь и снова громче в паузах."},
+  {q:"Какой панелью включают дакинг?",
+   a:["«Основной звук» (тип Музыка → Приглушение)","«Проект»","«Эффекты»","«Титры»"],c:0,
+   e:"Essential Sound: музыке — тип «Музыка», голосу — «Диалог»."},
+  {q:"Кто должен быть громче — голос или музыка?",
+   a:["Музыка","Голос (главный), музыка тише","Одинаково громко","Эффекты"],c:1,
+   e:"Голос всегда разборчив; музыка и звуки — фоном."},
+  {q:"Что делает фейд (аудиопереход) на музыке?",
+   a:["Меняет цвет","Плавное появление/затухание — нет резкого обрыва","Ускоряет","Режет"],c:1,
+   e:"«Постоянная мощность» на краях — музыка мягко приходит и уходит."},
+
+  {q:"😄 Титр белый на белом фоне — вообще не видно! Что добавить?",
+   a:["Громче музыку","Обводку/тень/плашку под текст","Реверс","Ещё титр"],c:1,
+   e:"Контур или тёмная подложка — и текст читается на любом фоне."},
+  {q:"😄 Музыка гремит так, что голос не разобрать. Что включить?",
+   a:["Ещё музыку","Дакинг / опустить музыку под голос","Титр","Ускорение"],c:1,
+   e:"Голос — главный; музыку приглушаем (дакинг/уровни)."},
+  {q:"😄 Нажал «Речь в текст», а нам нельзя ИИ. Как сделать субтитры?",
+   a:["Никак","Напечатать вручную на дорожке подписей","Реверсом","Экспортом"],c:1,
+   e:"По правилам курса субтитры печатаем сами, без авто-расшифровки."},
+
+  {q:"🤔 Почему субтитры делают короткими (3–6 слов в строке)?",
+   a:["Так модно","Длинную строку не успеют прочитать","Экономит цвет","Быстрее рендер"],c:1,
+   e:"Короткая фраза читается за секунду — успеваешь и смотреть, и читать."},
+  {q:"🤔 Почему голос из нейросети удобнее записи в классе?",
+   a:["Он громче","Нет шума/эха класса — чисто и быстро, микрофон не нужен","Ярче цвет","Меньше весит"],c:1,
+   e:"TTS даёт чистую дорожку по тексту; свой голос — по желанию."},
+  {q:"🤔 Почему дакинг лучше, чем просто тихая музыка весь ролик?",
+   a:["Он ярче","Музыка громкая в паузах (атмосфера) и тихая под голос (разборчиво)","Быстрее","Меньше весит"],c:1,
+   e:"Дакинг берёт лучшее: и настроение музыки, и чёткость речи."},
+];
+
+let i=0, score=0, locked=false;
+const app=document.getElementById('app');
+
+function shuffle(){for(let k=QUESTIONS.length-1;k>0;k--){const j=Math.floor(Math.random()*(k+1));[QUESTIONS[k],QUESTIONS[j]]=[QUESTIONS[j],QUESTIONS[k]];}for(const Q of QUESTIONS){const cc=Q.a[Q.c];for(let k=Q.a.length-1;k>0;k--){const j=Math.floor(Math.random()*(k+1));[Q.a[k],Q.a[j]]=[Q.a[j],Q.a[k]];}Q.c=Q.a.indexOf(cc);}}
+shuffle();
+
+function render(){
+  const Q=QUESTIONS[i];
+  app.innerHTML=`
+    <h1>🔊✍️ Голос и титры</h1>
+    <div class="sub">Викторина по уроку «Титры, субтитры и звук»</div>
+    <div class="bar"><i style="width:${(i/QUESTIONS.length)*100}%"></i></div>
+    <div class="meta"><span>Вопрос ${i+1} из ${QUESTIONS.length}</span><span>⭐ Очки: ${score}</span></div>
+    <div class="q">${Q.q}</div>
+    <div class="opts" id="opts">
+      ${Q.a.map((t,n)=>`<button class="opt" data-n="${n}"><b>${n+1}</b><span>${t}</span></button>`).join('')}
+    </div>
+    <div class="fb" id="fb"></div>
+    <button class="btn" id="next">${i===QUESTIONS.length-1?'Показать результат →':'Следующий вопрос →'}</button>
+    <div class="hint">Можно отвечать клавишами 1–4</div>`;
+  locked=false;
+  document.querySelectorAll('.opt').forEach(b=>b.onclick=()=>choose(+b.dataset.n));
+  document.getElementById('next').onclick=next;
+}
+
+function choose(n){
+  if(locked) return; locked=true;
+  const Q=QUESTIONS[i];
+  const opts=[...document.querySelectorAll('.opt')];
+  opts.forEach(b=>b.disabled=true);
+  opts[Q.c].classList.add('ok');
+  const fb=document.getElementById('fb');
+  if(n===Q.c){ score++; fb.className='fb show good'; fb.textContent='✅ Верно! '+Q.e; }
+  else { opts[n].classList.add('bad'); fb.className='fb show no'; fb.textContent='❌ Не совсем. '+Q.e; }
+  document.querySelector('.meta').children[1].textContent='⭐ Очки: '+score;
+  document.getElementById('next').classList.add('show');
+}
+
+function next(){ i++; if(i<QUESTIONS.length) render(); else result(); }
+
+function result(){
+  const pct=Math.round(score/QUESTIONS.length*100);
+  let em,msg;
+  if(pct===100){em='🏆';msg='Идеально! Титры и звук — как у настоящего блогера! 🎙';}
+  else if(pct>=70){em='🎉';msg='Отлично! Титры, субтитры, голос и дакинг — под контролем.';}
+  else if(pct>=40){em='👍';msg='Неплохо! Помни: голос главный, титрам — обводку, дакинг в «Основном звуке».';}
+  else {em='💪';msg='Начало есть! Перечитай про титры, субтитры и дакинг.';}
+  app.innerHTML=`
+    <div class="center">
+      <div class="emoji">${em}</div>
+      <h1>Готово!</h1>
+      <div class="score">${score} / ${QUESTIONS.length}</div>
+      <div class="sub">${msg}</div>
+      <button class="btn show" id="again">🔁 Пройти заново</button>
+    </div>`;
+  document.getElementById('again').onclick=()=>{i=0;score=0;shuffle();render();};
+}
+
+document.addEventListener('keydown',e=>{
+  if(['1','2','3','4'].includes(e.key)){ const b=document.querySelector(`.opt[data-n="${+e.key-1}"]`); if(b&&!b.disabled) choose(+e.key-1); }
+  if(e.key==='Enter'){ const nb=document.getElementById('next'); if(nb&&nb.classList.contains('show')) next(); }
+});
+
+render();
+</script>
+</body>
+</html>
