@@ -1,0 +1,53 @@
+<svg viewBox="0 0 500 400" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <clipPath id="monP"><rect x="60" y="20" width="380" height="176" rx="8"/></clipPath>
+    <linearGradient id="skyP" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#F97316"/><stop offset="1" stop-color="#FDBA74"/></linearGradient>
+  </defs>
+
+  <rect width="500" height="400" fill="#1E1E1E"/>
+
+  <!-- ===== PROGRAM MONITOR ===== -->
+  <rect x="60" y="20" width="380" height="176" rx="8" fill="#0B1220"/>
+  <g clip-path="url(#monP)">
+    <rect x="60" y="20" width="380" height="176" fill="url(#skyP)"/>
+    <rect x="60" y="160" width="380" height="36" fill="#7C2D12"/>
+    <!-- ball: forward -> freeze -> reverse back -->
+    <g>
+      <animateTransform attributeName="transform" type="translate" values="0 0;150 0;150 0;0 0" keyTimes="0;0.35;0.58;1" dur="4s" repeatCount="indefinite"/>
+      <circle cx="150" cy="130" r="16" fill="#FDE047"/>
+      <path d="M136,124 a16,16 0 0 1 10,-10" fill="none" stroke="#FEF9C3" stroke-width="4" stroke-linecap="round"/>
+    </g>
+    <!-- FREEZE badge -->
+    <g>
+      <animate attributeName="opacity" dur="4s" repeatCount="indefinite" keyTimes="0;0.35;0.4;0.55;0.58;1" values="0;0;1;1;0;0"/>
+      <rect x="150" y="40" width="200" height="30" rx="6" fill="#0F172A" opacity="0.7"/>
+      <text x="250" y="61" font-family="Segoe UI, Arial, sans-serif" font-size="18" font-weight="800" fill="#FDE047" text-anchor="middle">❚❚ стоп-кадр</text>
+    </g>
+    <!-- REVERSE badge -->
+    <g>
+      <animate attributeName="opacity" dur="4s" repeatCount="indefinite" keyTimes="0;0.58;0.63;0.95;1" values="0;0;1;1;0"/>
+      <rect x="150" y="40" width="200" height="30" rx="6" fill="#0F172A" opacity="0.7"/>
+      <text x="250" y="61" font-family="Segoe UI, Arial, sans-serif" font-size="18" font-weight="800" fill="#67E8F9" text-anchor="middle">◀ реверс · время назад</text>
+    </g>
+  </g>
+  <rect x="60" y="20" width="380" height="176" rx="8" fill="none" stroke="#3F3F46" stroke-width="2"/>
+  <text x="66" y="14" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="700" fill="#A1A1AA">Программа · вперёд → пауза → назад</text>
+
+  <!-- ===== TIMELINE (3 segments: forward | freeze | reverse) ===== -->
+  <rect x="16" y="214" width="468" height="150" rx="8" fill="#141414"/>
+  <rect x="20" y="240" width="40" height="42" rx="4" fill="#27272A"/><text x="40" y="265" font-family="Segoe UI, Arial, sans-serif" font-size="13" font-weight="700" fill="#D4D4D8" text-anchor="middle">V1</text>
+
+  <rect x="61" y="240" width="150" height="42" rx="4" fill="#F97316"/><text x="70" y="265" font-family="Segoe UI, Arial, sans-serif" font-size="11" fill="#431407">вперёд</text>
+  <rect x="213" y="240" width="70" height="42" rx="4" fill="#64748B"/><text x="248" y="258" font-family="Segoe UI, Arial, sans-serif" font-size="14" fill="#F8FAFC" text-anchor="middle">❚❚</text><text x="248" y="274" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#E2E8F0" text-anchor="middle">стоп-кадр</text>
+  <rect x="285" y="240" width="184" height="42" rx="4" fill="#0EA5E9"/><text x="294" y="265" font-family="Segoe UI, Arial, sans-serif" font-size="11" fill="#082F49">◀ реверс (−100%)</text>
+
+  <!-- playhead sync: pause over the freeze segment -->
+  <g>
+    <animateTransform attributeName="transform" type="translate" values="0 0;150 0;222 0;408 0" keyTimes="0;0.35;0.58;1" dur="4s" repeatCount="indefinite"/>
+    <polygon points="55,220 67,220 61,230" fill="#EF4444"/>
+    <rect x="59" y="224" width="3" height="66" fill="#EF4444"/>
+  </g>
+
+  <text x="250" y="316" font-family="Segoe UI, Arial, sans-serif" font-size="15" font-weight="700" fill="#E4E4E7" text-anchor="middle">Пример практики: стоп-кадр на пике + реверс (время идёт назад)</text>
+  <text x="250" y="340" font-family="Segoe UI, Arial, sans-serif" font-size="13" font-weight="600" fill="#A1A1AA" text-anchor="middle">вперёд → драматичная пауза → перемотка назад</text>
+</svg>

@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Викторина — Повелитель времени</title>
+<style>
+  :root{
+    --bg1:#0EA5E9; --bg2:#6366F1; --card:#ffffff; --ink:#0f172a;
+    --accent:#4F46E5; --ok:#16a34a; --bad:#dc2626; --soft:#e0e7ff;
+  }
+  *{box-sizing:border-box;font-family:"Segoe UI",system-ui,sans-serif}
+  body{margin:0;min-height:100vh;display:flex;align-items:center;justify-content:center;
+    background:linear-gradient(135deg,var(--bg1),var(--bg2));padding:20px;color:var(--ink)}
+  .app{background:var(--card);width:min(760px,100%);border-radius:24px;
+    box-shadow:0 25px 60px rgba(0,0,0,.35);padding:34px 34px 28px;position:relative;overflow:hidden}
+  h1{margin:0 0 6px;font-size:26px;text-align:center}
+  .sub{text-align:center;color:#64748b;margin-bottom:22px;font-size:15px}
+  .bar{height:10px;background:var(--soft);border-radius:99px;overflow:hidden;margin-bottom:18px}
+  .bar>i{display:block;height:100%;width:0;background:var(--accent);transition:.4s}
+  .meta{display:flex;justify-content:space-between;font-size:14px;color:#64748b;margin-bottom:14px}
+  .q{font-size:22px;font-weight:700;margin:6px 0 20px;line-height:1.3}
+  .opts{display:grid;gap:12px}
+  .opt{border:2px solid #e2e8f0;background:#fff;border-radius:14px;padding:15px 18px;font-size:18px;
+    text-align:left;cursor:pointer;transition:.15s;display:flex;align-items:center;gap:12px}
+  .opt:hover{border-color:var(--accent);background:var(--soft);transform:translateY(-2px)}
+  .opt b{background:var(--soft);color:var(--accent);width:30px;height:30px;border-radius:8px;
+    display:flex;align-items:center;justify-content:center;font-size:15px;flex:0 0 auto}
+  .opt.ok{border-color:var(--ok);background:#dcfce7}
+  .opt.ok b{background:var(--ok);color:#fff}
+  .opt.bad{border-color:var(--bad);background:#fee2e2}
+  .opt.bad b{background:var(--bad);color:#fff}
+  .opt:disabled{cursor:default;transform:none}
+  .fb{margin-top:16px;padding:14px 16px;border-radius:12px;font-size:16px;display:none;line-height:1.4}
+  .fb.show{display:block}
+  .fb.good{background:#dcfce7;color:#166534}
+  .fb.no{background:#fee2e2;color:#991b1b}
+  .btn{margin-top:18px;width:100%;padding:15px;border:0;border-radius:14px;background:var(--accent);
+    color:#fff;font-size:18px;font-weight:700;cursor:pointer;display:none}
+  .btn.show{display:block}
+  .btn:hover{filter:brightness(1.08)}
+  .center{text-align:center}
+  .score{font-size:64px;font-weight:800;margin:10px 0}
+  .emoji{font-size:70px}
+  .hint{color:#94a3b8;font-size:13px;text-align:center;margin-top:14px}
+</style>
+</head>
+<body>
+<div class="app" id="app"></div>
+<script>
+const QUESTIONS = [
+  {q:"Какая скорость даёт слоу-мо (замедление)?",
+   a:["200%","Меньше 100% (например 50%)","100%","1000%"],c:1,
+   e:"50% = в 2 раза медленнее. Меньше 100% — медленнее обычного."},
+  {q:"Какая скорость даёт ускорение / таймлапс?",
+   a:["Больше 100% (например 300%)","50%","10%","0%"],c:0,
+   e:"300% = в 3 раза быстрее — время «летит»."},
+  {q:"Как открыть настройку скорости клипа?",
+   a:["F8","ПКМ по клипу → «Скорость/Длительность» (Ctrl+R)","Ctrl+M","Экспорт"],c:1,
+   e:"Там же — проценты, реверс и «Волновое изменение»."},
+  {q:"Какая галка пускает видео задом наперёд?",
+   a:["«Сохранить высоту звука»","«Реверс скорости»","«Волновое изменение»","«Оптический поток»"],c:1,
+   e:"«Реверс скорости» = время назад; можно вместе с процентами (−50%)."},
+  {q:"Что делает инструмент «Растянуть скорость» (R)?",
+   a:["Режет клип","Меняет скорость, растягивая клип за край","Красит","Добавляет звук"],c:1,
+   e:"Тянешь длиннее — медленнее; удобно подогнать под бит/длину."},
+  {q:"Что такое стоп-кадр (удержание кадра)?",
+   a:["Ускорение","Заморозка одного кадра — драматичная пауза","Переход","Титр"],c:1,
+   e:"«Замри!» на пике действия; вставляют сегмент удержания кадра."},
+  {q:"Что такое speed-ramp (Изменение времени)?",
+   a:["Резкий скачок скорости","Плавный переход между скоростями — влёт в слоу-мо","Реверс","Экспорт"],c:1,
+   e:"Резинка скорости + раздвинутые ключи дают плавный «whoosh»."},
+  {q:"Что делает «Оптический поток»?",
+   a:["Меняет цвет","Дорисовывает промежуточные кадры для плавного слоу-мо","Режет","Импортирует"],c:1,
+   e:"Иначе сильное слоу-мо «дёргается». Нужен рендер участка."},
+  {q:"Что нажать после Оптического потока, чтобы слоу-мо играло плавно?",
+   a:["Enter (рендер участка)","F8","Пробел два раза","Ничего"],c:0,
+   e:"Enter просчитывает участок — полоса над клипом станет зелёной."},
+  {q:"Зачем галка «Волновое изменение» при смене скорости?",
+   a:["Для звука","Чтобы соседние клипы подвинулись — без дырок и наездов","Для цвета","Для титра"],c:1,
+   e:"Замедленный клип длиннее — соседи должны сдвинуться правильно."},
+
+  {q:"😄 Замедлил клип — а рядом появилась дырка (или клипы наехали). Что забыл?",
+   a:["Сохранить","Галку «Волновое изменение»","Титр","Экспорт"],c:1,
+   e:"Без неё длина меняется, но соседи стоят на месте."},
+  {q:"😄 Слоу-мо дёргается, как слайд-шоу. Что сделать?",
+   a:["Громче музыку","Оптический поток + Enter (или взять клип 60fps)","Ярче цвет","Больше маркеров"],c:1,
+   e:"Программа дорисует кадры; ещё лучше — исходник с высоким fps."},
+  {q:"😄 Пустил реверс — голос звучит как из фильма ужасов! Что делать?",
+   a:["Так и надо","Отключить звук на реверс-куске","Ускорить","Добавить титр"],c:1,
+   e:"Речь задом наперёд звучит жутко — звук на таких кусках убирают."},
+
+  {q:"🤔 Почему замедляют только пик момента, а не весь клип?",
+   a:["Так короче грузит","Контраст скоростей создаёт эффект; всё слоу — долго и скучно","Экономит цвет","Случайно"],c:1,
+   e:"Слоу-мо «выстреливает» именно рядом с обычной скоростью."},
+  {q:"🤔 Почему speed-ramp круче резкого переключения скорости?",
+   a:["Он ярче","Плавный влёт естественнее и кинематографичнее; скачок «дёргает»","Быстрее рендер","Меньше весит"],c:1,
+   e:"Мягкая «горка» скорости = тот самый профессиональный «whoosh»."},
+  {q:"🤔 Почему для сильного слоу-мо лучше видео с 60/120 fps?",
+   a:["Оно ярче","Больше кадров в секунду — есть что показать замедленно, не дёргается","Меньше весит","Быстрее грузит"],c:1,
+   e:"Мало кадров → при растягивании их не хватает и картинка «прыгает»."},
+];
+
+let i=0, score=0, locked=false;
+const app=document.getElementById('app');
+
+function shuffle(){for(let k=QUESTIONS.length-1;k>0;k--){const j=Math.floor(Math.random()*(k+1));[QUESTIONS[k],QUESTIONS[j]]=[QUESTIONS[j],QUESTIONS[k]];}for(const Q of QUESTIONS){const cc=Q.a[Q.c];for(let k=Q.a.length-1;k>0;k--){const j=Math.floor(Math.random()*(k+1));[Q.a[k],Q.a[j]]=[Q.a[j],Q.a[k]];}Q.c=Q.a.indexOf(cc);}}
+shuffle();
+
+function render(){
+  const Q=QUESTIONS[i];
+  app.innerHTML=`
+    <h1>⚡ Повелитель времени</h1>
+    <div class="sub">Викторина по уроку «Скорость, реверс, стоп-кадр»</div>
+    <div class="bar"><i style="width:${(i/QUESTIONS.length)*100}%"></i></div>
+    <div class="meta"><span>Вопрос ${i+1} из ${QUESTIONS.length}</span><span>⭐ Очки: ${score}</span></div>
+    <div class="q">${Q.q}</div>
+    <div class="opts" id="opts">
+      ${Q.a.map((t,n)=>`<button class="opt" data-n="${n}"><b>${n+1}</b><span>${t}</span></button>`).join('')}
+    </div>
+    <div class="fb" id="fb"></div>
+    <button class="btn" id="next">${i===QUESTIONS.length-1?'Показать результат →':'Следующий вопрос →'}</button>
+    <div class="hint">Можно отвечать клавишами 1–4</div>`;
+  locked=false;
+  document.querySelectorAll('.opt').forEach(b=>b.onclick=()=>choose(+b.dataset.n));
+  document.getElementById('next').onclick=next;
+}
+
+function choose(n){
+  if(locked) return; locked=true;
+  const Q=QUESTIONS[i];
+  const opts=[...document.querySelectorAll('.opt')];
+  opts.forEach(b=>b.disabled=true);
+  opts[Q.c].classList.add('ok');
+  const fb=document.getElementById('fb');
+  if(n===Q.c){ score++; fb.className='fb show good'; fb.textContent='✅ Верно! '+Q.e; }
+  else { opts[n].classList.add('bad'); fb.className='fb show no'; fb.textContent='❌ Не совсем. '+Q.e; }
+  document.querySelector('.meta').children[1].textContent='⭐ Очки: '+score;
+  document.getElementById('next').classList.add('show');
+}
+
+function next(){ i++; if(i<QUESTIONS.length) render(); else result(); }
+
+function result(){
+  const pct=Math.round(score/QUESTIONS.length*100);
+  let em,msg;
+  if(pct===100){em='🏆';msg='Идеально! Ты повелитель времени! ⚡';}
+  else if(pct>=70){em='🎉';msg='Отлично! Слоу-мо, реверс и speed-ramp — под контролем.';}
+  else if(pct>=40){em='👍';msg='Неплохо! Помни: <100% слоу, «Волновое изменение», Оптический поток + Enter.';}
+  else {em='💪';msg='Начало есть! Перечитай про скорость, реверс и speed-ramp.';}
+  app.innerHTML=`
+    <div class="center">
+      <div class="emoji">${em}</div>
+      <h1>Готово!</h1>
+      <div class="score">${score} / ${QUESTIONS.length}</div>
+      <div class="sub">${msg}</div>
+      <button class="btn show" id="again">🔁 Пройти заново</button>
+    </div>`;
+  document.getElementById('again').onclick=()=>{i=0;score=0;shuffle();render();};
+}
+
+document.addEventListener('keydown',e=>{
+  if(['1','2','3','4'].includes(e.key)){ const b=document.querySelector(`.opt[data-n="${+e.key-1}"]`); if(b&&!b.disabled) choose(+e.key-1); }
+  if(e.key==='Enter'){ const nb=document.getElementById('next'); if(nb&&nb.classList.contains('show')) next(); }
+});
+
+render();
+</script>
+</body>
+</html>
