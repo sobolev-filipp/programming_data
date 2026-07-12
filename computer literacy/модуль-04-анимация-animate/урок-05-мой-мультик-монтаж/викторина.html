@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Викторина — Мой мультик (весь Модуль 4)</title>
+<style>
+  :root{
+    --bg1:#F59E0B; --bg2:#EF4444; --card:#ffffff; --ink:#1f2937;
+    --accent:#D97706; --ok:#16a34a; --bad:#dc2626; --soft:#fef3c7;
+  }
+  *{box-sizing:border-box;font-family:"Segoe UI",system-ui,sans-serif}
+  body{margin:0;min-height:100vh;display:flex;align-items:center;justify-content:center;
+    background:linear-gradient(135deg,var(--bg1),var(--bg2));padding:20px;color:var(--ink)}
+  .app{background:var(--card);width:min(760px,100%);border-radius:24px;
+    box-shadow:0 25px 60px rgba(0,0,0,.35);padding:34px 34px 28px;position:relative;overflow:hidden}
+  h1{margin:0 0 6px;font-size:26px;text-align:center}
+  .sub{text-align:center;color:#64748b;margin-bottom:22px;font-size:15px}
+  .bar{height:10px;background:var(--soft);border-radius:99px;overflow:hidden;margin-bottom:18px}
+  .bar>i{display:block;height:100%;width:0;background:var(--accent);transition:.4s}
+  .meta{display:flex;justify-content:space-between;font-size:14px;color:#64748b;margin-bottom:14px}
+  .q{font-size:22px;font-weight:700;margin:6px 0 20px;line-height:1.3}
+  .opts{display:grid;gap:12px}
+  .opt{border:2px solid #e2e8f0;background:#fff;border-radius:14px;padding:15px 18px;font-size:18px;
+    text-align:left;cursor:pointer;transition:.15s;display:flex;align-items:center;gap:12px}
+  .opt:hover{border-color:var(--accent);background:var(--soft);transform:translateY(-2px)}
+  .opt b{background:var(--soft);color:var(--accent);width:30px;height:30px;border-radius:8px;
+    display:flex;align-items:center;justify-content:center;font-size:15px;flex:0 0 auto}
+  .opt.ok{border-color:var(--ok);background:#dcfce7}
+  .opt.ok b{background:var(--ok);color:#fff}
+  .opt.bad{border-color:var(--bad);background:#fee2e2}
+  .opt.bad b{background:var(--bad);color:#fff}
+  .opt:disabled{cursor:default;transform:none}
+  .fb{margin-top:16px;padding:14px 16px;border-radius:12px;font-size:16px;display:none;line-height:1.4}
+  .fb.show{display:block}
+  .fb.good{background:#dcfce7;color:#166534}
+  .fb.no{background:#fee2e2;color:#991b1b}
+  .btn{margin-top:18px;width:100%;padding:15px;border:0;border-radius:14px;background:var(--accent);
+    color:#fff;font-size:18px;font-weight:700;cursor:pointer;display:none}
+  .btn.show{display:block}
+  .btn:hover{filter:brightness(1.08)}
+  .center{text-align:center}
+  .score{font-size:64px;font-weight:800;margin:10px 0}
+  .emoji{font-size:70px}
+  .hint{color:#94a3b8;font-size:13px;text-align:center;margin-top:14px}
+</style>
+</head>
+<body>
+<div class="app" id="app"></div>
+<script>
+const QUESTIONS = [
+  {q:"Что делает клавиша F8 (урок 1)?",
+   a:["Экспортирует GIF","Превращает объект в символ","Удаляет кадр","Добавляет звук"],c:1,
+   e:"Символ нужен для анимации движения (motion tween) и переиспользования."},
+  {q:"Сколько кадров = 1 секунда при 24 к/с?",
+   a:["12","24","60","1"],c:1,
+   e:"Значит 15 секунд мультика ≈ 360 кадров."},
+  {q:"Принцип «сжатие-растяжение» — это когда...",
+   a:["меняется цвет","мяч пружинит и деформируется при ударе/полёте","звук громче","слой прозрачный"],c:1,
+   e:"Squash & stretch придаёт вес и «резину» движению."},
+  {q:"Как заставить объект лететь по дуге (урок 2)?",
+   a:["Морфингом","Путём движения — изогнуть траекторию","Кнопкой","Ctrl+B"],c:1,
+   e:"«Выделением» тянем линию пути в кривую — объект летит по дуге."},
+  {q:"Что делает плавность (easing)?",
+   a:["Красит","Задаёт разгон и торможение движения","Импортирует звук","Ставит кости"],c:1,
+   e:"Ease придаёт «медленный вход/выход» — движение живее."},
+  {q:"Морфинг (анимация формы, урок 3) работает с чем?",
+   a:["С символами","С чистыми фигурами (заливками)","С кнопками","Со звуком"],c:1,
+   e:"Символ надо разбить в фигуру (Ctrl+B); диапазон морфинга — зелёный."},
+  {q:"Что такое IK (инверсная кинематика, урок 4)?",
+   a:["Смена сцены","Тянешь кончик — сгибается вся цепочка костей","Экспорт MP4","Титр"],c:1,
+   e:"Риг на костях: тянешь кисть — плечо и локоть подстраиваются сами."},
+  {q:"Какая синхронизация звука нужна для липсинка и музыки?",
+   a:["«Событие»","«Поток» (Stream)","«Остановить»","«Начать»"],c:1,
+   e:"«Поток» привязывает звук к таймлайну — совпадает с картинкой."},
+  {q:"С чего начинается мультик — ещё до программы (урок 5)?",
+   a:["С экспорта","С раскадровки (плана истории)","С музыки","С титров"],c:1,
+   e:"Раскадровка: начало → середина → конец, тайминг сцен."},
+  {q:"В каком формате сохранять мультик СО ЗВУКОМ?",
+   a:["GIF","MP4 (через Media Encoder)","PNG","SVG"],c:1,
+   e:"GIF не хранит звук; для музыки нужен MP4 (или HTML5)."},
+
+  {q:"😄 Сделал мультик с музыкой, сохранил в GIF — а звука нет! Почему?",
+   a:["Сломался файл","GIF не хранит звук — нужен MP4","Тихая музыка","Нет цвета"],c:1,
+   e:"Для звука экспортируй видео/медиа → MP4."},
+  {q:"😄 Пытаюсь морфить персонажа-символ — не выходит. Что сделать?",
+   a:["Добавить звук","Разбить в фигуру (Ctrl+B)","Нажать F8","Новую сцену"],c:1,
+   e:"Морфинг живёт на фигурах; символ надо разделить."},
+  {q:"😄 Титр-название не «проявляется» плавно через Альфу. В чём дело?",
+   a:["Мало кадров","Текст не символ — нужно сначала F8","Не тот цвет","Нет музыки"],c:1,
+   e:"Эффект цвета/Альфа работает только на символе."},
+
+  {q:"🤔 Почему даже 10-секундный мультик должен иметь начало, середину и конец?",
+   a:["Так короче","Это история — зрителю нужна понятная развязка","Так ярче","Меньше весит"],c:1,
+   e:"Набор трюков без сюжета не «читается»; история держит внимание."},
+  {q:"🤔 Почему быстрые склейки ощущаются бодро, а длинные планы — спокойно?",
+   a:["Случайно","Тайминг монтажа задаёт ритм и настроение","Из-за цвета","Из-за звука"],c:1,
+   e:"Длительность сцен — инструмент эмоции, как в настоящем кино."},
+  {q:"🤔 Почему выгодно переиспользовать героев из прошлых уроков?",
+   a:["Так принято","Мультик — это сборка готового; экономишь время","Красивее цвет","Меньше кадров"],c:1,
+   e:"Символы уже сделаны — собираешь историю, а не рисуешь заново."},
+];
+
+let i=0, score=0, locked=false;
+const app=document.getElementById('app');
+
+function shuffle(){for(let k=QUESTIONS.length-1;k>0;k--){const j=Math.floor(Math.random()*(k+1));[QUESTIONS[k],QUESTIONS[j]]=[QUESTIONS[j],QUESTIONS[k]];}for(const Q of QUESTIONS){const cc=Q.a[Q.c];for(let k=Q.a.length-1;k>0;k--){const j=Math.floor(Math.random()*(k+1));[Q.a[k],Q.a[j]]=[Q.a[j],Q.a[k]];}Q.c=Q.a.indexOf(cc);}}
+shuffle();
+
+function render(){
+  const Q=QUESTIONS[i];
+  app.innerHTML=`
+    <h1>🏆 Мой мультик</h1>
+    <div class="sub">Викторина по всему Модулю 4 (анимация)</div>
+    <div class="bar"><i style="width:${(i/QUESTIONS.length)*100}%"></i></div>
+    <div class="meta"><span>Вопрос ${i+1} из ${QUESTIONS.length}</span><span>⭐ Очки: ${score}</span></div>
+    <div class="q">${Q.q}</div>
+    <div class="opts" id="opts">
+      ${Q.a.map((t,n)=>`<button class="opt" data-n="${n}"><b>${n+1}</b><span>${t}</span></button>`).join('')}
+    </div>
+    <div class="fb" id="fb"></div>
+    <button class="btn" id="next">${i===QUESTIONS.length-1?'Показать результат →':'Следующий вопрос →'}</button>
+    <div class="hint">Можно отвечать клавишами 1–4</div>`;
+  locked=false;
+  document.querySelectorAll('.opt').forEach(b=>b.onclick=()=>choose(+b.dataset.n));
+  document.getElementById('next').onclick=next;
+}
+
+function choose(n){
+  if(locked) return; locked=true;
+  const Q=QUESTIONS[i];
+  const opts=[...document.querySelectorAll('.opt')];
+  opts.forEach(b=>b.disabled=true);
+  opts[Q.c].classList.add('ok');
+  const fb=document.getElementById('fb');
+  if(n===Q.c){ score++; fb.className='fb show good'; fb.textContent='✅ Верно! '+Q.e; }
+  else { opts[n].classList.add('bad'); fb.className='fb show no'; fb.textContent='❌ Не совсем. '+Q.e; }
+  document.querySelector('.meta').children[1].textContent='⭐ Очки: '+score;
+  document.getElementById('next').classList.add('show');
+}
+
+function next(){ i++; if(i<QUESTIONS.length) render(); else result(); }
+
+function result(){
+  const pct=Math.round(score/QUESTIONS.length*100);
+  let em,msg;
+  if(pct===100){em='🏆';msg='Идеально! Ты настоящий аниматор-режиссёр! 🎬';}
+  else if(pct>=70){em='🎉';msg='Отлично! Весь модуль анимации — у тебя в руках.';}
+  else if(pct>=40){em='👍';msg='Неплохо! Помни: символ (F8), морфинг для фигур, звук «Поток», мультик со звуком — MP4.';}
+  else {em='💪';msg='Начало есть! Перелистай уроки 1–5 — кадры, tween, кости, монтаж.';}
+  app.innerHTML=`
+    <div class="center">
+      <div class="emoji">${em}</div>
+      <h1>Готово!</h1>
+      <div class="score">${score} / ${QUESTIONS.length}</div>
+      <div class="sub">${msg}</div>
+      <button class="btn show" id="again">🔁 Пройти заново</button>
+    </div>`;
+  document.getElementById('again').onclick=()=>{i=0;score=0;shuffle();render();};
+}
+
+document.addEventListener('keydown',e=>{
+  if(['1','2','3','4'].includes(e.key)){ const b=document.querySelector(`.opt[data-n="${+e.key-1}"]`); if(b&&!b.disabled) choose(+e.key-1); }
+  if(e.key==='Enter'){ const nb=document.getElementById('next'); if(nb&&nb.classList.contains('show')) next(); }
+});
+
+render();
+</script>
+</body>
+</html>

@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Викторина — Первый клип под музыку</title>
+<style>
+  :root{
+    --bg1:#6D28D9; --bg2:#DB2777; --card:#ffffff; --ink:#1f2937;
+    --accent:#7C3AED; --ok:#16a34a; --bad:#dc2626; --soft:#ede9fe;
+  }
+  *{box-sizing:border-box;font-family:"Segoe UI",system-ui,sans-serif}
+  body{margin:0;min-height:100vh;display:flex;align-items:center;justify-content:center;
+    background:linear-gradient(135deg,var(--bg1),var(--bg2));padding:20px;color:var(--ink)}
+  .app{background:var(--card);width:min(760px,100%);border-radius:24px;
+    box-shadow:0 25px 60px rgba(0,0,0,.35);padding:34px 34px 28px;position:relative;overflow:hidden}
+  h1{margin:0 0 6px;font-size:26px;text-align:center}
+  .sub{text-align:center;color:#64748b;margin-bottom:22px;font-size:15px}
+  .bar{height:10px;background:var(--soft);border-radius:99px;overflow:hidden;margin-bottom:18px}
+  .bar>i{display:block;height:100%;width:0;background:var(--accent);transition:.4s}
+  .meta{display:flex;justify-content:space-between;font-size:14px;color:#64748b;margin-bottom:14px}
+  .q{font-size:22px;font-weight:700;margin:6px 0 20px;line-height:1.3}
+  .opts{display:grid;gap:12px}
+  .opt{border:2px solid #e2e8f0;background:#fff;border-radius:14px;padding:15px 18px;font-size:18px;
+    text-align:left;cursor:pointer;transition:.15s;display:flex;align-items:center;gap:12px}
+  .opt:hover{border-color:var(--accent);background:var(--soft);transform:translateY(-2px)}
+  .opt b{background:var(--soft);color:var(--accent);width:30px;height:30px;border-radius:8px;
+    display:flex;align-items:center;justify-content:center;font-size:15px;flex:0 0 auto}
+  .opt.ok{border-color:var(--ok);background:#dcfce7}
+  .opt.ok b{background:var(--ok);color:#fff}
+  .opt.bad{border-color:var(--bad);background:#fee2e2}
+  .opt.bad b{background:var(--bad);color:#fff}
+  .opt:disabled{cursor:default;transform:none}
+  .fb{margin-top:16px;padding:14px 16px;border-radius:12px;font-size:16px;display:none;line-height:1.4}
+  .fb.show{display:block}
+  .fb.good{background:#dcfce7;color:#166534}
+  .fb.no{background:#fee2e2;color:#991b1b}
+  .btn{margin-top:18px;width:100%;padding:15px;border:0;border-radius:14px;background:var(--accent);
+    color:#fff;font-size:18px;font-weight:700;cursor:pointer;display:none}
+  .btn.show{display:block}
+  .btn:hover{filter:brightness(1.08)}
+  .center{text-align:center}
+  .score{font-size:64px;font-weight:800;margin:10px 0}
+  .emoji{font-size:70px}
+  .hint{color:#94a3b8;font-size:13px;text-align:center;margin-top:14px}
+</style>
+</head>
+<body>
+<div class="app" id="app"></div>
+<script>
+const QUESTIONS = [
+  {q:"Какая панель показывает зрителю готовый монтаж?",
+   a:["«Исходник»","«Программа»","«Проект»","«Эффекты»"],c:1,
+   e:"«Программа» показывает то, что под плейхедом на таймлайне — итог монтажа."},
+  {q:"Где просматривают и обрезают ОДИН клип до попадания на таймлайн?",
+   a:["В мониторе «Исходник»","В «Программе»","В «Эффектах»","В экспорте"],c:0,
+   e:"«Исходник» — там ставим точки Входа/Выхода и берём лучший кусок."},
+  {q:"Что делает клавиша I?",
+   a:["Ставит точку Входа","Импортирует","Играет","Режет"],c:0,
+   e:"I — точка Входа (начало нужного куска), O — точка Выхода."},
+  {q:"Как проще всего создать секвенцию в Premiere?",
+   a:["Написать код","Перетащить клип на таймлайн (создастся сама)","Экспортировать","Нажать M"],c:1,
+   e:"Premiere создаёт секвенцию под размер первого клипа автоматически."},
+  {q:"Каким инструментом режут клип на части?",
+   a:["Стрелка (Выделение)","Лезвие (C)","Рука","Текст"],c:1,
+   e:"Лезвие (C) разрезает клип; потом вернись на Выделение (V)."},
+  {q:"Как убрать щель между клипами, чтобы не мелькал чёрный экран?",
+   a:["Delete","Shift+Delete (удалить со сдвигом / Ripple)","Ctrl+S","F8"],c:1,
+   e:"Shift+Delete убирает кусок и подтягивает соседний — без дырки."},
+  {q:"Как поставить маркер на удар музыки?",
+   a:["Клавишей M во время игры","Клавишей I","Через экспорт","Через «Наплыв»"],c:0,
+   e:"Играешь музыку и на каждый бит жмёшь M — получается сетка ритма."},
+  {q:"Что такое «Наплыв» (Cross Dissolve)?",
+   a:["Ускорение","Плавный переход между клипами","Титр","Экспорт"],c:1,
+   e:"Один кадр плавно перетекает в другой; ставят на начало/конец/смену сцены."},
+  {q:"В каком формате экспортируют готовый ролик?",
+   a:["PNG","H.264 (MP4)","SVG","GIF"],c:1,
+   e:"H.264 = MP4: играет везде, весит немного, годится для YouTube."},
+  {q:"Что показывает синяя вертикальная линия на таймлайне?",
+   a:["Громкость","Плейхед — текущий момент","Границу экспорта","Маркер"],c:1,
+   e:"Плейхед: то, что под ним, видно в мониторе «Программа»."},
+
+  {q:"😄 Клипы разложил, а при просмотре мелькает чёрный экран. Почему?",
+   a:["Сломался Premiere","Между клипами щели — надо встык / Ripple","Тихая музыка","Нет титров"],c:1,
+   e:"Пустота на дорожке V1 = чёрный кадр. Стыкуй клипы (привязка S)."},
+  {q:"😄 Порезал один клип — и вдруг режешь всё подряд! Что забыл?",
+   a:["Сохранить","Вернуться на Выделение (V) с Лезвия","Импорт","Экспорт"],c:1,
+   e:"После Лезвия (C) сразу жми V, иначе каждый клик режет."},
+  {q:"😄 Открыл проект — вместо видео цветные полосы «Media offline». Что случилось?",
+   a:["Вирус","Исходные файлы переместили после импорта","Мало цвета","Нет звука"],c:1,
+   e:"Premiere хранит ссылки на файлы; верни их в папку или «Связать медиаданные»."},
+
+  {q:"🤔 Почему берут лучшие 1–2 секунды клипа, а не весь клип целиком?",
+   a:["Так короче грузит","Динамика и ритм — зритель не скучает","Экономит цвет","Случайно"],c:1,
+   e:"Плотный монтаж из «сочных» кусков держит внимание."},
+  {q:"🤔 Почему склейку ставят именно на удар музыки?",
+   a:["Так принято","Совпадение картинки и ритма смотрится «залипательно»","Быстрее рендер","Ярче цвет"],c:1,
+   e:"Мозг любит синхрон звука и картинки — ролик ощущается профессиональным."},
+  {q:"🤔 Почему нельзя двигать исходные файлы после импорта?",
+   a:["Они тяжёлые","Premiere хранит ссылки на файлы, а не их копии","Портится звук","Меняется цвет"],c:1,
+   e:"Переместил файл — ссылка «рвётся», клип становится offline."},
+];
+
+let i=0, score=0, locked=false;
+const app=document.getElementById('app');
+
+function shuffle(){for(let k=QUESTIONS.length-1;k>0;k--){const j=Math.floor(Math.random()*(k+1));[QUESTIONS[k],QUESTIONS[j]]=[QUESTIONS[j],QUESTIONS[k]];}for(const Q of QUESTIONS){const cc=Q.a[Q.c];for(let k=Q.a.length-1;k>0;k--){const j=Math.floor(Math.random()*(k+1));[Q.a[k],Q.a[j]]=[Q.a[j],Q.a[k]];}Q.c=Q.a.indexOf(cc);}}
+shuffle();
+
+function render(){
+  const Q=QUESTIONS[i];
+  app.innerHTML=`
+    <h1>🎬 Первый клип под музыку</h1>
+    <div class="sub">Викторина по уроку «Первый монтаж в Premiere»</div>
+    <div class="bar"><i style="width:${(i/QUESTIONS.length)*100}%"></i></div>
+    <div class="meta"><span>Вопрос ${i+1} из ${QUESTIONS.length}</span><span>⭐ Очки: ${score}</span></div>
+    <div class="q">${Q.q}</div>
+    <div class="opts" id="opts">
+      ${Q.a.map((t,n)=>`<button class="opt" data-n="${n}"><b>${n+1}</b><span>${t}</span></button>`).join('')}
+    </div>
+    <div class="fb" id="fb"></div>
+    <button class="btn" id="next">${i===QUESTIONS.length-1?'Показать результат →':'Следующий вопрос →'}</button>
+    <div class="hint">Можно отвечать клавишами 1–4</div>`;
+  locked=false;
+  document.querySelectorAll('.opt').forEach(b=>b.onclick=()=>choose(+b.dataset.n));
+  document.getElementById('next').onclick=next;
+}
+
+function choose(n){
+  if(locked) return; locked=true;
+  const Q=QUESTIONS[i];
+  const opts=[...document.querySelectorAll('.opt')];
+  opts.forEach(b=>b.disabled=true);
+  opts[Q.c].classList.add('ok');
+  const fb=document.getElementById('fb');
+  if(n===Q.c){ score++; fb.className='fb show good'; fb.textContent='✅ Верно! '+Q.e; }
+  else { opts[n].classList.add('bad'); fb.className='fb show no'; fb.textContent='❌ Не совсем. '+Q.e; }
+  document.querySelector('.meta').children[1].textContent='⭐ Очки: '+score;
+  document.getElementById('next').classList.add('show');
+}
+
+function next(){ i++; if(i<QUESTIONS.length) render(); else result(); }
+
+function result(){
+  const pct=Math.round(score/QUESTIONS.length*100);
+  let em,msg;
+  if(pct===100){em='🏆';msg='Идеально! Ты готовый видеомонтажёр! 🎬';}
+  else if(pct>=70){em='🎉';msg='Отлично! Интерфейс, нарезка и ритм — под контролем.';}
+  else if(pct>=40){em='👍';msg='Неплохо! Помни: обрезай точками I/O, склейки на бит, щели — Shift+Delete.';}
+  else {em='💪';msg='Начало есть! Перечитай про 5 панелей, точки Входа/Выхода и ритм.';}
+  app.innerHTML=`
+    <div class="center">
+      <div class="emoji">${em}</div>
+      <h1>Готово!</h1>
+      <div class="score">${score} / ${QUESTIONS.length}</div>
+      <div class="sub">${msg}</div>
+      <button class="btn show" id="again">🔁 Пройти заново</button>
+    </div>`;
+  document.getElementById('again').onclick=()=>{i=0;score=0;shuffle();render();};
+}
+
+document.addEventListener('keydown',e=>{
+  if(['1','2','3','4'].includes(e.key)){ const b=document.querySelector(`.opt[data-n="${+e.key-1}"]`); if(b&&!b.disabled) choose(+e.key-1); }
+  if(e.key==='Enter'){ const nb=document.getElementById('next'); if(nb&&nb.classList.contains('show')) next(); }
+});
+
+render();
+</script>
+</body>
+</html>

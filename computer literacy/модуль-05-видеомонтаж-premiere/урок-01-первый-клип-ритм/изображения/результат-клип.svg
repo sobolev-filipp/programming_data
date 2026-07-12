@@ -1,0 +1,78 @@
+<svg viewBox="0 0 500 400" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <clipPath id="mon"><rect x="60" y="20" width="380" height="176" rx="8"/></clipPath>
+    <linearGradient id="skyA" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#7DD3FC"/><stop offset="1" stop-color="#BAE6FD"/></linearGradient>
+    <linearGradient id="skyC" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#312E81"/><stop offset="1" stop-color="#6D28D9"/></linearGradient>
+  </defs>
+
+  <!-- app background -->
+  <rect width="500" height="400" fill="#1E1E1E"/>
+
+  <!-- ===== PROGRAM MONITOR ===== -->
+  <rect x="60" y="20" width="380" height="176" rx="8" fill="#0B1220"/>
+  <g clip-path="url(#mon)">
+    <!-- Scene A: park + sun -->
+    <g>
+      <animate attributeName="opacity" dur="6s" repeatCount="indefinite" keyTimes="0;0.30;0.36;1" values="1;1;0;0"/>
+      <rect x="60" y="20" width="380" height="176" fill="url(#skyA)"/>
+      <rect x="60" y="150" width="380" height="46" fill="#86EFAC"/>
+      <circle cx="140" cy="70" r="26" fill="#FDE047"/>
+      <ellipse cx="300" cy="60" rx="34" ry="16" fill="#ffffff" opacity="0.85"/>
+      <text x="250" y="130" font-family="Segoe UI, Arial, sans-serif" font-size="20" font-weight="800" fill="#065F46" text-anchor="middle">🌳 сцена 1</text>
+    </g>
+    <!-- Scene B: city -->
+    <g>
+      <animate attributeName="opacity" dur="6s" repeatCount="indefinite" keyTimes="0;0.30;0.36;0.63;0.69;1" values="0;0;1;1;0;0"/>
+      <rect x="60" y="20" width="380" height="176" fill="#FDBA74"/>
+      <rect x="60" y="150" width="380" height="46" fill="#7C2D12"/>
+      <rect x="110" y="80" width="40" height="70" fill="#9A3412"/><rect x="170" y="60" width="46" height="90" fill="#C2410C"/><rect x="240" y="95" width="38" height="55" fill="#9A3412"/><rect x="300" y="70" width="44" height="80" fill="#C2410C"/>
+      <text x="250" y="130" font-family="Segoe UI, Arial, sans-serif" font-size="20" font-weight="800" fill="#FFEDD5" text-anchor="middle">🌆 сцена 2</text>
+    </g>
+    <!-- Scene C: night sky + fireworks -->
+    <g>
+      <animate attributeName="opacity" dur="6s" repeatCount="indefinite" keyTimes="0;0.63;0.69;1" values="0;0;1;1"/>
+      <rect x="60" y="20" width="380" height="176" fill="url(#skyC)"/>
+      <g fill="#FDE047">
+        <circle cx="160" cy="70" r="3"/><circle cx="220" cy="50" r="2.5"/><circle cx="330" cy="80" r="3"/><circle cx="380" cy="55" r="2.5"/>
+      </g>
+      <g stroke="#F472B6" stroke-width="2.5" stroke-linecap="round">
+        <line x1="300" y1="90" x2="300" y2="70"/><line x1="300" y1="90" x2="315" y2="78"/><line x1="300" y1="90" x2="285" y2="78"/><line x1="300" y1="90" x2="318" y2="95"/><line x1="300" y1="90" x2="282" y2="95"/>
+      </g>
+      <text x="250" y="150" font-family="Segoe UI, Arial, sans-serif" font-size="20" font-weight="800" fill="#FDE047" text-anchor="middle">🎆 сцена 3</text>
+    </g>
+  </g>
+  <rect x="60" y="20" width="380" height="176" rx="8" fill="none" stroke="#3F3F46" stroke-width="2"/>
+  <text x="66" y="14" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="700" fill="#A1A1AA">Программа (что видит зритель)</text>
+
+  <!-- ===== TIMELINE PANEL ===== -->
+  <rect x="16" y="214" width="468" height="150" rx="8" fill="#141414"/>
+  <!-- track labels -->
+  <rect x="20" y="238" width="40" height="34" rx="4" fill="#27272A"/><text x="40" y="259" font-family="Segoe UI, Arial, sans-serif" font-size="13" font-weight="700" fill="#D4D4D8" text-anchor="middle">V1</text>
+  <rect x="20" y="292" width="40" height="42" rx="4" fill="#27272A"/><text x="40" y="317" font-family="Segoe UI, Arial, sans-serif" font-size="13" font-weight="700" fill="#D4D4D8" text-anchor="middle">A1</text>
+
+  <!-- ruler + beat markers -->
+  <rect x="60" y="222" width="410" height="12" fill="#1F1F22"/>
+  <g fill="#38BDF8">
+    <polygon points="128,222 136,222 132,230"/><polygon points="196,222 204,222 200,230"/><polygon points="264,222 272,222 268,230"/><polygon points="333,222 341,222 337,230"/><polygon points="401,222 409,222 405,230"/>
+  </g>
+
+  <!-- V1 clips (3 clips, cut on beats) -->
+  <rect x="61" y="238" width="134" height="34" rx="4" fill="#14B8A6"/><text x="70" y="259" font-family="Segoe UI, Arial, sans-serif" font-size="11" fill="#042F2E">клип 1</text>
+  <rect x="197" y="238" width="135" height="34" rx="4" fill="#8B5CF6"/><text x="206" y="259" font-family="Segoe UI, Arial, sans-serif" font-size="11" fill="#1E1B4B">клип 2</text>
+  <rect x="334" y="238" width="135" height="34" rx="4" fill="#F97316"/><text x="343" y="259" font-family="Segoe UI, Arial, sans-serif" font-size="11" fill="#431407">клип 3</text>
+
+  <!-- A1 music waveform -->
+  <rect x="61" y="292" width="408" height="42" rx="4" fill="#166534"/>
+  <g fill="#4ADE80">
+    <rect x="70" y="306" width="4" height="14"/><rect x="78" y="300" width="4" height="26"/><rect x="86" y="310" width="4" height="6"/><rect x="94" y="298" width="4" height="30"/><rect x="102" y="308" width="4" height="10"/><rect x="110" y="302" width="4" height="22"/><rect x="118" y="311" width="4" height="4"/><rect x="126" y="296" width="4" height="34"/><rect x="134" y="308" width="4" height="10"/><rect x="142" y="303" width="4" height="20"/><rect x="150" y="310" width="4" height="6"/><rect x="158" y="300" width="4" height="26"/><rect x="166" y="309" width="4" height="8"/><rect x="174" y="304" width="4" height="18"/><rect x="182" y="311" width="4" height="4"/><rect x="190" y="297" width="4" height="32"/><rect x="198" y="307" width="4" height="12"/><rect x="206" y="301" width="4" height="24"/><rect x="214" y="310" width="4" height="6"/><rect x="222" y="299" width="4" height="28"/><rect x="230" y="308" width="4" height="10"/><rect x="238" y="303" width="4" height="20"/><rect x="246" y="311" width="4" height="4"/><rect x="254" y="296" width="4" height="34"/><rect x="262" y="308" width="4" height="10"/><rect x="270" y="302" width="4" height="22"/><rect x="278" y="310" width="4" height="6"/><rect x="286" y="300" width="4" height="26"/><rect x="294" y="309" width="4" height="8"/><rect x="302" y="304" width="4" height="18"/><rect x="310" y="311" width="4" height="4"/><rect x="318" y="297" width="4" height="32"/><rect x="326" y="307" width="4" height="12"/><rect x="334" y="301" width="4" height="24"/><rect x="342" y="310" width="4" height="6"/><rect x="350" y="299" width="4" height="28"/><rect x="358" y="308" width="4" height="10"/><rect x="366" y="303" width="4" height="20"/><rect x="374" y="311" width="4" height="4"/><rect x="382" y="296" width="4" height="34"/><rect x="390" y="308" width="4" height="10"/><rect x="398" y="302" width="4" height="22"/><rect x="406" y="310" width="4" height="6"/><rect x="414" y="300" width="4" height="26"/><rect x="422" y="309" width="4" height="8"/><rect x="430" y="304" width="4" height="18"/><rect x="438" y="311" width="4" height="4"/><rect x="446" y="298" width="4" height="30"/><rect x="454" y="307" width="4" height="12"/><rect x="462" y="303" width="4" height="20"/>
+  </g>
+
+  <!-- red PLAYHEAD sweeping -->
+  <g>
+    <animateTransform attributeName="transform" type="translate" values="0 0;408 0" dur="6s" repeatCount="indefinite"/>
+    <polygon points="55,218 67,218 61,228" fill="#EF4444"/>
+    <rect x="59" y="222" width="3" height="118" fill="#EF4444"/>
+  </g>
+
+  <text x="250" y="356" font-family="Segoe UI, Arial, sans-serif" font-size="15" font-weight="700" fill="#E4E4E7" text-anchor="middle">🎬 Клип под музыку: склейки стоят на битах (синие маркеры) — сцена меняется в ритм</text>
+</svg>

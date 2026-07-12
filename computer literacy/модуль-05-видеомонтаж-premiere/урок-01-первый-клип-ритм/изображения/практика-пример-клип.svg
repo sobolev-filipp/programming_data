@@ -1,0 +1,62 @@
+<svg viewBox="0 0 500 400" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <clipPath id="mon2"><rect x="150" y="20" width="200" height="176" rx="8"/></clipPath>
+    <linearGradient id="wv" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#38BDF8"/><stop offset="1" stop-color="#0EA5E9"/></linearGradient>
+  </defs>
+
+  <rect width="500" height="400" fill="#1E1E1E"/>
+
+  <!-- ===== VERTICAL (Shorts) PROGRAM MONITOR ===== -->
+  <rect x="150" y="20" width="200" height="176" rx="8" fill="#0B1220"/>
+  <g clip-path="url(#mon2)">
+    <!-- Clip 1: wave/sea -->
+    <g>
+      <animate attributeName="opacity" dur="5s" repeatCount="indefinite" keyTimes="0;0.38;0.50;1" values="1;1;0;0"/>
+      <rect x="150" y="20" width="200" height="176" fill="url(#wv)"/>
+      <path d="M150,150 q25,-16 50,0 t50,0 t50,0 t50,0 v46 h-200 Z" fill="#0369A1"/>
+      <text x="250" y="115" font-family="Segoe UI, Arial, sans-serif" font-size="18" font-weight="800" fill="#E0F2FE" text-anchor="middle">🌊 клип 1</text>
+    </g>
+    <!-- Clip 2: sunset -->
+    <g>
+      <animate attributeName="opacity" dur="5s" repeatCount="indefinite" keyTimes="0;0.38;0.50;1" values="0;0;1;1"/>
+      <rect x="150" y="20" width="200" height="176" fill="#FB7185"/>
+      <rect x="150" y="150" width="200" height="46" fill="#7F1D1D"/>
+      <circle cx="250" cy="150" r="34" fill="#FDE047"/>
+      <text x="250" y="115" font-family="Segoe UI, Arial, sans-serif" font-size="18" font-weight="800" fill="#7F1D1D" text-anchor="middle">🌅 клип 2</text>
+    </g>
+  </g>
+  <rect x="150" y="20" width="200" height="176" rx="8" fill="none" stroke="#3F3F46" stroke-width="2"/>
+  <text x="156" y="14" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="700" fill="#A1A1AA">Программа · вертикаль 9:16 (Shorts)</text>
+
+  <!-- ===== TIMELINE ===== -->
+  <rect x="16" y="214" width="468" height="150" rx="8" fill="#141414"/>
+  <rect x="20" y="238" width="40" height="34" rx="4" fill="#27272A"/><text x="40" y="259" font-family="Segoe UI, Arial, sans-serif" font-size="13" font-weight="700" fill="#D4D4D8" text-anchor="middle">V1</text>
+  <rect x="20" y="292" width="40" height="42" rx="4" fill="#27272A"/><text x="40" y="317" font-family="Segoe UI, Arial, sans-serif" font-size="13" font-weight="700" fill="#D4D4D8" text-anchor="middle">A1</text>
+
+  <rect x="60" y="222" width="410" height="12" fill="#1F1F22"/>
+
+  <!-- two clips overlapping with a CROSS DISSOLVE in the middle -->
+  <rect x="61" y="238" width="230" height="34" rx="4" fill="#38BDF8"/><text x="72" y="259" font-family="Segoe UI, Arial, sans-serif" font-size="11" fill="#082F49">клип 1</text>
+  <rect x="235" y="238" width="234" height="34" rx="4" fill="#FB7185"/><text x="330" y="259" font-family="Segoe UI, Arial, sans-serif" font-size="11" fill="#4C0519">клип 2</text>
+  <!-- transition icon (bowtie) over the cut -->
+  <g>
+    <rect x="223" y="238" width="24" height="34" fill="#A78BFA" opacity="0.85"/>
+    <path d="M223,238 L247,272 M247,238 L223,272" stroke="#F5F3FF" stroke-width="2"/>
+  </g>
+  <text x="235" y="286" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="700" fill="#C4B5FD" text-anchor="middle">Наплыв</text>
+
+  <!-- waveform -->
+  <rect x="61" y="298" width="408" height="36" rx="4" fill="#155E75"/>
+  <g fill="#67E8F9">
+    <rect x="70" y="308" width="4" height="16"/><rect x="80" y="302" width="4" height="28"/><rect x="90" y="312" width="4" height="8"/><rect x="100" y="304" width="4" height="24"/><rect x="110" y="310" width="4" height="12"/><rect x="120" y="300" width="4" height="30"/><rect x="130" y="311" width="4" height="6"/><rect x="140" y="306" width="4" height="20"/><rect x="150" y="309" width="4" height="12"/><rect x="160" y="301" width="4" height="28"/><rect x="170" y="312" width="4" height="8"/><rect x="180" y="305" width="4" height="22"/><rect x="190" y="308" width="4" height="16"/><rect x="200" y="302" width="4" height="28"/><rect x="210" y="311" width="4" height="8"/><rect x="220" y="304" width="4" height="24"/><rect x="230" y="309" width="4" height="12"/><rect x="240" y="300" width="4" height="30"/><rect x="250" y="311" width="4" height="6"/><rect x="260" y="306" width="4" height="20"/><rect x="270" y="309" width="4" height="12"/><rect x="280" y="302" width="4" height="26"/><rect x="290" y="312" width="4" height="8"/><rect x="300" y="305" width="4" height="22"/><rect x="310" y="308" width="4" height="16"/><rect x="320" y="301" width="4" height="28"/><rect x="330" y="311" width="4" height="8"/><rect x="340" y="304" width="4" height="24"/><rect x="350" y="309" width="4" height="12"/><rect x="360" y="300" width="4" height="30"/><rect x="370" y="311" width="4" height="6"/><rect x="380" y="306" width="4" height="20"/><rect x="390" y="309" width="4" height="12"/><rect x="400" y="302" width="4" height="26"/><rect x="410" y="312" width="4" height="8"/><rect x="420" y="305" width="4" height="22"/><rect x="430" y="308" width="4" height="16"/><rect x="440" y="301" width="4" height="28"/><rect x="450" y="311" width="4" height="8"/><rect x="460" y="304" width="4" height="24"/>
+  </g>
+
+  <!-- playhead sweeps and pauses over the dissolve -->
+  <g>
+    <animateTransform attributeName="transform" type="translate" values="0 0;174 0;174 0;408 0" keyTimes="0;0.42;0.5;1" dur="5s" repeatCount="indefinite"/>
+    <polygon points="55,218 67,218 61,228" fill="#EF4444"/>
+    <rect x="59" y="222" width="3" height="118" fill="#EF4444"/>
+  </g>
+
+  <text x="250" y="356" font-family="Segoe UI, Arial, sans-serif" font-size="15" font-weight="700" fill="#E4E4E7" text-anchor="middle">Пример практики: 2 клипа + переход «Наплыв» (плавное перетекание) в вертикали</text>
+</svg>
