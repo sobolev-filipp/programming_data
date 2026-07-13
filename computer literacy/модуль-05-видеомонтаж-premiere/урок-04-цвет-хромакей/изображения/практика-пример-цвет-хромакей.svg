@@ -1,37 +1,54 @@
 <svg viewBox="0 0 500 400" xmlns="http://www.w3.org/2000/svg">
   <defs>
-    <clipPath id="monU"><rect x="60" y="18" width="380" height="176" rx="8"/></clipPath>
-    <linearGradient id="seaU" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0EA5E9"/><stop offset="1" stop-color="#075985"/></linearGradient>
-    <radialGradient id="vignU" cx="0.5" cy="0.5" r="0.75"><stop offset="0.55" stop-color="#000000" stop-opacity="0"/><stop offset="1" stop-color="#000000" stop-opacity="0.6"/></radialGradient>
+    <clipPath id="monW"><rect x="60" y="18" width="380" height="176" rx="8"/></clipPath>
+    <linearGradient id="mapSky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#38BDF8"/><stop offset="1" stop-color="#0284C7"/></linearGradient>
   </defs>
 
   <rect width="500" height="400" fill="#1E1E1E"/>
 
-  <text x="66" y="12" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="700" fill="#A1A1AA">Программа · телепорт под воду (до / после)</text>
+  <text x="66" y="12" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="700" fill="#A1A1AA">Программа · прогноз погоды (ведущий на карте)</text>
   <rect x="60" y="18" width="380" height="176" rx="8" fill="#0B1220"/>
-  <g clip-path="url(#monU)">
-    <!-- LEFT half: ДО (зелёный фон, плоский цвет) -->
-    <rect x="60" y="18" width="190" height="176" fill="#22C55E"/>
-    <!-- RIGHT half: ПОСЛЕ (подводный фон + грейд) -->
-    <rect x="250" y="18" width="190" height="176" fill="url(#seaU)"/>
-    <g fill="#BAE6FD" opacity="0.6"><circle cx="290" cy="50" r="4"/><circle cx="360" cy="70" r="3"/><circle cx="410" cy="45" r="4"/><circle cx="330" cy="110" r="3"/></g>
-    <!-- fish -->
-    <g fill="#FDBA74"><path d="M300,150 q14,-10 28,0 q-14,10 -28,0 z"/><path d="M300,150 l-8,-6 0,12 z"/></g>
-    <!-- vignette on right -->
-    <rect x="250" y="18" width="190" height="176" fill="url(#vignU)"/>
+  <g clip-path="url(#monW)">
+    <!-- weather map background (V1) -->
+    <rect x="60" y="18" width="380" height="176" fill="url(#mapSky)"/>
+    <!-- landmass -->
+    <path d="M95,70 q40,-18 90,-6 q35,8 70,-2 q45,-12 80,10 q20,30 -10,52 q-30,20 -80,14 q-50,-6 -95,10 q-40,12 -60,-16 q-14,-40 5,-62 z" fill="#4ADE80" opacity="0.9"/>
+    <!-- city dots + temps -->
+    <circle cx="150" cy="95" r="4" fill="#065F46"/><text x="150" y="118" font-family="Segoe UI, Arial, sans-serif" font-size="13" font-weight="800" fill="#fff" text-anchor="middle">+25°</text>
+    <circle cx="250" cy="120" r="4" fill="#065F46"/><text x="250" y="146" font-family="Segoe UI, Arial, sans-serif" font-size="13" font-weight="800" fill="#fff" text-anchor="middle">+18°</text>
+    <!-- sun with rotating rays -->
+    <g transform="translate(360,70)">
+      <g stroke="#FDE047" stroke-width="3" stroke-linecap="round"><animateTransform attributeName="transform" type="rotate" values="0;360" dur="9s" repeatCount="indefinite"/>
+        <line x1="0" y1="-20" x2="0" y2="-28"/><line x1="0" y1="20" x2="0" y2="28"/><line x1="-20" y1="0" x2="-28" y2="0"/><line x1="20" y1="0" x2="28" y2="0"/><line x1="-14" y1="-14" x2="-20" y2="-20"/><line x1="14" y1="14" x2="20" y2="20"/><line x1="14" y1="-14" x2="20" y2="-20"/><line x1="-14" y1="14" x2="-20" y2="20"/>
+      </g>
+      <circle cx="0" cy="0" r="14" fill="#FBBF24"/>
+    </g>
+    <!-- drifting cloud -->
+    <g fill="#F1F5F9"><animateTransform attributeName="transform" type="translate" values="-40 0;60 0;-40 0" dur="7s" repeatCount="indefinite"/>
+      <ellipse cx="180" cy="55" rx="20" ry="12"/><ellipse cx="198" cy="52" rx="16" ry="12"/><ellipse cx="165" cy="58" rx="13" ry="10"/>
+    </g>
 
-    <!-- character (diver) in center, spans the split -->
-    <ellipse cx="250" cy="180" rx="34" ry="9" fill="#000" opacity="0.25"/>
-    <rect x="230" y="112" width="40" height="58" rx="11" fill="#F59E0B"/>
-    <circle cx="250" cy="94" r="22" fill="#93C5FD"/><circle cx="250" cy="94" r="15" fill="#FCD9B8"/>
-    <rect x="235" y="128" width="7" height="32" rx="3" fill="#F59E0B"/><rect x="258" y="128" width="7" height="32" rx="3" fill="#F59E0B"/>
+    <!-- header title bar (from lesson 3 skills) -->
+    <rect x="60" y="18" width="380" height="26" fill="#1E3A8A"/>
+    <text x="72" y="36" font-family="Segoe UI, Arial, sans-serif" font-size="15" font-weight="800" fill="#fff">☀ ПОГОДА НА ЗАВТРА</text>
 
-    <!-- split line + labels -->
-    <line x1="250" y1="18" x2="250" y2="194" stroke="#fff" stroke-width="2" stroke-dasharray="5 4"/>
-    <text x="150" y="40" font-family="Segoe UI, Arial, sans-serif" font-size="14" font-weight="800" fill="#052E16" text-anchor="middle">ДО 🟩</text>
-    <text x="345" y="40" font-family="Segoe UI, Arial, sans-serif" font-size="14" font-weight="800" fill="#E0F2FE" text-anchor="middle">ПОСЛЕ 🌊</text>
-    <!-- moving highlight to show it's "live" -->
-    <circle cx="345" cy="150" r="6" fill="#fff" opacity="0.5"><animate attributeName="cx" values="270;420;270" dur="3s" repeatCount="indefinite"/><animate attributeName="opacity" values="0.1;0.6;0.1" dur="3s" repeatCount="indefinite"/></circle>
+    <!-- presenter (keyed) on the right, pointing at map -->
+    <g>
+      <ellipse cx="380" cy="188" rx="34" ry="8" fill="#000" opacity="0.25"/>
+      <rect x="360" y="120" width="40" height="70" rx="11" fill="#DC2626"/>
+      <circle cx="380" cy="102" r="20" fill="#FCD9B8"/><path d="M362,96 q18,-20 36,0 q-4,-14 -18,-14 q-14,0 -18,14 z" fill="#7C2D12"/>
+      <!-- pointing arm toward map -->
+      <rect x="326" y="132" width="40" height="9" rx="4" fill="#DC2626" transform="rotate(-8 366 136)"/>
+      <circle cx="326" cy="132" r="6" fill="#FCD9B8"/>
+    </g>
+
+    <!-- corner thumbnail: green-screen source (before) -->
+    <g>
+      <rect x="66" y="150" width="52" height="38" rx="3" fill="#22C55E"/>
+      <rect x="84" y="164" width="16" height="20" rx="4" fill="#DC2626"/><circle cx="92" cy="160" r="7" fill="#FCD9B8"/>
+      <rect x="66" y="150" width="52" height="38" rx="3" fill="none" stroke="#fff" stroke-width="1.5"/>
+      <text x="92" y="147" font-family="Segoe UI, Arial, sans-serif" font-size="8" font-weight="700" fill="#052E16" text-anchor="middle">зелёный фон</text>
+    </g>
   </g>
   <rect x="60" y="18" width="380" height="176" rx="8" fill="none" stroke="#3F3F46" stroke-width="2"/>
 
@@ -42,10 +59,10 @@
     <rect x="20" y="240" width="34" height="20" rx="3" fill="#27272A"/><text x="37" y="254">V2</text>
     <rect x="20" y="266" width="34" height="20" rx="3" fill="#27272A"/><text x="37" y="280">V1</text>
   </g>
-  <rect x="58" y="214" width="414" height="20" rx="3" fill="#F59E0B"/><text x="66" y="228" font-family="Segoe UI, Arial, sans-serif" font-size="10" fill="#431407">корректирующий слой · Lumetri (холодный подводный грейд + виньетка)</text>
-  <rect x="58" y="240" width="414" height="20" rx="3" fill="#7C3AED"/><text x="66" y="254" font-family="Segoe UI, Arial, sans-serif" font-size="10" fill="#EDE9FE">герой-ныряльщик · Ultra Key</text>
-  <rect x="58" y="266" width="414" height="20" rx="3" fill="#1D4ED8"/><text x="66" y="280" font-family="Segoe UI, Arial, sans-serif" font-size="10" fill="#DBEAFE">фон: подводный мир 🐠</text>
+  <rect x="58" y="214" width="414" height="20" rx="3" fill="#F59E0B"/><text x="66" y="228" font-family="Segoe UI, Arial, sans-serif" font-size="10" fill="#431407">титры: «ПОГОДА НА ЗАВТРА», +25°, иконки солнце/облако</text>
+  <rect x="58" y="240" width="414" height="20" rx="3" fill="#7C3AED"/><text x="66" y="254" font-family="Segoe UI, Arial, sans-serif" font-size="10" fill="#EDE9FE">ведущий на зелёном фоне · Ultra Key</text>
+  <rect x="58" y="266" width="414" height="20" rx="3" fill="#1D4ED8"/><text x="66" y="280" font-family="Segoe UI, Arial, sans-serif" font-size="10" fill="#DBEAFE">фон: карта погоды 🗺</text>
 
-  <text x="250" y="322" font-family="Segoe UI, Arial, sans-serif" font-size="14.5" font-weight="700" fill="#E4E4E7" text-anchor="middle">Пример практики: телепорт под воду — свой фон + свой грейд</text>
-  <text x="250" y="341" font-family="Segoe UI, Arial, sans-serif" font-size="12.5" font-weight="600" fill="#A1A1AA" text-anchor="middle">выбери другое место (пляж/джунгли/город) и своё настроение цвета</text>
+  <text x="250" y="322" font-family="Segoe UI, Arial, sans-serif" font-size="14.5" font-weight="700" fill="#E4E4E7" text-anchor="middle">Пример практики: ПРОГНОЗ ПОГОДЫ — ведущий с зелёного фона на карте</text>
+  <text x="250" y="341" font-family="Segoe UI, Arial, sans-serif" font-size="12.5" font-weight="600" fill="#A1A1AA" text-anchor="middle">хромакей + титры-температура + иконки — как настоящий телеэфир</text>
 </svg>
