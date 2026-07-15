@@ -1133,27 +1133,38 @@ ball.physicsBody = SKPhysicsBody(circleOfRadius: 25)
 hero.physicsBody = SKPhysicsBody(texture: hero.texture!, size: hero.size)
 ```
 
+> **Важно — размер тела должен совпадать со спрайтом!** Частая ошибка: спрайт 50×50, а радиус тела ставят 50. Тогда невидимое физическое тело в два раза больше картинки и объект отскакивает «в воздухе», не долетая до других. Правило: для круга радиус = половина размера спрайта. Спрайт 50×50 → `circleOfRadius: 25`. Чтобы увидеть реальные границы тел, включи `view.showsPhysics = true` в GameViewController — они подсветятся синим.
+
 #### Настройка физического тела
+
+Каждое свойство влияет на поведение объекта. Вот что делает каждое:
 
 ```swift
 let body = hero.physicsBody!
 
-body.isDynamic     = true     // true = двигается, false = статичный (стены, пол)
-body.affectedByGravity = true // влияет ли гравитация
-body.allowsRotation = false   // разрешить вращение при столкновениях
+body.isDynamic     = true     // true = двигается физикой, false = стоит на месте (стены, пол, платформы)
+body.affectedByGravity = true // падает ли вниз под действием гравитации
+body.allowsRotation = false   // может ли крутиться при ударах (false — всегда «стоит прямо»)
 
-body.friction    = 0.2        // трение (0–1)
-body.restitution = 0.5        // упругость — насколько отскакивает (0–1)
-body.mass        = 1.0        // масса
-body.linearDamping  = 0.1    // замедление движения
-body.angularDamping = 0.1    // замедление вращения
+body.friction    = 0.2        // трение о поверхности: 0 = скользкий лёд, 1 = липучка
+body.restitution = 0.5        // упругость: 0 = падает как камень, 1 = скачет как супермяч
+body.mass        = 1.0        // масса в кг — тяжёлые объекты труднее толкнуть
+body.linearDamping  = 0.1     // «сопротивление воздуха» движению: 0 = летит вечно, 1 = быстро тормозит
+body.angularDamping = 0.1     // то же для вращения
 
-// Задать скорость напрямую
+// Задать скорость напрямую (мгновенно)
 hero.physicsBody?.velocity = CGVector(dx: 200, dy: 0)
 
-// Применить силу (одиночный толчок)
+// Применить импульс — резкий одиночный толчок (как удар по мячу)
 hero.physicsBody?.applyImpulse(CGVector(dx: 0, dy: 500))
+
+// Применить силу — постоянное давление (как ветер, пока действует)
+hero.physicsBody?.applyForce(CGVector(dx: 100, dy: 0))
 ```
+
+> **impulse или force?** `applyImpulse` — это резкий удар один раз (прыжок, выстрел, толчок). `applyForce` — это давление которое действует пока ты его прикладываешь (двигатель ракеты, ветер). Для большинства игр нужен `applyImpulse`.
+
+> **CGVector** — это стрелка с направлением. `dx` — насколько вправо (минус = влево), `dy` — насколько вверх (минус = вниз). `CGVector(dx: 0, dy: 500)` — толчок строго вверх.
 
 #### Настройка гравитации сцены
 
@@ -1169,47 +1180,116 @@ override func didMove(to view: SKView) {
 
 #### Категории и обнаружение столкновений
 
-Чтобы знать кто с кем столкнулся, каждому объекту дают категорию — это число степени двойки (1, 2, 4, 8...).
+Когда в игре много объектов, движку нужно понимать: какой из них герой, какой враг, какой стена. Для этого каждому объекту дают **категорию** — метку в виде числа.
+
+Категории записывают в двоичном виде (`0b0001`) числами степени двойки — 1, 2, 4, 8, 16 и так далее. Почему именно так? Потому что такие числа можно комбинировать через оператор `|` и при этом их всегда можно «разобрать» обратно. Если бы мы использовали обычные 1, 2, 3, 4 — комбинация 1+2 дала бы 3, и движок не смог бы отличить «категория 3» от «категории 1 и 2 вместе».
 
 ```swift
-// Определяем категории
+// Определяем категории — каждая в 2 раза больше предыдущей
 struct PhysicsCategory {
     static let hero:   UInt32 = 0b0001   // = 1
     static let enemy:  UInt32 = 0b0010   // = 2
     static let bullet: UInt32 = 0b0100   // = 4
     static let wall:   UInt32 = 0b1000   // = 8
 }
+```
 
-// Назначаем категории объектам
+У каждого физического тела есть **три разных маски** — их часто путают, поэтому запомни разницу:
+
+| Маска | Отвечает на вопрос | Пример |
+|---|---|---|
+| `categoryBitMask` | «Кто я?» | герой = `hero` |
+| `collisionBitMask` | «От кого я физически отталкиваюсь?» | герой отскакивает от стен |
+| `contactTestBitMask` | «О касании с кем мне сообщить?» | сообщи когда коснусь врага |
+
+```swift
+// Назначаем маски герою
 hero.physicsBody?.categoryBitMask    = PhysicsCategory.hero
-hero.physicsBody?.contactTestBitMask = PhysicsCategory.enemy   // с кем проверять столкновение
-hero.physicsBody?.collisionBitMask   = PhysicsCategory.wall    // от кого отталкиваться
+hero.physicsBody?.collisionBitMask   = PhysicsCategory.wall     // отталкивается от стен
+hero.physicsBody?.contactTestBitMask = PhysicsCategory.enemy    // сообщи о касании врага
 
 enemy.physicsBody?.categoryBitMask   = PhysicsCategory.enemy
 ```
 
-#### Обработка столкновений
+Разница между `collision` и `contactTest` важна:
+- `collisionBitMask` — это **физика**. Объекты реально отталкиваются друг от друга, как настоящие предметы.
+- `contactTestBitMask` — это **уведомление**. Движок просто говорит нам «эти двое коснулись», но физически они могут пройти сквозь друг друга.
+
+**Сенсор** — это объект у которого `collisionBitMask = 0` (ни от кого не отталкивается), но есть `contactTestBitMask`. Пуля пролетает сквозь него, но мы получаем уведомление. Так делают невидимые триггеры — зоны которые что-то засчитывают.
+
+#### Обработка столкновений — 3 шага
 
 ```swift
-// 1. Подключить протокол
+// ШАГ 1 — подключить протокол SKPhysicsContactDelegate
 class GameScene: SKScene, SKPhysicsContactDelegate {
 
     override func didMove(to view: SKView) {
-        physicsWorld.contactDelegate = self  // назначить делегата
+        // ШАГ 2 — назначить себя делегатом (без этого didBegin не вызовется!)
+        physicsWorld.contactDelegate = self
     }
 
-    // 2. Этот метод вызывается при каждом столкновении
+    // ШАГ 3 — этот метод вызывается автоматически при каждом касании
     func didBegin(_ contact: SKPhysicsContact) {
-        let bodyA = contact.bodyA
-        let bodyB = contact.bodyB
-
-        // Узнать кто с кем столкнулся
-        if bodyA.categoryBitMask == PhysicsCategory.hero &&
-           bodyB.categoryBitMask == PhysicsCategory.enemy {
-            print("Герой столкнулся с врагом!")
-            bodyB.node?.removeFromParent()  // удалить врага
-        }
+        // ...
     }
+}
+```
+
+#### Почему bodyA и bodyB нужно сортировать
+
+Когда два тела касаются, движок кладёт их в `contact.bodyA` и `contact.bodyB`. **Но порядок не гарантирован!** Иногда герой попадает в `bodyA`, иногда в `bodyB` — это зависит от того кто первый обнаружил касание.
+
+Из-за этого наивный код часто не срабатывает:
+
+```swift
+// ❌ НЕНАДЁЖНО — сработает только если герой случайно попал в bodyA
+func didBegin(_ contact: SKPhysicsContact) {
+    let bodyA = contact.bodyA
+    let bodyB = contact.bodyB
+
+    if bodyA.categoryBitMask == PhysicsCategory.hero &&
+       bodyB.categoryBitMask == PhysicsCategory.enemy {
+        // Этот код пропустит половину столкновений!
+    }
+}
+```
+
+Чтобы всегда работало — мы **сортируем** тела: то у которого меньше `categoryBitMask`, кладём в `bodyA`. Поскольку у `hero` категория = 1, а у `enemy` = 2, после сортировки герой всегда окажется в `bodyA`. Так проверка становится предсказуемой:
+
+```swift
+// ✅ НАДЁЖНО — так мы пишем на уроках
+func didBegin(_ contact: SKPhysicsContact) {
+    // Сортируем: меньший categoryBitMask всегда попадает в bodyA
+    let (bodyA, bodyB) = contact.bodyA.categoryBitMask < contact.bodyB.categoryBitMask
+        ? (contact.bodyA, contact.bodyB)   // если A меньше B — оставляем как есть
+        : (contact.bodyB, contact.bodyA)   // иначе — меняем местами
+
+    // Теперь герой (категория 1) ГАРАНТИРОВАННО в bodyA
+    if bodyA.categoryBitMask == PhysicsCategory.hero &&
+       bodyB.categoryBitMask == PhysicsCategory.enemy {
+        print("Герой столкнулся с врагом!")
+        bodyB.node?.removeFromParent()   // удалить врага
+    }
+}
+```
+
+> **Как читать эту запись:** `условие ? A : B` — это тернарный оператор. Читается «если условие верно — взять A, иначе B». А `let (x, y) = (первое, второе)` — это распаковка кортежа, присваивание сразу двум переменным. Вместе они означают: «если A меньше B — положи их как есть, иначе поменяй местами».
+
+> **Как получить сам объект:** `bodyA` — это физическое тело (`SKPhysicsBody`), а не спрайт. Чтобы добраться до спрайта, используй `bodyA.node` — это вернёт `SKNode` к которому прикреплено тело. Пример: `bodyB.node?.removeFromParent()` удаляет спрайт врага со сцены.
+
+#### Защита от повторного срабатывания
+
+`didBegin` может вызваться дважды за один кадр (например пуля коснулась двух краёв врага). Поэтому перед удалением всегда проверяй что объект ещё на сцене:
+
+```swift
+func bulletHitEnemy(bullet: SKNode?, enemy: SKNode?) {
+    guard let bullet = bullet, let enemy = enemy else { return }
+    // Если уже удалены — выходим, чтобы не начислить очки дважды
+    guard bullet.parent != nil, enemy.parent != nil else { return }
+
+    bullet.removeFromParent()
+    enemy.removeFromParent()
+    score += 1
 }
 ```
 
