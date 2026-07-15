@@ -1,0 +1,82 @@
+<svg viewBox="0 0 500 400" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <clipPath id="promo"><rect x="120" y="212" width="260" height="130" rx="10"/></clipPath>
+    <linearGradient id="promoBg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#312E81"/><stop offset="1" stop-color="#6D28D9"/></linearGradient>
+  </defs>
+
+  <rect width="500" height="400" fill="#1E1E1E"/>
+  <text x="250" y="24" font-family="Segoe UI, Arial, sans-serif" font-size="14" font-weight="800" fill="#E4E4E7" text-anchor="middle">4 программы Adobe → одно промо</text>
+
+  <!-- ===== 4 STATION CARDS ===== -->
+  <!-- Ai -->
+  <g>
+    <rect x="18" y="40" width="104" height="80" rx="10" fill="#2A1A00" stroke="#FF9A00" stroke-width="2"/>
+    <rect x="30" y="50" width="26" height="26" rx="5" fill="#FF9A00"/><text x="43" y="69" font-family="Segoe UI, Arial, sans-serif" font-size="14" font-weight="800" fill="#2A1A00" text-anchor="middle">Ai</text>
+    <path d="M84,58 l6,14 15,1 -11,10 4,15 -14,-8 -14,8 4,-15 -11,-10 15,-1 z" fill="#FF9A00"/>
+    <text x="70" y="98" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="700" fill="#FFD79A" text-anchor="middle">логотип</text>
+    <text x="70" y="112" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#B58A4A" text-anchor="middle">Модуль 3</text>
+  </g>
+  <!-- Ps -->
+  <g>
+    <rect x="138" y="40" width="104" height="80" rx="10" fill="#001A2E" stroke="#31A8FF" stroke-width="2"/>
+    <rect x="150" y="50" width="26" height="26" rx="5" fill="#31A8FF"/><text x="163" y="69" font-family="Segoe UI, Arial, sans-serif" font-size="14" font-weight="800" fill="#001A2E" text-anchor="middle">Ps</text>
+    <rect x="196" y="54" width="34" height="24" rx="3" fill="#31A8FF"/><circle cx="204" cy="62" r="3" fill="#FDE047"/><path d="M196,78 l9,-8 6,5 8,-9 5,12 z" fill="#0B4A7A"/>
+    <text x="190" y="98" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="700" fill="#9DD4FF" text-anchor="middle">обложка</text>
+    <text x="190" y="112" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#5A8AB5" text-anchor="middle">Модуль 2</text>
+  </g>
+  <!-- Animate -->
+  <g>
+    <rect x="258" y="40" width="104" height="80" rx="10" fill="#2A0018" stroke="#EB4B98" stroke-width="2"/>
+    <rect x="270" y="50" width="26" height="26" rx="5" fill="#EB4B98"/><text x="283" y="69" font-family="Segoe UI, Arial, sans-serif" font-size="13" font-weight="800" fill="#2A0018" text-anchor="middle">An</text>
+    <circle cx="320" cy="64" r="12" fill="#F9A8D4"/><circle cx="316" cy="62" r="2" fill="#2A0018"/><circle cx="324" cy="62" r="2" fill="#2A0018"/>
+    <g><animateTransform attributeName="transform" type="rotate" values="-18 332 70;20 332 70;-18 332 70" dur="0.9s" repeatCount="indefinite"/><line x1="332" y1="70" x2="344" y2="54" stroke="#F9A8D4" stroke-width="5" stroke-linecap="round"/></g>
+    <text x="310" y="98" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="700" fill="#F9A8D4" text-anchor="middle">заставка</text>
+    <text x="310" y="112" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#B5647F" text-anchor="middle">Модуль 4</text>
+  </g>
+  <!-- Premiere -->
+  <g>
+    <rect x="378" y="40" width="104" height="80" rx="10" fill="#1A0A2E" stroke="#C084FC" stroke-width="2"/>
+    <rect x="390" y="50" width="26" height="26" rx="5" fill="#C084FC"/><text x="403" y="69" font-family="Segoe UI, Arial, sans-serif" font-size="14" font-weight="800" fill="#1A0A2E" text-anchor="middle">Pr</text>
+    <rect x="428" y="54" width="44" height="6" rx="2" fill="#14B8A6"/><rect x="428" y="63" width="44" height="6" rx="2" fill="#F59E0B"/><rect x="428" y="72" width="44" height="6" rx="2" fill="#166534"/>
+    <text x="430" y="98" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="700" fill="#DDD0FC" text-anchor="middle">монтаж</text>
+    <text x="430" y="112" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#8A6BB0" text-anchor="middle">Модуль 5</text>
+  </g>
+
+  <!-- arrows between cards -->
+  <g fill="#71717A">
+    <polygon points="124,80 134,74 134,86"><animate attributeName="opacity" values="0.3;1;0.3" dur="1.5s" repeatCount="indefinite"/></polygon>
+    <polygon points="244,80 254,74 254,86"><animate attributeName="opacity" values="0.3;1;0.3" dur="1.5s" begin="0.3s" repeatCount="indefinite"/></polygon>
+    <polygon points="364,80 374,74 374,86"><animate attributeName="opacity" values="0.3;1;0.3" dur="1.5s" begin="0.6s" repeatCount="indefinite"/></polygon>
+  </g>
+
+  <!-- down arrow -->
+  <g fill="#16A34A">
+    <rect x="244" y="130" width="12" height="52" rx="3"/><polygon points="230,178 270,178 250,200"><animate attributeName="opacity" values="0.5;1;0.5" dur="1.2s" repeatCount="indefinite"/></polygon>
+  </g>
+  <text x="308" y="170" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="700" fill="#86EFAC">всё импортируем в Premiere</text>
+
+  <!-- ===== FINAL PROMO VIDEO ===== -->
+  <rect x="120" y="212" width="260" height="130" rx="10" fill="#0B1220"/>
+  <g clip-path="url(#promo)">
+    <rect x="120" y="212" width="260" height="130" fill="url(#promoBg)"/>
+    <g fill="#FDE68A"><circle cx="150" cy="240" r="2"/><circle cx="340" cy="250" r="2.5"/><circle cx="200" cy="228" r="1.6"/></g>
+    <!-- logo emblem -->
+    <path d="M250,230 l5,12 13,1 -10,9 4,13 -12,-7 -12,7 4,-13 -10,-9 13,-1 z" fill="#FF9A00"/>
+    <!-- mascot waving -->
+    <circle cx="200" cy="300" r="16" fill="#F9A8D4"/><circle cx="195" cy="298" r="2.5" fill="#2A0018"/><circle cx="205" cy="298" r="2.5" fill="#2A0018"/>
+    <g><animateTransform attributeName="transform" type="rotate" values="-16 214 302;22 214 302;-16 214 302" dur="0.9s" repeatCount="indefinite"/><line x1="214" y1="302" x2="228" y2="284" stroke="#F9A8D4" stroke-width="6" stroke-linecap="round"/></g>
+    <!-- title -->
+    <text x="250" y="284" font-family="Segoe UI, Arial, sans-serif" font-size="19" font-weight="800" fill="#fff" text-anchor="middle">КАНАЛ ПИКСЕЛЬ</text>
+    <!-- play button -->
+    <g><animateTransform attributeName="transform" type="scale" values="1 1;1.12 1.12;1 1" dur="1.4s" repeatCount="indefinite" additive="sum"/>
+      <circle cx="320" cy="300" r="16" fill="#000" opacity="0.4"/><path d="M314,292 L328,300 L314,308 Z" fill="#fff"/></g>
+  </g>
+  <rect x="120" y="212" width="260" height="130" rx="10" fill="none" stroke="#3F3F46" stroke-width="2"/>
+  <!-- export badge -->
+  <rect x="388" y="250" width="96" height="54" rx="8" fill="#141414" stroke="#16A34A" stroke-width="1.5"/>
+  <text x="436" y="272" font-family="Segoe UI, Arial, sans-serif" font-size="12" font-weight="800" fill="#86EFAC" text-anchor="middle">📤 Экспорт</text>
+  <text x="436" y="290" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="700" fill="#E4E4E7" text-anchor="middle">MP4</text>
+
+  <text x="250" y="366" font-family="Segoe UI, Arial, sans-serif" font-size="14.5" font-weight="700" fill="#E4E4E7" text-anchor="middle">🎬 Adobe-шедевр: логотип + обложка + заставка + монтаж = промо канала</text>
+  <text x="250" y="384" font-family="Segoe UI, Arial, sans-serif" font-size="12" font-weight="600" fill="#A1A1AA" text-anchor="middle">все программы в едином стиле → итоговый экспонат портфолио</text>
+</svg>

@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Викторина — Adobe-шедевр (весь блок)</title>
+<style>
+  :root{
+    --bg1:#FF9A00; --bg2:#7C3AED; --card:#ffffff; --ink:#1f2937;
+    --accent:#7C3AED; --ok:#16a34a; --bad:#dc2626; --soft:#ede9fe;
+  }
+  *{box-sizing:border-box;font-family:"Segoe UI",system-ui,sans-serif}
+  body{margin:0;min-height:100vh;display:flex;align-items:center;justify-content:center;
+    background:linear-gradient(135deg,var(--bg1),var(--bg2));padding:20px;color:var(--ink)}
+  .app{background:var(--card);width:min(760px,100%);border-radius:24px;
+    box-shadow:0 25px 60px rgba(0,0,0,.35);padding:34px 34px 28px;position:relative;overflow:hidden}
+  h1{margin:0 0 6px;font-size:26px;text-align:center}
+  .sub{text-align:center;color:#64748b;margin-bottom:22px;font-size:15px}
+  .bar{height:10px;background:var(--soft);border-radius:99px;overflow:hidden;margin-bottom:18px}
+  .bar>i{display:block;height:100%;width:0;background:var(--accent);transition:.4s}
+  .meta{display:flex;justify-content:space-between;font-size:14px;color:#64748b;margin-bottom:14px}
+  .q{font-size:22px;font-weight:700;margin:6px 0 20px;line-height:1.3}
+  .opts{display:grid;gap:12px}
+  .opt{border:2px solid #e2e8f0;background:#fff;border-radius:14px;padding:15px 18px;font-size:18px;
+    text-align:left;cursor:pointer;transition:.15s;display:flex;align-items:center;gap:12px}
+  .opt:hover{border-color:var(--accent);background:var(--soft);transform:translateY(-2px)}
+  .opt b{background:var(--soft);color:var(--accent);width:30px;height:30px;border-radius:8px;
+    display:flex;align-items:center;justify-content:center;font-size:15px;flex:0 0 auto}
+  .opt.ok{border-color:var(--ok);background:#dcfce7}
+  .opt.ok b{background:var(--ok);color:#fff}
+  .opt.bad{border-color:var(--bad);background:#fee2e2}
+  .opt.bad b{background:var(--bad);color:#fff}
+  .opt:disabled{cursor:default;transform:none}
+  .fb{margin-top:16px;padding:14px 16px;border-radius:12px;font-size:16px;display:none;line-height:1.4}
+  .fb.show{display:block}
+  .fb.good{background:#dcfce7;color:#166534}
+  .fb.no{background:#fee2e2;color:#991b1b}
+  .btn{margin-top:18px;width:100%;padding:15px;border:0;border-radius:14px;background:var(--accent);
+    color:#fff;font-size:18px;font-weight:700;cursor:pointer;display:none}
+  .btn.show{display:block}
+  .btn:hover{filter:brightness(1.08)}
+  .center{text-align:center}
+  .score{font-size:64px;font-weight:800;margin:10px 0}
+  .emoji{font-size:70px}
+  .hint{color:#94a3b8;font-size:13px;text-align:center;margin-top:14px}
+</style>
+</head>
+<body>
+<div class="app" id="app"></div>
+<script>
+const QUESTIONS = [
+  {q:"В какой программе делают ЛОГОТИП (вектор)?",
+   a:["Premiere","Illustrator","Animate","Word"],c:1,
+   e:"Illustrator — вектор: логотипы и иконки, не пикселят при увеличении."},
+  {q:"В какой программе обрабатывают ФОТО и делают обложки?",
+   a:["Photoshop","Illustrator","Premiere","Animate"],c:0,
+   e:"Photoshop — фото, коллажи, обложки, эффекты слоёв."},
+  {q:"В какой программе делают АНИМАЦИЮ/заставку?",
+   a:["Photoshop","Animate","Premiere","Illustrator"],c:1,
+   e:"Animate — оживить героев, сделать заставку (кадры, tween, кости)."},
+  {q:"В какой программе МОНТИРУЮТ видео?",
+   a:["Premiere","Illustrator","Photoshop","Animate"],c:0,
+   e:"Premiere — нарезка, звук, цвет, экспорт готового ролика."},
+  {q:"Зачем экспортировать логотип в PNG с прозрачным фоном?",
+   a:["Так ярче","Чтобы лёг на видео без белого прямоугольника","Так меньше весит","Для звука"],c:1,
+   e:"Прозрачность (альфа) = лого «садится» поверх кадра, как слой."},
+  {q:"Что такое единый стиль (бренд)?",
+   a:["Много цветов","Одинаковые цвета, шрифт и значок во всех программах","Один клип","Громкая музыка"],c:1,
+   e:"Единый стиль делает набор картинок «брендом»."},
+  {q:"Почему логотип рисуют в векторе (Illustrator), а не в Photoshop?",
+   a:["Так модно","Вектор не пикселит и не мнётся при любом увеличении","Быстрее","Ярче"],c:1,
+   e:"Логотип нужен и на визитке, и на билборде — вектор масштабируется без потерь."},
+  {q:"Куда собирают все части (лого, обложку, заставку, клипы)?",
+   a:["В Illustrator","В Premiere (монтаж)","В Photoshop","В Word"],c:1,
+   e:"Premiere — финальная сборка всего в один ролик."},
+  {q:"Сколько длится хорошая заставка канала?",
+   a:["15–20 сек","2–4 секунды","1 минуту","полролика"],c:1,
+   e:"Заставка короткая и бодрая, иначе её пролистывают."},
+  {q:"Что такое логотип-вотермарк?",
+   a:["Титр в конце","Маленький логотип в углу весь ролик","Звук","Переход"],c:1,
+   e:"Полупрозрачный лого в углу — узнаваемость бренда, как у каналов."},
+
+  {q:"😄 Вокруг логотипа на видео белый прямоугольник! Что забыл?",
+   a:["Громче музыку","Экспорт PNG с прозрачным фоном (альфа)","Титр","Реверс"],c:1,
+   e:"Без прозрачности лого приносит с собой белый фон."},
+  {q:"😄 Лого синее, обложка красная, заставка зелёная — сплошная «каша». Что нарушено?",
+   a:["Скорость","Единый стиль (цвета/шрифт/маскот)","Экспорт","Звук"],c:1,
+   e:"Бренд — это один стиль во всех программах."},
+  {q:"😄 Заставка идёт 15 секунд, все пролистнули. Что сделать?",
+   a:["Добавить титров","Сократить до 2–4 секунд","Громче музыку","Ярче цвет"],c:1,
+   e:"Интро должно быть коротким и цепляющим."},
+
+  {q:"🤔 Почему профи используют РАЗНЫЕ программы, а не одну на всё?",
+   a:["Так дороже","У каждой своя суперсила (вектор/фото/анимация/видео) — результат лучше","Так модно","Случайно"],c:1,
+   e:"Правильный инструмент под задачу даёт качество; студия так и работает."},
+  {q:"🤔 Почему выгодно переиспользовать свои работы из прошлых модулей?",
+   a:["Так принято","Экономит время; капстон = сборка, а не рисовать заново, и стиль уже единый","Ярче","Меньше весит"],c:1,
+   e:"Готовые лого/маскот сразу в дело — быстрее и цельнее."},
+  {q:"🤔 Почему единый стиль важен для бренда?",
+   a:["Для красоты","Узнаваемость: разнобой не запоминается и выглядит непрофессионально","Быстрее рендер","Меньше файл"],c:1,
+   e:"Один стиль — зритель узнаёт канал с первого кадра."},
+];
+
+let i=0, score=0, locked=false;
+const app=document.getElementById('app');
+
+function shuffle(){for(let k=QUESTIONS.length-1;k>0;k--){const j=Math.floor(Math.random()*(k+1));[QUESTIONS[k],QUESTIONS[j]]=[QUESTIONS[j],QUESTIONS[k]];}for(const Q of QUESTIONS){const cc=Q.a[Q.c];for(let k=Q.a.length-1;k>0;k--){const j=Math.floor(Math.random()*(k+1));[Q.a[k],Q.a[j]]=[Q.a[j],Q.a[k]];}Q.c=Q.a.indexOf(cc);}}
+shuffle();
+
+function render(){
+  const Q=QUESTIONS[i];
+  app.innerHTML=`
+    <h1>🎬 Adobe-шедевр</h1>
+    <div class="sub">Викторина по всему творческому блоку Adobe</div>
+    <div class="bar"><i style="width:${(i/QUESTIONS.length)*100}%"></i></div>
+    <div class="meta"><span>Вопрос ${i+1} из ${QUESTIONS.length}</span><span>⭐ Очки: ${score}</span></div>
+    <div class="q">${Q.q}</div>
+    <div class="opts" id="opts">
+      ${Q.a.map((t,n)=>`<button class="opt" data-n="${n}"><b>${n+1}</b><span>${t}</span></button>`).join('')}
+    </div>
+    <div class="fb" id="fb"></div>
+    <button class="btn" id="next">${i===QUESTIONS.length-1?'Показать результат →':'Следующий вопрос →'}</button>
+    <div class="hint">Можно отвечать клавишами 1–4</div>`;
+  locked=false;
+  document.querySelectorAll('.opt').forEach(b=>b.onclick=()=>choose(+b.dataset.n));
+  document.getElementById('next').onclick=next;
+}
+
+function choose(n){
+  if(locked) return; locked=true;
+  const Q=QUESTIONS[i];
+  const opts=[...document.querySelectorAll('.opt')];
+  opts.forEach(b=>b.disabled=true);
+  opts[Q.c].classList.add('ok');
+  const fb=document.getElementById('fb');
+  if(n===Q.c){ score++; fb.className='fb show good'; fb.textContent='✅ Верно! '+Q.e; }
+  else { opts[n].classList.add('bad'); fb.className='fb show no'; fb.textContent='❌ Не совсем. '+Q.e; }
+  document.querySelector('.meta').children[1].textContent='⭐ Очки: '+score;
+  document.getElementById('next').classList.add('show');
+}
+
+function next(){ i++; if(i<QUESTIONS.length) render(); else result(); }
+
+function result(){
+  const pct=Math.round(score/QUESTIONS.length*100);
+  let em,msg;
+  if(pct===100){em='🏆';msg='Идеально! Ты настоящий цифровой художник — владеешь всем Adobe! 🎨🎬';}
+  else if(pct>=70){em='🎉';msg='Отлично! Пайплайн и единый стиль — под контролем.';}
+  else if(pct>=40){em='👍';msg='Неплохо! Помни: Ai-лого, Ps-обложка, Animate-заставка, Premiere-монтаж; PNG с альфой; единый стиль.';}
+  else {em='💪';msg='Начало есть! Вспомни, какая программа за что отвечает.';}
+  app.innerHTML=`
+    <div class="center">
+      <div class="emoji">${em}</div>
+      <h1>Готово!</h1>
+      <div class="score">${score} / ${QUESTIONS.length}</div>
+      <div class="sub">${msg}</div>
+      <button class="btn show" id="again">🔁 Пройти заново</button>
+    </div>`;
+  document.getElementById('again').onclick=()=>{i=0;score=0;shuffle();render();};
+}
+
+document.addEventListener('keydown',e=>{
+  if(['1','2','3','4'].includes(e.key)){ const b=document.querySelector(`.opt[data-n="${+e.key-1}"]`); if(b&&!b.disabled) choose(+e.key-1); }
+  if(e.key==='Enter'){ const nb=document.getElementById('next'); if(nb&&nb.classList.contains('show')) next(); }
+});
+
+render();
+</script>
+</body>
+</html>

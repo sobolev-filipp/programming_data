@@ -67,6 +67,8 @@ Desktop.ini
 *.7z
 *.rar
 
+*.mp4
+
 # IDE и редакторы
 .idea/
 *.sublime-project
