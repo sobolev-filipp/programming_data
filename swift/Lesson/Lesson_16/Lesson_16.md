@@ -243,9 +243,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 
     var ship: SKSpriteNode!
     var scoreLabel: SKLabelNode!
-    var livesLabel: SKLabelNode!
+    var lifeBar: SKSpriteNode!      // картинка полоски жизни
     var score = 0
-    var lives = 3
+    var lives = 3.0                 // дробные жизни — теряем по 0.5
+    var maxLives = 3.0
     var asteroidSpeed = 3.5
     var isGameOver = false
 
@@ -382,18 +383,33 @@ func setupHUD() {
     addChild(scoreLabel)
 
     // Жизни
-    livesLabel = SKLabelNode(fontNamed: "Helvetica-Bold")
-    livesLabel.fontSize = 22
-    livesLabel.fontColor = .red
-    livesLabel.position = CGPoint(x: 20, y: size.height - 55)
-    livesLabel.horizontalAlignmentMode = .left
-    livesLabel.zPosition = 10
-    updateLivesLabel()
-    addChild(livesLabel)
+    // Полоска жизни — картинка (см. раздел «Полоска жизни через картинку»)
+    setupLifeBar()
 }
 
-func updateLivesLabel() {
-    livesLabel.text = String(repeating: "❤️", count: lives)
+func setupLifeBar() {
+    lifeBar = SKSpriteNode(imageNamed: lifeImageName())
+    lifeBar.size = CGSize(width: 120, height: 40)
+    lifeBar.position = CGPoint(x: 80, y: size.height - 55)
+    lifeBar.zPosition = 10
+    addChild(lifeBar)
+}
+
+func lifeImageName() -> String {
+    let safe = max(0, min(maxLives, lives))
+    if safe == safe.rounded() {
+        return "\(Int(safe))"      // 3.0 → "3"
+    } else {
+        return "\(safe)"           // 2.5 → "2.5"
+    }
+}
+
+func updateLifeBar() {
+    lifeBar.texture = SKTexture(imageNamed: lifeImageName())
+    lifeBar.run(SKAction.sequence([
+        SKAction.scale(to: 1.15, duration: 0.08),
+        SKAction.scale(to: 1.0, duration: 0.08)
+    ]))
 }
 
 func setupFireButton() {
@@ -645,9 +661,9 @@ func shipHitAsteroid(asteroid: SKNode?) {
 
     asteroid.removeFromParent()
 
-    // Теряем жизнь
-    lives -= 1
-    updateLivesLabel()
+    // Теряем полсердца
+    lives -= 0.5
+    updateLifeBar()
 
     // Мигание корабля
     let flash = SKAction.repeat(SKAction.sequence([
@@ -788,9 +804,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 
     var ship: SKSpriteNode!
     var scoreLabel: SKLabelNode!
-    var livesLabel: SKLabelNode!
+    var lifeBar: SKSpriteNode!      // картинка полоски жизни
     var score = 0
-    var lives = 3
+    var lives = 3.0                 // дробные жизни — теряем по 0.5
+    var maxLives = 3.0
     var asteroidSpeed = 3.5
     var isGameOver = false
 
@@ -907,18 +924,33 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         scoreLabel.zPosition = 10
         addChild(scoreLabel)
 
-        livesLabel = SKLabelNode(fontNamed: "Helvetica-Bold")
-        livesLabel.fontSize = 22
-        livesLabel.fontColor = .red
-        livesLabel.position = CGPoint(x: 20, y: size.height - 55)
-        livesLabel.horizontalAlignmentMode = .left
-        livesLabel.zPosition = 10
-        updateLivesLabel()
-        addChild(livesLabel)
+        setupLifeBar()
     }
 
-    func updateLivesLabel() {
-        livesLabel.text = String(repeating: "❤️", count: lives)
+    func setupLifeBar() {
+        lifeBar = SKSpriteNode(imageNamed: lifeImageName())
+        lifeBar.size = CGSize(width: 120, height: 40)
+        lifeBar.position = CGPoint(x: 80, y: size.height - 55)
+        lifeBar.zPosition = 10
+        addChild(lifeBar)
+    }
+
+    // Имя картинки = число жизней. Файлы: "3","2.5","2","1.5","1","0.5","0"
+    func lifeImageName() -> String {
+        let safe = max(0, min(maxLives, lives))
+        if safe == safe.rounded() {
+            return "\(Int(safe))"      // 3.0 -> "3"
+        } else {
+            return "\(safe)"           // 2.5 -> "2.5"
+        }
+    }
+
+    func updateLifeBar() {
+        lifeBar.texture = SKTexture(imageNamed: lifeImageName())
+        lifeBar.run(SKAction.sequence([
+            SKAction.scale(to: 1.15, duration: 0.08),
+            SKAction.scale(to: 1.0, duration: 0.08)
+        ]))
     }
 
     // MARK: - Кнопка огня
@@ -1134,8 +1166,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         guard asteroid.parent != nil else { return }
 
         asteroid.removeFromParent()
-        lives -= 1
-        updateLivesLabel()
+        lives -= 0.5
+        updateLifeBar()
 
         ship.run(SKAction.repeat(SKAction.sequence([
             SKAction.fadeOut(withDuration: 0.1),
@@ -1219,6 +1251,89 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
 }
 ```
+
+---
+
+## Дополнение — Полоска жизни через картинку
+
+Вместо эмодзи-сердечек `❤️` можно показывать жизнь красивой картинкой которая меняется. В этом проекте используется 7 картинок для 3 жизней с шагом в полсердца.
+
+### Подготовка картинок
+
+В `Assets.xcassets` добавить 7 картинок с именами по количеству жизни:
+
+`3` · `2.5` · `2` · `1.5` · `1` · `0.5` · `0`
+
+> Имя картинки = число жизней которое она показывает. Это ключевая идея — мы будем собирать имя картинки прямо из переменной `lives`.
+
+### Свойства
+
+```swift
+var lives = 3.0                 // жизни теперь ДРОБНЫЕ (Double), а не целые
+var maxLives = 3.0
+var lifeBar: SKSpriteNode!      // одна картинка, а не массив
+```
+
+> **Объясни ребёнку:** раньше жизни были целые (`Int`), и мы теряли по 1. Теперь они дробные (`Double`), теряем по 0.5 — полсердца за удар. Поэтому тип поменялся с `Int` на `Double`.
+
+### Создание полоски
+
+```swift
+func setupLifeBar() {
+    lifeBar = SKSpriteNode(imageNamed: lifeImageName())
+    lifeBar.size = CGSize(width: 120, height: 40)
+    lifeBar.position = CGPoint(x: 80, y: size.height - 55)
+    lifeBar.zPosition = 10
+    addChild(lifeBar)
+}
+```
+
+### Главная хитрость — собираем имя картинки из числа
+
+```swift
+func lifeImageName() -> String {
+    let safe = max(0, min(maxLives, lives))   // не выходим за 0...3
+
+    // Проблема: Swift выводит 3.0 вместо 3, а картинка называется "3"
+    // Решение: если число целое — убираем дробную часть
+    if safe == safe.rounded() {
+        return "\(Int(safe))"      // 3.0 → "3",  2.0 → "2"
+    } else {
+        return "\(safe)"           // 2.5 → "2.5", 0.5 → "0.5"
+    }
+}
+```
+
+> **Зачем проверка `safe == safe.rounded()`?** Если просто написать `"\(lives)"`, то для 3 жизней получится строка `"3.0"` — а картинка называется `"3"` без `.0`. Xcode не найдёт файл `3.0` и картинка не появится. Поэтому целые числа (3.0, 2.0, 1.0, 0.0) мы превращаем в `"3"`, `"2"` через `Int()`, а дробные (2.5, 1.5, 0.5) оставляем как есть.
+
+### Обновление картинки
+
+```swift
+func updateLifeBar() {
+    // texture меняет картинку у спрайта не пересоздавая его
+    lifeBar.texture = SKTexture(imageNamed: lifeImageName())
+
+    // Анимация «вздрагивания» при потере
+    lifeBar.run(SKAction.sequence([
+        SKAction.scale(to: 1.15, duration: 0.08),
+        SKAction.scale(to: 1.0, duration: 0.08)
+    ]))
+}
+```
+
+### Потеря жизни при ударе
+
+```swift
+func shipHitAsteroid(asteroid: SKNode?) {
+    // ...
+    lives -= 0.5           // полсердца за удар (было: lives -= 1)
+    updateLifeBar()        // обновляем картинку (было: updateLivesLabel())
+    // ...
+    if lives <= 0 { gameOver() }
+}
+```
+
+> **Важно:** `SKTexture(imageNamed:)` меняет картинку у существующего спрайта — это быстро и не «дёргает» позицию. Не нужно удалять и создавать спрайт заново.
 
 ---
 
