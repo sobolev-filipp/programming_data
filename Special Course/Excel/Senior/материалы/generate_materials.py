@@ -5,17 +5,22 @@
 Запуск:  python generate_materials.py
 Требует: openpyxl  (pip install openpyxl)
 
-Создаёт в текущей папке:
-  - Продажи.xlsx              (основная таблица заказов, ~300 строк; столбец «Сумма» ученик считает сам)
-  - Прайс.xlsx                (справочник товар→цена→категория для ВПР/ПРОСМОТРX)
-  - Сотрудники.xlsx           («грязные» данные: ФИО одной строкой, даты, телефоны в разных форматах)
-  - Выгрузка_грязная.csv      (грязный CSV для Power Query: пробелы, текст-числа, пустые строки)
-  - Данные_для_дашборда.xlsx  (продажи за год, ~1200 строк, для итогового проекта)
+Создаёт в текущей папке правдоподобную «рабочую» выгрузку торговой компании «ТехноТрейд»:
+  - Продажи.xlsx              заказы (300 строк) — основная таблица курса
+  - Прайс.xlsx                справочник товар→категория→цена (для ВПР/ПРОСМОТРX)
+  - Планы.xlsx                план выручки по менеджерам (для план-факт анализа)
+  - Сотрудники.xlsx           «грязные» данные кадров (ФИО, даты-текст, телефоны)
+  - Выгрузка_грязная.csv      грязный CSV для чистки в Power Query
+  - Данные_для_дашборда.xlsx  заказы за год (1200 строк) — для итогового дашборда
+  - Выгрузки_по_месяцам/      3 помесячных CSV (для сценария Power Query «собери из папки»)
 
-Данные детерминированы (random.seed=42) — при повторном запуске получаются те же файлы.
+Данные детерминированы (random.seed=42). Столбцы A–H в «Продажи»/«Данные_для_дашборда»
+совпадают с прежней версией; реалистичные поля (№ заказа, клиент, канал, отгрузка,
+статус оплаты) добавлены СПРАВА (столбцы I–N), чтобы прежние уроки не «поехали».
 Все данные вымышленные.
 """
 import csv
+import os
 import random
 from datetime import date, timedelta
 
@@ -27,6 +32,10 @@ random.seed(42)
 # ---------- Справочники ----------
 MANAGERS = ["Иванова А.", "Петров С.", "Сидорова М.", "Кузнецов Д.", "Смирнова О.", "Волков И."]
 CITIES = ["Москва", "Санкт-Петербург", "Казань", "Новосибирск", "Екатеринбург", "Краснодар"]
+CHANNELS = ["Онлайн-магазин", "Розничный магазин", "Телефон", "Менеджер"]
+CLIENTS = ["ООО Ромашка", "ИП Соколов", "ООО ТехноПлюс", "АО Вектор", "ООО Мир Офиса",
+           "ИП Гаврилов", "ООО Стройсервис", "АО Прогресс", "ООО Аметист", "Розничный клиент"]
+PAY_STATUSES = (["Оплачен"] * 6) + (["Ожидает оплаты"] * 3) + (["Просрочен"] * 1)
 
 # Товар -> (категория, цена)
 PRODUCTS = {
@@ -65,35 +74,48 @@ def style_header(ws, ncols):
 def autofit(ws):
     for col in ws.columns:
         width = max((len(str(c.value)) for c in col if c.value is not None), default=10)
-        ws.column_dimensions[col[0].column_letter].width = min(width + 3, 40)
+        ws.column_dimensions[col[0].column_letter].width = min(width + 3, 42)
 
 
-# ---------- 1. Продажи.xlsx ----------
-def make_sales(filename="Продажи.xlsx", n=300, start=date(2025, 1, 1), days=180, dashboard=False):
+# ---------- Продажи / Данные для дашборда ----------
+def make_sales(filename, n, start, days, first_order_no):
+    """A–H — как раньше (Сумма пустая). I–N — реалистичные поля."""
     wb = Workbook()
     ws = wb.active
     ws.title = "Продажи"
-    headers = ["Дата заказа", "Менеджер", "Город", "Категория", "Товар", "Количество", "Цена", "Сумма"]
+    headers = ["Дата заказа", "Менеджер", "Город", "Категория", "Товар",
+               "Количество", "Цена", "Сумма",
+               "№ заказа", "Клиент", "Тип клиента", "Канал продаж",
+               "Дата отгрузки", "Статус оплаты"]
     ws.append(headers)
-    for _ in range(n):
+    for i in range(n):
+        # --- базовые столбцы A–H: тот же порядок случайных вызовов, что и раньше ---
         d = start + timedelta(days=random.randint(0, days))
         product = random.choice(PRODUCT_NAMES)
         category, price = PRODUCTS[product]
         qty = random.randint(1, 8)
-        row = [d, random.choice(MANAGERS), random.choice(CITIES), category, product, qty, price, None]
-        # «Сумма» намеренно пустая — ученик считает формулой на уроке 2.
-        ws.append(row)
-    # форматы
+        manager = random.choice(MANAGERS)
+        city = random.choice(CITIES)
+        # --- новые столбцы I–N (доп. случайные вызовы ПОСЛЕ базовых) ---
+        client = random.choice(CLIENTS)
+        client_type = "Опт" if qty >= 5 else "Розница"
+        channel = random.choice(CHANNELS)
+        ship = d + timedelta(days=random.randint(1, 7))
+        pay = random.choice(PAY_STATUSES)
+        order_no = first_order_no + i
+        ws.append([d, manager, city, category, product, qty, price, None,
+                   order_no, client, client_type, channel, ship, pay])
     for r in range(2, n + 2):
         ws.cell(row=r, column=1).number_format = "DD.MM.YYYY"
         ws.cell(row=r, column=7).number_format = "# ##0 ₽"
+        ws.cell(row=r, column=13).number_format = "DD.MM.YYYY"
     style_header(ws, len(headers))
     autofit(ws)
     wb.save(filename)
-    print(f"  сохранён {filename} ({n} строк)")
+    print(f"  сохранён {filename} ({n} строк, 14 столбцов)")
 
 
-# ---------- 2. Прайс.xlsx ----------
+# ---------- Прайс ----------
 def make_price(filename="Прайс.xlsx"):
     wb = Workbook()
     ws = wb.active
@@ -109,7 +131,27 @@ def make_price(filename="Прайс.xlsx"):
     print(f"  сохранён {filename} ({len(PRODUCTS)} товаров)")
 
 
-# ---------- 3. Сотрудники.xlsx («грязные» данные) ----------
+# ---------- Планы (план-факт по менеджерам) ----------
+def make_plans(filename="Планы.xlsx"):
+    wb = Workbook()
+    ws = wb.active
+    ws.title = "Планы"
+    ws.append(["Менеджер", "План выручки, ₽"])
+    plans = {  # округлённые «плановые» цифры на период
+        "Иванова А.": 2_500_000, "Петров С.": 2_200_000, "Сидорова М.": 2_400_000,
+        "Кузнецов Д.": 2_000_000, "Смирнова О.": 2_300_000, "Волков И.": 1_900_000,
+    }
+    for m in MANAGERS:
+        ws.append([m, plans[m]])
+    for r in range(2, len(MANAGERS) + 2):
+        ws.cell(row=r, column=2).number_format = "# ##0 ₽"
+    style_header(ws, 2)
+    autofit(ws)
+    wb.save(filename)
+    print(f"  сохранён {filename} (план по {len(MANAGERS)} менеджерам)")
+
+
+# ---------- Сотрудники («грязные» данные) ----------
 def make_employees(filename="Сотрудники.xlsx", n=40):
     last_m = ["Иванов", "Петров", "Сидоров", "Кузнецов", "Смирнов", "Волков", "Морозов", "Новиков"]
     last_f = ["Иванова", "Петрова", "Сидорова", "Кузнецова", "Смирнова", "Волкова", "Морозова", "Новикова"]
@@ -128,15 +170,12 @@ def make_employees(filename="Сотрудники.xlsx", n=40):
             ln, fn, pt = random.choice(last_m), random.choice(first_m), random.choice(patr_m)
         else:
             ln, fn, pt = random.choice(last_f), random.choice(first_f), random.choice(patr_f)
-        # ФИО одной строкой, иногда с лишними пробелами
         fio = f"{ln} {fn} {pt}"
         if random.random() < 0.3:
-            fio = "  " + fio + " "          # лишние пробелы по краям
+            fio = "  " + fio + " "
         if random.random() < 0.2:
-            fio = fio.replace(" ", "  ", 1)  # двойной пробел внутри
-        # дата приёма
+            fio = fio.replace(" ", "  ", 1)
         d = date(random.randint(2015, 2024), random.randint(1, 12), random.randint(1, 28))
-        # телефон в РАЗНЫХ форматах — намеренно
         digits = f"9{random.randint(10,99)}{random.randint(1000000,9999999)}"
         fmt = random.choice([
             f"+7 ({digits[0:3]}) {digits[3:6]}-{digits[6:8]}-{digits[8:10]}",
@@ -146,14 +185,13 @@ def make_employees(filename="Сотрудники.xlsx", n=40):
         ])
         email = f"{fn.lower()}.{ln.lower()}@company.ru"
         ws.append([fio, random.choice(depts), d.strftime("%d.%m.%Y"), fmt, email])
-    # ВНИМАНИЕ: дата приёма записана как ТЕКСТ (строка) — ученик учится превращать её в дату.
     style_header(ws, 5)
     autofit(ws)
     wb.save(filename)
     print(f"  сохранён {filename} ({n} сотрудников, 'грязные' данные)")
 
 
-# ---------- 4. Выгрузка_грязная.csv (для Power Query) ----------
+# ---------- Грязный CSV (для очистки в Power Query) ----------
 def make_dirty_csv(filename="Выгрузка_грязная.csv", n=120):
     city_variants = {
         "Москва": ["Москва", "москва", " Москва", "МОСКВА", "Москва "],
@@ -164,7 +202,7 @@ def make_dirty_csv(filename="Выгрузка_грязная.csv", n=120):
     rows = [["Дата", "Город", "Товар", "Количество", "Сумма"]]
     for _ in range(n):
         if random.random() < 0.08:
-            rows.append(["", "", "", "", ""])  # пустая строка-мусор
+            rows.append(["", "", "", "", ""])
             continue
         d = date(2025, random.randint(1, 6), random.randint(1, 28))
         city = random.choice(city_variants[random.choice(base_cities)])
@@ -172,20 +210,41 @@ def make_dirty_csv(filename="Выгрузка_грязная.csv", n=120):
         qty = random.randint(1, 10)
         _, price = PRODUCTS[product]
         total = qty * price
-        # число как ТЕКСТ, иногда с пробелом-разделителем тысяч и лишними пробелами
         total_str = f" {total:,} ".replace(",", " ") if random.random() < 0.5 else str(total)
         rows.append([d.strftime("%d.%m.%Y"), city, "  " + product if random.random() < 0.3 else product,
                      str(qty), total_str])
     with open(filename, "w", newline="", encoding="utf-8-sig") as f:
         csv.writer(f, delimiter=";").writerows(rows)
-    print(f"  сохранён {filename} ({n} строк, спец. 'грязный' для Power Query)")
+    print(f"  сохранён {filename} ({n} строк, 'грязный')")
+
+
+# ---------- Помесячные выгрузки (Power Query: собрать из папки) ----------
+def make_monthly_exports(folder="Выгрузки_по_месяцам"):
+    os.makedirs(folder, exist_ok=True)
+    months = [("2025-01", date(2025, 1, 1), 31),
+              ("2025-02", date(2025, 2, 1), 28),
+              ("2025-03", date(2025, 3, 1), 31)]
+    for name, start, days in months:
+        rows = [["Дата", "Менеджер", "Город", "Товар", "Количество", "Цена"]]
+        for _ in range(random.randint(35, 50)):
+            d = start + timedelta(days=random.randint(0, days - 1))
+            product = random.choice(PRODUCT_NAMES)
+            _, price = PRODUCTS[product]
+            rows.append([d.strftime("%d.%m.%Y"), random.choice(MANAGERS), random.choice(CITIES),
+                         product, random.randint(1, 8), price])
+        path = os.path.join(folder, f"{name}.csv")
+        with open(path, "w", newline="", encoding="utf-8-sig") as f:
+            csv.writer(f, delimiter=";").writerows(rows)
+    print(f"  сохранены помесячные выгрузки в папке {folder}/ (3 файла)")
 
 
 if __name__ == "__main__":
     print("Генерация учебных файлов…")
-    make_sales("Продажи.xlsx", n=300, start=date(2025, 1, 1), days=180)
+    make_sales("Продажи.xlsx", n=300, start=date(2025, 1, 1), days=180, first_order_no=100001)
     make_price("Прайс.xlsx")
+    make_plans("Планы.xlsx")
     make_employees("Сотрудники.xlsx", n=40)
     make_dirty_csv("Выгрузка_грязная.csv", n=120)
-    make_sales("Данные_для_дашборда.xlsx", n=1200, start=date(2025, 1, 1), days=364)
+    make_sales("Данные_для_дашборда.xlsx", n=1200, start=date(2025, 1, 1), days=364, first_order_no=200001)
+    make_monthly_exports("Выгрузки_по_месяцам")
     print("Готово. Файлы лежат рядом со скриптом.")
