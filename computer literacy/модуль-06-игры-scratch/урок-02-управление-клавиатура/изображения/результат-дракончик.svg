@@ -1,0 +1,144 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 440" font-family="'Segoe UI',system-ui,sans-serif">
+  <defs>
+    <linearGradient id="sky2" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#cfeaff"/>
+      <stop offset="1" stop-color="#eafaf0"/>
+    </linearGradient>
+    <linearGradient id="page2" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#f7f9fc"/>
+      <stop offset="1" stop-color="#eef1f6"/>
+    </linearGradient>
+  </defs>
+
+  <rect x="0" y="0" width="720" height="440" fill="url(#page2)"/>
+  <text x="24" y="36" font-size="23" font-weight="700" fill="#1f2937">🐉 Управляй героем — стрелки</text>
+  <text x="24" y="59" font-size="14" fill="#64748b">Дракончик летит по стрелкам, машет крыльями, разворачивается</text>
+
+  <!-- ============ STAGE with coordinate grid ============ -->
+  <g>
+    <rect x="24" y="78" width="440" height="320" rx="14" fill="url(#sky2)" stroke="#cbd5e1" stroke-width="2"/>
+    <!-- grid -->
+    <g stroke="#c3dced" stroke-width="1">
+      <line x1="24" y1="158" x2="464" y2="158"/>
+      <line x1="24" y1="318" x2="464" y2="318"/>
+      <line x1="134" y1="78" x2="134" y2="398"/>
+      <line x1="354" y1="78" x2="354" y2="398"/>
+    </g>
+    <!-- axes through center (244,238) -->
+    <g stroke="#8fb8d4" stroke-width="2">
+      <line x1="24" y1="238" x2="464" y2="238"/>
+      <line x1="244" y1="78" x2="244" y2="398"/>
+    </g>
+    <text x="452" y="232" font-size="12" fill="#5b7a91">x+</text>
+    <text x="250" y="92" font-size="12" fill="#5b7a91">y+</text>
+    <text x="250" y="234" font-size="11" fill="#5b7a91">0,0</text>
+    <!-- hills -->
+    <path d="M24 360 q80 -40 160 0 q80 40 160 0 q60 -30 120 0 l0 38 l-440 0 z" fill="#a9e08a" opacity="0.85"/>
+
+    <!-- DRAGON moving: center->right->up->left->down->center -->
+    <g>
+      <animateTransform attributeName="transform" attributeType="XML" type="translate"
+        values="244,238; 380,238; 380,150; 120,150; 120,300; 244,238"
+        keyTimes="0;0.2;0.4;0.6;0.8;1" dur="8s" repeatCount="indefinite"/>
+
+      <!-- RIGHT-FACING (visible 0..0.5) -->
+      <g>
+        <animate attributeName="opacity" values="1;1;1;0;0;1" keyTimes="0;0.2;0.5;0.55;0.95;1" dur="8s" repeatCount="indefinite"/>
+        <!-- tail -->
+        <path d="M-30 4 q-22 2 -30 -14 q14 6 24 -2 z" fill="#3fae5a" stroke="#2e8a45" stroke-width="2"/>
+        <!-- body -->
+        <ellipse cx="0" cy="0" rx="30" ry="20" fill="#5ec97a" stroke="#2e8a45" stroke-width="3"/>
+        <!-- wing pose A/B -->
+        <g fill="#3fae5a" stroke="#2e8a45" stroke-width="2">
+          <path d="M-6 -12 q-10 -26 10 -30 q-2 18 8 24 z">
+            <animate attributeName="opacity" values="1;0;1" keyTimes="0;0.5;1" dur="0.4s" repeatCount="indefinite"/>
+          </path>
+          <path d="M-6 -8 q-10 -6 -2 -26 q6 14 14 18 z">
+            <animate attributeName="opacity" values="0;1;0" keyTimes="0;0.5;1" dur="0.4s" repeatCount="indefinite"/>
+          </path>
+        </g>
+        <!-- head -->
+        <circle cx="24" cy="-8" r="15" fill="#6ed389" stroke="#2e8a45" stroke-width="3"/>
+        <path d="M14 -20 l3 -9 l7 6 z" fill="#6ed389" stroke="#2e8a45" stroke-width="1.5"/>
+        <circle cx="27" cy="-11" r="2.6" fill="#12351f"/>
+        <ellipse cx="36" cy="-4" rx="5" ry="3" fill="#8fe0a5"/>
+      </g>
+
+      <!-- LEFT-FACING (visible 0.5..0.95) -->
+      <g transform="scale(-1,1)">
+        <animate attributeName="opacity" values="0;0;0;1;1;0" keyTimes="0;0.2;0.5;0.55;0.95;1" dur="8s" repeatCount="indefinite"/>
+        <path d="M-30 4 q-22 2 -30 -14 q14 6 24 -2 z" fill="#3fae5a" stroke="#2e8a45" stroke-width="2"/>
+        <ellipse cx="0" cy="0" rx="30" ry="20" fill="#5ec97a" stroke="#2e8a45" stroke-width="3"/>
+        <g fill="#3fae5a" stroke="#2e8a45" stroke-width="2">
+          <path d="M-6 -12 q-10 -26 10 -30 q-2 18 8 24 z">
+            <animate attributeName="opacity" values="1;0;1" keyTimes="0;0.5;1" dur="0.4s" repeatCount="indefinite"/>
+          </path>
+          <path d="M-6 -8 q-10 -6 -2 -26 q6 14 14 18 z">
+            <animate attributeName="opacity" values="0;1;0" keyTimes="0;0.5;1" dur="0.4s" repeatCount="indefinite"/>
+          </path>
+        </g>
+        <circle cx="24" cy="-8" r="15" fill="#6ed389" stroke="#2e8a45" stroke-width="3"/>
+        <path d="M14 -20 l3 -9 l7 6 z" fill="#6ed389" stroke="#2e8a45" stroke-width="1.5"/>
+        <circle cx="27" cy="-11" r="2.6" fill="#12351f"/>
+        <ellipse cx="36" cy="-4" rx="5" ry="3" fill="#8fe0a5"/>
+      </g>
+    </g>
+  </g>
+
+  <!-- ============ ARROW KEYS (light up in sync) ============ -->
+  <g transform="translate(500,90)">
+    <text x="0" y="0" font-size="13" font-weight="700" fill="#475569">Клавиши:</text>
+    <!-- up -->
+    <g transform="translate(46,14)">
+      <rect width="40" height="40" rx="8" fill="#e2e8f0" stroke="#94a3b8" stroke-width="2"/>
+      <rect width="40" height="40" rx="8" fill="#4c97ff">
+        <animate attributeName="opacity" values="0;0;1;0;0" keyTimes="0;0.2;0.3;0.4;1" dur="8s" repeatCount="indefinite"/>
+      </rect>
+      <text x="20" y="27" font-size="18" text-anchor="middle" fill="#334155">▲</text>
+    </g>
+    <!-- left -->
+    <g transform="translate(0,58)">
+      <rect width="40" height="40" rx="8" fill="#e2e8f0" stroke="#94a3b8" stroke-width="2"/>
+      <rect width="40" height="40" rx="8" fill="#4c97ff">
+        <animate attributeName="opacity" values="0;0;0;1;0;0" keyTimes="0;0.4;0.5;0.6;0.7;1" dur="8s" repeatCount="indefinite"/>
+      </rect>
+      <text x="20" y="27" font-size="18" text-anchor="middle" fill="#334155">◀</text>
+    </g>
+    <!-- down -->
+    <g transform="translate(46,58)">
+      <rect width="40" height="40" rx="8" fill="#e2e8f0" stroke="#94a3b8" stroke-width="2"/>
+      <rect width="40" height="40" rx="8" fill="#4c97ff">
+        <animate attributeName="opacity" values="0;0;0;1;0" keyTimes="0;0.7;0.8;0.9;1" dur="8s" repeatCount="indefinite"/>
+      </rect>
+      <text x="20" y="27" font-size="18" text-anchor="middle" fill="#334155">▼</text>
+    </g>
+    <!-- right -->
+    <g transform="translate(92,58)">
+      <rect width="40" height="40" rx="8" fill="#e2e8f0" stroke="#94a3b8" stroke-width="2"/>
+      <rect width="40" height="40" rx="8" fill="#4c97ff">
+        <animate attributeName="opacity" values="1;1;0;0;0" keyTimes="0;0.1;0.2;0.3;1" dur="8s" repeatCount="indefinite"/>
+      </rect>
+      <text x="20" y="27" font-size="18" text-anchor="middle" fill="#334155">▶</text>
+    </g>
+  </g>
+
+  <!-- ============ SCRIPT ============ -->
+  <g transform="translate(500,214)" font-size="11.5" font-weight="600">
+    <text x="0" y="-6" font-size="13" font-weight="700" fill="#475569">Плавное управление:</text>
+    <rect x="0" y="2" width="196" height="26" rx="8" fill="#f5b800"/>
+    <text x="8" y="19" fill="#fff">когда 🚩 нажат</text>
+    <rect x="0" y="30" width="196" height="26" rx="6" fill="#ff8c1a"/>
+    <text x="8" y="47" fill="#fff">всегда</text>
+    <rect x="12" y="58" width="184" height="24" rx="6" fill="#59c059"/>
+    <text x="18" y="74" fill="#fff" font-size="10.5">если ▶ нажата? → x на 6</text>
+    <rect x="12" y="84" width="184" height="24" rx="6" fill="#59c059"/>
+    <text x="18" y="100" fill="#fff" font-size="10.5">если ◀ нажата? → x на -6</text>
+    <rect x="12" y="110" width="184" height="24" rx="6" fill="#59c059"/>
+    <text x="18" y="126" fill="#fff" font-size="10.5">если ▲ нажата? → y на 6</text>
+    <rect x="12" y="136" width="184" height="24" rx="6" fill="#59c059"/>
+    <text x="18" y="152" fill="#fff" font-size="10.5">если ▼ нажата? → y на -6</text>
+    <rect x="12" y="162" width="184" height="24" rx="6" fill="#4c97ff"/>
+    <text x="18" y="178" fill="#fff" font-size="10.5">если край — оттолкнуться</text>
+    <rect x="0" y="188" width="196" height="12" rx="6" fill="#ff8c1a"/>
+  </g>
+</svg>
