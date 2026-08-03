@@ -1,0 +1,78 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 448" font-family="'Segoe UI',system-ui,sans-serif">
+  <rect x="0" y="0" width="640" height="448" fill="#f7f9fc"/>
+  <text x="320" y="34" font-size="22" font-weight="700" fill="#1f2937" text-anchor="middle">🧭 Направление в Scratch (в градусах)</text>
+  <text x="320" y="56" font-size="13" fill="#64748b" text-anchor="middle">повернуть в направлении (…) — куда «смотрит» и летит спрайт</text>
+
+  <!-- ============ DIAL ============ -->
+  <g transform="translate(210,240)">
+    <!-- outer ring -->
+    <circle cx="0" cy="0" r="130" fill="#ffffff" stroke="#cbd5e1" stroke-width="2"/>
+    <circle cx="0" cy="0" r="130" fill="none" stroke="#e2e8f0" stroke-width="14" opacity="0.5"/>
+
+    <!-- cross axes -->
+    <line x1="0" y1="-130" x2="0" y2="130" stroke="#e2e8f0" stroke-width="2"/>
+    <line x1="-130" y1="0" x2="130" y2="0" stroke="#e2e8f0" stroke-width="2"/>
+
+    <!-- major direction ticks + labels -->
+    <!-- 0 up -->
+    <line x1="0" y1="-130" x2="0" y2="-108" stroke="#4c97ff" stroke-width="4"/>
+    <text x="0" y="-140" font-size="18" font-weight="800" fill="#2563eb" text-anchor="middle">0°</text>
+    <text x="0" y="-158" font-size="12" fill="#64748b" text-anchor="middle">вверх ↑</text>
+    <!-- 90 right -->
+    <line x1="130" y1="0" x2="108" y2="0" stroke="#16a34a" stroke-width="4"/>
+    <text x="150" y="6" font-size="18" font-weight="800" fill="#15803d" text-anchor="middle">90°</text>
+    <text x="150" y="24" font-size="12" fill="#64748b" text-anchor="middle">вправо →</text>
+    <!-- 180 down -->
+    <line x1="0" y1="130" x2="0" y2="108" stroke="#f59e0b" stroke-width="4"/>
+    <text x="0" y="154" font-size="18" font-weight="800" fill="#b45309" text-anchor="middle">180°</text>
+    <text x="0" y="172" font-size="12" fill="#64748b" text-anchor="middle">вниз ↓</text>
+    <!-- -90 left -->
+    <line x1="-130" y1="0" x2="-108" y2="0" stroke="#dc2626" stroke-width="4"/>
+    <text x="-150" y="6" font-size="18" font-weight="800" fill="#b91c1c" text-anchor="middle">-90°</text>
+    <text x="-150" y="24" font-size="12" fill="#64748b" text-anchor="middle">← влево</text>
+
+    <!-- Ping-Pong diagonal hints -->
+    <g font-size="11" fill="#94a3b8" font-weight="600">
+      <circle cx="79" cy="-79" r="3" fill="#94a3b8"/><text x="92" y="-84">45°</text>
+      <circle cx="-79" cy="-79" r="3" fill="#94a3b8"/><text x="-120" y="-84">-45°</text>
+      <circle cx="79" cy="79" r="3" fill="#94a3b8"/><text x="90" y="96">135°</text>
+      <circle cx="-79" cy="79" r="3" fill="#94a3b8"/><text x="-128" y="96">225°</text>
+    </g>
+
+    <!-- rotating arrow (sweeps to show direction) -->
+    <g>
+      <animateTransform attributeName="transform" attributeType="XML" type="rotate"
+        values="0;90;180;270;360" keyTimes="0;0.25;0.5;0.75;1" dur="7s" repeatCount="indefinite"/>
+      <line x1="0" y1="0" x2="0" y2="-96" stroke="#7c3aed" stroke-width="6" stroke-linecap="round"/>
+      <path d="M0 -108 l-10 18 l20 0 z" fill="#7c3aed"/>
+    </g>
+    <circle cx="0" cy="0" r="9" fill="#7c3aed"/>
+    <!-- center sprite dot -->
+    <circle cx="0" cy="0" r="4" fill="#fff"/>
+  </g>
+
+  <!-- ============ LEGEND ============ -->
+  <g transform="translate(400,110)" font-size="14">
+    <rect x="0" y="0" width="220" height="250" rx="14" fill="#ffffff" stroke="#e2e8f0" stroke-width="2"/>
+    <text x="16" y="30" font-size="15" font-weight="800" fill="#334155">Запомни 4 направления:</text>
+
+    <g font-weight="700">
+      <rect x="16" y="46" width="26" height="26" rx="6" fill="#dbeafe"/><text x="29" y="64" fill="#2563eb" text-anchor="middle">0</text>
+      <text x="52" y="64" fill="#334155">— вверх ↑</text>
+
+      <rect x="16" y="82" width="26" height="26" rx="6" fill="#dcfce7"/><text x="29" y="100" fill="#15803d" text-anchor="middle">90</text>
+      <text x="52" y="100" fill="#334155">— вправо →</text>
+
+      <rect x="16" y="118" width="26" height="26" rx="6" fill="#ffedd5"/><text x="29" y="136" fill="#b45309" text-anchor="middle" font-size="11">180</text>
+      <text x="52" y="136" fill="#334155">— вниз ↓</text>
+
+      <rect x="16" y="154" width="26" height="26" rx="6" fill="#fee2e2"/><text x="29" y="172" fill="#b91c1c" text-anchor="middle" font-size="11">-90</text>
+      <text x="52" y="172" fill="#334155">— влево ←</text>
+    </g>
+
+    <text x="16" y="210" font-size="12" fill="#64748b">В Пинг-понге мяч летит под</text>
+    <text x="16" y="228" font-size="12" fill="#64748b">углом 135–225° (вниз наискосок).</text>
+  </g>
+
+  <text x="210" y="436" font-size="12" fill="#94a3b8" text-anchor="middle">Фиолетовая стрелка крутится — это и есть «направление» спрайта</text>
+</svg>

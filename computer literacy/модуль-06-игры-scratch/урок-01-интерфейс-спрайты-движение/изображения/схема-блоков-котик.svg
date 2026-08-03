@@ -1,0 +1,61 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 780 360" font-family="'Segoe UI',system-ui,sans-serif">
+  <rect x="0" y="0" width="780" height="360" fill="#f7f9fc"/>
+  <text x="24" y="30" font-size="20" font-weight="800" fill="#1f2937">🧩 Итоговая схема блоков — «Оживи котика»</text>
+  <text x="24" y="52" font-size="13" fill="#64748b">Собери у котика ДВА скрипта. Цвет блока = раздел палитры.</text>
+
+  <!-- ============ SCRIPT 1 — walk ============ -->
+  <text x="24" y="82" font-size="14" font-weight="700" fill="#334155">🚶 Скрипт 1 — ходьба</text>
+  <g font-size="13" font-weight="700" fill="#ffffff">
+    <!-- hat -->
+    <path d="M24 92 q0 -10 10 -10 l60 0 q6 6 12 0 l120 0 q10 0 10 10 l0 20 l-212 0 z" fill="#f5b800"/>
+    <text x="34" y="107" fill="#3d2f00">когда 🚩 нажат</text>
+    <!-- set rotation (motion) -->
+    <rect x="24" y="112" width="252" height="30" rx="6" fill="#4c97ff"/>
+    <text x="34" y="131">способ вращения [влево-вправо]</text>
+    <!-- forever top (control) -->
+    <rect x="24" y="142" width="252" height="28" rx="6" fill="#ff8c1a"/>
+    <text x="34" y="161">всегда</text>
+    <!-- left arm -->
+    <rect x="24" y="170" width="14" height="132" fill="#ff8c1a"/>
+    <!-- inner: идти (motion) -->
+    <rect x="40" y="172" width="236" height="30" rx="6" fill="#4c97ff"/>
+    <text x="50" y="191">идти 5 шагов</text>
+    <!-- inner: если на краю (motion) -->
+    <rect x="40" y="204" width="236" height="30" rx="6" fill="#4c97ff"/>
+    <text x="50" y="223" font-size="12">если на краю, оттолкнуться</text>
+    <!-- inner: следующий костюм (looks) -->
+    <rect x="40" y="236" width="236" height="30" rx="6" fill="#9966ff"/>
+    <text x="50" y="255">следующий костюм</text>
+    <!-- inner: ждать (control) -->
+    <rect x="40" y="268" width="236" height="30" rx="6" fill="#ffab19"/>
+    <text x="50" y="287">ждать 0.2 секунды</text>
+    <!-- forever bottom cap -->
+    <rect x="24" y="300" width="252" height="14" rx="6" fill="#ff8c1a"/>
+  </g>
+
+  <!-- ============ SCRIPT 2 — meow ============ -->
+  <text x="440" y="82" font-size="14" font-weight="700" fill="#334155">🔊 Скрипт 2 — мяу по клику</text>
+  <g font-size="13" font-weight="700" fill="#ffffff">
+    <!-- hat -->
+    <path d="M440 92 q0 -10 10 -10 l60 0 q6 6 12 0 l130 0 q10 0 10 10 l0 20 l-222 0 z" fill="#f5b800"/>
+    <text x="450" y="107" fill="#3d2f00">когда спрайт нажат</text>
+    <!-- play sound (sound) -->
+    <rect x="440" y="112" width="262" height="30" rx="6" fill="#cf63cf"/>
+    <text x="450" y="131">играть звук [Мяу] до конца</text>
+    <!-- say (looks) -->
+    <rect x="440" y="144" width="262" height="30" rx="6" fill="#9966ff"/>
+    <text x="450" y="163" font-size="12">сказать [Мяу!] в течение 1 секунды</text>
+  </g>
+
+  <!-- legend -->
+  <g font-size="12" font-weight="600" fill="#475569" transform="translate(440,210)">
+    <text x="0" y="0" font-size="13" font-weight="700" fill="#334155">Цвета = разделы:</text>
+    <rect x="0" y="12" width="16" height="16" rx="4" fill="#f5b800"/><text x="22" y="25">События</text>
+    <rect x="0" y="34" width="16" height="16" rx="4" fill="#4c97ff"/><text x="22" y="47">Движение</text>
+    <rect x="0" y="56" width="16" height="16" rx="4" fill="#9966ff"/><text x="22" y="69">Внешний вид</text>
+    <rect x="140" y="12" width="16" height="16" rx="4" fill="#cf63cf"/><text x="162" y="25">Звук</text>
+    <rect x="140" y="34" width="16" height="16" rx="4" fill="#ffab19"/><text x="162" y="47">Управление</text>
+  </g>
+
+  <text x="24" y="340" font-size="12" fill="#94a3b8">💡 Блоки внутри «всегда» должны быть обняты оранжевой скобкой. Второй скрипт — отдельно, со своей шапкой.</text>
+</svg>

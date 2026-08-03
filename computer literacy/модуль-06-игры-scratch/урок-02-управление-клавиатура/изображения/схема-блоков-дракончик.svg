@@ -1,0 +1,102 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 672" font-family="'Segoe UI',system-ui,sans-serif">
+  <rect x="0" y="0" width="640" height="672" fill="#f7f9fc"/>
+  <text x="24" y="30" font-size="20" font-weight="800" fill="#1f2937">🧩 Итоговая схема блоков — «Дракончик»</text>
+  <text x="24" y="52" font-size="13" fill="#64748b">Один скрипт: плавное управление + разворот + крылья + границы.</text>
+
+  <g font-weight="700" fill="#ffffff">
+    <!-- hat -->
+    <path d="M24 78 q0 -10 10 -10 l70 0 q6 6 12 0 l120 0 q10 0 10 10 l0 18 l-222 0 z" fill="#f5b800"/>
+    <text x="34" y="92" font-size="13" fill="#3d2f00">когда 🚩 нажат</text>
+    <!-- set rotation -->
+    <rect x="24" y="96" width="300" height="26" rx="6" fill="#4c97ff"/>
+    <text x="34" y="114" font-size="13">установить способ вращения [влево-вправо]</text>
+
+    <!-- forever top -->
+    <rect x="24" y="124" width="300" height="26" rx="6" fill="#ff8c1a"/>
+    <text x="34" y="142" font-size="13">всегда</text>
+    <!-- level-1 arm -->
+    <rect x="24" y="150" width="14" height="446" fill="#ff8c1a"/>
+
+    <!-- если ▶ -->
+    <rect x="40" y="152" width="284" height="26" rx="6" fill="#ffab19"/>
+    <rect x="86" y="156" width="150" height="18" rx="9" fill="#5cb1d6"/>
+    <text x="48" y="170" font-size="12">если</text>
+    <text x="93" y="170" font-size="11">клавиша ▶ нажата?</text>
+    <rect x="40" y="178" width="14" height="52" fill="#ffab19"/>
+    <rect x="56" y="180" width="268" height="24" rx="6" fill="#4c97ff"/>
+    <text x="64" y="197" font-size="12">повернуть в направлении (90)</text>
+    <rect x="56" y="206" width="268" height="24" rx="6" fill="#4c97ff"/>
+    <text x="64" y="223" font-size="12">изменить x на (6)</text>
+    <rect x="40" y="232" width="284" height="10" rx="5" fill="#ffab19"/>
+
+    <!-- если ◀ -->
+    <rect x="40" y="244" width="284" height="26" rx="6" fill="#ffab19"/>
+    <rect x="86" y="248" width="150" height="18" rx="9" fill="#5cb1d6"/>
+    <text x="48" y="262" font-size="12">если</text>
+    <text x="93" y="262" font-size="11">клавиша ◀ нажата?</text>
+    <rect x="40" y="270" width="14" height="52" fill="#ffab19"/>
+    <rect x="56" y="272" width="268" height="24" rx="6" fill="#4c97ff"/>
+    <text x="64" y="289" font-size="12">повернуть в направлении (-90)</text>
+    <rect x="56" y="298" width="268" height="24" rx="6" fill="#4c97ff"/>
+    <text x="64" y="315" font-size="12">изменить x на (-6)</text>
+    <rect x="40" y="324" width="284" height="10" rx="5" fill="#ffab19"/>
+
+    <!-- если ▲ -->
+    <rect x="40" y="336" width="284" height="26" rx="6" fill="#ffab19"/>
+    <rect x="86" y="340" width="150" height="18" rx="9" fill="#5cb1d6"/>
+    <text x="48" y="354" font-size="12">если</text>
+    <text x="93" y="354" font-size="11">клавиша ▲ нажата?</text>
+    <rect x="40" y="362" width="14" height="26" fill="#ffab19"/>
+    <rect x="56" y="364" width="268" height="24" rx="6" fill="#4c97ff"/>
+    <text x="64" y="381" font-size="12">изменить y на (6)</text>
+    <rect x="40" y="388" width="284" height="10" rx="5" fill="#ffab19"/>
+
+    <!-- если ▼ -->
+    <rect x="40" y="400" width="284" height="26" rx="6" fill="#ffab19"/>
+    <rect x="86" y="404" width="150" height="18" rx="9" fill="#5cb1d6"/>
+    <text x="48" y="418" font-size="12">если</text>
+    <text x="93" y="418" font-size="11">клавиша ▼ нажата?</text>
+    <rect x="40" y="426" width="14" height="26" fill="#ffab19"/>
+    <rect x="56" y="428" width="268" height="24" rx="6" fill="#4c97ff"/>
+    <text x="64" y="445" font-size="12">изменить y на (-6)</text>
+    <rect x="40" y="452" width="284" height="10" rx="5" fill="#ffab19"/>
+
+    <!-- если любая -->
+    <rect x="40" y="464" width="284" height="26" rx="6" fill="#ffab19"/>
+    <rect x="86" y="468" width="160" height="18" rx="9" fill="#5cb1d6"/>
+    <text x="48" y="482" font-size="12">если</text>
+    <text x="93" y="482" font-size="11">клавиша [любая] нажата?</text>
+    <rect x="40" y="490" width="14" height="52" fill="#ffab19"/>
+    <rect x="56" y="492" width="268" height="24" rx="6" fill="#9966ff"/>
+    <text x="64" y="509" font-size="12">следующий костюм</text>
+    <rect x="56" y="518" width="268" height="24" rx="6" fill="#ffab19"/>
+    <text x="64" y="535" font-size="12">ждать 0.1 секунды</text>
+    <rect x="40" y="542" width="284" height="10" rx="5" fill="#ffab19"/>
+
+    <!-- если на краю (single) -->
+    <rect x="40" y="554" width="284" height="26" rx="6" fill="#4c97ff"/>
+    <text x="48" y="572" font-size="12">если на краю, оттолкнуться</text>
+
+    <!-- forever bottom cap -->
+    <rect x="24" y="584" width="300" height="12" rx="6" fill="#ff8c1a"/>
+  </g>
+
+  <!-- legend -->
+  <g font-size="12" font-weight="600" fill="#475569" transform="translate(370,150)">
+    <rect x="-10" y="-24" width="250" height="210" rx="12" fill="#ffffff" stroke="#e2e8f0" stroke-width="2"/>
+    <text x="4" y="-2" font-size="13" font-weight="700" fill="#334155">Цвета = разделы палитры:</text>
+    <rect x="4" y="12" width="16" height="16" rx="4" fill="#f5b800"/><text x="26" y="25">События (шапка)</text>
+    <rect x="4" y="36" width="16" height="16" rx="4" fill="#4c97ff"/><text x="26" y="49">Движение</text>
+    <rect x="4" y="60" width="16" height="16" rx="4" fill="#9966ff"/><text x="26" y="73">Внешний вид</text>
+    <rect x="4" y="84" width="16" height="16" rx="4" fill="#ffab19"/><text x="26" y="97">Управление (всегда/если/ждать)</text>
+    <rect x="4" y="108" width="16" height="16" rx="4" fill="#5cb1d6"/><text x="26" y="121">Сенсоры (клавиша нажата?)</text>
+    <text x="4" y="150" font-size="11" font-weight="500" fill="#64748b">💡 Голубые «пилюли» — это</text>
+    <text x="4" y="166" font-size="11" font-weight="500" fill="#64748b">вопросы-сенсоры внутри «если».</text>
+  </g>
+
+  <text x="370" y="360" font-size="12" font-weight="600" fill="#475569">🏓 Пинг-понг:</text>
+  <text x="370" y="378" font-size="11" fill="#64748b">его итоговые схемы — 5 картинок</text>
+  <text x="370" y="394" font-size="11" fill="#64748b">«пингпонг-1…5» в этой же папке.</text>
+
+  <text x="24" y="640" font-size="12" fill="#94a3b8">💡 Четыре «если» идут ПОДРЯД внутри «всегда» (не вложены друг в друга). «если на краю» — обычный блок, без ветки.</text>
+</svg>
