@@ -1,0 +1,69 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 420" font-family="'Segoe UI',system-ui,sans-serif">
+  <rect x="0" y="0" width="720" height="420" fill="#f7f9fc"/>
+  <text x="24" y="30" font-size="20" font-weight="800" fill="#1f2937">⚡ Доп-проект «Не задень провод!»</text>
+  <text x="24" y="52" font-size="13" fill="#64748b">Веди колечко мышкой по проводу. Коснулся — назад на старт!</text>
+
+  <!-- ===== GAME STAGE ===== -->
+  <rect x="24" y="70" width="380" height="320" rx="12" fill="#eef4fb" stroke="#cbd5e1" stroke-width="2"/>
+
+  <!-- wire (red, wavy) -->
+  <path d="M70 340 Q120 200 180 250 T300 180 Q340 150 360 100"
+        fill="none" stroke="#e11d48" stroke-width="10" stroke-linecap="round"/>
+  <!-- start (green) -->
+  <circle cx="70" cy="340" r="14" fill="#22c55e"/>
+  <text x="70" y="368" font-size="11" font-weight="700" fill="#16a34a" text-anchor="middle">старт</text>
+  <!-- finish (yellow) -->
+  <rect x="346" y="84" width="30" height="30" rx="6" fill="#ffd43b" stroke="#e0a800" stroke-width="2"/>
+  <text x="361" y="128" font-size="11" font-weight="700" fill="#b45309" text-anchor="middle">финиш</text>
+
+  <!-- ring moving along the wire -->
+  <g fill="none" stroke="#3b82f6" stroke-width="5">
+    <circle cx="0" cy="0" r="11"/>
+    <animateMotion dur="6s" repeatCount="indefinite" rotate="0"
+      keyPoints="0;0.5;0.5;0;0.15;0.55;0.9;1" keyTimes="0;0.35;0.4;0.45;0.55;0.7;0.9;1"
+      path="M70 340 Q120 200 180 250 T300 180 Q340 150 360 100"/>
+  </g>
+
+  <!-- Бз-з-з! bubble -->
+  <g transform="translate(150,200)">
+    <animate attributeName="opacity" values="0;0;1;1;0;0" keyTimes="0;0.33;0.36;0.42;0.45;1" dur="6s" repeatCount="indefinite"/>
+    <rect x="0" y="0" width="80" height="26" rx="12" fill="#fff" stroke="#dc2626" stroke-width="1.5"/>
+    <text x="40" y="18" font-size="12" font-weight="800" fill="#dc2626" text-anchor="middle">Бз-з-з!</text>
+  </g>
+
+  <!-- ===== SCRIPT ===== -->
+  <g font-weight="700" fill="#ffffff" font-size="12">
+    <text x="424" y="86" font-size="14" font-weight="800" fill="#334155">Скрипт колечка:</text>
+    <!-- hat -->
+    <path d="M424 96 q0 -10 10 -10 l60 0 q6 6 12 0 l100 0 q10 0 10 10 l0 16 l-192 0 z" fill="#f5b800"/>
+    <text x="434" y="110" fill="#3d2f00" font-size="12">когда 🚩 нажат</text>
+    <!-- forever -->
+    <rect x="424" y="128" width="272" height="24" rx="6" fill="#ff8c1a"/>
+    <text x="432" y="145">всегда</text>
+    <rect x="424" y="152" width="14" height="176" fill="#ff8c1a"/>
+    <!-- follow mouse -->
+    <rect x="440" y="154" width="256" height="24" rx="6" fill="#4c97ff"/>
+    <text x="448" y="171" font-size="11">перейти в x:(мышка x) y:(мышка y)</text>
+    <!-- if wire -->
+    <rect x="440" y="180" width="256" height="24" rx="6" fill="#ffab19"/>
+    <text x="448" y="197" font-size="11">если ⟨касается цвета [красный]?⟩</text>
+    <rect x="440" y="204" width="14" height="48" fill="#ffab19"/>
+    <rect x="456" y="206" width="240" height="22" rx="6" fill="#9966ff"/>
+    <text x="463" y="221" font-size="11">сказать [Бз-з-з!] 0.5 сек</text>
+    <rect x="456" y="230" width="240" height="22" rx="6" fill="#4c97ff"/>
+    <text x="463" y="245" font-size="11">перейти на старт</text>
+    <rect x="440" y="252" width="256" height="9" rx="4" fill="#ffab19"/>
+    <!-- if finish -->
+    <rect x="440" y="263" width="256" height="24" rx="6" fill="#ffab19"/>
+    <text x="448" y="280" font-size="11">если ⟨касается цвета [жёлтый]?⟩</text>
+    <rect x="440" y="287" width="14" height="46" fill="#ffab19"/>
+    <rect x="456" y="289" width="240" height="22" rx="6" fill="#9966ff"/>
+    <text x="463" y="304" font-size="11">сказать [Прошёл!] 2 сек</text>
+    <rect x="456" y="313" width="240" height="22" rx="6" fill="#ec5a13"/>
+    <text x="463" y="328" font-size="11">стоп [всё]</text>
+    <rect x="440" y="335" width="256" height="9" rx="4" fill="#ffab19"/>
+    <rect x="424" y="346" width="272" height="12" rx="6" fill="#ff8c1a"/>
+  </g>
+
+  <text x="24" y="410" font-size="12" fill="#94a3b8">💡 Та же логика, что в лабиринте: касание цвета → наказание. Только рулим мышкой, а не стрелками.</text>
+</svg>

@@ -1,0 +1,78 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 440" font-family="'Segoe UI',system-ui,sans-serif">
+  <rect x="0" y="0" width="720" height="440" fill="#f7f9fc"/>
+  <text x="24" y="34" font-size="20" font-weight="800" fill="#1f2937">🐭 Лабиринт: мышонок ищет сыр 🧀</text>
+  <text x="24" y="55" font-size="13" fill="#64748b">Задел стену — назад на старт. Дошёл до сыра — Победа!</text>
+
+  <!-- ===== MAZE STAGE (blue = walls) ===== -->
+  <rect x="24" y="70" width="456" height="340" rx="12" fill="#4c97ff" stroke="#2f6fd0" stroke-width="2"/>
+
+  <!-- corridor (cream = walkable path) -->
+  <polyline points="60,360 150,360 150,150 320,150 320,300 410,300 410,120"
+    fill="none" stroke="#fdf6e3" stroke-width="42" stroke-linejoin="round" stroke-linecap="round"/>
+
+  <!-- start marker -->
+  <circle cx="60" cy="360" r="16" fill="#22c55e" opacity="0.9"/>
+  <text x="60" y="364" font-size="10" font-weight="700" fill="#fff" text-anchor="middle">СТАРТ</text>
+
+  <!-- cheese -->
+  <g transform="translate(410,120)">
+    <path d="M-20 -14 L20 -14 L18 14 L-18 14 Z" fill="#ffd43b" stroke="#e0a800" stroke-width="2"/>
+    <circle cx="-8" cy="-2" r="4" fill="#e0a800"/>
+    <circle cx="8" cy="6" r="3" fill="#e0a800"/>
+    <circle cx="4" cy="-8" r="2.5" fill="#e0a800"/>
+  </g>
+
+  <!-- ===== MOUSE (scripted path with a wall-bump + teleport) ===== -->
+  <g>
+    <animateTransform attributeName="transform" attributeType="XML" type="translate"
+      values="60,360; 60,235; 60,235; 60,360; 150,360; 150,150; 320,150; 320,300; 410,300; 410,120; 410,120"
+      keyTimes="0; 0.18; 0.26; 0.30; 0.42; 0.55; 0.66; 0.76; 0.85; 0.95; 1"
+      dur="9s" repeatCount="indefinite"/>
+    <!-- tail -->
+    <path d="M-14 6 q-16 2 -14 -12" stroke="#b0808f" stroke-width="3" fill="none" stroke-linecap="round"/>
+    <!-- body -->
+    <ellipse cx="0" cy="0" rx="15" ry="12" fill="#b8b8c0" stroke="#8a8a95" stroke-width="2"/>
+    <!-- ears -->
+    <circle cx="8" cy="-11" r="6" fill="#d9b3c4" stroke="#8a8a95" stroke-width="1.5"/>
+    <circle cx="-4" cy="-12" r="5" fill="#d9b3c4" stroke="#8a8a95" stroke-width="1.5"/>
+    <!-- face -->
+    <circle cx="12" cy="-2" r="2" fill="#2b2b33"/>
+    <circle cx="18" cy="0" r="2.5" fill="#e06f8b"/>
+  </g>
+
+  <!-- "Ой!" bubble on wall touch -->
+  <g transform="translate(88,205)">
+    <animate attributeName="opacity" values="0;0;1;1;0;0" keyTimes="0;0.16;0.19;0.28;0.31;1" dur="9s" repeatCount="indefinite"/>
+    <rect x="0" y="0" width="66" height="26" rx="12" fill="#fff" stroke="#dc2626" stroke-width="1.5"/>
+    <text x="33" y="18" font-size="13" font-weight="800" fill="#dc2626" text-anchor="middle">Ой!</text>
+  </g>
+
+  <!-- "Победа!" bubble at cheese -->
+  <g transform="translate(360,86)">
+    <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;0.93;0.96;1" dur="9s" repeatCount="indefinite"/>
+    <rect x="0" y="0" width="110" height="28" rx="13" fill="#fff" stroke="#16a34a" stroke-width="2"/>
+    <text x="55" y="19" font-size="14" font-weight="800" fill="#16a34a" text-anchor="middle">ПОБЕДА! 🧀</text>
+  </g>
+
+  <!-- ===== LEGEND ===== -->
+  <g transform="translate(504,90)" font-size="13" fill="#334155">
+    <rect x="0" y="0" width="196" height="180" rx="12" fill="#ffffff" stroke="#e2e8f0" stroke-width="2"/>
+    <text x="14" y="26" font-size="14" font-weight="800">Правила игры:</text>
+
+    <rect x="14" y="40" width="18" height="18" rx="4" fill="#4c97ff"/>
+    <text x="40" y="54" font-size="12">синее — стена</text>
+    <text x="40" y="70" font-size="11" fill="#64748b">коснулся → на старт</text>
+
+    <rect x="14" y="82" width="18" height="18" rx="4" fill="#fdf6e3" stroke="#e2e8f0"/>
+    <text x="40" y="96" font-size="12">светлое — коридор</text>
+
+    <circle cx="23" cy="122" r="9" fill="#22c55e"/>
+    <text x="40" y="126" font-size="12">старт</text>
+
+    <path d="M14 142 l30 0 l-1 18 l-28 0 z" fill="#ffd43b" stroke="#e0a800" stroke-width="1.5"/>
+    <text x="52" y="156" font-size="12">сыр → Победа</text>
+  </g>
+
+  <text x="504" y="292" font-size="11" fill="#94a3b8">Правила проверяются</text>
+  <text x="504" y="308" font-size="11" fill="#94a3b8">постоянно — внутри «всегда».</text>
+</svg>

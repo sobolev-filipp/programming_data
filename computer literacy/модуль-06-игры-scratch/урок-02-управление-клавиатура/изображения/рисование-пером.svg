@@ -1,0 +1,77 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 470" font-family="'Segoe UI',system-ui,sans-serif">
+  <rect x="0" y="0" width="760" height="470" fill="#f7f9fc"/>
+  <text x="24" y="30" font-size="20" font-weight="800" fill="#1f2937">🖊 Рисуем пером — простые фигуры</text>
+  <text x="24" y="52" font-size="13" fill="#64748b">Спрайт едет и оставляет след. Угол поворота = 360 ÷ число сторон.</text>
+
+  <!-- ============ CANVAS ============ -->
+  <rect x="24" y="70" width="360" height="366" rx="12" fill="#ffffff" stroke="#cbd5e1" stroke-width="2"/>
+
+  <!-- square (red) -->
+  <rect x="60" y="110" width="96" height="96" fill="none" stroke="#e11d48" stroke-width="5" stroke-linejoin="round"/>
+  <text x="108" y="228" font-size="12" fill="#e11d48" text-anchor="middle" font-weight="700">квадрат</text>
+
+  <!-- triangle (green) -->
+  <path d="M250 200 L316 200 L283 143 Z" fill="none" stroke="#16a34a" stroke-width="5" stroke-linejoin="round"/>
+  <text x="283" y="222" font-size="12" fill="#16a34a" text-anchor="middle" font-weight="700">треугольник</text>
+
+  <!-- star (purple) -->
+  <path d="M150 268 L166 314 L214 314 L176 342 L190 388 L150 360 L110 388 L124 342 L86 314 L134 314 Z"
+        fill="none" stroke="#7c3aed" stroke-width="5" stroke-linejoin="round"/>
+  <text x="150" y="410" font-size="12" fill="#7c3aed" text-anchor="middle" font-weight="700">звезда</text>
+
+  <!-- pencil sprite -->
+  <g transform="translate(300,300) rotate(35)">
+    <rect x="0" y="0" width="14" height="52" rx="2" fill="#f6c453" stroke="#b8860b" stroke-width="1.5"/>
+    <path d="M0 52 l7 16 l7 -16 z" fill="#f2d9a0" stroke="#b8860b" stroke-width="1.5"/>
+    <path d="M2 66 l5 12 l5 -12 z" fill="#3b2a1a"/>
+    <rect x="0" y="0" width="14" height="8" fill="#e26d5c"/>
+  </g>
+
+  <!-- ============ RECIPES ============ -->
+  <text x="410" y="86" font-size="14" font-weight="800" fill="#334155">Рецепты фигур (блоки):</text>
+
+  <g font-weight="700" fill="#ffffff" font-size="12.5">
+    <!-- SQUARE -->
+    <text x="410" y="108" font-size="12" font-weight="700" fill="#e11d48">🟥 Квадрат</text>
+    <rect x="410" y="114" width="300" height="26" rx="6" fill="#ff8c1a"/>
+    <text x="420" y="132">повторить 4 раз</text>
+    <rect x="410" y="140" width="14" height="54" fill="#ff8c1a"/>
+    <rect x="426" y="142" width="284" height="24" rx="6" fill="#4c97ff"/>
+    <text x="434" y="159">идти 100 шагов</text>
+    <rect x="426" y="168" width="284" height="24" rx="6" fill="#4c97ff"/>
+    <text x="434" y="185">повернуть ↻ на 90 градусов</text>
+    <rect x="410" y="194" width="300" height="10" rx="5" fill="#ff8c1a"/>
+
+    <!-- TRIANGLE -->
+    <text x="410" y="224" font-size="12" font-weight="700" fill="#16a34a">🔺 Треугольник</text>
+    <rect x="410" y="230" width="300" height="26" rx="6" fill="#ff8c1a"/>
+    <text x="420" y="248">повторить 3 раз</text>
+    <rect x="410" y="256" width="14" height="54" fill="#ff8c1a"/>
+    <rect x="426" y="258" width="284" height="24" rx="6" fill="#4c97ff"/>
+    <text x="434" y="275">идти 100 шагов</text>
+    <rect x="426" y="284" width="284" height="24" rx="6" fill="#4c97ff"/>
+    <text x="434" y="301">повернуть ↻ на 120 градусов</text>
+    <rect x="410" y="310" width="300" height="10" rx="5" fill="#ff8c1a"/>
+
+    <!-- STAR -->
+    <text x="410" y="340" font-size="12" font-weight="700" fill="#7c3aed">⭐ Звезда</text>
+    <rect x="410" y="346" width="300" height="26" rx="6" fill="#ff8c1a"/>
+    <text x="420" y="364">повторить 5 раз</text>
+    <rect x="410" y="372" width="14" height="54" fill="#ff8c1a"/>
+    <rect x="426" y="374" width="284" height="24" rx="6" fill="#4c97ff"/>
+    <text x="434" y="391">идти 120 шагов</text>
+    <rect x="426" y="400" width="284" height="24" rx="6" fill="#4c97ff"/>
+    <text x="434" y="417">повернуть ↻ на 144 градуса</text>
+    <rect x="410" y="426" width="300" height="10" rx="5" fill="#ff8c1a"/>
+  </g>
+
+  <!-- ============ KEY LEGEND ============ -->
+  <g transform="translate(24,446)" font-size="12" fill="#475569" font-weight="600">
+    <text x="0" y="0">Клавиши рисовалки:</text>
+    <text x="130" y="0" fill="#334155">1</text><text x="140" y="0">— рисовать · </text>
+    <text x="222" y="0" fill="#334155">2</text><text x="232" y="0">— поднять перо · </text>
+    <text x="338" y="0" fill="#334155">3</text><text x="348" y="0">— цвет · </text>
+    <text x="404" y="0" fill="#334155">4/5</text><text x="426" y="0">— толще/тоньше · </text>
+    <text x="540" y="0" fill="#334155">пробел</text><text x="586" y="0">— очистить</text>
+  </g>
+</svg>

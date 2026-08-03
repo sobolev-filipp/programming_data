@@ -1,0 +1,80 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 660 500" font-family="'Segoe UI',system-ui,sans-serif">
+  <rect x="0" y="0" width="660" height="500" fill="#f7f9fc"/>
+  <text x="24" y="30" font-size="20" font-weight="800" fill="#1f2937">🧩 Итоговая схема блоков — «Лабиринт»</text>
+  <text x="24" y="52" font-size="13" fill="#64748b">Скрипт мышонка: управление + правила (если/иначе) внутри «всегда».</text>
+
+  <g font-weight="700" fill="#ffffff" font-size="12.5">
+    <!-- hat -->
+    <path d="M24 66 q0 -10 10 -10 l60 0 q6 6 12 0 l110 0 q10 0 10 10 l0 18 l-202 0 z" fill="#f5b800"/>
+    <text x="34" y="80" fill="#3d2f00">когда 🚩 нажат</text>
+    <!-- go to start -->
+    <rect x="24" y="84" width="320" height="26" rx="6" fill="#4c97ff"/>
+    <text x="34" y="102">перейти в x: (-200) y: (-150)  ← старт</text>
+
+    <!-- forever -->
+    <rect x="24" y="112" width="320" height="26" rx="6" fill="#ff8c1a"/>
+    <text x="34" y="130">всегда</text>
+    <rect x="24" y="138" width="14" height="316" fill="#ff8c1a"/>
+
+    <!-- compact movement -->
+    <rect x="40" y="140" width="304" height="34" rx="6" fill="#4c97ff"/>
+    <text x="48" y="156" font-size="12">управление стрелками</text>
+    <text x="48" y="169" font-size="10.5" fill="#dbeafe">4× если &lt;клавиша нажата?&gt; → изменить x/y</text>
+
+    <!-- если / иначе : стена -->
+    <rect x="40" y="178" width="304" height="26" rx="6" fill="#ffab19"/>
+    <text x="48" y="195" font-size="12">если</text>
+    <rect x="86" y="182" width="176" height="18" rx="9" fill="#5cb1d6"/>
+    <text x="93" y="195" font-size="10.5">касается цвета [стена]?</text>
+    <text x="270" y="195" font-size="12">то</text>
+    <rect x="40" y="204" width="14" height="52" fill="#ffab19"/>
+    <rect x="56" y="206" width="288" height="24" rx="6" fill="#9966ff"/>
+    <text x="64" y="223" font-size="12">сказать [Ааа, стена!] 0.3 сек</text>
+    <rect x="56" y="232" width="288" height="24" rx="6" fill="#4c97ff"/>
+    <text x="64" y="249" font-size="12">перейти на старт (x:-200 y:-150)</text>
+    <!-- иначе -->
+    <rect x="40" y="258" width="304" height="24" rx="6" fill="#ffab19"/>
+    <text x="48" y="274" font-size="12">иначе</text>
+    <rect x="40" y="282" width="14" height="28" fill="#ffab19"/>
+    <rect x="56" y="284" width="288" height="24" rx="6" fill="#9966ff"/>
+    <text x="64" y="301" font-size="12">сказать [Бегу к сыру!] 0.3 сек</text>
+    <rect x="40" y="310" width="304" height="10" rx="5" fill="#ffab19"/>
+
+    <!-- если : сыр -->
+    <rect x="40" y="322" width="304" height="26" rx="6" fill="#ffab19"/>
+    <text x="48" y="339" font-size="12">если</text>
+    <rect x="86" y="326" width="150" height="18" rx="9" fill="#5cb1d6"/>
+    <text x="93" y="339" font-size="10.5">касается [Сыр]?</text>
+    <text x="244" y="339" font-size="12">то</text>
+    <rect x="40" y="348" width="14" height="52" fill="#ffab19"/>
+    <rect x="56" y="350" width="288" height="24" rx="6" fill="#9966ff"/>
+    <text x="64" y="367" font-size="12">сказать [ПОБЕДА! 🧀] 2 сек</text>
+    <rect x="56" y="376" width="288" height="24" rx="6" fill="#ec5a13"/>
+    <text x="64" y="393" font-size="12">стоп [всё]</text>
+    <rect x="40" y="400" width="304" height="10" rx="5" fill="#ffab19"/>
+
+    <!-- forever bottom -->
+    <rect x="24" y="444" width="320" height="12" rx="6" fill="#ff8c1a"/>
+  </g>
+
+  <!-- legend -->
+  <g font-size="12" font-weight="600" fill="#475569" transform="translate(374,90)">
+    <rect x="-6" y="-20" width="268" height="230" rx="12" fill="#ffffff" stroke="#e2e8f0" stroke-width="2"/>
+    <text x="8" y="0" font-size="13" font-weight="800" fill="#334155">Цвета = разделы:</text>
+    <rect x="8" y="12" width="16" height="16" rx="4" fill="#f5b800"/><text x="30" y="25">События</text>
+    <rect x="8" y="34" width="16" height="16" rx="4" fill="#4c97ff"/><text x="30" y="47">Движение</text>
+    <rect x="8" y="56" width="16" height="16" rx="4" fill="#9966ff"/><text x="30" y="69">Внешний вид (сказать)</text>
+    <rect x="8" y="78" width="16" height="16" rx="4" fill="#ffab19"/><text x="30" y="91">Управление (всегда/если)</text>
+    <rect x="8" y="100" width="16" height="16" rx="4" fill="#5cb1d6"/><text x="30" y="113">Сенсоры (касается…?)</text>
+    <rect x="8" y="122" width="16" height="16" rx="4" fill="#ec5a13"/><text x="30" y="135">Управление (стоп)</text>
+
+    <text x="8" y="164" font-size="11.5" font-weight="700" fill="#334155">🔀 если / иначе:</text>
+    <text x="8" y="182" font-size="11" font-weight="500" fill="#64748b">сработает РОВНО ОДНА ветка —</text>
+    <text x="8" y="197" font-size="11" font-weight="500" fill="#64748b">«то» (правда) или «иначе» (ложь).</text>
+  </g>
+
+  <text x="374" y="336" font-size="11.5" font-weight="600" fill="#475569">💡 Все правила — ВНУТРИ «всегда»,</text>
+  <text x="374" y="353" font-size="11.5" font-weight="600" fill="#475569">поэтому проверяются постоянно.</text>
+
+  <text x="24" y="480" font-size="12" fill="#94a3b8">💡 Координаты старта (-200; -150) — подставь СВОИ (посмотри x/y мышонка на старте).</text>
+</svg>

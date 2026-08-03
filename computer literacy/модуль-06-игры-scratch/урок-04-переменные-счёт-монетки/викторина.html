@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Викторина — Урок 4: Кот и золото (Scratch)</title>
+<style>
+  :root{
+    --bg1:#ff8c1a; --bg2:#ffd43b; --card:#ffffff; --ink:#1f2937;
+    --accent:#e07800; --ok:#16a34a; --bad:#dc2626; --soft:#fff2d6;
+  }
+  *{box-sizing:border-box;font-family:"Segoe UI",system-ui,sans-serif}
+  body{margin:0;min-height:100vh;display:flex;align-items:center;justify-content:center;
+    background:linear-gradient(135deg,var(--bg1),var(--bg2));padding:20px;color:var(--ink)}
+  .app{background:var(--card);width:min(760px,100%);border-radius:24px;
+    box-shadow:0 25px 60px rgba(0,0,0,.35);padding:34px 34px 28px;position:relative;overflow:hidden}
+  h1{margin:0 0 6px;font-size:26px;text-align:center}
+  .sub{text-align:center;color:#64748b;margin-bottom:22px;font-size:15px}
+  .bar{height:10px;background:var(--soft);border-radius:99px;overflow:hidden;margin-bottom:18px}
+  .bar>i{display:block;height:100%;width:0;background:var(--accent);transition:.4s}
+  .meta{display:flex;justify-content:space-between;font-size:14px;color:#64748b;margin-bottom:14px}
+  .q{font-size:22px;font-weight:700;margin:6px 0 20px;line-height:1.3}
+  .opts{display:grid;gap:12px}
+  .opt{border:2px solid #e2e8f0;background:#fff;border-radius:14px;padding:15px 18px;font-size:18px;
+    text-align:left;cursor:pointer;transition:.15s;display:flex;align-items:center;gap:12px}
+  .opt:hover{border-color:var(--accent);background:var(--soft);transform:translateY(-2px)}
+  .opt b{background:var(--soft);color:var(--accent);width:30px;height:30px;border-radius:8px;
+    display:flex;align-items:center;justify-content:center;font-size:15px;flex:0 0 auto}
+  .opt.ok{border-color:var(--ok);background:#dcfce7}
+  .opt.ok b{background:var(--ok);color:#fff}
+  .opt.bad{border-color:var(--bad);background:#fee2e2}
+  .opt.bad b{background:var(--bad);color:#fff}
+  .opt:disabled{cursor:default;transform:none}
+  .fb{margin-top:16px;padding:14px 16px;border-radius:12px;font-size:16px;display:none;line-height:1.4}
+  .fb.show{display:block}
+  .fb.good{background:#dcfce7;color:#166534}
+  .fb.no{background:#fee2e2;color:#991b1b}
+  .btn{margin-top:18px;width:100%;padding:15px;border:0;border-radius:14px;background:var(--accent);
+    color:#fff;font-size:18px;font-weight:700;cursor:pointer;display:none}
+  .btn.show{display:block}
+  .btn:hover{filter:brightness(1.08)}
+  .center{text-align:center}
+  .score{font-size:64px;font-weight:800;margin:10px 0}
+  .emoji{font-size:70px}
+  .hint{color:#94a3b8;font-size:13px;text-align:center;margin-top:14px}
+</style>
+</head>
+<body>
+<div class="app" id="app"></div>
+<script>
+const QUESTIONS = [
+  {q:"Что такое переменная?",
+   a:["Спрайт","Ячейка памяти с именем для числа","Фон","Звук"],c:1,
+   e:"Переменная — коробочка для числа (счёт, жизни, время)."},
+  {q:"Чем «установить в» отличается от «изменить на»?",
+   a:["Ничем","«установить в» задаёт число, «изменить на» прибавляет","«изменить» быстрее","«установить» для звука"],c:1,
+   e:"«установить в 0» — задать; «изменить на 1» — прибавить."},
+  {q:"Зачем в начале игры ставят «установить [счёт] в 0»?",
+   a:["Для красоты","Чтобы обнулить счёт прошлой игры","Для звука","Ускоряет игру"],c:1,
+   e:"Без обнуления результат прошлой игры «прилипнет»."},
+  {q:"Как прибавить очко за пойманный мешочек?",
+   a:["установить счёт в 1","изменить [счёт] на 1","спрятаться","идти 10 шагов"],c:1,
+   e:"«изменить на 1» добавляет единицу к счёту."},
+  {q:"Что делает «выдать случайное от 0 до 7»?",
+   a:["Всегда 7","Каждый раз новое число от 0 до 7","Ждёт 7 сек","Ничего"],c:1,
+   e:"Оператор случайного числа — для случайной клетки, скорости и т.п."},
+  {q:"Зачем нужен «сбросить таймер» в начале раунда?",
+   a:["Ускорить игру","Обнулить секундомер, чтобы честно мерить 3 секунды","Для звука","Сменить фон"],c:1,
+   e:"Таймер растёт сам; сбрасываем его перед отсчётом раунда."},
+  {q:"Что значит «ждать до ⟨касается или таймер > 3⟩»?",
+   a:["Ждать 3 минуты","Ждать, пока не случится хотя бы одно: поймал ИЛИ прошло 3 сек","Ждать вечно","Ничего"],c:1,
+   e:"«или» — достаточно одного из условий, чтобы продолжить."},
+  {q:"Что делает «повторить 20»?",
+   a:["Ждёт 20 сек","Повторяет вложенное 20 раз (20 раундов)","Даёт 20 очков","Меняет костюм"],c:1,
+   e:"Цикл на число повторов — ровно 20 раундов."},
+  {q:"Как показать итог «Счёт: 14»?",
+   a:["сказать [Счёт]","сказать (соединить [Счёт: ] (счёт))","играть звук","очистить"],c:1,
+   e:"«соединить» склеивает текст и число переменной."},
+  {q:"Почему кот прыгает на 60 шагов?",
+   a:["Так быстрее","Клетка поля = 60 пикселей, чтобы вставать ровно в клетку","Случайно","Для звука"],c:1,
+   e:"Прыжок на размер клетки держит кота на сетке."},
+
+  {q:"😄 Счёт с прошлой игры не обнулился и «врёт». Что забыли?",
+   a:["Звук","«установить [счёт] в 0» под флажком","Фон","Костюм"],c:1,
+   e:"Обнуление счёта в начале — обязательный шаг."},
+  {q:"😄 Счёт растёт сам, даже когда кот НЕ ловит мешочек. Почему?",
+   a:["Мешок сломан","«изменить счёт» стоит ВНЕ «если касается»","Нет фона","Мало клеток"],c:1,
+   e:"+1 должно быть только внутри проверки касания."},
+  {q:"😄 Мешочек появляется не в клетках, а «где попало». В чём дело?",
+   a:["Мало памяти","Операторы собраны в неправильном порядке","Нет звука","Спрайт большой"],c:1,
+   e:"Сначала «случайное × 60», потом «+(-210)» — иначе позиция уедет."},
+
+  {q:"🤔 Зачем игре вообще переменная-счёт?",
+   a:["Для красоты","Появляются цель, результат, рекорд — азарт и соревнование","Ускоряет игру","Меняет цвет"],c:1,
+   e:"Счёт превращает движение в игру, где есть результат."},
+  {q:"🤔 Какие ещё числа в играх хранят в переменных?",
+   a:["Только счёт","Жизни, время, уровень, скорость — всё, что меняется","Ничего","Только цвет"],c:1,
+   e:"Любое меняющееся число — это переменная."},
+  {q:"🤔 Почему сложное выражение из операторов собирают «изнутри наружу»?",
+   a:["Так принято","Проще вложить готовое «ядро» (случайное×60) в блок «+»","Быстрее считает","Меньше блоков"],c:1,
+   e:"Сначала собирают внутреннюю часть, потом кладут в внешнюю."},
+];
+
+let i=0, score=0, locked=false;
+const app=document.getElementById('app');
+
+function shuffle(){for(let k=QUESTIONS.length-1;k>0;k--){const j=Math.floor(Math.random()*(k+1));[QUESTIONS[k],QUESTIONS[j]]=[QUESTIONS[j],QUESTIONS[k]];}for(const Q of QUESTIONS){const cc=Q.a[Q.c];for(let k=Q.a.length-1;k>0;k--){const j=Math.floor(Math.random()*(k+1));[Q.a[k],Q.a[j]]=[Q.a[j],Q.a[k]];}Q.c=Q.a.indexOf(cc);}}
+shuffle();
+
+function render(){
+  const Q=QUESTIONS[i];
+  app.innerHTML=`
+    <h1>🐱 Кот и золото</h1>
+    <div class="sub">Викторина по уроку 4 · Scratch</div>
+    <div class="bar"><i style="width:${(i/QUESTIONS.length)*100}%"></i></div>
+    <div class="meta"><span>Вопрос ${i+1} из ${QUESTIONS.length}</span><span>⭐ Очки: ${score}</span></div>
+    <div class="q">${Q.q}</div>
+    <div class="opts" id="opts">
+      ${Q.a.map((t,n)=>`<button class="opt" data-n="${n}"><b>${n+1}</b><span>${t}</span></button>`).join('')}
+    </div>
+    <div class="fb" id="fb"></div>
+    <button class="btn" id="next">${i===QUESTIONS.length-1?'Показать результат →':'Следующий вопрос →'}</button>
+    <div class="hint">Можно отвечать клавишами 1–4</div>`;
+  locked=false;
+  document.querySelectorAll('.opt').forEach(b=>b.onclick=()=>choose(+b.dataset.n));
+  document.getElementById('next').onclick=next;
+}
+
+function choose(n){
+  if(locked) return; locked=true;
+  const Q=QUESTIONS[i];
+  const opts=[...document.querySelectorAll('.opt')];
+  opts.forEach(b=>b.disabled=true);
+  opts[Q.c].classList.add('ok');
+  const fb=document.getElementById('fb');
+  if(n===Q.c){ score++; fb.className='fb show good'; fb.textContent='✅ Верно! '+Q.e; }
+  else { opts[n].classList.add('bad'); fb.className='fb show no'; fb.textContent='❌ Не совсем. '+Q.e; }
+  document.querySelector('.meta').children[1].textContent='⭐ Очки: '+score;
+  document.getElementById('next').classList.add('show');
+}
+
+function next(){ i++; if(i<QUESTIONS.length) render(); else result(); }
+
+function result(){
+  const pct=Math.round(score/QUESTIONS.length*100);
+  let em,msg;
+  if(pct===100){em='🏆';msg='Идеально! Переменные и счёт — твоё золото! 💰';}
+  else if(pct>=70){em='🎉';msg='Отлично! Счёт, таймер и операторы — под контролем.';}
+  else if(pct>=40){em='👍';msg='Неплохо! Помни: обнули счёт в начале, +1 только при касании.';}
+  else {em='💪';msg='Начало есть! Загляни в самоучитель — там всё по шагам.';}
+  app.innerHTML=`
+    <div class="center">
+      <div class="emoji">${em}</div>
+      <h1>Готово!</h1>
+      <div class="score">${score} / ${QUESTIONS.length}</div>
+      <div class="sub">${msg}</div>
+      <button class="btn show" id="again">🔁 Пройти заново</button>
+    </div>`;
+  document.getElementById('again').onclick=()=>{i=0;score=0;shuffle();render();};
+}
+
+document.addEventListener('keydown',e=>{
+  if(['1','2','3','4'].includes(e.key)){ const b=document.querySelector(`.opt[data-n="${+e.key-1}"]`); if(b&&!b.disabled) choose(+e.key-1); }
+  if(e.key==='Enter'){ const nb=document.getElementById('next'); if(nb&&nb.classList.contains('show')) next(); }
+});
+
+render();
+</script>
+</body>
+</html>

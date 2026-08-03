@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 400" font-family="'Segoe UI',system-ui,sans-serif">
+  <rect x="0" y="0" width="680" height="400" fill="#f7f9fc"/>
+  <text x="24" y="30" font-size="20" font-weight="800" fill="#1f2937">🏓 Доп: добавляем СЧЁТ к Пинг-понгу</text>
+  <text x="24" y="52" font-size="13" fill="#64748b">Три новых кусочка к мячу (🟢 НОВОЕ). Остальное — с урока 2.</text>
+
+  <!-- mini game preview -->
+  <g>
+    <rect x="24" y="76" width="180" height="270" rx="10" fill="#eef4fb" stroke="#cbd5e1" stroke-width="2"/>
+    <!-- score board -->
+    <rect x="40" y="90" width="148" height="34" rx="8" fill="#ff8c1a"/>
+    <text x="52" y="112" font-size="13" font-weight="700" fill="#fff">Счёт</text>
+    <text x="172" y="114" font-size="18" font-weight="800" fill="#fff" text-anchor="end">7</text>
+    <!-- ball -->
+    <circle cx="110" cy="200" r="12" fill="#a3e635" stroke="#65a30d" stroke-width="2"/>
+    <!-- paddle -->
+    <rect x="72" y="315" width="76" height="12" rx="6" fill="#7c3aed"/>
+  </g>
+
+  <!-- additions -->
+  <g font-weight="700" fill="#ffffff" font-size="12.5">
+    <!-- 1 -->
+    <text x="234" y="94" font-size="13" font-weight="800" fill="#334155">1. В начале (под «когда 🚩»):</text>
+    <rect x="234" y="102" width="250" height="28" rx="6" fill="#ff8c1a"/>
+    <text x="244" y="121">установить [Счёт] в 0</text>
+    <g transform="translate(494,104)"><rect width="66" height="22" rx="11" fill="#dcfce7"/><text x="33" y="16" font-size="11" font-weight="800" fill="#16a34a" text-anchor="middle">🟢 НОВОЕ</text></g>
+
+    <!-- 2 -->
+    <text x="234" y="160" font-size="13" font-weight="800" fill="#334155">2. При отскоке от ракетки:</text>
+    <rect x="234" y="168" width="300" height="26" rx="6" fill="#ffab19"/>
+    <text x="244" y="185" font-size="12">если ⟨касается [Ракетка]?⟩ то</text>
+    <rect x="234" y="194" width="14" height="52" fill="#ffab19"/>
+    <rect x="250" y="196" width="284" height="22" rx="6" fill="#4c97ff"/>
+    <text x="258" y="211" font-size="11">повернуть в направлении (случайное -30..30)</text>
+    <rect x="250" y="220" width="284" height="24" rx="6" fill="#ff8c1a"/>
+    <text x="258" y="236" font-size="12">изменить [Счёт] на 1</text>
+    <g transform="translate(542,221)"><rect width="66" height="22" rx="11" fill="#dcfce7"/><text x="33" y="16" font-size="11" font-weight="800" fill="#16a34a" text-anchor="middle">🟢 НОВОЕ</text></g>
+    <rect x="234" y="246" width="300" height="9" rx="4" fill="#ffab19"/>
+
+    <!-- 3 -->
+    <text x="234" y="288" font-size="13" font-weight="800" fill="#334155">3. В конце (мяч коснулся низа):</text>
+    <rect x="234" y="296" width="300" height="26" rx="6" fill="#9966ff"/>
+    <text x="244" y="313" font-size="11.5">сказать (соединить [Счёт: ] (Счёт)) 2 сек</text>
+    <g transform="translate(542,297)"><rect width="66" height="22" rx="11" fill="#dcfce7"/><text x="33" y="16" font-size="11" font-weight="800" fill="#16a34a" text-anchor="middle">🟢 НОВОЕ</text></g>
+  </g>
+
+  <text x="24" y="376" font-size="12" fill="#94a3b8">💡 Та же переменная-счёт, что в «Коте и золоте»: обнулили в начале, +1 за успех, показали в конце.</text>
+</svg>

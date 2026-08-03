@@ -1,0 +1,91 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 440" font-family="'Segoe UI',system-ui,sans-serif">
+  <rect x="0" y="0" width="720" height="440" fill="#f7f9fc"/>
+  <text x="24" y="34" font-size="20" font-weight="800" fill="#1f2937">🐱 Кот и золото — собери за время 💰</text>
+  <text x="24" y="55" font-size="13" fill="#64748b">Мешочек прыгает по клеткам, у кота 3 секунды. Поймал — счёт +1!</text>
+
+  <!-- ===== GRID FIELD ===== -->
+  <rect x="24" y="88" width="440" height="330" rx="10" fill="#fdf6e3" stroke="#e5d9b6" stroke-width="2"/>
+  <g stroke="#efe4c4" stroke-width="1.5">
+    <line x1="79" y1="88" x2="79" y2="418"/><line x1="134" y1="88" x2="134" y2="418"/>
+    <line x1="189" y1="88" x2="189" y2="418"/><line x1="244" y1="88" x2="244" y2="418"/>
+    <line x1="299" y1="88" x2="299" y2="418"/><line x1="354" y1="88" x2="354" y2="418"/>
+    <line x1="409" y1="88" x2="409" y2="418"/>
+    <line x1="24" y1="143" x2="464" y2="143"/><line x1="24" y1="198" x2="464" y2="198"/>
+    <line x1="24" y1="253" x2="464" y2="253"/><line x1="24" y1="308" x2="464" y2="308"/>
+    <line x1="24" y1="363" x2="464" y2="363"/>
+  </g>
+
+  <!-- gold bags at 3 spots (toggle) -->
+  <g>
+    <!-- G1 -->
+    <g transform="translate(320,150)">
+      <animate attributeName="opacity" values="1;1;0;0;0;0" keyTimes="0;0.30;0.32;0.63;0.96;1" dur="9s" repeatCount="indefinite"/>
+      <path d="M-14 -2 q14 -18 28 0 q6 22 -14 22 q-20 0 -14 -22 z" fill="#ffd43b" stroke="#e0a800" stroke-width="2"/>
+      <rect x="-10" y="-10" width="20" height="6" rx="3" fill="#c99700"/>
+      <text x="0" y="16" font-size="13" font-weight="800" fill="#a06e00" text-anchor="middle">$</text>
+    </g>
+    <!-- G2 -->
+    <g transform="translate(180,300)">
+      <animate attributeName="opacity" values="0;0;0;1;0;0" keyTimes="0;0.33;0.34;0.63;0.65;1" dur="9s" repeatCount="indefinite"/>
+      <path d="M-14 -2 q14 -18 28 0 q6 22 -14 22 q-20 0 -14 -22 z" fill="#ffd43b" stroke="#e0a800" stroke-width="2"/>
+      <rect x="-10" y="-10" width="20" height="6" rx="3" fill="#c99700"/>
+      <text x="0" y="16" font-size="13" font-weight="800" fill="#a06e00" text-anchor="middle">$</text>
+    </g>
+    <!-- G3 -->
+    <g transform="translate(400,240)">
+      <animate attributeName="opacity" values="0;0;0;0;1;0" keyTimes="0;0.63;0.66;0.67;0.96;1" dur="9s" repeatCount="indefinite"/>
+      <path d="M-14 -2 q14 -18 28 0 q6 22 -14 22 q-20 0 -14 -22 z" fill="#ffd43b" stroke="#e0a800" stroke-width="2"/>
+      <rect x="-10" y="-10" width="20" height="6" rx="3" fill="#c99700"/>
+      <text x="0" y="16" font-size="13" font-weight="800" fill="#a06e00" text-anchor="middle">$</text>
+    </g>
+  </g>
+
+  <!-- +1 popups -->
+  <g font-size="18" font-weight="800" fill="#16a34a">
+    <text x="330" y="140" text-anchor="middle"><animate attributeName="opacity" values="0;0;1;0;0" keyTimes="0;0.29;0.33;0.4;1" dur="9s" repeatCount="indefinite"/>+1</text>
+    <text x="190" y="290" text-anchor="middle"><animate attributeName="opacity" values="0;0;1;0;0" keyTimes="0;0.62;0.66;0.72;1" dur="9s" repeatCount="indefinite"/>+1</text>
+    <text x="410" y="230" text-anchor="middle"><animate attributeName="opacity" values="0;0;1;0" keyTimes="0;0.95;0.98;1" dur="9s" repeatCount="indefinite"/>+1</text>
+  </g>
+
+  <!-- CAT (Player) -->
+  <g>
+    <animateTransform attributeName="transform" attributeType="XML" type="translate"
+      values="140,360; 320,150; 180,300; 400,240; 400,240"
+      keyTimes="0;0.30;0.63;0.96;1" dur="9s" repeatCount="indefinite"/>
+    <ellipse cx="0" cy="0" rx="20" ry="15" fill="#ff9a3c" stroke="#e06f1e" stroke-width="2.5"/>
+    <circle cx="0" cy="-16" r="12" fill="#ffb066" stroke="#e06f1e" stroke-width="2.5"/>
+    <path d="M-10 -24 l-2 -9 l9 5 z" fill="#ffb066" stroke="#e06f1e" stroke-width="1.5"/>
+    <path d="M10 -24 l2 -9 l-9 5 z" fill="#ffb066" stroke="#e06f1e" stroke-width="1.5"/>
+    <circle cx="-4" cy="-17" r="2" fill="#2b2b33"/>
+    <circle cx="4" cy="-17" r="2" fill="#2b2b33"/>
+    <path d="M-2 -12 q2 3 4 0" stroke="#2b2b33" stroke-width="1.4" fill="none"/>
+  </g>
+
+  <!-- ===== HUD ===== -->
+  <g transform="translate(504,100)">
+    <!-- score board -->
+    <rect x="0" y="0" width="190" height="70" rx="12" fill="#ff8c1a"/>
+    <text x="16" y="30" font-size="15" font-weight="700" fill="#fff">score (счёт)</text>
+    <g font-size="40" font-weight="800" fill="#fff" text-anchor="middle">
+      <text x="150" y="52"><animate attributeName="opacity" values="1;1;0;0;0;0" keyTimes="0;0.30;0.31;0.63;0.96;1" dur="9s" repeatCount="indefinite"/>0</text>
+      <text x="150" y="52"><animate attributeName="opacity" values="0;0;1;1;0;0" keyTimes="0;0.30;0.31;0.63;0.64;1" dur="9s" repeatCount="indefinite"/>1</text>
+      <text x="150" y="52"><animate attributeName="opacity" values="0;0;1;1;0;0" keyTimes="0;0.63;0.64;0.96;0.97;1" dur="9s" repeatCount="indefinite"/>2</text>
+      <text x="150" y="52"><animate attributeName="opacity" values="0;0;1;1" keyTimes="0;0.96;0.97;1" dur="9s" repeatCount="indefinite"/>3</text>
+    </g>
+
+    <!-- timer -->
+    <text x="0" y="104" font-size="14" font-weight="700" fill="#475569">⏱ таймер (3 сек):</text>
+    <rect x="0" y="114" width="190" height="16" rx="8" fill="#e2e8f0"/>
+    <rect x="0" y="114" width="190" height="16" rx="8" fill="#38bdf8">
+      <animate attributeName="width" values="190;0;190;0;190;0"
+        keyTimes="0;0.30;0.315;0.63;0.645;0.96" dur="9s" repeatCount="indefinite"/>
+    </rect>
+
+    <!-- rounds -->
+    <text x="0" y="164" font-size="13" fill="#64748b">повторить 20 раундов</text>
+    <text x="0" y="184" font-size="13" fill="#64748b">поймал → счёт +1 🔊</text>
+  </g>
+
+  <text x="504" y="300" font-size="12" fill="#94a3b8">Переменная score — «память»</text>
+  <text x="504" y="316" font-size="12" fill="#94a3b8">игры: обнулили и растим.</text>
+</svg>

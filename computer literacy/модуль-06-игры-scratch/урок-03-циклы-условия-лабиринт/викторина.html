@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Викторина — Урок 3: Лабиринт (Scratch)</title>
+<style>
+  :root{
+    --bg1:#38bdf8; --bg2:#7c3aed; --card:#ffffff; --ink:#1f2937;
+    --accent:#7c3aed; --ok:#16a34a; --bad:#dc2626; --soft:#ede9fe;
+  }
+  *{box-sizing:border-box;font-family:"Segoe UI",system-ui,sans-serif}
+  body{margin:0;min-height:100vh;display:flex;align-items:center;justify-content:center;
+    background:linear-gradient(135deg,var(--bg1),var(--bg2));padding:20px;color:var(--ink)}
+  .app{background:var(--card);width:min(760px,100%);border-radius:24px;
+    box-shadow:0 25px 60px rgba(0,0,0,.35);padding:34px 34px 28px;position:relative;overflow:hidden}
+  h1{margin:0 0 6px;font-size:26px;text-align:center}
+  .sub{text-align:center;color:#64748b;margin-bottom:22px;font-size:15px}
+  .bar{height:10px;background:var(--soft);border-radius:99px;overflow:hidden;margin-bottom:18px}
+  .bar>i{display:block;height:100%;width:0;background:var(--accent);transition:.4s}
+  .meta{display:flex;justify-content:space-between;font-size:14px;color:#64748b;margin-bottom:14px}
+  .q{font-size:22px;font-weight:700;margin:6px 0 20px;line-height:1.3}
+  .opts{display:grid;gap:12px}
+  .opt{border:2px solid #e2e8f0;background:#fff;border-radius:14px;padding:15px 18px;font-size:18px;
+    text-align:left;cursor:pointer;transition:.15s;display:flex;align-items:center;gap:12px}
+  .opt:hover{border-color:var(--accent);background:var(--soft);transform:translateY(-2px)}
+  .opt b{background:var(--soft);color:var(--accent);width:30px;height:30px;border-radius:8px;
+    display:flex;align-items:center;justify-content:center;font-size:15px;flex:0 0 auto}
+  .opt.ok{border-color:var(--ok);background:#dcfce7}
+  .opt.ok b{background:var(--ok);color:#fff}
+  .opt.bad{border-color:var(--bad);background:#fee2e2}
+  .opt.bad b{background:var(--bad);color:#fff}
+  .opt:disabled{cursor:default;transform:none}
+  .fb{margin-top:16px;padding:14px 16px;border-radius:12px;font-size:16px;display:none;line-height:1.4}
+  .fb.show{display:block}
+  .fb.good{background:#dcfce7;color:#166534}
+  .fb.no{background:#fee2e2;color:#991b1b}
+  .btn{margin-top:18px;width:100%;padding:15px;border:0;border-radius:14px;background:var(--accent);
+    color:#fff;font-size:18px;font-weight:700;cursor:pointer;display:none}
+  .btn.show{display:block}
+  .btn:hover{filter:brightness(1.08)}
+  .center{text-align:center}
+  .score{font-size:64px;font-weight:800;margin:10px 0}
+  .emoji{font-size:70px}
+  .hint{color:#94a3b8;font-size:13px;text-align:center;margin-top:14px}
+</style>
+</head>
+<body>
+<div class="app" id="app"></div>
+<script>
+const QUESTIONS = [
+  {q:"Что делает блок «если ⟨…⟩ то»?",
+   a:["Повторяет вечно","Выполняет вложенное, только когда условие правда","Останавливает игру","Меняет костюм"],c:1,
+   e:"«если» — развилка: правда → выполняем, ложь → пропускаем."},
+  {q:"Чем «если/иначе» отличается от простого «если»?",
+   a:["Ничем","Выбирает ОДНУ из двух дорог (то / иначе)","Работает быстрее","Нужен для звука"],c:1,
+   e:"«если/иначе» всегда выполняет ровно одну ветку."},
+  {q:"Что проверяет блок «касается цвета ⟨ ⟩?»",
+   a:["Громкость","Коснулся ли спрайт этого цвета (да/нет)","Скорость","Размер спрайта"],c:1,
+   e:"Это сенсор-вопрос: да, если спрайт коснулся заданного цвета."},
+  {q:"Как ТОЧНО выбрать цвет стены в блоке касания?",
+   a:["Ползунками наугад","Пипеткой — кликнуть по стене на сцене","Написать название","Никак"],c:1,
+   e:"Пипетка берёт точный цвет прямо со сцены — касание сработает."},
+  {q:"Куда положить правило, чтобы оно проверялось ПОСТОЯННО?",
+   a:["Под флажок один раз","Внутрь цикла «всегда»","В отдельный спрайт","В костюмы"],c:1,
+   e:"Правила живут внутри «всегда» — проверяются много раз в секунду."},
+  {q:"Как сделать «коснулся стены → на старт»?",
+   a:["если касается цвета стены → перейти в x,y старта","поднять перо","следующий костюм","ждать 1 сек"],c:0,
+   e:"Условие касания + телепорт на координаты старта."},
+  {q:"Как сделать условие ПОБЕДЫ у сыра?",
+   a:["всегда идти","если касается [Сыр] → сказать «Победа» → стоп всё","изменить x","очистить"],c:1,
+   e:"Касание спрайта-цели → сообщение и стоп игры."},
+  {q:"Сколько веток «если/иначе» выполнится за один раз?",
+   a:["Обе","Ровно одна","Ни одной","Три"],c:1,
+   e:"Правда → «то», ложь → «иначе». Всегда одна."},
+  {q:"Каким должен быть цвет всех стен лабиринта?",
+   a:["Разным","Строго одинаковым","Полосатым","Прозрачным"],c:1,
+   e:"Один цвет — иначе «касается цвета» поймает не все стены."},
+  {q:"Когда брать «касается спрайта», а не «касается цвета»?",
+   a:["Всегда цвет","Для предметов и врагов (сыр, кот) — касается спрайта","Никогда","Для фона"],c:1,
+   e:"Цвет — для стен/зон; спрайт — для предметов и персонажей."},
+
+  {q:"😄 Мышонок ПРОХОДИТ сквозь стены. Главная причина?",
+   a:["Мало костюмов","Цвет выбран не пипеткой (или скорость велика)","Нет звука","Спрайт большой"],c:1,
+   e:"Неточный цвет — касание не ловится; и уменьши скорость."},
+  {q:"😄 Правило вообще не срабатывает. Что проверить ПЕРВЫМ?",
+   a:["Громкость","Стоит ли «если» ВНУТРИ «всегда»","Цвет фона","Размер сцены"],c:1,
+   e:"Снаружи цикла правило сработает лишь раз при старте."},
+  {q:"😄 Игра ОСТАНАВЛИВАЕТСЯ сразу на старте. В чём беда?",
+   a:["Слабый ПК","Блок «стоп всё» попал не в победу, а в управление","Нет фона","Много спрайтов"],c:1,
+   e:"«стоп всё» должен быть только внутри условия победы."},
+
+  {q:"🤔 Почему условия делают из «движения» настоящую ИГРУ?",
+   a:["Так красивее","Появляются правила: проигрыш, победа, реакции","Быстрее работает","Меньше блоков"],c:1,
+   e:"Правила и цель — суть игры, а даёт их именно «если»."},
+  {q:"🤔 Почему «если/иначе» иногда лучше двух отдельных «если»?",
+   a:["Короче на 1 блок","Гарантирует РОВНО ОДИН выбор из двух (не оба сразу)","Ярче","Для звука"],c:1,
+   e:"Взаимоисключающие ветки: либо одно, либо другое — без накладок."},
+  {q:"🤔 Почему полезно проговорить правило словами перед сборкой?",
+   a:["Так принято","«Если … то …» словами — и легко собрать из блоков","Для оценки","Не полезно"],c:1,
+   e:"Ясная формулировка правила = понятная схема из «если»."},
+];
+
+let i=0, score=0, locked=false;
+const app=document.getElementById('app');
+
+function shuffle(){for(let k=QUESTIONS.length-1;k>0;k--){const j=Math.floor(Math.random()*(k+1));[QUESTIONS[k],QUESTIONS[j]]=[QUESTIONS[j],QUESTIONS[k]];}for(const Q of QUESTIONS){const cc=Q.a[Q.c];for(let k=Q.a.length-1;k>0;k--){const j=Math.floor(Math.random()*(k+1));[Q.a[k],Q.a[j]]=[Q.a[j],Q.a[k]];}Q.c=Q.a.indexOf(cc);}}
+shuffle();
+
+function render(){
+  const Q=QUESTIONS[i];
+  app.innerHTML=`
+    <h1>🐭 Лабиринт</h1>
+    <div class="sub">Викторина по уроку 3 · Scratch</div>
+    <div class="bar"><i style="width:${(i/QUESTIONS.length)*100}%"></i></div>
+    <div class="meta"><span>Вопрос ${i+1} из ${QUESTIONS.length}</span><span>⭐ Очки: ${score}</span></div>
+    <div class="q">${Q.q}</div>
+    <div class="opts" id="opts">
+      ${Q.a.map((t,n)=>`<button class="opt" data-n="${n}"><b>${n+1}</b><span>${t}</span></button>`).join('')}
+    </div>
+    <div class="fb" id="fb"></div>
+    <button class="btn" id="next">${i===QUESTIONS.length-1?'Показать результат →':'Следующий вопрос →'}</button>
+    <div class="hint">Можно отвечать клавишами 1–4</div>`;
+  locked=false;
+  document.querySelectorAll('.opt').forEach(b=>b.onclick=()=>choose(+b.dataset.n));
+  document.getElementById('next').onclick=next;
+}
+
+function choose(n){
+  if(locked) return; locked=true;
+  const Q=QUESTIONS[i];
+  const opts=[...document.querySelectorAll('.opt')];
+  opts.forEach(b=>b.disabled=true);
+  opts[Q.c].classList.add('ok');
+  const fb=document.getElementById('fb');
+  if(n===Q.c){ score++; fb.className='fb show good'; fb.textContent='✅ Верно! '+Q.e; }
+  else { opts[n].classList.add('bad'); fb.className='fb show no'; fb.textContent='❌ Не совсем. '+Q.e; }
+  document.querySelector('.meta').children[1].textContent='⭐ Очки: '+score;
+  document.getElementById('next').classList.add('show');
+}
+
+function next(){ i++; if(i<QUESTIONS.length) render(); else result(); }
+
+function result(){
+  const pct=Math.round(score/QUESTIONS.length*100);
+  let em,msg;
+  if(pct===100){em='🏆';msg='Идеально! Ты мастер условий — мышонок всегда доберётся до сыра! 🧀';}
+  else if(pct>=70){em='🎉';msg='Отлично! «если», «если/иначе» и касание — под контролем.';}
+  else if(pct>=40){em='👍';msg='Неплохо! Повтори: правило — внутри «всегда», цвет — пипеткой.';}
+  else {em='💪';msg='Начало есть! Загляни в самоучитель — там всё по шагам.';}
+  app.innerHTML=`
+    <div class="center">
+      <div class="emoji">${em}</div>
+      <h1>Готово!</h1>
+      <div class="score">${score} / ${QUESTIONS.length}</div>
+      <div class="sub">${msg}</div>
+      <button class="btn show" id="again">🔁 Пройти заново</button>
+    </div>`;
+  document.getElementById('again').onclick=()=>{i=0;score=0;shuffle();render();};
+}
+
+document.addEventListener('keydown',e=>{
+  if(['1','2','3','4'].includes(e.key)){ const b=document.querySelector(`.opt[data-n="${+e.key-1}"]`); if(b&&!b.disabled) choose(+e.key-1); }
+  if(e.key==='Enter'){ const nb=document.getElementById('next'); if(nb&&nb.classList.contains('show')) next(); }
+});
+
+render();
+</script>
+</body>
+</html>
