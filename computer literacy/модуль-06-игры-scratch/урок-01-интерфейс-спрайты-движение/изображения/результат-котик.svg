@@ -1,0 +1,153 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 440" font-family="'Segoe UI',system-ui,sans-serif">
+  <defs>
+    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#bfe3ff"/>
+      <stop offset="1" stop-color="#e9f7ff"/>
+    </linearGradient>
+    <linearGradient id="page" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#f7f9fc"/>
+      <stop offset="1" stop-color="#eef1f6"/>
+    </linearGradient>
+  </defs>
+
+  <!-- page bg -->
+  <rect x="0" y="0" width="720" height="440" fill="url(#page)"/>
+
+  <!-- title -->
+  <text x="24" y="38" font-size="24" font-weight="700" fill="#1f2937">🐱 Живой котик — Scratch</text>
+  <text x="24" y="62" font-size="14" fill="#64748b">Котик ходит сам, шагает лапами и разворачивается у стенки</text>
+
+  <!-- ================= STAGE ================= -->
+  <g>
+    <rect x="24" y="84" width="500" height="300" rx="14" fill="url(#sky)" stroke="#cbd5e1" stroke-width="2"/>
+    <!-- sun -->
+    <circle cx="470" cy="130" r="26" fill="#ffe08a"/>
+    <!-- clouds -->
+    <g fill="#ffffff" opacity="0.9">
+      <ellipse cx="150" cy="140" rx="34" ry="16"/>
+      <ellipse cx="180" cy="132" rx="26" ry="14"/>
+      <ellipse cx="330" cy="115" rx="30" ry="14"/>
+    </g>
+    <!-- ground -->
+    <rect x="24" y="330" width="500" height="54" rx="0" fill="#8fd16a"/>
+    <rect x="24" y="330" width="500" height="10" fill="#79c057"/>
+    <!-- grass tufts -->
+    <g stroke="#5fa93f" stroke-width="3" stroke-linecap="round">
+      <path d="M70 330 l0 -12 M76 330 l4 -10 M64 330 l-4 -10"/>
+      <path d="M420 330 l0 -12 M426 330 l4 -10 M414 330 l-4 -10"/>
+    </g>
+
+    <!-- green flag badge -->
+    <g transform="translate(40,100)">
+      <rect x="-6" y="-16" width="70" height="26" rx="8" fill="#ffffff" stroke="#22c55e" stroke-width="2"/>
+      <path d="M2 -12 l0 20" stroke="#16a34a" stroke-width="3" stroke-linecap="round"/>
+      <path d="M4 -12 l16 5 l-16 5 z" fill="#22c55e"/>
+      <text x="26" y="2" font-size="12" font-weight="700" fill="#16a34a">СТАРТ</text>
+    </g>
+
+    <!-- ============ CAT (walks 60 -> 430 -> 60) ============ -->
+    <g>
+      <!-- horizontal walk -->
+      <animateTransform attributeName="transform" attributeType="XML" type="translate"
+        values="60,300; 430,300; 60,300" keyTimes="0;0.5;1" dur="6s" repeatCount="indefinite"/>
+
+      <!-- flip: face right first half, face left second half -->
+      <g>
+        <!-- RIGHT-FACING cat -->
+        <g>
+          <set attributeName="opacity" to="1"/>
+          <animate attributeName="opacity" values="1;1;0;0;1" keyTimes="0;0.48;0.5;0.98;1" dur="6s" repeatCount="indefinite"/>
+          <!-- body -->
+          <ellipse cx="0" cy="0" rx="34" ry="24" fill="#ff9a3c" stroke="#e06f1e" stroke-width="3"/>
+          <!-- head -->
+          <circle cx="26" cy="-14" r="18" fill="#ffb066" stroke="#e06f1e" stroke-width="3"/>
+          <!-- ears -->
+          <path d="M14 -26 l4 -14 l10 8 z" fill="#ffb066" stroke="#e06f1e" stroke-width="2"/>
+          <path d="M34 -28 l6 -13 l7 11 z" fill="#ffb066" stroke="#e06f1e" stroke-width="2"/>
+          <!-- eyes + nose -->
+          <circle cx="24" cy="-16" r="2.6" fill="#3b2a1a"/>
+          <circle cx="33" cy="-16" r="2.6" fill="#3b2a1a"/>
+          <path d="M27 -9 q2 3 4 0" stroke="#3b2a1a" stroke-width="1.6" fill="none"/>
+          <!-- tail -->
+          <path d="M-32 -4 q-24 -6 -18 -30" stroke="#e06f1e" stroke-width="6" fill="none" stroke-linecap="round"/>
+          <!-- legs: two poses toggling -->
+          <g stroke="#e06f1e" stroke-width="6" stroke-linecap="round">
+            <g>
+              <animate attributeName="opacity" values="1;0;1" keyTimes="0;0.5;1" dur="0.4s" repeatCount="indefinite"/>
+              <path d="M-14 22 l-6 12"/><path d="M14 22 l6 12"/>
+            </g>
+            <g>
+              <animate attributeName="opacity" values="0;1;0" keyTimes="0;0.5;1" dur="0.4s" repeatCount="indefinite"/>
+              <path d="M-14 22 l6 12"/><path d="M14 22 l-6 12"/>
+            </g>
+          </g>
+        </g>
+
+        <!-- LEFT-FACING cat (mirrored) -->
+        <g transform="scale(-1,1)">
+          <set attributeName="opacity" to="0"/>
+          <animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.48;0.5;0.98;1" dur="6s" repeatCount="indefinite"/>
+          <ellipse cx="0" cy="0" rx="34" ry="24" fill="#ff9a3c" stroke="#e06f1e" stroke-width="3"/>
+          <circle cx="26" cy="-14" r="18" fill="#ffb066" stroke="#e06f1e" stroke-width="3"/>
+          <path d="M14 -26 l4 -14 l10 8 z" fill="#ffb066" stroke="#e06f1e" stroke-width="2"/>
+          <path d="M34 -28 l6 -13 l7 11 z" fill="#ffb066" stroke="#e06f1e" stroke-width="2"/>
+          <circle cx="24" cy="-16" r="2.6" fill="#3b2a1a"/>
+          <circle cx="33" cy="-16" r="2.6" fill="#3b2a1a"/>
+          <path d="M27 -9 q2 3 4 0" stroke="#3b2a1a" stroke-width="1.6" fill="none"/>
+          <path d="M-32 -4 q-24 -6 -18 -30" stroke="#e06f1e" stroke-width="6" fill="none" stroke-linecap="round"/>
+          <g stroke="#e06f1e" stroke-width="6" stroke-linecap="round">
+            <g>
+              <animate attributeName="opacity" values="1;0;1" keyTimes="0;0.5;1" dur="0.4s" repeatCount="indefinite"/>
+              <path d="M-14 22 l-6 12"/><path d="M14 22 l6 12"/>
+            </g>
+            <g>
+              <animate attributeName="opacity" values="0;1;0" keyTimes="0;0.5;1" dur="0.4s" repeatCount="indefinite"/>
+              <path d="M-14 22 l6 12"/><path d="M14 22 l-6 12"/>
+            </g>
+          </g>
+        </g>
+      </g>
+    </g>
+  </g>
+
+  <!-- ================= SCRIPT (blocks) ================= -->
+  <g transform="translate(544,96)" font-size="12.5" font-weight="600">
+    <text x="0" y="-4" font-size="13" font-weight="700" fill="#475569">Скрипт котика:</text>
+    <!-- when flag -->
+    <g>
+      <rect x="0" y="4" width="150" height="30" rx="8" fill="#f5b800"/>
+      <text x="10" y="24" fill="#fff">когда 🚩 нажат</text>
+    </g>
+    <!-- set rotation -->
+    <g>
+      <rect x="0" y="36" width="150" height="30" rx="6" fill="#4c97ff"/>
+      <text x="8" y="56" fill="#fff" font-size="11">вращение влево-вправо</text>
+    </g>
+    <!-- forever wrapper -->
+    <g>
+      <rect x="0" y="68" width="150" height="30" rx="6" fill="#ff8c1a"/>
+      <text x="10" y="88" fill="#fff">всегда</text>
+      <!-- inner -->
+      <rect x="14" y="100" width="136" height="28" rx="6" fill="#4c97ff"/>
+      <text x="22" y="119" fill="#fff" font-size="11">идти 5 шагов</text>
+      <rect x="14" y="130" width="136" height="28" rx="6" fill="#4c97ff"/>
+      <text x="22" y="149" fill="#fff" font-size="10">если край — оттолкнуться</text>
+      <rect x="14" y="160" width="136" height="28" rx="6" fill="#9966ff"/>
+      <text x="22" y="179" fill="#fff" font-size="11">следующий костюм</text>
+      <rect x="14" y="190" width="136" height="28" rx="6" fill="#ff8c1a"/>
+      <text x="22" y="209" fill="#fff" font-size="11">ждать 0.2 сек</text>
+      <rect x="0" y="220" width="150" height="14" rx="6" fill="#ff8c1a"/>
+    </g>
+    <!-- hint -->
+    <text x="0" y="256" font-size="11" font-weight="500" fill="#94a3b8">клик по котику →</text>
+    <text x="0" y="272" font-size="11" font-weight="500" fill="#94a3b8">играть звук «Мяу» 🔊</text>
+  </g>
+
+  <!-- meow bubble pulsing -->
+  <g transform="translate(250,150)">
+    <animate attributeName="opacity" values="0;0;1;1;0;0" keyTimes="0;0.6;0.65;0.8;0.85;1" dur="6s" repeatCount="indefinite"/>
+    <rect x="0" y="0" width="70" height="30" rx="14" fill="#fff" stroke="#94a3b8" stroke-width="1.5"/>
+    <path d="M14 30 l-6 12 l18 -12 z" fill="#fff" stroke="#94a3b8" stroke-width="1.5"/>
+    <text x="35" y="20" font-size="14" font-weight="700" fill="#334155" text-anchor="middle">Мяу!</text>
+  </g>
+</svg>
