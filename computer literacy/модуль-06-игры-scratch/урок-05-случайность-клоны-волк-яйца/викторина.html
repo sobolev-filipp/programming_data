@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Викторина — Урок 5: Волк и яйца (Scratch)</title>
+<style>
+  :root{
+    --bg1:#ff5c8a; --bg2:#f5b800; --card:#ffffff; --ink:#1f2937;
+    --accent:#db2777; --ok:#16a34a; --bad:#dc2626; --soft:#fde4ef;
+  }
+  *{box-sizing:border-box;font-family:"Segoe UI",system-ui,sans-serif}
+  body{margin:0;min-height:100vh;display:flex;align-items:center;justify-content:center;
+    background:linear-gradient(135deg,var(--bg1),var(--bg2));padding:20px;color:var(--ink)}
+  .app{background:var(--card);width:min(760px,100%);border-radius:24px;
+    box-shadow:0 25px 60px rgba(0,0,0,.35);padding:34px 34px 28px;position:relative;overflow:hidden}
+  h1{margin:0 0 6px;font-size:26px;text-align:center}
+  .sub{text-align:center;color:#64748b;margin-bottom:22px;font-size:15px}
+  .bar{height:10px;background:var(--soft);border-radius:99px;overflow:hidden;margin-bottom:18px}
+  .bar>i{display:block;height:100%;width:0;background:var(--accent);transition:.4s}
+  .meta{display:flex;justify-content:space-between;font-size:14px;color:#64748b;margin-bottom:14px}
+  .q{font-size:22px;font-weight:700;margin:6px 0 20px;line-height:1.3}
+  .opts{display:grid;gap:12px}
+  .opt{border:2px solid #e2e8f0;background:#fff;border-radius:14px;padding:15px 18px;font-size:18px;
+    text-align:left;cursor:pointer;transition:.15s;display:flex;align-items:center;gap:12px}
+  .opt:hover{border-color:var(--accent);background:var(--soft);transform:translateY(-2px)}
+  .opt b{background:var(--soft);color:var(--accent);width:30px;height:30px;border-radius:8px;
+    display:flex;align-items:center;justify-content:center;font-size:15px;flex:0 0 auto}
+  .opt.ok{border-color:var(--ok);background:#dcfce7}
+  .opt.ok b{background:var(--ok);color:#fff}
+  .opt.bad{border-color:var(--bad);background:#fee2e2}
+  .opt.bad b{background:var(--bad);color:#fff}
+  .opt:disabled{cursor:default;transform:none}
+  .fb{margin-top:16px;padding:14px 16px;border-radius:12px;font-size:16px;display:none;line-height:1.4}
+  .fb.show{display:block}
+  .fb.good{background:#dcfce7;color:#166534}
+  .fb.no{background:#fee2e2;color:#991b1b}
+  .btn{margin-top:18px;width:100%;padding:15px;border:0;border-radius:14px;background:var(--accent);
+    color:#fff;font-size:18px;font-weight:700;cursor:pointer;display:none}
+  .btn.show{display:block}
+  .btn:hover{filter:brightness(1.08)}
+  .center{text-align:center}
+  .score{font-size:64px;font-weight:800;margin:10px 0}
+  .emoji{font-size:70px}
+  .hint{color:#94a3b8;font-size:13px;text-align:center;margin-top:14px}
+</style>
+</head>
+<body>
+<div class="app" id="app"></div>
+<script>
+const QUESTIONS = [
+  {q:"Что такое клон?",
+   a:["Новый спрайт","Живая копия спрайта, действует сама","Фон","Переменная"],c:1,
+   e:"Клон — копия спрайта, появляется в игре и живёт сама."},
+  {q:"В каком блоке пишут поведение клона?",
+   a:["когда флажок","когда я начинаю как клон","всегда","создать клон"],c:1,
+   e:"«когда я начинаю как клон» — код, который выполняет каждая копия."},
+  {q:"Каким блоком делают копию?",
+   a:["создать клон [сам]","спрятаться","идти 10 шагов","показаться"],c:0,
+   e:"«создать клон [сам]» штампует новую копию."},
+  {q:"Зачем спрайту-родителю прятаться?",
+   a:["Так быстрее","Чтобы видны были только падающие клоны","Для звука","Для счёта"],c:1,
+   e:"Родитель штампует клоны и прячется; видны копии."},
+  {q:"Почему клоны обязательно удалять?",
+   a:["Для красоты","Иначе копятся, тормозят, и упираются в лимит 300","Так ярче","Не обязательно"],c:1,
+   e:"«удалить этот клон» освобождает место; иначе игра зависнет."},
+  {q:"Как поймать падающее яйцо (дать +1)?",
+   a:["ждать 3 сек","если ⟨касается [Волк]?⟩ → счёт +1 → удалить клон","идти 10 шагов","очистить"],c:1,
+   e:"Проверка касания волка в скрипте клона + удаление."},
+  {q:"Как сделать «промах — минус жизнь»?",
+   a:["если ⟨y < дна⟩ → жизни -1 → удалить клон","играть звук","создать клон","спрятаться"],c:0,
+   e:"Долетел до дна — отнимаем жизнь и удаляем клон."},
+  {q:"Как яйца появляются в РАЗНЫХ местах?",
+   a:["Случайно само","Родитель идёт в случайную точку ПЕРЕД «создать клон»","Меняет костюм","Никак"],c:1,
+   e:"Клон наследует позицию: сначала переместились, потом клонировали."},
+  {q:"Сколько клонов может жить одновременно?",
+   a:["Сколько угодно","Максимум 300","Только 1","Ровно 10"],c:1,
+   e:"Лимит Scratch — 300 клонов, поэтому их удаляют."},
+  {q:"Что клон наследует от родителя при создании?",
+   a:["Ничего","Позицию, костюм, размер","Только цвет фона","Звук"],c:1,
+   e:"Копия берёт вид и место родителя в момент создания."},
+
+  {q:"😄 Игра дико тормозит, экран забит яйцами. Что забыли?",
+   a:["Звук","«удалить этот клон»","Фон","Костюм"],c:1,
+   e:"Без удаления клоны копятся сотнями — тормоза."},
+  {q:"😄 Сверху висит лишнее НЕПОДВИЖНОЕ яйцо. Почему?",
+   a:["Мало памяти","Родитель не спрятан (`спрятаться`)","Нет фона","Спрайт большой"],c:1,
+   e:"Родителя надо прятать — видны только клоны."},
+  {q:"😄 Все яйца падают из ОДНОЙ точки. В чём дело?",
+   a:["Сломан Scratch","«создать клон» стоит ДО перемещения в случайную точку","Нет звука","Мало клеток"],c:1,
+   e:"Сначала перейти в случайную точку, потом клонировать."},
+
+  {q:"🤔 Чем клоны лучше, чем 20 отдельных спрайтов?",
+   a:["Ничем","Поведение пишешь ОДИН раз — копий много; легко менять","Ярче","Меньше вес"],c:1,
+   e:"Один рецепт-скрипт управляет всеми копиями."},
+  {q:"🤔 Где ещё в играх применяют клоны?",
+   a:["Нигде","Дождь, пули, враги, звёзды, конфетти — всё «много одинаковых»","Только фон","Только звук"],c:1,
+   e:"Клоны — стандартный приём для множества объектов."},
+  {q:"🤔 Почему поведение клона в отдельном блоке «когда я начинаю как клон»?",
+   a:["Так короче","Чтобы КАЖДАЯ копия выполняла его сама, независимо","Для цвета","Случайно"],c:1,
+   e:"Каждый клон запускает этот скрипт для себя — десять яиц, десять «actors»."},
+];
+
+let i=0, score=0, locked=false;
+const app=document.getElementById('app');
+
+function shuffle(){for(let k=QUESTIONS.length-1;k>0;k--){const j=Math.floor(Math.random()*(k+1));[QUESTIONS[k],QUESTIONS[j]]=[QUESTIONS[j],QUESTIONS[k]];}for(const Q of QUESTIONS){const cc=Q.a[Q.c];for(let k=Q.a.length-1;k>0;k--){const j=Math.floor(Math.random()*(k+1));[Q.a[k],Q.a[j]]=[Q.a[j],Q.a[k]];}Q.c=Q.a.indexOf(cc);}}
+shuffle();
+
+function render(){
+  const Q=QUESTIONS[i];
+  app.innerHTML=`
+    <h1>🐺 Волк и яйца</h1>
+    <div class="sub">Викторина по уроку 5 · Scratch</div>
+    <div class="bar"><i style="width:${(i/QUESTIONS.length)*100}%"></i></div>
+    <div class="meta"><span>Вопрос ${i+1} из ${QUESTIONS.length}</span><span>⭐ Очки: ${score}</span></div>
+    <div class="q">${Q.q}</div>
+    <div class="opts" id="opts">
+      ${Q.a.map((t,n)=>`<button class="opt" data-n="${n}"><b>${n+1}</b><span>${t}</span></button>`).join('')}
+    </div>
+    <div class="fb" id="fb"></div>
+    <button class="btn" id="next">${i===QUESTIONS.length-1?'Показать результат →':'Следующий вопрос →'}</button>
+    <div class="hint">Можно отвечать клавишами 1–4</div>`;
+  locked=false;
+  document.querySelectorAll('.opt').forEach(b=>b.onclick=()=>choose(+b.dataset.n));
+  document.getElementById('next').onclick=next;
+}
+
+function choose(n){
+  if(locked) return; locked=true;
+  const Q=QUESTIONS[i];
+  const opts=[...document.querySelectorAll('.opt')];
+  opts.forEach(b=>b.disabled=true);
+  opts[Q.c].classList.add('ok');
+  const fb=document.getElementById('fb');
+  if(n===Q.c){ score++; fb.className='fb show good'; fb.textContent='✅ Верно! '+Q.e; }
+  else { opts[n].classList.add('bad'); fb.className='fb show no'; fb.textContent='❌ Не совсем. '+Q.e; }
+  document.querySelector('.meta').children[1].textContent='⭐ Очки: '+score;
+  document.getElementById('next').classList.add('show');
+}
+
+function next(){ i++; if(i<QUESTIONS.length) render(); else result(); }
+
+function result(){
+  const pct=Math.round(score/QUESTIONS.length*100);
+  let em,msg;
+  if(pct===100){em='🏆';msg='Идеально! Клоны — твоя суперсила! Один спрайт, целый дождь! 🥚';}
+  else if(pct>=70){em='🎉';msg='Отлично! Клоны, случайность и ловля — под контролем.';}
+  else if(pct>=40){em='👍';msg='Неплохо! Помни: родитель прячется, поведение — в «когда я начинаю как клон», клоны удалять.';}
+  else {em='💪';msg='Начало есть! Загляни в самоучитель — там всё по шагам.';}
+  app.innerHTML=`
+    <div class="center">
+      <div class="emoji">${em}</div>
+      <h1>Готово!</h1>
+      <div class="score">${score} / ${QUESTIONS.length}</div>
+      <div class="sub">${msg}</div>
+      <button class="btn show" id="again">🔁 Пройти заново</button>
+    </div>`;
+  document.getElementById('again').onclick=()=>{i=0;score=0;shuffle();render();};
+}
+
+document.addEventListener('keydown',e=>{
+  if(['1','2','3','4'].includes(e.key)){ const b=document.querySelector(`.opt[data-n="${+e.key-1}"]`); if(b&&!b.disabled) choose(+e.key-1); }
+  if(e.key==='Enter'){ const nb=document.getElementById('next'); if(nb&&nb.classList.contains('show')) next(); }
+});
+
+render();
+</script>
+</body>
+</html>

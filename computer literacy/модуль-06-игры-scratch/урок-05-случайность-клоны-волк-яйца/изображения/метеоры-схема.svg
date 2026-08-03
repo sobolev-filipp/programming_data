@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 380" font-family="'Segoe UI',system-ui,sans-serif">
+  <rect x="0" y="0" width="680" height="380" fill="#f7f9fc"/>
+  <text x="24" y="30" font-size="20" font-weight="800" fill="#1f2937">☄️ Доп «Метеоритный дождь: увернись»</text>
+  <text x="24" y="52" font-size="13" fill="#64748b">Те же клоны, но цель обратная — НЕ поймать, а уклониться!</text>
+
+  <!-- preview (space) -->
+  <rect x="24" y="76" width="230" height="270" rx="10" fill="#0f172a"/>
+  <g fill="#ffffff" opacity="0.7">
+    <circle cx="60" cy="110" r="1.6"/><circle cx="120" cy="150" r="1.3"/><circle cx="200" cy="120" r="1.6"/>
+    <circle cx="90" cy="200" r="1.2"/><circle cx="180" cy="220" r="1.5"/><circle cx="150" cy="100" r="1.2"/>
+  </g>
+  <!-- meteors -->
+  <g fill="#f97316" stroke="#c2410c" stroke-width="1.5">
+    <circle cx="90" cy="150" r="10"/><circle cx="170" cy="110" r="8"/><circle cx="130" cy="220" r="9"/>
+  </g>
+  <g stroke="#fdba74" stroke-width="2" opacity="0.8">
+    <line x1="90" y1="150" x2="82" y2="132"/><line x1="170" y1="110" x2="164" y2="96"/><line x1="130" y1="220" x2="123" y2="204"/>
+  </g>
+  <!-- hero (rocket) dodging -->
+  <g transform="translate(150,315)">
+    <path d="M0 -16 q8 8 6 20 l-12 0 q-2 -12 6 -20 z" fill="#38bdf8" stroke="#0284c7" stroke-width="1.5"/>
+    <path d="M-6 4 l-6 8 l6 -2 z" fill="#0284c7"/><path d="M6 4 l6 8 l-6 -2 z" fill="#0284c7"/>
+    <path d="M-3 6 l3 8 l3 -8 z" fill="#f59e0b"/>
+  </g>
+  <text x="139" y="340" font-size="11" fill="#94a3b8" text-anchor="middle">уворачивайся ←→</text>
+
+  <!-- scripts (compact, emphasize differences) -->
+  <g font-weight="700" fill="#ffffff" font-size="11.5">
+    <text x="278" y="94" font-size="13" font-weight="800" fill="#334155">Что поменять по сравнению с «Волком»:</text>
+
+    <!-- meteor parent -->
+    <text x="278" y="120" font-size="12" font-weight="700" fill="#b45309">🪨 Метеор-родитель (как яйцо):</text>
+    <rect x="278" y="126" width="380" height="22" rx="5" fill="#ffab19"/><text x="285" y="141">спрятаться → всегда: случайная точка вверху → создать клон → ждать</text>
+
+    <!-- clone -->
+    <text x="278" y="172" font-size="12" font-weight="700" fill="#15803d">👯 Клон-метеор:</text>
+    <rect x="278" y="178" width="380" height="22" rx="5" fill="#ffab19"/><text x="285" y="193">когда я начинаю как клон → показаться → всегда:</text>
+    <rect x="292" y="202" width="366" height="22" rx="5" fill="#4c97ff"/><text x="299" y="217">изменить y на -6  (падаем)</text>
+    <rect x="292" y="226" width="366" height="34" rx="5" fill="#ffab19"/>
+    <text x="299" y="239" font-size="10.5">если ⟨касается [Герой]?⟩ →</text>
+    <text x="299" y="253" font-size="10" fill="#fee2e2">жизни −1 · удалить клон   (столкновение — ПЛОХО!)</text>
+    <rect x="292" y="262" width="366" height="20" rx="5" fill="#4c97ff"/><text x="299" y="276" font-size="10">если ⟨y &lt; -170⟩ → удалить клон (пролетел мимо — хорошо)</text>
+
+    <!-- survive timer -->
+    <text x="278" y="308" font-size="12" font-weight="700" fill="#c2410c">⏱ Цель — продержаться:</text>
+    <rect x="278" y="314" width="380" height="22" rx="5" fill="#ff8c1a"/><text x="285" y="329">всегда: ждать 1 сек → изменить [время] на 1   → в конце: «Выжил (время) сек»</text>
+  </g>
+
+  <text x="278" y="360" font-size="11" fill="#94a3b8">💡 Приём тот же (клоны + падение), а игра совсем другого жанра.</text>
+</svg>

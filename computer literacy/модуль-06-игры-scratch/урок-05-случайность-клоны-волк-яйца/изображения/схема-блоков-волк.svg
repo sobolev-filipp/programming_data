@@ -1,0 +1,68 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 420" font-family="'Segoe UI',system-ui,sans-serif">
+  <rect x="0" y="0" width="720" height="420" fill="#f7f9fc"/>
+  <text x="24" y="28" font-size="19" font-weight="800" fill="#1f2937">🧩 Итоговая схема блоков — «Волк и яйца»</text>
+  <text x="24" y="48" font-size="12.5" fill="#64748b">Три скрипта. Главное — клон: поведение пишем один раз, копий много.</text>
+
+  <g font-weight="700" fill="#ffffff" font-size="11">
+    <!-- ================= WOLF ================= -->
+    <text x="20" y="70" font-size="12.5" font-weight="800" fill="#e11d63">🐺 Волк</text>
+    <path d="M20 76 q0 -8 8 -8 l44 0 q5 5 10 0 l40 0 q8 0 8 8 l0 14 l-110 0 z" fill="#f5b800"/>
+    <text x="28" y="88" fill="#3d2f00">когда 🚩</text>
+    <rect x="20" y="92" width="180" height="22" rx="5" fill="#ff8c1a"/><text x="27" y="107">установить [счёт] в 0</text>
+    <rect x="20" y="116" width="180" height="22" rx="5" fill="#ff8c1a"/><text x="27" y="131">установить [жизни] в 3</text>
+    <rect x="20" y="140" width="180" height="22" rx="5" fill="#4c97ff"/><text x="27" y="155">установить y в -140</text>
+    <rect x="20" y="164" width="180" height="22" rx="5" fill="#ffab19"/><text x="27" y="179">всегда</text>
+    <rect x="20" y="186" width="12" height="164" fill="#ffab19"/>
+    <rect x="34" y="188" width="166" height="30" rx="5" fill="#4c97ff"/><text x="41" y="200" font-size="10">если →/← нажата →</text><text x="41" y="212" font-size="10">изменить x на ±10</text>
+    <rect x="34" y="220" width="166" height="22" rx="5" fill="#4c97ff"/><text x="41" y="235" font-size="10">если на краю, оттолкнуться</text>
+    <rect x="34" y="244" width="166" height="22" rx="5" fill="#ffab19"/><text x="41" y="259" font-size="10">если ⟨жизни = 0⟩ то</text>
+    <rect x="34" y="266" width="12" height="52" fill="#ffab19"/>
+    <rect x="48" y="268" width="152" height="24" rx="5" fill="#9966ff"/><text x="55" y="284" font-size="9.5">сказать (Счёт: …) 3 сек</text>
+    <rect x="48" y="294" width="152" height="22" rx="5" fill="#ec5a13"/><text x="55" y="309" font-size="10">стоп [всё]</text>
+    <rect x="34" y="318" width="166" height="8" rx="4" fill="#ffab19"/>
+    <rect x="20" y="350" width="180" height="10" rx="5" fill="#ffab19"/>
+
+    <!-- ================= PARENT ================= -->
+    <text x="250" y="70" font-size="12.5" font-weight="800" fill="#b45309">🥚 Яйцо — родитель</text>
+    <path d="M250 76 q0 -8 8 -8 l44 0 q5 5 10 0 l40 0 q8 0 8 8 l0 14 l-110 0 z" fill="#f5b800"/>
+    <text x="258" y="88" fill="#3d2f00">когда 🚩</text>
+    <rect x="250" y="92" width="190" height="22" rx="5" fill="#9966ff"/><text x="257" y="107">спрятаться</text>
+    <rect x="250" y="116" width="190" height="22" rx="5" fill="#ffab19"/><text x="257" y="131">всегда</text>
+    <rect x="250" y="138" width="12" height="96" fill="#ffab19"/>
+    <rect x="264" y="140" width="176" height="30" rx="5" fill="#4c97ff"/><text x="271" y="152" font-size="10">перейти x:(случайное</text><text x="271" y="164" font-size="10">-220..220) y: 170</text>
+    <rect x="264" y="172" width="176" height="22" rx="5" fill="#ffab19"/><text x="271" y="187" font-size="10">создать клон [сам]</text>
+    <rect x="264" y="196" width="176" height="22" rx="5" fill="#ffab19"/><text x="271" y="211" font-size="10">ждать (случайное 0.6..1.4)</text>
+    <rect x="250" y="220" width="190" height="8" rx="4" fill="#ffab19"/>
+    <rect x="250" y="234" width="190" height="10" rx="5" fill="#ffab19"/>
+    <text x="250" y="266" font-size="10.5" font-weight="600" fill="#64748b">Родитель прячется и штампует</text>
+    <text x="250" y="281" font-size="10.5" font-weight="600" fill="#64748b">клоны в случайных местах вверху.</text>
+
+    <!-- ================= CLONE ================= -->
+    <text x="490" y="70" font-size="12.5" font-weight="800" fill="#15803d">👯 Клон (каждое яйцо)</text>
+    <rect x="490" y="74" width="210" height="24" rx="10" fill="#ffab19"/><text x="498" y="90" font-size="10.5">когда я начинаю как клон</text>
+    <rect x="490" y="100" width="210" height="22" rx="5" fill="#9966ff"/><text x="497" y="115">показаться</text>
+    <rect x="490" y="124" width="210" height="22" rx="5" fill="#ffab19"/><text x="497" y="139">всегда</text>
+    <rect x="490" y="146" width="12" height="140" fill="#ffab19"/>
+    <rect x="504" y="148" width="196" height="22" rx="5" fill="#4c97ff"/><text x="511" y="163" font-size="10">изменить y на -6  (падаем)</text>
+    <rect x="504" y="172" width="196" height="34" rx="5" fill="#ffab19"/>
+    <text x="511" y="185" font-size="10">если ⟨касается [Волк]?⟩ →</text>
+    <text x="511" y="199" font-size="9.5" fill="#fff8e1">звук · счёт +1 · удалить клон</text>
+    <rect x="504" y="208" width="196" height="34" rx="5" fill="#ffab19"/>
+    <text x="511" y="221" font-size="10">если ⟨y &lt; -150⟩ (упал) →</text>
+    <text x="511" y="235" font-size="9.5" fill="#fff8e1">жизни −1 · удалить клон</text>
+    <rect x="490" y="244" width="210" height="8" rx="4" fill="#ffab19"/>
+    <rect x="490" y="286" width="210" height="10" rx="5" fill="#ffab19"/>
+    <text x="490" y="316" font-size="10.5" font-weight="700" fill="#dc2626">⚠️ Обязательно «удалить этот клон» —</text>
+    <text x="490" y="330" font-size="10.5" font-weight="600" fill="#64748b">иначе клоны копятся (лимит 300).</text>
+  </g>
+
+  <!-- legend -->
+  <g font-size="11" font-weight="600" fill="#475569" transform="translate(20,378)">
+    <rect x="0" y="-10" width="14" height="14" rx="3" fill="#f5b800"/><text x="20" y="1">События</text>
+    <rect x="96" y="-10" width="14" height="14" rx="3" fill="#4c97ff"/><text x="116" y="1">Движение</text>
+    <rect x="196" y="-10" width="14" height="14" rx="3" fill="#9966ff"/><text x="216" y="1">Вид</text>
+    <rect x="256" y="-10" width="14" height="14" rx="3" fill="#ffab19"/><text x="276" y="1">Управление (клоны)</text>
+    <rect x="426" y="-10" width="14" height="14" rx="3" fill="#ff8c1a"/><text x="446" y="1">Переменные</text>
+    <rect x="546" y="-10" width="14" height="14" rx="3" fill="#ec5a13"/><text x="566" y="1">стоп</text>
+  </g>
+</svg>
