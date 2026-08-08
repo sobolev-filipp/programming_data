@@ -1,0 +1,104 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 470" font-family="'Segoe UI',system-ui,sans-serif">
+  <rect x="0" y="0" width="720" height="470" fill="#f7f9fc"/>
+  <text x="24" y="30" font-size="19" font-weight="800" fill="#1f2937">🗺 Карта навыков модуля — твой арсенал</text>
+  <text x="24" y="50" font-size="13" fill="#64748b">Всё, что ты умеешь после 8 уроков. Выбери приёмы для своей контрольной.</text>
+
+  <g font-family="'Segoe UI',system-ui,sans-serif">
+    <!-- Row 1 -->
+    <g>
+      <rect x="24" y="72" width="158" height="160" rx="12" fill="#eff6ff" stroke="#bfdbfe" stroke-width="1.5"/>
+      <text x="36" y="94" font-size="11" font-weight="800" fill="#1d4ed8">УРОК 1</text>
+      <text x="150" y="98" font-size="26" text-anchor="end">🐱</text>
+      <text x="36" y="120" font-size="13" font-weight="800" fill="#1f2937">Движение</text>
+      <text x="36" y="142" font-size="10.5" fill="#475569">сцена, спрайты,</text>
+      <text x="36" y="158" font-size="10.5" fill="#475569">костюмы</text>
+      <text x="36" y="180" font-size="10.5" fill="#475569">цикл «всегда»</text>
+      <text x="36" y="196" font-size="10.5" fill="#475569">события 🚩</text>
+      <text x="36" y="218" font-size="10.5" fill="#475569">«если край —</text>
+      <text x="36" y="230" font-size="10.5" fill="#475569">оттолкнуться»</text>
+    </g>
+    <g>
+      <rect x="197" y="72" width="158" height="160" rx="12" fill="#f0fdfa" stroke="#99f6e4" stroke-width="1.5"/>
+      <text x="209" y="94" font-size="11" font-weight="800" fill="#0f766e">УРОК 2</text>
+      <text x="323" y="98" font-size="26" text-anchor="end">🐉</text>
+      <text x="209" y="120" font-size="13" font-weight="800" fill="#1f2937">Клавиши + перо</text>
+      <text x="209" y="142" font-size="10.5" fill="#475569">координаты x / y</text>
+      <text x="209" y="158" font-size="10.5" fill="#475569">клавиша нажата?</text>
+      <text x="209" y="180" font-size="10.5" fill="#475569">плавное управление</text>
+      <text x="209" y="202" font-size="10.5" fill="#475569">перо, фигуры</text>
+      <text x="209" y="218" font-size="10.5" fill="#475569">через «повторить»</text>
+    </g>
+    <g>
+      <rect x="370" y="72" width="158" height="160" rx="12" fill="#fefce8" stroke="#fde68a" stroke-width="1.5"/>
+      <text x="382" y="94" font-size="11" font-weight="800" fill="#a16207">УРОК 3</text>
+      <text x="496" y="98" font-size="26" text-anchor="end">🐭</text>
+      <text x="382" y="120" font-size="13" font-weight="800" fill="#1f2937">Условия</text>
+      <text x="382" y="142" font-size="10.5" fill="#475569">если / если-иначе</text>
+      <text x="382" y="164" font-size="10.5" fill="#475569">касается спрайта?</text>
+      <text x="382" y="180" font-size="10.5" fill="#475569">касается цвета?</text>
+      <text x="382" y="202" font-size="10.5" fill="#475569">возврат на старт,</text>
+      <text x="382" y="218" font-size="10.5" fill="#475569">условие победы</text>
+    </g>
+    <g>
+      <rect x="543" y="72" width="158" height="160" rx="12" fill="#fff7ed" stroke="#fed7aa" stroke-width="1.5"/>
+      <text x="555" y="94" font-size="11" font-weight="800" fill="#c2410c">УРОК 4</text>
+      <text x="669" y="98" font-size="26" text-anchor="end">💰</text>
+      <text x="555" y="120" font-size="13" font-weight="800" fill="#1f2937">Переменные</text>
+      <text x="555" y="142" font-size="10.5" fill="#475569">счёт, жизни</text>
+      <text x="555" y="164" font-size="10.5" fill="#475569">операторы, случайное</text>
+      <text x="555" y="180" font-size="10.5" fill="#475569">таймер</text>
+      <text x="555" y="202" font-size="10.5" fill="#475569">повторить N,</text>
+      <text x="555" y="218" font-size="10.5" fill="#475569">соединить</text>
+    </g>
+
+    <!-- Row 2 -->
+    <g>
+      <rect x="24" y="248" width="158" height="160" rx="12" fill="#f5f3ff" stroke="#ddd6fe" stroke-width="1.5"/>
+      <text x="36" y="270" font-size="11" font-weight="800" fill="#6d28d9">УРОК 5</text>
+      <text x="150" y="274" font-size="26" text-anchor="end">🐺</text>
+      <text x="36" y="296" font-size="13" font-weight="800" fill="#1f2937">Клоны</text>
+      <text x="36" y="318" font-size="10.5" fill="#475569">создать клон</text>
+      <text x="36" y="334" font-size="10.5" fill="#475569">начинаю как клон</text>
+      <text x="36" y="350" font-size="10.5" fill="#475569">удалить этот клон</text>
+      <text x="36" y="372" font-size="10.5" fill="#475569">случайность,</text>
+      <text x="36" y="388" font-size="10.5" fill="#475569">падение, ловля</text>
+    </g>
+    <g>
+      <rect x="197" y="248" width="158" height="160" rx="12" fill="#eef2ff" stroke="#c7d2fe" stroke-width="1.5"/>
+      <text x="209" y="270" font-size="11" font-weight="800" fill="#4338ca">УРОК 6</text>
+      <text x="323" y="274" font-size="26" text-anchor="end">🚀</text>
+      <text x="209" y="296" font-size="13" font-weight="800" fill="#1f2937">Стрелялка</text>
+      <text x="209" y="318" font-size="10.5" fill="#475569">клоны-пули</text>
+      <text x="209" y="334" font-size="10.5" fill="#475569">клоны-враги</text>
+      <text x="209" y="356" font-size="10.5" fill="#475569">попадание</text>
+      <text x="209" y="372" font-size="10.5" fill="#475569">(клон ↔ клон),</text>
+      <text x="209" y="388" font-size="10.5" fill="#475569">счёт / жизни</text>
+    </g>
+    <g>
+      <rect x="370" y="248" width="158" height="160" rx="12" fill="#ecfeff" stroke="#a5f3fc" stroke-width="1.5"/>
+      <text x="382" y="270" font-size="11" font-weight="800" fill="#0e7490">УРОК 7</text>
+      <text x="496" y="274" font-size="26" text-anchor="end">🏝</text>
+      <text x="382" y="296" font-size="13" font-weight="800" fill="#1f2937">Сообщения</text>
+      <text x="382" y="318" font-size="10.5" fill="#475569">передать /</text>
+      <text x="382" y="334" font-size="10.5" fill="#475569">когда я получу</text>
+      <text x="382" y="356" font-size="10.5" fill="#475569">смена фонов-экранов</text>
+      <text x="382" y="378" font-size="10.5" fill="#475569">уровни, старт,</text>
+      <text x="382" y="394" font-size="10.5" fill="#475569">победа</text>
+    </g>
+    <g>
+      <rect x="543" y="248" width="158" height="160" rx="12" fill="#f0fdf4" stroke="#bbf7d0" stroke-width="1.5"/>
+      <text x="555" y="270" font-size="11" font-weight="800" fill="#15803d">УРОК 8</text>
+      <text x="669" y="274" font-size="26" text-anchor="end">🦖</text>
+      <text x="555" y="296" font-size="13" font-weight="800" fill="#1f2937">Гравитация</text>
+      <text x="555" y="318" font-size="10.5" fill="#475569">скорость_y</text>
+      <text x="555" y="334" font-size="10.5" fill="#475569">прыжок (толчок)</text>
+      <text x="555" y="356" font-size="10.5" fill="#475569">земля / платформы</text>
+      <text x="555" y="378" font-size="10.5" fill="#475569">раннер,</text>
+      <text x="555" y="394" font-size="10.5" fill="#475569">платформер</text>
+    </g>
+  </g>
+
+  <!-- capstone bar -->
+  <rect x="24" y="424" width="677" height="34" rx="10" fill="#4f46e5"/>
+  <text x="362" y="446" font-size="14" font-weight="800" fill="#fff" text-anchor="middle">🏆 УРОК 9 — собери всё это в свою игру «Спасательная миссия» + свои ассеты из Adobe</text>
+</svg>

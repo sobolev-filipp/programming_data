@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 700 400" font-family="'Segoe UI',system-ui,sans-serif">
+  <rect x="0" y="0" width="700" height="400" fill="#f7f9fc"/>
+  <text x="24" y="30" font-size="19" font-weight="800" fill="#1f2937">🐤 Доп «Flappy Bird»</text>
+  <text x="24" y="52" font-size="13" fill="#64748b">Тот же движок гравитации — но взмах в воздухе вместо прыжка с земли.</text>
+
+  <!-- preview -->
+  <rect x="24" y="70" width="200" height="260" rx="10" fill="#7ec0ee"/>
+  <!-- columns -->
+  <rect x="150" y="70" width="34" height="90" fill="#5aa02c" stroke="#3f7a1f" stroke-width="3"/>
+  <rect x="150" y="230" width="34" height="100" fill="#5aa02c" stroke="#3f7a1f" stroke-width="3"/>
+  <text x="167" y="195" font-size="11" fill="#1f3d0c" text-anchor="middle">щель</text>
+  <!-- chick -->
+  <g transform="translate(80,170)">
+    <circle cx="0" cy="0" r="18" fill="#ffdb5d" stroke="#e6a700" stroke-width="2"/>
+    <circle cx="6" cy="-4" r="5" fill="#fff"/><circle cx="7" cy="-4" r="2.4" fill="#17242d"/>
+    <path d="M17 0 l10 -4 -3 8 z" fill="#e54529"/>
+    <path d="M-14 2 q-8 4 -2 10" fill="none" stroke="#e6a700" stroke-width="3"/>
+  </g>
+  <text x="124" y="352" font-size="11" fill="#64748b" text-anchor="middle">жми пробел — курочка машет вверх</text>
+
+  <!-- scripts -->
+  <g font-size="11" font-weight="700" fill="#ffffff">
+    <text x="248" y="90" font-size="12.5" font-weight="800" fill="#b45309">🐤 Курочка — мягкая гравитация</text>
+    <rect x="248" y="96" width="428" height="20" rx="9" fill="#f5b800"/><text x="255" y="110" fill="#3d2f00">когда 🚩 → перейти x:-120 y:0 → установить [скорость_y] в 0 → всегда:</text>
+    <rect x="262" y="118" width="414" height="20" rx="4" fill="#ff8c1a"/><text x="269" y="132">изменить [скорость_y] на -0.6  (мягче, чем у дино!)</text>
+    <rect x="262" y="140" width="414" height="20" rx="4" fill="#4c97ff"/><text x="269" y="154">изменить y на (скорость_y)</text>
+    <rect x="262" y="162" width="414" height="20" rx="4" fill="#ffab19"/><text x="269" y="176">если ⟨касается края?⟩ → 📣 передать [game over]</text>
+
+    <text x="248" y="204" font-size="12.5" font-weight="800" fill="#b45309">🐤 Взмах (в любой точке!)</text>
+    <rect x="248" y="210" width="428" height="20" rx="9" fill="#f5b800"/><text x="255" y="224" fill="#3d2f00">когда клавиша [пробел] нажата</text>
+    <rect x="248" y="232" width="428" height="20" rx="4" fill="#ff8c1a"/><text x="255" y="246">установить [скорость_y] в 8  (толчок вверх, без проверки земли)</text>
+
+    <text x="248" y="274" font-size="12.5" font-weight="800" fill="#5aa02c">🟩 Колонны — клоны навстречу</text>
+    <rect x="248" y="280" width="428" height="20" rx="9" fill="#f5b800"/><text x="255" y="294" fill="#3d2f00">когда 🚩 → спрятаться → всегда:</text>
+    <rect x="262" y="302" width="414" height="20" rx="4" fill="#4c97ff"/><text x="269" y="316">перейти x:240 y:(случайное -80..80) → создать клон → ждать 1.6</text>
+    <rect x="248" y="326" width="428" height="20" rx="9" fill="#ffab19"/><text x="255" y="340">когда я начинаю как клон → всегда: изменить x на -4</text>
+    <rect x="262" y="348" width="414" height="20" rx="4" fill="#ffab19"/><text x="269" y="362">если касается [Курочка]? → game over;  если x&lt;-240 → счёт+1 · удалить</text>
+  </g>
+
+  <text x="24" y="386" font-size="11.5" fill="#94a3b8">💡 Один движок — две игры! У дино прыжок только с земли, у курочки — взмах в воздухе.</text>
+</svg>

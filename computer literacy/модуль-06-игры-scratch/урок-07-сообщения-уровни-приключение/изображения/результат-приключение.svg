@@ -1,0 +1,150 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 448" font-family="'Segoe UI',system-ui,sans-serif">
+  <rect x="0" y="0" width="720" height="448" fill="#eef2ff"/>
+  <text x="24" y="30" font-size="19" font-weight="800" fill="#1f2937">🏝 Остров приключений — игра с уровнями</text>
+  <text x="24" y="49" font-size="12.5" fill="#64748b">Собери 5 звёзд → войди в портал 🌀 → новый уровень. Всё держится на сообщениях.</text>
+
+  <!-- ===== PLAY SCREEN ===== -->
+  <g>
+    <rect x="24" y="60" width="456" height="272" rx="12" fill="#3b2f6b"/>
+    <rect x="24" y="60" width="456" height="272" rx="12" fill="url(#sky)"/>
+    <!-- ground -->
+    <rect x="24" y="292" width="456" height="40" rx="0" fill="#2f6b3b"/>
+    <rect x="24" y="286" width="456" height="10" fill="#3c8a4c"/>
+
+    <!-- HUD: 5 stars filling -->
+    <text x="300" y="82" font-size="12" font-weight="700" fill="#fff8e1">Собрано:</text>
+    <g transform="translate(362,78)">
+      <g><polygon points="0,-9 3,-3 9,-3 4,2 6,9 0,4 -6,9 -4,2 -9,-3 -3,-3" fill="#4b4470" stroke="#fde047" stroke-width="1"/>
+         <polygon points="0,-9 3,-3 9,-3 4,2 6,9 0,4 -6,9 -4,2 -9,-3 -3,-3" fill="#fde047">
+           <animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.10;0.14;0.9375;0.96" dur="8s" repeatCount="indefinite"/></polygon></g>
+      <g transform="translate(22,0)"><polygon points="0,-9 3,-3 9,-3 4,2 6,9 0,4 -6,9 -4,2 -9,-3 -3,-3" fill="#4b4470" stroke="#fde047" stroke-width="1"/>
+         <polygon points="0,-9 3,-3 9,-3 4,2 6,9 0,4 -6,9 -4,2 -9,-3 -3,-3" fill="#fde047">
+           <animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.20;0.24;0.9375;0.96" dur="8s" repeatCount="indefinite"/></polygon></g>
+      <g transform="translate(44,0)"><polygon points="0,-9 3,-3 9,-3 4,2 6,9 0,4 -6,9 -4,2 -9,-3 -3,-3" fill="#4b4470" stroke="#fde047" stroke-width="1"/>
+         <polygon points="0,-9 3,-3 9,-3 4,2 6,9 0,4 -6,9 -4,2 -9,-3 -3,-3" fill="#fde047">
+           <animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.31;0.35;0.9375;0.96" dur="8s" repeatCount="indefinite"/></polygon></g>
+      <g transform="translate(66,0)"><polygon points="0,-9 3,-3 9,-3 4,2 6,9 0,4 -6,9 -4,2 -9,-3 -3,-3" fill="#4b4470" stroke="#fde047" stroke-width="1"/>
+         <polygon points="0,-9 3,-3 9,-3 4,2 6,9 0,4 -6,9 -4,2 -9,-3 -3,-3" fill="#fde047">
+           <animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.42;0.46;0.9375;0.96" dur="8s" repeatCount="indefinite"/></polygon></g>
+      <g transform="translate(88,0)"><polygon points="0,-9 3,-3 9,-3 4,2 6,9 0,4 -6,9 -4,2 -9,-3 -3,-3" fill="#4b4470" stroke="#fde047" stroke-width="1"/>
+         <polygon points="0,-9 3,-3 9,-3 4,2 6,9 0,4 -6,9 -4,2 -9,-3 -3,-3" fill="#fde047">
+           <animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.53;0.57;0.9375;0.96" dur="8s" repeatCount="indefinite"/></polygon></g>
+    </g>
+
+    <!-- collectable stars on the field (fade out when collected) -->
+    <g transform="translate(120,150)"><polygon points="0,-14 4,-4 14,-4 6,3 9,13 0,7 -9,13 -6,3 -14,-4 -4,-4" fill="#ffd21e" stroke="#eab308" stroke-width="1.5">
+      <animate attributeName="opacity" values="1;1;0;0;1" keyTimes="0;0.10;0.14;0.94;0.96" dur="8s" repeatCount="indefinite"/></polygon></g>
+    <g transform="translate(250,120)"><polygon points="0,-14 4,-4 14,-4 6,3 9,13 0,7 -9,13 -6,3 -14,-4 -4,-4" fill="#ffd21e" stroke="#eab308" stroke-width="1.5">
+      <animate attributeName="opacity" values="1;1;0;0;1" keyTimes="0;0.20;0.24;0.94;0.96" dur="8s" repeatCount="indefinite"/></polygon></g>
+    <g transform="translate(360,175)"><polygon points="0,-14 4,-4 14,-4 6,3 9,13 0,7 -9,13 -6,3 -14,-4 -4,-4" fill="#ffd21e" stroke="#eab308" stroke-width="1.5">
+      <animate attributeName="opacity" values="1;1;0;0;1" keyTimes="0;0.31;0.35;0.94;0.96" dur="8s" repeatCount="indefinite"/></polygon></g>
+    <g transform="translate(180,235)"><polygon points="0,-14 4,-4 14,-4 6,3 9,13 0,7 -9,13 -6,3 -14,-4 -4,-4" fill="#ffd21e" stroke="#eab308" stroke-width="1.5">
+      <animate attributeName="opacity" values="1;1;0;0;1" keyTimes="0;0.42;0.46;0.94;0.96" dur="8s" repeatCount="indefinite"/></polygon></g>
+    <g transform="translate(310,240)"><polygon points="0,-14 4,-4 14,-4 6,3 9,13 0,7 -9,13 -6,3 -14,-4 -4,-4" fill="#ffd21e" stroke="#eab308" stroke-width="1.5">
+      <animate attributeName="opacity" values="1;1;0;0;1" keyTimes="0;0.53;0.57;0.94;0.96" dur="8s" repeatCount="indefinite"/></polygon></g>
+
+    <!-- portal appears after collecting -->
+    <g transform="translate(430,150)">
+      <g opacity="0">
+        <animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.60;0.66;0.94;0.97" dur="8s" repeatCount="indefinite"/>
+        <circle cx="0" cy="0" r="26" fill="#22d3ee" opacity="0.35"/>
+        <g>
+          <circle cx="0" cy="0" r="20" fill="none" stroke="#06b6d4" stroke-width="5"/>
+          <circle cx="0" cy="0" r="12" fill="none" stroke="#a5f3fc" stroke-width="4"/>
+          <circle cx="0" cy="0" r="5" fill="#ecfeff"/>
+          <animateTransform attributeName="transform" type="rotate" from="0" to="360" dur="1.5s" repeatCount="indefinite"/>
+        </g>
+      </g>
+      <text x="0" y="-36" font-size="12" font-weight="700" fill="#a5f3fc" text-anchor="middle">🌀 портал!
+        <animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.60;0.66;0.94;0.97" dur="8s" repeatCount="indefinite"/></text>
+    </g>
+
+    <!-- HERO wandering to collect -->
+    <g>
+      <animateTransform attributeName="transform" type="translate"
+        values="60,250; 120,250; 250,250; 360,250; 180,250; 310,250; 415,250; 60,250"
+        keyTimes="0;0.10;0.22;0.34;0.45;0.56;0.66;1"
+        dur="8s" repeatCount="indefinite"/>
+      <ellipse cx="0" cy="26" rx="16" ry="5" fill="#000" opacity="0.18"/>
+      <circle cx="0" cy="-2" r="13" fill="#ffcf8f" stroke="#d98b3a" stroke-width="2"/>
+      <circle cx="-4" cy="-4" r="2" fill="#333"/><circle cx="5" cy="-4" r="2" fill="#333"/>
+      <path d="M-5 2 Q0 6 5 2" stroke="#a15a1e" stroke-width="1.6" fill="none"/>
+      <rect x="-11" y="10" width="22" height="16" rx="6" fill="#4c97ff"/>
+    </g>
+
+    <!-- broadcast bubble -->
+    <g transform="translate(250,95)" opacity="0">
+      <animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.66;0.72;0.9;0.95" dur="8s" repeatCount="indefinite"/>
+      <rect x="-96" y="-18" width="192" height="30" rx="8" fill="#f5b800"/>
+      <text x="0" y="2" font-size="13" font-weight="800" fill="#3d2f00" text-anchor="middle">📣 передать [новый уровень]</text>
+    </g>
+  </g>
+
+  <!-- ===== SIDE: what happens ===== -->
+  <g transform="translate(496,60)">
+    <rect x="0" y="0" width="200" height="272" rx="12" fill="#ffffff" stroke="#e2e8f0" stroke-width="1.5"/>
+    <text x="16" y="26" font-size="13" font-weight="800" fill="#334155">Один сигнал 📣 →</text>
+    <text x="16" y="44" font-size="13" font-weight="800" fill="#334155">все откликаются:</text>
+
+    <g font-size="12" fill="#475569">
+      <rect x="14" y="58" width="172" height="34" rx="8" fill="#eef2ff"/>
+      <text x="24" y="79" font-weight="700">🎬 Сцена → меняет фон</text>
+      <rect x="14" y="98" width="172" height="34" rx="8" fill="#ecfdf5"/>
+      <text x="24" y="119" font-weight="700">🦸 Герой → на старт</text>
+      <rect x="14" y="138" width="172" height="34" rx="8" fill="#fef9c3"/>
+      <text x="24" y="159" font-weight="700">⭐ Звёзды → заново</text>
+      <rect x="14" y="178" width="172" height="34" rx="8" fill="#e0f2fe"/>
+      <text x="24" y="199" font-weight="700">🌀 Портал → прячется</text>
+    </g>
+    <rect x="14" y="222" width="172" height="38" rx="9" fill="#4f46e5"/>
+    <text x="100" y="246" font-size="12.5" font-weight="800" fill="#fff" text-anchor="middle">= новый уровень!</text>
+  </g>
+
+  <!-- ===== FILMSTRIP: screens in order ===== -->
+  <text x="24" y="356" font-size="12.5" font-weight="800" fill="#334155">Экраны игры по порядку (переключает Сцена-дирижёр):</text>
+  <g transform="translate(0,364)">
+    <!-- boxes -->
+    <g>
+      <rect x="24" y="0" width="120" height="70" rx="9" fill="#312e5f"/>
+      <polygon points="66,26 66,44 82,35" fill="#fde047"/>
+      <text x="84" y="40" font-size="12" font-weight="700" fill="#fff">Играть</text>
+      <text x="84" y="62" font-size="11" fill="#c7d2fe">старт</text>
+    </g>
+    <g transform="translate(138,0)">
+      <rect x="24" y="0" width="120" height="70" rx="9" fill="#2f8f4e"/>
+      <text x="84" y="34" font-size="16" text-anchor="middle">⭐⭐</text>
+      <text x="84" y="62" font-size="11" fill="#dcfce7" text-anchor="middle">уровень 1</text>
+    </g>
+    <g transform="translate(276,0)">
+      <rect x="24" y="0" width="120" height="70" rx="9" fill="#2563a8"/>
+      <text x="84" y="34" font-size="16" text-anchor="middle">⭐⭐⭐</text>
+      <text x="84" y="62" font-size="11" fill="#dbeafe" text-anchor="middle">уровень 2</text>
+    </g>
+    <g transform="translate(414,0)">
+      <rect x="24" y="0" width="120" height="70" rx="9" fill="#6d47b8"/>
+      <text x="84" y="34" font-size="16" text-anchor="middle">⭐⭐⭐</text>
+      <text x="84" y="62" font-size="11" fill="#ede9fe" text-anchor="middle">уровень 3</text>
+    </g>
+    <g transform="translate(552,0)">
+      <rect x="24" y="0" width="120" height="70" rx="9" fill="#e0a800"/>
+      <text x="84" y="36" font-size="20" text-anchor="middle">🏆</text>
+      <text x="84" y="62" font-size="11" fill="#3d2f00" text-anchor="middle">победа</text>
+    </g>
+    <!-- moving highlight -->
+    <rect x="24" y="0" width="120" height="70" rx="9" fill="none" stroke="#ef4444" stroke-width="4">
+      <animateTransform attributeName="transform" type="translate" calcMode="discrete"
+        values="0,0; 138,0; 276,0; 414,0; 552,0" keyTimes="0;0.2;0.4;0.6;0.8" dur="8s" repeatCount="indefinite"/>
+    </rect>
+    <!-- arrows between -->
+    <g fill="#94a3b8" font-size="16" font-weight="800">
+      <text x="150" y="42">→</text><text x="288" y="42">→</text><text x="426" y="42">→</text><text x="564" y="42">→</text>
+    </g>
+  </g>
+
+  <defs>
+    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#7c6fd6"/>
+      <stop offset="1" stop-color="#c3b9f2"/>
+    </linearGradient>
+  </defs>
+</svg>

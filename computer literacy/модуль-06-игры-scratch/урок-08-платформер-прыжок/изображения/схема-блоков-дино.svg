@@ -1,0 +1,68 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 540" font-family="'Segoe UI',system-ui,sans-serif">
+  <rect x="0" y="0" width="760" height="540" fill="#f7f9fc"/>
+  <text x="24" y="26" font-size="18" font-weight="800" fill="#1f2937">🧩 Итоговая схема блоков — «Динозаврик»</text>
+  <text x="24" y="45" font-size="12.5" fill="#64748b">Сердце игры — движок гравитации: «скорость_y» убывает каждый кадр и двигает дино.</text>
+
+  <g font-size="11" font-weight="700" fill="#ffffff">
+    <!-- ===== ДИНО: гравитация ===== -->
+    <text x="24" y="66" font-size="12.5" font-weight="800" fill="#535353">🦖 Дино — гравитация + земля</text>
+    <rect x="24" y="72" width="336" height="20" rx="9" fill="#f5b800"/><text x="31" y="86" fill="#3d2f00">когда 🚩</text>
+    <rect x="24" y="94" width="336" height="20" rx="4" fill="#ff8c1a"/><text x="31" y="108">установить [счёт] 0 · [скорость_y] 0</text>
+    <rect x="24" y="116" width="336" height="20" rx="4" fill="#4c97ff"/><text x="31" y="130">перейти в x: -150 y: -90</text>
+    <rect x="24" y="138" width="336" height="20" rx="4" fill="#ffab19"/><text x="31" y="152">всегда:</text>
+    <rect x="38" y="160" width="322" height="20" rx="4" fill="#ff8c1a"/><text x="45" y="174">изменить [скорость_y] на -1  ← гравитация</text>
+    <rect x="38" y="182" width="322" height="20" rx="4" fill="#4c97ff"/><text x="45" y="196">изменить y на (скорость_y)  ← движение</text>
+    <rect x="38" y="204" width="322" height="20" rx="4" fill="#ffab19"/><text x="45" y="218">если ⟨y &lt; -90⟩ → y = -90 · скорость_y = 0</text>
+
+    <!-- прыжок -->
+    <text x="24" y="248" font-size="12.5" font-weight="800" fill="#535353">🦘 Дино — прыжок</text>
+    <rect x="24" y="254" width="336" height="20" rx="9" fill="#f5b800"/><text x="31" y="268" fill="#3d2f00">когда клавиша [пробел] нажата</text>
+    <rect x="24" y="276" width="336" height="20" rx="4" fill="#ffab19"/><text x="31" y="290">если ⟨y = -90⟩ (на земле) →</text>
+    <rect x="38" y="298" width="322" height="20" rx="4" fill="#ff8c1a"/><text x="45" y="312">установить [скорость_y] в 13 · звук [jump]</text>
+
+    <!-- анимация -->
+    <text x="24" y="342" font-size="12.5" font-weight="800" fill="#535353">🎞 Дино — анимация</text>
+    <rect x="24" y="348" width="336" height="20" rx="9" fill="#f5b800"/><text x="31" y="362" fill="#3d2f00">когда 🚩 → всегда:</text>
+    <rect x="38" y="370" width="322" height="20" rx="4" fill="#ffab19"/><text x="45" y="384">если ⟨y = -90⟩ → бег1 · ждать0.1 · бег2 · ждать0.1</text>
+    <rect x="38" y="392" width="322" height="20" rx="4" fill="#9966ff"/><text x="45" y="406">иначе → переключить костюм на [прыжок]</text>
+
+    <!-- game over -->
+    <rect x="24" y="420" width="336" height="20" rx="9" fill="#f5b800"/><text x="31" y="434" fill="#3d2f00">когда я получу [game over]</text>
+    <rect x="24" y="442" width="336" height="20" rx="4" fill="#9966ff"/><text x="31" y="456">сказать (соединить [Бум! Счёт: ] счёт)</text>
+    <rect x="24" y="464" width="336" height="20" rx="4" fill="#ec5a13"/><text x="31" y="478">стоп [всё]</text>
+
+    <!-- ===== КАКТУС ===== -->
+    <text x="392" y="66" font-size="12.5" font-weight="800" fill="#4a7c2f">🌵 Кактус — родитель</text>
+    <rect x="392" y="72" width="344" height="20" rx="9" fill="#f5b800"/><text x="399" y="86" fill="#3d2f00">когда 🚩 → спрятаться → всегда:</text>
+    <rect x="406" y="94" width="330" height="20" rx="4" fill="#4c97ff"/><text x="413" y="108">перейти в x: 240 y: -95</text>
+    <rect x="406" y="116" width="330" height="20" rx="4" fill="#ffab19"/><text x="413" y="130">создать клон [сам]</text>
+    <rect x="406" y="138" width="330" height="20" rx="4" fill="#ffab19"/><text x="413" y="152">ждать (случайное 1.2 .. 2.2) сек</text>
+
+    <text x="392" y="182" font-size="12.5" font-weight="800" fill="#4a7c2f">🌵 Кактус — клон (едет навстречу)</text>
+    <rect x="392" y="188" width="344" height="20" rx="9" fill="#ffab19"/><text x="399" y="202">когда я начинаю как клон:</text>
+    <rect x="406" y="210" width="330" height="20" rx="4" fill="#9966ff"/><text x="413" y="224">костюм (случайное 1..2) → показаться</text>
+    <rect x="406" y="232" width="330" height="20" rx="4" fill="#ffab19"/><text x="413" y="246">всегда:</text>
+    <rect x="420" y="254" width="316" height="20" rx="4" fill="#4c97ff"/><text x="427" y="268">изменить x на -8</text>
+    <rect x="420" y="276" width="316" height="30" rx="4" fill="#ffab19"/>
+    <text x="427" y="289">если ⟨касается [Дино]?⟩ →</text><text x="427" y="302" font-size="10" fill="#fff8e1">📣 передать [game over] · удалить клон</text>
+    <rect x="420" y="308" width="316" height="30" rx="4" fill="#ffab19"/>
+    <text x="427" y="321">если ⟨x &lt; -240⟩ (перепрыгнули) →</text><text x="427" y="334" font-size="10" fill="#fff8e1">счёт +1 · удалить этот клон</text>
+
+    <!-- note -->
+    <rect x="392" y="360" width="344" height="120" rx="10" fill="#0b1026"/>
+    <text x="408" y="384" font-size="13" font-weight="800" fill="#fbbf24">💡 Движок гравитации</text>
+    <text x="408" y="406" font-size="11.5" fill="#e2e8f0">Две строки в «всегда»: скорость_y −1</text>
+    <text x="408" y="424" font-size="11.5" fill="#e2e8f0">и «изменить y на скорость_y». Прыжок —</text>
+    <text x="408" y="442" font-size="11.5" fill="#e2e8f0">толчок в скорость, только с земли.</text>
+    <text x="408" y="464" font-size="11.5" fill="#fca5a5">Этот движок — у ЛЮБОГО платформера.</text>
+  </g>
+
+  <!-- legend -->
+  <g font-size="11" font-weight="600" fill="#475569" transform="translate(24,512)">
+    <rect x="0" y="-10" width="14" height="14" rx="3" fill="#f5b800"/><text x="20" y="1">События / сообщения</text>
+    <rect x="180" y="-10" width="14" height="14" rx="3" fill="#4c97ff"/><text x="200" y="1">Движение</text>
+    <rect x="290" y="-10" width="14" height="14" rx="3" fill="#ffab19"/><text x="310" y="1">Управление (если)</text>
+    <rect x="452" y="-10" width="14" height="14" rx="3" fill="#9966ff"/><text x="472" y="1">Внешность</text>
+    <rect x="560" y="-10" width="14" height="14" rx="3" fill="#ff8c1a"/><text x="580" y="1">Переменные</text>
+  </g>
+</svg>

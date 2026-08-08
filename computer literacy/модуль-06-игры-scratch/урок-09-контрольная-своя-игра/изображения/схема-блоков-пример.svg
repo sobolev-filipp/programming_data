@@ -1,0 +1,61 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 520" font-family="'Segoe UI',system-ui,sans-serif">
+  <rect x="0" y="0" width="760" height="520" fill="#f7f9fc"/>
+  <text x="24" y="26" font-size="18" font-weight="800" fill="#1f2937">🧩 Схема блоков примера — «Спаси котят»</text>
+  <text x="24" y="45" font-size="12.5" fill="#64748b">Ни одной новой темы — всё собрано из уроков 1–7. Собери свою игру по этой логике.</text>
+
+  <g font-size="11" font-weight="700" fill="#ffffff">
+    <!-- ПОЖАРНЫЙ -->
+    <text x="24" y="66" font-size="12.5" font-weight="800" fill="#e11d48">🧑‍🚒 Пожарный (герой)</text>
+    <rect x="24" y="72" width="336" height="20" rx="9" fill="#f5b800"/><text x="31" y="86" fill="#3d2f00">когда 🚩</text>
+    <rect x="24" y="94" width="336" height="20" rx="4" fill="#ff8c1a"/><text x="31" y="108">установить [спасено] 0 · [жизни] 3</text>
+    <rect x="24" y="116" width="336" height="20" rx="4" fill="#4c97ff"/><text x="31" y="130">перейти в x: -180 y: -120</text>
+    <rect x="24" y="138" width="336" height="20" rx="4" fill="#ffab19"/><text x="31" y="152">всегда:</text>
+    <rect x="38" y="160" width="322" height="20" rx="4" fill="#4c97ff"/><text x="45" y="174">если ←/→/↑/↓ нажата → изменить x / y</text>
+    <rect x="38" y="182" width="322" height="20" rx="4" fill="#ffab19"/><text x="45" y="196">если ⟨спасено = 5⟩ → 📣 передать [победа]</text>
+    <rect x="38" y="204" width="322" height="20" rx="4" fill="#ffab19"/><text x="45" y="218">если ⟨жизни = 0⟩ → сказать [Не успел…] · стоп</text>
+
+    <text x="24" y="248" font-size="12.5" font-weight="800" fill="#e11d48">🎞 Пожарный — анимация</text>
+    <rect x="24" y="254" width="336" height="20" rx="9" fill="#f5b800"/><text x="31" y="268" fill="#3d2f00">когда 🚩 → всегда:</text>
+    <rect x="38" y="276" width="322" height="20" rx="4" fill="#9966ff"/><text x="45" y="290">следующий костюм · ждать 0.15 (шаги)</text>
+
+    <!-- КОТЁНОК -->
+    <text x="392" y="66" font-size="12.5" font-weight="800" fill="#d97706">🐱 Котёнок (клоны) — спасаем</text>
+    <rect x="392" y="72" width="344" height="20" rx="9" fill="#f5b800"/><text x="399" y="86" fill="#3d2f00">когда 🚩 → спрятаться → повторить 5:</text>
+    <rect x="406" y="94" width="330" height="20" rx="4" fill="#4c97ff"/><text x="413" y="108">в случайную точку → создать клон [сам]</text>
+    <rect x="392" y="116" width="344" height="20" rx="9" fill="#ffab19"/><text x="399" y="130">когда я начинаю как клон → показаться → всегда:</text>
+    <rect x="406" y="138" width="330" height="20" rx="4" fill="#ffab19"/><text x="413" y="152">если ⟨касается [Пожарный]?⟩ →</text>
+    <rect x="420" y="160" width="316" height="20" rx="4" fill="#ff8c1a"/><text x="427" y="174">спасено +1 · звук [pop] · удалить этот клон</text>
+
+    <!-- ОГОНЬ -->
+    <text x="392" y="192" font-size="12.5" font-weight="800" fill="#ea580c">🔥 Огонь (клоны) — опасность</text>
+    <rect x="392" y="198" width="344" height="20" rx="9" fill="#f5b800"/><text x="399" y="212" fill="#3d2f00">когда 🚩 → спрятаться → всегда:</text>
+    <rect x="406" y="220" width="330" height="20" rx="4" fill="#4c97ff"/><text x="413" y="234">в случайную точку внизу → клон → ждать 1.5</text>
+    <rect x="392" y="242" width="344" height="20" rx="9" fill="#ffab19"/><text x="399" y="256">когда я начинаю как клон → показаться → всегда:</text>
+    <rect x="406" y="264" width="330" height="20" rx="4" fill="#9966ff"/><text x="413" y="278">следующий костюм (мерцание 🎬)</text>
+    <rect x="406" y="286" width="330" height="20" rx="4" fill="#ffab19"/><text x="413" y="300">если ⟨касается [Пожарный]?⟩ → жизни −1 · удалить</text>
+
+    <!-- ПОБЕДА -->
+    <text x="392" y="332" font-size="12.5" font-weight="800" fill="#0284c7">🏆 Сцена — победа</text>
+    <rect x="392" y="338" width="344" height="20" rx="9" fill="#f5b800"/><text x="399" y="352" fill="#3d2f00">когда я получу [победа]</text>
+    <rect x="392" y="360" width="344" height="20" rx="4" fill="#9966ff"/><text x="399" y="374">переключить фон на [победа]</text>
+    <rect x="392" y="382" width="344" height="20" rx="4" fill="#ec5a13"/><text x="399" y="396">сказать [Все спасены! 🏆] · стоп [всё]</text>
+  </g>
+
+  <!-- note -->
+  <rect x="24" y="312" width="336" height="150" rx="10" fill="#0b1026"/>
+  <text x="40" y="338" font-size="13" font-weight="800" fill="#fbbf24">💡 Это и есть «сборка»</text>
+  <text x="40" y="362" font-size="11.5" fill="#e2e8f0">Движение (у.1–2), касание (у.3),</text>
+  <text x="40" y="380" font-size="11.5" fill="#e2e8f0">переменные (у.4), клоны (у.5),</text>
+  <text x="40" y="398" font-size="11.5" fill="#e2e8f0">сообщение-победа (у.7) — вместе.</text>
+  <text x="40" y="424" font-size="11.5" fill="#fca5a5">+ свои фон, герой и анимация из Adobe.</text>
+  <text x="40" y="448" font-size="11.5" fill="#93c5fd">Твоя игра — по этой же логике, свой сюжет!</text>
+
+  <!-- legend -->
+  <g font-size="11" font-weight="600" fill="#475569" transform="translate(24,492)">
+    <rect x="0" y="-10" width="14" height="14" rx="3" fill="#f5b800"/><text x="20" y="1">События / сообщения</text>
+    <rect x="180" y="-10" width="14" height="14" rx="3" fill="#4c97ff"/><text x="200" y="1">Движение</text>
+    <rect x="290" y="-10" width="14" height="14" rx="3" fill="#ffab19"/><text x="310" y="1">Управление (если)</text>
+    <rect x="452" y="-10" width="14" height="14" rx="3" fill="#9966ff"/><text x="472" y="1">Внешность</text>
+    <rect x="560" y="-10" width="14" height="14" rx="3" fill="#ff8c1a"/><text x="580" y="1">Переменные</text>
+  </g>
+</svg>

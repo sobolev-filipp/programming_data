@@ -1,0 +1,77 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 600" font-family="'Segoe UI',system-ui,sans-serif">
+  <rect x="0" y="0" width="760" height="600" fill="#f7f9fc"/>
+  <text x="24" y="26" font-size="18" font-weight="800" fill="#1f2937">🧩 Итоговая схема блоков — «Остров приключений»</text>
+  <text x="24" y="45" font-size="12.5" fill="#64748b">Жёлтым — сообщения (📣): один «передать» запускает Сцену, героя, звёзды и портал сразу.</text>
+
+  <g font-size="11" font-weight="700" fill="#ffffff">
+    <!-- ================= КНОПКА ================= -->
+    <text x="24" y="66" font-size="12.5" font-weight="800" fill="#312e5f">🔘 Кнопка «Играть»</text>
+    <rect x="24" y="72" width="336" height="20" rx="9" fill="#f5b800"/><text x="31" y="86" fill="#3d2f00">когда 🚩</text>
+    <rect x="24" y="94" width="336" height="20" rx="4" fill="#ff8c1a"/><text x="31" y="108">установить [уровень] в 1</text>
+    <rect x="24" y="116" width="336" height="20" rx="4" fill="#9966ff"/><text x="31" y="130">переключить фон на [старт]</text>
+    <rect x="24" y="138" width="336" height="20" rx="4" fill="#9966ff"/><text x="31" y="152">показаться</text>
+
+    <rect x="24" y="166" width="336" height="20" rx="9" fill="#f5b800"/><text x="31" y="180" fill="#3d2f00">когда этот спрайт нажат</text>
+    <rect x="24" y="188" width="336" height="20" rx="4" fill="#9966ff"/><text x="31" y="202">спрятаться</text>
+    <rect x="24" y="210" width="336" height="20" rx="4" fill="#f5b800"/><text x="31" y="224" fill="#3d2f00">📣 передать [новый уровень]</text>
+
+    <!-- ================= СЦЕНА ================= -->
+    <text x="24" y="250" font-size="12.5" font-weight="800" fill="#0284c7">🎬 Сцена — дирижёр</text>
+    <rect x="24" y="256" width="336" height="20" rx="9" fill="#f5b800"/><text x="31" y="270" fill="#3d2f00">когда я получу [новый уровень]</text>
+    <rect x="24" y="278" width="336" height="20" rx="4" fill="#ff8c1a"/><text x="31" y="292">установить [собрано] в 0</text>
+    <rect x="24" y="300" width="336" height="20" rx="4" fill="#ffab19"/><text x="31" y="314">если ⟨уровень = 1⟩ → фон [уровень1]</text>
+    <rect x="24" y="322" width="336" height="20" rx="4" fill="#ffab19"/><text x="31" y="336">если ⟨уровень = 2⟩ → фон [уровень2]</text>
+    <rect x="24" y="344" width="336" height="20" rx="4" fill="#ffab19"/><text x="31" y="358">если ⟨уровень = 3⟩ → фон [уровень3]</text>
+    <rect x="24" y="366" width="336" height="20" rx="4" fill="#ffab19"/><text x="31" y="380">если ⟨уровень = 4⟩ → 📣 передать [победа]</text>
+
+    <rect x="24" y="394" width="336" height="20" rx="9" fill="#f5b800"/><text x="31" y="408" fill="#3d2f00">когда я получу [победа]</text>
+    <rect x="24" y="416" width="336" height="20" rx="4" fill="#9966ff"/><text x="31" y="430">переключить фон на [победа]</text>
+
+    <!-- ================= ГЕРОЙ ================= -->
+    <text x="392" y="66" font-size="12.5" font-weight="800" fill="#15803d">🦸 Герой</text>
+    <rect x="392" y="72" width="344" height="20" rx="9" fill="#f5b800"/><text x="399" y="86" fill="#3d2f00">когда 🚩 → спрятаться</text>
+
+    <rect x="392" y="100" width="344" height="20" rx="9" fill="#f5b800"/><text x="399" y="114" fill="#3d2f00">когда я получу [новый уровень]</text>
+    <rect x="406" y="122" width="330" height="20" rx="4" fill="#4c97ff"/><text x="413" y="136">перейти в x: -180 y: -120 → показаться</text>
+
+    <rect x="392" y="150" width="344" height="20" rx="9" fill="#f5b800"/><text x="399" y="164" fill="#3d2f00">когда я получу [победа] → спрятаться</text>
+
+    <rect x="392" y="178" width="344" height="20" rx="9" fill="#f5b800"/><text x="399" y="192" fill="#3d2f00">когда 🚩 → всегда:</text>
+    <rect x="406" y="200" width="330" height="20" rx="4" fill="#4c97ff"/><text x="413" y="214">если ←/→/↑/↓ → изменить x / y</text>
+    <rect x="406" y="222" width="330" height="20" rx="4" fill="#4c97ff"/><text x="413" y="236">если на краю, оттолкнуться</text>
+
+    <!-- ================= ЗВЕЗДА ================= -->
+    <text x="392" y="258" font-size="12.5" font-weight="800" fill="#b45309">⭐ Звезда (клоны)</text>
+    <rect x="392" y="264" width="344" height="20" rx="9" fill="#f5b800"/><text x="399" y="278" fill="#3d2f00">когда я получу [новый уровень] → спрятаться</text>
+    <rect x="406" y="286" width="330" height="20" rx="4" fill="#ffab19"/><text x="413" y="300">повторить 5 раз:</text>
+    <rect x="420" y="308" width="316" height="20" rx="4" fill="#4c97ff"/><text x="427" y="322">в случайную точку → создать клон [сам]</text>
+
+    <rect x="392" y="336" width="344" height="20" rx="9" fill="#ffab19"/><text x="399" y="350">когда я начинаю как клон → показаться → всегда:</text>
+    <rect x="406" y="358" width="330" height="20" rx="4" fill="#ffab19"/><text x="413" y="372">если ⟨касается [Герой]?⟩ →</text>
+    <rect x="420" y="380" width="316" height="20" rx="4" fill="#ff8c1a"/><text x="427" y="394">собрано +1 · удалить этот клон</text>
+
+    <!-- ================= ПОРТАЛ ================= -->
+    <text x="392" y="416" font-size="12.5" font-weight="800" fill="#0e7490">🌀 Портал</text>
+    <rect x="392" y="422" width="344" height="20" rx="9" fill="#f5b800"/><text x="399" y="436" fill="#3d2f00">когда 🚩 → спрятаться</text>
+    <rect x="392" y="450" width="344" height="20" rx="9" fill="#f5b800"/><text x="399" y="464" fill="#3d2f00">когда 🚩 → всегда:</text>
+    <rect x="406" y="472" width="330" height="20" rx="4" fill="#ffab19"/><text x="413" y="486">если ⟨собрано = 5⟩ → показаться</text>
+    <rect x="420" y="494" width="316" height="20" rx="4" fill="#ffab19"/><text x="427" y="508">если ⟨касается [Герой]?⟩ →</text>
+    <rect x="434" y="516" width="302" height="20" rx="4" fill="#ff8c1a"/><text x="441" y="530">уровень +1 · 📣 передать [новый уровень]</text>
+  </g>
+
+  <!-- collision/idea note -->
+  <rect x="24" y="454" width="336" height="88" rx="10" fill="#0b1026"/>
+  <text x="40" y="478" font-size="12.5" font-weight="800" fill="#fbbf24">💡 Сцена — центр управления</text>
+  <text x="40" y="500" font-size="11.5" fill="#e2e8f0">Она одна решает, какой сейчас экран.</text>
+  <text x="40" y="518" font-size="11.5" fill="#e2e8f0">Портал кричит «новый уровень» —</text>
+  <text x="40" y="536" font-size="11.5" fill="#fca5a5">и Сцена, герой, звёзды слышат сразу.</text>
+
+  <!-- legend -->
+  <g font-size="11" font-weight="600" fill="#475569" transform="translate(24,566)">
+    <rect x="0" y="-10" width="14" height="14" rx="3" fill="#f5b800"/><text x="20" y="1">События / сообщения</text>
+    <rect x="180" y="-10" width="14" height="14" rx="3" fill="#4c97ff"/><text x="200" y="1">Движение</text>
+    <rect x="290" y="-10" width="14" height="14" rx="3" fill="#9966ff"/><text x="310" y="1">Внешность (фон)</text>
+    <rect x="450" y="-10" width="14" height="14" rx="3" fill="#ffab19"/><text x="470" y="1">Управление (если)</text>
+    <rect x="620" y="-10" width="14" height="14" rx="3" fill="#ff8c1a"/><text x="640" y="1">Переменные</text>
+  </g>
+</svg>

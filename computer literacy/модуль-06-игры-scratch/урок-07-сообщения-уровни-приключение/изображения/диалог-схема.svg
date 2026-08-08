@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 380" font-family="'Segoe UI',system-ui,sans-serif">
+  <rect x="0" y="0" width="680" height="380" fill="#f7f9fc"/>
+  <text x="24" y="30" font-size="19" font-weight="800" fill="#1f2937">🎭 Доп «Сценка: диалог героев»</text>
+  <text x="24" y="52" font-size="13" fill="#64748b">Сообщения передают «ход» — герои говорят по очереди, не перебивая друг друга.</text>
+
+  <!-- turn order arrows -->
+  <g stroke="#94a3b8" stroke-width="2.5" fill="none" marker-end="url(#ar2)">
+    <path d="M330 118 C 380 118, 380 118, 424 118"/>
+    <path d="M424 190 C 380 190, 380 190, 330 190"/>
+  </g>
+
+  <g font-size="11" font-weight="700" fill="#ffffff">
+    <!-- CAT -->
+    <text x="24" y="96" font-size="12.5" font-weight="800" fill="#b45309">🐱 Кот (начинает)</text>
+    <rect x="24" y="102" width="300" height="20" rx="9" fill="#f5b800"/><text x="31" y="116" fill="#3d2f00">когда 🚩</text>
+    <rect x="24" y="124" width="300" height="20" rx="4" fill="#9966ff"/><text x="31" y="138">сказать [Привет! Как дела?] 2 сек</text>
+    <rect x="24" y="146" width="300" height="20" rx="4" fill="#f5b800"/><text x="31" y="160" fill="#3d2f00">📣 передать [ход Гобо]</text>
+
+    <text x="24" y="230" font-size="12.5" font-weight="800" fill="#b45309">🐱 Кот (отвечает в конце)</text>
+    <rect x="24" y="236" width="300" height="20" rx="9" fill="#f5b800"/><text x="31" y="250" fill="#3d2f00">когда я получу [ход Кота]</text>
+    <rect x="24" y="258" width="300" height="20" rx="4" fill="#9966ff"/><text x="31" y="272">сказать [Побежали! 🏝] 2 сек</text>
+
+    <!-- GOBO -->
+    <text x="356" y="168" font-size="12.5" font-weight="800" fill="#7c3aed">👾 Гобо (отвечает)</text>
+    <rect x="356" y="174" width="300" height="20" rx="9" fill="#f5b800"/><text x="363" y="188" fill="#3d2f00">когда я получу [ход Гобо]</text>
+    <rect x="356" y="196" width="300" height="20" rx="4" fill="#9966ff"/><text x="363" y="210">сказать [Отлично! Идём на остров?] 2 сек</text>
+    <rect x="356" y="218" width="300" height="20" rx="4" fill="#f5b800"/><text x="363" y="232" fill="#3d2f00">📣 передать [ход Кота]</text>
+  </g>
+
+  <!-- note -->
+  <rect x="356" y="256" width="300" height="72" rx="10" fill="#0b1026"/>
+  <text x="372" y="280" font-size="12.5" font-weight="800" fill="#fbbf24">💡 Правило очереди</text>
+  <text x="372" y="300" font-size="11.5" fill="#e2e8f0">Каждый говорит только ПОСЛЕ сигнала</text>
+  <text x="372" y="318" font-size="11.5" fill="#e2e8f0">от собеседника — реплики не наедут.</text>
+
+  <text x="24" y="300" font-size="12" fill="#475569">🎬 Так делают катсцены и квесты:</text>
+  <text x="24" y="320" font-size="12" fill="#475569">Кот → Гобо → Кот. Сигнал передаёт «ход».</text>
+  <text x="24" y="352" font-size="11.5" fill="#94a3b8">💡 Для длинных сценок удобно `передать [x] и ждать` — шаги строго по очереди.</text>
+
+  <defs>
+    <marker id="ar2" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L8,3 L0,6 Z" fill="#94a3b8"/>
+    </marker>
+  </defs>
+</svg>
