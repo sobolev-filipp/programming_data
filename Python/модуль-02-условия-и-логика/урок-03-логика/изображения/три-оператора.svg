@@ -1,0 +1,73 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 820 480" font-family="'Segoe UI',system-ui,sans-serif">
+  <rect x="0" y="0" width="820" height="480" fill="#f7f9fc"/>
+  <text x="410" y="36" font-size="24" font-weight="700" fill="#1f2937" text-anchor="middle">🧠 Три логических оператора: <tspan font-family="monospace" fill="#7c3aed">and · or · not</tspan></text>
+  <text x="410" y="60" font-size="14" fill="#64748b" text-anchor="middle">они соединяют условия и дают один ответ True / False</text>
+
+  <!-- AND -->
+  <g transform="translate(30,88)">
+    <rect x="0" y="0" width="245" height="360" rx="16" fill="#ffffff" stroke="#7c3aed" stroke-width="2.5"/>
+    <rect x="0" y="0" width="245" height="52" rx="16" fill="#7c3aed"/>
+    <rect x="0" y="36" width="245" height="16" fill="#7c3aed"/>
+    <text x="122" y="34" font-size="22" font-weight="800" fill="#ffffff" text-anchor="middle" font-family="monospace">and</text>
+    <text x="122" y="82" font-size="15" font-weight="700" fill="#5b21b6" text-anchor="middle">«И» — оба условия</text>
+    <text x="122" y="104" font-size="13" fill="#64748b" text-anchor="middle">True, только если ОБА True</text>
+
+    <!-- example -->
+    <rect x="20" y="122" width="205" height="70" rx="10" fill="#f5f3ff"/>
+    <text x="32" y="148" font-size="14" fill="#334155">Пустить на аттракцион,</text>
+    <text x="32" y="170" font-size="14" fill="#334155">если рост ОК <tspan font-weight="800" fill="#7c3aed">и</tspan> возраст ОК</text>
+
+    <!-- mini truth -->
+    <g transform="translate(30,208)" font-family="monospace" font-size="14">
+      <text x="0" y="14" fill="#16a34a">True  and True  → True</text>
+      <text x="0" y="40" fill="#dc2626">True  and False → False</text>
+      <text x="0" y="66" fill="#dc2626">False and True  → False</text>
+      <text x="0" y="92" fill="#dc2626">False and False → False</text>
+    </g>
+    <text x="122" y="336" font-size="13" fill="#7c3aed" text-anchor="middle" font-style="italic">строже всех: нужен «зачёт» везде</text>
+  </g>
+
+  <!-- OR -->
+  <g transform="translate(288,88)">
+    <rect x="0" y="0" width="245" height="360" rx="16" fill="#ffffff" stroke="#0891b2" stroke-width="2.5"/>
+    <rect x="0" y="0" width="245" height="52" rx="16" fill="#0891b2"/>
+    <rect x="0" y="36" width="245" height="16" fill="#0891b2"/>
+    <text x="122" y="34" font-size="22" font-weight="800" fill="#ffffff" text-anchor="middle" font-family="monospace">or</text>
+    <text x="122" y="82" font-size="15" font-weight="700" fill="#0e7490" text-anchor="middle">«ИЛИ» — хотя бы одно</text>
+    <text x="122" y="104" font-size="13" fill="#64748b" text-anchor="middle">True, если ХОТЯ БЫ одно True</text>
+
+    <rect x="20" y="122" width="205" height="70" rx="10" fill="#ecfeff"/>
+    <text x="32" y="148" font-size="14" fill="#334155">Скидка, если ты студент</text>
+    <text x="32" y="170" font-size="14" fill="#334155"><tspan font-weight="800" fill="#0891b2">или</tspan> пенсионер</text>
+
+    <g transform="translate(30,208)" font-family="monospace" font-size="14">
+      <text x="0" y="14" fill="#16a34a">True  or True  → True</text>
+      <text x="0" y="40" fill="#16a34a">True  or False → True</text>
+      <text x="0" y="66" fill="#16a34a">False or True  → True</text>
+      <text x="0" y="92" fill="#dc2626">False or False → False</text>
+    </g>
+    <text x="122" y="336" font-size="13" fill="#0891b2" text-anchor="middle" font-style="italic">добрее всех: хватит одного</text>
+  </g>
+
+  <!-- NOT -->
+  <g transform="translate(546,88)">
+    <rect x="0" y="0" width="245" height="360" rx="16" fill="#ffffff" stroke="#db2777" stroke-width="2.5"/>
+    <rect x="0" y="0" width="245" height="52" rx="16" fill="#db2777"/>
+    <rect x="0" y="36" width="245" height="16" fill="#db2777"/>
+    <text x="122" y="34" font-size="22" font-weight="800" fill="#ffffff" text-anchor="middle" font-family="monospace">not</text>
+    <text x="122" y="82" font-size="15" font-weight="700" fill="#9d174d" text-anchor="middle">«НЕ» — переворот</text>
+    <text x="122" y="104" font-size="13" fill="#64748b" text-anchor="middle">меняет True ↔ False</text>
+
+    <rect x="20" y="122" width="205" height="70" rx="10" fill="#fdf2f8"/>
+    <text x="32" y="148" font-size="14" fill="#334155">Впустить, если</text>
+    <text x="32" y="170" font-size="14" fill="#334155"><tspan font-weight="800" fill="#db2777">не</tspan> заблокирован</text>
+
+    <g transform="translate(46,214)" font-family="monospace" font-size="15">
+      <text x="0" y="14" fill="#dc2626">not True  → False</text>
+      <text x="0" y="46" fill="#16a34a">not False → True</text>
+    </g>
+    <text x="122" y="336" font-size="13" fill="#db2777" text-anchor="middle" font-style="italic">переключатель наоборот</text>
+  </g>
+
+  <text x="410" y="474" font-size="13.5" fill="#475569" text-anchor="middle" font-style="italic">💡 and — самый строгий (нужны все), or — самый добрый (хватит одного), not — переворачивает ответ.</text>
+</svg>

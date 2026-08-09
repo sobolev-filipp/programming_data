@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 820 470" font-family="'Segoe UI',system-ui,sans-serif">
+  <rect x="0" y="0" width="820" height="470" fill="#f7f9fc"/>
+  <text x="410" y="38" font-size="24" font-weight="700" fill="#1f2937" text-anchor="middle"><tspan font-family="monospace" fill="#7c3aed">if / else</tspan> — две дороги, одна из них сработает всегда</text>
+  <text x="410" y="62" font-size="14" fill="#64748b" text-anchor="middle">условие True → блок if; иначе (False) → блок else. Что-то одно выполнится обязательно.</text>
+
+  <!-- code -->
+  <g transform="translate(40,110)">
+    <rect x="0" y="0" width="300" height="130" rx="12" fill="#0f172a"/>
+    <text x="18" y="34" font-size="16" font-family="'Consolas',monospace"><tspan fill="#c084fc">if</tspan> <tspan fill="#e2e8f0">age </tspan><tspan fill="#f472b6">&gt;=</tspan><tspan fill="#e2e8f0"> 18:</tspan></text>
+    <text x="42" y="60" font-size="16" font-family="'Consolas',monospace"><tspan fill="#fbbf24">print</tspan><tspan fill="#e2e8f0">(</tspan><tspan fill="#86efac">"Проходи"</tspan><tspan fill="#e2e8f0">)</tspan></text>
+    <text x="18" y="90" font-size="16" font-family="'Consolas',monospace"><tspan fill="#c084fc">else</tspan><tspan fill="#e2e8f0">:</tspan></text>
+    <text x="42" y="116" font-size="16" font-family="'Consolas',monospace"><tspan fill="#fbbf24">print</tspan><tspan fill="#e2e8f0">(</tspan><tspan fill="#fca5a5">"Рано"</tspan><tspan fill="#e2e8f0">)</tspan></text>
+  </g>
+  <text x="190" y="262" font-size="12.5" fill="#64748b" text-anchor="middle">else БЕЗ условия — «во всех остальных случаях»</text>
+
+  <!-- diamond -->
+  <g transform="translate(560,150)">
+    <polygon points="0,-52 132,0 0,52 -132,0" fill="#ede9fe" stroke="#7c3aed" stroke-width="3"/>
+    <text x="0" y="-4" font-size="16" font-weight="700" fill="#5b21b6" text-anchor="middle" font-family="monospace">age &gt;= 18 ?</text>
+    <text x="0" y="20" font-size="12.5" fill="#6d28d9" text-anchor="middle">условие верно?</text>
+  </g>
+
+  <!-- YES -->
+  <line x1="428" y1="150" x2="428" y2="290" stroke="#16a34a" stroke-width="2.5"/>
+  <polygon points="428,290 422,278 434,278" fill="#16a34a"/>
+  <text x="405" y="220" font-size="15" font-weight="800" fill="#16a34a" text-anchor="end">Да ✅</text>
+  <rect x="352" y="292" width="152" height="58" rx="10" fill="#dcfce7" stroke="#16a34a" stroke-width="2.5"/>
+  <text x="428" y="320" font-size="14" font-weight="700" fill="#15803d" text-anchor="middle" font-family="monospace">print("Проходи")</text>
+  <text x="428" y="340" font-size="12" fill="#15803d" text-anchor="middle">блок if</text>
+
+  <!-- NO -->
+  <line x1="692" y1="150" x2="692" y2="290" stroke="#ea580c" stroke-width="2.5"/>
+  <polygon points="692,290 686,278 698,278" fill="#ea580c"/>
+  <text x="715" y="220" font-size="15" font-weight="800" fill="#ea580c" text-anchor="start">Нет ❌</text>
+  <rect x="616" y="292" width="152" height="58" rx="10" fill="#ffedd5" stroke="#ea580c" stroke-width="2.5"/>
+  <text x="692" y="320" font-size="14" font-weight="700" fill="#9a3412" text-anchor="middle" font-family="monospace">print("Рано")</text>
+  <text x="692" y="340" font-size="12" fill="#9a3412" text-anchor="middle">блок else</text>
+
+  <!-- merge -->
+  <path d="M 428 350 L 428 388 L 560 388" stroke="#94a3b8" stroke-width="2" fill="none"/>
+  <path d="M 692 350 L 692 388 L 560 388" stroke="#94a3b8" stroke-width="2" fill="none"/>
+  <line x1="560" y1="388" x2="560" y2="404" stroke="#94a3b8" stroke-width="2"/>
+  <polygon points="560,404 554,392 566,392" fill="#94a3b8"/>
+  <rect x="470" y="406" width="180" height="42" rx="10" fill="#e2e8f0" stroke="#334155" stroke-width="2"/>
+  <text x="560" y="433" font-size="14" fill="#334155" text-anchor="middle">программа идёт дальше</text>
+
+  <text x="410" y="465" font-size="13.5" fill="#475569" text-anchor="middle" font-style="italic">💡 Одно из двух — обязательно. С else не нужен второй if с противоположным условием.</text>
+</svg>

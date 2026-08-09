@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 820 520" font-family="'Segoe UI',system-ui,sans-serif">
+  <rect x="0" y="0" width="820" height="520" fill="#f7f9fc"/>
+  <text x="410" y="36" font-size="24" font-weight="700" fill="#1f2937" text-anchor="middle">🪜 Лестница <tspan font-family="monospace" fill="#7c3aed">if / elif / else</tspan></text>
+  <text x="410" y="60" font-size="14" fill="#64748b" text-anchor="middle">Python идёт по ступенькам сверху вниз и останавливается на ПЕРВОМ верном условии</text>
+
+  <!-- example value -->
+  <rect x="330" y="76" width="160" height="34" rx="8" fill="#0f172a"/>
+  <text x="410" y="99" font-size="15" font-family="monospace" fill="#e2e8f0" text-anchor="middle">ball = <tspan fill="#fbbf24">78</tspan></text>
+
+  <!-- Step 1: if >= 90 -> False -->
+  <g transform="translate(90,124)">
+    <rect x="0" y="0" width="470" height="46" rx="10" fill="#fee2e2" stroke="#dc2626" stroke-width="2"/>
+    <text x="16" y="29" font-size="16" font-family="monospace" fill="#0f172a"><tspan fill="#7c3aed">if</tspan> ball &gt;= 90:</text>
+    <text x="230" y="29" font-size="14" fill="#991b1b">78 &gt;= 90 ? → False, пропускаем</text>
+  </g>
+  <text x="600" y="153" font-size="15" font-weight="700" fill="#dc2626">❌ мимо</text>
+
+  <!-- Step 2: elif >= 75 -> True -->
+  <g transform="translate(90,186)">
+    <rect x="0" y="0" width="470" height="46" rx="10" fill="#dcfce7" stroke="#16a34a" stroke-width="3"/>
+    <text x="16" y="29" font-size="16" font-family="monospace" fill="#0f172a"><tspan fill="#7c3aed">elif</tspan> ball &gt;= 75:</text>
+    <text x="230" y="29" font-size="14" fill="#15803d">78 &gt;= 75 ? → True! СТОП</text>
+  </g>
+  <text x="600" y="215" font-size="15" font-weight="800" fill="#16a34a">✅ здесь!</text>
+  <!-- executed block -->
+  <g transform="translate(126,240)">
+    <rect x="0" y="0" width="360" height="34" rx="8" fill="#bbf7d0" stroke="#16a34a" stroke-width="2"/>
+    <text x="16" y="23" font-size="15" font-family="monospace" fill="#166534">print("Оценка 4")   ← выполняется</text>
+  </g>
+
+  <!-- Step 3: elif >= 60 -> skipped -->
+  <g transform="translate(90,290)">
+    <rect x="0" y="0" width="470" height="42" rx="10" fill="#f1f5f9" stroke="#cbd5e1" stroke-width="2" stroke-dasharray="5 4"/>
+    <text x="16" y="27" font-size="16" font-family="monospace" fill="#94a3b8"><tspan fill="#a78bfa">elif</tspan> ball &gt;= 60:</text>
+    <text x="230" y="27" font-size="14" fill="#94a3b8">даже не проверяется</text>
+  </g>
+  <text x="600" y="316" font-size="14" font-weight="700" fill="#94a3b8">⤵ пропущено</text>
+
+  <!-- Step 4: else -> skipped -->
+  <g transform="translate(90,342)">
+    <rect x="0" y="0" width="470" height="42" rx="10" fill="#f1f5f9" stroke="#cbd5e1" stroke-width="2" stroke-dasharray="5 4"/>
+    <text x="16" y="27" font-size="16" font-family="monospace" fill="#94a3b8"><tspan fill="#a78bfa">else</tspan>:</text>
+    <text x="230" y="27" font-size="14" fill="#94a3b8">во всех остальных случаях — тоже мимо</text>
+  </g>
+  <text x="600" y="368" font-size="14" font-weight="700" fill="#94a3b8">⤵ пропущено</text>
+
+  <!-- down arrow through the ladder -->
+  <line x1="70" y1="124" x2="70" y2="360" stroke="#7c3aed" stroke-width="3"/>
+  <polygon points="70,232 64,220 76,220" fill="#7c3aed"/>
+  <text x="46" y="200" font-size="12" fill="#7c3aed" transform="rotate(-90 46 200)" text-anchor="middle">идём вниз</text>
+
+  <!-- bottom note -->
+  <g transform="translate(90,406)">
+    <rect x="0" y="0" width="640" height="66" rx="12" fill="#ede9fe" stroke="#7c3aed" stroke-width="2"/>
+    <text x="20" y="28" font-size="15" font-weight="800" fill="#5b21b6">Главное правило лестницы:</text>
+    <text x="20" y="52" font-size="14.5" fill="#4c1d95">сработает РОВНО ОДНА ветка — первая, чьё условие True. Как только нашли — остальные не смотрим.</text>
+  </g>
+
+  <text x="410" y="502" font-size="13.5" fill="#475569" text-anchor="middle" font-style="italic">💡 elif = «а иначе если». else = «а иначе» (без условия, ловит всё, что не подошло выше).</text>
+</svg>
