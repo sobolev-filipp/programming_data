@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 860 420" font-family="'Segoe UI',system-ui,sans-serif">
+  <rect x="0" y="0" width="860" height="420" fill="#f7f9fc"/>
+  <text x="430" y="38" font-size="24" font-weight="700" fill="#1f2937" text-anchor="middle">➗ Деление нацело // и остаток %</text>
+  <text x="430" y="62" font-size="14" fill="#64748b" text-anchor="middle">17 конфет разложить по 5 в пакет: сколько полных пакетов и сколько конфет останется?</text>
+
+  <!-- 17 candies grouped into bags of 5 -->
+  <g transform="translate(60,95)">
+    <text x="0" y="0" font-size="15" font-weight="700" fill="#334155">17 конфет по 5 в пакет:</text>
+    <!-- bag 1 -->
+    <g transform="translate(0,20)">
+      <rect x="0" y="0" width="150" height="70" rx="10" fill="#dcfce7" stroke="#16a34a" stroke-width="2"/>
+      <text x="75" y="44" font-size="26" text-anchor="middle">🍬🍬🍬🍬🍬</text>
+      <text x="75" y="88" font-size="12" fill="#15803d" text-anchor="middle">пакет 1</text>
+    </g>
+    <g transform="translate(165,20)">
+      <rect x="0" y="0" width="150" height="70" rx="10" fill="#dcfce7" stroke="#16a34a" stroke-width="2"/>
+      <text x="75" y="44" font-size="26" text-anchor="middle">🍬🍬🍬🍬🍬</text>
+      <text x="75" y="88" font-size="12" fill="#15803d" text-anchor="middle">пакет 2</text>
+    </g>
+    <g transform="translate(330,20)">
+      <rect x="0" y="0" width="150" height="70" rx="10" fill="#dcfce7" stroke="#16a34a" stroke-width="2"/>
+      <text x="75" y="44" font-size="26" text-anchor="middle">🍬🍬🍬🍬🍬</text>
+      <text x="75" y="88" font-size="12" fill="#15803d" text-anchor="middle">пакет 3</text>
+    </g>
+    <!-- remainder -->
+    <g transform="translate(500,20)">
+      <rect x="0" y="0" width="90" height="70" rx="10" fill="#fee2e2" stroke="#dc2626" stroke-width="2" stroke-dasharray="5 4"/>
+      <text x="45" y="44" font-size="26" text-anchor="middle">🍬🍬</text>
+      <text x="45" y="88" font-size="12" fill="#b91c1c" text-anchor="middle">остаток</text>
+    </g>
+  </g>
+
+  <!-- formulas -->
+  <g transform="translate(160,230)">
+    <rect x="0" y="0" width="250" height="120" rx="12" fill="#ffffff" stroke="#16a34a" stroke-width="2"/>
+    <text x="125" y="34" font-size="15" fill="#334155" text-anchor="middle">Целых пакетов:</text>
+    <text x="125" y="74" font-size="28" font-weight="800" fill="#15803d" text-anchor="middle" font-family="monospace">17 // 5</text>
+    <text x="125" y="104" font-size="24" font-weight="800" fill="#0f172a" text-anchor="middle" font-family="monospace">= 3</text>
+  </g>
+  <g transform="translate(450,230)">
+    <rect x="0" y="0" width="250" height="120" rx="12" fill="#ffffff" stroke="#dc2626" stroke-width="2"/>
+    <text x="125" y="34" font-size="15" fill="#334155" text-anchor="middle">Останется конфет:</text>
+    <text x="125" y="74" font-size="28" font-weight="800" fill="#b91c1c" text-anchor="middle" font-family="monospace">17 % 5</text>
+    <text x="125" y="104" font-size="24" font-weight="800" fill="#0f172a" text-anchor="middle" font-family="monospace">= 2</text>
+  </g>
+
+  <text x="430" y="392" font-size="13.5" fill="#475569" text-anchor="middle" font-style="italic">💡 <tspan font-family="monospace">//</tspan> — сколько раз влезло целиком, <tspan font-family="monospace">%</tspan> — что не поместилось. А обычное <tspan font-family="monospace">17 / 5</tspan> = 3.4 (дробное).</text>
+</svg>

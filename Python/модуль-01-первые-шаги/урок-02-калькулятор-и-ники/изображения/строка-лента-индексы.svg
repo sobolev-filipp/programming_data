@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 860 400" font-family="'Segoe UI',system-ui,sans-serif">
+  <rect x="0" y="0" width="860" height="400" fill="#f7f9fc"/>
+  <text x="430" y="38" font-size="24" font-weight="700" fill="#1f2937" text-anchor="middle">🔤 Строка — это лента символов с номерами</text>
+  <text x="430" y="62" font-size="14" fill="#64748b" text-anchor="middle">каждая буква стоит на своём месте (индексе). Нумерация начинается с 0, а не с 1!</text>
+
+  <!-- the tape: P y t h o n -->
+  <g transform="translate(160,120)">
+    <!-- cells -->
+    <g font-family="monospace" font-weight="800" font-size="34" text-anchor="middle">
+      <rect x="0"   y="0" width="90" height="90" rx="10" fill="#ffffff" stroke="#7c3aed" stroke-width="2.5"/>
+      <text x="45"  y="58" fill="#6d28d9">P</text>
+      <rect x="90"  y="0" width="90" height="90" rx="10" fill="#ffffff" stroke="#7c3aed" stroke-width="2.5"/>
+      <text x="135" y="58" fill="#6d28d9">y</text>
+      <rect x="180" y="0" width="90" height="90" rx="10" fill="#ffffff" stroke="#7c3aed" stroke-width="2.5"/>
+      <text x="225" y="58" fill="#6d28d9">t</text>
+      <rect x="270" y="0" width="90" height="90" rx="10" fill="#ffffff" stroke="#7c3aed" stroke-width="2.5"/>
+      <text x="315" y="58" fill="#6d28d9">h</text>
+      <rect x="360" y="0" width="90" height="90" rx="10" fill="#ffffff" stroke="#7c3aed" stroke-width="2.5"/>
+      <text x="405" y="58" fill="#6d28d9">o</text>
+      <rect x="450" y="0" width="90" height="90" rx="10" fill="#ffffff" stroke="#7c3aed" stroke-width="2.5"/>
+      <text x="495" y="58" fill="#6d28d9">n</text>
+    </g>
+    <!-- positive indices -->
+    <g font-family="monospace" font-size="20" font-weight="700" text-anchor="middle" fill="#2563eb">
+      <text x="45" y="120">0</text><text x="135" y="120">1</text><text x="225" y="120">2</text>
+      <text x="315" y="120">3</text><text x="405" y="120">4</text><text x="495" y="120">5</text>
+    </g>
+    <text x="270" y="148" font-size="13" fill="#2563eb" text-anchor="middle">индексы вперёд (с 0)</text>
+    <!-- negative indices -->
+    <g font-family="monospace" font-size="18" font-weight="700" text-anchor="middle" fill="#dc2626">
+      <text x="45" y="-14">-6</text><text x="135" y="-14">-5</text><text x="225" y="-14">-4</text>
+      <text x="315" y="-14">-3</text><text x="405" y="-14">-2</text><text x="495" y="-14">-1</text>
+    </g>
+    <text x="270" y="-34" font-size="13" fill="#dc2626" text-anchor="middle">индексы с конца (с -1)</text>
+  </g>
+
+  <!-- examples -->
+  <g transform="translate(160,300)" font-family="monospace" font-size="16">
+    <rect x="0" y="0" width="250" height="34" rx="8" fill="#0f172a"/>
+    <text x="14" y="23" fill="#e2e8f0">word[0]</text><text x="150" y="23" fill="#4ade80">→ 'P'</text>
+    <rect x="270" y="0" width="250" height="34" rx="8" fill="#0f172a"/>
+    <text x="284" y="23" fill="#e2e8f0">word[-1]</text><text x="440" y="23" fill="#4ade80">→ 'n'</text>
+  </g>
+  <text x="430" y="372" font-size="13.5" fill="#475569" text-anchor="middle" font-style="italic">💡 <tspan font-family="monospace">len("Python")</tspan> = 6 (всего букв). Последний индекс = длина − 1 = 5. Отсюда «нумерация с 0».</text>
+</svg>

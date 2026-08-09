@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 860 470" font-family="'Segoe UI',system-ui,sans-serif">
+  <rect x="0" y="0" width="860" height="470" fill="#f7f9fc"/>
+  <text x="430" y="38" font-size="24" font-weight="700" fill="#1f2937" text-anchor="middle">🧮 Порядок операций (что Python считает первым)</text>
+  <text x="430" y="62" font-size="14" fill="#64748b" text-anchor="middle">как в математике: сначала степень, потом умножение/деление, потом сложение/вычитание. Скобки — главнее всех.</text>
+
+  <!-- priority ladder -->
+  <g transform="translate(40,90)">
+    <rect x="0" y="0" width="330" height="46" rx="10" fill="#ede9fe" stroke="#7c3aed" stroke-width="2"/>
+    <text x="18" y="29" font-size="17" font-weight="800" fill="#6d28d9" font-family="monospace">1. ( )</text>
+    <text x="150" y="29" font-size="14" fill="#4c1d95">скобки — первыми</text>
+
+    <rect x="0" y="56" width="330" height="46" rx="10" fill="#dbeafe" stroke="#2563eb" stroke-width="2"/>
+    <text x="18" y="85" font-size="17" font-weight="800" fill="#1d4ed8" font-family="monospace">2. **</text>
+    <text x="150" y="85" font-size="14" fill="#1e3a8a">степень</text>
+
+    <rect x="0" y="112" width="330" height="46" rx="10" fill="#dcfce7" stroke="#16a34a" stroke-width="2"/>
+    <text x="18" y="141" font-size="17" font-weight="800" fill="#15803d" font-family="monospace">3. *  /  //  %</text>
+    <text x="150" y="141" font-size="14" fill="#14532d">умножение и деление</text>
+
+    <rect x="0" y="168" width="330" height="46" rx="10" fill="#fef3c7" stroke="#f59e0b" stroke-width="2"/>
+    <text x="18" y="197" font-size="17" font-weight="800" fill="#b45309" font-family="monospace">4. +  -</text>
+    <text x="150" y="197" font-size="14" fill="#78350f">сложение и вычитание</text>
+
+    <text x="165" y="250" font-size="13" fill="#64748b" text-anchor="middle">одинаковые — слева направо</text>
+  </g>
+
+  <!-- worked example -->
+  <g transform="translate(430,95)">
+    <text x="0" y="0" font-size="15" font-weight="700" fill="#334155">Пример: без скобок</text>
+    <rect x="0" y="12" width="380" height="40" rx="8" fill="#0f172a"/>
+    <text x="16" y="39" font-size="19" font-family="monospace" fill="#e2e8f0">2 + 3 * 4</text>
+    <text x="16" y="78" font-size="14" fill="#475569">сначала <tspan font-family="monospace" fill="#16a34a" font-weight="700">3 * 4 = 12</tspan></text>
+    <text x="16" y="100" font-size="14" fill="#475569">потом <tspan font-family="monospace" fill="#b45309" font-weight="700">2 + 12 = 14</tspan></text>
+    <text x="16" y="124" font-size="17" font-weight="800" fill="#0f172a" font-family="monospace">= 14</text>
+
+    <text x="0" y="168" font-size="15" font-weight="700" fill="#334155">Пример: со скобками</text>
+    <rect x="0" y="180" width="380" height="40" rx="8" fill="#0f172a"/>
+    <text x="16" y="207" font-size="19" font-family="monospace" fill="#e2e8f0">(2 + 3) * 4</text>
+    <text x="16" y="246" font-size="14" fill="#475569">сначала <tspan font-family="monospace" fill="#6d28d9" font-weight="700">(2 + 3) = 5</tspan></text>
+    <text x="16" y="268" font-size="14" fill="#475569">потом <tspan font-family="monospace" fill="#16a34a" font-weight="700">5 * 4 = 20</tspan></text>
+    <text x="16" y="292" font-size="17" font-weight="800" fill="#0f172a" font-family="monospace">= 20</text>
+  </g>
+
+  <rect x="40" y="405" width="780" height="46" rx="12" fill="#eff6ff" stroke="#93c5fd" stroke-width="1.5"/>
+  <text x="430" y="433" font-size="14.5" fill="#1e40af" text-anchor="middle">💡 Не уверен в порядке — ставь скобки. <tspan font-family="monospace">(a + b) / 2</tspan> всегда понятнее, чем <tspan font-family="monospace">a + b / 2</tspan>.</text>
+</svg>
