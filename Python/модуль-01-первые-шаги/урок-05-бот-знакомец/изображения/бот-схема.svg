@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 860 430" font-family="'Segoe UI',system-ui,sans-serif">
+  <rect x="0" y="0" width="860" height="430" fill="#f7f9fc"/>
+  <text x="430" y="36" font-size="23" font-weight="700" fill="#1f2937" text-anchor="middle">🤖 Как устроен бот-знакомец (поток диалога)</text>
+  <text x="430" y="60" font-size="14" fill="#64748b" text-anchor="middle">программа идёт по шагам сверху вниз — и в каждом использует навык из своего урока</text>
+
+  <!-- steps -->
+  <g>
+    <!-- step 1 -->
+    <rect x="60" y="90" width="300" height="60" rx="12" fill="#ede9fe" stroke="#7c3aed" stroke-width="2"/>
+    <text x="80" y="118" font-size="15" font-weight="700" fill="#5b21b6">1. Приветствие по времени</text>
+    <text x="80" y="138" font-size="12.5" fill="#6d28d9" font-family="monospace">datetime + список + //</text>
+
+    <!-- step 2 -->
+    <rect x="60" y="170" width="300" height="60" rx="12" fill="#dbeafe" stroke="#2563eb" stroke-width="2"/>
+    <text x="80" y="198" font-size="15" font-weight="700" fill="#1e40af">2. Знакомство: имя, возраст</text>
+    <text x="80" y="218" font-size="12.5" fill="#1d4ed8" font-family="monospace">input + int(input)</text>
+
+    <!-- step 3 -->
+    <rect x="60" y="250" width="300" height="60" rx="12" fill="#dcfce7" stroke="#16a34a" stroke-width="2"/>
+    <text x="80" y="278" font-size="15" font-weight="700" fill="#166534">3. Считаем дни жизни</text>
+    <text x="80" y="298" font-size="12.5" fill="#15803d" font-family="monospace">datetime: (today - bd).days</text>
+
+    <!-- step 4 -->
+    <rect x="60" y="330" width="300" height="60" rx="12" fill="#fef3c7" stroke="#f59e0b" stroke-width="2"/>
+    <text x="80" y="358" font-size="15" font-weight="700" fill="#92400e">4. Случайная реакция</text>
+    <text x="80" y="378" font-size="12.5" fill="#b45309" font-family="monospace">random.choice([...])</text>
+
+    <!-- arrows -->
+    <g stroke="#94a3b8" stroke-width="3" fill="none">
+      <line x1="210" y1="150" x2="210" y2="168"/><polygon points="210,170 205,162 215,162" fill="#94a3b8"/>
+      <line x1="210" y1="230" x2="210" y2="248"/><polygon points="210,250 205,242 215,242" fill="#94a3b8"/>
+      <line x1="210" y1="310" x2="210" y2="328"/><polygon points="210,330 205,322 215,322" fill="#94a3b8"/>
+    </g>
+  </g>
+
+  <!-- output preview -->
+  <g transform="translate(420,90)">
+    <rect x="0" y="0" width="380" height="300" rx="12" fill="#0f172a" stroke="#334155" stroke-width="2"/>
+    <rect x="0" y="0" width="380" height="30" rx="12" fill="#1e293b"/>
+    <rect x="0" y="18" width="380" height="12" fill="#1e293b"/>
+    <text x="190" y="20" font-size="12" font-weight="700" fill="#94a3b8" text-anchor="middle">чат с ботом</text>
+    <g font-family="monospace" font-size="13.5">
+      <text x="18" y="62" fill="#a5b4fc">Доброе утро! Я бот-знакомец.</text>
+      <text x="18" y="88" fill="#e2e8f0">Как тебя зовут? </text><text x="180" y="88" fill="#4ade80">Гера</text>
+      <text x="18" y="114" fill="#e2e8f0">Сколько тебе лет? </text><text x="200" y="114" fill="#4ade80">12</text>
+      <text x="18" y="146" fill="#a5b4fc">Приятно, Гера!</text>
+      <text x="18" y="170" fill="#a5b4fc">Ты живёшь уже 4562 дня —</text>
+      <text x="18" y="190" fill="#a5b4fc">это круто!</text>
+      <text x="18" y="222" fill="#fbbf24">Мой случайный совет:</text>
+      <text x="18" y="242" fill="#fbbf24">«Попробуй сегодня что-то</text>
+      <text x="18" y="262" fill="#fbbf24">новенькое!»</text>
+      <text x="18" y="290" fill="#94a3b8">— до встречи, Гера! 🙂</text>
+    </g>
+  </g>
+</svg>

@@ -1,0 +1,62 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 820 470" font-family="'Segoe UI',system-ui,sans-serif">
+  <rect x="0" y="0" width="820" height="470" fill="#f7f9fc"/>
+  <text x="410" y="38" font-size="24" font-weight="700" fill="#1f2937" text-anchor="middle">⚖️ Сравнения → ответ <tspan font-family="monospace" fill="#16a34a">True</tspan> или <tspan font-family="monospace" fill="#dc2626">False</tspan></text>
+  <text x="410" y="62" font-size="14" fill="#64748b" text-anchor="middle">каждое сравнение — это вопрос, на который Python отвечает «да» (True) или «нет» (False)</text>
+
+  <!-- 6 operator cards -->
+  <!-- row 1 -->
+  <g transform="translate(40,90)">
+    <rect x="0" y="0" width="235" height="86" rx="12" fill="#ffffff" stroke="#cbd5e1" stroke-width="2"/>
+    <text x="18" y="34" font-size="26" font-weight="800" fill="#7c3aed" font-family="monospace">&gt;</text>
+    <text x="52" y="34" font-size="15" fill="#334155">больше</text>
+    <text x="18" y="64" font-size="15" font-family="monospace" fill="#0f172a">5 &gt; 3</text>
+    <text x="120" y="64" font-size="15" font-family="monospace" font-weight="700" fill="#16a34a">True</text>
+  </g>
+  <g transform="translate(293,90)">
+    <rect x="0" y="0" width="235" height="86" rx="12" fill="#ffffff" stroke="#cbd5e1" stroke-width="2"/>
+    <text x="18" y="34" font-size="26" font-weight="800" fill="#7c3aed" font-family="monospace">&lt;</text>
+    <text x="52" y="34" font-size="15" fill="#334155">меньше</text>
+    <text x="18" y="64" font-size="15" font-family="monospace" fill="#0f172a">5 &lt; 3</text>
+    <text x="120" y="64" font-size="15" font-family="monospace" font-weight="700" fill="#dc2626">False</text>
+  </g>
+  <g transform="translate(546,90)">
+    <rect x="0" y="0" width="235" height="86" rx="12" fill="#ffffff" stroke="#cbd5e1" stroke-width="2"/>
+    <text x="18" y="34" font-size="24" font-weight="800" fill="#7c3aed" font-family="monospace">==</text>
+    <text x="66" y="34" font-size="15" fill="#334155">равно</text>
+    <text x="18" y="64" font-size="15" font-family="monospace" fill="#0f172a">5 == 5</text>
+    <text x="130" y="64" font-size="15" font-family="monospace" font-weight="700" fill="#16a34a">True</text>
+  </g>
+  <!-- row 2 -->
+  <g transform="translate(40,196)">
+    <rect x="0" y="0" width="235" height="86" rx="12" fill="#ffffff" stroke="#cbd5e1" stroke-width="2"/>
+    <text x="18" y="34" font-size="24" font-weight="800" fill="#7c3aed" font-family="monospace">!=</text>
+    <text x="66" y="34" font-size="15" fill="#334155">не равно</text>
+    <text x="18" y="64" font-size="15" font-family="monospace" fill="#0f172a">5 != 3</text>
+    <text x="130" y="64" font-size="15" font-family="monospace" font-weight="700" fill="#16a34a">True</text>
+  </g>
+  <g transform="translate(293,196)">
+    <rect x="0" y="0" width="235" height="86" rx="12" fill="#ffffff" stroke="#cbd5e1" stroke-width="2"/>
+    <text x="18" y="34" font-size="24" font-weight="800" fill="#7c3aed" font-family="monospace">&gt;=</text>
+    <text x="66" y="34" font-size="15" fill="#334155">больше или равно</text>
+    <text x="18" y="64" font-size="15" font-family="monospace" fill="#0f172a">5 &gt;= 5</text>
+    <text x="130" y="64" font-size="15" font-family="monospace" font-weight="700" fill="#16a34a">True</text>
+  </g>
+  <g transform="translate(546,196)">
+    <rect x="0" y="0" width="235" height="86" rx="12" fill="#ffffff" stroke="#cbd5e1" stroke-width="2"/>
+    <text x="18" y="34" font-size="24" font-weight="800" fill="#7c3aed" font-family="monospace">&lt;=</text>
+    <text x="66" y="34" font-size="15" fill="#334155">меньше или равно</text>
+    <text x="18" y="64" font-size="15" font-family="monospace" fill="#0f172a">3 &lt;= 3</text>
+    <text x="130" y="64" font-size="15" font-family="monospace" font-weight="700" fill="#16a34a">True</text>
+  </g>
+
+  <!-- warning about == vs = -->
+  <g transform="translate(40,308)">
+    <rect x="0" y="0" width="740" height="96" rx="14" fill="#fef3c7" stroke="#f59e0b" stroke-width="2.5"/>
+    <text x="24" y="34" font-size="17" font-weight="800" fill="#b45309">⚠️ Одна из главных ошибок новичка:</text>
+    <text x="24" y="64" font-size="16" font-family="monospace" fill="#0f172a"><tspan fill="#7c3aed" font-weight="700">=</tspan>  — «положи в коробку»  (age <tspan fill="#7c3aed" font-weight="700">=</tspan> 18)</text>
+    <text x="400" y="64" font-size="16" font-family="monospace" fill="#0f172a"><tspan fill="#16a34a" font-weight="700">==</tspan>  — «сравни, равны ли»  (age <tspan fill="#16a34a" font-weight="700">==</tspan> 18)</text>
+    <text x="24" y="86" font-size="13.5" fill="#92400e">В условии <tspan font-family="monospace" font-weight="700">if</tspan> всегда две равно: <tspan font-family="monospace" font-weight="700">if age == 18:</tspan> — сравниваем, а не кладём.</text>
+  </g>
+
+  <text x="410" y="446" font-size="13.5" fill="#475569" text-anchor="middle" font-style="italic">💡 Результат любого сравнения — это значение типа bool: только True или False. Из них питается if.</text>
+</svg>

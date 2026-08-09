@@ -1,0 +1,59 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 860 400" font-family="'Segoe UI',system-ui,sans-serif">
+  <rect x="0" y="0" width="860" height="400" fill="#f7f9fc"/>
+  <text x="430" y="38" font-size="24" font-weight="700" fill="#1f2937" text-anchor="middle">🎲 Три главных инструмента случайности</text>
+  <text x="430" y="62" font-size="14" fill="#64748b" text-anchor="middle">каждый раз при запуске результат может быть разным — как в настоящей игре</text>
+
+  <!-- randint -->
+  <g transform="translate(40,95)">
+    <rect x="0" y="0" width="250" height="250" rx="14" fill="#ffffff" stroke="#2563eb" stroke-width="2.5"/>
+    <rect x="0" y="0" width="250" height="44" rx="14" fill="#dbeafe"/>
+    <rect x="0" y="28" width="250" height="16" fill="#dbeafe"/>
+    <text x="125" y="29" font-size="16" font-weight="800" fill="#1d4ed8" text-anchor="middle" font-family="monospace">randint(1, 6)</text>
+    <text x="125" y="80" font-size="13.5" fill="#334155" text-anchor="middle">случайное ЦЕЛОЕ число</text>
+    <text x="125" y="100" font-size="13.5" fill="#334155" text-anchor="middle">от 1 до 6 (оба включены)</text>
+    <text x="125" y="165" font-size="60" text-anchor="middle">🎲</text>
+    <text x="125" y="210" font-size="14" fill="#64748b" text-anchor="middle" font-family="monospace">→ 1, 2, 3, 4, 5 или 6</text>
+    <text x="125" y="234" font-size="12" fill="#94a3b8" text-anchor="middle">кубик, бросок, урон, монетка (1-2)</text>
+  </g>
+
+  <!-- choice -->
+  <g transform="translate(305,95)">
+    <rect x="0" y="0" width="250" height="250" rx="14" fill="#ffffff" stroke="#a855f7" stroke-width="2.5"/>
+    <rect x="0" y="0" width="250" height="44" rx="14" fill="#f3e8ff"/>
+    <rect x="0" y="28" width="250" height="16" fill="#f3e8ff"/>
+    <text x="125" y="29" font-size="16" font-weight="800" fill="#7e22ce" text-anchor="middle" font-family="monospace">choice([...])</text>
+    <text x="125" y="80" font-size="13.5" fill="#334155" text-anchor="middle">случайный ВЫБОР</text>
+    <text x="125" y="100" font-size="13.5" fill="#334155" text-anchor="middle">одного из вариантов</text>
+    <g font-family="monospace" font-size="13">
+      <rect x="30" y="120" width="88" height="30" rx="8" fill="#ede9fe" stroke="#a855f7"/>
+      <text x="74" y="140" fill="#6d28d9" text-anchor="middle">"камень"</text>
+      <rect x="132" y="120" width="88" height="30" rx="8" fill="#faf5ff" stroke="#d8b4fe"/>
+      <text x="176" y="140" fill="#7e22ce" text-anchor="middle">"ножницы"</text>
+      <rect x="80" y="158" width="90" height="30" rx="8" fill="#faf5ff" stroke="#d8b4fe"/>
+      <text x="125" y="178" fill="#7e22ce" text-anchor="middle">"бумага"</text>
+    </g>
+    <text x="125" y="215" font-size="14" fill="#64748b" text-anchor="middle" font-family="monospace">→ "камень"</text>
+    <text x="125" y="236" font-size="12" fill="#94a3b8" text-anchor="middle">предсказание, ход бота, приз</text>
+  </g>
+
+  <!-- random() -->
+  <g transform="translate(570,95)">
+    <rect x="0" y="0" width="250" height="250" rx="14" fill="#ffffff" stroke="#14b8a6" stroke-width="2.5"/>
+    <rect x="0" y="0" width="250" height="44" rx="14" fill="#ccfbf1"/>
+    <rect x="0" y="28" width="250" height="16" fill="#ccfbf1"/>
+    <text x="125" y="29" font-size="16" font-weight="800" fill="#0f766e" text-anchor="middle" font-family="monospace">random()</text>
+    <text x="125" y="80" font-size="13.5" fill="#334155" text-anchor="middle">случайное ДРОБНОЕ</text>
+    <text x="125" y="100" font-size="13.5" fill="#334155" text-anchor="middle">от 0.0 до 1.0</text>
+    <!-- number line -->
+    <line x1="30" y1="150" x2="220" y2="150" stroke="#0d9488" stroke-width="3"/>
+    <line x1="30" y1="143" x2="30" y2="157" stroke="#0d9488" stroke-width="3"/>
+    <line x1="220" y1="143" x2="220" y2="157" stroke="#0d9488" stroke-width="3"/>
+    <circle cx="140" cy="150" r="7" fill="#14b8a6"/>
+    <text x="30" y="176" font-size="12" fill="#0f766e" text-anchor="middle" font-family="monospace">0.0</text>
+    <text x="220" y="176" font-size="12" fill="#0f766e" text-anchor="middle" font-family="monospace">1.0</text>
+    <text x="125" y="210" font-size="14" fill="#64748b" text-anchor="middle" font-family="monospace">→ 0.5817...</text>
+    <text x="125" y="236" font-size="12" fill="#94a3b8" text-anchor="middle">шанс, вероятность, %</text>
+  </g>
+
+  <text x="430" y="384" font-size="13.5" fill="#475569" text-anchor="middle" font-style="italic">💡 Все три — из библиотеки random, пишутся через точку: <tspan font-family="monospace">random.randint(...)</tspan>, <tspan font-family="monospace">random.choice(...)</tspan>.</text>
+</svg>

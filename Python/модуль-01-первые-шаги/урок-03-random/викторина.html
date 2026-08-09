@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Викторина — Урок 3: Библиотека random (Python)</title>
+<style>
+  :root{
+    --bg1:#ffd43b; --bg2:#3776ab; --card:#ffffff; --ink:#1f2937;
+    --accent:#3776ab; --ok:#16a34a; --bad:#dc2626; --soft:#e6f0fb;
+  }
+  *{box-sizing:border-box;font-family:"Segoe UI",system-ui,sans-serif}
+  body{margin:0;min-height:100vh;display:flex;align-items:center;justify-content:center;
+    background:linear-gradient(135deg,var(--bg1),var(--bg2));padding:20px;color:var(--ink)}
+  .app{background:var(--card);width:min(760px,100%);border-radius:24px;
+    box-shadow:0 25px 60px rgba(0,0,0,.35);padding:34px 34px 28px;position:relative;overflow:hidden}
+  h1{margin:0 0 6px;font-size:26px;text-align:center}
+  .sub{text-align:center;color:#64748b;margin-bottom:22px;font-size:15px}
+  .bar{height:10px;background:var(--soft);border-radius:99px;overflow:hidden;margin-bottom:18px}
+  .bar>i{display:block;height:100%;width:0;background:var(--accent);transition:.4s}
+  .meta{display:flex;justify-content:space-between;font-size:14px;color:#64748b;margin-bottom:14px}
+  .q{font-size:22px;font-weight:700;margin:6px 0 20px;line-height:1.3}
+  .q code{background:#0f172a;color:#e2e8f0;padding:2px 8px;border-radius:6px;font-size:19px}
+  .opts{display:grid;gap:12px}
+  .opt{border:2px solid #e2e8f0;background:#fff;border-radius:14px;padding:15px 18px;font-size:18px;
+    text-align:left;cursor:pointer;transition:.15s;display:flex;align-items:center;gap:12px}
+  .opt:hover{border-color:var(--accent);background:var(--soft);transform:translateY(-2px)}
+  .opt b{background:var(--soft);color:var(--accent);width:30px;height:30px;border-radius:8px;
+    display:flex;align-items:center;justify-content:center;font-size:15px;flex:0 0 auto}
+  .opt span code{background:#0f172a;color:#e2e8f0;padding:1px 6px;border-radius:5px;font-size:16px}
+  .opt.ok{border-color:var(--ok);background:#dcfce7}
+  .opt.ok b{background:var(--ok);color:#fff}
+  .opt.bad{border-color:var(--bad);background:#fee2e2}
+  .opt.bad b{background:var(--bad);color:#fff}
+  .opt:disabled{cursor:default;transform:none}
+  .fb{margin-top:16px;padding:14px 16px;border-radius:12px;font-size:16px;display:none;line-height:1.4}
+  .fb.show{display:block}
+  .fb.good{background:#dcfce7;color:#166534}
+  .fb.no{background:#fee2e2;color:#991b1b}
+  .fb code{background:#0f172a;color:#e2e8f0;padding:1px 6px;border-radius:5px}
+  .btn{margin-top:18px;width:100%;padding:15px;border:0;border-radius:14px;background:var(--accent);
+    color:#fff;font-size:18px;font-weight:700;cursor:pointer;display:none}
+  .btn.show{display:block}
+  .btn:hover{filter:brightness(1.08)}
+  .center{text-align:center}
+  .score{font-size:64px;font-weight:800;margin:10px 0}
+  .emoji{font-size:70px}
+  .hint{color:#94a3b8;font-size:13px;text-align:center;margin-top:14px}
+</style>
+</head>
+<body>
+<div class="app" id="app"></div>
+<script>
+const QUESTIONS = [
+  {q:"Что делает команда <code>import random</code>?",
+   a:["Создаёт число","Подключает библиотеку random к программе","Печатает текст","Удаляет random"],c:1,
+   e:"import подключает библиотеку — «ящик инструментов» — к твоему файлу."},
+  {q:"Что вернёт <code>random.randint(1, 6)</code>?",
+   a:["Всегда 1","Случайное целое от 1 до 6","Дробное 0..1","Букву"],c:1,
+   e:"randint даёт случайное целое число в диапазоне (оба конца включены)."},
+  {q:"Сколько разных значений может дать <code>random.randint(1, 6)</code>?",
+   a:["5","6","7","бесконечно"],c:1,
+   e:"Оба конца включены: 1,2,3,4,5,6 — ровно 6 вариантов."},
+  {q:"Что делает <code>random.choice([\"A\", \"B\", \"C\"])</code>?",
+   a:["Сортирует список","Выбирает случайный один из вариантов","Считает длину","Печатает всё"],c:1,
+   e:"choice случайно выбирает ОДИН элемент из списка вариантов."},
+  {q:"Где обычно пишут <code>import</code>?",
+   a:["В конце файла","В самом начале файла","Внутри print","Не важно, нельзя"],c:1,
+   e:"import ставят в первых строках — сразу видно, что нужно программе."},
+  {q:"Что вернёт <code>math.sqrt(9)</code>?",
+   a:["81","3.0","4.5","9"],c:1,
+   e:"sqrt — квадратный корень: из 9 это 3.0."},
+  {q:"Что такое <code>math.pi</code>?",
+   a:["Пирог","Число π ≈ 3.14","Ошибка","Пиксель"],c:1,
+   e:"math.pi — знаменитое число π (3.1415...)."},
+  {q:"Что вернёт <code>math.ceil(4.2)</code>?",
+   a:["4","5","4.2","2"],c:1,
+   e:"ceil округляет ВВЕРХ: 4.2 → 5 («потолок»)."},
+  {q:"Что вернёт <code>math.floor(4.7)</code>?",
+   a:["5","4","4.7","0"],c:1,
+   e:"floor округляет ВНИЗ: 4.7 → 4 («пол»)."},
+  {q:"Как правильно взять инструмент из библиотеки?",
+   a:["random-randint(1,6)","random.randint(1, 6)","randint.random(1,6)","random(randint,1,6)"],c:1,
+   e:"Имя библиотеки, точка, имя инструмента: random.randint(...)."},
+
+  {q:"😄 Забыл строку <code>import random</code>. Что скажет Python?",
+   a:["Ничего, всё ок","NameError: name 'random' is not defined","Выдаст 0","Сам подключит"],c:1,
+   e:"Без импорта Python не знает слова random → NameError."},
+  {q:"😄 Написал <code>random.choice(\"Да\", \"Нет\")</code> без скобок [ ]. Что будет?",
+   a:["Выберет случайно","Ошибка — варианты должны быть в списке [ ]","Выберет «Да»","Выведет оба"],c:1,
+   e:"choice принимает ОДИН список: random.choice([\"Да\", \"Нет\"])."},
+  {q:"😄 Сохранил <code>x = randint(1,6)</code> и печатаешь x три раза — числа одинаковые. Почему?",
+   a:["Python сломался","Случайность вызвана 1 раз, число уже зафиксировано в x","Кубик честный","Так и надо всегда"],c:1,
+   e:"Нужно новое число — вызови randint снова, а не печатай сохранённое."},
+
+  {q:"🤔 Зачем вообще нужны библиотеки?",
+   a:["Чтобы усложнить","Чтобы не писать готовый код с нуля — берём инструменты","Для красоты","Обязательны в каждой строке"],c:1,
+   e:"Библиотеки — готовые инструменты; экономят время и код."},
+  {q:"🤔 Почему <code>randint(1, 6)</code> даёт 6 вариантов, а не 5?",
+   a:["Ошибка","Оба конца включены — и 1, и 6 возможны","6 всегда лишнее","Питон считает с 0"],c:1,
+   e:"randint(a, b) включает и a, и b — как настоящий кубик."},
+  {q:"🤔 Нужно посчитать, сколько коробок по 6 штук на 20 предметов. Что взять?",
+   a:["round","math.ceil (вверх) — 4 коробки","math.floor (вниз)","обычное /"],c:1,
+   e:"«Сколько нужно» — всегда округление ВВЕРХ: ceil(20/6)=4."},
+];
+
+let i=0, score=0, locked=false;
+const app=document.getElementById('app');
+
+function shuffle(){for(let k=QUESTIONS.length-1;k>0;k--){const j=Math.floor(Math.random()*(k+1));[QUESTIONS[k],QUESTIONS[j]]=[QUESTIONS[j],QUESTIONS[k]];}for(const Q of QUESTIONS){const cc=Q.a[Q.c];for(let k=Q.a.length-1;k>0;k--){const j=Math.floor(Math.random()*(k+1));[Q.a[k],Q.a[j]]=[Q.a[j],Q.a[k]];}Q.c=Q.a.indexOf(cc);}}
+shuffle();
+
+function render(){
+  const Q=QUESTIONS[i];
+  app.innerHTML=`
+    <h1>🎲 Библиотека random</h1>
+    <div class="sub">Викторина по уроку 3 · Python</div>
+    <div class="bar"><i style="width:${(i/QUESTIONS.length)*100}%"></i></div>
+    <div class="meta"><span>Вопрос ${i+1} из ${QUESTIONS.length}</span><span>⭐ Очки: ${score}</span></div>
+    <div class="q">${Q.q}</div>
+    <div class="opts" id="opts">
+      ${Q.a.map((t,n)=>`<button class="opt" data-n="${n}"><b>${n+1}</b><span>${t}</span></button>`).join('')}
+    </div>
+    <div class="fb" id="fb"></div>
+    <button class="btn" id="next">${i===QUESTIONS.length-1?'Показать результат →':'Следующий вопрос →'}</button>
+    <div class="hint">Можно отвечать клавишами 1–4</div>`;
+  locked=false;
+  document.querySelectorAll('.opt').forEach(b=>b.onclick=()=>choose(+b.dataset.n));
+  document.getElementById('next').onclick=next;
+}
+
+function choose(n){
+  if(locked) return; locked=true;
+  const Q=QUESTIONS[i];
+  const opts=[...document.querySelectorAll('.opt')];
+  opts.forEach(b=>b.disabled=true);
+  opts[Q.c].classList.add('ok');
+  const fb=document.getElementById('fb');
+  if(n===Q.c){ score++; fb.className='fb show good'; fb.innerHTML='✅ Верно! '+Q.e; }
+  else { opts[n].classList.add('bad'); fb.className='fb show no'; fb.innerHTML='❌ Не совсем. '+Q.e; }
+  document.querySelector('.meta').children[1].textContent='⭐ Очки: '+score;
+  document.getElementById('next').classList.add('show');
+}
+
+function next(){ i++; if(i<QUESTIONS.length) render(); else result(); }
+
+function result(){
+  const pct=Math.round(score/QUESTIONS.length*100);
+  let em,msg;
+  if(pct===100){em='🏆';msg='Идеально! Библиотеки, randint и choice — в кармане! 🎲';}
+  else if(pct>=70){em='🎉';msg='Отлично! Случайность тебе подчиняется.';}
+  else if(pct>=40){em='👍';msg='Неплохо! Повтори: import в начале, randint включает оба конца.';}
+  else {em='💪';msg='Ещё разок! Загляни в итого.md — там суть за 3 минуты.';}
+  app.innerHTML=`
+    <div class="center">
+      <div class="emoji">${em}</div>
+      <h1>Готово!</h1>
+      <div class="score">${score} / ${QUESTIONS.length}</div>
+      <div class="sub">${msg}</div>
+      <button class="btn show" id="again">🔁 Пройти заново</button>
+    </div>`;
+  document.getElementById('again').onclick=()=>{i=0;score=0;shuffle();render();};
+}
+
+document.addEventListener('keydown',e=>{
+  if(['1','2','3','4'].includes(e.key)){ const b=document.querySelector(`.opt[data-n="${+e.key-1}"]`); if(b&&!b.disabled) choose(+e.key-1); }
+  if(e.key==='Enter'){ const nb=document.getElementById('next'); if(nb&&nb.classList.contains('show')) next(); }
+});
+
+render();
+</script>
+</body>
+</html>

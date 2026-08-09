@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Викторина — Урок 5 + итог Модуля 1 (Python)</title>
+<style>
+  :root{
+    --bg1:#ffd43b; --bg2:#3776ab; --card:#ffffff; --ink:#1f2937;
+    --accent:#3776ab; --ok:#16a34a; --bad:#dc2626; --soft:#e6f0fb;
+  }
+  *{box-sizing:border-box;font-family:"Segoe UI",system-ui,sans-serif}
+  body{margin:0;min-height:100vh;display:flex;align-items:center;justify-content:center;
+    background:linear-gradient(135deg,var(--bg1),var(--bg2));padding:20px;color:var(--ink)}
+  .app{background:var(--card);width:min(760px,100%);border-radius:24px;
+    box-shadow:0 25px 60px rgba(0,0,0,.35);padding:34px 34px 28px;position:relative;overflow:hidden}
+  h1{margin:0 0 6px;font-size:26px;text-align:center}
+  .sub{text-align:center;color:#64748b;margin-bottom:22px;font-size:15px}
+  .bar{height:10px;background:var(--soft);border-radius:99px;overflow:hidden;margin-bottom:18px}
+  .bar>i{display:block;height:100%;width:0;background:var(--accent);transition:.4s}
+  .meta{display:flex;justify-content:space-between;font-size:14px;color:#64748b;margin-bottom:14px}
+  .q{font-size:22px;font-weight:700;margin:6px 0 20px;line-height:1.3}
+  .q code{background:#0f172a;color:#e2e8f0;padding:2px 8px;border-radius:6px;font-size:18px}
+  .opts{display:grid;gap:12px}
+  .opt{border:2px solid #e2e8f0;background:#fff;border-radius:14px;padding:15px 18px;font-size:18px;
+    text-align:left;cursor:pointer;transition:.15s;display:flex;align-items:center;gap:12px}
+  .opt:hover{border-color:var(--accent);background:var(--soft);transform:translateY(-2px)}
+  .opt b{background:var(--soft);color:var(--accent);width:30px;height:30px;border-radius:8px;
+    display:flex;align-items:center;justify-content:center;font-size:15px;flex:0 0 auto}
+  .opt span code{background:#0f172a;color:#e2e8f0;padding:1px 6px;border-radius:5px;font-size:16px}
+  .opt.ok{border-color:var(--ok);background:#dcfce7}
+  .opt.ok b{background:var(--ok);color:#fff}
+  .opt.bad{border-color:var(--bad);background:#fee2e2}
+  .opt.bad b{background:var(--bad);color:#fff}
+  .opt:disabled{cursor:default;transform:none}
+  .fb{margin-top:16px;padding:14px 16px;border-radius:12px;font-size:16px;display:none;line-height:1.4}
+  .fb.show{display:block}
+  .fb.good{background:#dcfce7;color:#166534}
+  .fb.no{background:#fee2e2;color:#991b1b}
+  .fb code{background:#0f172a;color:#e2e8f0;padding:1px 6px;border-radius:5px}
+  .btn{margin-top:18px;width:100%;padding:15px;border:0;border-radius:14px;background:var(--accent);
+    color:#fff;font-size:18px;font-weight:700;cursor:pointer;display:none}
+  .btn.show{display:block}
+  .btn:hover{filter:brightness(1.08)}
+  .center{text-align:center}
+  .score{font-size:64px;font-weight:800;margin:10px 0}
+  .emoji{font-size:70px}
+  .hint{color:#94a3b8;font-size:13px;text-align:center;margin-top:14px}
+</style>
+</head>
+<body>
+<div class="app" id="app"></div>
+<script>
+const QUESTIONS = [
+  {q:"Зачем буква <code>f</code> в <code>print(f\"Мне {age} лет\")</code>?",
+   a:["Для скорости","Подставляет значение переменной из {age}","Делает жирным","Это опечатка"],c:1,
+   e:"f-строка подставляет переменные из фигурных скобок."},
+  {q:"Что вернёт <code>input()</code>, даже если ввели число?",
+   a:["Число","Строку (str)","Дробное","Ничего"],c:1,
+   e:"input() всегда возвращает строку — для счёта нужен int()."},
+  {q:"Что даёт <code>17 // 5</code>?",
+   a:["3.4","3","2","5"],c:1,
+   e:"// — деление нацело: 3 (а 17 % 5 = 2 — остаток)."},
+  {q:"Что делает <code>name.upper()</code>?",
+   a:["Длину","Все буквы БОЛЬШИМИ","Убирает пробелы","Первую букву большой"],c:1,
+   e:".upper() переводит строку в верхний регистр."},
+  {q:"Что делает <code>import random</code>?",
+   a:["Создаёт число","Подключает библиотеку random","Печатает","Удаляет"],c:1,
+   e:"import подключает библиотеку — ящик готовых инструментов."},
+  {q:"Что делает <code>random.choice([\"A\",\"B\",\"C\"])</code>?",
+   a:["Сортирует","Выбирает случайный один вариант","Считает длину","Печатает всё"],c:1,
+   e:"choice случайно выбирает один элемент из списка."},
+  {q:"Как узнать сегодняшнюю дату?",
+   a:["date.random()","datetime.date.today()","time.now()","today.date"],c:1,
+   e:"datetime.date.today() возвращает сегодняшнюю дату."},
+  {q:"Что означает <code>(today - birthday).days</code>?",
+   a:["День рождения","Возраст в днях","Номер дня","Ошибку"],c:1,
+   e:"Разница дат в днях = сколько дней ты живёшь."},
+  {q:"Что делает трюк <code>greetings[hour // 6]</code>?",
+   a:["Случайное слово","Выбирает приветствие по времени суток","Считает часы","Ошибка"],c:1,
+   e:"hour//6 даёт номер части суток (0-3), список — нужную фразу. Без if!"},
+  {q:"Где правильно писать <code>import</code>?",
+   a:["В конце файла","В самом верху файла","В середине","В f-строке"],c:1,
+   e:"Все импорты — в начале файла, один раз."},
+
+  {q:"😄 Собрал бота, но <code>age + 10</code> упало с ошибкой. Что забыл?",
+   a:["Сохранить файл","Обернуть возраст в int(input())","Поставить эмодзи","Перезагрузить ПК"],c:1,
+   e:"input даёт строку; для счёта нужно int(input(...))."},
+  {q:"😄 Вставил эмодзи прямо в <code>print(\"Привет 🎉\")</code>. Что может случиться на Windows?",
+   a:["Ничего","Программа может упасть (UnicodeEncodeError)","Эмодзи станет больше","Ускорится"],c:1,
+   e:"В консоли Windows эмодзи в print может уронить программу. Эмодзи — в текст, не в print."},
+  {q:"😄 Написал <code>import</code> в середине программы. Почему так не делают?",
+   a:["Это запрещено законом","Импорты принято собирать вверху — так понятнее","Питон удалит файл","Ничего страшного, всегда так"],c:1,
+   e:"Технически можно, но хороший стиль — все import в начале файла."},
+
+  {q:"🤔 Как трюк <code>hour // 6</code> выбирает приветствие БЕЗ <code>if</code>?",
+   a:["Случайно","Деление нацело даёт номер части суток, список — фразу по номеру","Питон угадывает","Никак, нужен if"],c:1,
+   e:"0-5→0, 6-11→1, 12-17→2, 18-23→3 — и берём фразу из списка по этому номеру."},
+  {q:"🤔 Почему большие программы строят ПО ШАГАМ (запуская части)?",
+   a:["Так медленнее","Легче найти ошибку и видно структуру","Так требует Питон","Чтобы было длиннее"],c:1,
+   e:"Маленький кусок проверить проще, чем 40 строк сразу."},
+  {q:"🤔 Какая структура почти у любой программы?",
+   a:["Вывод → ввод","Ввод → обработка → вывод","Только вывод","Случайная"],c:1,
+   e:"Сначала получаем данные, потом обрабатываем, потом показываем результат."},
+];
+
+let i=0, score=0, locked=false;
+const app=document.getElementById('app');
+
+function shuffle(){for(let k=QUESTIONS.length-1;k>0;k--){const j=Math.floor(Math.random()*(k+1));[QUESTIONS[k],QUESTIONS[j]]=[QUESTIONS[j],QUESTIONS[k]];}for(const Q of QUESTIONS){const cc=Q.a[Q.c];for(let k=Q.a.length-1;k>0;k--){const j=Math.floor(Math.random()*(k+1));[Q.a[k],Q.a[j]]=[Q.a[j],Q.a[k]];}Q.c=Q.a.indexOf(cc);}}
+shuffle();
+
+function render(){
+  const Q=QUESTIONS[i];
+  app.innerHTML=`
+    <h1>🤖 Итог Модуля 1</h1>
+    <div class="sub">Викторина по всему модулю · Python</div>
+    <div class="bar"><i style="width:${(i/QUESTIONS.length)*100}%"></i></div>
+    <div class="meta"><span>Вопрос ${i+1} из ${QUESTIONS.length}</span><span>⭐ Очки: ${score}</span></div>
+    <div class="q">${Q.q}</div>
+    <div class="opts" id="opts">
+      ${Q.a.map((t,n)=>`<button class="opt" data-n="${n}"><b>${n+1}</b><span>${t}</span></button>`).join('')}
+    </div>
+    <div class="fb" id="fb"></div>
+    <button class="btn" id="next">${i===QUESTIONS.length-1?'Показать результат →':'Следующий вопрос →'}</button>
+    <div class="hint">Можно отвечать клавишами 1–4</div>`;
+  locked=false;
+  document.querySelectorAll('.opt').forEach(b=>b.onclick=()=>choose(+b.dataset.n));
+  document.getElementById('next').onclick=next;
+}
+
+function choose(n){
+  if(locked) return; locked=true;
+  const Q=QUESTIONS[i];
+  const opts=[...document.querySelectorAll('.opt')];
+  opts.forEach(b=>b.disabled=true);
+  opts[Q.c].classList.add('ok');
+  const fb=document.getElementById('fb');
+  if(n===Q.c){ score++; fb.className='fb show good'; fb.innerHTML='✅ Верно! '+Q.e; }
+  else { opts[n].classList.add('bad'); fb.className='fb show no'; fb.innerHTML='❌ Не совсем. '+Q.e; }
+  document.querySelector('.meta').children[1].textContent='⭐ Очки: '+score;
+  document.getElementById('next').classList.add('show');
+}
+
+function next(){ i++; if(i<QUESTIONS.length) render(); else result(); }
+
+function result(){
+  const pct=Math.round(score/QUESTIONS.length*100);
+  let em,msg;
+  if(pct===100){em='🏆';msg='Идеально! Модуль 1 пройден на 100% — ты готов к условиям! 🤖';}
+  else if(pct>=70){em='🎉';msg='Отлично! База Python в кармане, можно в Модуль 2.';}
+  else if(pct>=40){em='👍';msg='Неплохо! Пробегись по итого.md — там весь модуль на одной странице.';}
+  else {em='💪';msg='Ещё разок! Открой итого.md и повтори основное.';}
+  app.innerHTML=`
+    <div class="center">
+      <div class="emoji">${em}</div>
+      <h1>Готово!</h1>
+      <div class="score">${score} / ${QUESTIONS.length}</div>
+      <div class="sub">${msg}</div>
+      <button class="btn show" id="again">🔁 Пройти заново</button>
+    </div>`;
+  document.getElementById('again').onclick=()=>{i=0;score=0;shuffle();render();};
+}
+
+document.addEventListener('keydown',e=>{
+  if(['1','2','3','4'].includes(e.key)){ const b=document.querySelector(`.opt[data-n="${+e.key-1}"]`); if(b&&!b.disabled) choose(+e.key-1); }
+  if(e.key==='Enter'){ const nb=document.getElementById('next'); if(nb&&nb.classList.contains('show')) next(); }
+});
+
+render();
+</script>
+</body>
+</html>

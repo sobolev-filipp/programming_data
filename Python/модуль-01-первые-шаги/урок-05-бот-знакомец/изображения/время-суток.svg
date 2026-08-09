@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 860 400" font-family="'Segoe UI',system-ui,sans-serif">
+  <rect x="0" y="0" width="860" height="400" fill="#f7f9fc"/>
+  <text x="430" y="36" font-size="23" font-weight="700" fill="#1f2937" text-anchor="middle">🕐 Приветствие по времени: трюк <tspan font-family="monospace">час // 6</tspan></text>
+  <text x="430" y="60" font-size="14" fill="#64748b" text-anchor="middle">делим час на 6 нацело — получаем номер части суток (0,1,2,3), берём фразу из списка по этому номеру</text>
+
+  <!-- 4 zones -->
+  <g transform="translate(40,90)">
+    <!-- ночь -->
+    <rect x="0" y="0" width="190" height="150" rx="12" fill="#1e293b" stroke="#334155" stroke-width="2"/>
+    <text x="95" y="40" font-size="30" text-anchor="middle">🌙</text>
+    <text x="95" y="70" font-size="13" fill="#cbd5e1" text-anchor="middle" font-family="monospace">часы 0–5</text>
+    <text x="95" y="98" font-size="15" fill="#e2e8f0" text-anchor="middle">0 // 6 … 5 // 6</text>
+    <text x="95" y="120" font-size="20" font-weight="800" fill="#60a5fa" text-anchor="middle" font-family="monospace">= 0</text>
+    <text x="95" y="142" font-size="13" fill="#93c5fd" text-anchor="middle">«Доброй ночи»</text>
+
+    <!-- утро -->
+    <rect x="200" y="0" width="190" height="150" rx="12" fill="#fef3c7" stroke="#f59e0b" stroke-width="2"/>
+    <text x="295" y="40" font-size="30" text-anchor="middle">🌅</text>
+    <text x="295" y="70" font-size="13" fill="#92400e" text-anchor="middle" font-family="monospace">часы 6–11</text>
+    <text x="295" y="98" font-size="15" fill="#78350f" text-anchor="middle">6 // 6 … 11 // 6</text>
+    <text x="295" y="120" font-size="20" font-weight="800" fill="#b45309" text-anchor="middle" font-family="monospace">= 1</text>
+    <text x="295" y="142" font-size="13" fill="#92400e" text-anchor="middle">«Доброе утро»</text>
+
+    <!-- день -->
+    <rect x="400" y="0" width="190" height="150" rx="12" fill="#dbeafe" stroke="#2563eb" stroke-width="2"/>
+    <text x="495" y="40" font-size="30" text-anchor="middle">☀️</text>
+    <text x="495" y="70" font-size="13" fill="#1e40af" text-anchor="middle" font-family="monospace">часы 12–17</text>
+    <text x="495" y="98" font-size="15" fill="#1e3a8a" text-anchor="middle">12 // 6 … 17 // 6</text>
+    <text x="495" y="120" font-size="20" font-weight="800" fill="#1d4ed8" text-anchor="middle" font-family="monospace">= 2</text>
+    <text x="495" y="142" font-size="13" fill="#1e40af" text-anchor="middle">«Добрый день»</text>
+
+    <!-- вечер -->
+    <rect x="600" y="0" width="190" height="150" rx="12" fill="#ede9fe" stroke="#7c3aed" stroke-width="2"/>
+    <text x="695" y="40" font-size="30" text-anchor="middle">🌆</text>
+    <text x="695" y="70" font-size="13" fill="#5b21b6" text-anchor="middle" font-family="monospace">часы 18–23</text>
+    <text x="695" y="98" font-size="15" fill="#4c1d95" text-anchor="middle">18 // 6 … 23 // 6</text>
+    <text x="695" y="120" font-size="20" font-weight="800" fill="#6d28d9" text-anchor="middle" font-family="monospace">= 3</text>
+    <text x="695" y="142" font-size="13" fill="#5b21b6" text-anchor="middle">«Добрый вечер»</text>
+  </g>
+
+  <!-- code -->
+  <g transform="translate(120,275)" font-family="monospace" font-size="14.5">
+    <rect x="0" y="0" width="620" height="70" rx="10" fill="#0f172a"/>
+    <text x="18" y="28" fill="#e2e8f0">hour = datetime.datetime.now().hour</text>
+    <text x="18" y="54" fill="#e2e8f0">greet = ["Доброй ночи","Доброе утро","Добрый день","Добрый вечер"][hour // 6]</text>
+  </g>
+  <text x="430" y="392" font-size="12.5" fill="#94a3b8" text-anchor="middle" font-style="italic">💡 Никаких if! Деление нацело само выбирает нужную фразу по номеру.</text>
+</svg>

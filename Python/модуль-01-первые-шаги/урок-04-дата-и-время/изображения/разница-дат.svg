@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 860 400" font-family="'Segoe UI',system-ui,sans-serif">
+  <rect x="0" y="0" width="860" height="400" fill="#f7f9fc"/>
+  <text x="430" y="38" font-size="24" font-weight="700" fill="#1f2937" text-anchor="middle">➖ Разница дат = сколько дней между ними</text>
+  <text x="430" y="62" font-size="14" fill="#64748b" text-anchor="middle">одну дату можно вычесть из другой — получится промежуток (timedelta), у него есть .days</text>
+
+  <!-- number line -->
+  <line x1="90" y1="180" x2="770" y2="180" stroke="#cbd5e1" stroke-width="4"/>
+  <!-- ticks -->
+  <g stroke="#e2e8f0" stroke-width="2">
+    <line x1="180" y1="170" x2="180" y2="190"/>
+    <line x1="320" y1="170" x2="320" y2="190"/>
+    <line x1="460" y1="170" x2="460" y2="190"/>
+    <line x1="600" y1="170" x2="600" y2="190"/>
+  </g>
+
+  <!-- date A -->
+  <g transform="translate(180,180)">
+    <circle cx="0" cy="0" r="12" fill="#16a34a"/>
+    <rect x="-70" y="24" width="140" height="54" rx="10" fill="#dcfce7" stroke="#16a34a" stroke-width="2"/>
+    <text x="0" y="46" font-size="13" fill="#15803d" text-anchor="middle">рождение</text>
+    <text x="0" y="66" font-size="15" font-weight="800" fill="#166534" text-anchor="middle" font-family="monospace">14.03.2013</text>
+  </g>
+
+  <!-- date B -->
+  <g transform="translate(600,180)">
+    <circle cx="0" cy="0" r="12" fill="#2563eb"/>
+    <rect x="-70" y="24" width="140" height="54" rx="10" fill="#dbeafe" stroke="#2563eb" stroke-width="2"/>
+    <text x="0" y="46" font-size="13" fill="#1d4ed8" text-anchor="middle">сегодня</text>
+    <text x="0" y="66" font-size="15" font-weight="800" fill="#1e40af" text-anchor="middle" font-family="monospace">09.08.2026</text>
+  </g>
+
+  <!-- gap bracket -->
+  <path d="M 180 140 L 180 120 L 600 120 L 600 140" fill="none" stroke="#a855f7" stroke-width="2.5"/>
+  <rect x="320" y="92" width="160" height="40" rx="20" fill="#f3e8ff" stroke="#a855f7" stroke-width="2"/>
+  <text x="400" y="118" font-size="17" font-weight="800" fill="#7e22ce" text-anchor="middle">4897 дней</text>
+
+  <!-- code -->
+  <g transform="translate(150,290)" font-family="monospace" font-size="15">
+    <rect x="0" y="0" width="560" height="66" rx="10" fill="#0f172a"/>
+    <text x="18" y="28" fill="#e2e8f0">разница = сегодня <tspan fill="#f472b6">-</tspan> рождение</text>
+    <text x="18" y="52" fill="#94a3b8"># </text><text x="40" y="52" fill="#e2e8f0">print(разница.days)   </text><text x="330" y="52" fill="#4ade80"># 4897</text>
+  </g>
+  <text x="430" y="384" font-size="12.5" fill="#94a3b8" text-anchor="middle" font-style="italic">(число дней зависит от сегодняшней даты — у тебя может быть другим)</text>
+</svg>
