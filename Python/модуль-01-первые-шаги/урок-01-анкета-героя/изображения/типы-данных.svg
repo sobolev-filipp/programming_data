@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 860 380" font-family="'Segoe UI',system-ui,sans-serif">
+  <rect x="0" y="0" width="860" height="380" fill="#f7f9fc"/>
+  <text x="430" y="38" font-size="24" font-weight="700" fill="#1f2937" text-anchor="middle">🏷 Четыре главных типа данных</text>
+  <text x="430" y="62" font-size="14" fill="#64748b" text-anchor="middle">тип — это «что за содержимое»: целое число, дробное, текст или «да/нет». Узнать тип: <tspan font-family="monospace" fill="#334155">type(x)</tspan></text>
+
+  <!-- int -->
+  <g transform="translate(40,100)">
+    <rect x="0" y="0" width="180" height="230" rx="14" fill="#ffffff" stroke="#3b82f6" stroke-width="2.5"/>
+    <rect x="0" y="0" width="180" height="46" rx="14" fill="#dbeafe"/>
+    <rect x="0" y="30" width="180" height="16" fill="#dbeafe"/>
+    <text x="90" y="30" font-size="20" font-weight="800" fill="#1d4ed8" text-anchor="middle" font-family="monospace">int</text>
+    <text x="90" y="88" font-size="14" fill="#334155" text-anchor="middle">целое число</text>
+    <text x="90" y="140" font-size="34" font-weight="800" fill="#2563eb" text-anchor="middle" font-family="monospace">12</text>
+    <text x="90" y="176" font-size="18" fill="#60a5fa" text-anchor="middle" font-family="monospace">0   -5   2025</text>
+    <text x="90" y="214" font-size="12.5" fill="#64748b" text-anchor="middle">возраст, счёт,</text>
+    <text x="90" y="230" font-size="12.5" fill="#64748b" text-anchor="middle">количество</text>
+  </g>
+
+  <!-- float -->
+  <g transform="translate(240,100)">
+    <rect x="0" y="0" width="180" height="230" rx="14" fill="#ffffff" stroke="#14b8a6" stroke-width="2.5"/>
+    <rect x="0" y="0" width="180" height="46" rx="14" fill="#ccfbf1"/>
+    <rect x="0" y="30" width="180" height="16" fill="#ccfbf1"/>
+    <text x="90" y="30" font-size="20" font-weight="800" fill="#0f766e" text-anchor="middle" font-family="monospace">float</text>
+    <text x="90" y="88" font-size="14" fill="#334155" text-anchor="middle">дробное число</text>
+    <text x="90" y="140" font-size="34" font-weight="800" fill="#0d9488" text-anchor="middle" font-family="monospace">3.14</text>
+    <text x="90" y="176" font-size="18" fill="#2dd4bf" text-anchor="middle" font-family="monospace">1.5   -0.7</text>
+    <text x="90" y="214" font-size="12.5" fill="#64748b" text-anchor="middle">рост, цена,</text>
+    <text x="90" y="230" font-size="12.5" fill="#64748b" text-anchor="middle">температура</text>
+    <text x="90" y="118" font-size="11" fill="#94a3b8" text-anchor="middle">точка, не запятая!</text>
+  </g>
+
+  <!-- str -->
+  <g transform="translate(440,100)">
+    <rect x="0" y="0" width="180" height="230" rx="14" fill="#ffffff" stroke="#a855f7" stroke-width="2.5"/>
+    <rect x="0" y="0" width="180" height="46" rx="14" fill="#f3e8ff"/>
+    <rect x="0" y="30" width="180" height="16" fill="#f3e8ff"/>
+    <text x="90" y="30" font-size="20" font-weight="800" fill="#7e22ce" text-anchor="middle" font-family="monospace">str</text>
+    <text x="90" y="88" font-size="14" fill="#334155" text-anchor="middle">строка (текст)</text>
+    <text x="90" y="140" font-size="26" font-weight="800" fill="#9333ea" text-anchor="middle" font-family="monospace">"Гера"</text>
+    <text x="90" y="176" font-size="16" fill="#c084fc" text-anchor="middle" font-family="monospace">"привет"  "42"</text>
+    <text x="90" y="214" font-size="12.5" fill="#64748b" text-anchor="middle">имя, слово —</text>
+    <text x="90" y="230" font-size="12.5" fill="#64748b" text-anchor="middle">всегда в кавычках!</text>
+  </g>
+
+  <!-- bool -->
+  <g transform="translate(640,100)">
+    <rect x="0" y="0" width="180" height="230" rx="14" fill="#ffffff" stroke="#f59e0b" stroke-width="2.5"/>
+    <rect x="0" y="0" width="180" height="46" rx="14" fill="#fef3c7"/>
+    <rect x="0" y="30" width="180" height="16" fill="#fef3c7"/>
+    <text x="90" y="30" font-size="20" font-weight="800" fill="#b45309" text-anchor="middle" font-family="monospace">bool</text>
+    <text x="90" y="88" font-size="14" fill="#334155" text-anchor="middle">да / нет</text>
+    <text x="90" y="138" font-size="22" font-weight="800" fill="#16a34a" text-anchor="middle" font-family="monospace">True</text>
+    <text x="90" y="170" font-size="22" font-weight="800" fill="#dc2626" text-anchor="middle" font-family="monospace">False</text>
+    <text x="90" y="214" font-size="12.5" fill="#64748b" text-anchor="middle">включено?</text>
+    <text x="90" y="230" font-size="12.5" fill="#64748b" text-anchor="middle">победил? (позже)</text>
+  </g>
+
+  <text x="430" y="360" font-size="13.5" fill="#475569" text-anchor="middle" font-style="italic">⚠️ 42 (int) и "42" (str) — это РАЗНОЕ: число можно сложить, строку — только склеить. Тип решает, что можно делать.</text>
+</svg>

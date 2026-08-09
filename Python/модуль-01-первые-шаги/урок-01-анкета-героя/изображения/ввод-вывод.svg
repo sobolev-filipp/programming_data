@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 860 400" font-family="'Segoe UI',system-ui,sans-serif">
+  <rect x="0" y="0" width="860" height="400" fill="#f7f9fc"/>
+  <text x="430" y="38" font-size="24" font-weight="700" fill="#1f2937" text-anchor="middle">⌨️ input() спрашивает, print() отвечает</text>
+  <text x="430" y="62" font-size="14" fill="#64748b" text-anchor="middle">программа умеет разговаривать: получить ответ от пользователя и показать свой</text>
+
+  <!-- USER -->
+  <g transform="translate(60,150)">
+    <circle cx="60" cy="40" r="34" fill="#fde68a" stroke="#f59e0b" stroke-width="2"/>
+    <text x="60" y="52" font-size="34" text-anchor="middle">🧑</text>
+    <text x="60" y="105" font-size="14" font-weight="700" fill="#334155" text-anchor="middle">пользователь</text>
+    <text x="60" y="124" font-size="12.5" fill="#64748b" text-anchor="middle">печатает на клавиатуре</text>
+  </g>
+
+  <!-- input arrow (user -> program) -->
+  <g>
+    <path d="M 200 175 L 330 175" stroke="#a855f7" stroke-width="4" fill="none"/>
+    <polygon points="330,175 316,167 316,183" fill="#a855f7"/>
+    <rect x="212" y="140" width="106" height="26" rx="13" fill="#f3e8ff" stroke="#a855f7" stroke-width="1.5"/>
+    <text x="265" y="158" font-size="13" font-weight="700" fill="#7e22ce" text-anchor="middle" font-family="monospace">input()</text>
+    <text x="265" y="204" font-size="12.5" fill="#64748b" text-anchor="middle">ВВОД: «дай ответ»</text>
+  </g>
+
+  <!-- PROGRAM -->
+  <g transform="translate(345,120)">
+    <rect x="0" y="0" width="170" height="150" rx="14" fill="#ffffff" stroke="#334155" stroke-width="2.5"/>
+    <text x="85" y="46" font-size="34" text-anchor="middle">🐍</text>
+    <text x="85" y="80" font-size="15" font-weight="700" fill="#334155" text-anchor="middle">программа</text>
+    <text x="85" y="106" font-size="12.5" fill="#64748b" text-anchor="middle">получает ответ,</text>
+    <text x="85" y="124" font-size="12.5" fill="#64748b" text-anchor="middle">кладёт в переменную</text>
+    <text x="85" y="142" font-size="12" fill="#94a3b8" text-anchor="middle" font-family="monospace">name = input(...)</text>
+  </g>
+
+  <!-- print arrow (program -> screen) -->
+  <g>
+    <path d="M 530 175 L 660 175" stroke="#7c3aed" stroke-width="4" fill="none"/>
+    <polygon points="660,175 646,167 646,183" fill="#7c3aed"/>
+    <rect x="540" y="140" width="106" height="26" rx="13" fill="#ede9fe" stroke="#7c3aed" stroke-width="1.5"/>
+    <text x="593" y="158" font-size="13" font-weight="700" fill="#6d28d9" text-anchor="middle" font-family="monospace">print()</text>
+    <text x="593" y="204" font-size="12.5" fill="#64748b" text-anchor="middle">ВЫВОД: «вот ответ»</text>
+  </g>
+
+  <!-- SCREEN -->
+  <g transform="translate(675,130)">
+    <rect x="0" y="0" width="140" height="100" rx="10" fill="#0f172a" stroke="#334155" stroke-width="2"/>
+    <text x="16" y="40" font-size="14" font-family="monospace" fill="#4ade80">Как тебя</text>
+    <text x="16" y="60" font-size="14" font-family="monospace" fill="#4ade80">зовут? Гера</text>
+    <text x="16" y="84" font-size="14" font-family="monospace" fill="#e2e8f0">Привет, Гера!</text>
+    <text x="70" y="122" font-size="14" font-weight="700" fill="#334155" text-anchor="middle">экран</text>
+  </g>
+
+  <!-- warning -->
+  <rect x="140" y="300" width="580" height="66" rx="12" fill="#fef2f2" stroke="#fca5a5" stroke-width="1.5"/>
+  <text x="430" y="328" font-size="14" font-weight="700" fill="#b91c1c" text-anchor="middle">⚠️ input() ВСЕГДА возвращает строку (str) — даже если ввели «12»!</text>
+  <text x="430" y="352" font-size="13.5" fill="#7f1d1d" text-anchor="middle">чтобы считать как число, оберни: <tspan font-family="monospace" font-weight="700">age = int(input("Возраст: "))</tspan></text>
+</svg>

@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 820 470" font-family="'Segoe UI',system-ui,sans-serif">
+  <rect x="0" y="0" width="820" height="470" fill="#f7f9fc"/>
+  <text x="410" y="38" font-size="24" font-weight="700" fill="#1f2937" text-anchor="middle">📦 Переменная — это коробка с именем</text>
+  <text x="410" y="62" font-size="14" fill="#64748b" text-anchor="middle">у коробки есть имя (как подписать), значение (что лежит внутри) и тип (что за содержимое)</text>
+
+  <!-- code line -->
+  <g transform="translate(260,92)">
+    <rect x="0" y="0" width="300" height="46" rx="10" fill="#0f172a"/>
+    <text x="20" y="30" font-size="20" font-family="'Consolas',monospace" fill="#e2e8f0"><tspan fill="#60a5fa">age</tspan> <tspan fill="#94a3b8">=</tspan> <tspan fill="#fbbf24">12</tspan></text>
+  </g>
+  <text x="410" y="166" font-size="13" fill="#64748b" text-anchor="middle">знак <tspan font-family="monospace" font-weight="700" fill="#334155">=</tspan> — это НЕ «равно», а «положи справа в коробку слева» ⬅</text>
+
+  <!-- ==== THE BOX ==== -->
+  <g transform="translate(300,200)">
+    <!-- name tag -->
+    <rect x="20" y="-8" width="120" height="34" rx="8" fill="#dbeafe" stroke="#60a5fa" stroke-width="2"/>
+    <text x="80" y="15" font-size="18" font-weight="800" fill="#1d4ed8" text-anchor="middle" font-family="monospace">age</text>
+    <line x1="80" y1="26" x2="80" y2="44" stroke="#60a5fa" stroke-width="2" stroke-dasharray="3 3"/>
+    <text x="80" y="-16" font-size="12.5" fill="#2563eb" text-anchor="middle">имя (как зовём коробку)</text>
+
+    <!-- box body -->
+    <rect x="0" y="44" width="220" height="140" rx="12" fill="#ffffff" stroke="#334155" stroke-width="3"/>
+    <!-- lid -->
+    <path d="M -6 44 L 226 44 L 210 26 L 10 26 Z" fill="#e2e8f0" stroke="#334155" stroke-width="2.5"/>
+    <!-- value -->
+    <text x="110" y="135" font-size="58" font-weight="800" fill="#f59e0b" text-anchor="middle" font-family="monospace">12</text>
+    <text x="110" y="205" font-size="13" fill="#64748b" text-anchor="middle">значение (что лежит внутри)</text>
+
+    <!-- type tag -->
+    <rect x="150" y="150" width="86" height="26" rx="13" fill="#dcfce7" stroke="#22c55e" stroke-width="1.5"/>
+    <text x="193" y="168" font-size="13" font-weight="700" fill="#15803d" text-anchor="middle" font-family="monospace">int</text>
+  </g>
+
+  <!-- explanation panel -->
+  <g transform="translate(560,200)">
+    <text x="0" y="4" font-size="15" font-weight="700" fill="#334155">Что это даёт:</text>
+    <text x="0" y="34" font-size="14" fill="#475569">• положил один раз —</text>
+    <text x="14" y="54" font-size="14" fill="#475569">пользуешься сколько хочешь</text>
+    <text x="0" y="82" font-size="14" fill="#475569">• значение можно <tspan font-weight="700" fill="#0f172a">поменять</tspan>:</text>
+    <text x="14" y="102" font-size="14" font-family="monospace" fill="#0f172a">age = 13</text>
+    <text x="14" y="120" font-size="13" fill="#64748b">→ в коробке теперь 13</text>
+    <text x="0" y="150" font-size="14" fill="#475569">• тип узнаём командой:</text>
+    <text x="14" y="170" font-size="14" font-family="monospace" fill="#0f172a">type(age)</text>
+  </g>
+
+  <text x="410" y="440" font-size="13.5" fill="#475569" text-anchor="middle" font-style="italic">💡 Имя коробки пишем слева от =, значение — справа. Компьютер запоминает: «age = 12».</text>
+</svg>

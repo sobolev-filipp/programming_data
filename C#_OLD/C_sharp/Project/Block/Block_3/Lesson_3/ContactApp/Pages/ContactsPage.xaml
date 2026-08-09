@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="ContactApp.Pages.ContactsPage"
+             Title="ContactsPage">
+    <VerticalStackLayout Padding="10">
+        <Entry x:Name="SearchEntry"
+               Placeholder="Поиск по имени"
+               TextChanged="OnSearchChanged"/>
+
+        <ScrollView>
+            <VerticalStackLayout x:Name="ContactsLayout"/>
+        </ScrollView>
+
+        <Button Text="Добавить контакт"
+                Clicked="OnAddClicked"/>
+    </VerticalStackLayout>
+</ContentPage>
