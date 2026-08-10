@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Викторина — Урок 5 «Камень-ножницы-бумага» + итог Модуля 2 (Python)</title>
+<style>
+  :root{
+    --bg1:#a78bfa; --bg2:#7c3aed; --card:#ffffff; --ink:#1f2937;
+    --accent:#7c3aed; --ok:#16a34a; --bad:#dc2626; --soft:#ede9fe;
+  }
+  *{box-sizing:border-box;font-family:"Segoe UI",system-ui,sans-serif}
+  body{margin:0;min-height:100vh;display:flex;align-items:center;justify-content:center;
+    background:linear-gradient(135deg,var(--bg1),var(--bg2));padding:20px;color:var(--ink)}
+  .app{background:var(--card);width:min(760px,100%);border-radius:24px;
+    box-shadow:0 25px 60px rgba(0,0,0,.35);padding:34px 34px 28px;position:relative;overflow:hidden}
+  h1{margin:0 0 6px;font-size:26px;text-align:center}
+  .sub{text-align:center;color:#64748b;margin-bottom:22px;font-size:15px}
+  .bar{height:10px;background:var(--soft);border-radius:99px;overflow:hidden;margin-bottom:18px}
+  .bar>i{display:block;height:100%;width:0;background:var(--accent);transition:.4s}
+  .meta{display:flex;justify-content:space-between;font-size:14px;color:#64748b;margin-bottom:14px}
+  .q{font-size:22px;font-weight:700;margin:6px 0 20px;line-height:1.3}
+  .q code{background:#0f172a;color:#e2e8f0;padding:2px 8px;border-radius:6px;font-size:18px}
+  .opts{display:grid;gap:12px}
+  .opt{border:2px solid #e2e8f0;background:#fff;border-radius:14px;padding:15px 18px;font-size:18px;
+    text-align:left;cursor:pointer;transition:.15s;display:flex;align-items:center;gap:12px}
+  .opt:hover{border-color:var(--accent);background:var(--soft);transform:translateY(-2px)}
+  .opt b{background:var(--soft);color:var(--accent);width:30px;height:30px;border-radius:8px;
+    display:flex;align-items:center;justify-content:center;font-size:15px;flex:0 0 auto}
+  .opt span code{background:#0f172a;color:#e2e8f0;padding:1px 6px;border-radius:5px;font-size:16px}
+  .opt.ok{border-color:var(--ok);background:#dcfce7}
+  .opt.ok b{background:var(--ok);color:#fff}
+  .opt.bad{border-color:var(--bad);background:#fee2e2}
+  .opt.bad b{background:var(--bad);color:#fff}
+  .opt:disabled{cursor:default;transform:none}
+  .fb{margin-top:16px;padding:14px 16px;border-radius:12px;font-size:16px;display:none;line-height:1.4}
+  .fb.show{display:block}
+  .fb.good{background:#dcfce7;color:#166534}
+  .fb.no{background:#fee2e2;color:#991b1b}
+  .fb code{background:#0f172a;color:#e2e8f0;padding:1px 6px;border-radius:5px}
+  .btn{margin-top:18px;width:100%;padding:15px;border:0;border-radius:14px;background:var(--accent);
+    color:#fff;font-size:18px;font-weight:700;cursor:pointer;display:none}
+  .btn.show{display:block}
+  .btn:hover{filter:brightness(1.08)}
+  .center{text-align:center}
+  .score{font-size:64px;font-weight:800;margin:10px 0}
+  .emoji{font-size:70px}
+  .hint{color:#94a3b8;font-size:13px;text-align:center;margin-top:14px}
+</style>
+</head>
+<body>
+<div class="app" id="app"></div>
+<script>
+const QUESTIONS = [
+  {q:"Как компьютер делает случайный ход в КНБ?",
+   a:["<code>random.randint</code>","<code>random.choice([\"камень\",\"ножницы\",\"бумага\"])</code>","<code>input()</code>","<code>choice.random()</code>"],c:1,
+   e:"random.choice выбирает случайный вариант из списка."},
+  {q:"Что бьёт ножницы?",
+   a:["Бумага","Камень","Ничего","Ножницы"],c:1,
+   e:"Камень тупит ножницы."},
+  {q:"Какую ветку в лестнице победителя ставят ПЕРВОЙ?",
+   a:["Победу игрока","Ничью (player == comp)","else","Победу компьютера"],c:1,
+   e:"Сначала отсекаем ничью — иначе она «утечёт» в другие ветки."},
+  {q:"Почему для всех побед компьютера хватает одного <code>else</code>?",
+   a:["Так короче случайно","Ничья и победы игрока уже отсечены — остаётся только это","else всегда один","Компьютер не выигрывает"],c:1,
+   e:"«Умный else»: остаток случаев — ровно победа компьютера."},
+  {q:"Как правильно записать победу «камень бьёт ножницы»?",
+   a:["<code>player==\"камень\" and \"ножницы\"</code>","<code>player==\"камень\" and comp==\"ножницы\"</code>","<code>player and comp</code>","<code>\"камень\">\"ножницы\"</code>"],c:1,
+   e:"По обе стороны and — полные сравнения."},
+  {q:"Что даёт <code>player == comp</code>?",
+   a:["Победу игрока","Ничью","Ошибку","Победу компьютера"],c:1,
+   e:"Одинаковые фигуры — ничья."},
+  {q:"Зачем к вводу игрока добавляют <code>.lower().strip()</code>?",
+   a:["Для скорости","Чтобы «Камень» и « камень » тоже распознались","Обязательно по правилам","Чтобы считать"],c:1,
+   e:"Убирает регистр и пробелы — сравнение честное."},
+  {q:"Как ведут счёт побед за серию?",
+   a:["<code>wins == 1</code>","копилками: <code>wins += 1</code>","<code>random</code>","никак"],c:1,
+   e:"Заводим wins=0 и прибавляем по итогу раунда."},
+  {q:"Сколько всего исходов у одного раунда КНБ (3×3)?",
+   a:["3","6","9","27"],c:2,
+   e:"9 пар: 3 ничьи, 3 победы игрока, 3 победы компьютера."},
+  {q:"Чтобы гарантированно проверить один исход при отладке, что делают?",
+   a:["Перезапускают много раз","Временно фиксируют <code>comp = \"ножницы\"</code>","Удаляют random","Меняют Python"],c:1,
+   e:"Фиксируют ход компьютера, потом возвращают random.choice."},
+
+  {q:"😄 В игре ничья выдаёт «Компьютер выиграл». Что забыли?",
+   a:["import random","ветку <code>player == comp</code> первой","print","int()"],c:1,
+   e:"Ничью надо проверять первой веткой лестницы."},
+  {q:"😄 Игрок ввёл «Бумага», а игра не поняла. Почему?",
+   a:["Бумага не фигура","Забыли <code>.lower()</code> — большая Б","Python сломался","Нужен pip"],c:1,
+   e:"Сравнение строгое: «Бумага» != «бумага». Приведи ввод."},
+  {q:"😄 Написали <code>wins += 1</code>, но <code>wins = 0</code> нет. Что будет?",
+   a:["0","NameError","Игра зависнет","1"],c:1,
+   e:"Копилку надо завести до использования."},
+
+  {q:"🤔 Почему серию «играем до 3 побед» пока не сделать красиво?",
+   a:["Python не умеет","Нужен цикл — повтор неизвестное число раз (Модуль 3)","Не хватает random","Нужны списки"],c:1,
+   e:"Повтор до условия — это while, тема следующего модуля."},
+  {q:"🤔 Три победы игрока слили в одну ветку через <code>or</code>. Что обязательно?",
+   a:["Ничего","Скобки вокруг каждой пары <code>and</code>","Убрать else","Заменить on if"],c:1,
+   e:"and сильнее or — без скобок логика сломается."},
+  {q:"🤔 Что общего у викторины (Урок 4) и КНБ (Урок 5)?",
+   a:["Ничего","Обе ведут счёт копилкой += и ветвятся условиями","Обе про даты","Обе без random"],c:1,
+   e:"Счётчик += и if/elif/else — фундамент обоих проектов модуля."},
+];
+
+let i=0, score=0, locked=false;
+const app=document.getElementById('app');
+
+function shuffle(){for(let k=QUESTIONS.length-1;k>0;k--){const j=Math.floor(Math.random()*(k+1));[QUESTIONS[k],QUESTIONS[j]]=[QUESTIONS[j],QUESTIONS[k]];}for(const Q of QUESTIONS){const cc=Q.a[Q.c];for(let k=Q.a.length-1;k>0;k--){const j=Math.floor(Math.random()*(k+1));[Q.a[k],Q.a[j]]=[Q.a[j],Q.a[k]];}Q.c=Q.a.indexOf(cc);}}
+shuffle();
+
+function render(){
+  const Q=QUESTIONS[i];
+  app.innerHTML=`
+    <h1>✊✋✌️ Итог Модуля 2</h1>
+    <div class="sub">КНБ + весь модуль «Условия и логика» · Python</div>
+    <div class="bar"><i style="width:${(i/QUESTIONS.length)*100}%"></i></div>
+    <div class="meta"><span>Вопрос ${i+1} из ${QUESTIONS.length}</span><span>⭐ Очки: ${score}</span></div>
+    <div class="q">${Q.q}</div>
+    <div class="opts" id="opts">
+      ${Q.a.map((t,n)=>`<button class="opt" data-n="${n}"><b>${n+1}</b><span>${t}</span></button>`).join('')}
+    </div>
+    <div class="fb" id="fb"></div>
+    <button class="btn" id="next">${i===QUESTIONS.length-1?'Показать результат →':'Следующий вопрос →'}</button>
+    <div class="hint">Можно отвечать клавишами 1–4</div>`;
+  locked=false;
+  document.querySelectorAll('.opt').forEach(b=>b.onclick=()=>choose(+b.dataset.n));
+  document.getElementById('next').onclick=next;
+}
+
+function choose(n){
+  if(locked) return; locked=true;
+  const Q=QUESTIONS[i];
+  const opts=[...document.querySelectorAll('.opt')];
+  opts.forEach(b=>b.disabled=true);
+  opts[Q.c].classList.add('ok');
+  const fb=document.getElementById('fb');
+  if(n===Q.c){ score++; fb.className='fb show good'; fb.innerHTML='✅ Верно! '+Q.e; }
+  else { opts[n].classList.add('bad'); fb.className='fb show no'; fb.innerHTML='❌ Не совсем. '+Q.e; }
+  document.querySelector('.meta').children[1].textContent='⭐ Очки: '+score;
+  document.getElementById('next').classList.add('show');
+}
+
+function next(){ i++; if(i<QUESTIONS.length) render(); else result(); }
+
+function result(){
+  const pct=Math.round(score/QUESTIONS.length*100);
+  let em,msg;
+  if(pct===100){em='🏆';msg='Идеально! Модуль 2 пройден на 100% — ты готов к циклам! 🔁';}
+  else if(pct>=70){em='🎉';msg='Отлично! Условия и логика в кармане, вперёд в Модуль 3.';}
+  else if(pct>=40){em='👍';msg='Неплохо! Пробегись по итого.md — про порядок веток и умный else.';}
+  else {em='💪';msg='Ещё разок! Открой итого.md и повтори лестницу условий.';}
+  app.innerHTML=`
+    <div class="center">
+      <div class="emoji">${em}</div>
+      <h1>Готово!</h1>
+      <div class="score">${score} / ${QUESTIONS.length}</div>
+      <div class="sub">${msg}</div>
+      <button class="btn show" id="again">🔁 Пройти заново</button>
+    </div>`;
+  document.getElementById('again').onclick=()=>{i=0;score=0;shuffle();render();};
+}
+
+document.addEventListener('keydown',e=>{
+  if(['1','2','3','4'].includes(e.key)){ const b=document.querySelector(`.opt[data-n="${+e.key-1}"]`); if(b&&!b.disabled) choose(+e.key-1); }
+  if(e.key==='Enter'){ const nb=document.getElementById('next'); if(nb&&nb.classList.contains('show')) next(); }
+});
+
+render();
+</script>
+</body>
+</html>

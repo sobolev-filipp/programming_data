@@ -1,0 +1,68 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 820 480" font-family="'Segoe UI',system-ui,sans-serif">
+  <rect x="0" y="0" width="820" height="480" fill="#f7f9fc"/>
+  <text x="410" y="36" font-size="24" font-weight="700" fill="#1f2937" text-anchor="middle">🎯 Поток викторины</text>
+  <text x="410" y="60" font-size="14" fill="#64748b" text-anchor="middle">каждый вопрос устроен одинаково: спросили → сравнили → начислили очко или нет</text>
+
+  <!-- start -->
+  <g transform="translate(330,82)">
+    <rect x="0" y="0" width="160" height="42" rx="21" fill="#e2e8f0" stroke="#334155" stroke-width="2"/>
+    <text x="80" y="27" font-size="15" font-weight="700" fill="#334155" text-anchor="middle">score = 0</text>
+  </g>
+  <line x1="410" y1="124" x2="410" y2="150" stroke="#94a3b8" stroke-width="2"/>
+  <polygon points="410,150 404,138 416,138" fill="#94a3b8"/>
+
+  <!-- question block -->
+  <g transform="translate(300,152)">
+    <rect x="0" y="0" width="220" height="46" rx="10" fill="#dbeafe" stroke="#2563eb" stroke-width="2"/>
+    <text x="110" y="28" font-size="14.5" fill="#1e40af" text-anchor="middle" font-family="monospace">ans = input("Вопрос?")</text>
+  </g>
+  <line x1="410" y1="198" x2="410" y2="222" stroke="#94a3b8" stroke-width="2"/>
+  <polygon points="410,222 404,210 416,210" fill="#94a3b8"/>
+
+  <!-- diamond check -->
+  <g transform="translate(410,262)">
+    <polygon points="0,-40 130,0 0,40 -130,0" fill="#ede9fe" stroke="#7c3aed" stroke-width="2.5"/>
+    <text x="0" y="-2" font-size="14.5" font-weight="700" fill="#5b21b6" text-anchor="middle" font-family="monospace">ans == ответ?</text>
+    <text x="0" y="18" font-size="12" fill="#6d28d9" text-anchor="middle">верно?</text>
+  </g>
+
+  <!-- YES -->
+  <line x1="280" y1="262" x2="180" y2="262" stroke="#16a34a" stroke-width="2.5"/>
+  <polygon points="180,262 192,256 192,268" fill="#16a34a"/>
+  <text x="240" y="252" font-size="14" font-weight="800" fill="#16a34a" text-anchor="middle">Да ✅</text>
+  <g transform="translate(40,240)">
+    <rect x="0" y="0" width="140" height="46" rx="10" fill="#dcfce7" stroke="#16a34a" stroke-width="2"/>
+    <text x="70" y="21" font-size="13.5" fill="#166534" text-anchor="middle">«Верно!»</text>
+    <text x="70" y="39" font-size="14" fill="#15803d" text-anchor="middle" font-family="monospace">score += 1</text>
+  </g>
+
+  <!-- NO -->
+  <line x1="540" y1="262" x2="640" y2="262" stroke="#dc2626" stroke-width="2.5"/>
+  <polygon points="640,262 628,256 628,268" fill="#dc2626"/>
+  <text x="580" y="252" font-size="14" font-weight="800" fill="#dc2626" text-anchor="middle">Нет ❌</text>
+  <g transform="translate(640,240)">
+    <rect x="0" y="0" width="150" height="46" rx="10" fill="#fee2e2" stroke="#dc2626" stroke-width="2"/>
+    <text x="75" y="21" font-size="13.5" fill="#991b1b" text-anchor="middle">«Неверно,</text>
+    <text x="75" y="39" font-size="13.5" fill="#991b1b" text-anchor="middle">правильный ответ…»</text>
+  </g>
+
+  <!-- repeat note -->
+  <g transform="translate(250,320)">
+    <rect x="0" y="0" width="320" height="40" rx="10" fill="#fff7ed" stroke="#ea580c" stroke-width="1.5" stroke-dasharray="5 4"/>
+    <text x="160" y="25" font-size="13.5" fill="#9a3412" text-anchor="middle">↻ так повторяем для каждого вопроса</text>
+  </g>
+  <line x1="410" y1="360" x2="410" y2="384" stroke="#94a3b8" stroke-width="2"/>
+  <polygon points="410,384 404,372 416,372" fill="#94a3b8"/>
+
+  <!-- final -->
+  <g transform="translate(250,386)">
+    <rect x="0" y="0" width="320" height="66" rx="12" fill="#7c3aed"/>
+    <text x="160" y="27" font-size="14.5" font-weight="700" fill="#ffffff" text-anchor="middle">Итог: score из N + процент</text>
+    <text x="160" y="50" font-size="13" fill="#ddd6fe" text-anchor="middle">много очков → награда-шутка pyjokes 🎉</text>
+  </g>
+
+  <text x="70" y="360" font-size="12.5" fill="#64748b">💡 без цикла</text>
+  <text x="70" y="378" font-size="12.5" fill="#64748b">пишем вопросы</text>
+  <text x="70" y="396" font-size="12.5" fill="#64748b">подряд (цикл —</text>
+  <text x="70" y="414" font-size="12.5" fill="#64748b">Модуль 3)</text>
+</svg>

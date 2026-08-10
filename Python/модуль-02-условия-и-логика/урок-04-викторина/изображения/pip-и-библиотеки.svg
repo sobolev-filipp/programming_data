@@ -1,0 +1,66 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 820 480" font-family="'Segoe UI',system-ui,sans-serif">
+  <rect x="0" y="0" width="820" height="480" fill="#f7f9fc"/>
+  <text x="410" y="36" font-size="24" font-weight="700" fill="#1f2937" text-anchor="middle">📦 Две породы библиотек: встроенные и внешние</text>
+  <text x="410" y="60" font-size="14" fill="#64748b" text-anchor="middle">одни уже внутри Python, другие нужно скачать из интернета командой <tspan font-family="monospace" fill="#7c3aed">pip install</tspan></text>
+
+  <!-- LEFT: built-in -->
+  <g transform="translate(40,90)">
+    <rect x="0" y="0" width="340" height="150" rx="14" fill="#dcfce7" stroke="#16a34a" stroke-width="2.5"/>
+    <text x="170" y="30" font-size="17" font-weight="800" fill="#15803d" text-anchor="middle">Встроенные (уже есть)</text>
+    <text x="170" y="56" font-size="13.5" fill="#166534" text-anchor="middle">идут вместе с Python — просто импортируй</text>
+    <g font-family="monospace" font-size="15" fill="#14532d">
+      <text x="24" y="88">import random</text>
+      <text x="24" y="112">import datetime</text>
+      <text x="24" y="136">import math</text>
+    </g>
+    <text x="290" y="136" font-size="26">✅</text>
+  </g>
+
+  <!-- RIGHT: external -->
+  <g transform="translate(440,90)">
+    <rect x="0" y="0" width="340" height="150" rx="14" fill="#ede9fe" stroke="#7c3aed" stroke-width="2.5"/>
+    <text x="170" y="30" font-size="17" font-weight="800" fill="#5b21b6" text-anchor="middle">Внешние (надо поставить)</text>
+    <text x="170" y="56" font-size="13.5" fill="#4c1d95" text-anchor="middle">написали другие люди — сначала скачай</text>
+    <g font-family="monospace" font-size="15" fill="#4c1d95">
+      <text x="24" y="88">pyjokes</text>
+      <text x="24" y="112">requests</text>
+      <text x="24" y="136">wikipedia</text>
+    </g>
+    <text x="290" y="120" font-size="26">🌐</text>
+  </g>
+
+  <!-- pip flow -->
+  <text x="410" y="278" font-size="16" font-weight="800" fill="#334155" text-anchor="middle">Как поставить внешнюю библиотеку:</text>
+
+  <!-- step 1: terminal command -->
+  <g transform="translate(60,296)">
+    <rect x="0" y="0" width="230" height="70" rx="10" fill="#0f172a"/>
+    <text x="16" y="28" font-size="12" fill="#94a3b8" font-family="monospace">терминал (не в коде!)</text>
+    <text x="16" y="52" font-size="16" font-family="monospace"><tspan fill="#fbbf24">pip install</tspan> <tspan fill="#e2e8f0">pyjokes</tspan></text>
+  </g>
+  <!-- arrow -->
+  <line x1="298" y1="331" x2="360" y2="331" stroke="#7c3aed" stroke-width="3"/>
+  <polygon points="360,331 348,325 348,337" fill="#7c3aed"/>
+  <!-- step 2: PyPI cloud -->
+  <g transform="translate(368,296)">
+    <rect x="0" y="0" width="180" height="70" rx="10" fill="#e0f2fe" stroke="#0891b2" stroke-width="2"/>
+    <text x="90" y="30" font-size="26" text-anchor="middle">☁️</text>
+    <text x="90" y="54" font-size="13" fill="#0e7490" text-anchor="middle">склад PyPI: качает</text>
+  </g>
+  <!-- arrow -->
+  <line x1="556" y1="331" x2="618" y2="331" stroke="#7c3aed" stroke-width="3"/>
+  <polygon points="618,331 606,325 606,337" fill="#7c3aed"/>
+  <!-- step 3: import in code -->
+  <g transform="translate(626,296)">
+    <rect x="0" y="0" width="150" height="70" rx="10" fill="#0f172a"/>
+    <text x="14" y="28" font-size="12" fill="#94a3b8" font-family="monospace">в программе</text>
+    <text x="14" y="52" font-size="15" font-family="monospace"><tspan fill="#c084fc">import</tspan> <tspan fill="#e2e8f0">pyjokes</tspan></text>
+  </g>
+
+  <!-- note -->
+  <g transform="translate(60,388)">
+    <rect x="0" y="0" width="716" height="58" rx="12" fill="#fef3c7" stroke="#f59e0b" stroke-width="2"/>
+    <text x="20" y="26" font-size="14.5" fill="#92400e"><tspan font-weight="800">Ставим один раз</tspan> — потом библиотека живёт на компьютере, и <tspan font-family="monospace" font-weight="700">import</tspan> работает в любой программе.</text>
+    <text x="20" y="48" font-size="13.5" fill="#92400e">Забыл поставить, но написал <tspan font-family="monospace">import pyjokes</tspan> → <tspan font-family="monospace" font-weight="700">ModuleNotFoundError</tspan> (знакомая ошибка из Модуля 1!).</text>
+  </g>
+</svg>

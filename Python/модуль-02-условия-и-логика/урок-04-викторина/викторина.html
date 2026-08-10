@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Викторина — Урок 4 «Викторина + pyjokes» (Python)</title>
+<style>
+  :root{
+    --bg1:#a78bfa; --bg2:#7c3aed; --card:#ffffff; --ink:#1f2937;
+    --accent:#7c3aed; --ok:#16a34a; --bad:#dc2626; --soft:#ede9fe;
+  }
+  *{box-sizing:border-box;font-family:"Segoe UI",system-ui,sans-serif}
+  body{margin:0;min-height:100vh;display:flex;align-items:center;justify-content:center;
+    background:linear-gradient(135deg,var(--bg1),var(--bg2));padding:20px;color:var(--ink)}
+  .app{background:var(--card);width:min(760px,100%);border-radius:24px;
+    box-shadow:0 25px 60px rgba(0,0,0,.35);padding:34px 34px 28px;position:relative;overflow:hidden}
+  h1{margin:0 0 6px;font-size:26px;text-align:center}
+  .sub{text-align:center;color:#64748b;margin-bottom:22px;font-size:15px}
+  .bar{height:10px;background:var(--soft);border-radius:99px;overflow:hidden;margin-bottom:18px}
+  .bar>i{display:block;height:100%;width:0;background:var(--accent);transition:.4s}
+  .meta{display:flex;justify-content:space-between;font-size:14px;color:#64748b;margin-bottom:14px}
+  .q{font-size:22px;font-weight:700;margin:6px 0 20px;line-height:1.3}
+  .q code{background:#0f172a;color:#e2e8f0;padding:2px 8px;border-radius:6px;font-size:18px}
+  .opts{display:grid;gap:12px}
+  .opt{border:2px solid #e2e8f0;background:#fff;border-radius:14px;padding:15px 18px;font-size:18px;
+    text-align:left;cursor:pointer;transition:.15s;display:flex;align-items:center;gap:12px}
+  .opt:hover{border-color:var(--accent);background:var(--soft);transform:translateY(-2px)}
+  .opt b{background:var(--soft);color:var(--accent);width:30px;height:30px;border-radius:8px;
+    display:flex;align-items:center;justify-content:center;font-size:15px;flex:0 0 auto}
+  .opt span code{background:#0f172a;color:#e2e8f0;padding:1px 6px;border-radius:5px;font-size:16px}
+  .opt.ok{border-color:var(--ok);background:#dcfce7}
+  .opt.ok b{background:var(--ok);color:#fff}
+  .opt.bad{border-color:var(--bad);background:#fee2e2}
+  .opt.bad b{background:var(--bad);color:#fff}
+  .opt:disabled{cursor:default;transform:none}
+  .fb{margin-top:16px;padding:14px 16px;border-radius:12px;font-size:16px;display:none;line-height:1.4}
+  .fb.show{display:block}
+  .fb.good{background:#dcfce7;color:#166534}
+  .fb.no{background:#fee2e2;color:#991b1b}
+  .fb code{background:#0f172a;color:#e2e8f0;padding:1px 6px;border-radius:5px}
+  .btn{margin-top:18px;width:100%;padding:15px;border:0;border-radius:14px;background:var(--accent);
+    color:#fff;font-size:18px;font-weight:700;cursor:pointer;display:none}
+  .btn.show{display:block}
+  .btn:hover{filter:brightness(1.08)}
+  .center{text-align:center}
+  .score{font-size:64px;font-weight:800;margin:10px 0}
+  .emoji{font-size:70px}
+  .hint{color:#94a3b8;font-size:13px;text-align:center;margin-top:14px}
+</style>
+</head>
+<body>
+<div class="app" id="app"></div>
+<script>
+const QUESTIONS = [
+  {q:"Что делает <code>score += 1</code>?",
+   a:["Создаёт score","Прибавляет 1 к score","Сравнивает с 1","Обнуляет score"],c:1,
+   e:"score += 1 — то же, что score = score + 1."},
+  {q:"Как правильно завести копилку очков в начале?",
+   a:["<code>score = 0</code>","<code>score += 0</code>","<code>score == 0</code>","<code>int score</code>"],c:0,
+   e:"Заводим score = 0 ДО того, как прибавлять."},
+  {q:"Что будет, если написать <code>score += 1</code> без <code>score = 0</code> выше?",
+   a:["0","1","NameError","Ничего"],c:2,
+   e:"Переменной ещё нет → NameError. Сначала заведи копилку."},
+  {q:"Где должно стоять <code>score += 1</code>, чтобы очко шло за ВЕРНЫЙ ответ?",
+   a:["После программы","Внутри ветки if (с отступом)","В ветке else","В самом начале"],c:1,
+   e:"Очко начисляем внутри if — только при верном ответе."},
+  {q:"Чем встроенная библиотека (random) отличается от внешней (pyjokes)?",
+   a:["Ничем","Внешнюю надо сначала поставить через pip","random быстрее","pyjokes нельзя импортировать"],c:1,
+   e:"random идёт с Python, pyjokes ставят через pip install."},
+  {q:"Какой командой ставят библиотеку pyjokes?",
+   a:["<code>import pyjokes</code>","<code>pip install pyjokes</code>","<code>get pyjokes</code>","<code>python pyjokes</code>"],c:1,
+   e:"pip install pyjokes — в терминале, один раз."},
+  {q:"Где пишут <code>pip install ...</code>?",
+   a:["В .py-файле","В терминале","В f-строке","В комментарии"],c:1,
+   e:"pip — в терминале; в коде потом import."},
+  {q:"Что вернёт <code>pyjokes.get_joke(language=\"en\")</code>?",
+   a:["Ошибку","Случайную шутку","Число","Пустоту"],c:1,
+   e:"Случайную шутку про программистов (на английском)."},
+  {q:"Как посчитать процент из 5 вопросов?",
+   a:["<code>score * 5</code>","<code>score / 5 * 100</code>","<code>score + 100</code>","<code>5 / score</code>"],c:1,
+   e:"Очки делим на количество и умножаем на 100."},
+  {q:"Что делает <code>lives -= 1</code>?",
+   a:["Прибавляет жизнь","Отнимает 1 жизнь","Удваивает","Обнуляет"],c:1,
+   e:"-= отнимает: то же, что lives = lives - 1."},
+
+  {q:"😄 Ученик ответил неверно, а очки всё равно выросли. В чём дело?",
+   a:["Баг Python","<code>score += 1</code> стоит без отступа (вне if)","Плохой интернет","Так и надо"],c:1,
+   e:"Очко вылезло из if — прибавляется всегда. Верни отступ внутрь if."},
+  {q:"😄 Написал <code>import pyjokes</code>, а получил <code>ModuleNotFoundError</code>. Что забыл?",
+   a:["Сохранить файл","<code>pip install pyjokes</code>","Поставить эмодзи","Перезагрузить ПК"],c:1,
+   e:"Библиотеку надо сначала поставить через pip."},
+  {q:"😄 Правильный ответ «Париж», а игрок ввёл «париж» — не засчитано. Почему?",
+   a:["Париж — не столица","Не привёл ввод к одному регистру (.lower())","Python сломался","Нужен int()"],c:1,
+   e:"Сравнение строгое. Добавь .lower().strip() к ответу."},
+
+  {q:"🤔 Почему <code>score += 1</code> удобнее, чем <code>score = score + 1</code>?",
+   a:["Работает в 10 раз быстрее","Короче и меньше опечаток — то же действие","Это разные вещи","Только так можно считать"],c:1,
+   e:"+= — сокращение той же операции, программисты пишут так постоянно."},
+  {q:"🤔 Почему в этом уроке 5 вопросов пишут подряд, а не в цикле?",
+   a:["Так надёжнее","Цикл ещё не проходили — это Модуль 3","Циклов в Python нет","Так быстрее"],c:1,
+   e:"Пока пишем по блоку на вопрос; цикл сожмёт это в Модуле 3."},
+  {q:"🤔 Зачем добавлять <code>else</code> с правильным ответом к каждому вопросу?",
+   a:["Обязательно по правилам","Чтобы при ошибке показать верный ответ — это обучает","Для скорости","Чтобы код был длиннее"],c:1,
+   e:"else превращает ошибку в подсказку: игрок видит правильный ответ."},
+];
+
+let i=0, score=0, locked=false;
+const app=document.getElementById('app');
+
+function shuffle(){for(let k=QUESTIONS.length-1;k>0;k--){const j=Math.floor(Math.random()*(k+1));[QUESTIONS[k],QUESTIONS[j]]=[QUESTIONS[j],QUESTIONS[k]];}for(const Q of QUESTIONS){const cc=Q.a[Q.c];for(let k=Q.a.length-1;k>0;k--){const j=Math.floor(Math.random()*(k+1));[Q.a[k],Q.a[j]]=[Q.a[j],Q.a[k]];}Q.c=Q.a.indexOf(cc);}}
+shuffle();
+
+function render(){
+  const Q=QUESTIONS[i];
+  app.innerHTML=`
+    <h1>🎯 Викторина + pyjokes</h1>
+    <div class="sub">Викторина по уроку 4 · Модуль 2 · Python</div>
+    <div class="bar"><i style="width:${(i/QUESTIONS.length)*100}%"></i></div>
+    <div class="meta"><span>Вопрос ${i+1} из ${QUESTIONS.length}</span><span>⭐ Очки: ${score}</span></div>
+    <div class="q">${Q.q}</div>
+    <div class="opts" id="opts">
+      ${Q.a.map((t,n)=>`<button class="opt" data-n="${n}"><b>${n+1}</b><span>${t}</span></button>`).join('')}
+    </div>
+    <div class="fb" id="fb"></div>
+    <button class="btn" id="next">${i===QUESTIONS.length-1?'Показать результат →':'Следующий вопрос →'}</button>
+    <div class="hint">Можно отвечать клавишами 1–4</div>`;
+  locked=false;
+  document.querySelectorAll('.opt').forEach(b=>b.onclick=()=>choose(+b.dataset.n));
+  document.getElementById('next').onclick=next;
+}
+
+function choose(n){
+  if(locked) return; locked=true;
+  const Q=QUESTIONS[i];
+  const opts=[...document.querySelectorAll('.opt')];
+  opts.forEach(b=>b.disabled=true);
+  opts[Q.c].classList.add('ok');
+  const fb=document.getElementById('fb');
+  if(n===Q.c){ score++; fb.className='fb show good'; fb.innerHTML='✅ Верно! '+Q.e; }
+  else { opts[n].classList.add('bad'); fb.className='fb show no'; fb.innerHTML='❌ Не совсем. '+Q.e; }
+  document.querySelector('.meta').children[1].textContent='⭐ Очки: '+score;
+  document.getElementById('next').classList.add('show');
+}
+
+function next(){ i++; if(i<QUESTIONS.length) render(); else result(); }
+
+function result(){
+  const pct=Math.round(score/QUESTIONS.length*100);
+  let em,msg;
+  if(pct===100){em='🏆';msg='Идеально! Проект собран на 100% — вперёд к «Камень-ножницы-бумага»! ✊';}
+  else if(pct>=70){em='🎉';msg='Отлично! Счётчик и pip освоены, можно в Урок 5.';}
+  else if(pct>=40){em='👍';msg='Неплохо! Пробегись по итого.md — про score += 1 и pip.';}
+  else {em='💪';msg='Ещё разок! Открой итого.md и повтори копилку и установку библиотек.';}
+  app.innerHTML=`
+    <div class="center">
+      <div class="emoji">${em}</div>
+      <h1>Готово!</h1>
+      <div class="score">${score} / ${QUESTIONS.length}</div>
+      <div class="sub">${msg}</div>
+      <button class="btn show" id="again">🔁 Пройти заново</button>
+    </div>`;
+  document.getElementById('again').onclick=()=>{i=0;score=0;shuffle();render();};
+}
+
+document.addEventListener('keydown',e=>{
+  if(['1','2','3','4'].includes(e.key)){ const b=document.querySelector(`.opt[data-n="${+e.key-1}"]`); if(b&&!b.disabled) choose(+e.key-1); }
+  if(e.key==='Enter'){ const nb=document.getElementById('next'); if(nb&&nb.classList.contains('show')) next(); }
+});
+
+render();
+</script>
+</body>
+</html>

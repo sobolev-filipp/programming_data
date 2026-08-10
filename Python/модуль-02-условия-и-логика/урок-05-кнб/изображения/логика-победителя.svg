@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 820 500" font-family="'Segoe UI',system-ui,sans-serif">
+  <rect x="0" y="0" width="820" height="500" fill="#f7f9fc"/>
+  <text x="410" y="36" font-size="24" font-weight="700" fill="#1f2937" text-anchor="middle">🧠 Как программа определяет победителя</text>
+  <text x="410" y="60" font-size="14" fill="#64748b" text-anchor="middle">лестница <tspan font-family="monospace" fill="#7c3aed">if / elif / else</tspan>: сначала ничья, потом 3 победы игрока, иначе — компьютер</text>
+
+  <!-- step 1: ничья -->
+  <g transform="translate(90,84)">
+    <rect x="0" y="0" width="640" height="52" rx="10" fill="#e2e8f0" stroke="#64748b" stroke-width="2"/>
+    <text x="16" y="32" font-size="15" font-family="monospace" fill="#0f172a"><tspan fill="#7c3aed">if</tspan> player == comp:</text>
+    <text x="330" y="32" font-size="14.5" fill="#334155">одинаковые фигуры → <tspan font-weight="800">Ничья</tspan> 🤝</text>
+  </g>
+
+  <!-- step 2: 3 победы игрока -->
+  <g transform="translate(90,148)">
+    <rect x="0" y="0" width="640" height="150" rx="10" fill="#dcfce7" stroke="#16a34a" stroke-width="2.5"/>
+    <text x="16" y="30" font-size="14" font-weight="800" fill="#15803d">Три случая, когда выигрывает игрок (через <tspan font-family="monospace">and</tspan>):</text>
+    <text x="26" y="60" font-size="14.5" font-family="monospace" fill="#166534"><tspan fill="#7c3aed">elif</tspan> player == "камень"  <tspan fill="#0891b2">and</tspan> comp == "ножницы":</text>
+    <text x="26" y="88" font-size="14.5" font-family="monospace" fill="#166534"><tspan fill="#7c3aed">elif</tspan> player == "ножницы" <tspan fill="#0891b2">and</tspan> comp == "бумага":</text>
+    <text x="26" y="116" font-size="14.5" font-family="monospace" fill="#166534"><tspan fill="#7c3aed">elif</tspan> player == "бумага"  <tspan fill="#0891b2">and</tspan> comp == "камень":</text>
+    <text x="26" y="140" font-size="13.5" fill="#15803d">→ во всех трёх: <tspan font-weight="800">Ты выиграл!</tspan> ✅  (<tspan font-family="monospace">score += 1</tspan>)</text>
+  </g>
+
+  <!-- step 3: else -->
+  <g transform="translate(90,310)">
+    <rect x="0" y="0" width="640" height="66" rx="10" fill="#fee2e2" stroke="#dc2626" stroke-width="2.5"/>
+    <text x="16" y="30" font-size="15" font-family="monospace" fill="#991b1b"><tspan fill="#7c3aed">else</tspan>:</text>
+    <text x="16" y="54" font-size="14.5" fill="#7f1d1d">все остальные случаи → <tspan font-weight="800">Компьютер выиграл!</tspan> 💻  (не ничья и не победа игрока)</text>
+  </g>
+
+  <!-- why else works -->
+  <g transform="translate(90,392)">
+    <rect x="0" y="0" width="640" height="80" rx="12" fill="#fef3c7" stroke="#f59e0b" stroke-width="2"/>
+    <text x="20" y="28" font-size="15" font-weight="800" fill="#b45309">Почему хватает одного <tspan font-family="monospace">else</tspan>?</text>
+    <text x="20" y="52" font-size="14" fill="#92400e">Ничью мы уже отсекли первой веткой, три победы игрока — следующими. Значит в <tspan font-family="monospace" font-weight="700">else</tspan> остаётся</text>
+    <text x="20" y="72" font-size="14" fill="#92400e">ровно один случай — выиграл компьютер. Не нужно расписывать его три варианта отдельно!</text>
+  </g>
+</svg>

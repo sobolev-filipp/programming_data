@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 820 470" font-family="'Segoe UI',system-ui,sans-serif">
+  <rect x="0" y="0" width="820" height="470" fill="#f7f9fc"/>
+  <text x="410" y="36" font-size="24" font-weight="700" fill="#1f2937" text-anchor="middle">🎮 Поток одного раунда</text>
+  <text x="410" y="60" font-size="14" fill="#64748b" text-anchor="middle">игрок выбирает, компьютер выбирает случайно, сравниваем и ведём счёт</text>
+
+  <!-- player choice -->
+  <g transform="translate(60,96)">
+    <rect x="0" y="0" width="300" height="70" rx="12" fill="#dbeafe" stroke="#2563eb" stroke-width="2"/>
+    <text x="150" y="28" font-size="14" font-weight="700" fill="#1e40af" text-anchor="middle">Игрок</text>
+    <text x="150" y="52" font-size="13.5" font-family="monospace" fill="#1e3a8a" text-anchor="middle">player = input(...).lower()</text>
+  </g>
+  <!-- comp choice -->
+  <g transform="translate(460,96)">
+    <rect x="0" y="0" width="300" height="70" rx="12" fill="#f3e8ff" stroke="#9333ea" stroke-width="2"/>
+    <text x="150" y="28" font-size="14" font-weight="700" fill="#6b21a8" text-anchor="middle">Компьютер</text>
+    <text x="150" y="52" font-size="13" font-family="monospace" fill="#581c87" text-anchor="middle">comp = random.choice([...])</text>
+  </g>
+
+  <!-- arrows down to compare -->
+  <line x1="210" y1="166" x2="330" y2="212" stroke="#94a3b8" stroke-width="2.5"/>
+  <line x1="610" y1="166" x2="490" y2="212" stroke="#94a3b8" stroke-width="2.5"/>
+
+  <!-- compare box -->
+  <g transform="translate(300,214)">
+    <rect x="0" y="0" width="220" height="56" rx="12" fill="#0f172a"/>
+    <text x="110" y="34" font-size="16" font-weight="700" fill="#e2e8f0" text-anchor="middle" font-family="monospace">сравниваем выбор</text>
+  </g>
+  <line x1="410" y1="270" x2="410" y2="298" stroke="#94a3b8" stroke-width="2.5"/>
+  <polygon points="410,298 404,286 416,286" fill="#94a3b8"/>
+
+  <!-- three outcomes -->
+  <g transform="translate(60,300)">
+    <rect x="0" y="0" width="220" height="80" rx="12" fill="#e2e8f0" stroke="#64748b" stroke-width="2"/>
+    <text x="110" y="30" font-size="26" text-anchor="middle">🤝</text>
+    <text x="110" y="56" font-size="15" font-weight="700" fill="#334155" text-anchor="middle">Ничья</text>
+    <text x="110" y="74" font-size="12.5" fill="#64748b" text-anchor="middle">одинаковые фигуры</text>
+  </g>
+  <g transform="translate(300,300)">
+    <rect x="0" y="0" width="220" height="80" rx="12" fill="#dcfce7" stroke="#16a34a" stroke-width="2.5"/>
+    <text x="110" y="30" font-size="26" text-anchor="middle">✅</text>
+    <text x="110" y="56" font-size="15" font-weight="700" fill="#15803d" text-anchor="middle">Победа игрока</text>
+    <text x="110" y="74" font-size="12.5" font-family="monospace" fill="#15803d" text-anchor="middle">wins += 1</text>
+  </g>
+  <g transform="translate(540,300)">
+    <rect x="0" y="0" width="220" height="80" rx="12" fill="#fee2e2" stroke="#dc2626" stroke-width="2.5"/>
+    <text x="110" y="30" font-size="26" text-anchor="middle">💻</text>
+    <text x="110" y="56" font-size="15" font-weight="700" fill="#991b1b" text-anchor="middle">Победа компьютера</text>
+    <text x="110" y="74" font-size="12.5" font-family="monospace" fill="#991b1b" text-anchor="middle">losses += 1</text>
+  </g>
+
+  <!-- score line -->
+  <g transform="translate(60,398)">
+    <rect x="0" y="0" width="700" height="56" rx="12" fill="#ede9fe" stroke="#7c3aed" stroke-width="2"/>
+    <text x="20" y="24" font-size="14.5" font-weight="800" fill="#5b21b6">Счёт ведём копилками (Урок 4):</text>
+    <text x="20" y="46" font-size="14" font-family="monospace" fill="#4c1d95">wins = 0, losses = 0  →  прибавляем по итогу раунда  →  кто первым до 3, тот чемпион</text>
+  </g>
+</svg>
