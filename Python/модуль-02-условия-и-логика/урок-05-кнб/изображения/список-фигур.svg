@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 780 390" font-family="'Segoe UI',system-ui,sans-serif">
+  <rect x="0" y="0" width="780" height="390" fill="#f7f9fc"/>
+  <text x="390" y="34" font-size="23" font-weight="700" fill="#1f2937" text-anchor="middle">🆕 Список — коробка с пронумерованными ячейками</text>
+  <text x="390" y="62" font-size="15" fill="#7c3aed" text-anchor="middle" font-family="monospace">options = ["камень", "ножницы", "бумага"]</text>
+
+  <!-- index labels -->
+  <g font-size="15" font-weight="700" font-family="monospace" fill="#7c3aed" text-anchor="middle">
+    <text x="200" y="96">индекс 0</text>
+    <text x="390" y="96">индекс 1</text>
+    <text x="580" y="96">индекс 2</text>
+  </g>
+
+  <!-- cells -->
+  <g>
+    <rect x="110" y="106" width="180" height="72" rx="12" fill="#ede9fe" stroke="#7c3aed" stroke-width="2.5"/>
+    <text x="200" y="150" font-size="20" fill="#5b21b6" text-anchor="middle" font-weight="700">камень</text>
+    <rect x="300" y="106" width="180" height="72" rx="12" fill="#ede9fe" stroke="#7c3aed" stroke-width="2.5"/>
+    <text x="390" y="150" font-size="20" fill="#5b21b6" text-anchor="middle" font-weight="700">ножницы</text>
+    <rect x="490" y="106" width="180" height="72" rx="12" fill="#ede9fe" stroke="#7c3aed" stroke-width="2.5"/>
+    <text x="580" y="150" font-size="20" fill="#5b21b6" text-anchor="middle" font-weight="700">бумага</text>
+  </g>
+
+  <!-- access hints -->
+  <g font-size="14" font-family="monospace" fill="#64748b" text-anchor="middle">
+    <text x="200" y="200">options[0]</text>
+    <text x="390" y="200">options[1]</text>
+    <text x="580" y="200">options[2]</text>
+  </g>
+  <text x="390" y="226" font-size="13" fill="#94a3b8" text-anchor="middle">⚠️ счёт с НУЛЯ · всего элементов: len(options) = 3 · options[3] — ошибка IndexError</text>
+
+  <!-- in / not in panel -->
+  <g transform="translate(110,250)">
+    <rect x="0" y="0" width="560" height="118" rx="12" fill="#fff" stroke="#e2e8f0"/>
+    <text x="280" y="26" font-size="15" font-weight="700" fill="#1f2937" text-anchor="middle">Проверка «есть ли значение в списке?» — оператор in / not in</text>
+    <g font-size="14.5" font-family="monospace">
+      <text x="24" y="58" fill="#334155">"камень" in options</text>
+      <text x="300" y="58" fill="#16a34a" font-weight="700">→ True  (есть)</text>
+      <text x="24" y="82" fill="#334155">"ящерица" in options</text>
+      <text x="300" y="82" fill="#dc2626" font-weight="700">→ False (нет такой)</text>
+      <text x="24" y="106" fill="#334155">player not in options</text>
+      <text x="300" y="106" fill="#7c3aed" font-weight="700">→ ловим неверный ввод</text>
+    </g>
+  </g>
+</svg>

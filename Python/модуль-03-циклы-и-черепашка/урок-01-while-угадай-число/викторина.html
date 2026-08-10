@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Викторина — Урок 1 «Цикл while: Угадай число» (Python)</title>
+<style>
+  :root{
+    --bg1:#5eead4; --bg2:#0d9488; --card:#ffffff; --ink:#1f2937;
+    --accent:#0d9488; --ok:#16a34a; --bad:#dc2626; --soft:#ccfbf1;
+  }
+  *{box-sizing:border-box;font-family:"Segoe UI",system-ui,sans-serif}
+  body{margin:0;min-height:100vh;display:flex;align-items:center;justify-content:center;
+    background:linear-gradient(135deg,var(--bg1),var(--bg2));padding:20px;color:var(--ink)}
+  .app{background:var(--card);width:min(760px,100%);border-radius:24px;
+    box-shadow:0 25px 60px rgba(0,0,0,.35);padding:34px 34px 28px;position:relative;overflow:hidden}
+  h1{margin:0 0 6px;font-size:26px;text-align:center}
+  .sub{text-align:center;color:#64748b;margin-bottom:22px;font-size:15px}
+  .bar{height:10px;background:var(--soft);border-radius:99px;overflow:hidden;margin-bottom:18px}
+  .bar>i{display:block;height:100%;width:0;background:var(--accent);transition:.4s}
+  .meta{display:flex;justify-content:space-between;font-size:14px;color:#64748b;margin-bottom:14px}
+  .q{font-size:22px;font-weight:700;margin:6px 0 20px;line-height:1.3}
+  .q code{background:#0f172a;color:#e2e8f0;padding:2px 8px;border-radius:6px;font-size:18px}
+  .opts{display:grid;gap:12px}
+  .opt{border:2px solid #e2e8f0;background:#fff;border-radius:14px;padding:15px 18px;font-size:18px;
+    text-align:left;cursor:pointer;transition:.15s;display:flex;align-items:center;gap:12px}
+  .opt:hover{border-color:var(--accent);background:var(--soft);transform:translateY(-2px)}
+  .opt b{background:var(--soft);color:var(--accent);width:30px;height:30px;border-radius:8px;
+    display:flex;align-items:center;justify-content:center;font-size:15px;flex:0 0 auto}
+  .opt span code{background:#0f172a;color:#e2e8f0;padding:1px 6px;border-radius:5px;font-size:16px}
+  .opt.ok{border-color:var(--ok);background:#dcfce7}
+  .opt.ok b{background:var(--ok);color:#fff}
+  .opt.bad{border-color:var(--bad);background:#fee2e2}
+  .opt.bad b{background:var(--bad);color:#fff}
+  .opt:disabled{cursor:default;transform:none}
+  .fb{margin-top:16px;padding:14px 16px;border-radius:12px;font-size:16px;display:none;line-height:1.4}
+  .fb.show{display:block}
+  .fb.good{background:#dcfce7;color:#166534}
+  .fb.no{background:#fee2e2;color:#991b1b}
+  .fb code{background:#0f172a;color:#e2e8f0;padding:1px 6px;border-radius:5px}
+  .btn{margin-top:18px;width:100%;padding:15px;border:0;border-radius:14px;background:var(--accent);
+    color:#fff;font-size:18px;font-weight:700;cursor:pointer;display:none}
+  .btn.show{display:block}
+  .btn:hover{filter:brightness(1.08)}
+  .center{text-align:center}
+  .score{font-size:64px;font-weight:800;margin:10px 0}
+  .emoji{font-size:70px}
+  .hint{color:#94a3b8;font-size:13px;text-align:center;margin-top:14px}
+</style>
+</head>
+<body>
+<div class="app" id="app"></div>
+<script>
+const QUESTIONS = [
+  {q:"Как правильно прочитать цикл <code>while</code>?",
+   a:["«сделай один раз»","«повторяй тело, ПОКА условие True»","«если условие True»","«жди ввода»"],c:1,
+   e:"while = «пока»: тело повторяется, пока условие истинно."},
+  {q:"Что ОБЯЗАТЕЛЬНО должно быть в теле, чтобы цикл не стал вечным?",
+   a:["print()","что-то, что приближает условие к False (напр. <code>count += 1</code>)","import","else"],c:1,
+   e:"Без изменения переменной условие всегда True — вечный цикл."},
+  {q:"Что делает <code>break</code>?",
+   a:["пропускает один виток","немедленно выходит из цикла","перезапускает цикл","печатает результат"],c:1,
+   e:"break сразу завершает цикл, строки после него не выполнятся."},
+  {q:"Что выведет: <code>count=1</code>; <code>while count&lt;=3:</code> <code>print(count)</code>; <code>count+=1</code>?",
+   a:["1 2 3","1 2 3 4","1 1 1","3 2 1"],c:0,
+   e:"Печатает 1, 2, 3. На count=4 условие ложно — выход."},
+  {q:"Программа зациклилась и печатает без конца. Как остановить?",
+   a:["выключить компьютер","нажать <code>Ctrl + C</code> в терминале","подождать","нажать Enter"],c:1,
+   e:"Ctrl+C — аварийная остановка любого зависшего цикла."},
+  {q:"Зачем нужен <code>while True</code>?",
+   a:["чтобы цикл был красивее","повторять, пока не сработает <code>break</code>","чтобы цикл не запускался","для ошибок"],c:1,
+   e:"while True крутится всегда; выход — только через break внутри if."},
+  {q:"В игре «Угадай число» подсказка «Больше!» означает:",
+   a:["твой вариант больше загаданного","загаданное больше твоего варианта — целься выше","ты выиграл","ошибка ввода"],c:1,
+   e:"«Больше!» = загаданное число больше твоего, называй большее."},
+  {q:"Где в игре «Угадай число» стоит <code>break</code>?",
+   a:["в ветке <code>if guess &lt; secret</code>","в ветке <code>else</code>, когда угадал","до цикла","нигде"],c:1,
+   e:"break в else (guess == secret) — единственный выход из игры."},
+  {q:"Что забыли: <code>n=5</code>; <code>while n&gt;0:</code> <code>print(n)</code> ?",
+   a:["двоеточие","<code>n -= 1</code> — изменение переменной","import random","else"],c:1,
+   e:"Без n -= 1 условие n>0 всегда True — вечный цикл."},
+  {q:"Из скольких обязательных частей состоит правильный <code>while</code>?",
+   a:["из одной — условия","из трёх: начало, условие, изменение","из двух: while и print","из пяти"],c:1,
+   e:"Начало (переменная) → условие → изменение внутри тела."},
+
+  {q:"😄 Цикл печатает <code>1</code> бесконечно. Что забыли?",
+   a:["import","<code>count += 1</code> в теле","print","двоеточие"],c:1,
+   e:"Переменная не меняется — условие вечно True."},
+  {q:"😄 <code>while count &lt;= 5 print(count)</code> — что не так?",
+   a:["ничего","нет двоеточия <code>:</code> после условия","мало пробелов","нужен break"],c:1,
+   e:"После условия while обязательно двоеточие — иначе SyntaxError."},
+  {q:"😄 <code>while True:</code> крутится и не выходит. Что нужно добавить?",
+   a:["ещё один while","<code>break</code> внутри <code>if</code>","print","int()"],c:1,
+   e:"while True выходит только через break — добавь условие выхода."},
+
+  {q:"🤔 Когда берут <code>while</code>, а не <code>for</code> (следующий урок)?",
+   a:["всегда","когда число повторов заранее НЕизвестно (пока не угадает)","когда есть список","никогда"],c:1,
+   e:"while — «пока не случится». for — когда число повторов известно."},
+  {q:"🤔 <code>total=0; n=1; while n&lt;=100: total+=n; n+=1</code> — что в total?",
+   a:["100","5050","101","0"],c:1,
+   e:"Сумма 1+2+...+100 = 5050 (копилка в цикле)."},
+  {q:"🤔 Как ограничить игру 7 попытками?",
+   a:["никак","условие <code>while attempts &lt; 7:</code> + флаг <code>won</code>","убрать random","добавить print"],c:1,
+   e:"Условие while само остановит по попыткам; флаг помнит победу."},
+];
+
+let i=0, score=0, locked=false;
+const app=document.getElementById('app');
+
+function shuffle(){for(let k=QUESTIONS.length-1;k>0;k--){const j=Math.floor(Math.random()*(k+1));[QUESTIONS[k],QUESTIONS[j]]=[QUESTIONS[j],QUESTIONS[k]];}for(const Q of QUESTIONS){const cc=Q.a[Q.c];for(let k=Q.a.length-1;k>0;k--){const j=Math.floor(Math.random()*(k+1));[Q.a[k],Q.a[j]]=[Q.a[j],Q.a[k]];}Q.c=Q.a.indexOf(cc);}}
+shuffle();
+
+function render(){
+  const Q=QUESTIONS[i];
+  app.innerHTML=`
+    <h1>🔁 Викторина: цикл while</h1>
+    <div class="sub">Урок 1 «Угадай число» · Модуль 3 · Python</div>
+    <div class="bar"><i style="width:${(i/QUESTIONS.length)*100}%"></i></div>
+    <div class="meta"><span>Вопрос ${i+1} из ${QUESTIONS.length}</span><span>⭐ Очки: ${score}</span></div>
+    <div class="q">${Q.q}</div>
+    <div class="opts" id="opts">
+      ${Q.a.map((t,n)=>`<button class="opt" data-n="${n}"><b>${n+1}</b><span>${t}</span></button>`).join('')}
+    </div>
+    <div class="fb" id="fb"></div>
+    <button class="btn" id="next">${i===QUESTIONS.length-1?'Показать результат →':'Следующий вопрос →'}</button>
+    <div class="hint">Можно отвечать клавишами 1–4</div>`;
+  locked=false;
+  document.querySelectorAll('.opt').forEach(b=>b.onclick=()=>choose(+b.dataset.n));
+  document.getElementById('next').onclick=next;
+}
+
+function choose(n){
+  if(locked) return; locked=true;
+  const Q=QUESTIONS[i];
+  const opts=[...document.querySelectorAll('.opt')];
+  opts.forEach(b=>b.disabled=true);
+  opts[Q.c].classList.add('ok');
+  const fb=document.getElementById('fb');
+  if(n===Q.c){ score++; fb.className='fb show good'; fb.innerHTML='✅ Верно! '+Q.e; }
+  else { opts[n].classList.add('bad'); fb.className='fb show no'; fb.innerHTML='❌ Не совсем. '+Q.e; }
+  document.querySelector('.meta').children[1].textContent='⭐ Очки: '+score;
+  document.getElementById('next').classList.add('show');
+}
+
+function next(){ i++; if(i<QUESTIONS.length) render(); else result(); }
+
+function result(){
+  const pct=Math.round(score/QUESTIONS.length*100);
+  let em,msg;
+  if(pct===100){em='🏆';msg='Идеально! Цикл while освоен на 100% — ты готов к for и черепашке! 🐢';}
+  else if(pct>=70){em='🎉';msg='Отлично! while и break в кармане, вперёд в Урок 2.';}
+  else if(pct>=40){em='👍';msg='Неплохо! Пробегись по итого.md — про три части цикла и break.';}
+  else {em='💪';msg='Ещё разок! Открой итого.md и повтори скелет while.';}
+  app.innerHTML=`
+    <div class="center">
+      <div class="emoji">${em}</div>
+      <h1>Готово!</h1>
+      <div class="score">${score} / ${QUESTIONS.length}</div>
+      <div class="sub">${msg}</div>
+      <button class="btn show" id="again">🔁 Пройти заново</button>
+    </div>`;
+  document.getElementById('again').onclick=()=>{i=0;score=0;shuffle();render();};
+}
+
+document.addEventListener('keydown',e=>{
+  if(['1','2','3','4'].includes(e.key)){ const b=document.querySelector(`.opt[data-n="${+e.key-1}"]`); if(b&&!b.disabled) choose(+e.key-1); }
+  if(e.key==='Enter'){ const nb=document.getElementById('next'); if(nb&&nb.classList.contains('show')) next(); }
+});
+
+render();
+</script>
+</body>
+</html>

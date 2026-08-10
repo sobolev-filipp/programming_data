@@ -4,7 +4,7 @@
 
 import random
 
-variants = ["камень", "ножницы", "бумага"]
+options = ["камень", "ножницы", "бумага"]   # список фигур (знакомство со списками)
 wins = 0     # копилка побед игрока
 losses = 0   # копилка побед компьютера
 
@@ -14,7 +14,7 @@ print("=" * 34)
 
 # --- Раунд 1 ---
 player = input("\nРаунд 1. Твой выбор: ").lower().strip()
-comp = random.choice(variants)
+comp = random.choice(options)
 print(f"Компьютер: {comp}")
 if player == comp:
     print("Ничья.")
@@ -27,7 +27,7 @@ else:
 
 # --- Раунд 2 ---
 player = input("\nРаунд 2. Твой выбор: ").lower().strip()
-comp = random.choice(variants)
+comp = random.choice(options)
 print(f"Компьютер: {comp}")
 if player == comp:
     print("Ничья.")
@@ -40,7 +40,7 @@ else:
 
 # --- Раунд 3 ---
 player = input("\nРаунд 3. Твой выбор: ").lower().strip()
-comp = random.choice(variants)
+comp = random.choice(options)
 print(f"Компьютер: {comp}")
 if player == comp:
     print("Ничья.")
