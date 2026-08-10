@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 400" font-family="'Segoe UI',system-ui,sans-serif">
+  <defs>
+    <marker id="en_ar" markerWidth="11" markerHeight="11" refX="8" refY="5" orient="auto"><path d="M0,0 L9,5 L0,10 z" fill="#0d9488"/></marker>
+  </defs>
+  <rect x="0" y="0" width="800" height="400" fill="#f7f9fc"/>
+  <text x="400" y="34" font-size="23" font-weight="700" fill="#1f2937" text-anchor="middle">🔢 enumerate — номер + значение сразу</text>
+  <text x="400" y="58" font-size="14.5" fill="#0d9488" text-anchor="middle" font-family="monospace">for i, game in enumerate(games):</text>
+
+  <!-- source list -->
+  <text x="120" y="96" font-size="14" fill="#64748b">список games:</text>
+  <g font-size="14.5">
+    <rect x="60" y="104" width="150" height="40" rx="9" fill="#ccfbf1" stroke="#0d9488" stroke-width="2"/><text x="135" y="130" text-anchor="middle" fill="#0f766e" font-weight="700">Minecraft</text>
+    <rect x="60" y="150" width="150" height="40" rx="9" fill="#ccfbf1" stroke="#0d9488" stroke-width="2"/><text x="135" y="176" text-anchor="middle" fill="#0f766e" font-weight="700">Roblox</text>
+    <rect x="60" y="196" width="150" height="40" rx="9" fill="#ccfbf1" stroke="#0d9488" stroke-width="2"/><text x="135" y="222" text-anchor="middle" fill="#0f766e" font-weight="700">Sims</text>
+  </g>
+
+  <!-- arrow -->
+  <path d="M220,190 L300,190" stroke="#0d9488" stroke-width="2.5" fill="none" marker-end="url(#en_ar)"/>
+  <text x="260" y="180" font-size="13" fill="#0d9488" font-weight="700" text-anchor="middle">enumerate</text>
+
+  <!-- pairs -->
+  <text x="470" y="96" font-size="14" fill="#64748b">пары (i, game):</text>
+  <g font-size="15" font-family="monospace">
+    <rect x="320" y="104" width="70" height="40" rx="9" fill="#0f172a"/><text x="355" y="130" text-anchor="middle" fill="#5eead4">i = 0</text>
+    <rect x="398" y="104" width="220" height="40" rx="9" fill="#fff" stroke="#0d9488" stroke-width="1.6"/><text x="508" y="130" text-anchor="middle" fill="#0f766e" font-weight="700">game = "Minecraft"</text>
+    <rect x="320" y="150" width="70" height="40" rx="9" fill="#0f172a"/><text x="355" y="176" text-anchor="middle" fill="#5eead4">i = 1</text>
+    <rect x="398" y="150" width="220" height="40" rx="9" fill="#fff" stroke="#0d9488" stroke-width="1.6"/><text x="508" y="176" text-anchor="middle" fill="#0f766e" font-weight="700">game = "Roblox"</text>
+    <rect x="320" y="196" width="70" height="40" rx="9" fill="#0f172a"/><text x="355" y="222" text-anchor="middle" fill="#5eead4">i = 2</text>
+    <rect x="398" y="196" width="220" height="40" rx="9" fill="#fff" stroke="#0d9488" stroke-width="1.6"/><text x="508" y="222" text-anchor="middle" fill="#0f766e" font-weight="700">game = "Sims"</text>
+  </g>
+
+  <!-- start=1 note -->
+  <rect x="60" y="286" width="680" height="74" rx="12" fill="#ede9fe" stroke="#7c3aed" stroke-width="1.6"/>
+  <text x="80" y="314" font-size="15" fill="#5b21b6" font-weight="700">По умолчанию номера с 0. Нужен счёт с 1 — добавь start=1:</text>
+  <text x="80" y="342" font-size="14.5" font-family="monospace" fill="#5b21b6">for place, game in enumerate(games, start=1):   →   1, 2, 3 …</text>
+</svg>

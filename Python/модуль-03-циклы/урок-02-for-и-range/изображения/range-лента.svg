@@ -1,0 +1,51 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 430" font-family="'Segoe UI',system-ui,sans-serif">
+  <rect x="0" y="0" width="800" height="430" fill="#f7f9fc"/>
+  <text x="400" y="34" font-size="23" font-weight="700" fill="#1f2937" text-anchor="middle">🔢 range — числовая лента для for</text>
+  <text x="400" y="58" font-size="14" fill="#64748b" text-anchor="middle">start ВХОДИТ · stop НЕ входит · step — шаг между числами</text>
+
+  <!-- row 1: range(1,6) -->
+  <g transform="translate(70,86)">
+    <text x="0" y="16" font-size="15" font-family="monospace" fill="#0d9488" font-weight="700">range(1, 6)</text>
+    <text x="150" y="16" font-size="13" fill="#64748b">→ 1 2 3 4 5  (6 не входит!)</text>
+    <g font-size="17" font-weight="700" font-family="monospace" text-anchor="middle">
+      <rect x="0" y="26" width="52" height="46" rx="8" fill="#ccfbf1" stroke="#0d9488" stroke-width="2"/><text x="26" y="55" fill="#0f766e">1</text>
+      <rect x="58" y="26" width="52" height="46" rx="8" fill="#ccfbf1" stroke="#0d9488" stroke-width="2"/><text x="84" y="55" fill="#0f766e">2</text>
+      <rect x="116" y="26" width="52" height="46" rx="8" fill="#ccfbf1" stroke="#0d9488" stroke-width="2"/><text x="142" y="55" fill="#0f766e">3</text>
+      <rect x="174" y="26" width="52" height="46" rx="8" fill="#ccfbf1" stroke="#0d9488" stroke-width="2"/><text x="200" y="55" fill="#0f766e">4</text>
+      <rect x="232" y="26" width="52" height="46" rx="8" fill="#ccfbf1" stroke="#0d9488" stroke-width="2"/><text x="258" y="55" fill="#0f766e">5</text>
+      <rect x="290" y="26" width="52" height="46" rx="8" fill="#fee2e2" stroke="#dc2626" stroke-width="2" stroke-dasharray="5 4"/><text x="316" y="55" fill="#dc2626">6</text>
+    </g>
+    <text x="26" y="90" font-size="12" fill="#0d9488" text-anchor="middle" font-weight="700">start ✓</text>
+    <text x="316" y="90" font-size="12" fill="#dc2626" text-anchor="middle" font-weight="700">stop ✗</text>
+  </g>
+
+  <!-- row 2: range(2,11,2) -->
+  <g transform="translate(70,196)">
+    <text x="0" y="16" font-size="15" font-family="monospace" fill="#0d9488" font-weight="700">range(2, 11, 2)</text>
+    <text x="180" y="16" font-size="13" fill="#64748b">→ 2 4 6 8 10  (шаг 2)</text>
+    <g font-size="17" font-weight="700" font-family="monospace" text-anchor="middle">
+      <rect x="0" y="26" width="52" height="46" rx="8" fill="#ccfbf1" stroke="#0d9488" stroke-width="2"/><text x="26" y="55" fill="#0f766e">2</text>
+      <rect x="58" y="26" width="52" height="46" rx="8" fill="#ccfbf1" stroke="#0d9488" stroke-width="2"/><text x="84" y="55" fill="#0f766e">4</text>
+      <rect x="116" y="26" width="52" height="46" rx="8" fill="#ccfbf1" stroke="#0d9488" stroke-width="2"/><text x="142" y="55" fill="#0f766e">6</text>
+      <rect x="174" y="26" width="52" height="46" rx="8" fill="#ccfbf1" stroke="#0d9488" stroke-width="2"/><text x="200" y="55" fill="#0f766e">8</text>
+      <rect x="232" y="26" width="52" height="46" rx="8" fill="#ccfbf1" stroke="#0d9488" stroke-width="2"/><text x="258" y="55" fill="#0f766e">10</text>
+    </g>
+    <text x="142" y="92" font-size="12" fill="#94a3b8" text-anchor="middle">шаг +2: перепрыгиваем нечётные</text>
+  </g>
+
+  <!-- row 3: range(5,0,-1) -->
+  <g transform="translate(70,306)">
+    <text x="0" y="16" font-size="15" font-family="monospace" fill="#0d9488" font-weight="700">range(5, 0, -1)</text>
+    <text x="180" y="16" font-size="13" fill="#64748b">→ 5 4 3 2 1  (обратный отсчёт, шаг −1)</text>
+    <g font-size="17" font-weight="700" font-family="monospace" text-anchor="middle">
+      <rect x="0" y="26" width="52" height="46" rx="8" fill="#fef3c7" stroke="#f59e0b" stroke-width="2"/><text x="26" y="55" fill="#b45309">5</text>
+      <rect x="58" y="26" width="52" height="46" rx="8" fill="#fef3c7" stroke="#f59e0b" stroke-width="2"/><text x="84" y="55" fill="#b45309">4</text>
+      <rect x="116" y="26" width="52" height="46" rx="8" fill="#fef3c7" stroke="#f59e0b" stroke-width="2"/><text x="142" y="55" fill="#b45309">3</text>
+      <rect x="174" y="26" width="52" height="46" rx="8" fill="#fef3c7" stroke="#f59e0b" stroke-width="2"/><text x="200" y="55" fill="#b45309">2</text>
+      <rect x="232" y="26" width="52" height="46" rx="8" fill="#fef3c7" stroke="#f59e0b" stroke-width="2"/><text x="258" y="55" fill="#b45309">1</text>
+    </g>
+  </g>
+
+  <text x="620" y="360" font-size="13" fill="#0d9488" text-anchor="middle" font-weight="700">range(n) = от 0</text>
+  <text x="620" y="380" font-size="12.5" fill="#64748b" text-anchor="middle">range(5): 0 1 2 3 4</text>
+</svg>

@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 820 430" font-family="'Segoe UI',system-ui,sans-serif">
+  <defs>
+    <pattern id="grid3" width="24" height="24" patternUnits="userSpaceOnUse">
+      <path d="M24 0H0V24" fill="none" stroke="#d0d0d0" stroke-width="1"/>
+    </pattern>
+    <marker id="pl3_ar" markerWidth="11" markerHeight="11" refX="8" refY="5" orient="auto"><path d="M0,0 L9,5 L0,10 z" fill="#0d9488"/></marker>
+  </defs>
+  <rect x="0" y="0" width="820" height="430" fill="#f7f9fc"/>
+  <text x="410" y="32" font-size="22" font-weight="700" fill="#1f2937" text-anchor="middle">🐢 Пылесос по списку: собери мусор через zip</text>
+  <text x="410" y="55" font-size="14" fill="#64748b" text-anchor="middle">Координаты мусора — в двух списках. zip даёт пары (x, y), go_to() ведёт пылесос.</text>
+
+  <!-- grid -->
+  <rect x="40" y="72" width="240" height="240" fill="url(#grid3)" stroke="#000096" stroke-width="3"/>
+  <!-- trash with labels -->
+  <g font-size="11" font-family="monospace" fill="#334155" text-anchor="middle">
+    <circle cx="100" cy="216" r="9" fill="#b0b0b0"/><text x="100" y="234">(2,3)</text>
+    <circle cx="172" cy="144" r="9" fill="#b0b0b0"/><text x="172" y="162">(5,6)</text>
+    <circle cx="220" cy="264" r="9" fill="#b0b0b0"/><text x="220" y="282">(7,1)</text>
+    <circle cx="76" cy="96" r="9" fill="#b0b0b0"/><text x="76" y="114">(1,8)</text>
+    <circle cx="244" cy="192" r="9" fill="#b0b0b0"/><text x="244" y="210">(8,4)</text>
+  </g>
+  <!-- vacuum at start -->
+  <circle cx="52" cy="288" r="10" fill="#f59e0b" stroke="#7c3aed" stroke-width="3"/>
+  <text x="160" y="332" font-size="12" fill="#94a3b8" text-anchor="middle">🟠 старт · ⚪ мусор (с координатами)</text>
+
+  <!-- lists -->
+  <g transform="translate(330,74)">
+    <text x="0" y="16" font-size="14.5" font-family="monospace" fill="#0d9488" font-weight="700">trash_x = [2, 5, 7, 1, 8]</text>
+    <text x="0" y="40" font-size="14.5" font-family="monospace" fill="#0d9488" font-weight="700">trash_y = [3, 6, 1, 8, 4]</text>
+    <path d="M60,50 L60,74" stroke="#0d9488" stroke-width="2.5" fill="none" marker-end="url(#pl3_ar)"/>
+    <text x="150" y="68" font-size="12.5" fill="#0d9488" font-weight="700">zip → пары</text>
+    <g font-size="13" font-family="monospace" fill="#5b21b6">
+      <text x="0" y="96">(2,3) (5,6) (7,1) (1,8) (8,4)</text>
+    </g>
+  </g>
+
+  <!-- code -->
+  <rect x="330" y="192" width="450" height="120" rx="12" fill="#0f172a"/>
+  <text x="350" y="220" font-size="14" font-family="monospace" fill="#94a3b8"># обойти весь мусор:</text>
+  <text x="350" y="246" font-size="14" font-family="monospace" fill="#5eead4">for x, y in zip(trash_x, trash_y):</text>
+  <text x="382" y="270" font-size="14" font-family="monospace" fill="#5eead4">go_to(x, y)</text>
+  <text x="382" y="294" font-size="14" font-family="monospace" fill="#5eead4">clean()</text>
+
+  <text x="410" y="360" font-size="13" fill="#64748b" text-anchor="middle">🎓 enumerate добавит номер: for i, (x, y) in enumerate(zip(...), start=1)</text>
+</svg>

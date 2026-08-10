@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 400" font-family="'Segoe UI',system-ui,sans-serif">
+  <defs>
+    <marker id="sl_ar" markerWidth="11" markerHeight="11" refX="8" refY="5" orient="auto"><path d="M0,0 L9,5 L0,10 z" fill="#0d9488"/></marker>
+  </defs>
+  <rect x="0" y="0" width="800" height="400" fill="#f7f9fc"/>
+  <text x="400" y="34" font-size="22" font-weight="700" fill="#1f2937" text-anchor="middle">⏳ time.sleep + end="\r" — анимация в консоли</text>
+  <text x="400" y="58" font-size="14" fill="#64748b" text-anchor="middle">sleep(t) — пауза; end="\r" возвращает курсор в начало строки (перерисовка на месте).</text>
+
+  <!-- progress frames -->
+  <g font-family="monospace" font-size="16">
+    <rect x="120" y="86" width="360" height="40" rx="8" fill="#0f172a"/><text x="140" y="112" fill="#e2e8f0">[###.......]  30%</text>
+    <rect x="120" y="164" width="360" height="40" rx="8" fill="#0f172a"/><text x="140" y="190" fill="#e2e8f0">[######....]  60%</text>
+    <rect x="120" y="242" width="360" height="40" rx="8" fill="#0f172a"/><text x="140" y="268" fill="#5eead4">[##########] 100%</text>
+  </g>
+  <!-- arrows with sleep -->
+  <path d="M300,126 L300,162" stroke="#0d9488" stroke-width="2.5" fill="none" marker-end="url(#sl_ar)"/>
+  <path d="M300,204 L300,240" stroke="#0d9488" stroke-width="2.5" fill="none" marker-end="url(#sl_ar)"/>
+  <text x="330" y="150" font-size="13" fill="#0d9488" font-family="monospace">time.sleep(0.2)</text>
+  <text x="330" y="228" font-size="13" fill="#0d9488" font-family="monospace">time.sleep(0.2)</text>
+
+  <text x="530" y="150" font-size="13.5" fill="#64748b">одна и та же строка</text>
+  <text x="530" y="170" font-size="13.5" fill="#64748b">перерисовывается —</text>
+  <text x="530" y="190" font-size="13.5" fill="#64748b">видно «движение»</text>
+
+  <!-- code -->
+  <rect x="120" y="304" width="560" height="72" rx="10" fill="#0f172a"/>
+  <text x="140" y="330" font-size="14" font-family="monospace" fill="#e2e8f0">for i in range(1, 11):</text>
+  <text x="140" y="350" font-size="14" font-family="monospace" fill="#5eead4">    bar = "#" * i + "." * (10 - i)</text>
+  <text x="140" y="370" font-size="14" font-family="monospace" fill="#5eead4">    print(f"[{bar}]", end="\r"); time.sleep(0.2)</text>
+</svg>

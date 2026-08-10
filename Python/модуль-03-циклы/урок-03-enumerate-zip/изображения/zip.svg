@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 400" font-family="'Segoe UI',system-ui,sans-serif">
+  <defs>
+    <marker id="zp_ar" markerWidth="11" markerHeight="11" refX="8" refY="5" orient="auto"><path d="M0,0 L9,5 L0,10 z" fill="#0d9488"/></marker>
+  </defs>
+  <rect x="0" y="0" width="800" height="400" fill="#f7f9fc"/>
+  <text x="400" y="34" font-size="23" font-weight="700" fill="#1f2937" text-anchor="middle">🤝 zip — два списка параллельно</text>
+  <text x="400" y="58" font-size="14.5" fill="#0d9488" text-anchor="middle" font-family="monospace">for name, score in zip(names, scores):</text>
+
+  <!-- names row -->
+  <text x="40" y="104" font-size="13.5" fill="#64748b">names:</text>
+  <g font-size="15" text-anchor="middle" font-weight="700">
+    <rect x="110" y="86" width="120" height="40" rx="9" fill="#ccfbf1" stroke="#0d9488" stroke-width="2"/><text x="170" y="112" fill="#0f766e">Аня</text>
+    <rect x="250" y="86" width="120" height="40" rx="9" fill="#ccfbf1" stroke="#0d9488" stroke-width="2"/><text x="310" y="112" fill="#0f766e">Боря</text>
+    <rect x="390" y="86" width="120" height="40" rx="9" fill="#ccfbf1" stroke="#0d9488" stroke-width="2"/><text x="450" y="112" fill="#0f766e">Вика</text>
+  </g>
+  <!-- scores row -->
+  <text x="40" y="164" font-size="13.5" fill="#64748b">scores:</text>
+  <g font-size="15" text-anchor="middle" font-weight="700">
+    <rect x="110" y="146" width="120" height="40" rx="9" fill="#fef3c7" stroke="#f59e0b" stroke-width="2"/><text x="170" y="172" fill="#b45309">15</text>
+    <rect x="250" y="146" width="120" height="40" rx="9" fill="#fef3c7" stroke="#f59e0b" stroke-width="2"/><text x="310" y="172" fill="#b45309">22</text>
+    <rect x="390" y="146" width="120" height="40" rx="9" fill="#fef3c7" stroke="#f59e0b" stroke-width="2"/><text x="450" y="172" fill="#b45309">8</text>
+  </g>
+
+  <!-- zipper arrows -->
+  <path d="M170,186 L170,222" stroke="#0d9488" stroke-width="2.5" fill="none" marker-end="url(#zp_ar)"/>
+  <path d="M310,186 L310,222" stroke="#0d9488" stroke-width="2.5" fill="none" marker-end="url(#zp_ar)"/>
+  <path d="M450,186 L450,222" stroke="#0d9488" stroke-width="2.5" fill="none" marker-end="url(#zp_ar)"/>
+  <text x="600" y="176" font-size="14" fill="#0d9488" font-weight="700">zip «сшивает»</text>
+  <text x="600" y="196" font-size="13" fill="#64748b">по парам, как молния</text>
+
+  <!-- pairs -->
+  <g font-size="15" text-anchor="middle" font-weight="700" font-family="monospace">
+    <rect x="110" y="228" width="120" height="46" rx="10" fill="#0f172a"/><text x="170" y="256" fill="#5eead4">Аня, 15</text>
+    <rect x="250" y="228" width="120" height="46" rx="10" fill="#0f172a"/><text x="310" y="256" fill="#5eead4">Боря, 22</text>
+    <rect x="390" y="228" width="120" height="46" rx="10" fill="#0f172a"/><text x="450" y="256" fill="#5eead4">Вика, 8</text>
+  </g>
+
+  <text x="400" y="316" font-size="14.5" fill="#334155" text-anchor="middle">На каждом витке: name = "Аня", score = 15 → потом "Боря", 22 → …</text>
+  <text x="400" y="344" font-size="13" fill="#94a3b8" text-anchor="middle">⚠️ если списки разной длины — zip идёт по КОРОТКОМУ (лишнее отбрасывается)</text>
+</svg>

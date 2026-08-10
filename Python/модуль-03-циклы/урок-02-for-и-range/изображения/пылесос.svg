@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 820 430" font-family="'Segoe UI',system-ui,sans-serif">
+  <defs>
+    <pattern id="grid" width="28" height="28" patternUnits="userSpaceOnUse">
+      <path d="M28 0H0V28" fill="none" stroke="#d0d0d0" stroke-width="1"/>
+    </pattern>
+    <marker id="pl_ar" markerWidth="11" markerHeight="11" refX="8" refY="5" orient="auto"><path d="M0,0 L9,5 L0,10 z" fill="#0d9488"/></marker>
+  </defs>
+  <rect x="0" y="0" width="820" height="430" fill="#f7f9fc"/>
+  <text x="410" y="34" font-size="23" font-weight="700" fill="#1f2937" text-anchor="middle">🐢 Умный пылесос — собери мусор циклом</text>
+  <text x="410" y="57" font-size="14" fill="#64748b" text-anchor="middle">Комната 10×10. Пиши только АЛГОРИТМ из команд. Мусор убирается командой clean().</text>
+
+  <!-- grid room -->
+  <rect x="40" y="80" width="280" height="280" fill="url(#grid)" stroke="#000096" stroke-width="3"/>
+  <!-- cleaned cells (blue) -->
+  <circle cx="82" cy="234" r="10" fill="#1e63ff"/>
+  <circle cx="110" cy="234" r="10" fill="#1e63ff"/>
+  <!-- trash (grey) -->
+  <circle cx="138" cy="234" r="9" fill="#b0b0b0"/>
+  <circle cx="166" cy="234" r="9" fill="#b0b0b0"/>
+  <circle cx="194" cy="234" r="9" fill="#b0b0b0"/>
+  <circle cx="222" cy="234" r="9" fill="#b0b0b0"/>
+  <circle cx="250" cy="234" r="9" fill="#b0b0b0"/>
+  <circle cx="278" cy="234" r="9" fill="#b0b0b0"/>
+  <circle cx="306" cy="234" r="9" fill="#b0b0b0"/>
+  <!-- vacuum -->
+  <circle cx="54" cy="234" r="12" fill="#f59e0b" stroke="#7c3aed" stroke-width="3"/>
+  <!-- sweep arrow -->
+  <path d="M60,206 L300,206" stroke="#0d9488" stroke-width="2.5" fill="none" marker-end="url(#pl_ar)" stroke-dasharray="6 5"/>
+  <text x="180" y="198" font-size="12.5" fill="#0d9488" font-weight="700" text-anchor="middle">едем вправо и убираем</text>
+  <text x="180" y="382" font-size="12.5" fill="#94a3b8" text-anchor="middle">🟠 пылесос · ⚪ мусор · 🔵 убранная клетка</text>
+
+  <!-- right panel -->
+  <g transform="translate(370,78)">
+    <rect x="0" y="0" width="420" height="150" rx="12" fill="#fff" stroke="#e2e8f0"/>
+    <text x="20" y="28" font-size="15" font-weight="700" fill="#0d9488">Команды движения:</text>
+    <text x="20" y="54" font-size="14.5" font-family="monospace" fill="#334155">right()  left()  up()  down()</text>
+    <text x="20" y="80" font-size="14.5" font-family="monospace" fill="#334155">clean()  — убрать мусор в клетке</text>
+    <text x="20" y="112" font-size="13.5" fill="#64748b">Флаг <tspan font-family="monospace" fill="#334155">wall</tspan> = True, когда пылесос у стены.</text>
+    <text x="20" y="134" font-size="13.5" fill="#64748b">Выехал за стену → программа остановится.</text>
+  </g>
+
+  <rect x="370" y="244" width="420" height="120" rx="12" fill="#0f172a"/>
+  <text x="390" y="272" font-size="14" font-family="monospace" fill="#e2e8f0">TASK = 1     # номер задания</text>
+  <text x="390" y="300" font-size="14" font-family="monospace" fill="#94a3b8"># собрать ряд мусора справа:</text>
+  <text x="390" y="326" font-size="14" font-family="monospace" fill="#5eead4">for i in range(9):</text>
+  <text x="418" y="348" font-size="14" font-family="monospace" fill="#5eead4">right(); clean()</text>
+</svg>
