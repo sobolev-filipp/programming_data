@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 420" font-family="'Segoe UI',system-ui,sans-serif">
+  <defs>
+    <marker id="bc_ar" markerWidth="11" markerHeight="11" refX="8" refY="5" orient="auto"><path d="M0,0 L9,5 L0,10 z" fill="#dc2626"/></marker>
+    <marker id="bc_arG" markerWidth="11" markerHeight="11" refX="8" refY="5" orient="auto"><path d="M0,0 L9,5 L0,10 z" fill="#0d9488"/></marker>
+  </defs>
+  <rect x="0" y="0" width="800" height="420" fill="#f7f9fc"/>
+  <text x="400" y="34" font-size="23" font-weight="700" fill="#1f2937" text-anchor="middle">⛔ break и ⏭ continue</text>
+  <text x="400" y="58" font-size="14" fill="#64748b" text-anchor="middle">break — выйти из цикла совсем. continue — пропустить один виток.</text>
+
+  <!-- BREAK panel -->
+  <g transform="translate(40,80)">
+    <rect x="0" y="0" width="340" height="300" rx="14" fill="#fff" stroke="#dc2626" stroke-width="2"/>
+    <text x="170" y="30" font-size="17" font-weight="800" fill="#dc2626" text-anchor="middle">break — выйти из цикла</text>
+    <g font-size="15" font-family="monospace" text-anchor="middle">
+      <rect x="70" y="46" width="200" height="34" rx="7" fill="#dcfce7" stroke="#16a34a"/><text x="170" y="69" fill="#166534">виток 1</text>
+      <rect x="70" y="86" width="200" height="34" rx="7" fill="#dcfce7" stroke="#16a34a"/><text x="170" y="109" fill="#166534">виток 2</text>
+      <rect x="70" y="126" width="200" height="34" rx="7" fill="#fee2e2" stroke="#dc2626"/><text x="170" y="149" fill="#991b1b">виток 3 → break</text>
+      <rect x="70" y="166" width="200" height="34" rx="7" fill="#f1f5f9" stroke="#cbd5e1" stroke-dasharray="4 4"/><text x="170" y="189" fill="#94a3b8">виток 4 (не будет)</text>
+      <rect x="70" y="206" width="200" height="34" rx="7" fill="#f1f5f9" stroke="#cbd5e1" stroke-dasharray="4 4"/><text x="170" y="229" fill="#94a3b8">виток 5 (не будет)</text>
+    </g>
+    <path d="M270,143 C320,143 320,262 232,262" stroke="#dc2626" stroke-width="2.5" fill="none" marker-end="url(#bc_ar)"/>
+    <rect x="70" y="250" width="160" height="34" rx="7" fill="#fff7ed" stroke="#f59e0b"/><text x="150" y="273" font-size="14" fill="#b45309" text-anchor="middle" font-family="monospace">после цикла</text>
+  </g>
+
+  <!-- CONTINUE panel -->
+  <g transform="translate(420,80)">
+    <rect x="0" y="0" width="340" height="300" rx="14" fill="#fff" stroke="#0d9488" stroke-width="2"/>
+    <text x="170" y="30" font-size="17" font-weight="800" fill="#0d9488" text-anchor="middle">continue — пропустить виток</text>
+    <g font-size="15" font-family="monospace" text-anchor="middle">
+      <rect x="70" y="46" width="200" height="34" rx="7" fill="#dcfce7" stroke="#16a34a"/><text x="170" y="69" fill="#166534">виток 1 ✓</text>
+      <rect x="70" y="86" width="200" height="34" rx="7" fill="#dcfce7" stroke="#16a34a"/><text x="170" y="109" fill="#166534">виток 2 ✓</text>
+      <rect x="70" y="126" width="200" height="34" rx="7" fill="#ccfbf1" stroke="#0d9488"/><text x="170" y="149" fill="#0f766e">виток 3 → continue</text>
+      <rect x="70" y="166" width="200" height="34" rx="7" fill="#dcfce7" stroke="#16a34a"/><text x="170" y="189" fill="#166534">виток 4 ✓</text>
+      <rect x="70" y="206" width="200" height="34" rx="7" fill="#dcfce7" stroke="#16a34a"/><text x="170" y="229" fill="#166534">виток 5 ✓</text>
+    </g>
+    <path d="M270,143 C316,143 316,183 272,183" stroke="#0d9488" stroke-width="2.5" fill="none" marker-end="url(#bc_arG)"/>
+    <text x="170" y="272" font-size="13" fill="#64748b" text-anchor="middle">цикл НЕ прерывается — просто</text>
+    <text x="170" y="290" font-size="13" fill="#64748b" text-anchor="middle">пропустили тело на витке 3</text>
+  </g>
+</svg>

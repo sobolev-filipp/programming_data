@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 440" font-family="'Segoe UI',system-ui,sans-serif">
+  <defs>
+    <marker id="h_ar" markerWidth="11" markerHeight="11" refX="8" refY="5" orient="auto"><path d="M0,0 L9,5 L0,10 z" fill="#334155"/></marker>
+    <marker id="h_g" markerWidth="11" markerHeight="11" refX="8" refY="5" orient="auto"><path d="M0,0 L9,5 L0,10 z" fill="#16a34a"/></marker>
+    <marker id="h_r" markerWidth="11" markerHeight="11" refX="8" refY="5" orient="auto"><path d="M0,0 L9,5 L0,10 z" fill="#dc2626"/></marker>
+  </defs>
+  <rect x="0" y="0" width="800" height="440" fill="#f7f9fc"/>
+  <text x="400" y="32" font-size="23" font-weight="700" fill="#1f2937" text-anchor="middle">🎮 «Виселица»: игровой цикл</text>
+  <text x="400" y="55" font-size="14" fill="#64748b" text-anchor="middle">Показать маску → проверить конец → спросить букву → повторить.</text>
+
+  <!-- setup -->
+  <rect x="300" y="72" width="200" height="40" rx="10" fill="#fff" stroke="#0d9488" stroke-width="2.5"/>
+  <text x="400" y="97" font-size="13.5" font-family="monospace" fill="#0f766e" text-anchor="middle">secret = choice(words)</text>
+  <path d="M400,112 L400,132" stroke="#334155" stroke-width="2.5" fill="none" marker-end="url(#h_ar)"/>
+
+  <!-- loop container -->
+  <rect x="120" y="126" width="560" height="270" rx="14" fill="none" stroke="#0d9488" stroke-width="2" stroke-dasharray="8 6"/>
+  <text x="138" y="146" font-size="13.5" font-family="monospace" fill="#0d9488" font-weight="700">while True:</text>
+
+  <!-- build mask -->
+  <rect x="300" y="150" width="200" height="46" rx="10" fill="#0f172a"/>
+  <text x="400" y="170" font-size="12.5" font-family="monospace" fill="#e2e8f0" text-anchor="middle">маска: for буква in secret</text>
+  <text x="400" y="188" font-size="12.5" font-family="monospace" fill="#5eead4" text-anchor="middle">открыта или "_"</text>
+  <path d="M400,196 L400,214" stroke="#334155" stroke-width="2.5" fill="none" marker-end="url(#h_ar)"/>
+
+  <!-- win check -->
+  <polygon points="400,216 480,244 400,272 320,244" fill="#dcfce7" stroke="#16a34a" stroke-width="2"/>
+  <text x="400" y="248" font-size="12.5" fill="#166534" text-anchor="middle">нет "_" ?</text>
+  <path d="M480,244 L560,244" stroke="#16a34a" stroke-width="2.5" fill="none" marker-end="url(#h_g)"/>
+  <text x="600" y="240" font-size="13" fill="#166534" font-weight="700" text-anchor="middle">Победа!</text>
+  <text x="600" y="256" font-size="12" fill="#64748b" text-anchor="middle">break</text>
+
+  <!-- lose check -->
+  <path d="M400,272 L400,290" stroke="#334155" stroke-width="2.5" fill="none" marker-end="url(#h_ar)"/>
+  <polygon points="400,292 480,318 400,344 320,318" fill="#fee2e2" stroke="#dc2626" stroke-width="2"/>
+  <text x="400" y="315" font-size="12" fill="#991b1b" text-anchor="middle">ошибок == 6 ?</text>
+  <path d="M480,318 L560,318" stroke="#dc2626" stroke-width="2.5" fill="none" marker-end="url(#h_r)"/>
+  <text x="600" y="314" font-size="13" fill="#991b1b" font-weight="700" text-anchor="middle">Проигрыш</text>
+  <text x="600" y="330" font-size="12" fill="#64748b" text-anchor="middle">break</text>
+
+  <!-- guess -->
+  <path d="M320,318 L180,318 L180,244 L180,180 L298,180" stroke="#0d9488" stroke-width="2.5" fill="none" marker-end="url(#h_ar)" stroke-dasharray="7 5"/>
+  <rect x="120" y="360" width="380" height="30" rx="8" fill="#fff" stroke="#e2e8f0"/>
+  <text x="140" y="380" font-size="12.5" fill="#334155">буква in secret → guessed.append(буква) · иначе ошибок += 1</text>
+  <text x="300" y="336" font-size="12" fill="#0d9488" font-weight="700" text-anchor="middle">спросить букву, обновить</text>
+</svg>

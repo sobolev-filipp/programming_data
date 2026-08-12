@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 820 430" font-family="'Segoe UI',system-ui,sans-serif">
+  <defs>
+    <pattern id="grid4" width="24" height="24" patternUnits="userSpaceOnUse">
+      <path d="M24 0H0V24" fill="none" stroke="#d0d0d0" stroke-width="1"/>
+    </pattern>
+  </defs>
+  <rect x="0" y="0" width="820" height="430" fill="#f7f9fc"/>
+  <text x="410" y="32" font-size="23" font-weight="700" fill="#1f2937" text-anchor="middle">🐢 Пылесос: убрать ОБЛАСТЬ вложенным циклом</text>
+  <text x="410" y="55" font-size="14" fill="#64748b" text-anchor="middle">Внешний цикл — строки, внутренний — столбцы. Пылесос заходит в каждую клетку области.</text>
+
+  <!-- grid -->
+  <rect x="40" y="76" width="240" height="240" fill="url(#grid4)" stroke="#000096" stroke-width="3"/>
+  <!-- filled 5x5 block cols 2..6 rows 2..6 (visual). cell 24, origin (40,76). y grows down; row0 bottom -->
+  <!-- draw dots: cols 2..6 -> x=40+ c*24+12 ; rows 2..6 -> y=76+(9-r)*24+12 -->
+  <g>
+    <!-- we approximate a filled 5x5 block; blue = cleaned (first row), grey = trash -->
+    <!-- row r=6 (top of block) y=76+3*24+12=160 -->
+    <circle cx="112" cy="160" r="8" fill="#1e63ff"/><circle cx="136" cy="160" r="8" fill="#1e63ff"/><circle cx="160" cy="160" r="8" fill="#1e63ff"/><circle cx="184" cy="160" r="8" fill="#1e63ff"/><circle cx="208" cy="160" r="8" fill="#1e63ff"/>
+    <!-- r=5 y=184 -->
+    <circle cx="112" cy="184" r="8" fill="#b0b0b0"/><circle cx="136" cy="184" r="8" fill="#b0b0b0"/><circle cx="160" cy="184" r="8" fill="#b0b0b0"/><circle cx="184" cy="184" r="8" fill="#b0b0b0"/><circle cx="208" cy="184" r="8" fill="#b0b0b0"/>
+    <!-- r=4 y=208 -->
+    <circle cx="112" cy="208" r="8" fill="#b0b0b0"/><circle cx="136" cy="208" r="8" fill="#b0b0b0"/><circle cx="160" cy="208" r="8" fill="#b0b0b0"/><circle cx="184" cy="208" r="8" fill="#b0b0b0"/><circle cx="208" cy="208" r="8" fill="#b0b0b0"/>
+    <!-- r=3 y=232 -->
+    <circle cx="112" cy="232" r="8" fill="#b0b0b0"/><circle cx="136" cy="232" r="8" fill="#b0b0b0"/><circle cx="160" cy="232" r="8" fill="#b0b0b0"/><circle cx="184" cy="232" r="8" fill="#b0b0b0"/><circle cx="208" cy="232" r="8" fill="#b0b0b0"/>
+    <!-- r=2 y=256 -->
+    <circle cx="112" cy="256" r="8" fill="#b0b0b0"/><circle cx="136" cy="256" r="8" fill="#b0b0b0"/><circle cx="160" cy="256" r="8" fill="#b0b0b0"/><circle cx="184" cy="256" r="8" fill="#b0b0b0"/><circle cx="208" cy="256" r="8" fill="#b0b0b0"/>
+  </g>
+  <!-- vacuum on first cleaned row -->
+  <circle cx="208" cy="160" r="10" fill="#f59e0b" stroke="#7c3aed" stroke-width="3"/>
+  <text x="160" y="304" font-size="12" fill="#94a3b8" text-anchor="middle">область 5×5 · 🔵 убрано · ⚪ мусор</text>
+
+  <!-- code -->
+  <rect x="330" y="92" width="450" height="150" rx="12" fill="#0f172a"/>
+  <text x="350" y="120" font-size="14" font-family="monospace" fill="#94a3b8"># убрать прямоугольник rows 2..6, cols 2..6</text>
+  <text x="350" y="148" font-size="14.5" font-family="monospace" fill="#5eead4">for row in range(2, 7):</text>
+  <text x="382" y="172" font-size="14.5" font-family="monospace" fill="#e2e8f0">for col in range(2, 7):</text>
+  <text x="414" y="196" font-size="14.5" font-family="monospace" fill="#e2e8f0">go_to(col, row)</text>
+  <text x="414" y="220" font-size="14.5" font-family="monospace" fill="#e2e8f0">clean()</text>
+
+  <rect x="330" y="262" width="450" height="120" rx="12" fill="#fff" stroke="#e2e8f0"/>
+  <text x="350" y="288" font-size="14" fill="#1f2937" font-weight="700">Команды: go_to(x, y) · clean()</text>
+  <text x="350" y="314" font-size="13.5" fill="#334155">🎓 Шахматка — внутри добавь условие через <tspan font-family="monospace">continue</tspan>:</text>
+  <text x="350" y="338" font-size="13.5" font-family="monospace" fill="#0d9488">if (row + col) % 2 != 0: continue</text>
+  <text x="350" y="364" font-size="13" fill="#64748b">TASK меняет область: прямоугольник, треугольник, рамка, ромб…</text>
+</svg>

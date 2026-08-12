@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 820 430" font-family="'Segoe UI',system-ui,sans-serif">
+  <defs>
+    <pattern id="grid5" width="24" height="24" patternUnits="userSpaceOnUse">
+      <path d="M24 0H0V24" fill="none" stroke="#d0d0d0" stroke-width="1"/>
+    </pattern>
+    <marker id="s_g" markerWidth="10" markerHeight="10" refX="7" refY="5" orient="auto"><path d="M0,0 L9,5 L0,10 z" fill="#16a34a"/></marker>
+    <marker id="s_r" markerWidth="10" markerHeight="10" refX="7" refY="5" orient="auto"><path d="M0,0 L9,5 L0,10 z" fill="#dc2626"/></marker>
+  </defs>
+  <rect x="0" y="0" width="820" height="430" fill="#f7f9fc"/>
+  <text x="410" y="32" font-size="23" font-weight="700" fill="#1f2937" text-anchor="middle">📡 Сенсоры стен: пылесос «чувствует» стену</text>
+  <text x="410" y="55" font-size="14" fill="#64748b" text-anchor="middle">Сенсор = True, если в ту сторону дальше нельзя (там стена).</text>
+
+  <!-- grid -->
+  <rect x="40" y="76" width="240" height="240" fill="url(#grid5)" stroke="#000096" stroke-width="3"/>
+  <!-- vacuum near right wall: cell (8,5) -> x=40+8*24+12=244 ; y row5 -> 76+(9-5)*24+12=184 -->
+  <circle cx="244" cy="184" r="11" fill="#f59e0b" stroke="#7c3aed" stroke-width="3"/>
+  <!-- sensor arrows -->
+  <path d="M256,184 L276,184" stroke="#dc2626" stroke-width="2.5" fill="none" marker-end="url(#s_r)"/>
+  <text x="270" y="176" font-size="10.5" fill="#dc2626" font-weight="700" text-anchor="end">wall_right = True</text>
+  <path d="M232,184 L212,184" stroke="#16a34a" stroke-width="2.5" fill="none" marker-end="url(#s_g)"/>
+  <path d="M244,172 L244,152" stroke="#16a34a" stroke-width="2.5" fill="none" marker-end="url(#s_g)"/>
+  <path d="M244,196 L244,216" stroke="#16a34a" stroke-width="2.5" fill="none" marker-end="url(#s_g)"/>
+  <text x="160" y="340" font-size="12" fill="#94a3b8" text-anchor="middle">🟢 можно ехать (False) · 🔴 стена (True)</text>
+
+  <!-- panel -->
+  <rect x="330" y="76" width="450" height="132" rx="12" fill="#fff" stroke="#e2e8f0"/>
+  <text x="350" y="102" font-size="15" font-weight="700" fill="#0d9488">Сенсоры (True / False):</text>
+  <text x="350" y="128" font-size="14" font-family="monospace" fill="#334155">wall_right  wall_left  wall_up  wall_down</text>
+  <text x="350" y="152" font-size="14" font-family="monospace" fill="#334155">wall  — рядом любая стена</text>
+  <text x="350" y="178" font-size="13.5" fill="#64748b">Ещё есть <tspan font-family="monospace" fill="#334155">x, y</tspan> — текущие координаты пылесоса (0..9).</text>
+  <text x="350" y="198" font-size="13" fill="#94a3b8">Сенсоры нужны, когда длина ряда заранее НЕизвестна.</text>
+
+  <!-- code -->
+  <rect x="330" y="224" width="450" height="98" rx="12" fill="#0f172a"/>
+  <text x="350" y="252" font-size="14" font-family="monospace" fill="#94a3b8"># ехать вправо, ПОКА не упрёмся в стену</text>
+  <text x="350" y="278" font-size="14.5" font-family="monospace" fill="#5eead4">while not wall_right:</text>
+  <text x="382" y="302" font-size="14.5" font-family="monospace" fill="#e2e8f0">right(); clean()</text>
+</svg>

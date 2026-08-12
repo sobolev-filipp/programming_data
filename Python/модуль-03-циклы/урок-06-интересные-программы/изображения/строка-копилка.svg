@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 420" font-family="'Segoe UI',system-ui,sans-serif">
+  <defs>
+    <marker id="g_ar" markerWidth="10" markerHeight="10" refX="7" refY="5" orient="auto"><path d="M0,0 L9,5 L0,10 z" fill="#0d9488"/></marker>
+  </defs>
+  <rect x="0" y="0" width="800" height="420" fill="#f7f9fc"/>
+  <text x="400" y="32" font-size="23" font-weight="700" fill="#1f2937" text-anchor="middle">🔑 Генератор: строка-копилка растёт в цикле</text>
+  <text x="400" y="55" font-size="14" fill="#64748b" text-anchor="middle">password = "" · на каждом витке += случайный символ.</text>
+
+  <!-- code -->
+  <rect x="40" y="76" width="330" height="120" rx="12" fill="#0f172a"/>
+  <text x="60" y="104" font-size="14.5" font-family="monospace" fill="#5eead4">password = ""</text>
+  <text x="60" y="128" font-size="14.5" font-family="monospace" fill="#5eead4">for i in range(4):</text>
+  <text x="92" y="152" font-size="14.5" font-family="monospace" fill="#e2e8f0">password += random.choice(symbols)</text>
+  <text x="60" y="182" font-size="13" font-family="monospace" fill="#94a3b8">print(password)</text>
+
+  <!-- accumulation steps -->
+  <text x="585" y="96" font-size="14" fill="#0d9488" font-weight="700" text-anchor="middle">Как растёт строка:</text>
+  <g font-size="16" font-family="monospace" text-anchor="middle" font-weight="700">
+    <rect x="470" y="108" width="230" height="34" rx="8" fill="#fff" stroke="#e2e8f0"/><text x="585" y="131" fill="#94a3b8">""  (пусто)</text>
+    <rect x="470" y="150" width="230" height="34" rx="8" fill="#ccfbf1" stroke="#0d9488"/><text x="585" y="173" fill="#0f766e">"r"</text>
+    <rect x="470" y="192" width="230" height="34" rx="8" fill="#ccfbf1" stroke="#0d9488"/><text x="585" y="215" fill="#0f766e">"r9"</text>
+    <rect x="470" y="234" width="230" height="34" rx="8" fill="#ccfbf1" stroke="#0d9488"/><text x="585" y="257" fill="#0f766e">"r9z"</text>
+    <rect x="470" y="276" width="230" height="34" rx="8" fill="#dcfce7" stroke="#16a34a"/><text x="585" y="299" fill="#15803d">"r9z6"  ← готово</text>
+  </g>
+  <path d="M585,142 L585,148" stroke="#0d9488" stroke-width="2" marker-end="url(#g_ar)"/>
+  <path d="M585,184 L585,190" stroke="#0d9488" stroke-width="2" marker-end="url(#g_ar)"/>
+  <path d="M585,226 L585,232" stroke="#0d9488" stroke-width="2" marker-end="url(#g_ar)"/>
+  <path d="M585,268 L585,274" stroke="#0d9488" stroke-width="2" marker-end="url(#g_ar)"/>
+
+  <!-- nick -->
+  <rect x="40" y="300" width="380" height="96" rx="12" fill="#fff" stroke="#e2e8f0"/>
+  <text x="60" y="326" font-size="14.5" fill="#1f2937" font-weight="700">Ник — из готовых кусочков:</text>
+  <text x="60" y="352" font-size="13.5" font-family="monospace" fill="#334155">choice(прил) + choice(сущ) + str(randint)</text>
+  <text x="60" y="378" font-size="14" font-family="monospace" fill="#0d9488">"Быстрый" + "Дракон" + "42"  →  БыстрыйДракон42</text>
+</svg>

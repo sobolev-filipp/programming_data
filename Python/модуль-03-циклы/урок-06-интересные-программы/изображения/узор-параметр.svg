@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 420" font-family="'Segoe UI',system-ui,sans-serif">
+  <rect x="0" y="0" width="800" height="420" fill="#f7f9fc"/>
+  <text x="400" y="32" font-size="23" font-weight="700" fill="#1f2937" text-anchor="middle">🎨 ASCII-узор: один параметр меняет размер</text>
+  <text x="400" y="55" font-size="14" fill="#64748b" text-anchor="middle">size задаёт масштаб. Вложенные циклы строят строки.</text>
+
+  <!-- size 3 -->
+  <g transform="translate(70,90)">
+    <text x="70" y="0" font-size="14" fill="#0d9488" font-weight="700" text-anchor="middle">size = 3</text>
+    <g font-size="15" font-family="monospace" fill="#5b21b6" text-anchor="middle">
+      <text x="70" y="26">  *</text>
+      <text x="70" y="46"> ***</text>
+      <text x="70" y="66">*****</text>
+      <text x="70" y="86"> ***</text>
+      <text x="70" y="106">  *</text>
+    </g>
+  </g>
+
+  <!-- size 5 -->
+  <g transform="translate(300,90)">
+    <text x="90" y="0" font-size="14" fill="#0d9488" font-weight="700" text-anchor="middle">size = 5</text>
+    <g font-size="14" font-family="monospace" fill="#5b21b6" text-anchor="middle">
+      <text x="90" y="24">    *</text>
+      <text x="90" y="42">   ***</text>
+      <text x="90" y="60">  *****</text>
+      <text x="90" y="78"> *******</text>
+      <text x="90" y="96">*********</text>
+      <text x="90" y="114"> *******</text>
+      <text x="90" y="132">  *****</text>
+      <text x="90" y="150">   ***</text>
+      <text x="90" y="168">    *</text>
+    </g>
+  </g>
+
+  <!-- formula/code -->
+  <rect x="520" y="90" width="250" height="130" rx="12" fill="#0f172a"/>
+  <text x="540" y="116" font-size="13.5" font-family="monospace" fill="#94a3b8"># одна строка ромба:</text>
+  <text x="540" y="140" font-size="13.5" font-family="monospace" fill="#5eead4">" " * (size - row)</text>
+  <text x="540" y="162" font-size="13.5" font-family="monospace" fill="#e2e8f0">+ "*" * (2*row - 1)</text>
+  <text x="540" y="192" font-size="12.5" font-family="monospace" fill="#94a3b8"># row идёт от 1 до size</text>
+  <text x="540" y="210" font-size="12.5" font-family="monospace" fill="#94a3b8"># и обратно</text>
+
+  <rect x="70" y="300" width="700" height="90" rx="12" fill="#fff" stroke="#e2e8f0"/>
+  <text x="90" y="326" font-size="14.5" fill="#1f2937" font-weight="700">Приём «параметризация».</text>
+  <text x="90" y="352" font-size="14" fill="#334155">Спросил <tspan font-family="monospace">size</tspan> — и та же программа рисует узор любого масштаба.</text>
+  <text x="90" y="376" font-size="13.5" fill="#64748b">Пробелы сдвигают строку к центру, звёзды растут по нечётным (1, 3, 5…).</text>
+</svg>

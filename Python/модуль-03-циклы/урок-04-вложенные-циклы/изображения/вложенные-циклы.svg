@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 420" font-family="'Segoe UI',system-ui,sans-serif">
+  <rect x="0" y="0" width="800" height="420" fill="#f7f9fc"/>
+  <text x="400" y="34" font-size="23" font-weight="700" fill="#1f2937" text-anchor="middle">🔁 Вложенные циклы: внешний × внутренний</text>
+  <text x="400" y="58" font-size="14" fill="#64748b" text-anchor="middle">Для КАЖДОГО шага внешнего цикла внутренний проходит ВСЕ свои шаги.</text>
+
+  <!-- code -->
+  <rect x="40" y="86" width="340" height="150" rx="12" fill="#0f172a"/>
+  <text x="60" y="118" font-size="15" font-family="monospace" fill="#5eead4">for i in range(3):</text>
+  <text x="360" y="118" font-size="12" font-family="monospace" fill="#64748b" text-anchor="end"># внешний</text>
+  <text x="92" y="146" font-size="15" font-family="monospace" fill="#e2e8f0">for j in range(3):</text>
+  <text x="360" y="146" font-size="12" font-family="monospace" fill="#64748b" text-anchor="end"># внутренний</text>
+  <text x="124" y="174" font-size="15" font-family="monospace" fill="#e2e8f0">print(i, j)</text>
+  <text x="60" y="212" font-size="13.5" fill="#94a3b8">3 × 3 = 9 витков</text>
+  <text x="60" y="230" font-size="13.5" fill="#94a3b8">внутреннего тела</text>
+
+  <!-- matrix with order -->
+  <text x="590" y="104" font-size="14" fill="#0d9488" font-weight="700" text-anchor="middle">Порядок пар (i, j):</text>
+  <g font-size="14" font-family="monospace" text-anchor="middle">
+    <!-- row i=0 -->
+    <rect x="450" y="116" width="90" height="44" rx="8" fill="#ccfbf1" stroke="#0d9488" stroke-width="1.6"/><text x="495" y="143" fill="#0f766e">0,0</text>
+    <rect x="546" y="116" width="90" height="44" rx="8" fill="#ccfbf1" stroke="#0d9488" stroke-width="1.6"/><text x="591" y="143" fill="#0f766e">0,1</text>
+    <rect x="642" y="116" width="90" height="44" rx="8" fill="#ccfbf1" stroke="#0d9488" stroke-width="1.6"/><text x="687" y="143" fill="#0f766e">0,2</text>
+    <!-- row i=1 -->
+    <rect x="450" y="166" width="90" height="44" rx="8" fill="#e0f2fe" stroke="#0284c7" stroke-width="1.6"/><text x="495" y="193" fill="#075985">1,0</text>
+    <rect x="546" y="166" width="90" height="44" rx="8" fill="#e0f2fe" stroke="#0284c7" stroke-width="1.6"/><text x="591" y="193" fill="#075985">1,1</text>
+    <rect x="642" y="166" width="90" height="44" rx="8" fill="#e0f2fe" stroke="#0284c7" stroke-width="1.6"/><text x="687" y="193" fill="#075985">1,2</text>
+    <!-- row i=2 -->
+    <rect x="450" y="216" width="90" height="44" rx="8" fill="#ede9fe" stroke="#7c3aed" stroke-width="1.6"/><text x="495" y="243" fill="#5b21b6">2,0</text>
+    <rect x="546" y="216" width="90" height="44" rx="8" fill="#ede9fe" stroke="#7c3aed" stroke-width="1.6"/><text x="591" y="243" fill="#5b21b6">2,1</text>
+    <rect x="642" y="216" width="90" height="44" rx="8" fill="#ede9fe" stroke="#7c3aed" stroke-width="1.6"/><text x="687" y="243" fill="#5b21b6">2,2</text>
+  </g>
+  <text x="450" y="284" font-size="13" fill="#64748b">i=0: внутренний прошёл все j (0,1,2), потом i=1 …</text>
+
+  <!-- table analogy -->
+  <rect x="40" y="300" width="720" height="94" rx="12" fill="#fff" stroke="#e2e8f0"/>
+  <text x="60" y="326" font-size="14.5" fill="#1f2937" font-weight="700">Где встречается: таблицы и сетки.</text>
+  <text x="60" y="352" font-size="14" fill="#334155">Внешний цикл — <tspan font-weight="700">строки</tspan>, внутренний — <tspan font-weight="700">столбцы</tspan> внутри строки.</text>
+  <text x="60" y="376" font-size="13.5" fill="#64748b">Таблица умножения 10×10, шахматка, узоры, «залить» область клеток.</text>
+</svg>

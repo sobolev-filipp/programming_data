@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 820 430" font-family="'Segoe UI',system-ui,sans-serif">
+  <defs>
+    <pattern id="grid5s" width="24" height="24" patternUnits="userSpaceOnUse">
+      <path d="M24 0H0V24" fill="none" stroke="#d0d0d0" stroke-width="1"/>
+    </pattern>
+    <marker id="sn_ar" markerWidth="10" markerHeight="10" refX="7" refY="5" orient="auto"><path d="M0,0 L9,5 L0,10 z" fill="#0d9488"/></marker>
+  </defs>
+  <rect x="0" y="0" width="820" height="430" fill="#f7f9fc"/>
+  <text x="410" y="32" font-size="23" font-weight="700" fill="#1f2937" text-anchor="middle">🐍 Змейка: убрать всю комнату</text>
+  <text x="410" y="55" font-size="14" fill="#64748b" text-anchor="middle">Едем по ряду до стены, поднимаемся, меняем направление — и обратно.</text>
+
+  <!-- grid -->
+  <rect x="40" y="76" width="240" height="240" fill="url(#grid5s)" stroke="#000096" stroke-width="3"/>
+  <!-- snake path: bottom row L->R, up, next row R->L, up... draw as polylines -->
+  <!-- row y positions (row0 bottom): 76+(9-r)*24+12 -->
+  <!-- r0 y=292, r1 y=268, r2 y=244 ... use first 4 rows -->
+  <path d="M52,292 L268,292" stroke="#0d9488" stroke-width="3" fill="none" marker-end="url(#sn_ar)"/>
+  <path d="M268,292 L268,268" stroke="#0d9488" stroke-width="3" fill="none"/>
+  <path d="M268,268 L52,268" stroke="#0d9488" stroke-width="3" fill="none" marker-end="url(#sn_ar)"/>
+  <path d="M52,268 L52,244" stroke="#0d9488" stroke-width="3" fill="none"/>
+  <path d="M52,244 L268,244" stroke="#0d9488" stroke-width="3" fill="none" marker-end="url(#sn_ar)"/>
+  <path d="M268,244 L268,220" stroke="#0d9488" stroke-width="3" fill="none"/>
+  <path d="M268,220 L52,220" stroke="#0d9488" stroke-width="3" fill="none" marker-end="url(#sn_ar)"/>
+  <circle cx="52" cy="292" r="8" fill="#f59e0b" stroke="#7c3aed" stroke-width="2.5"/>
+  <text x="160" y="340" font-size="12" fill="#94a3b8" text-anchor="middle">🟠 старт снизу слева · маршрут «змейкой»</text>
+
+  <!-- code -->
+  <rect x="330" y="80" width="450" height="242" rx="12" fill="#0f172a"/>
+  <text x="350" y="106" font-size="13.5" font-family="monospace" fill="#94a3b8"># going_right — флаг направления</text>
+  <text x="350" y="128" font-size="14" font-family="monospace" fill="#5eead4">going_right = True</text>
+  <text x="350" y="150" font-size="14" font-family="monospace" fill="#5eead4">for row in range(10):</text>
+  <text x="382" y="172" font-size="14" font-family="monospace" fill="#e2e8f0">clean()</text>
+  <text x="382" y="194" font-size="13.5" font-family="monospace" fill="#e2e8f0">while едем в сторону и не стена:</text>
+  <text x="414" y="216" font-size="13.5" font-family="monospace" fill="#e2e8f0">right() или left(); clean()</text>
+  <text x="382" y="238" font-size="14" font-family="monospace" fill="#e2e8f0">if not wall_up:</text>
+  <text x="414" y="260" font-size="14" font-family="monospace" fill="#e2e8f0">up()</text>
+  <text x="382" y="282" font-size="14" font-family="monospace" fill="#5eead4">going_right = not going_right</text>
+  <text x="350" y="308" font-size="12.5" fill="#64748b" font-family="monospace"># for(строки) + while(до стены) + флаг — всё вместе!</text>
+</svg>
