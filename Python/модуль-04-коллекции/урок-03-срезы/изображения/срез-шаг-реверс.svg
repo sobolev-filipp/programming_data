@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 420" font-family="'Segoe UI',system-ui,sans-serif">
+  <rect x="0" y="0" width="800" height="420" fill="#f7f9fc"/>
+  <text x="400" y="34" font-size="23" font-weight="700" fill="#1f2937" text-anchor="middle">⏭️ Третье число — ШАГ: a[start:stop:step]</text>
+  <text x="400" y="58" font-size="14" fill="#64748b" text-anchor="middle">step=2 — через один; step=-1 — задом наперёд.</text>
+
+  <!-- step 2 -->
+  <text x="70" y="96" font-size="15.5" font-family="monospace" fill="#ea580c" font-weight="700">data[::2]  — каждый второй</text>
+  <g font-size="15" font-weight="700" font-family="monospace">
+    <rect x="70" y="106" width="46" height="42" rx="8" fill="#ffedd5" stroke="#ea580c" stroke-width="2.5"/><text x="93" y="133" text-anchor="middle" fill="#9a3412">0</text>
+    <rect x="128" y="106" width="46" height="42" rx="8" fill="#fff" stroke="#cbd5e1" stroke-width="2"/><text x="151" y="133" text-anchor="middle" fill="#cbd5e1">1</text>
+    <rect x="186" y="106" width="46" height="42" rx="8" fill="#ffedd5" stroke="#ea580c" stroke-width="2.5"/><text x="209" y="133" text-anchor="middle" fill="#9a3412">2</text>
+    <rect x="244" y="106" width="46" height="42" rx="8" fill="#fff" stroke="#cbd5e1" stroke-width="2"/><text x="267" y="133" text-anchor="middle" fill="#cbd5e1">3</text>
+    <rect x="302" y="106" width="46" height="42" rx="8" fill="#ffedd5" stroke="#ea580c" stroke-width="2.5"/><text x="325" y="133" text-anchor="middle" fill="#9a3412">4</text>
+    <rect x="360" y="106" width="46" height="42" rx="8" fill="#fff" stroke="#cbd5e1" stroke-width="2"/><text x="383" y="133" text-anchor="middle" fill="#cbd5e1">5</text>
+    <rect x="418" y="106" width="46" height="42" rx="8" fill="#ffedd5" stroke="#ea580c" stroke-width="2.5"/><text x="441" y="133" text-anchor="middle" fill="#9a3412">6</text>
+    <rect x="476" y="106" width="46" height="42" rx="8" fill="#fff" stroke="#cbd5e1" stroke-width="2"/><text x="499" y="133" text-anchor="middle" fill="#cbd5e1">7</text>
+  </g>
+  <text x="600" y="132" font-size="16" font-family="monospace" fill="#9a3412" font-weight="700">[0,2,4,6]</text>
+  <!-- hop arcs -->
+  <path d="M93,150 q29,26 58,0" stroke="#ea580c" stroke-width="2" fill="none"/>
+  <path d="M209,150 q29,26 58,0" stroke="#ea580c" stroke-width="2" fill="none"/>
+  <path d="M325,150 q29,26 58,0" stroke="#ea580c" stroke-width="2" fill="none"/>
+
+  <line x1="60" y1="188" x2="740" y2="188" stroke="#e2e8f0" stroke-width="1.5"/>
+
+  <!-- reverse -->
+  <text x="70" y="222" font-size="15.5" font-family="monospace" fill="#2563eb" font-weight="700">data[::-1]  — задом наперёд (шаг −1)</text>
+  <g font-size="15" font-weight="700" font-family="monospace">
+    <rect x="70" y="232" width="60" height="42" rx="8" fill="#dbeafe" stroke="#2563eb" stroke-width="2"/><text x="100" y="259" text-anchor="middle" fill="#1e40af">0</text>
+    <rect x="138" y="232" width="60" height="42" rx="8" fill="#dbeafe" stroke="#2563eb" stroke-width="2"/><text x="168" y="259" text-anchor="middle" fill="#1e40af">1</text>
+    <rect x="206" y="232" width="60" height="42" rx="8" fill="#dbeafe" stroke="#2563eb" stroke-width="2"/><text x="236" y="259" text-anchor="middle" fill="#1e40af">2</text>
+    <rect x="274" y="232" width="60" height="42" rx="8" fill="#dbeafe" stroke="#2563eb" stroke-width="2"/><text x="304" y="259" text-anchor="middle" fill="#1e40af">3</text>
+  </g>
+  <text x="380" y="258" font-size="20" fill="#2563eb">→</text>
+  <g font-size="15" font-weight="700" font-family="monospace">
+    <rect x="410" y="232" width="60" height="42" rx="8" fill="#dbeafe" stroke="#2563eb" stroke-width="2"/><text x="440" y="259" text-anchor="middle" fill="#1e40af">3</text>
+    <rect x="478" y="232" width="60" height="42" rx="8" fill="#dbeafe" stroke="#2563eb" stroke-width="2"/><text x="508" y="259" text-anchor="middle" fill="#1e40af">2</text>
+    <rect x="546" y="232" width="60" height="42" rx="8" fill="#dbeafe" stroke="#2563eb" stroke-width="2"/><text x="576" y="259" text-anchor="middle" fill="#1e40af">1</text>
+    <rect x="614" y="232" width="60" height="42" rx="8" fill="#dbeafe" stroke="#2563eb" stroke-width="2"/><text x="644" y="259" text-anchor="middle" fill="#1e40af">0</text>
+  </g>
+
+  <!-- string reverse + copy -->
+  <g font-family="monospace" font-size="15">
+    <rect x="70" y="300" width="330" height="44" rx="9" fill="#eff6ff" stroke="#2563eb" stroke-width="1.5"/>
+    <text x="86" y="328" fill="#1e40af">"привет"[::-1]  →  "тевирп"</text>
+    <rect x="410" y="300" width="320" height="44" rx="9" fill="#dcfce7" stroke="#16a34a" stroke-width="1.5"/>
+    <text x="426" y="328" fill="#166534">copy = data[:]  — безопасная копия</text>
+  </g>
+
+  <text x="400" y="378" font-size="14" fill="#334155" text-anchor="middle"><tspan font-family="monospace" fill="#2563eb" font-weight="700">[::-1]</tspan> переворачивает список ИЛИ строку. Отличная проверка палиндрома.</text>
+  <text x="400" y="402" font-size="13" fill="#64748b" text-anchor="middle"><tspan font-family="monospace">[:]</tspan> — копия: меняешь копию, оригинал цел (в отличие от <tspan font-family="monospace">new = data</tspan>).</text>
+</svg>

@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 400" font-family="'Segoe UI',system-ui,sans-serif">
+  <rect x="0" y="0" width="800" height="400" fill="#f7f9fc"/>
+  <text x="400" y="36" font-size="23" font-weight="700" fill="#1f2937" text-anchor="middle">🔒 Список меняется — кортеж заморожен</text>
+  <text x="400" y="60" font-size="14" fill="#64748b" text-anchor="middle">Кортеж — тот же набор, но изменить его нельзя. Скобки круглые ( ).</text>
+
+  <!-- LIST -->
+  <g transform="translate(60,90)">
+    <rect x="0" y="0" width="310" height="250" rx="16" fill="#ecfeff" stroke="#0891b2" stroke-width="2"/>
+    <text x="155" y="34" font-size="18" font-weight="700" fill="#0e7490" text-anchor="middle">✏️ Список — можно менять</text>
+    <text x="155" y="58" font-size="14" font-family="monospace" fill="#0e7490" text-anchor="middle">nums = [10, 20, 30]</text>
+    <g font-size="17" font-weight="700" font-family="monospace">
+      <rect x="35" y="76" width="70" height="48" rx="9" fill="#cffafe" stroke="#0891b2" stroke-width="2"/><text x="70" y="107" text-anchor="middle" fill="#0e7490">10</text>
+      <rect x="120" y="76" width="70" height="48" rx="9" fill="#dcfce7" stroke="#16a34a" stroke-width="2.5"/><text x="155" y="107" text-anchor="middle" fill="#166534">99</text>
+      <rect x="205" y="76" width="70" height="48" rx="9" fill="#cffafe" stroke="#0891b2" stroke-width="2"/><text x="240" y="107" text-anchor="middle" fill="#0e7490">30</text>
+    </g>
+    <text x="155" y="168" font-size="15" font-family="monospace" fill="#16a34a" text-anchor="middle" font-weight="700">nums[1] = 99  ✓</text>
+    <text x="155" y="196" font-size="13.5" fill="#0e7490" text-anchor="middle">работает: элемент заменился</text>
+    <text x="155" y="228" font-size="13" fill="#64748b" text-anchor="middle">можно append, remove, sort...</text>
+  </g>
+
+  <!-- TUPLE -->
+  <g transform="translate(430,90)">
+    <rect x="0" y="0" width="310" height="250" rx="16" fill="#fff7ed" stroke="#ea580c" stroke-width="2"/>
+    <text x="155" y="34" font-size="18" font-weight="700" fill="#9a3412" text-anchor="middle">🔒 Кортеж — заморожен</text>
+    <text x="155" y="58" font-size="14" font-family="monospace" fill="#9a3412" text-anchor="middle">point = (10, 20, 30)</text>
+    <g font-size="17" font-weight="700" font-family="monospace">
+      <rect x="35" y="76" width="70" height="48" rx="9" fill="#ffedd5" stroke="#ea580c" stroke-width="2"/><text x="70" y="107" text-anchor="middle" fill="#9a3412">10</text>
+      <rect x="120" y="76" width="70" height="48" rx="9" fill="#ffedd5" stroke="#ea580c" stroke-width="2"/><text x="155" y="107" text-anchor="middle" fill="#9a3412">20</text>
+      <rect x="205" y="76" width="70" height="48" rx="9" fill="#ffedd5" stroke="#ea580c" stroke-width="2"/><text x="240" y="107" text-anchor="middle" fill="#9a3412">30</text>
+    </g>
+    <text x="155" y="168" font-size="15" font-family="monospace" fill="#dc2626" text-anchor="middle" font-weight="700">point[1] = 99  ✗</text>
+    <text x="155" y="194" font-size="12.5" fill="#dc2626" text-anchor="middle">TypeError: 'tuple' object does</text>
+    <text x="155" y="211" font-size="12.5" fill="#dc2626" text-anchor="middle">not support item assignment</text>
+    <text x="155" y="236" font-size="13" fill="#9a3412" text-anchor="middle">читать — можно, менять — нет</text>
+  </g>
+
+  <text x="400" y="378" font-size="13.5" fill="#334155" text-anchor="middle">Кортеж берут для того, что НЕ должно меняться: координаты (x, y), цвет RGB, дата.</text>
+</svg>

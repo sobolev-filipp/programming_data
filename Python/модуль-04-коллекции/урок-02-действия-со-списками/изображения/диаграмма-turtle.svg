@@ -46,5 +46,5 @@
     <text x="446" y="371" fill="#166534">bar(v, "#16a34a")</text>
     <text x="600" y="371" fill="#166534" font-size="12">— свой цвет</text>
   </g>
-  <text x="400" y="410" font-size="13" fill="#64748b" text-anchor="middle">TASK меняет задание: 1 — как есть · 2 — отсортированный · 3 — макс зелёным.</text>
+  <text x="400" y="410" font-size="13" fill="#64748b" text-anchor="middle">12 заданий: сортировка · max/min · среднее · выше среднего · фильтр · топ-3.</text>
 </svg>

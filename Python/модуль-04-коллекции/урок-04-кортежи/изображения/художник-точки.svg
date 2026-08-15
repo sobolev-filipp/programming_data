@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 430" font-family="'Segoe UI',system-ui,sans-serif">
+  <rect x="0" y="0" width="800" height="430" fill="#f7f9fc"/>
+  <text x="400" y="34" font-size="23" font-weight="700" fill="#1f2937" text-anchor="middle">🖌 Художник по точкам — фигура из кортежей</text>
+  <text x="400" y="58" font-size="14" fill="#64748b" text-anchor="middle">Список вершин-кортежей (x, y) соединяем линиями в фигуру.</text>
+
+  <!-- coordinate pad -->
+  <g transform="translate(70,80)">
+    <!-- grid -->
+    <g stroke="#e8edf3" stroke-width="1">
+      <line x1="0" y1="0" x2="300" y2="0"/><line x1="0" y1="50" x2="300" y2="50"/><line x1="0" y1="100" x2="300" y2="100"/><line x1="0" y1="150" x2="300" y2="150"/><line x1="0" y1="200" x2="300" y2="200"/><line x1="0" y1="250" x2="300" y2="250"/>
+      <line x1="0" y1="0" x2="0" y2="250"/><line x1="50" y1="0" x2="50" y2="250"/><line x1="100" y1="0" x2="100" y2="250"/><line x1="150" y1="0" x2="150" y2="250"/><line x1="200" y1="0" x2="200" y2="250"/><line x1="250" y1="0" x2="250" y2="250"/><line x1="300" y1="0" x2="300" y2="250"/>
+    </g>
+    <!-- house drawn: points (50,200)(250,200)(250,100)(150,50)(50,100) -->
+    <polygon points="50,200 250,200 250,100 150,50 50,100" fill="#fff7ed" stroke="#ea580c" stroke-width="3"/>
+    <!-- vertices -->
+    <g fill="#2563eb">
+      <circle cx="50" cy="200" r="6"/><circle cx="250" cy="200" r="6"/><circle cx="250" cy="100" r="6"/><circle cx="150" cy="50" r="6"/><circle cx="50" cy="100" r="6"/>
+    </g>
+    <g font-size="11" font-family="monospace" fill="#1e40af">
+      <text x="24" y="222">(-2,-2)</text><text x="214" y="222">(2,-2)</text><text x="256" y="104">(2,1)</text><text x="120" y="42">(0,3)</text><text x="0" y="96">(-2,1)</text>
+    </g>
+  </g>
+
+  <!-- code panel -->
+  <g transform="translate(430,110)">
+    <rect x="0" y="0" width="320" height="150" rx="12" fill="#0f172a"/>
+    <text x="16" y="30" font-size="12.5" font-family="monospace" fill="#fdba74">house = [(-2,-2), (2,-2),</text>
+    <text x="16" y="50" font-size="12.5" font-family="monospace" fill="#fdba74">   (2,1), (0,3), (-2,1), (-2,-2)]</text>
+    <text x="16" y="82" font-size="13.5" font-family="monospace" fill="#7dd3fc">move_to(house[0])</text>
+    <text x="16" y="104" font-size="13.5" font-family="monospace" fill="#7dd3fc">for point in house:</text>
+    <text x="40" y="126" font-size="13.5" font-family="monospace" fill="#e2e8f0">line_to(point)</text>
+  </g>
+  <text x="590" y="286" font-size="13" fill="#64748b" text-anchor="middle">каждая вершина — кортеж (x, y)</text>
+
+  <g font-family="monospace" font-size="13.5">
+    <rect x="70" y="352" width="210" height="38" rx="9" fill="#fff7ed" stroke="#ea580c" stroke-width="1.5"/>
+    <text x="86" y="376" fill="#9a3412">move_to(p) / line_to(p)</text>
+    <rect x="300" y="352" width="150" height="38" rx="9" fill="#eff6ff" stroke="#2563eb" stroke-width="1.5"/>
+    <text x="316" y="376" fill="#1e40af">dot(p)</text>
+    <rect x="470" y="352" width="260" height="38" rx="9" fill="#dcfce7" stroke="#16a34a" stroke-width="1.5"/>
+    <text x="486" y="376" fill="#166534">сдвиг: x, y = p → (x+3, y)</text>
+  </g>
+  <text x="400" y="416" font-size="12.5" fill="#64748b" text-anchor="middle">10 заданий: домик · точки в вершинах · сдвиг · отражение · масштаб · крыша (срез) · свой рисунок</text>
+</svg>
