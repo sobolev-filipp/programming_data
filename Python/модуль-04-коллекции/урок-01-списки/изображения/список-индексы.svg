@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 400" font-family="'Segoe UI',system-ui,sans-serif">
+  <rect x="0" y="0" width="800" height="400" fill="#f7f9fc"/>
+  <text x="400" y="36" font-size="23" font-weight="700" fill="#1f2937" text-anchor="middle">📋 Список — ячейки с номерами (индексами)</text>
+  <text x="400" y="60" font-size="14" fill="#64748b" text-anchor="middle">Сверху — обычные индексы с 0; снизу — отрицательные с конца.</text>
+
+  <text x="60" y="112" font-size="16" font-family="monospace" fill="#ea580c" font-weight="700">tracks = ["Muse", "Coldplay", "Twenty One Pilots", "Kino"]</text>
+
+  <!-- top indexes -->
+  <g font-family="monospace" font-size="17" font-weight="700" fill="#0891b2" text-anchor="middle">
+    <text x="150" y="150">0</text><text x="325" y="150">1</text><text x="500" y="150">2</text><text x="675" y="150">3</text>
+  </g>
+
+  <!-- cells -->
+  <g font-size="16.5" font-weight="700" font-family="monospace">
+    <rect x="70" y="160" width="160" height="56" rx="10" fill="#ffedd5" stroke="#ea580c" stroke-width="2"/><text x="150" y="194" text-anchor="middle" fill="#9a3412">Muse</text>
+    <rect x="245" y="160" width="160" height="56" rx="10" fill="#ffedd5" stroke="#ea580c" stroke-width="2"/><text x="325" y="194" text-anchor="middle" fill="#9a3412">Coldplay</text>
+    <rect x="420" y="160" width="160" height="56" rx="10" fill="#ffedd5" stroke="#ea580c" stroke-width="2"/><text x="500" y="188" text-anchor="middle" fill="#9a3412" font-size="13">Twenty One</text><text x="500" y="205" text-anchor="middle" fill="#9a3412" font-size="13">Pilots</text>
+    <rect x="595" y="160" width="160" height="56" rx="10" fill="#ffedd5" stroke="#ea580c" stroke-width="2"/><text x="675" y="194" text-anchor="middle" fill="#9a3412">Kino</text>
+  </g>
+
+  <!-- bottom negative indexes -->
+  <g font-family="monospace" font-size="16" font-weight="700" fill="#94a3b8" text-anchor="middle">
+    <text x="150" y="244">-4</text><text x="325" y="244">-3</text><text x="500" y="244">-2</text><text x="675" y="244">-1</text>
+  </g>
+
+  <!-- examples -->
+  <g font-family="monospace" font-size="15.5">
+    <rect x="70" y="278" width="315" height="40" rx="9" fill="#ecfeff" stroke="#0891b2" stroke-width="1.5"/>
+    <text x="86" y="304" fill="#0e7490">tracks[0]  →  "Muse"</text>
+    <rect x="70" y="326" width="315" height="40" rx="9" fill="#ecfeff" stroke="#0891b2" stroke-width="1.5"/>
+    <text x="86" y="352" fill="#0e7490">tracks[1]  →  "Coldplay"</text>
+    <rect x="415" y="278" width="315" height="40" rx="9" fill="#fff7ed" stroke="#ea580c" stroke-width="1.5"/>
+    <text x="431" y="304" fill="#9a3412">tracks[-1] →  "Kino"  (последний)</text>
+    <rect x="415" y="326" width="315" height="40" rx="9" fill="#fff7ed" stroke="#ea580c" stroke-width="1.5"/>
+    <text x="431" y="352" fill="#9a3412">len(tracks) → 4   (штук всего)</text>
+  </g>
+</svg>

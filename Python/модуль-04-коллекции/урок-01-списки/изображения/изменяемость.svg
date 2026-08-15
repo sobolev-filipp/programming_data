@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 380" font-family="'Segoe UI',system-ui,sans-serif">
+  <defs>
+    <marker id="ch_ar" markerWidth="12" markerHeight="12" refX="8" refY="5" orient="auto"><path d="M0,0 L9,5 L0,10 z" fill="#ea580c"/></marker>
+  </defs>
+  <rect x="0" y="0" width="800" height="380" fill="#f7f9fc"/>
+  <text x="400" y="36" font-size="23" font-weight="700" fill="#1f2937" text-anchor="middle">✏️ Список можно менять по индексу</text>
+  <text x="400" y="60" font-size="14" fill="#64748b" text-anchor="middle">Строку так нельзя, а список — да: он ИЗМЕНЯЕМЫЙ. Меняется тот же список.</text>
+
+  <text x="70" y="108" font-size="15.5" font-family="monospace" fill="#334155" font-weight="700">score = [10, 25, 7]</text>
+  <text x="330" y="108" font-size="14" fill="#94a3b8">хотим исправить второй элемент</text>
+
+  <!-- BEFORE -->
+  <text x="70" y="150" font-size="14" fill="#64748b" font-weight="700">БЫЛО</text>
+  <g font-size="17" font-weight="700" font-family="monospace">
+    <rect x="70" y="160" width="90" height="52" rx="10" fill="#e2e8f0" stroke="#94a3b8" stroke-width="2"/><text x="115" y="193" text-anchor="middle" fill="#334155">10</text>
+    <rect x="170" y="160" width="90" height="52" rx="10" fill="#fee2e2" stroke="#dc2626" stroke-width="2.5"/><text x="215" y="193" text-anchor="middle" fill="#991b1b">25</text>
+    <rect x="270" y="160" width="90" height="52" rx="10" fill="#e2e8f0" stroke="#94a3b8" stroke-width="2"/><text x="315" y="193" text-anchor="middle" fill="#334155">7</text>
+  </g>
+  <text x="115" y="234" font-size="13" font-family="monospace" fill="#94a3b8" text-anchor="middle">0</text>
+  <text x="215" y="234" font-size="13" font-family="monospace" fill="#dc2626" text-anchor="middle" font-weight="700">1</text>
+  <text x="315" y="234" font-size="13" font-family="monospace" fill="#94a3b8" text-anchor="middle">2</text>
+
+  <!-- arrow + command -->
+  <path d="M390,186 L470,186" stroke="#ea580c" stroke-width="3" fill="none" marker-end="url(#ch_ar)"/>
+  <rect x="378" y="150" width="120" height="30" rx="8" fill="#fff7ed" stroke="#ea580c" stroke-width="1.5"/>
+  <text x="438" y="171" font-size="13.5" font-family="monospace" fill="#9a3412" text-anchor="middle" font-weight="700">score[1] = 99</text>
+
+  <!-- AFTER -->
+  <text x="520" y="150" font-size="14" fill="#64748b" font-weight="700">СТАЛО</text>
+  <g font-size="17" font-weight="700" font-family="monospace">
+    <rect x="520" y="160" width="90" height="52" rx="10" fill="#e2e8f0" stroke="#94a3b8" stroke-width="2"/><text x="565" y="193" text-anchor="middle" fill="#334155">10</text>
+    <rect x="620" y="160" width="90" height="52" rx="10" fill="#dcfce7" stroke="#16a34a" stroke-width="2.5"/><text x="665" y="193" text-anchor="middle" fill="#166534">99</text>
+    <rect x="720" y="160" width="60" height="52" rx="10" fill="#e2e8f0" stroke="#94a3b8" stroke-width="2"/><text x="750" y="193" text-anchor="middle" fill="#334155">7</text>
+  </g>
+
+  <text x="400" y="300" font-size="15" fill="#334155" text-anchor="middle">Обращаемся к ячейке по индексу <tspan font-family="monospace" fill="#ea580c" font-weight="700">score[1]</tspan> и присваиваем ей новое значение.</text>
+  <text x="400" y="326" font-size="14" fill="#64748b" text-anchor="middle">Это тот же самый список — он не копируется, а перезаписывается на месте.</text>
+  <text x="400" y="356" font-size="13" fill="#dc2626" text-anchor="middle">⚠️ Индекс за границей (например score[5]) → ошибка IndexError.</text>
+</svg>
