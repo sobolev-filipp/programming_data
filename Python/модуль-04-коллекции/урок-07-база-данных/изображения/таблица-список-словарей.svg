@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 820 430" font-family="'Segoe UI',system-ui,sans-serif">
+  <rect x="0" y="0" width="820" height="430" fill="#f7f9fc"/>
+  <text x="410" y="36" font-size="24" font-weight="700" fill="#1f2937" text-anchor="middle">🗃️ Таблица = список словарей</text>
+  <text x="410" y="60" font-size="14" fill="#64748b" text-anchor="middle">Каждая строка — словарь-запись. Одинаковые ключи — это «столбцы» таблицы.</text>
+
+  <!-- table -->
+  <g font-family="monospace" font-size="15">
+    <!-- header row -->
+    <rect x="60" y="86" width="60"  height="40" fill="#0f172a"/><text x="90"  y="112" text-anchor="middle" fill="#e2e8f0" font-size="13">№</text>
+    <rect x="120" y="86" width="180" height="40" fill="#0f172a"/><text x="210" y="112" text-anchor="middle" fill="#e2e8f0">"имя"</text>
+    <rect x="300" y="86" width="180" height="40" fill="#0f172a"/><text x="390" y="112" text-anchor="middle" fill="#e2e8f0">"класс"</text>
+    <rect x="480" y="86" width="130" height="40" fill="#0f172a"/><text x="545" y="112" text-anchor="middle" fill="#e2e8f0">"hp"</text>
+    <rect x="610" y="86" width="150" height="40" fill="#0f172a"/><text x="685" y="112" text-anchor="middle" fill="#e2e8f0">"уровень"</text>
+
+    <!-- row 0 -->
+    <rect x="60" y="126" width="60" height="44" fill="#fff7ed" stroke="#e5e7eb"/><text x="90" y="153" text-anchor="middle" fill="#9a3412">[0]</text>
+    <rect x="120" y="126" width="180" height="44" fill="#fff7ed" stroke="#e5e7eb"/><text x="210" y="153" text-anchor="middle" fill="#1f2937">Рыцарь</text>
+    <rect x="300" y="126" width="180" height="44" fill="#fff7ed" stroke="#e5e7eb"/><text x="390" y="153" text-anchor="middle" fill="#1f2937">воин</text>
+    <rect x="480" y="126" width="130" height="44" fill="#fff7ed" stroke="#e5e7eb"/><text x="545" y="153" text-anchor="middle" fill="#1f2937">100</text>
+    <rect x="610" y="126" width="150" height="44" fill="#fff7ed" stroke="#e5e7eb"/><text x="685" y="153" text-anchor="middle" fill="#1f2937">5</text>
+
+    <!-- row 1 (highlight) -->
+    <rect x="60" y="170" width="60" height="44" fill="#ffedd5" stroke="#ea580c" stroke-width="2"/><text x="90" y="197" text-anchor="middle" fill="#9a3412">[1]</text>
+    <rect x="120" y="170" width="180" height="44" fill="#ffedd5" stroke="#ea580c" stroke-width="2"/><text x="210" y="197" text-anchor="middle" fill="#9a3412">Маг</text>
+    <rect x="300" y="170" width="180" height="44" fill="#ffedd5" stroke="#ea580c" stroke-width="2"/><text x="390" y="197" text-anchor="middle" fill="#9a3412">маг</text>
+    <rect x="480" y="170" width="130" height="44" fill="#dcfce7" stroke="#16a34a" stroke-width="2.5"/><text x="545" y="197" text-anchor="middle" fill="#166534" font-weight="700">70</text>
+    <rect x="610" y="170" width="150" height="44" fill="#ffedd5" stroke="#ea580c" stroke-width="2"/><text x="685" y="197" text-anchor="middle" fill="#9a3412">7</text>
+
+    <!-- row 2 -->
+    <rect x="60" y="214" width="60" height="44" fill="#fff7ed" stroke="#e5e7eb"/><text x="90" y="241" text-anchor="middle" fill="#9a3412">[2]</text>
+    <rect x="120" y="214" width="180" height="44" fill="#fff7ed" stroke="#e5e7eb"/><text x="210" y="241" text-anchor="middle" fill="#1f2937">Лучник</text>
+    <rect x="300" y="214" width="180" height="44" fill="#fff7ed" stroke="#e5e7eb"/><text x="390" y="241" text-anchor="middle" fill="#1f2937">воин</text>
+    <rect x="480" y="214" width="130" height="44" fill="#fff7ed" stroke="#e5e7eb"/><text x="545" y="241" text-anchor="middle" fill="#1f2937">80</text>
+    <rect x="610" y="214" width="150" height="44" fill="#fff7ed" stroke="#e5e7eb"/><text x="685" y="241" text-anchor="middle" fill="#1f2937">4</text>
+  </g>
+
+  <text x="410" y="292" font-size="14" fill="#334155" text-anchor="middle">Одна строка — это словарь: <tspan font-family="monospace" fill="#9a3412">{"имя":"Маг", "класс":"маг", "hp":70, "уровень":7}</tspan></text>
+
+  <rect x="230" y="312" width="360" height="46" rx="10" fill="#ecfeff" stroke="#0891b2" stroke-width="2"/>
+  <text x="410" y="340" font-size="16" font-family="monospace" fill="#0e7490" text-anchor="middle" font-weight="700">heroes[1]["hp"]  →  70</text>
+
+  <text x="410" y="390" font-size="13.5" fill="#334155" text-anchor="middle">Сначала выбираем СТРОКУ по номеру (список: <tspan font-family="monospace">[1]</tspan>), потом ПОЛЕ по ключу (словарь: <tspan font-family="monospace">["hp"]</tspan>).</text>
+</svg>

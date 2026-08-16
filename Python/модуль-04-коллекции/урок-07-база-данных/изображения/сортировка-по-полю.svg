@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 820 410" font-family="'Segoe UI',system-ui,sans-serif">
+  <rect x="0" y="0" width="820" height="410" fill="#f7f9fc"/>
+  <text x="410" y="36" font-size="24" font-weight="700" fill="#1f2937" text-anchor="middle">🏆 Сортировка записей по полю (через кортежи)</text>
+  <text x="410" y="60" font-size="14" fill="#64748b" text-anchor="middle">Собираем пары (hp, имя) и сортируем: кортежи сравниваются по первому числу — значит по hp.</text>
+
+  <!-- step 1: build pairs -->
+  <g transform="translate(50,95)" font-family="monospace" font-size="14">
+    <text x="130" y="0" font-size="13.5" font-weight="700" fill="#334155" text-anchor="middle" font-family="'Segoe UI'">1. пары (hp, имя)</text>
+    <rect x="0" y="12" width="260" height="36" rx="8" fill="#ffedd5" stroke="#ea580c" stroke-width="1.5"/><text x="130" y="36" text-anchor="middle" fill="#9a3412">(100, "Рыцарь")</text>
+    <rect x="0" y="54" width="260" height="36" rx="8" fill="#ffedd5" stroke="#ea580c" stroke-width="1.5"/><text x="130" y="78" text-anchor="middle" fill="#9a3412">(70, "Маг")</text>
+    <rect x="0" y="96" width="260" height="36" rx="8" fill="#ffedd5" stroke="#ea580c" stroke-width="1.5"/><text x="130" y="120" text-anchor="middle" fill="#9a3412">(80, "Лучник")</text>
+  </g>
+
+  <!-- arrow -->
+  <g transform="translate(330,175)">
+    <text x="45" y="-8" font-size="12.5" font-family="monospace" fill="#ea580c" text-anchor="middle">.sort(reverse=True)</text>
+    <line x1="0" y1="0" x2="120" y2="0" stroke="#ea580c" stroke-width="3"/>
+    <polygon points="128,0 116,-6 116,6" fill="#ea580c"/>
+  </g>
+
+  <!-- step 2: sorted -->
+  <g transform="translate(490,95)" font-family="monospace" font-size="14">
+    <text x="130" y="0" font-size="13.5" font-weight="700" fill="#166534" text-anchor="middle" font-family="'Segoe UI'">2. по убыванию hp</text>
+    <rect x="0" y="12" width="260" height="36" rx="8" fill="#dcfce7" stroke="#16a34a" stroke-width="2"/><text x="130" y="36" text-anchor="middle" fill="#166534">(100, "Рыцарь")</text>
+    <rect x="0" y="54" width="260" height="36" rx="8" fill="#dcfce7" stroke="#16a34a" stroke-width="2"/><text x="130" y="78" text-anchor="middle" fill="#166534">(80, "Лучник")</text>
+    <rect x="0" y="96" width="260" height="36" rx="8" fill="#dcfce7" stroke="#16a34a" stroke-width="2"/><text x="130" y="120" text-anchor="middle" fill="#166534">(70, "Маг")</text>
+  </g>
+
+  <rect x="120" y="270" width="580" height="56" rx="12" fill="#0f172a"/>
+  <text x="145" y="294" font-size="14" font-family="monospace" fill="#e2e8f0">пары = []</text>
+  <text x="145" y="314" font-size="14" font-family="monospace" fill="#93c5fd">for h in heroes: пары.append((h["hp"], h["имя"]));  пары.sort(reverse=True)</text>
+
+  <text x="410" y="356" font-size="13.5" fill="#334155" text-anchor="middle">💡 Кортеж-пара ставит нужное поле ПЕРВЫМ — и обычная сортировка расставляет записи по этому полю.</text>
+  <text x="410" y="380" font-size="12.5" fill="#64748b" text-anchor="middle">(так сортируют по полю без lambda — своих функций ещё не проходили)</text>
+</svg>
