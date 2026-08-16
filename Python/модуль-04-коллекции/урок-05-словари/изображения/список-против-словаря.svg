@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 820 420" font-family="'Segoe UI',system-ui,sans-serif">
+  <rect x="0" y="0" width="820" height="420" fill="#f7f9fc"/>
+  <text x="410" y="38" font-size="24" font-weight="700" fill="#1f2937" text-anchor="middle">🔎 Почему словарь удобнее списка</text>
+  <text x="410" y="62" font-size="14" fill="#64748b" text-anchor="middle">Найти телефон Веры: в списке — перебирать все пары, в словаре — сразу по ключу.</text>
+
+  <!-- LIST side -->
+  <g transform="translate(50,90)">
+    <rect x="0" y="0" width="340" height="290" rx="16" fill="#ecfeff" stroke="#0891b2" stroke-width="2"/>
+    <text x="170" y="32" font-size="18" font-weight="700" fill="#0e7490" text-anchor="middle">Список пар — искать перебором</text>
+    <text x="170" y="56" font-size="13" font-family="monospace" fill="#0e7490" text-anchor="middle">[("Аня","555-01"), ("Боря",...), ...]</text>
+    <g font-family="monospace" font-size="15">
+      <rect x="40" y="76" width="260" height="40" rx="9" fill="#cffafe" stroke="#0891b2" stroke-width="2"/>
+      <text x="60" y="101" fill="#0e7490">("Аня", "555-01")</text>
+      <text x="285" y="101" fill="#dc2626" text-anchor="end">не то</text>
+      <rect x="40" y="124" width="260" height="40" rx="9" fill="#cffafe" stroke="#0891b2" stroke-width="2"/>
+      <text x="60" y="149" fill="#0e7490">("Боря", "555-02")</text>
+      <text x="285" y="149" fill="#dc2626" text-anchor="end">не то</text>
+      <rect x="40" y="172" width="260" height="40" rx="9" fill="#dcfce7" stroke="#16a34a" stroke-width="2.5"/>
+      <text x="60" y="197" fill="#166534">("Вера", "555-03")</text>
+      <text x="285" y="197" fill="#16a34a" text-anchor="end">нашли!</text>
+    </g>
+    <text x="170" y="242" font-size="14" fill="#0e7490" text-anchor="middle">проверили 3 элемента подряд...</text>
+    <text x="170" y="266" font-size="13.5" fill="#64748b" text-anchor="middle">а если их 1000? долго 🐌</text>
+  </g>
+
+  <!-- DICT side -->
+  <g transform="translate(430,90)">
+    <rect x="0" y="0" width="340" height="290" rx="16" fill="#fff7ed" stroke="#ea580c" stroke-width="2"/>
+    <text x="170" y="32" font-size="18" font-weight="700" fill="#9a3412" text-anchor="middle">Словарь — сразу по ключу</text>
+    <text x="170" y="56" font-size="13" font-family="monospace" fill="#9a3412" text-anchor="middle">{"Аня":"555-01", "Вера":"555-03", ...}</text>
+
+    <rect x="60" y="90" width="220" height="46" rx="10" fill="#ffedd5" stroke="#ea580c" stroke-width="2"/>
+    <text x="170" y="119" font-size="16" font-family="monospace" font-weight="700" fill="#9a3412" text-anchor="middle">book["Вера"]</text>
+    <line x1="170" y1="140" x2="170" y2="168" stroke="#ea580c" stroke-width="2.5"/>
+    <polygon points="170,176 163,163 177,163" fill="#ea580c"/>
+    <rect x="60" y="180" width="220" height="46" rx="10" fill="#0f172a"/>
+    <text x="170" y="209" font-size="18" font-family="monospace" font-weight="700" fill="#e2e8f0" text-anchor="middle">"555-03"</text>
+    <text x="170" y="256" font-size="14" fill="#9a3412" text-anchor="middle">один шаг — без перебора 🚀</text>
+  </g>
+
+  <text x="410" y="408" font-size="13.5" fill="#334155" text-anchor="middle">Словарь берут, когда нужно быстро находить значение ПО ИМЕНИ (по ключу), а не по номеру-индексу.</text>
+</svg>

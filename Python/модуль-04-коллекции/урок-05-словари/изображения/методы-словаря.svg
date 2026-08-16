@@ -1,0 +1,51 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 820 440" font-family="'Segoe UI',system-ui,sans-serif">
+  <rect x="0" y="0" width="820" height="440" fill="#f7f9fc"/>
+  <text x="410" y="38" font-size="24" font-weight="700" fill="#1f2937" text-anchor="middle">🧰 Что умеет словарь</text>
+  <text x="410" y="62" font-size="14" fill="#64748b" text-anchor="middle">Один словарь — три способа на него посмотреть и безопасный доступ через .get()</text>
+
+  <text x="410" y="94" font-size="15" font-family="monospace" fill="#9a3412" text-anchor="middle" font-weight="700">book = {"Аня": "555-01", "Боря": "555-02"}</text>
+
+  <!-- keys -->
+  <g transform="translate(40,120)" font-family="monospace">
+    <rect x="0" y="0" width="240" height="120" rx="14" fill="#fff7ed" stroke="#ea580c" stroke-width="2"/>
+    <text x="120" y="30" font-size="16" font-weight="700" fill="#9a3412" text-anchor="middle">book.keys()</text>
+    <text x="120" y="56" font-size="12" font-family="'Segoe UI'" fill="#9a3412" text-anchor="middle">все КЛЮЧИ (бирки)</text>
+    <rect x="20" y="70" width="200" height="34" rx="8" fill="#ffedd5"/>
+    <text x="120" y="93" font-size="14" fill="#9a3412" text-anchor="middle">"Аня", "Боря"</text>
+  </g>
+  <!-- values -->
+  <g transform="translate(290,120)" font-family="monospace">
+    <rect x="0" y="0" width="240" height="120" rx="14" fill="#ecfeff" stroke="#0891b2" stroke-width="2"/>
+    <text x="120" y="30" font-size="16" font-weight="700" fill="#0e7490" text-anchor="middle">book.values()</text>
+    <text x="120" y="56" font-size="12" font-family="'Segoe UI'" fill="#0e7490" text-anchor="middle">все ЗНАЧЕНИЯ</text>
+    <rect x="20" y="70" width="200" height="34" rx="8" fill="#cffafe"/>
+    <text x="120" y="93" font-size="14" fill="#0e7490" text-anchor="middle">"555-01", "555-02"</text>
+  </g>
+  <!-- items -->
+  <g transform="translate(540,120)" font-family="monospace">
+    <rect x="0" y="0" width="240" height="120" rx="14" fill="#f5f3ff" stroke="#7c3aed" stroke-width="2"/>
+    <text x="120" y="30" font-size="16" font-weight="700" fill="#6d28d9" text-anchor="middle">book.items()</text>
+    <text x="120" y="56" font-size="12" font-family="'Segoe UI'" fill="#6d28d9" text-anchor="middle">ПАРЫ (ключ, значение)</text>
+    <rect x="20" y="70" width="200" height="34" rx="8" fill="#ede9fe"/>
+    <text x="120" y="93" font-size="12.5" fill="#6d28d9" text-anchor="middle">("Аня","555-01"), ...</text>
+  </g>
+
+  <!-- get -->
+  <g transform="translate(150,270)" font-family="monospace">
+    <rect x="0" y="0" width="240" height="120" rx="14" fill="#dcfce7" stroke="#16a34a" stroke-width="2.5"/>
+    <text x="120" y="30" font-size="15" font-weight="700" fill="#166534" text-anchor="middle">book.get("Аня")</text>
+    <text x="120" y="60" font-size="18" fill="#166534" text-anchor="middle">→ "555-01" ✓</text>
+    <text x="120" y="92" font-size="13" fill="#166534" text-anchor="middle">book.get("Кот")</text>
+    <text x="120" y="110" font-size="13" fill="#166534" text-anchor="middle">→ None (не падает)</text>
+  </g>
+  <!-- brackets danger -->
+  <g transform="translate(430,270)" font-family="monospace">
+    <rect x="0" y="0" width="240" height="120" rx="14" fill="#fee2e2" stroke="#dc2626" stroke-width="2.5"/>
+    <text x="120" y="30" font-size="15" font-weight="700" fill="#991b1b" text-anchor="middle">book["Кот"]</text>
+    <text x="120" y="60" font-size="17" fill="#991b1b" text-anchor="middle">→ KeyError ✗</text>
+    <text x="120" y="92" font-size="12.5" font-family="'Segoe UI'" fill="#991b1b" text-anchor="middle">нет ключа — программа</text>
+    <text x="120" y="110" font-size="12.5" font-family="'Segoe UI'" fill="#991b1b" text-anchor="middle">падает с ошибкой</text>
+  </g>
+
+  <text x="410" y="424" font-size="13.5" fill="#334155" text-anchor="middle">💡 Не уверен, есть ли ключ — бери .get() (вернёт None вместо ошибки). Уверен — можно [ ].</text>
+</svg>

@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 820 430" font-family="'Segoe UI',system-ui,sans-serif">
+  <rect x="0" y="0" width="820" height="430" fill="#f7f9fc"/>
+  <text x="410" y="38" font-size="24" font-weight="700" fill="#1f2937" text-anchor="middle">🔑 Словарь: ключ → значение</text>
+  <text x="410" y="62" font-size="14" fill="#64748b" text-anchor="middle">Каждая «бирка» (ключ) ведёт к своей ячейке (значению). Ищем не по номеру, а по имени.</text>
+
+  <text x="410" y="96" font-size="15" font-family="monospace" fill="#9a3412" text-anchor="middle" font-weight="700">book = {"Аня": "555-01", "Боря": "555-02", "Вера": "555-03"}</text>
+
+  <!-- three lockers -->
+  <g font-family="monospace">
+    <!-- locker 1 -->
+    <g transform="translate(70,130)">
+      <rect x="0" y="40" width="200" height="150" rx="14" fill="#fff7ed" stroke="#ea580c" stroke-width="2.5"/>
+      <rect x="30" y="10" width="140" height="46" rx="10" fill="#ffedd5" stroke="#ea580c" stroke-width="2"/>
+      <text x="100" y="40" font-size="20" font-weight="700" fill="#9a3412" text-anchor="middle">"Аня"</text>
+      <text x="100" y="85" font-size="13" fill="#9a3412" text-anchor="middle">ключ (бирка)</text>
+      <line x1="100" y1="95" x2="100" y2="120" stroke="#ea580c" stroke-width="2.5"/>
+      <polygon points="100,128 94,116 106,116" fill="#ea580c"/>
+      <rect x="30" y="132" width="140" height="46" rx="10" fill="#0f172a"/>
+      <text x="100" y="162" font-size="19" font-weight="700" fill="#e2e8f0" text-anchor="middle">555-01</text>
+    </g>
+    <!-- locker 2 -->
+    <g transform="translate(310,130)">
+      <rect x="0" y="40" width="200" height="150" rx="14" fill="#fff7ed" stroke="#ea580c" stroke-width="2.5"/>
+      <rect x="30" y="10" width="140" height="46" rx="10" fill="#ffedd5" stroke="#ea580c" stroke-width="2"/>
+      <text x="100" y="40" font-size="20" font-weight="700" fill="#9a3412" text-anchor="middle">"Боря"</text>
+      <text x="100" y="85" font-size="13" fill="#9a3412" text-anchor="middle">ключ (бирка)</text>
+      <line x1="100" y1="95" x2="100" y2="120" stroke="#ea580c" stroke-width="2.5"/>
+      <polygon points="100,128 94,116 106,116" fill="#ea580c"/>
+      <rect x="30" y="132" width="140" height="46" rx="10" fill="#0f172a"/>
+      <text x="100" y="162" font-size="19" font-weight="700" fill="#e2e8f0" text-anchor="middle">555-02</text>
+    </g>
+    <!-- locker 3 -->
+    <g transform="translate(550,130)">
+      <rect x="0" y="40" width="200" height="150" rx="14" fill="#fff7ed" stroke="#ea580c" stroke-width="2.5"/>
+      <rect x="30" y="10" width="140" height="46" rx="10" fill="#ffedd5" stroke="#ea580c" stroke-width="2"/>
+      <text x="100" y="40" font-size="20" font-weight="700" fill="#9a3412" text-anchor="middle">"Вера"</text>
+      <text x="100" y="85" font-size="13" fill="#9a3412" text-anchor="middle">ключ (бирка)</text>
+      <line x1="100" y1="95" x2="100" y2="120" stroke="#ea580c" stroke-width="2.5"/>
+      <polygon points="100,128 94,116 106,116" fill="#ea580c"/>
+      <rect x="30" y="132" width="140" height="46" rx="10" fill="#0f172a"/>
+      <text x="100" y="162" font-size="19" font-weight="700" fill="#e2e8f0" text-anchor="middle">555-03</text>
+    </g>
+  </g>
+
+  <rect x="250" y="352" width="320" height="40" rx="10" fill="#ecfeff" stroke="#0891b2" stroke-width="2"/>
+  <text x="410" y="378" font-size="16" font-family="monospace" fill="#0e7490" text-anchor="middle" font-weight="700">book["Боря"]  →  "555-02"</text>
+
+  <text x="410" y="418" font-size="13.5" fill="#334155" text-anchor="middle">Значение достаём по ключу в квадратных скобках. Ключ у каждой ячейки — свой и неповторимый.</text>
+</svg>
