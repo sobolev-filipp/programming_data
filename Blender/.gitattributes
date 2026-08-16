@@ -1,0 +1,2 @@
+# git-crypt: в Blender файл изображения.md — учительский (шифруется)
+изображения.md   filter=git-crypt diff=git-crypt
