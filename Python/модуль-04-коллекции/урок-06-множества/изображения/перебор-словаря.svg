@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 820 400" font-family="'Segoe UI',system-ui,sans-serif">
+  <rect x="0" y="0" width="820" height="400" fill="#f7f9fc"/>
+  <text x="410" y="38" font-size="24" font-weight="700" fill="#1f2937" text-anchor="middle">🔁 Перебор словаря парами: for k, v in d.items()</text>
+  <text x="410" y="62" font-size="14" fill="#64748b" text-anchor="middle">.items() отдаёт пары (ключ, значение), а распаковка сразу кладёт их в две переменные.</text>
+
+  <text x="410" y="96" font-size="15" font-family="monospace" fill="#9a3412" text-anchor="middle" font-weight="700">prices = {"кофе": 120, "чай": 80}</text>
+
+  <!-- items() column -->
+  <g transform="translate(90,125)" font-family="monospace">
+    <text x="120" y="0" font-size="14" font-weight="700" fill="#6d28d9" text-anchor="middle" font-family="'Segoe UI'">prices.items() — пары-кортежи</text>
+    <rect x="10" y="16" width="220" height="44" rx="9" fill="#ede9fe" stroke="#7c3aed" stroke-width="2"/>
+    <text x="120" y="44" font-size="15" fill="#6d28d9" text-anchor="middle">("кофе", 120)</text>
+    <rect x="10" y="70" width="220" height="44" rx="9" fill="#ede9fe" stroke="#7c3aed" stroke-width="2"/>
+    <text x="120" y="98" font-size="15" fill="#6d28d9" text-anchor="middle">("чай", 80)</text>
+  </g>
+
+  <!-- arrow -->
+  <g transform="translate(340,190)">
+    <text x="35" y="-6" font-size="13" font-family="monospace" fill="#ea580c" text-anchor="middle">k, v = пара</text>
+    <line x1="0" y1="6" x2="60" y2="6" stroke="#ea580c" stroke-width="3"/>
+    <polygon points="68,6 56,0 56,12" fill="#ea580c"/>
+  </g>
+
+  <!-- unpacked columns -->
+  <g transform="translate(430,125)" font-family="monospace">
+    <text x="150" y="0" font-size="14" font-weight="700" fill="#9a3412" text-anchor="middle" font-family="'Segoe UI'">на каждом шаге цикла</text>
+    <rect x="10" y="16" width="130" height="44" rx="9" fill="#ffedd5" stroke="#ea580c" stroke-width="2"/>
+    <text x="75" y="44" font-size="15" fill="#9a3412" text-anchor="middle">dish="кофе"</text>
+    <rect x="160" y="16" width="130" height="44" rx="9" fill="#dcfce7" stroke="#16a34a" stroke-width="2"/>
+    <text x="225" y="44" font-size="15" fill="#166534" text-anchor="middle">price=120</text>
+    <rect x="10" y="70" width="130" height="44" rx="9" fill="#ffedd5" stroke="#ea580c" stroke-width="2"/>
+    <text x="75" y="98" font-size="15" fill="#9a3412" text-anchor="middle">dish="чай"</text>
+    <rect x="160" y="70" width="130" height="44" rx="9" fill="#dcfce7" stroke="#16a34a" stroke-width="2"/>
+    <text x="225" y="98" font-size="15" fill="#166534" text-anchor="middle">price=80</text>
+  </g>
+
+  <rect x="150" y="300" width="520" height="70" rx="12" fill="#0f172a"/>
+  <text x="175" y="330" font-size="15" font-family="monospace" fill="#e2e8f0">for dish, price in prices.items():</text>
+  <text x="205" y="356" font-size="15" font-family="monospace" fill="#93c5fd">print(f"{dish}: {price} руб")</text>
+</svg>
