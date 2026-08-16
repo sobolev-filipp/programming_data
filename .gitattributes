@@ -10,5 +10,8 @@ solutions.md                filter=git-crypt diff=git-crypt
 METHODOLOGY.md              filter=git-crypt diff=git-crypt
 СЦЕНАРИЙ-КУРСА.md            filter=git-crypt diff=git-crypt
 *_homework_solution.swift   filter=git-crypt diff=git-crypt
+# служебные инструкции по git-crypt — тоже прячем от посторонних
+КАК-ЧИТАТЬ-УЧИТЕЛЬСКИЕ-ФАЙЛЫ.md   filter=git-crypt diff=git-crypt
+ИНСТРУКЦИЯ-ДЛЯ-ИИ-git-crypt.md    filter=git-crypt diff=git-crypt
 # изображения.md — учительский ТОЛЬКО в Blender и computer literacy
 # (в Python он ученический), поэтому вынесен в локальные .gitattributes этих курсов.
