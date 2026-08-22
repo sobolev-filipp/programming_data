@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 820 340" font-family="'Segoe UI',system-ui,sans-serif">
+  <rect x="0" y="0" width="820" height="340" fill="#f7f9fc"/>
+  <text x="410" y="38" font-size="24" font-weight="700" fill="#1f2937" text-anchor="middle">🔡 Строка — это лента символов с номерами</text>
+  <text x="410" y="62" font-size="14" fill="#64748b" text-anchor="middle">каждый символ стоит на своём месте (индексе). Счёт идёт с <tspan font-family="monospace" fill="#334155">0</tspan></text>
+
+  <!-- cells -->
+  <g font-family="monospace">
+    <!-- п -->
+    <rect x="110" y="110" width="80" height="80" rx="10" fill="#dbeafe" stroke="#3b82f6" stroke-width="2.5"/>
+    <text x="150" y="163" font-size="38" font-weight="800" fill="#1d4ed8" text-anchor="middle">п</text>
+    <text x="150" y="212" font-size="20" fill="#64748b" text-anchor="middle">0</text>
+    <!-- р -->
+    <rect x="190" y="110" width="80" height="80" rx="10" fill="#dbeafe" stroke="#3b82f6" stroke-width="2.5"/>
+    <text x="230" y="163" font-size="38" font-weight="800" fill="#1d4ed8" text-anchor="middle">р</text>
+    <text x="230" y="212" font-size="20" fill="#64748b" text-anchor="middle">1</text>
+    <!-- и -->
+    <rect x="270" y="110" width="80" height="80" rx="10" fill="#dbeafe" stroke="#3b82f6" stroke-width="2.5"/>
+    <text x="310" y="163" font-size="38" font-weight="800" fill="#1d4ed8" text-anchor="middle">и</text>
+    <text x="310" y="212" font-size="20" fill="#64748b" text-anchor="middle">2</text>
+    <!-- в -->
+    <rect x="350" y="110" width="80" height="80" rx="10" fill="#ffffff" stroke="#94a3b8" stroke-width="2.5"/>
+    <text x="390" y="163" font-size="38" font-weight="800" fill="#334155" text-anchor="middle">в</text>
+    <text x="390" y="212" font-size="20" fill="#64748b" text-anchor="middle">3</text>
+    <!-- е -->
+    <rect x="430" y="110" width="80" height="80" rx="10" fill="#ffffff" stroke="#94a3b8" stroke-width="2.5"/>
+    <text x="470" y="163" font-size="38" font-weight="800" fill="#334155" text-anchor="middle">е</text>
+    <text x="470" y="212" font-size="20" fill="#64748b" text-anchor="middle">4</text>
+    <!-- т -->
+    <rect x="510" y="110" width="80" height="80" rx="10" fill="#ffffff" stroke="#94a3b8" stroke-width="2.5"/>
+    <text x="550" y="163" font-size="38" font-weight="800" fill="#334155" text-anchor="middle">т</text>
+    <text x="550" y="212" font-size="20" fill="#64748b" text-anchor="middle">5</text>
+  </g>
+
+  <!-- substring bracket -->
+  <path d="M 110 100 L 110 88 L 350 88 L 350 100" stroke="#16a34a" stroke-width="2.5" fill="none"/>
+  <text x="230" y="80" font-size="15" font-weight="700" fill="#16a34a" text-anchor="middle" font-family="monospace">Substring(0, 3) → "при"</text>
+
+  <!-- length -->
+  <text x="660" y="150" font-size="15" fill="#334155" font-family="monospace">.Length = 6</text>
+  <text x="660" y="178" font-size="14" fill="#64748b">(всего символов)</text>
+
+  <text x="410" y="270" font-size="14" fill="#475569" text-anchor="middle"><tspan font-family="monospace" fill="#334155">Substring(старт, длина)</tspan> — берём кусок: с какого номера и сколько символов.</text>
+  <text x="410" y="298" font-size="13.5" fill="#475569" text-anchor="middle" font-style="italic">⚠️ Первый символ — под номером 0, а не 1. Последний у слова из 6 букв — под номером 5.</text>
+</svg>

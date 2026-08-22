@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 860 400" font-family="'Segoe UI',system-ui,sans-serif">
+  <rect x="0" y="0" width="860" height="400" fill="#f7f9fc"/>
+  <text x="430" y="36" font-size="24" font-weight="700" fill="#1f2937" text-anchor="middle">🧵 Методы строк — «умелки» текста</text>
+  <text x="430" y="60" font-size="14" fill="#64748b" text-anchor="middle">вызываются через точку: <tspan font-family="monospace" fill="#334155">строка.Метод()</tspan></text>
+
+  <!-- source string -->
+  <g transform="translate(330,80)">
+    <rect x="0" y="0" width="200" height="56" rx="12" fill="#f3e8ff" stroke="#a855f7" stroke-width="2.5"/>
+    <text x="100" y="26" font-size="12.5" fill="#7e22ce" text-anchor="middle">строка (string)</text>
+    <text x="100" y="46" font-size="20" font-weight="800" fill="#9333ea" text-anchor="middle" font-family="monospace">"привет"</text>
+  </g>
+
+  <!-- 4 method rows -->
+  <!-- row 1 -->
+  <g transform="translate(80,170)">
+    <rect x="0" y="0" width="300" height="42" rx="10" fill="#ffffff" stroke="#334155" stroke-width="2"/>
+    <text x="16" y="27" font-size="16" fill="#334155" font-family="monospace">"привет".ToUpper()</text>
+    <path d="M 310 21 L 360 21" stroke="#16a34a" stroke-width="3.5" fill="none"/><polygon points="360,21 348,14 348,28" fill="#16a34a"/>
+    <rect x="370" y="0" width="150" height="42" rx="10" fill="#dcfce7" stroke="#16a34a" stroke-width="2"/>
+    <text x="445" y="27" font-size="16" font-weight="700" fill="#166534" text-anchor="middle" font-family="monospace">"ПРИВЕТ"</text>
+  </g>
+  <!-- row 2 -->
+  <g transform="translate(80,222)">
+    <rect x="0" y="0" width="300" height="42" rx="10" fill="#ffffff" stroke="#334155" stroke-width="2"/>
+    <text x="16" y="27" font-size="16" fill="#334155" font-family="monospace">"привет".Length</text>
+    <path d="M 310 21 L 360 21" stroke="#16a34a" stroke-width="3.5" fill="none"/><polygon points="360,21 348,14 348,28" fill="#16a34a"/>
+    <rect x="370" y="0" width="150" height="42" rx="10" fill="#dcfce7" stroke="#16a34a" stroke-width="2"/>
+    <text x="445" y="27" font-size="16" font-weight="700" fill="#166534" text-anchor="middle" font-family="monospace">6</text>
+  </g>
+  <!-- row 3 -->
+  <g transform="translate(80,274)">
+    <rect x="0" y="0" width="300" height="42" rx="10" fill="#ffffff" stroke="#334155" stroke-width="2"/>
+    <text x="16" y="27" font-size="15" fill="#334155" font-family="monospace">"привет".Substring(0,3)</text>
+    <path d="M 310 21 L 360 21" stroke="#16a34a" stroke-width="3.5" fill="none"/><polygon points="360,21 348,14 348,28" fill="#16a34a"/>
+    <rect x="370" y="0" width="150" height="42" rx="10" fill="#dcfce7" stroke="#16a34a" stroke-width="2"/>
+    <text x="445" y="27" font-size="16" font-weight="700" fill="#166534" text-anchor="middle" font-family="monospace">"при"</text>
+  </g>
+  <!-- row 4 -->
+  <g transform="translate(80,326)">
+    <rect x="0" y="0" width="300" height="42" rx="10" fill="#ffffff" stroke="#334155" stroke-width="2"/>
+    <text x="16" y="27" font-size="14.5" fill="#334155" font-family="monospace">"привет".Replace("и","О")</text>
+    <path d="M 310 21 L 360 21" stroke="#16a34a" stroke-width="3.5" fill="none"/><polygon points="360,21 348,14 348,28" fill="#16a34a"/>
+    <rect x="370" y="0" width="150" height="42" rx="10" fill="#dcfce7" stroke="#16a34a" stroke-width="2"/>
+    <text x="445" y="27" font-size="16" font-weight="700" fill="#166534" text-anchor="middle" font-family="monospace">"прОвет"</text>
+  </g>
+
+  <!-- note -->
+  <rect x="560" y="170" width="230" height="198" rx="12" fill="#fffbeb" stroke="#fbbf24" stroke-width="1.5"/>
+  <text x="675" y="198" font-size="14" font-weight="700" fill="#b45309" text-anchor="middle">Запомни</text>
+  <text x="675" y="228" font-size="13" fill="#78350f" text-anchor="middle">• метод — со</text>
+  <text x="675" y="246" font-size="13" fill="#78350f" text-anchor="middle">скобками ()</text>
+  <text x="675" y="274" font-size="13" fill="#78350f" text-anchor="middle">• .Length — БЕЗ</text>
+  <text x="675" y="292" font-size="13" fill="#78350f" text-anchor="middle">скобок (свойство)</text>
+  <text x="675" y="322" font-size="13" fill="#78350f" text-anchor="middle">• метод даёт НОВУЮ</text>
+  <text x="675" y="340" font-size="13" fill="#78350f" text-anchor="middle">строку (исходная</text>
+  <text x="675" y="358" font-size="13" fill="#78350f" text-anchor="middle">не меняется)</text>
+</svg>

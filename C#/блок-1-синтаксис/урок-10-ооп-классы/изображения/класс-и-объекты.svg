@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 420" font-family="'Segoe UI',system-ui,sans-serif">
+  <rect x="0" y="0" width="880" height="420" fill="#f7f9fc"/>
+  <text x="440" y="38" font-size="23" font-weight="700" fill="#1f2937" text-anchor="middle">🏗 Класс — ЧЕРТЁЖ · объект — то, что по нему СДЕЛАНО</text>
+
+  <!-- Класс-чертёж -->
+  <rect x="55" y="80" width="270" height="230" rx="16" fill="#ede9fe" stroke="#6d28d9" stroke-width="3" stroke-dasharray="8 5"/>
+  <text x="190" y="112" font-size="17" font-weight="700" fill="#5b21b6" text-anchor="middle" font-family="monospace">class Hero</text>
+  <text x="190" y="133" font-size="12.5" fill="#7c3aed" text-anchor="middle">чертёж (шаблон, один)</text>
+
+  <rect x="80" y="150" width="220" height="40" rx="8" fill="#fff" stroke="#a78bfa" stroke-width="1.5"/>
+  <text x="95" y="175" font-size="14" fill="#334155" font-family="monospace">string Name;   <tspan fill="#94a3b8">// поле</tspan></text>
+  <rect x="80" y="198" width="220" height="40" rx="8" fill="#fff" stroke="#a78bfa" stroke-width="1.5"/>
+  <text x="95" y="223" font-size="14" fill="#334155" font-family="monospace">int Hp;        <tspan fill="#94a3b8">// поле</tspan></text>
+  <rect x="80" y="246" width="220" height="44" rx="8" fill="#fff" stroke="#a78bfa" stroke-width="1.5"/>
+  <text x="95" y="267" font-size="14" fill="#334155" font-family="monospace">Attack()</text>
+  <text x="95" y="283" font-size="12" fill="#94a3b8" font-family="monospace">// метод (поведение)</text>
+
+  <!-- стрелка new -->
+  <path d="M 330 195 L 400 195" stroke="#16a34a" stroke-width="4" fill="none"/>
+  <polygon points="400,195 385,187 385,203" fill="#16a34a"/>
+  <text x="365" y="182" font-size="14" fill="#16a34a" text-anchor="middle" font-weight="700" font-family="monospace">new</text>
+
+  <!-- объекты -->
+  <g>
+    <rect x="415" y="90" width="200" height="95" rx="12" fill="#dcfce7" stroke="#16a34a" stroke-width="2.5"/>
+    <text x="515" y="114" font-size="15" font-weight="700" fill="#166534" text-anchor="middle" font-family="monospace">hero1 (объект)</text>
+    <text x="435" y="140" font-size="13.5" fill="#334155" font-family="monospace">Name = "Артур"</text>
+    <text x="435" y="162" font-size="13.5" fill="#334155" font-family="monospace">Hp = 100</text>
+
+    <rect x="640" y="90" width="200" height="95" rx="12" fill="#dcfce7" stroke="#16a34a" stroke-width="2.5"/>
+    <text x="740" y="114" font-size="15" font-weight="700" fill="#166534" text-anchor="middle" font-family="monospace">hero2 (объект)</text>
+    <text x="660" y="140" font-size="13.5" fill="#334155" font-family="monospace">Name = "Мерлин"</text>
+    <text x="660" y="162" font-size="13.5" fill="#334155" font-family="monospace">Hp = 80</text>
+
+    <rect x="527" y="215" width="200" height="95" rx="12" fill="#dcfce7" stroke="#16a34a" stroke-width="2.5"/>
+    <text x="627" y="239" font-size="15" font-weight="700" fill="#166534" text-anchor="middle" font-family="monospace">hero3 (объект)</text>
+    <text x="547" y="265" font-size="13.5" fill="#334155" font-family="monospace">Name = "Гвен"</text>
+    <text x="547" y="287" font-size="13.5" fill="#334155" font-family="monospace">Hp = 100</text>
+  </g>
+
+  <text x="627" y="200" font-size="12.5" fill="#15803d" text-anchor="middle">у каждого — СВОИ значения полей</text>
+
+  <!-- нижняя мысль -->
+  <rect x="120" y="345" width="640" height="56" rx="12" fill="#fff" stroke="#6d28d9" stroke-width="2"/>
+  <text x="440" y="369" font-size="14.5" fill="#334155" text-anchor="middle" font-family="monospace">Hero hero1 = new Hero("Артур", 100);</text>
+  <text x="440" y="390" font-size="13" fill="#5b21b6" text-anchor="middle">🐍 как «словарь героя» из Урока 8 — но с типом и поведением</text>
+</svg>

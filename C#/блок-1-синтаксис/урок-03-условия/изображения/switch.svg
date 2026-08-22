@@ -1,0 +1,51 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 820 420" font-family="'Segoe UI',system-ui,sans-serif">
+  <rect x="0" y="0" width="820" height="420" fill="#f7f9fc"/>
+  <text x="410" y="38" font-size="24" font-weight="700" fill="#1f2937" text-anchor="middle">🔀 switch — выбор одной ветки по значению</text>
+  <text x="410" y="62" font-size="14" fill="#64748b" text-anchor="middle">значение сравнивается с каждым <tspan font-family="monospace" fill="#334155">case</tspan>; совпал — выполняем его и выходим (<tspan font-family="monospace" fill="#334155">break</tspan>)</text>
+
+  <!-- value -->
+  <g transform="translate(40,180)">
+    <rect x="0" y="0" width="150" height="70" rx="12" fill="#ede9fe" stroke="#6d28d9" stroke-width="2.5"/>
+    <text x="75" y="30" font-size="14" fill="#6d28d9" text-anchor="middle">значение</text>
+    <text x="75" y="56" font-size="24" font-weight="800" fill="#5b21b6" text-anchor="middle" font-family="monospace">op = "*"</text>
+  </g>
+  <text x="115" y="165" font-size="13" fill="#64748b" text-anchor="middle" font-family="monospace">switch (op)</text>
+
+  <!-- arrow to matched -->
+  <path d="M 190 215 C 240 215, 250 158, 300 158" stroke="#16a34a" stroke-width="4" fill="none"/>
+  <polygon points="300,158 286,151 286,165" fill="#16a34a"/>
+
+  <!-- cases -->
+  <g font-family="monospace">
+    <!-- + -->
+    <rect x="300" y="96" width="230" height="40" rx="9" fill="#ffffff" stroke="#cbd5e1" stroke-width="2"/>
+    <text x="316" y="122" font-size="16" fill="#334155">case "+"</text>
+    <text x="470" y="122" font-size="15" fill="#64748b" text-anchor="middle">→ сложить</text>
+    <!-- - -->
+    <rect x="300" y="140" width="230" height="40" rx="9" fill="#ffffff" stroke="#cbd5e1" stroke-width="2"/>
+    <text x="316" y="166" font-size="16" fill="#334155">case "-"</text>
+    <text x="470" y="166" font-size="15" fill="#64748b" text-anchor="middle">→ вычесть</text>
+    <!-- * highlighted -->
+    <rect x="296" y="184" width="238" height="44" rx="10" fill="#dcfce7" stroke="#16a34a" stroke-width="3"/>
+    <text x="316" y="212" font-size="17" font-weight="800" fill="#166534">case "*"</text>
+    <text x="470" y="212" font-size="15" font-weight="700" fill="#166534" text-anchor="middle">→ умножить ✔</text>
+    <!-- / -->
+    <rect x="300" y="232" width="230" height="40" rx="9" fill="#ffffff" stroke="#cbd5e1" stroke-width="2"/>
+    <text x="316" y="258" font-size="16" fill="#334155">case "/"</text>
+    <text x="470" y="258" font-size="15" fill="#64748b" text-anchor="middle">→ делить</text>
+    <!-- default -->
+    <rect x="300" y="276" width="230" height="40" rx="9" fill="#fff7ed" stroke="#fb923c" stroke-width="2"/>
+    <text x="316" y="302" font-size="16" fill="#9a3412">default</text>
+    <text x="470" y="302" font-size="14" fill="#9a3412" text-anchor="middle">→ ничего не совпало</text>
+  </g>
+
+  <!-- break note -->
+  <rect x="560" y="184" width="230" height="44" rx="10" fill="#eff6ff" stroke="#3b82f6" stroke-width="2"/>
+  <text x="675" y="205" font-size="13.5" font-weight="700" fill="#1d4ed8" text-anchor="middle">выполнили → break;</text>
+  <text x="675" y="222" font-size="12.5" fill="#3b82f6" text-anchor="middle">выходим из switch</text>
+  <path d="M 534 206 L 558 206" stroke="#3b82f6" stroke-width="3" fill="none"/><polygon points="558,206 546,200 546,212" fill="#3b82f6"/>
+
+  <rect x="150" y="350" width="520" height="52" rx="12" fill="#fef2f2" stroke="#fca5a5" stroke-width="1.5"/>
+  <text x="410" y="373" font-size="14" font-weight="700" fill="#b91c1c" text-anchor="middle">⚠️ В конце каждого case обязателен break; — иначе ошибка.</text>
+  <text x="410" y="393" font-size="13" fill="#7f1d1d" text-anchor="middle">default — как последний else: срабатывает, если ни один case не подошёл.</text>
+</svg>

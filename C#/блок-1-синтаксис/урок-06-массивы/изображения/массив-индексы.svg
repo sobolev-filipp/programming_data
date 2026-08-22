@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 820 330" font-family="'Segoe UI',system-ui,sans-serif">
+  <rect x="0" y="0" width="820" height="330" fill="#f7f9fc"/>
+  <text x="410" y="38" font-size="24" font-weight="700" fill="#1f2937" text-anchor="middle">📦 Массив — ячейки под номерами</text>
+  <text x="410" y="62" font-size="14" fill="#64748b" text-anchor="middle"><tspan font-family="monospace" fill="#334155">int[] scores = { 40, 90, 65, 20 };</tspan> — номера (индексы) идут с 0</text>
+
+  <!-- cells -->
+  <g font-family="monospace">
+    <!-- 0 -->
+    <rect x="150" y="110" width="110" height="80" rx="10" fill="#dbeafe" stroke="#3b82f6" stroke-width="2.5"/>
+    <text x="205" y="162" font-size="34" font-weight="800" fill="#1d4ed8" text-anchor="middle">40</text>
+    <text x="205" y="212" font-size="20" fill="#64748b" text-anchor="middle">0</text>
+    <!-- 1 highlighted -->
+    <rect x="262" y="106" width="114" height="88" rx="10" fill="#dcfce7" stroke="#16a34a" stroke-width="3.5"/>
+    <text x="319" y="162" font-size="34" font-weight="800" fill="#166534" text-anchor="middle">90</text>
+    <text x="319" y="212" font-size="20" font-weight="800" fill="#16a34a" text-anchor="middle">1</text>
+    <!-- 2 -->
+    <rect x="378" y="110" width="110" height="80" rx="10" fill="#dbeafe" stroke="#3b82f6" stroke-width="2.5"/>
+    <text x="433" y="162" font-size="34" font-weight="800" fill="#1d4ed8" text-anchor="middle">65</text>
+    <text x="433" y="212" font-size="20" fill="#64748b" text-anchor="middle">2</text>
+    <!-- 3 -->
+    <rect x="490" y="110" width="110" height="80" rx="10" fill="#dbeafe" stroke="#3b82f6" stroke-width="2.5"/>
+    <text x="545" y="162" font-size="34" font-weight="800" fill="#1d4ed8" text-anchor="middle">20</text>
+    <text x="545" y="212" font-size="20" fill="#64748b" text-anchor="middle">3</text>
+  </g>
+  <text x="375" y="232" font-size="13" fill="#94a3b8" text-anchor="middle">← индексы (номера ячеек)</text>
+
+  <!-- access arrow -->
+  <path d="M 319 78 L 319 100" stroke="#16a34a" stroke-width="3" fill="none"/><polygon points="319,100 313,88 325,88" fill="#16a34a"/>
+  <text x="319" y="70" font-size="15" font-weight="700" fill="#16a34a" text-anchor="middle" font-family="monospace">scores[1] = 90</text>
+
+  <!-- length note -->
+  <g transform="translate(630,110)">
+    <rect x="0" y="0" width="160" height="80" rx="12" fill="#fffbeb" stroke="#fbbf24" stroke-width="2"/>
+    <text x="80" y="30" font-size="15" fill="#334155" text-anchor="middle" font-family="monospace">.Length = 4</text>
+    <text x="80" y="55" font-size="12.5" fill="#78350f" text-anchor="middle">последний —</text>
+    <text x="80" y="72" font-size="12.5" fill="#78350f" text-anchor="middle" font-family="monospace">scores[Length-1]</text>
+  </g>
+
+  <text x="410" y="290" font-size="13.5" fill="#475569" text-anchor="middle" font-style="italic">⚠️ У массива из 4 ячеек индексы 0..3. scores[4] — выход за границу (ошибка). Размер массива не меняется.</text>
+</svg>

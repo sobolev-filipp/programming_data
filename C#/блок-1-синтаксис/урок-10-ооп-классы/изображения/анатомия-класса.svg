@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 860 470" font-family="'Segoe UI',system-ui,sans-serif">
+  <rect x="0" y="0" width="860" height="470" fill="#f7f9fc"/>
+  <text x="430" y="36" font-size="22" font-weight="700" fill="#1f2937" text-anchor="middle">🧩 Из чего состоит класс</text>
+
+  <!-- код класса -->
+  <rect x="40" y="60" width="470" height="380" rx="14" fill="#0f172a"/>
+  <text x="62" y="92" font-size="15" fill="#c4b5fd" font-family="monospace">class Hero</text>
+  <text x="62" y="114" font-size="15" fill="#64748b" font-family="monospace">{</text>
+
+  <text x="82" y="146" font-size="14.5" fill="#7dd3fc" font-family="monospace">public string Name;</text>
+  <text x="82" y="168" font-size="14.5" fill="#7dd3fc" font-family="monospace">public int Power;</text>
+
+  <text x="82" y="206" font-size="14.5" fill="#fca5a5" font-family="monospace">public int Hp</text>
+  <text x="82" y="226" font-size="14.5" fill="#fca5a5" font-family="monospace">{ get; set; }</text>
+
+  <text x="82" y="266" font-size="14.5" fill="#fcd34d" font-family="monospace">public Hero(string name)</text>
+  <text x="98" y="286" font-size="14.5" fill="#e2e8f0" font-family="monospace">{ Name = name; }</text>
+
+  <text x="82" y="326" font-size="14.5" fill="#86efac" font-family="monospace">public void Attack()</text>
+  <text x="98" y="346" font-size="14.5" fill="#e2e8f0" font-family="monospace">{ ... }</text>
+
+  <text x="62" y="392" font-size="15" fill="#64748b" font-family="monospace">}</text>
+
+  <!-- легенда -->
+  <g>
+    <rect x="545" y="118" width="285" height="52" rx="10" fill="#e0f2fe" stroke="#0284c7" stroke-width="2"/>
+    <text x="560" y="140" font-size="14.5" font-weight="700" fill="#0369a1">🔵 Поля — ДАННЫЕ</text>
+    <text x="560" y="160" font-size="12.5" fill="#0c4a6e">что объект «знает» (имя, сила)</text>
+
+    <rect x="545" y="180" width="285" height="58" rx="10" fill="#fee2e2" stroke="#dc2626" stroke-width="2"/>
+    <text x="560" y="202" font-size="14.5" font-weight="700" fill="#b91c1c">🔴 Свойство — умное поле</text>
+    <text x="560" y="222" font-size="12.5" fill="#7f1d1d">get/set — можно проверять (Hp ≥ 0)</text>
+
+    <rect x="545" y="248" width="285" height="58" rx="10" fill="#fef9c3" stroke="#ca8a04" stroke-width="2"/>
+    <text x="560" y="270" font-size="14.5" font-weight="700" fill="#a16207">🟡 Конструктор — «рождение»</text>
+    <text x="560" y="290" font-size="12.5" fill="#713f12">создаёт объект сразу с данными</text>
+
+    <rect x="545" y="316" width="285" height="58" rx="10" fill="#dcfce7" stroke="#16a34a" stroke-width="2"/>
+    <text x="560" y="338" font-size="14.5" font-weight="700" fill="#15803d">🟢 Методы — ПОВЕДЕНИЕ</text>
+    <text x="560" y="358" font-size="12.5" fill="#14532d">что объект «умеет» (атаковать)</text>
+  </g>
+
+  <text x="702" y="410" font-size="13.5" fill="#334155" text-anchor="middle" font-weight="700">Объект = данные + поведение</text>
+  <text x="702" y="430" font-size="12.5" fill="#64748b" text-anchor="middle">в одной «коробке»</text>
+</svg>

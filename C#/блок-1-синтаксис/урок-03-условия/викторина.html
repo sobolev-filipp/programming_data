@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Викторина — Урок 3: Условия и switch (C#)</title>
+<style>
+  :root{
+    --bg1:#512bd4; --bg2:#9b6dff; --card:#ffffff; --ink:#1f2937;
+    --accent:#512bd4; --ok:#16a34a; --bad:#dc2626; --soft:#ede9fe;
+  }
+  *{box-sizing:border-box;font-family:"Segoe UI",system-ui,sans-serif}
+  body{margin:0;min-height:100vh;display:flex;align-items:center;justify-content:center;
+    background:linear-gradient(135deg,var(--bg1),var(--bg2));padding:20px;color:var(--ink)}
+  .app{background:var(--card);width:min(760px,100%);border-radius:24px;
+    box-shadow:0 25px 60px rgba(0,0,0,.35);padding:34px 34px 28px;position:relative;overflow:hidden}
+  h1{margin:0 0 6px;font-size:26px;text-align:center}
+  .sub{text-align:center;color:#64748b;margin-bottom:22px;font-size:15px}
+  .bar{height:10px;background:var(--soft);border-radius:99px;overflow:hidden;margin-bottom:18px}
+  .bar>i{display:block;height:100%;width:0;background:var(--accent);transition:.4s}
+  .meta{display:flex;justify-content:space-between;font-size:14px;color:#64748b;margin-bottom:14px}
+  .q{font-size:22px;font-weight:700;margin:6px 0 20px;line-height:1.3}
+  .q code{background:#0f172a;color:#e2e8f0;padding:2px 8px;border-radius:6px;font-size:19px}
+  .opts{display:grid;gap:12px}
+  .opt{border:2px solid #e2e8f0;background:#fff;border-radius:14px;padding:15px 18px;font-size:18px;
+    text-align:left;cursor:pointer;transition:.15s;display:flex;align-items:center;gap:12px}
+  .opt:hover{border-color:var(--accent);background:var(--soft);transform:translateY(-2px)}
+  .opt b{background:var(--soft);color:var(--accent);width:30px;height:30px;border-radius:8px;
+    display:flex;align-items:center;justify-content:center;font-size:15px;flex:0 0 auto}
+  .opt span code{background:#0f172a;color:#e2e8f0;padding:1px 6px;border-radius:5px;font-size:16px}
+  .opt.ok{border-color:var(--ok);background:#dcfce7}
+  .opt.ok b{background:var(--ok);color:#fff}
+  .opt.bad{border-color:var(--bad);background:#fee2e2}
+  .opt.bad b{background:var(--bad);color:#fff}
+  .opt:disabled{cursor:default;transform:none}
+  .fb{margin-top:16px;padding:14px 16px;border-radius:12px;font-size:16px;display:none;line-height:1.4}
+  .fb.show{display:block}
+  .fb.good{background:#dcfce7;color:#166534}
+  .fb.no{background:#fee2e2;color:#991b1b}
+  .fb code{background:#0f172a;color:#e2e8f0;padding:1px 6px;border-radius:5px}
+  .btn{margin-top:18px;width:100%;padding:15px;border:0;border-radius:14px;background:var(--accent);
+    color:#fff;font-size:18px;font-weight:700;cursor:pointer;display:none}
+  .btn.show{display:block}
+  .btn:hover{filter:brightness(1.08)}
+  .center{text-align:center}
+  .score{font-size:64px;font-weight:800;margin:10px 0}
+  .emoji{font-size:70px}
+  .hint{color:#94a3b8;font-size:13px;text-align:center;margin-top:14px}
+</style>
+</head>
+<body>
+<div class="app" id="app"></div>
+<script>
+const QUESTIONS = [
+  {q:"Как в C# оформляют условие <code>if</code>?",
+   a:["<code>if условие:</code> с отступом","условие в <code>( )</code>, тело в <code>{ }</code>","<code>if [условие]</code>","никак"],c:1,
+   e:"В C#: условие в круглых скобках, тело — в фигурных. Двоеточия и отступов, как в Python, нет."},
+  {q:"Как сравнить на равенство в условии?",
+   a:["<code>=</code>","<code>==</code>","<code>equals</code>","<code>:=</code>"],c:1,
+   e:"= кладёт значение, == сравнивает. В условии всегда ==."},
+  {q:"Что в C# вместо питоновского <code>and</code>?",
+   a:["<code>&&</code>","<code>and</code>","<code>&</code>","<code>+</code>"],c:0,
+   e:"И — это &&, ИЛИ — ||, НЕ — !."},
+  {q:"Что ОБЯЗАТЕЛЬНО в конце каждого <code>case</code> в switch?",
+   a:["<code>;</code>","<code>break;</code>","<code>return</code>","ничего"],c:1,
+   e:"break; выходит из switch. Без него — ошибка Control cannot fall through."},
+  {q:"Что делает <code>default</code> в switch?",
+   a:["Первый вариант","Срабатывает, если ни один case не подошёл","Ошибку","Повтор"],c:1,
+   e:"default — как последний else: если ничего не совпало."},
+  {q:"Можно ли использовать <code>switch</code> со строками?",
+   a:["Нет, только с числами","Да: <code>case \"старт\":</code>","Только с bool","Только с char"],c:1,
+   e:"switch работает и со строками, и с числами."},
+  {q:"Что напечатает switch по <code>день=6</code> с веткой <code>case 6: case 7: «Выходной»</code>?",
+   a:["Ничего","Выходной","Ошибку","6"],c:1,
+   e:"Несколько case подряд — общее действие. 6 попадает в «Выходной»."},
+  {q:"Что означает <code>_</code> в switch-выражении?",
+   a:["Пробел","«Всё остальное» (как default)","Ошибку","Пустую строку"],c:1,
+   e:"_ ловит все значения, не совпавшие с вариантами — как default."},
+  {q:"Что выведет <code>возраст >= 18 ? \"A\" : \"B\"</code> при возрасте 15?",
+   a:["A","B","AB","Ошибку"],c:1,
+   e:"Тернарник: условие ложно (15<18) → берётся часть после двоеточия — B."},
+  {q:"<code>else if</code> в C# — это питоновский...",
+   a:["<code>elseif</code>","<code>elif</code>","<code>else:</code>","<code>switch</code>"],c:1,
+   e:"else if (два слова) = elif из Python."},
+  {q:"Когда <code>switch</code> удобнее лестницы <code>else if</code>?",
+   a:["Всегда","Когда одно значение сравнивают с многими вариантами","Никогда","Для строк нельзя"],c:1,
+   e:"switch хорош, когда одно значение (день, команда, знак) выбирают из набора вариантов."},
+  {q:"Что делает <code>&&</code>?",
+   a:["ИЛИ","И — истинно, когда ОБА условия истинны","НЕ","Сложение"],c:1,
+   e:"&& (И): истинно только если оба условия истинны."},
+
+  {q:"😄 Ты забыл <code>break;</code> в одном из <code>case</code>. Что будет?",
+   a:["Всё ок","Ошибка компиляции: Control cannot fall through","Программа ускорится","Сотрётся файл"],c:1,
+   e:"В C# каждый case должен завершаться break; иначе ошибка."},
+  {q:"😄 Написал <code>if (x = 5)</code>. В чём беда?",
+   a:["Всё верно","Это присваивание, а нужно сравнение <code>==</code>","Нужны кавычки","x слишком большой"],c:1,
+   e:"= кладёт 5 в x. Для сравнения нужно ==: if (x == 5)."},
+  {q:"😄 Написал <code>if (возраст and билет)</code>. Что не так?",
+   a:["Всё ок","В C# нужно <code>&&</code>, а не <code>and</code>","Мало скобок","and только для чисел"],c:1,
+   e:"В C# логическое И — это &&, а не слово and."},
+
+  {q:"🤔 Почему <code>switch</code> часто чище, чем длинная лестница <code>else if</code>?",
+   a:["Он короче случайно","Одно значение сравнивается с многими вариантами — меньше повторов","switch быстрее печатать","Это неправда"],c:1,
+   e:"Когда проверяем ОДНО значение на много вариантов, switch убирает повторяющиеся условия."},
+  {q:"🤔 Зачем в switch нужен <code>default</code>?",
+   a:["Для красоты","Поймать неожиданное значение, для которого нет case","Чтобы ускорить","Обязателен всегда"],c:1,
+   e:"default обрабатывает всё, что не попало ни в один case — защита от неожиданного ввода."},
+];
+
+let i=0, score=0, locked=false;
+const app=document.getElementById('app');
+
+function shuffle(){for(let k=QUESTIONS.length-1;k>0;k--){const j=Math.floor(Math.random()*(k+1));[QUESTIONS[k],QUESTIONS[j]]=[QUESTIONS[j],QUESTIONS[k]];}for(const Q of QUESTIONS){const cc=Q.a[Q.c];for(let k=Q.a.length-1;k>0;k--){const j=Math.floor(Math.random()*(k+1));[Q.a[k],Q.a[j]]=[Q.a[j],Q.a[k]];}Q.c=Q.a.indexOf(cc);}}
+shuffle();
+
+function render(){
+  const Q=QUESTIONS[i];
+  app.innerHTML=`
+    <h1>🔀 Условия и switch</h1>
+    <div class="sub">Викторина по уроку 3 · C#</div>
+    <div class="bar"><i style="width:${(i/QUESTIONS.length)*100}%"></i></div>
+    <div class="meta"><span>Вопрос ${i+1} из ${QUESTIONS.length}</span><span>⭐ Очки: ${score}</span></div>
+    <div class="q">${Q.q}</div>
+    <div class="opts" id="opts">
+      ${Q.a.map((t,n)=>`<button class="opt" data-n="${n}"><b>${n+1}</b><span>${t}</span></button>`).join('')}
+    </div>
+    <div class="fb" id="fb"></div>
+    <button class="btn" id="next">${i===QUESTIONS.length-1?'Показать результат →':'Следующий вопрос →'}</button>
+    <div class="hint">Можно отвечать клавишами 1–4</div>`;
+  locked=false;
+  document.querySelectorAll('.opt').forEach(b=>b.onclick=()=>choose(+b.dataset.n));
+  document.getElementById('next').onclick=next;
+}
+
+function choose(n){
+  if(locked) return; locked=true;
+  const Q=QUESTIONS[i];
+  const opts=[...document.querySelectorAll('.opt')];
+  opts.forEach(b=>b.disabled=true);
+  opts[Q.c].classList.add('ok');
+  const fb=document.getElementById('fb');
+  if(n===Q.c){ score++; fb.className='fb show good'; fb.innerHTML='✅ Верно! '+Q.e; }
+  else { opts[n].classList.add('bad'); fb.className='fb show no'; fb.innerHTML='❌ Не совсем. '+Q.e; }
+  document.querySelector('.meta').children[1].textContent='⭐ Очки: '+score;
+  document.getElementById('next').classList.add('show');
+}
+
+function next(){ i++; if(i<QUESTIONS.length) render(); else result(); }
+
+function result(){
+  const pct=Math.round(score/QUESTIONS.length*100);
+  let em,msg;
+  if(pct===100){em='🏆';msg='Идеально! if, switch и тернарник — всё в кармане! 🔀';}
+  else if(pct>=70){em='🎉';msg='Отлично! switch освоен уверенно.';}
+  else if(pct>=40){em='👍';msg='Неплохо! Повтори switch: case, break, default — и сравнение ==.';}
+  else {em='💪';msg='Ещё разок! Загляни в самоучитель — там switch по шагам.';}
+  app.innerHTML=`
+    <div class="center">
+      <div class="emoji">${em}</div>
+      <h1>Готово!</h1>
+      <div class="score">${score} / ${QUESTIONS.length}</div>
+      <div class="sub">${msg}</div>
+      <button class="btn show" id="again">🔁 Пройти заново</button>
+    </div>`;
+  document.getElementById('again').onclick=()=>{i=0;score=0;shuffle();render();};
+}
+
+document.addEventListener('keydown',e=>{
+  if(['1','2','3','4'].includes(e.key)){ const b=document.querySelector(`.opt[data-n="${+e.key-1}"]`); if(b&&!b.disabled) choose(+e.key-1); }
+  if(e.key==='Enter'){ const nb=document.getElementById('next'); if(nb&&nb.classList.contains('show')) next(); }
+});
+
+render();
+</script>
+</body>
+</html>

@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Викторина — Урок 9: Файлы и исключения (C#)</title>
+<style>
+  :root{
+    --bg1:#512bd4; --bg2:#9b6dff; --card:#ffffff; --ink:#1f2937;
+    --accent:#512bd4; --ok:#16a34a; --bad:#dc2626; --soft:#ede9fe;
+  }
+  *{box-sizing:border-box;font-family:"Segoe UI",system-ui,sans-serif}
+  body{margin:0;min-height:100vh;display:flex;align-items:center;justify-content:center;
+    background:linear-gradient(135deg,var(--bg1),var(--bg2));padding:20px;color:var(--ink)}
+  .app{background:var(--card);width:min(760px,100%);border-radius:24px;
+    box-shadow:0 25px 60px rgba(0,0,0,.35);padding:34px 34px 28px;position:relative;overflow:hidden}
+  h1{margin:0 0 6px;font-size:26px;text-align:center}
+  .sub{text-align:center;color:#64748b;margin-bottom:22px;font-size:15px}
+  .bar{height:10px;background:var(--soft);border-radius:99px;overflow:hidden;margin-bottom:18px}
+  .bar>i{display:block;height:100%;width:0;background:var(--accent);transition:.4s}
+  .meta{display:flex;justify-content:space-between;font-size:14px;color:#64748b;margin-bottom:14px}
+  .q{font-size:22px;font-weight:700;margin:6px 0 20px;line-height:1.3}
+  .q code{background:#0f172a;color:#e2e8f0;padding:2px 8px;border-radius:6px;font-size:19px}
+  .opts{display:grid;gap:12px}
+  .opt{border:2px solid #e2e8f0;background:#fff;border-radius:14px;padding:15px 18px;font-size:18px;
+    text-align:left;cursor:pointer;transition:.15s;display:flex;align-items:center;gap:12px}
+  .opt:hover{border-color:var(--accent);background:var(--soft);transform:translateY(-2px)}
+  .opt b{background:var(--soft);color:var(--accent);width:30px;height:30px;border-radius:8px;
+    display:flex;align-items:center;justify-content:center;font-size:15px;flex:0 0 auto}
+  .opt span code{background:#0f172a;color:#e2e8f0;padding:1px 6px;border-radius:5px;font-size:16px}
+  .opt.ok{border-color:var(--ok);background:#dcfce7}
+  .opt.ok b{background:var(--ok);color:#fff}
+  .opt.bad{border-color:var(--bad);background:#fee2e2}
+  .opt.bad b{background:var(--bad);color:#fff}
+  .opt:disabled{cursor:default;transform:none}
+  .fb{margin-top:16px;padding:14px 16px;border-radius:12px;font-size:16px;display:none;line-height:1.4}
+  .fb.show{display:block}
+  .fb.good{background:#dcfce7;color:#166534}
+  .fb.no{background:#fee2e2;color:#991b1b}
+  .fb code{background:#0f172a;color:#e2e8f0;padding:1px 6px;border-radius:5px}
+  .btn{margin-top:18px;width:100%;padding:15px;border:0;border-radius:14px;background:var(--accent);
+    color:#fff;font-size:18px;font-weight:700;cursor:pointer;display:none}
+  .btn.show{display:block}
+  .btn:hover{filter:brightness(1.08)}
+  .center{text-align:center}
+  .score{font-size:64px;font-weight:800;margin:10px 0}
+  .emoji{font-size:70px}
+  .hint{color:#94a3b8;font-size:13px;text-align:center;margin-top:14px}
+</style>
+</head>
+<body>
+<div class="app" id="app"></div>
+<script>
+const QUESTIONS = [
+  {q:"Зачем сохранять данные в файл?",
+   a:["Для красоты","Чтобы они остались после закрытия программы","Чтобы работало быстрее","Незачем"],c:1,
+   e:"Переменные живут только пока программа открыта; файл хранит данные на диске."},
+  {q:"Что делает <code>File.WriteAllText(f, s)</code>?",
+   a:["Читает файл","Создаёт/перезаписывает файл текстом s","Удаляет файл","Дописывает в конец"],c:1,
+   e:"WriteAllText записывает текст, стирая прежнее содержимое файла."},
+  {q:"Чем <code>AppendAllText</code> отличается от <code>WriteAllText</code>?",
+   a:["Ничем","Append ДОПИСЫВАЕТ в конец, не стирая старое","Append быстрее","Append только для чисел"],c:1,
+   e:"Для накопления записей нужен AppendAllText — WriteAllText перезаписывает."},
+  {q:"Как прочитать весь файл одной строкой?",
+   a:["<code>File.ReadAllText(f)</code>","<code>File.Open(f)</code>","<code>f.read()</code>","<code>File.Get(f)</code>"],c:0,
+   e:"ReadAllText возвращает всё содержимое файла как одну строку."},
+  {q:"Что возвращает <code>File.ReadAllLines(f)</code>?",
+   a:["Одну строку","Массив строк (по строке файла)","Число","Словарь"],c:1,
+   e:"ReadAllLines читает файл в массив строк — дальше удобно перебрать foreach."},
+  {q:"Что проверяют перед чтением файла?",
+   a:["Ничего","<code>File.Exists(f)</code> — существует ли файл","Длину","Цвет"],c:1,
+   e:"Иначе чтение несуществующего файла уронит программу (FileNotFoundException)."},
+  {q:"Что такое исключение (exception)?",
+   a:["Тип данных","Ошибка во время работы программы","Метод","Цикл"],c:1,
+   e:"Исключение — ошибка при выполнении (не число, деление на ноль, нет файла)."},
+  {q:"Что делает <code>try/catch</code>?",
+   a:["Ускоряет код","Ловит ошибку, чтобы программа не упала","Создаёт файл","Печатает"],c:1,
+   e:"Опасный код в try; если случилась ошибка — её ловит catch, программа продолжает."},
+  {q:"Куда кладут ОПАСНЫЙ код?",
+   a:["в <code>catch</code>","в <code>try</code>","в <code>finally</code>","в <code>throw</code>"],c:1,
+   e:"Опасное действие — внутри try; обработка ошибки — в catch."},
+  {q:"Что означает <code>catch (FormatException)</code>?",
+   a:["Ловим любую ошибку","Ловим именно ошибку неверного формата (не число)","Создаём формат","Ничего"],c:1,
+   e:"FormatException — например, Convert.ToInt32 от строки с буквами."},
+  {q:"Какая ошибка при делении на ноль?",
+   a:["FormatException","DivideByZeroException","FileNotFoundException","NullReference"],c:1,
+   e:"Деление целого на 0 бросает DivideByZeroException."},
+  {q:"Когда выполняется блок <code>finally</code>?",
+   a:["Только при ошибке","Только без ошибки","ВСЕГДА (и при ошибке, и без)","Никогда"],c:1,
+   e:"finally выполняется в любом случае — туда кладут «уборку»."},
+  {q:"Что делает <code>throw</code>?",
+   a:["Ловит ошибку","Сам бросает ошибку (когда данные недопустимы)","Читает файл","Печатает"],c:1,
+   e:"throw new ...(...) создаёт и бросает исключение — его потом ловят в catch."},
+  {q:"Зачем нужен <code>int.TryParse(s, out int n)</code>?",
+   a:["Для файлов","Проверить, число ли строка, без падения","Для сортировки","Для цвета"],c:1,
+   e:"TryParse возвращает true/false и кладёт число в out — защита ввода без try/catch."},
+  {q:"Что вернёт <code>int.TryParse(\"12\", out int n)</code>?",
+   a:["<code>false</code>","<code>true</code>, а n станет 12","ошибку","0"],c:1,
+   e:"«12» — число: TryParse вернёт true, n = 12."},
+  {q:"Как узнать текст ошибки в catch?",
+   a:["<code>ex.Text</code>","<code>ex.Message</code>","<code>ex.Error</code>","никак"],c:1,
+   e:"У пойманного исключения ex есть свойство Message с описанием."},
+  {q:"<code>catch (Exception ex)</code> — это...",
+   a:["ошибка","ловушка для ЛЮБОЙ ошибки","только для файлов","только для чисел"],c:1,
+   e:"Exception — общий тип всех ошибок; ловит что угодно (но лучше конкретный тип)."},
+
+  {q:"😄 Копил рекорды через <code>WriteAllText</code>, а в файле одна строка. Почему?",
+   a:["Файл сломан","WriteAllText каждый раз ПЕРЕЗАПИСЫВАЕТ — нужен AppendAllText","Мало памяти","Забыл точку"],c:1,
+   e:"WriteAllText стирает старое. Для накопления — AppendAllText."},
+  {q:"😄 Прочитал файл, которого нет, без проверки. Что будет?",
+   a:["Пустая строка","Ошибка FileNotFoundException — падение","Создастся файл","Ничего"],c:1,
+   e:"Нужно File.Exists перед чтением (или try/catch)."},
+  {q:"😄 Все три записи слиплись в одну строку. Что забыл?",
+   a:["Точку с запятой","Перевод строки <code>\\n</code> в конце","Цвет","try"],c:1,
+   e:"Без \\n строки пишутся встык. Добавь \\n или используй WriteAllLines."},
+
+  {q:"🤔 Что лучше для «проверить, число ли ввёл пользователь»?",
+   a:["Большой try/catch","<code>int.TryParse</code> — просто if/else","Ничего","Цикл for"],c:1,
+   e:"Для проверки ввода TryParse аккуратнее; try/catch — для более широких опасностей."},
+  {q:"🤔 Зачем вообще нужны исключения, а не просто «падать»?",
+   a:["Низачем","Чтобы поймать проблему и мягко её обработать, не рушив программу","Для скорости","Для красоты"],c:1,
+   e:"try/catch превращает аварию в понятное сообщение и позволяет продолжить работу."},
+];
+
+let i=0, score=0, locked=false;
+const app=document.getElementById('app');
+
+function shuffle(){for(let k=QUESTIONS.length-1;k>0;k--){const j=Math.floor(Math.random()*(k+1));[QUESTIONS[k],QUESTIONS[j]]=[QUESTIONS[j],QUESTIONS[k]];}for(const Q of QUESTIONS){const cc=Q.a[Q.c];for(let k=Q.a.length-1;k>0;k--){const j=Math.floor(Math.random()*(k+1));[Q.a[k],Q.a[j]]=[Q.a[j],Q.a[k]];}Q.c=Q.a.indexOf(cc);}}
+shuffle();
+
+function render(){
+  const Q=QUESTIONS[i];
+  app.innerHTML=`
+    <h1>💾 Файлы и исключения</h1>
+    <div class="sub">Викторина по уроку 9 · C#</div>
+    <div class="bar"><i style="width:${(i/QUESTIONS.length)*100}%"></i></div>
+    <div class="meta"><span>Вопрос ${i+1} из ${QUESTIONS.length}</span><span>⭐ Очки: ${score}</span></div>
+    <div class="q">${Q.q}</div>
+    <div class="opts" id="opts">
+      ${Q.a.map((t,n)=>`<button class="opt" data-n="${n}"><b>${n+1}</b><span>${t}</span></button>`).join('')}
+    </div>
+    <div class="fb" id="fb"></div>
+    <button class="btn" id="next">${i===QUESTIONS.length-1?'Показать результат →':'Следующий вопрос →'}</button>
+    <div class="hint">Можно отвечать клавишами 1–4</div>`;
+  locked=false;
+  document.querySelectorAll('.opt').forEach(b=>b.onclick=()=>choose(+b.dataset.n));
+  document.getElementById('next').onclick=next;
+}
+
+function choose(n){
+  if(locked) return; locked=true;
+  const Q=QUESTIONS[i];
+  const opts=[...document.querySelectorAll('.opt')];
+  opts.forEach(b=>b.disabled=true);
+  opts[Q.c].classList.add('ok');
+  const fb=document.getElementById('fb');
+  if(n===Q.c){ score++; fb.className='fb show good'; fb.innerHTML='✅ Верно! '+Q.e; }
+  else { opts[n].classList.add('bad'); fb.className='fb show no'; fb.innerHTML='❌ Не совсем. '+Q.e; }
+  document.querySelector('.meta').children[1].textContent='⭐ Очки: '+score;
+  document.getElementById('next').classList.add('show');
+}
+
+function next(){ i++; if(i<QUESTIONS.length) render(); else result(); }
+
+function result(){
+  const pct=Math.round(score/QUESTIONS.length*100);
+  let em,msg;
+  if(pct===100){em='🏆';msg='Идеально! Файлы и try/catch — под контролем! 💾';}
+  else if(pct>=70){em='🎉';msg='Отлично! Данные сохраняешь, ошибки ловишь.';}
+  else if(pct>=40){em='👍';msg='Неплохо! Повтори: AppendAllText, File.Exists, try/catch.';}
+  else {em='💪';msg='Ещё разок! Загляни в самоучитель — там файлы и ошибки по шагам.';}
+  app.innerHTML=`
+    <div class="center">
+      <div class="emoji">${em}</div>
+      <h1>Готово!</h1>
+      <div class="score">${score} / ${QUESTIONS.length}</div>
+      <div class="sub">${msg}</div>
+      <button class="btn show" id="again">🔁 Пройти заново</button>
+    </div>`;
+  document.getElementById('again').onclick=()=>{i=0;score=0;shuffle();render();};
+}
+
+document.addEventListener('keydown',e=>{
+  if(['1','2','3','4'].includes(e.key)){ const b=document.querySelector(`.opt[data-n="${+e.key-1}"]`); if(b&&!b.disabled) choose(+e.key-1); }
+  if(e.key==='Enter'){ const nb=document.getElementById('next'); if(nb&&nb.classList.contains('show')) next(); }
+});
+
+render();
+</script>
+</body>
+</html>

@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 860 396" font-family="'Segoe UI',system-ui,sans-serif">
+  <rect x="0" y="0" width="860" height="396" fill="#f7f9fc"/>
+  <text x="430" y="38" font-size="23" font-weight="700" fill="#1f2937" text-anchor="middle">📈 List&lt;T&gt; — массив, который РАСТЁТ</text>
+
+  <!-- массив -->
+  <text x="60" y="95" font-size="14" fill="#475569">Массив <tspan font-family="monospace" fill="#334155">int[]</tspan>:</text>
+  <g font-family="monospace">
+    <rect x="60" y="105" width="70" height="60" rx="8" fill="#e2e8f0" stroke="#94a3b8" stroke-width="2"/>
+    <rect x="130" y="105" width="70" height="60" rx="8" fill="#e2e8f0" stroke="#94a3b8" stroke-width="2"/>
+    <rect x="200" y="105" width="70" height="60" rx="8" fill="#e2e8f0" stroke="#94a3b8" stroke-width="2"/>
+    <text x="95" y="142" font-size="20" fill="#334155" text-anchor="middle">10</text>
+    <text x="165" y="142" font-size="20" fill="#334155" text-anchor="middle">20</text>
+    <text x="235" y="142" font-size="20" fill="#334155" text-anchor="middle">30</text>
+  </g>
+  <text x="165" y="200" font-size="13.5" fill="#dc2626" text-anchor="middle">🔒 размер фиксирован при создании</text>
+
+  <!-- List -->
+  <text x="480" y="95" font-size="14" fill="#475569">Список <tspan font-family="monospace" fill="#5b21b6">List&lt;int&gt;</tspan>:</text>
+  <g font-family="monospace">
+    <rect x="480" y="105" width="70" height="60" rx="8" fill="#ede9fe" stroke="#6d28d9" stroke-width="2.5"/>
+    <rect x="550" y="105" width="70" height="60" rx="8" fill="#ede9fe" stroke="#6d28d9" stroke-width="2.5"/>
+    <rect x="620" y="105" width="70" height="60" rx="8" fill="#ede9fe" stroke="#6d28d9" stroke-width="2.5"/>
+    <rect x="690" y="105" width="70" height="60" rx="8" fill="#dcfce7" stroke="#16a34a" stroke-width="2.5" stroke-dasharray="6 4"/>
+    <text x="515" y="142" font-size="20" fill="#5b21b6" text-anchor="middle">10</text>
+    <text x="585" y="142" font-size="20" fill="#5b21b6" text-anchor="middle">20</text>
+    <text x="655" y="142" font-size="20" fill="#5b21b6" text-anchor="middle">30</text>
+    <text x="725" y="142" font-size="26" fill="#16a34a" text-anchor="middle" font-weight="800">+</text>
+  </g>
+  <path d="M 690 220 C 700 195, 715 180, 725 172" stroke="#16a34a" stroke-width="3" fill="none"/>
+  <polygon points="725,172 715,181 726,184" fill="#16a34a"/>
+  <text x="620" y="238" font-size="15" fill="#166534" text-anchor="middle" font-family="monospace">list.Add(40);</text>
+  <text x="620" y="258" font-size="13" fill="#16a34a" text-anchor="middle">➕ можно добавлять сколько угодно</text>
+
+  <!-- индексы -->
+  <text x="165" y="185" font-size="12" fill="#94a3b8" text-anchor="middle" font-family="monospace">[0]  [1]  [2]</text>
+  <text x="585" y="185" font-size="12" fill="#94a3b8" text-anchor="middle" font-family="monospace">[0]  [1]  [2]  [3]</text>
+
+  <!-- нижняя плашка: команды List -->
+  <rect x="215" y="284" width="430" height="98" rx="12" fill="#fff" stroke="#6d28d9" stroke-width="2"/>
+  <text x="430" y="307" font-size="14.5" font-weight="700" fill="#5b21b6" text-anchor="middle">Главные команды List</text>
+  <text x="238" y="336" font-size="14" fill="#334155"><tspan font-family="monospace" fill="#6d28d9">Add(x)</tspan> — добавить</text>
+  <text x="238" y="364" font-size="14" fill="#334155"><tspan font-family="monospace" fill="#6d28d9">Remove(x)</tspan> — удалить</text>
+  <text x="470" y="336" font-size="14" fill="#334155"><tspan font-family="monospace" fill="#6d28d9">Count</tspan> — сколько</text>
+  <text x="470" y="364" font-size="14" fill="#334155"><tspan font-family="monospace" fill="#6d28d9">list[i]</tspan> — по индексу</text>
+</svg>

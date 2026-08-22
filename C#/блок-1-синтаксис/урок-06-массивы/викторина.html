@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Викторина — Урок 6: Массивы (C#)</title>
+<style>
+  :root{
+    --bg1:#512bd4; --bg2:#9b6dff; --card:#ffffff; --ink:#1f2937;
+    --accent:#512bd4; --ok:#16a34a; --bad:#dc2626; --soft:#ede9fe;
+  }
+  *{box-sizing:border-box;font-family:"Segoe UI",system-ui,sans-serif}
+  body{margin:0;min-height:100vh;display:flex;align-items:center;justify-content:center;
+    background:linear-gradient(135deg,var(--bg1),var(--bg2));padding:20px;color:var(--ink)}
+  .app{background:var(--card);width:min(760px,100%);border-radius:24px;
+    box-shadow:0 25px 60px rgba(0,0,0,.35);padding:34px 34px 28px;position:relative;overflow:hidden}
+  h1{margin:0 0 6px;font-size:26px;text-align:center}
+  .sub{text-align:center;color:#64748b;margin-bottom:22px;font-size:15px}
+  .bar{height:10px;background:var(--soft);border-radius:99px;overflow:hidden;margin-bottom:18px}
+  .bar>i{display:block;height:100%;width:0;background:var(--accent);transition:.4s}
+  .meta{display:flex;justify-content:space-between;font-size:14px;color:#64748b;margin-bottom:14px}
+  .q{font-size:22px;font-weight:700;margin:6px 0 20px;line-height:1.3}
+  .q code{background:#0f172a;color:#e2e8f0;padding:2px 8px;border-radius:6px;font-size:19px}
+  .opts{display:grid;gap:12px}
+  .opt{border:2px solid #e2e8f0;background:#fff;border-radius:14px;padding:15px 18px;font-size:18px;
+    text-align:left;cursor:pointer;transition:.15s;display:flex;align-items:center;gap:12px}
+  .opt:hover{border-color:var(--accent);background:var(--soft);transform:translateY(-2px)}
+  .opt b{background:var(--soft);color:var(--accent);width:30px;height:30px;border-radius:8px;
+    display:flex;align-items:center;justify-content:center;font-size:15px;flex:0 0 auto}
+  .opt span code{background:#0f172a;color:#e2e8f0;padding:1px 6px;border-radius:5px;font-size:16px}
+  .opt.ok{border-color:var(--ok);background:#dcfce7}
+  .opt.ok b{background:var(--ok);color:#fff}
+  .opt.bad{border-color:var(--bad);background:#fee2e2}
+  .opt.bad b{background:var(--bad);color:#fff}
+  .opt:disabled{cursor:default;transform:none}
+  .fb{margin-top:16px;padding:14px 16px;border-radius:12px;font-size:16px;display:none;line-height:1.4}
+  .fb.show{display:block}
+  .fb.good{background:#dcfce7;color:#166534}
+  .fb.no{background:#fee2e2;color:#991b1b}
+  .fb code{background:#0f172a;color:#e2e8f0;padding:1px 6px;border-radius:5px}
+  .btn{margin-top:18px;width:100%;padding:15px;border:0;border-radius:14px;background:var(--accent);
+    color:#fff;font-size:18px;font-weight:700;cursor:pointer;display:none}
+  .btn.show{display:block}
+  .btn:hover{filter:brightness(1.08)}
+  .center{text-align:center}
+  .score{font-size:64px;font-weight:800;margin:10px 0}
+  .emoji{font-size:70px}
+  .hint{color:#94a3b8;font-size:13px;text-align:center;margin-top:14px}
+</style>
+</head>
+<body>
+<div class="app" id="app"></div>
+<script>
+const QUESTIONS = [
+  {q:"Что такое массив?",
+   a:["Одно число","Много значений одного типа под общим именем","Цикл","Условие"],c:1,
+   e:"Массив хранит набор значений одного типа, доступ по номеру-индексу."},
+  {q:"С какого номера начинаются индексы массива?",
+   a:["С 1","С 0","С -1","С длины"],c:1,
+   e:"Индексы идут с 0: первый элемент — a[0]."},
+  {q:"Как узнать, сколько элементов в массиве <code>a</code>?",
+   a:["<code>a.Length</code>","<code>a.Length()</code>","<code>len(a)</code>","<code>a.Count()</code>"],c:0,
+   e:".Length — свойство, без скобок."},
+  {q:"Что вернёт <code>scores[1]</code> для <code>{ 40, 90, 65 }</code>?",
+   a:["40","90","65","1"],c:1,
+   e:"Индекс 1 — это ВТОРОЙ элемент (счёт с 0), значит 90."},
+  {q:"Как обратиться к последнему элементу массива <code>a</code>?",
+   a:["<code>a[a.Length]</code>","<code>a[a.Length - 1]</code>","<code>a[-1]</code>","<code>a.last</code>"],c:1,
+   e:"Последний индекс — Length - 1 (a[Length] уже за границей)."},
+  {q:"Как создать пустой массив на 5 чисел?",
+   a:["<code>int[5] a</code>","<code>new int[5]</code>","<code>int a = 5</code>","<code>array(5)</code>"],c:1,
+   e:"int[] a = new int[5]; — 5 ячеек, заполнены нулями."},
+  {q:"Что делает <code>Array.Sort(a)</code>?",
+   a:["Создаёт новый массив","Сортирует сам массив a по возрастанию","Переворачивает","Ищет максимум"],c:1,
+   e:"Array.Sort меняет сам массив a — упорядочивает по возрастанию."},
+  {q:"Как быстрее всего найти наибольшее число в массиве?",
+   a:["Только длинным циклом","Готовым методом <code>a.Max()</code>","<code>a.Big()</code>","Никак"],c:1,
+   e:"У массивов есть готовые методы: a.Max(), a.Min(), a.Sum(), a.Average() — не нужен цикл."},
+  {q:"Что вернёт <code>scores.Average()</code> для <code>{ 40, 90, 65, 20 }</code>?",
+   a:["Целое 53","Дробное 53,75","215","90"],c:1,
+   e:"Average() даёт среднее — обычно ДРОБНОЕ число (215 / 4 = 53,75)."},
+  {q:"Чем массив C# отличается от списка Python?",
+   a:["Ничем","У массива размер фиксирован — он не растёт","Массив быстрее печатать","Массив только для строк"],c:1,
+   e:"Список Python умел расти (append), а массив C# — нет: размер задан заранее."},
+  {q:"Что выведет <code>string.Join(\" \", new[]{1,2,3})</code>?",
+   a:["123","\"1 2 3\"","6","ошибку"],c:1,
+   e:"string.Join склеивает элементы через разделитель: 1 2 3."},
+  {q:"Как перебрать все элементы массива, если номер не важен?",
+   a:["<code>while</code>","<code>foreach (int n in a)</code>","<code>switch</code>","<code>if</code>"],c:1,
+   e:"foreach проходит по всем элементам без счётчика."},
+  {q:"В двумерном массиве что даёт <code>поле.GetLength(0)</code>?",
+   a:["Число столбцов","Число строк","Первый элемент","Ошибку"],c:1,
+   e:"GetLength(0) — число строк, GetLength(1) — число столбцов."},
+  {q:"Как посчитать сумму всех чисел массива?",
+   a:["<code>a.Sum</code> и всё","Накопителем: <code>сумма = 0; foreach ... сумма += n;</code>","Array.Sort","Никак"],c:1,
+   e:"Заводим сумму = 0 до цикла и прибавляем каждый элемент."},
+
+  {q:"😄 У массива из 4 ячеек ты написал <code>a[4]</code>. Что будет?",
+   a:["Вернёт 0","Ошибка: выход за границу (индексы 0..3)","Последний элемент","Пустая строка"],c:1,
+   e:"Индексы 0..3. a[4] → IndexOutOfRangeException."},
+  {q:"😄 Хочешь добавить элемент через <code>a.Add(5)</code> — не работает. Почему?",
+   a:["Опечатка","Массив не растёт — у него фиксированный размер","Нужны скобки","Add только для строк"],c:1,
+   e:"Массив нельзя увеличить. Для растущих данных есть List (Урок 8)."},
+  {q:"😄 Прошёл массив <code>foreach</code>'ем, менял элемент — а массив не изменился. Почему?",
+   a:["Баг","foreach только читает; для записи нужен for с индексом","Мало памяти","Нужен Sort"],c:1,
+   e:"foreach даёт копию значения. Менять ячейки — только for: a[i] = ..."},
+
+  {q:"🤔 Зачем параллельные массивы держать ОДНОЙ длины?",
+   a:["Для красоты","Чтобы индекс i указывал на связанные данные (names[i] ↔ scores[i])","Так быстрее","Необязательно"],c:1,
+   e:"Под одним индексом лежат связанные данные одного объекта; разная длина всё «разъедет»."},
+  {q:"🤔 Когда брать массив, а когда List (Урок 8)?",
+   a:["Всегда массив","Массив — когда число элементов известно и не меняется; List — когда добавляем/удаляем","Всегда List","Разницы нет"],c:1,
+   e:"Фиксированный набор → массив; растущий (список дел, корзина) → List."},
+];
+
+let i=0, score=0, locked=false;
+const app=document.getElementById('app');
+
+function shuffle(){for(let k=QUESTIONS.length-1;k>0;k--){const j=Math.floor(Math.random()*(k+1));[QUESTIONS[k],QUESTIONS[j]]=[QUESTIONS[j],QUESTIONS[k]];}for(const Q of QUESTIONS){const cc=Q.a[Q.c];for(let k=Q.a.length-1;k>0;k--){const j=Math.floor(Math.random()*(k+1));[Q.a[k],Q.a[j]]=[Q.a[j],Q.a[k]];}Q.c=Q.a.indexOf(cc);}}
+shuffle();
+
+function render(){
+  const Q=QUESTIONS[i];
+  app.innerHTML=`
+    <h1>📦 Массивы</h1>
+    <div class="sub">Викторина по уроку 6 · C#</div>
+    <div class="bar"><i style="width:${(i/QUESTIONS.length)*100}%"></i></div>
+    <div class="meta"><span>Вопрос ${i+1} из ${QUESTIONS.length}</span><span>⭐ Очки: ${score}</span></div>
+    <div class="q">${Q.q}</div>
+    <div class="opts" id="opts">
+      ${Q.a.map((t,n)=>`<button class="opt" data-n="${n}"><b>${n+1}</b><span>${t}</span></button>`).join('')}
+    </div>
+    <div class="fb" id="fb"></div>
+    <button class="btn" id="next">${i===QUESTIONS.length-1?'Показать результат →':'Следующий вопрос →'}</button>
+    <div class="hint">Можно отвечать клавишами 1–4</div>`;
+  locked=false;
+  document.querySelectorAll('.opt').forEach(b=>b.onclick=()=>choose(+b.dataset.n));
+  document.getElementById('next').onclick=next;
+}
+
+function choose(n){
+  if(locked) return; locked=true;
+  const Q=QUESTIONS[i];
+  const opts=[...document.querySelectorAll('.opt')];
+  opts.forEach(b=>b.disabled=true);
+  opts[Q.c].classList.add('ok');
+  const fb=document.getElementById('fb');
+  if(n===Q.c){ score++; fb.className='fb show good'; fb.innerHTML='✅ Верно! '+Q.e; }
+  else { opts[n].classList.add('bad'); fb.className='fb show no'; fb.innerHTML='❌ Не совсем. '+Q.e; }
+  document.querySelector('.meta').children[1].textContent='⭐ Очки: '+score;
+  document.getElementById('next').classList.add('show');
+}
+
+function next(){ i++; if(i<QUESTIONS.length) render(); else result(); }
+
+function result(){
+  const pct=Math.round(score/QUESTIONS.length*100);
+  let em,msg;
+  if(pct===100){em='🏆';msg='Идеально! Массивы, перебор и сортировка — всё в кармане! 📦';}
+  else if(pct>=70){em='🎉';msg='Отлично! С массивами работаешь уверенно.';}
+  else if(pct>=40){em='👍';msg='Неплохо! Повтори: индексы с 0, .Length без скобок, массив не растёт.';}
+  else {em='💪';msg='Ещё разок! Загляни в самоучитель — там массивы по шагам.';}
+  app.innerHTML=`
+    <div class="center">
+      <div class="emoji">${em}</div>
+      <h1>Готово!</h1>
+      <div class="score">${score} / ${QUESTIONS.length}</div>
+      <div class="sub">${msg}</div>
+      <button class="btn show" id="again">🔁 Пройти заново</button>
+    </div>`;
+  document.getElementById('again').onclick=()=>{i=0;score=0;shuffle();render();};
+}
+
+document.addEventListener('keydown',e=>{
+  if(['1','2','3','4'].includes(e.key)){ const b=document.querySelector(`.opt[data-n="${+e.key-1}"]`); if(b&&!b.disabled) choose(+e.key-1); }
+  if(e.key==='Enter'){ const nb=document.getElementById('next'); if(nb&&nb.classList.contains('show')) next(); }
+});
+
+render();
+</script>
+</body>
+</html>

@@ -1,0 +1,73 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 380" font-family="'Segoe UI',system-ui,sans-serif">
+  <rect x="0" y="0" width="960" height="380" fill="#f7f9fc"/>
+  <text x="480" y="36" font-size="24" font-weight="700" fill="#1f2937" text-anchor="middle">🏷 Пять типов данных в C#</text>
+  <text x="480" y="60" font-size="14" fill="#64748b" text-anchor="middle">тип — это «что за содержимое». В C# тип пишут ПЕРЕД именем: <tspan font-family="monospace" fill="#334155">int уровень = 5;</tspan></text>
+
+  <!-- int -->
+  <g transform="translate(22,92)">
+    <rect x="0" y="0" width="172" height="238" rx="14" fill="#ffffff" stroke="#3b82f6" stroke-width="2.5"/>
+    <rect x="0" y="0" width="172" height="44" rx="14" fill="#dbeafe"/>
+    <rect x="0" y="28" width="172" height="16" fill="#dbeafe"/>
+    <text x="86" y="30" font-size="20" font-weight="800" fill="#1d4ed8" text-anchor="middle" font-family="monospace">int</text>
+    <text x="86" y="84" font-size="14" fill="#334155" text-anchor="middle">целое число</text>
+    <text x="86" y="134" font-size="34" font-weight="800" fill="#2563eb" text-anchor="middle" font-family="monospace">5</text>
+    <text x="86" y="170" font-size="17" fill="#60a5fa" text-anchor="middle" font-family="monospace">0  -3  2025</text>
+    <text x="86" y="212" font-size="12.5" fill="#64748b" text-anchor="middle">уровень, счёт,</text>
+    <text x="86" y="228" font-size="12.5" fill="#64748b" text-anchor="middle">количество</text>
+  </g>
+
+  <!-- double -->
+  <g transform="translate(206,92)">
+    <rect x="0" y="0" width="172" height="238" rx="14" fill="#ffffff" stroke="#14b8a6" stroke-width="2.5"/>
+    <rect x="0" y="0" width="172" height="44" rx="14" fill="#ccfbf1"/>
+    <rect x="0" y="28" width="172" height="16" fill="#ccfbf1"/>
+    <text x="86" y="30" font-size="20" font-weight="800" fill="#0f766e" text-anchor="middle" font-family="monospace">double</text>
+    <text x="86" y="84" font-size="14" fill="#334155" text-anchor="middle">дробное число</text>
+    <text x="86" y="134" font-size="32" font-weight="800" fill="#0d9488" text-anchor="middle" font-family="monospace">87.5</text>
+    <text x="86" y="170" font-size="17" fill="#2dd4bf" text-anchor="middle" font-family="monospace">1.5   -0.7</text>
+    <text x="86" y="112" font-size="11" fill="#94a3b8" text-anchor="middle">точка, не запятая!</text>
+    <text x="86" y="212" font-size="12.5" fill="#64748b" text-anchor="middle">рост, цена,</text>
+    <text x="86" y="228" font-size="12.5" fill="#64748b" text-anchor="middle">здоровье</text>
+  </g>
+
+  <!-- string -->
+  <g transform="translate(390,92)">
+    <rect x="0" y="0" width="172" height="238" rx="14" fill="#ffffff" stroke="#a855f7" stroke-width="2.5"/>
+    <rect x="0" y="0" width="172" height="44" rx="14" fill="#f3e8ff"/>
+    <rect x="0" y="28" width="172" height="16" fill="#f3e8ff"/>
+    <text x="86" y="30" font-size="20" font-weight="800" fill="#7e22ce" text-anchor="middle" font-family="monospace">string</text>
+    <text x="86" y="84" font-size="14" fill="#334155" text-anchor="middle">строка (текст)</text>
+    <text x="86" y="134" font-size="26" font-weight="800" fill="#9333ea" text-anchor="middle" font-family="monospace">"Маг"</text>
+    <text x="86" y="170" font-size="15" fill="#c084fc" text-anchor="middle" font-family="monospace">"привет"  "42"</text>
+    <text x="86" y="212" font-size="12.5" fill="#64748b" text-anchor="middle">имя, слово —</text>
+    <text x="86" y="228" font-size="12.5" fill="#64748b" text-anchor="middle">ДВОЙНЫЕ кавычки</text>
+  </g>
+
+  <!-- bool -->
+  <g transform="translate(574,92)">
+    <rect x="0" y="0" width="172" height="238" rx="14" fill="#ffffff" stroke="#f59e0b" stroke-width="2.5"/>
+    <rect x="0" y="0" width="172" height="44" rx="14" fill="#fef3c7"/>
+    <rect x="0" y="28" width="172" height="16" fill="#fef3c7"/>
+    <text x="86" y="30" font-size="20" font-weight="800" fill="#b45309" text-anchor="middle" font-family="monospace">bool</text>
+    <text x="86" y="84" font-size="14" fill="#334155" text-anchor="middle">да / нет</text>
+    <text x="86" y="132" font-size="21" font-weight="800" fill="#16a34a" text-anchor="middle" font-family="monospace">true</text>
+    <text x="86" y="164" font-size="21" font-weight="800" fill="#dc2626" text-anchor="middle" font-family="monospace">false</text>
+    <text x="86" y="212" font-size="12.5" fill="#64748b" text-anchor="middle">живой? победил?</text>
+    <text x="86" y="228" font-size="12.5" fill="#64748b" text-anchor="middle">маленькими буквами</text>
+  </g>
+
+  <!-- char -->
+  <g transform="translate(758,92)">
+    <rect x="0" y="0" width="172" height="238" rx="14" fill="#ffffff" stroke="#ec4899" stroke-width="2.5"/>
+    <rect x="0" y="0" width="172" height="44" rx="14" fill="#fce7f3"/>
+    <rect x="0" y="28" width="172" height="16" fill="#fce7f3"/>
+    <text x="86" y="30" font-size="20" font-weight="800" fill="#be185d" text-anchor="middle" font-family="monospace">char</text>
+    <text x="86" y="84" font-size="14" fill="#334155" text-anchor="middle">один символ</text>
+    <text x="86" y="134" font-size="34" font-weight="800" fill="#db2777" text-anchor="middle" font-family="monospace">'В'</text>
+    <text x="86" y="170" font-size="17" fill="#f472b6" text-anchor="middle" font-family="monospace">'A'  '9'  '?'</text>
+    <text x="86" y="212" font-size="12.5" fill="#64748b" text-anchor="middle">буква, метка —</text>
+    <text x="86" y="228" font-size="12.5" fill="#64748b" text-anchor="middle">ОДИНАРНЫЕ кавычки</text>
+  </g>
+
+  <text x="480" y="362" font-size="13.5" fill="#475569" text-anchor="middle" font-style="italic">⚠️ 5 (int) и "5" (string) — РАЗНОЕ: число можно сложить, строку — только склеить. Тип решает, что можно делать.</text>
+</svg>

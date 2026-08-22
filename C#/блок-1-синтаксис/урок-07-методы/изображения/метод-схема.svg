@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 820 380" font-family="'Segoe UI',system-ui,sans-serif">
+  <rect x="0" y="0" width="820" height="380" fill="#f7f9fc"/>
+  <text x="410" y="36" font-size="24" font-weight="700" fill="#1f2937" text-anchor="middle">⚙️ Метод — это машина: вход → работа → выход</text>
+
+  <!-- params in -->
+  <g transform="translate(40,110)">
+    <rect x="0" y="0" width="150" height="90" rx="12" fill="#dbeafe" stroke="#2563eb" stroke-width="2.5"/>
+    <text x="75" y="28" font-size="13.5" fill="#1d4ed8" text-anchor="middle" font-weight="700">параметры (вход)</text>
+    <text x="75" y="58" font-size="20" fill="#1e3a8a" text-anchor="middle" font-family="monospace">a = 2</text>
+    <text x="75" y="80" font-size="20" fill="#1e3a8a" text-anchor="middle" font-family="monospace">b = 3</text>
+  </g>
+  <path d="M 196 155 L 250 155" stroke="#334155" stroke-width="4" fill="none"/><polygon points="250,155 236,147 236,163" fill="#334155"/>
+
+  <!-- method body (machine) -->
+  <g transform="translate(255,95)">
+    <rect x="0" y="0" width="250" height="120" rx="14" fill="#ede9fe" stroke="#6d28d9" stroke-width="3"/>
+    <text x="125" y="34" font-size="30" text-anchor="middle">⚙️</text>
+    <text x="125" y="66" font-size="15" fill="#5b21b6" text-anchor="middle" font-weight="700" font-family="monospace">int Add(int a, int b)</text>
+    <text x="125" y="94" font-size="15" fill="#334155" text-anchor="middle" font-family="monospace">return a + b;</text>
+    <text x="125" y="112" font-size="12" fill="#7c3aed" text-anchor="middle">тело метода (работа)</text>
+  </g>
+  <path d="M 511 155 L 565 155" stroke="#16a34a" stroke-width="4" fill="none"/><polygon points="565,155 551,147 551,163" fill="#16a34a"/>
+
+  <!-- return out -->
+  <g transform="translate(570,115)">
+    <rect x="0" y="0" width="150" height="80" rx="12" fill="#dcfce7" stroke="#16a34a" stroke-width="2.5"/>
+    <text x="75" y="28" font-size="13.5" fill="#166534" text-anchor="middle" font-weight="700">return (выход)</text>
+    <text x="75" y="62" font-size="30" fill="#15803d" text-anchor="middle" font-weight="800" font-family="monospace">5</text>
+  </g>
+
+  <text x="410" y="245" font-size="13.5" fill="#475569" text-anchor="middle" font-family="monospace">int sum = Add(2, 3);   // sum = 5</text>
+
+  <!-- void vs return -->
+  <rect x="120" y="275" width="270" height="85" rx="12" fill="#fff" stroke="#94a3b8" stroke-width="2"/>
+  <text x="255" y="300" font-size="15" font-weight="700" fill="#334155" text-anchor="middle" font-family="monospace">void</text>
+  <text x="255" y="324" font-size="13" fill="#475569" text-anchor="middle">ДЕЛАЕТ (печатает, рисует)</text>
+  <text x="255" y="344" font-size="12.5" fill="#94a3b8" text-anchor="middle">результата нет</text>
+
+  <rect x="430" y="275" width="270" height="85" rx="12" fill="#f0fdf4" stroke="#16a34a" stroke-width="2"/>
+  <text x="565" y="300" font-size="15" font-weight="700" fill="#166534" text-anchor="middle" font-family="monospace">int / string ...</text>
+  <text x="565" y="324" font-size="13" fill="#475569" text-anchor="middle">ВОЗВРАЩАЕТ через return</text>
+  <text x="565" y="344" font-size="12.5" fill="#16a34a" text-anchor="middle">результат можно использовать</text>
+</svg>

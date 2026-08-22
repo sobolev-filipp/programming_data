@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 400" font-family="'Segoe UI',system-ui,sans-serif">
+  <rect x="0" y="0" width="880" height="400" fill="#f7f9fc"/>
+  <text x="440" y="38" font-size="23" font-weight="700" fill="#1f2937" text-anchor="middle">🔑 List — по НОМЕРУ · Dictionary — по КЛЮЧУ</text>
+
+  <!-- List panel -->
+  <rect x="40" y="70" width="360" height="290" rx="16" fill="#ede9fe" stroke="#6d28d9" stroke-width="2.5"/>
+  <text x="220" y="102" font-size="18" font-weight="700" fill="#5b21b6" text-anchor="middle" font-family="monospace">List&lt;string&gt;</text>
+  <text x="220" y="124" font-size="13" fill="#7c3aed" text-anchor="middle">доступ по индексу-числу: list[0]</text>
+
+  <g font-family="monospace">
+    <rect x="70" y="145" width="60" height="46" rx="8" fill="#fff" stroke="#6d28d9" stroke-width="2"/>
+    <text x="100" y="174" font-size="16" fill="#5b21b6" text-anchor="middle">меч</text>
+    <text x="100" y="208" font-size="13" fill="#94a3b8" text-anchor="middle">[0]</text>
+
+    <rect x="145" y="145" width="60" height="46" rx="8" fill="#fff" stroke="#6d28d9" stroke-width="2"/>
+    <text x="175" y="174" font-size="16" fill="#5b21b6" text-anchor="middle">щит</text>
+    <text x="175" y="208" font-size="13" fill="#94a3b8" text-anchor="middle">[1]</text>
+
+    <rect x="220" y="145" width="70" height="46" rx="8" fill="#fff" stroke="#6d28d9" stroke-width="2"/>
+    <text x="255" y="174" font-size="16" fill="#5b21b6" text-anchor="middle">зелье</text>
+    <text x="255" y="208" font-size="13" fill="#94a3b8" text-anchor="middle">[2]</text>
+  </g>
+
+  <text x="220" y="255" font-size="14.5" fill="#334155" text-anchor="middle" font-family="monospace">list[1]  →  "щит"</text>
+  <text x="220" y="290" font-size="13.5" fill="#475569" text-anchor="middle">Порядок важен. Есть номера 0,1,2…</text>
+  <text x="220" y="330" font-size="13" fill="#7c3aed" text-anchor="middle">🐍 Python: обычный список <tspan font-family="monospace">[ ]</tspan></text>
+
+  <!-- Dictionary panel -->
+  <rect x="480" y="70" width="360" height="290" rx="16" fill="#dcfce7" stroke="#16a34a" stroke-width="2.5"/>
+  <text x="660" y="102" font-size="18" font-weight="700" fill="#166534" text-anchor="middle" font-family="monospace">Dictionary&lt;string,int&gt;</text>
+  <text x="660" y="124" font-size="13" fill="#15803d" text-anchor="middle">доступ по ключу-слову: prices["меч"]</text>
+
+  <g font-family="monospace">
+    <rect x="510" y="150" width="130" height="44" rx="8" fill="#fff" stroke="#16a34a" stroke-width="2"/>
+    <text x="545" y="178" font-size="15" fill="#166534" text-anchor="middle">"меч"</text>
+    <text x="612" y="178" font-size="15" fill="#334155" text-anchor="middle">100</text>
+    <path d="M 578 172 L 596 172" stroke="#16a34a" stroke-width="2.5"/><polygon points="596,172 588,168 588,176" fill="#16a34a"/>
+
+    <rect x="510" y="205" width="130" height="44" rx="8" fill="#fff" stroke="#16a34a" stroke-width="2"/>
+    <text x="545" y="233" font-size="15" fill="#166534" text-anchor="middle">"щит"</text>
+    <text x="612" y="233" font-size="15" fill="#334155" text-anchor="middle">60</text>
+    <path d="M 578 227 L 596 227" stroke="#16a34a" stroke-width="2.5"/><polygon points="596,227 588,223 588,231" fill="#16a34a"/>
+
+    <rect x="660" y="150" width="150" height="99" rx="8" fill="#f0fdf4" stroke="#86efac" stroke-width="1.5"/>
+    <text x="735" y="185" font-size="12.5" fill="#15803d" text-anchor="middle">ключ</text>
+    <text x="735" y="205" font-size="18" fill="#166534" text-anchor="middle" font-weight="700">↓</text>
+    <text x="735" y="228" font-size="12.5" fill="#15803d" text-anchor="middle">значение</text>
+  </g>
+
+  <text x="660" y="290" font-size="13.5" fill="#475569" text-anchor="middle">Ключ→значение. Быстро найти по имени.</text>
+  <text x="660" y="330" font-size="13" fill="#15803d" text-anchor="middle">🐍 Python: словарь <tspan font-family="monospace">{ }</tspan></text>
+</svg>

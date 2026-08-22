@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 440" font-family="'Segoe UI',system-ui,sans-serif">
+  <rect x="0" y="0" width="880" height="440" fill="#f7f9fc"/>
+  <text x="440" y="34" font-size="22" font-weight="700" fill="#1f2937" text-anchor="middle">🏗 Как устроена «Медиатека» — из знакомых кусочков</text>
+
+  <!-- Классы (наследование) -->
+  <rect x="30" y="60" width="250" height="170" rx="14" fill="#f5f3ff" stroke="#6d28d9" stroke-width="2"/>
+  <text x="155" y="82" font-size="13.5" font-weight="700" fill="#5b21b6" text-anchor="middle">🧩 Классы (ур. 10–11)</text>
+
+  <rect x="90" y="94" width="130" height="40" rx="8" fill="#ede9fe" stroke="#6d28d9" stroke-width="2"/>
+  <text x="155" y="119" font-size="13" fill="#5b21b6" text-anchor="middle" font-family="monospace">MediaItem</text>
+
+  <path d="M 155 134 L 110 158" stroke="#6d28d9" stroke-width="2"/>
+  <path d="M 155 134 L 200 158" stroke="#6d28d9" stroke-width="2"/>
+  <rect x="45" y="160" width="120" height="58" rx="8" fill="#dcfce7" stroke="#16a34a" stroke-width="2"/>
+  <text x="105" y="182" font-size="12.5" fill="#166534" text-anchor="middle" font-family="monospace">Book</text>
+  <text x="105" y="202" font-size="10.5" fill="#15803d" text-anchor="middle">автор, Info()</text>
+  <rect x="175" y="160" width="95" height="58" rx="8" fill="#dcfce7" stroke="#16a34a" stroke-width="2"/>
+  <text x="222" y="182" font-size="12.5" fill="#166534" text-anchor="middle" font-family="monospace">Movie</text>
+  <text x="222" y="202" font-size="10.5" fill="#15803d" text-anchor="middle">режиссёр</text>
+
+  <!-- List -->
+  <path d="M 280 145 L 335 145" stroke="#334155" stroke-width="2.5"/><polygon points="335,145 323,139 323,151" fill="#334155"/>
+  <rect x="340" y="90" width="210" height="110" rx="14" fill="#eff6ff" stroke="#2563eb" stroke-width="2"/>
+  <text x="445" y="112" font-size="13.5" font-weight="700" fill="#1d4ed8" text-anchor="middle">📋 Каталог (ур. 8)</text>
+  <text x="445" y="135" font-size="13" fill="#1e3a8a" text-anchor="middle" font-family="monospace">List&lt;MediaItem&gt;</text>
+  <rect x="360" y="150" width="170" height="20" rx="4" fill="#fff" stroke="#93c5fd"/>
+  <text x="445" y="164" font-size="10.5" fill="#334155" text-anchor="middle">книга, фильм, книга…</text>
+  <text x="445" y="188" font-size="10.5" fill="#3b82f6" text-anchor="middle">растёт: Add()</text>
+
+  <!-- Меню -->
+  <path d="M 445 200 L 445 235" stroke="#334155" stroke-width="2.5"/><polygon points="445,235 439,223 451,223" fill="#334155"/>
+  <rect x="300" y="240" width="290" height="120" rx="14" fill="#fefce8" stroke="#ca8a04" stroke-width="2"/>
+  <text x="445" y="262" font-size="13.5" font-weight="700" fill="#a16207" text-anchor="middle">🎛 Меню + методы (ур. 4, 7)</text>
+  <text x="320" y="286" font-size="11.5" fill="#334155" font-family="monospace">1 добавить  3 показать</text>
+  <text x="320" y="306" font-size="11.5" fill="#334155" font-family="monospace">4 найти     5 сортировать</text>
+  <text x="320" y="326" font-size="11.5" fill="#334155" font-family="monospace">6 сохранить 7 загрузить</text>
+  <text x="320" y="346" font-size="11" fill="#a16207">show(item.Info()) — у каждого свой (полиморфизм)</text>
+
+  <!-- Файл -->
+  <path d="M 590 300 L 645 300" stroke="#16a34a" stroke-width="2.5"/><polygon points="645,300 633,294 633,306" fill="#16a34a"/>
+  <rect x="650" y="240" width="200" height="130" rx="14" fill="#dcfce7" stroke="#16a34a" stroke-width="2"/>
+  <text x="750" y="262" font-size="13.5" font-weight="700" fill="#166534" text-anchor="middle">💾 Файл (ур. 9)</text>
+  <text x="750" y="284" font-size="12.5" fill="#166534" text-anchor="middle" font-family="monospace">media.txt</text>
+  <text x="668" y="308" font-size="10.5" fill="#334155" font-family="monospace">BOOK;Хоббит;1937;…</text>
+  <text x="668" y="325" font-size="10.5" fill="#334155" font-family="monospace">MOVIE;Матрица;1999;…</text>
+  <text x="750" y="350" font-size="10.5" fill="#15803d" text-anchor="middle">try/catch + TryParse</text>
+
+  <!-- Классы блок справа вверху -->
+  <rect x="595" y="60" width="255" height="150" rx="14" fill="#fff" stroke="#94a3b8" stroke-width="1.5"/>
+  <text x="722" y="82" font-size="13" font-weight="700" fill="#334155" text-anchor="middle">Одна запись = объект</text>
+  <text x="612" y="106" font-size="11.5" fill="#475569" font-family="monospace">new Book("Хоббит",</text>
+  <text x="612" y="123" font-size="11.5" fill="#475569" font-family="monospace">         1937, "Толкин")</text>
+  <text x="612" y="150" font-size="11.5" fill="#475569">→ Title, Year — общие (родитель)</text>
+  <text x="612" y="170" font-size="11.5" fill="#475569">→ Author — своё (книга)</text>
+  <text x="612" y="194" font-size="11.5" fill="#6d28d9">Info() печатает по-своему</text>
+
+  <text x="440" y="420" font-size="13.5" fill="#5b21b6" text-anchor="middle" font-weight="700">Ни одной новой темы — только сборка знакомых кирпичиков блока 1 в одно приложение</text>
+</svg>

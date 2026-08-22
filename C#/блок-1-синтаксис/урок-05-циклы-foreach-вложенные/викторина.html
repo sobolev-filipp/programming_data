@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Викторина — Урок 5: do-while, foreach, вложенные циклы (C#)</title>
+<style>
+  :root{
+    --bg1:#512bd4; --bg2:#9b6dff; --card:#ffffff; --ink:#1f2937;
+    --accent:#512bd4; --ok:#16a34a; --bad:#dc2626; --soft:#ede9fe;
+  }
+  *{box-sizing:border-box;font-family:"Segoe UI",system-ui,sans-serif}
+  body{margin:0;min-height:100vh;display:flex;align-items:center;justify-content:center;
+    background:linear-gradient(135deg,var(--bg1),var(--bg2));padding:20px;color:var(--ink)}
+  .app{background:var(--card);width:min(760px,100%);border-radius:24px;
+    box-shadow:0 25px 60px rgba(0,0,0,.35);padding:34px 34px 28px;position:relative;overflow:hidden}
+  h1{margin:0 0 6px;font-size:26px;text-align:center}
+  .sub{text-align:center;color:#64748b;margin-bottom:22px;font-size:15px}
+  .bar{height:10px;background:var(--soft);border-radius:99px;overflow:hidden;margin-bottom:18px}
+  .bar>i{display:block;height:100%;width:0;background:var(--accent);transition:.4s}
+  .meta{display:flex;justify-content:space-between;font-size:14px;color:#64748b;margin-bottom:14px}
+  .q{font-size:22px;font-weight:700;margin:6px 0 20px;line-height:1.3}
+  .q code{background:#0f172a;color:#e2e8f0;padding:2px 8px;border-radius:6px;font-size:19px}
+  .opts{display:grid;gap:12px}
+  .opt{border:2px solid #e2e8f0;background:#fff;border-radius:14px;padding:15px 18px;font-size:18px;
+    text-align:left;cursor:pointer;transition:.15s;display:flex;align-items:center;gap:12px}
+  .opt:hover{border-color:var(--accent);background:var(--soft);transform:translateY(-2px)}
+  .opt b{background:var(--soft);color:var(--accent);width:30px;height:30px;border-radius:8px;
+    display:flex;align-items:center;justify-content:center;font-size:15px;flex:0 0 auto}
+  .opt span code{background:#0f172a;color:#e2e8f0;padding:1px 6px;border-radius:5px;font-size:16px}
+  .opt.ok{border-color:var(--ok);background:#dcfce7}
+  .opt.ok b{background:var(--ok);color:#fff}
+  .opt.bad{border-color:var(--bad);background:#fee2e2}
+  .opt.bad b{background:var(--bad);color:#fff}
+  .opt:disabled{cursor:default;transform:none}
+  .fb{margin-top:16px;padding:14px 16px;border-radius:12px;font-size:16px;display:none;line-height:1.4}
+  .fb.show{display:block}
+  .fb.good{background:#dcfce7;color:#166534}
+  .fb.no{background:#fee2e2;color:#991b1b}
+  .fb code{background:#0f172a;color:#e2e8f0;padding:1px 6px;border-radius:5px}
+  .btn{margin-top:18px;width:100%;padding:15px;border:0;border-radius:14px;background:var(--accent);
+    color:#fff;font-size:18px;font-weight:700;cursor:pointer;display:none}
+  .btn.show{display:block}
+  .btn:hover{filter:brightness(1.08)}
+  .center{text-align:center}
+  .score{font-size:64px;font-weight:800;margin:10px 0}
+  .emoji{font-size:70px}
+  .hint{color:#94a3b8;font-size:13px;text-align:center;margin-top:14px}
+</style>
+</head>
+<body>
+<div class="app" id="app"></div>
+<script>
+const QUESTIONS = [
+  {q:"Чем <code>do-while</code> отличается от <code>while</code>?",
+   a:["Ничем","Тело выполняется хотя бы раз (проверка внизу)","Работает быстрее","Только для чисел"],c:1,
+   e:"do-while проверяет условие ПОСЛЕ тела, поэтому тело сработает минимум один раз."},
+  {q:"Что обязательно поставить после <code>} while (условие)</code>?",
+   a:["Ничего","Точку с запятой <code>;</code>","<code>break</code>","<code>{}</code>"],c:1,
+   e:"После do-while нужна точка с запятой: } while (условие);"},
+  {q:"Что делает <code>foreach</code>?",
+   a:["Считает до N","Перебирает все элементы коллекции без счётчика","Рисует узор","Сортирует"],c:1,
+   e:"foreach проходит по всем элементам по очереди — как for x in ... в Python."},
+  {q:"Что выведет <code>foreach (char c in \"кот\") Console.WriteLine(c);</code>?",
+   a:["кот","к, о, т — каждая с новой строки","3","ошибку"],c:1,
+   e:"foreach берёт по одной букве: к, о, т — каждая на своей строке."},
+  {q:"Что такое вложенный цикл?",
+   a:["Очень длинный цикл","Цикл внутри другого цикла","Цикл без тела","Цикл с ошибкой"],c:1,
+   e:"Вложенный цикл — это цикл, записанный внутри тела другого цикла."},
+  {q:"За что обычно отвечает ВНЕШНИЙ цикл при рисовании узора?",
+   a:["За столбцы","За строки","За цвет","Ни за что"],c:1,
+   e:"Внешний цикл — строки, внутренний — то, что внутри строки (столбцы)."},
+  {q:"Что ставят ПОСЛЕ внутреннего цикла, чтобы узор не слипся?",
+   a:["<code>break</code>","<code>Console.WriteLine()</code>","<code>;</code>","<code>Sleep</code>"],c:1,
+   e:"Console.WriteLine() переводит на новую строку в конце каждого ряда."},
+  {q:"Что вернёт <code>new string('*', 4)</code>?",
+   a:["'*'","\"****\"","4","ошибку"],c:1,
+   e:"new string('*', 4) — строка из 4 звёздочек: ****."},
+  {q:"Как включить зелёный цвет текста в консоли?",
+   a:["<code>color green</code>","<code>Console.ForegroundColor = ConsoleColor.Green;</code>","<code>Console.Green()</code>","никак"],c:1,
+   e:"Console.ForegroundColor = ConsoleColor.Green; красит последующий вывод."},
+  {q:"Как вернуть обычный цвет после цветного вывода?",
+   a:["<code>Console.ResetColor();</code>","<code>Console.Clear();</code>","само вернётся","<code>Console.Off()</code>"],c:0,
+   e:"Console.ResetColor() возвращает цвет по умолчанию."},
+  {q:"Когда <code>foreach</code> удобнее <code>for</code>?",
+   a:["Всегда","Когда нужно просто пройти по всем, а номер не важен","Никогда","Только для чисел"],c:1,
+   e:"foreach хорош, когда номер не нужен: короче и без ошибок с границами."},
+  {q:"Для чего особенно удобен <code>do-while</code>?",
+   a:["Для рисования","Для меню — показать хотя бы раз, потом повторять","Для сортировки","Ни для чего"],c:1,
+   e:"Меню надо показать минимум раз — это и делает do-while."},
+
+  {q:"😄 Твой узор вывелся В ОДНУ строку. Что забыл?",
+   a:["Цвет","<code>Console.WriteLine()</code> после внутреннего цикла","Точку с запятой","Random"],c:1,
+   e:"Без WriteLine() в конце ряда все символы печатаются подряд в одну строку."},
+  {q:"😄 После твоей программы весь текст в консоли стал красным. Почему?",
+   a:["Вирус","Забыл <code>Console.ResetColor()</code>","Сломался экран","Так и надо"],c:1,
+   e:"Цвет держится, пока его не сбросить. Верни через Console.ResetColor()."},
+  {q:"😄 Написал <code>do { ... } while (x > 0)</code> и получил ошибку. Чего не хватает?",
+   a:["Скобок","Точки с запятой после while","break","цвета"],c:1,
+   e:"После do-while нужна ; : } while (x > 0);"},
+
+  {q:"🤔 Почему <code>foreach</code> безопаснее <code>for</code> для перебора?",
+   a:["Он быстрее","Нет счётчика и границ — не выйдешь за пределы коллекции","Он новее","Это неправда"],c:1,
+   e:"foreach сам идёт по элементам — нельзя ошибиться с индексом или выйти за границу."},
+  {q:"🤔 Почему внутренний цикл выполняется гораздо больше раз, чем внешний?",
+   a:["Случайно","Для КАЖДОГО шага внешнего он прокручивается целиком заново","Он быстрее","Так короче код"],c:1,
+   e:"Внешний сделал 1 шаг — внутренний прошёл весь путь; и так на каждом шаге внешнего."},
+];
+
+let i=0, score=0, locked=false;
+const app=document.getElementById('app');
+
+function shuffle(){for(let k=QUESTIONS.length-1;k>0;k--){const j=Math.floor(Math.random()*(k+1));[QUESTIONS[k],QUESTIONS[j]]=[QUESTIONS[j],QUESTIONS[k]];}for(const Q of QUESTIONS){const cc=Q.a[Q.c];for(let k=Q.a.length-1;k>0;k--){const j=Math.floor(Math.random()*(k+1));[Q.a[k],Q.a[j]]=[Q.a[j],Q.a[k]];}Q.c=Q.a.indexOf(cc);}}
+shuffle();
+
+function render(){
+  const Q=QUESTIONS[i];
+  app.innerHTML=`
+    <h1>🎨 Циклы-2: узоры и перебор</h1>
+    <div class="sub">Викторина по уроку 5 · C#</div>
+    <div class="bar"><i style="width:${(i/QUESTIONS.length)*100}%"></i></div>
+    <div class="meta"><span>Вопрос ${i+1} из ${QUESTIONS.length}</span><span>⭐ Очки: ${score}</span></div>
+    <div class="q">${Q.q}</div>
+    <div class="opts" id="opts">
+      ${Q.a.map((t,n)=>`<button class="opt" data-n="${n}"><b>${n+1}</b><span>${t}</span></button>`).join('')}
+    </div>
+    <div class="fb" id="fb"></div>
+    <button class="btn" id="next">${i===QUESTIONS.length-1?'Показать результат →':'Следующий вопрос →'}</button>
+    <div class="hint">Можно отвечать клавишами 1–4</div>`;
+  locked=false;
+  document.querySelectorAll('.opt').forEach(b=>b.onclick=()=>choose(+b.dataset.n));
+  document.getElementById('next').onclick=next;
+}
+
+function choose(n){
+  if(locked) return; locked=true;
+  const Q=QUESTIONS[i];
+  const opts=[...document.querySelectorAll('.opt')];
+  opts.forEach(b=>b.disabled=true);
+  opts[Q.c].classList.add('ok');
+  const fb=document.getElementById('fb');
+  if(n===Q.c){ score++; fb.className='fb show good'; fb.innerHTML='✅ Верно! '+Q.e; }
+  else { opts[n].classList.add('bad'); fb.className='fb show no'; fb.innerHTML='❌ Не совсем. '+Q.e; }
+  document.querySelector('.meta').children[1].textContent='⭐ Очки: '+score;
+  document.getElementById('next').classList.add('show');
+}
+
+function next(){ i++; if(i<QUESTIONS.length) render(); else result(); }
+
+function result(){
+  const pct=Math.round(score/QUESTIONS.length*100);
+  let em,msg;
+  if(pct===100){em='🏆';msg='Идеально! do-while, foreach и вложенные циклы — мастер узоров! 🎨';}
+  else if(pct>=70){em='🎉';msg='Отлично! Вложенные циклы и узоры освоены.';}
+  else if(pct>=40){em='👍';msg='Неплохо! Повтори: WriteLine после внутреннего цикла, ResetColor, ; после do-while.';}
+  else {em='💪';msg='Ещё разок! Загляни в самоучитель — там узоры по шагам.';}
+  app.innerHTML=`
+    <div class="center">
+      <div class="emoji">${em}</div>
+      <h1>Готово!</h1>
+      <div class="score">${score} / ${QUESTIONS.length}</div>
+      <div class="sub">${msg}</div>
+      <button class="btn show" id="again">🔁 Пройти заново</button>
+    </div>`;
+  document.getElementById('again').onclick=()=>{i=0;score=0;shuffle();render();};
+}
+
+document.addEventListener('keydown',e=>{
+  if(['1','2','3','4'].includes(e.key)){ const b=document.querySelector(`.opt[data-n="${+e.key-1}"]`); if(b&&!b.disabled) choose(+e.key-1); }
+  if(e.key==='Enter'){ const nb=document.getElementById('next'); if(nb&&nb.classList.contains('show')) next(); }
+});
+
+render();
+</script>
+</body>
+</html>

@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 400" font-family="'Segoe UI',system-ui,sans-serif">
+  <rect x="0" y="0" width="880" height="400" fill="#f7f9fc"/>
+  <text x="440" y="38" font-size="23" font-weight="700" fill="#1f2937" text-anchor="middle">💾 Файл — «память, которая не исчезает»</text>
+
+  <!-- программа -->
+  <rect x="70" y="120" width="200" height="150" rx="16" fill="#ede9fe" stroke="#6d28d9" stroke-width="2.5"/>
+  <text x="170" y="150" font-size="34" text-anchor="middle">🖥</text>
+  <text x="170" y="185" font-size="16" font-weight="700" fill="#5b21b6" text-anchor="middle">Программа</text>
+  <text x="170" y="210" font-size="12.5" fill="#7c3aed" text-anchor="middle">переменные, списки</text>
+  <text x="170" y="245" font-size="11.5" fill="#dc2626" text-anchor="middle">закрыл — всё стёрлось</text>
+
+  <!-- файл -->
+  <rect x="610" y="120" width="200" height="150" rx="16" fill="#dcfce7" stroke="#16a34a" stroke-width="2.5"/>
+  <text x="710" y="152" font-size="34" text-anchor="middle">📄</text>
+  <text x="710" y="187" font-size="16" font-weight="700" fill="#166534" text-anchor="middle">records.txt</text>
+  <text x="710" y="212" font-size="12.5" fill="#15803d" text-anchor="middle">на диске</text>
+  <text x="710" y="245" font-size="11.5" fill="#166534" text-anchor="middle">остаётся после выхода ✅</text>
+
+  <!-- запись стрелки -->
+  <path d="M 275 165 L 605 165" stroke="#2563eb" stroke-width="3.5" fill="none"/>
+  <polygon points="605,165 590,157 590,173" fill="#2563eb"/>
+  <text x="440" y="150" font-size="14" fill="#1d4ed8" text-anchor="middle" font-weight="700">запись →</text>
+  <text x="440" y="185" font-size="13" fill="#334155" text-anchor="middle" font-family="monospace">File.WriteAllText — перезаписать</text>
+  <text x="440" y="205" font-size="13" fill="#334155" text-anchor="middle" font-family="monospace">File.AppendAllText — дописать</text>
+
+  <!-- чтение стрелки -->
+  <path d="M 605 240 L 275 240" stroke="#16a34a" stroke-width="3.5" fill="none"/>
+  <polygon points="275,240 290,232 290,248" fill="#16a34a"/>
+  <text x="440" y="262" font-size="14" fill="#166534" text-anchor="middle" font-weight="700">← чтение</text>
+  <text x="440" y="285" font-size="13" fill="#334155" text-anchor="middle" font-family="monospace">File.ReadAllText — весь текст</text>
+  <text x="440" y="305" font-size="13" fill="#334155" text-anchor="middle" font-family="monospace">File.ReadAllLines — по строкам</text>
+
+  <!-- нижняя плашка -->
+  <rect x="180" y="335" width="520" height="46" rx="10" fill="#fff" stroke="#d97706" stroke-width="2"/>
+  <text x="440" y="363" font-size="13.5" fill="#334155" text-anchor="middle">⚠️ Перед чтением проверь <tspan font-family="monospace" fill="#b45309">File.Exists(файл)</tspan> — вдруг файла ещё нет</text>
+</svg>

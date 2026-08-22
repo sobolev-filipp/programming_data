@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 430" font-family="'Segoe UI',system-ui,sans-serif">
+  <rect x="0" y="0" width="880" height="430" fill="#f7f9fc"/>
+  <text x="440" y="38" font-size="23" font-weight="700" fill="#1f2937" text-anchor="middle">🛡 try / catch — «поймать ошибку и не упасть»</text>
+
+  <!-- Без try: падение -->
+  <text x="215" y="80" font-size="15" font-weight="700" fill="#b91c1c" text-anchor="middle">❌ Без try — программа падает</text>
+  <rect x="60" y="95" width="310" height="70" rx="12" fill="#fee2e2" stroke="#dc2626" stroke-width="2"/>
+  <text x="215" y="125" font-size="14.5" fill="#991b1b" text-anchor="middle" font-family="monospace">int n = Convert.ToInt32("абв");</text>
+  <text x="215" y="150" font-size="13" fill="#b91c1c" text-anchor="middle">💥 FormatException — всё останавливается</text>
+
+  <!-- С try: ловим -->
+  <text x="660" y="80" font-size="15" font-weight="700" fill="#166534" text-anchor="middle">✅ С try — ошибка поймана</text>
+  <rect x="505" y="95" width="315" height="290" rx="14" fill="#fff" stroke="#94a3b8" stroke-width="2"/>
+
+  <!-- try box -->
+  <rect x="525" y="112" width="275" height="80" rx="10" fill="#dbeafe" stroke="#2563eb" stroke-width="2"/>
+  <text x="540" y="134" font-size="14" font-weight="700" fill="#1d4ed8" font-family="monospace">try {</text>
+  <text x="556" y="158" font-size="13" fill="#1e3a8a" font-family="monospace">опасный код</text>
+  <text x="556" y="178" font-size="12" fill="#3b82f6" font-family="monospace">(вдруг ошибка?)</text>
+
+  <path d="M 662 192 L 662 214" stroke="#dc2626" stroke-width="3" fill="none"/>
+  <polygon points="662,214 655,203 669,203" fill="#dc2626"/>
+  <text x="700" y="208" font-size="12" fill="#dc2626">если ошибка →</text>
+
+  <!-- catch box -->
+  <rect x="525" y="216" width="275" height="72" rx="10" fill="#fef3c7" stroke="#d97706" stroke-width="2"/>
+  <text x="540" y="238" font-size="14" font-weight="700" fill="#b45309" font-family="monospace">catch {</text>
+  <text x="556" y="262" font-size="13" fill="#92400e" font-family="monospace">обработать / сообщить</text>
+  <text x="556" y="280" font-size="12" fill="#d97706" font-family="monospace">программа НЕ падает</text>
+
+  <path d="M 662 288 L 662 308" stroke="#16a34a" stroke-width="3" fill="none"/>
+  <polygon points="662,308 655,297 669,297" fill="#16a34a"/>
+
+  <!-- finally box -->
+  <rect x="525" y="310" width="275" height="60" rx="10" fill="#dcfce7" stroke="#16a34a" stroke-width="2"/>
+  <text x="540" y="332" font-size="14" font-weight="700" fill="#166534" font-family="monospace">finally {</text>
+  <text x="556" y="355" font-size="12.5" fill="#15803d" font-family="monospace">выполнится ВСЕГДА (необязателен)</text>
+
+  <!-- нижняя мысль -->
+  <rect x="60" y="205" width="310" height="180" rx="12" fill="#eff6ff" stroke="#3b82f6" stroke-width="2"/>
+  <text x="215" y="232" font-size="14.5" font-weight="700" fill="#1d4ed8" text-anchor="middle">Как читать</text>
+  <text x="80" y="260" font-size="13.5" fill="#334155">🔵 <tspan font-family="monospace" fill="#1d4ed8">try</tspan> — «попробуй сделать»</text>
+  <text x="80" y="288" font-size="13.5" fill="#334155">🟠 <tspan font-family="monospace" fill="#b45309">catch</tspan> — «поймай ошибку»</text>
+  <text x="80" y="316" font-size="13.5" fill="#334155">🟢 <tspan font-family="monospace" fill="#166534">finally</tspan> — «сделай в конце»</text>
+  <text x="80" y="352" font-size="12.5" fill="#64748b">🐍 Python: <tspan font-family="monospace">try / except / finally</tspan></text>
+  <text x="80" y="374" font-size="12.5" fill="#64748b">C#: <tspan font-family="monospace">try / catch / finally</tspan></text>
+</svg>
