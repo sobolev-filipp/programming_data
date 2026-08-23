@@ -8,6 +8,8 @@ DerivedData/
 *.ipa
 *.dSYM.zip
 *.xcbkptlist
+
+*.key
 Проекты*
 
 # Unity
