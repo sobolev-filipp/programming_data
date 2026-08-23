@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<title>Типографика — демо свойств</title>
+<style>
+    body { font-family: Arial, sans-serif; background: #f8fafc; color: #1f2937; padding: 20px; line-height: 1.6; }
+    .card { background: white; border-radius: 12px; padding: 16px 22px; margin: 12px 0; }
+    .label { font-family: Consolas, monospace; color: #7c3aed; font-size: 13px; }
+
+    .s1 { font-size: 14px; } .s2 { font-size: 22px; } .s3 { font-size: 36px; }
+    .w300 { font-weight: 300; } .w400 { font-weight: 400; } .w900 { font-weight: 900; }
+    .italic { font-style: italic; }
+    .under { text-decoration: underline; } .strike { text-decoration: line-through; }
+    .upper { text-transform: uppercase; }
+    .spaced { letter-spacing: 6px; }
+    .lh { line-height: 2; }
+    .shadow { font-size: 30px; font-weight: 800; text-shadow: 2px 2px 5px rgba(0,0,0,.4); }
+    .neon { font-size: 30px; font-weight: 800; color: #0ff; background:#12121f; display:inline-block; padding:6px 14px; border-radius:8px;
+            text-shadow: 0 0 8px #0ff, 0 0 18px #0ff; }
+    .link { color: navy; text-decoration: none; }
+    .link:hover { color: crimson; text-decoration: underline; }
+</style>
+</head>
+<body>
+    <h1>Типографика — демо свойств CSS</h1>
+
+    <div class="card"><span class="label">font-size</span><br>
+        <span class="s1">14px</span> · <span class="s2">22px</span> · <span class="s3">36px</span></div>
+
+    <div class="card"><span class="label">font-weight</span><br>
+        <span class="s2 w300">тонкий 300</span> · <span class="s2 w400">обычный 400</span> · <span class="s2 w900">жирный 900</span></div>
+
+    <div class="card"><span class="label">font-style / text-decoration</span><br>
+        <span class="s2 italic">курсив</span> · <span class="s2 under">подчёркнутый</span> · <span class="s2 strike">зачёркнутый</span></div>
+
+    <div class="card"><span class="label">text-transform / letter-spacing</span><br>
+        <span class="s2 upper">заглавными</span> · <span class="s2 spaced">разрядка</span></div>
+
+    <div class="card"><span class="label">line-height</span>
+        <p class="lh">Строка один. Строка два. Строка три. Межстрочный интервал делает текст «дышащим» и лёгким для чтения.</p></div>
+
+    <div class="card"><span class="label">text-shadow</span><br>
+        <span class="shadow">Мягкая тень</span> &nbsp; <span class="neon">Неон</span></div>
+
+    <div class="card"><span class="label">:hover (наведи мышь)</span><br>
+        <a href="#" class="link s2">Наведи на меня</a></div>
+</body>
+</html>

@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Викторина — Итог модуля 1</title>
+<style>
+  :root{
+    --bg1:#059669; --bg2:#4f46e5; --card:#ffffff; --ink:#1f2937;
+    --accent:#059669; --ok:#16a34a; --bad:#dc2626; --soft:#d1fae5;
+  }
+  *{box-sizing:border-box;font-family:"Segoe UI",system-ui,sans-serif}
+  body{margin:0;min-height:100vh;display:flex;align-items:center;justify-content:center;
+    background:linear-gradient(135deg,var(--bg1),var(--bg2));padding:20px;color:var(--ink)}
+  .app{background:var(--card);width:min(760px,100%);border-radius:24px;
+    box-shadow:0 25px 60px rgba(0,0,0,.35);padding:34px 34px 28px;position:relative;overflow:hidden}
+  h1{margin:0 0 6px;font-size:26px;text-align:center}
+  .sub{text-align:center;color:#64748b;margin-bottom:22px;font-size:15px}
+  .bar{height:10px;background:var(--soft);border-radius:99px;overflow:hidden;margin-bottom:18px}
+  .bar>i{display:block;height:100%;width:0;background:var(--accent);transition:.4s}
+  .meta{display:flex;justify-content:space-between;font-size:14px;color:#64748b;margin-bottom:14px}
+  .q{font-size:22px;font-weight:700;margin:6px 0 20px;line-height:1.3}
+  .q code{background:#0f172a;color:#e2e8f0;padding:2px 8px;border-radius:6px;font-size:19px}
+  .opts{display:grid;gap:12px}
+  .opt{border:2px solid #e2e8f0;background:#fff;border-radius:14px;padding:15px 18px;font-size:18px;
+    text-align:left;cursor:pointer;transition:.15s;display:flex;align-items:center;gap:12px}
+  .opt:hover{border-color:var(--accent);background:var(--soft);transform:translateY(-2px)}
+  .opt b{background:var(--soft);color:var(--accent);width:30px;height:30px;border-radius:8px;
+    display:flex;align-items:center;justify-content:center;font-size:15px;flex:0 0 auto}
+  .opt span code{background:#0f172a;color:#e2e8f0;padding:1px 6px;border-radius:5px;font-size:16px}
+  .opt.ok{border-color:var(--ok);background:#dcfce7}
+  .opt.ok b{background:var(--ok);color:#fff}
+  .opt.bad{border-color:var(--bad);background:#fee2e2}
+  .opt.bad b{background:var(--bad);color:#fff}
+  .opt:disabled{cursor:default;transform:none}
+  .fb{margin-top:16px;padding:14px 16px;border-radius:12px;font-size:16px;display:none;line-height:1.4}
+  .fb.show{display:block}
+  .fb.good{background:#dcfce7;color:#166534}
+  .fb.no{background:#fee2e2;color:#991b1b}
+  .fb code{background:#0f172a;color:#e2e8f0;padding:1px 6px;border-radius:5px}
+  .btn{margin-top:18px;width:100%;padding:15px;border:0;border-radius:14px;background:var(--accent);
+    color:#fff;font-size:18px;font-weight:700;cursor:pointer;display:none}
+  .btn.show{display:block}
+  .btn:hover{filter:brightness(1.08)}
+  .center{text-align:center}
+  .score{font-size:64px;font-weight:800;margin:10px 0}
+  .emoji{font-size:70px}
+  .hint{color:#94a3b8;font-size:13px;text-align:center;margin-top:14px}
+</style>
+</head>
+<body>
+<div class="app" id="app"></div>
+<script>
+// Итог модуля 1: вопросы по всем урокам 1–5 + сборка + смешные + на подумать.
+const QUESTIONS = [
+  {q:"Что развернёт Emmet из <code>!</code>?",
+   a:["Один h1","Целый каркас HTML5-страницы","Ошибку","Пустой файл"],c:1,
+   e:"! + Tab — готовый каркас страницы."},
+  {q:"Какой способ подключить CSS — лучший?",
+   a:["inline style","&lt;style&gt; в head","внешний .css через &lt;link&gt;","никакой"],c:2,
+   e:"Внешний файл через &lt;link&gt; — один стиль на весь сайт."},
+  {q:"Каким тегом вставляют картинку?",
+   a:["&lt;img&gt;","&lt;picture&gt;","&lt;src&gt;","&lt;image&gt;"],c:0,
+   e:"&lt;img&gt; с атрибутами src и alt (одиночный тег)."},
+  {q:"Как сделать круглую аватарку?",
+   a:["border-radius: 50%","width: 100%","round: on","border: circle"],c:0,
+   e:"border-radius: 50% из квадратной картинки делает круг."},
+  {q:"Как читается HEX <code>#RRGGBB</code>?",
+   a:["Размер-Рамка-Радиус","Сколько Красного, Зелёного, Синего","3 случайных числа","Ширина цвета"],c:1,
+   e:"Три пары: красный, зелёный, синий (00..ff)."},
+  {q:"Как сделать полупрозрачный цвет?",
+   a:["rgb(...)","rgba(..., 0.5)","hsl(...)","color: half"],c:1,
+   e:"rgba/hsla с alpha 0–1 даёт прозрачность."},
+  {q:"Чем удобен HSL?",
+   a:["Он короче","Легко подбирать оттенки — крутишь светлоту L","Быстрее грузится","Только для фона"],c:1,
+   e:"Меняя L, получаешь гамму одного тона."},
+  {q:"Каким свойством задают размер текста?",
+   a:["text-size","font-size (в px)","font-weight","line-height"],c:1,
+   e:"font-size: 20px — размер шрифта."},
+  {q:"Что делает <code>text-shadow</code>?",
+   a:["Двигает текст","Добавляет тень/свечение тексту","Красит фон","Меняет шрифт"],c:1,
+   e:"text-shadow: X Y размытие цвет — тень или неон."},
+  {q:"Что делает <code>:hover</code>?",
+   a:["Прячет элемент","Задаёт стиль при наведении мыши","Открывает ссылку","Центрирует"],c:1,
+   e:"Стиль срабатывает, когда курсор над элементом."},
+  {q:"В чём разница px и %?",
+   a:["Ни в чём","px фиксированный, % — доля родителя","% всегда больше","px только для текста"],c:1,
+   e:"px не меняется; % зависит от родителя."},
+  {q:"В каком порядке лучше строить страницу?",
+   a:["Стиль → текст → структура","Структура → содержание → стиль","Сразу всё вперемешку","Цвет → структура"],c:1,
+   e:"Сначала блоки, потом контент, потом красота."},
+  {q:"Что развернёт Emmet из <code>.card*3</code>?",
+   a:["3 карточки &lt;div class=\"card\"&gt;","1 карточку","текст card 3 раза","ошибку"],c:0,
+   e:". = класс, *3 = три раза: три div.card."},
+  {q:"Как «подружить» цвета на странице?",
+   a:["Брать случайные","Взять один тон HSL и менять светлоту","Использовать только чёрный","Побольше цветов"],c:1,
+   e:"Оттенки одного тона всегда сочетаются."},
+
+  {q:"😄 Русские буквы стали «Ð¯Ð»...». Что забыл?",
+   a:["h1","&lt;meta charset=\"UTF-8\"&gt;","картинку","кнопку"],c:1,
+   e:"Кракозябры — нет кодировки UTF-8."},
+  {q:"😄 Стили из style.css не работают. Что первым проверить?",
+   a:["Перезагрузить ПК","&lt;link&gt; и правильный href","Сменить браузер","Удалить HTML"],c:1,
+   e:"Чаще всего забыт &lt;link&gt; или неверный href."},
+
+  {q:"🤔 Почему HTML и CSS разделили на два языка/файла?",
+   a:["Чтобы было сложнее","HTML — содержание, CSS — оформление; удобно менять дизайн отдельно","Так исторически зря","Чтобы файлов было больше"],c:1,
+   e:"Разделение содержания и оформления — гибко и удобно."},
+  {q:"🤔 Что делает страницу «красивой»?",
+   a:["Одно свойство","Продуманное сочетание структуры, цвета и текста","Много эффектов сразу","Яркие случайные цвета"],c:1,
+   e:"Красота — из согласованной работы всех частей вместе."},
+];
+
+let i=0, score=0, locked=false;
+const app=document.getElementById('app');
+
+function shuffle(){for(let k=QUESTIONS.length-1;k>0;k--){const j=Math.floor(Math.random()*(k+1));[QUESTIONS[k],QUESTIONS[j]]=[QUESTIONS[j],QUESTIONS[k]];}for(const Q of QUESTIONS){const cc=Q.a[Q.c];for(let k=Q.a.length-1;k>0;k--){const j=Math.floor(Math.random()*(k+1));[Q.a[k],Q.a[j]]=[Q.a[j],Q.a[k]];}Q.c=Q.a.indexOf(cc);}}
+shuffle();
+
+function render(){
+  const Q=QUESTIONS[i];
+  app.innerHTML=`
+    <h1>🏆 Итог модуля 1</h1>
+    <div class="sub">Викторина по всему модулю · WEB</div>
+    <div class="bar"><i style="width:${(i/QUESTIONS.length)*100}%"></i></div>
+    <div class="meta"><span>Вопрос ${i+1} из ${QUESTIONS.length}</span><span>⭐ Очки: ${score}</span></div>
+    <div class="q">${Q.q}</div>
+    <div class="opts" id="opts">
+      ${Q.a.map((t,n)=>`<button class="opt" data-n="${n}"><b>${n+1}</b><span>${t}</span></button>`).join('')}
+    </div>
+    <div class="fb" id="fb"></div>
+    <button class="btn" id="next">${i===QUESTIONS.length-1?'Показать результат →':'Следующий вопрос →'}</button>
+    <div class="hint">Можно отвечать клавишами 1–4</div>`;
+  locked=false;
+  document.querySelectorAll('.opt').forEach(b=>b.onclick=()=>choose(+b.dataset.n));
+  document.getElementById('next').onclick=next;
+}
+
+function choose(n){
+  if(locked) return; locked=true;
+  const Q=QUESTIONS[i];
+  const opts=[...document.querySelectorAll('.opt')];
+  opts.forEach(b=>b.disabled=true);
+  opts[Q.c].classList.add('ok');
+  const fb=document.getElementById('fb');
+  if(n===Q.c){ score++; fb.className='fb show good'; fb.innerHTML='✅ Верно! '+Q.e; }
+  else { opts[n].classList.add('bad'); fb.className='fb show no'; fb.innerHTML='❌ Не совсем. '+Q.e; }
+  document.querySelector('.meta').children[1].textContent='⭐ Очки: '+score;
+  document.getElementById('next').classList.add('show');
+}
+
+function next(){ i++; if(i<QUESTIONS.length) render(); else result(); }
+
+function result(){
+  const pct=Math.round(score/QUESTIONS.length*100);
+  let em,msg;
+  if(pct===100){em='🏆';msg='Идеально! Весь модуль 1 — на отлично! Ты готов к вёрстке! 🚀';}
+  else if(pct>=70){em='🎉';msg='Отлично! Основы веба у тебя крепкие.';}
+  else if(pct>=40){em='👍';msg='Неплохо! Пробегись по итогам уроков — и вперёд.';}
+  else {em='💪';msg='Повтори модуль по шпаргалкам (итого.md) — база важна.';}
+  app.innerHTML=`
+    <div class="center">
+      <div class="emoji">${em}</div>
+      <h1>Готово!</h1>
+      <div class="score">${score} / ${QUESTIONS.length}</div>
+      <div class="sub">${msg}</div>
+      <button class="btn show" id="again">🔁 Пройти заново</button>
+    </div>`;
+  document.getElementById('again').onclick=()=>{i=0;score=0;shuffle();render();};
+}
+
+document.addEventListener('keydown',e=>{
+  if(['1','2','3','4'].includes(e.key)){ const b=document.querySelector(`.opt[data-n="${+e.key-1}"]`); if(b&&!b.disabled) choose(+e.key-1); }
+  if(e.key==='Enter'){ const nb=document.getElementById('next'); if(nb&&nb.classList.contains('show')) next(); }
+});
+
+render();
+</script>
+</body>
+</html>

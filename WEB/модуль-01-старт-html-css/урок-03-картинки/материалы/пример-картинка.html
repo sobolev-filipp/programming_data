@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Картинки — как работает img</title>
+    <style>
+        body { text-align: center; font-family: Arial, sans-serif; }
+        .avatar { border-radius: 50%; border: 4px solid #f59e0b; }  /* круглая аватарка */
+        .cover  { border-radius: 12px; }                            /* мягкие углы */
+    </style>
+</head>
+<body>
+    <h1>Как работает &lt;img&gt; 🖼</h1>
+
+    <h2>1. Обычная картинка (ширина 150px)</h2>
+    <img src="картинки/кот.svg" alt="Рыжий кот" width="150">
+
+    <h2>2. Круглая аватарка (border-radius: 50%)</h2>
+    <img src="картинки/кот.svg" alt="Кот-аватарка" width="120" class="avatar">
+
+    <h2>3. Обложка со скруглением</h2>
+    <img src="картинки/обложка-игры.svg" alt="Обложка игры Space Run" width="160" class="cover">
+
+    <h2>4. Картинка-ссылка (кликни по коту)</h2>
+    <a href="https://ru.wikipedia.org/wiki/Кошка">
+        <img src="картинки/кот.svg" alt="Открыть статью про кошек" width="120">
+    </a>
+</body>
+</html>

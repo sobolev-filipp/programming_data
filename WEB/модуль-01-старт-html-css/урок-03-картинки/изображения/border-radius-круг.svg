@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 260" font-family="'Segoe UI', Arial, sans-serif">
+  <rect x="0" y="0" width="680" height="260" rx="16" fill="#f8fafc" stroke="#e2e8f0" stroke-width="2"/>
+  <text x="340" y="38" text-anchor="middle" font-size="22" font-weight="700" fill="#1e293b">border-radius скругляет картинку</text>
+
+  <!-- 0 -->
+  <rect x="60" y="80" width="110" height="110" rx="0" fill="#93c5fd" stroke="#2563eb" stroke-width="2"/>
+  <text x="115" y="215" text-anchor="middle" font-size="14" font-family="'Consolas',monospace" fill="#334155">0</text>
+  <text x="115" y="235" text-anchor="middle" font-size="12" fill="#64748b">углы острые</text>
+
+  <text x="205" y="140" font-size="24" fill="#94a3b8">→</text>
+
+  <!-- 20px -->
+  <rect x="245" y="80" width="110" height="110" rx="20" fill="#a7f3d0" stroke="#059669" stroke-width="2"/>
+  <text x="300" y="215" text-anchor="middle" font-size="14" font-family="'Consolas',monospace" fill="#334155">20px</text>
+  <text x="300" y="235" text-anchor="middle" font-size="12" fill="#64748b">мягкие углы</text>
+
+  <text x="390" y="140" font-size="24" fill="#94a3b8">→</text>
+
+  <!-- 50% circle -->
+  <circle cx="485" cy="135" r="55" fill="#fdba74" stroke="#ea580c" stroke-width="2"/>
+  <text x="485" y="215" text-anchor="middle" font-size="14" font-family="'Consolas',monospace" fill="#334155">50%</text>
+  <text x="485" y="235" text-anchor="middle" font-size="12" fill="#64748b">круг (аватарка!)</text>
+
+  <text x="600" y="120" font-size="14" font-family="'Consolas',monospace" fill="#7c3aed">img {</text>
+  <text x="600" y="142" font-size="13" font-family="'Consolas',monospace" fill="#334155"> border-</text>
+  <text x="600" y="160" font-size="13" font-family="'Consolas',monospace" fill="#334155"> radius:</text>
+  <text x="600" y="178" font-size="13" font-family="'Consolas',monospace" fill="#ea580c"> 50%;</text>
+  <text x="600" y="196" font-size="14" font-family="'Consolas',monospace" fill="#7c3aed">}</text>
+</svg>

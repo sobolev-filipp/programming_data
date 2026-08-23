@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 380" font-family="'Segoe UI', Arial, sans-serif">
+  <rect x="0" y="0" width="680" height="380" rx="16" fill="#f8fafc" stroke="#e2e8f0" stroke-width="2"/>
+  <text x="340" y="38" text-anchor="middle" font-size="22" font-weight="700" fill="#1e293b">Свойства текста в CSS</text>
+
+  <!-- font-size -->
+  <text x="30" y="86" font-size="13" font-family="'Consolas',monospace" fill="#7c3aed">font-size</text>
+  <text x="180" y="80" font-size="14" fill="#334155">маленький</text>
+  <text x="290" y="86" font-size="22" fill="#334155">крупнее</text>
+  <text x="440" y="94" font-size="32" fill="#334155">большой</text>
+
+  <line x1="30" y1="110" x2="650" y2="110" stroke="#eef2ff" stroke-width="1"/>
+
+  <!-- font-weight -->
+  <text x="30" y="146" font-size="13" font-family="'Consolas',monospace" fill="#7c3aed">font-weight</text>
+  <text x="180" y="148" font-size="20" font-weight="300" fill="#334155">тонкий</text>
+  <text x="300" y="148" font-size="20" font-weight="400" fill="#334155">обычный</text>
+  <text x="440" y="148" font-size="20" font-weight="800" fill="#334155">жирный</text>
+
+  <line x1="30" y1="168" x2="650" y2="168" stroke="#eef2ff" stroke-width="1"/>
+
+  <!-- font-style -->
+  <text x="30" y="204" font-size="13" font-family="'Consolas',monospace" fill="#7c3aed">font-style</text>
+  <text x="180" y="206" font-size="20" font-style="italic" fill="#334155">курсив (italic)</text>
+
+  <line x1="30" y1="226" x2="650" y2="226" stroke="#eef2ff" stroke-width="1"/>
+
+  <!-- letter-spacing -->
+  <text x="30" y="262" font-size="13" font-family="'Consolas',monospace" fill="#7c3aed">letter-spacing</text>
+  <text x="180" y="264" font-size="20" letter-spacing="6" fill="#334155">Р А З Р Я Д К А</text>
+
+  <line x1="30" y1="284" x2="650" y2="284" stroke="#eef2ff" stroke-width="1"/>
+
+  <!-- line-height -->
+  <text x="30" y="320" font-size="13" font-family="'Consolas',monospace" fill="#7c3aed">line-height</text>
+  <text x="180" y="312" font-size="15" fill="#334155">строка один</text>
+  <text x="180" y="332" font-size="15" fill="#334155">строка два (межстрочный</text>
+  <text x="180" y="352" font-size="15" fill="#334155">интервал между строками)</text>
+
+  <!-- text-shadow -->
+  <text x="470" y="330" font-size="28" font-weight="800" fill="#6366f1" style="text-shadow:2px 2px 4px rgba(0,0,0,.4)">Тень</text>
+  <text x="470" y="352" font-size="12" font-family="'Consolas',monospace" fill="#7c3aed">text-shadow</text>
+</svg>

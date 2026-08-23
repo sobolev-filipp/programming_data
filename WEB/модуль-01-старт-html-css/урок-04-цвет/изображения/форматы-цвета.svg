@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 660 300" font-family="'Segoe UI', Arial, sans-serif">
+  <rect x="0" y="0" width="660" height="300" rx="16" fill="#f8fafc" stroke="#e2e8f0" stroke-width="2"/>
+  <text x="330" y="40" text-anchor="middle" font-size="22" font-weight="700" fill="#1e293b">Один цвет — четыре записи</text>
+  <text x="330" y="64" text-anchor="middle" font-size="14" fill="#64748b">все четыре дают ОДИН и тот же красный</text>
+
+  <!-- swatch -->
+  <rect x="60" y="90" width="150" height="150" rx="16" fill="#ff0000" stroke="#b91c1c" stroke-width="2"/>
+  <text x="135" y="262" text-anchor="middle" font-size="14" fill="#64748b">этот цвет</text>
+
+  <!-- 4 formats -->
+  <g font-family="'Consolas','Courier New',monospace" font-size="18">
+    <rect x="270" y="92" width="330" height="34" rx="8" fill="#fef2f2" stroke="#fecaca"/>
+    <text x="286" y="115" fill="#334155">red</text>
+    <text x="470" y="115" font-family="'Segoe UI'" font-size="13" fill="#94a3b8">имя цвета</text>
+
+    <rect x="270" y="132" width="330" height="34" rx="8" fill="#fef2f2" stroke="#fecaca"/>
+    <text x="286" y="155" fill="#334155">#ff0000</text>
+    <text x="470" y="155" font-family="'Segoe UI'" font-size="13" fill="#94a3b8">HEX-код</text>
+
+    <rect x="270" y="172" width="330" height="34" rx="8" fill="#fef2f2" stroke="#fecaca"/>
+    <text x="286" y="195" fill="#334155">rgb(255, 0, 0)</text>
+    <text x="470" y="195" font-family="'Segoe UI'" font-size="13" fill="#94a3b8">каналы R G B</text>
+
+    <rect x="270" y="212" width="330" height="34" rx="8" fill="#fef2f2" stroke="#fecaca"/>
+    <text x="286" y="235" fill="#334155">hsl(0, 100%, 50%)</text>
+    <text x="470" y="235" font-family="'Segoe UI'" font-size="13" fill="#94a3b8">тон/насыщ/яркость</text>
+  </g>
+</svg>

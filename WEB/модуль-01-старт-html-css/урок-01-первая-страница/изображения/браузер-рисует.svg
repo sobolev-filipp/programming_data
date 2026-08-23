@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 300" font-family="'Segoe UI', Arial, sans-serif">
+  <rect x="0" y="0" width="720" height="300" rx="16" fill="#f8fafc" stroke="#e2e8f0" stroke-width="2"/>
+  <text x="360" y="38" text-anchor="middle" font-size="22" font-weight="700" fill="#1e293b">Браузер читает HTML и рисует страницу</text>
+
+  <!-- editor -->
+  <rect x="30" y="70" width="250" height="185" rx="10" fill="#0f172a"/>
+  <text x="48" y="98" font-size="13" fill="#94a3b8">index.html</text>
+  <g font-family="'Consolas',monospace" font-size="15">
+    <text x="48" y="128" fill="#818cf8">&lt;h1&gt;</text><text x="92" y="128" fill="#e2e8f0">Привет</text><text x="168" y="128" fill="#f87171">&lt;/h1&gt;</text>
+    <text x="48" y="156" fill="#818cf8">&lt;p&gt;</text><text x="80" y="156" fill="#e2e8f0">Я учусь</text><text x="176" y="156" fill="#f87171">&lt;/p&gt;</text>
+    <text x="48" y="184" fill="#818cf8">&lt;p&gt;</text><text x="80" y="184" fill="#e2e8f0">Люблю игры</text><text x="204" y="184" fill="#f87171">&lt;/p&gt;</text>
+  </g>
+
+  <!-- arrow -->
+  <g>
+    <line x1="300" y1="162" x2="410" y2="162" stroke="#6366f1" stroke-width="4"/>
+    <polygon points="410,152 435,162 410,172" fill="#6366f1"/>
+    <text x="368" y="150" text-anchor="middle" font-size="14" fill="#6366f1">читает</text>
+  </g>
+
+  <!-- browser -->
+  <rect x="455" y="70" width="235" height="185" rx="10" fill="#ffffff" stroke="#cbd5e1" stroke-width="2"/>
+  <rect x="455" y="70" width="235" height="30" rx="10" fill="#e2e8f0"/>
+  <circle cx="473" cy="85" r="5" fill="#f87171"/><circle cx="490" cy="85" r="5" fill="#fbbf24"/><circle cx="507" cy="85" r="5" fill="#34d399"/>
+  <text x="480" y="140" font-size="26" font-weight="800" fill="#0f172a">Привет</text>
+  <text x="480" y="175" font-size="15" fill="#334155">Я учусь</text>
+  <text x="480" y="200" font-size="15" fill="#334155">Люблю игры</text>
+</svg>

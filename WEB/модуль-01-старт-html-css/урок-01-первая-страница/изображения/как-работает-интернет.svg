@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 340" font-family="'Segoe UI', Arial, sans-serif">
+  <rect x="0" y="0" width="720" height="340" rx="16" fill="#f8fafc" stroke="#e2e8f0" stroke-width="2"/>
+  <text x="360" y="40" text-anchor="middle" font-size="22" font-weight="700" fill="#1e293b">Как устроен интернет (в двух словах)</text>
+  <text x="360" y="66" text-anchor="middle" font-size="14" fill="#64748b">открой файл в браузере — точки поедут по проводу</text>
+
+  <!-- USER device -->
+  <rect x="40" y="120" width="150" height="110" rx="12" fill="#ffffff" stroke="#2965f1" stroke-width="3"/>
+  <rect x="60" y="140" width="110" height="60" rx="6" fill="#eaf0ff"/>
+  <rect x="95" y="230" width="40" height="8" rx="3" fill="#2965f1"/>
+  <text x="115" y="258" text-anchor="middle" font-size="15" font-weight="700" fill="#2965f1">Ты · браузер</text>
+  <text x="115" y="278" text-anchor="middle" font-size="12" fill="#64748b">Chrome, Edge…</text>
+
+  <!-- SERVER -->
+  <rect x="530" y="120" width="150" height="110" rx="12" fill="#ffffff" stroke="#e34f26" stroke-width="3"/>
+  <rect x="552" y="138" width="106" height="20" rx="4" fill="#fde3db"/>
+  <rect x="552" y="164" width="106" height="20" rx="4" fill="#fde3db"/>
+  <rect x="552" y="190" width="106" height="20" rx="4" fill="#fde3db"/>
+  <circle cx="566" cy="148" r="4" fill="#e34f26"/><circle cx="566" cy="174" r="4" fill="#e34f26"/><circle cx="566" cy="200" r="4" fill="#e34f26"/>
+  <text x="605" y="258" text-anchor="middle" font-size="15" font-weight="700" fill="#e34f26">Сервер</text>
+  <text x="605" y="278" text-anchor="middle" font-size="12" fill="#64748b">там живёт сайт</text>
+
+  <!-- wire -->
+  <line x1="190" y1="175" x2="530" y2="175" stroke="#cbd5e1" stroke-width="6" stroke-linecap="round"/>
+  <text x="360" y="150" text-anchor="middle" font-size="13" fill="#94a3b8">интернет (провода и Wi-Fi)</text>
+
+  <!-- request packet: browser -> server (orange) -->
+  <g>
+    <rect x="-14" y="167" width="16" height="16" rx="3" fill="#e34f26">
+      <animate attributeName="x" from="200" to="512" dur="2.6s" repeatCount="indefinite"/>
+    </rect>
+  </g>
+  <text x="300" y="205" text-anchor="middle" font-size="12" fill="#e34f26">запрос: «дай страницу» →</text>
+
+  <!-- response packets: server -> browser (blue), staggered -->
+  <rect y="167" width="16" height="16" rx="3" fill="#2965f1">
+    <animate attributeName="x" from="512" to="200" dur="2.6s" begin="1.0s" repeatCount="indefinite"/>
+  </rect>
+  <rect y="167" width="16" height="16" rx="3" fill="#2965f1">
+    <animate attributeName="x" from="512" to="200" dur="2.6s" begin="1.4s" repeatCount="indefinite"/>
+  </rect>
+  <rect y="167" width="16" height="16" rx="3" fill="#2965f1">
+    <animate attributeName="x" from="512" to="200" dur="2.6s" begin="1.8s" repeatCount="indefinite"/>
+  </rect>
+  <text x="360" y="320" text-anchor="middle" font-size="12" fill="#2965f1">← ответ: кусочки HTML-страницы летят к тебе, браузер их собирает и рисует</text>
+</svg>

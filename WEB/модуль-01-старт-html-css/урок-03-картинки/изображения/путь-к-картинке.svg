@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 340" font-family="'Segoe UI', Arial, sans-serif">
+  <rect x="0" y="0" width="720" height="340" rx="16" fill="#f8fafc" stroke="#e2e8f0" stroke-width="2"/>
+  <text x="360" y="38" text-anchor="middle" font-size="22" font-weight="700" fill="#1e293b">Как картинка попадает на страницу</text>
+
+  <!-- folder -->
+  <rect x="30" y="80" width="200" height="150" rx="10" fill="#ffffff" stroke="#f59e0b" stroke-width="2"/>
+  <path d="M46 80 h50 l12 16 h76 v-2 a6 6 0 0 0 -6 -6 h-64 l-12 -16 h-50" fill="#fde68a"/>
+  <text x="130" y="70" text-anchor="middle" font-size="13" fill="#92400e">папка проекта</text>
+  <text x="48" y="128" font-family="'Consolas',monospace" font-size="13" fill="#334155">index.html</text>
+  <text x="48" y="152" font-family="'Consolas',monospace" font-size="13" fill="#334155">style.css</text>
+  <text x="48" y="176" font-family="'Consolas',monospace" font-size="13" font-weight="700" fill="#e34f26">кот.jpg  🖼</text>
+  <text x="48" y="204" font-family="'Consolas',monospace" font-size="12" fill="#94a3b8">← файл лежит рядом</text>
+
+  <!-- code -->
+  <rect x="255" y="118" width="200" height="80" rx="8" fill="#0f172a"/>
+  <text x="266" y="150" font-family="'Consolas',monospace" font-size="13" fill="#e2e8f0">&lt;img</text>
+  <text x="266" y="170" font-family="'Consolas',monospace" font-size="13" fill="#6ee7b7">  src="кот.jpg"</text>
+  <text x="266" y="190" font-family="'Consolas',monospace" font-size="13" fill="#fbbf24">  alt="кот"&gt;</text>
+
+  <!-- arrow -->
+  <line x1="460" y1="158" x2="520" y2="158" stroke="#10b981" stroke-width="4"/>
+  <polygon points="520,149 542,158 520,167" fill="#10b981"/>
+
+  <!-- browser shows -->
+  <rect x="548" y="80" width="150" height="150" rx="10" fill="#ffffff" stroke="#cbd5e1" stroke-width="2"/>
+  <rect x="548" y="80" width="150" height="24" rx="10" fill="#e2e8f0"/>
+  <circle cx="620" cy="160" r="34" fill="#fca5a5"/>
+  <circle cx="609" cy="152" r="4" fill="#111"/><circle cx="631" cy="152" r="4" fill="#111"/>
+  <path d="M609 170 q11 10 22 0" stroke="#111" stroke-width="2" fill="none"/>
+  <path d="M594 132 l10 14 M646 132 l-10 14" stroke="#fca5a5" stroke-width="8" stroke-linecap="round"/>
+  <text x="623" y="215" text-anchor="middle" font-size="12" fill="#64748b">картинка видна 🎉</text>
+
+  <text x="360" y="300" text-anchor="middle" font-size="14" fill="#dc2626">Если имя в src не совпадает с файлом — вместо картинки «сломанный» значок.</text>
+  <text x="360" y="322" text-anchor="middle" font-size="13" fill="#64748b">Проверяй: файл рядом, имя буква-в-букву (с расширением .jpg/.png).</text>
+</svg>

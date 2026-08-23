@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 340" font-family="'Segoe UI', Arial, sans-serif">
+  <rect x="0" y="0" width="680" height="340" rx="16" fill="#f8fafc" stroke="#e2e8f0" stroke-width="2"/>
+  <text x="340" y="40" text-anchor="middle" font-size="22" font-weight="700" fill="#1e293b">Теги бывают парные и непарные</text>
+
+  <!-- PAIRED -->
+  <text x="40" y="86" font-size="16" font-weight="700" fill="#2965f1">1. Парный тег — открыли и закрыли</text>
+  <g font-family="'Consolas','Courier New',monospace" font-size="30" font-weight="700">
+    <text x="70"  y="140" fill="#6366f1">&lt;h1&gt;</text>
+    <text x="180" y="140" fill="#0f172a">Привет!</text>
+    <text x="345" y="140" fill="#ef4444">&lt;/h1&gt;</text>
+  </g>
+  <g font-size="14" fill="#475569" text-anchor="middle">
+    <text x="110" y="168" fill="#6366f1">открывающий</text>
+    <text x="235" y="168" fill="#0f172a">содержимое</text>
+    <text x="395" y="168" fill="#ef4444">закрывающий</text>
+    <text x="395" y="186" fill="#ef4444" font-size="12">со слешем /</text>
+  </g>
+
+  <line x1="40" y1="210" x2="640" y2="210" stroke="#e2e8f0" stroke-width="2"/>
+
+  <!-- UNPAIRED / VOID -->
+  <text x="40" y="248" font-size="16" font-weight="700" fill="#e34f26">2. Непарный (одиночный) тег — закрывать НЕ нужно</text>
+  <g font-family="'Consolas','Courier New',monospace" font-size="30" font-weight="700">
+    <text x="70"  y="300" fill="#e34f26">&lt;br&gt;</text>
+    <text x="200" y="300" fill="#e34f26">&lt;hr&gt;</text>
+    <text x="330" y="300" fill="#e34f26">&lt;img&gt;</text>
+  </g>
+  <text x="470" y="292" font-size="14" fill="#475569">нет пары </text>
+  <text x="470" y="312" font-size="14" fill="#475569">и нет содержимого</text>
+  <text x="70" y="326" font-size="13" fill="#94a3b8" font-family="'Consolas',monospace">пишем без &lt;/br&gt; и без &lt;/hr&gt;</text>
+</svg>

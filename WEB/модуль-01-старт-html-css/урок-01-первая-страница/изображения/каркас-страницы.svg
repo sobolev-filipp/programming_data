@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 430" font-family="'Segoe UI', Arial, sans-serif">
+  <rect x="0" y="0" width="640" height="430" rx="16" fill="#f8fafc" stroke="#e2e8f0" stroke-width="2"/>
+  <text x="320" y="38" text-anchor="middle" font-size="22" font-weight="700" fill="#1e293b">Каркас HTML-страницы</text>
+
+  <text x="50" y="76" font-family="'Consolas',monospace" font-size="15" fill="#94a3b8">&lt;!DOCTYPE html&gt;  — это современная HTML5-страница</text>
+
+  <rect x="40" y="92" width="560" height="308" rx="12" fill="#eef2ff" stroke="#6366f1" stroke-width="2"/>
+  <text x="58" y="116" font-family="'Consolas',monospace" font-size="15" font-weight="700" fill="#6366f1">&lt;html&gt;  — вся страница</text>
+
+  <rect x="66" y="132" width="508" height="112" rx="10" fill="#fff7ed" stroke="#f59e0b" stroke-width="2"/>
+  <text x="84" y="156" font-family="'Consolas',monospace" font-size="14" font-weight="700" fill="#d97706">&lt;head&gt;  — НЕвидимая часть (настройки)</text>
+  <text x="100" y="184" font-family="'Consolas',monospace" font-size="13" fill="#7c2d12">&lt;meta charset=UTF-8&gt;  — русские буквы</text>
+  <text x="100" y="212" font-family="'Consolas',monospace" font-size="13" fill="#7c2d12">&lt;title&gt; ... &lt;/title&gt;  — имя вкладки</text>
+
+  <rect x="66" y="256" width="508" height="126" rx="10" fill="#ecfdf5" stroke="#10b981" stroke-width="2"/>
+  <text x="84" y="280" font-family="'Consolas',monospace" font-size="14" font-weight="700" fill="#059669">&lt;body&gt;  — ВИДИМАЯ часть</text>
+  <text x="100" y="308" font-family="'Consolas',monospace" font-size="13" fill="#064e3b">&lt;h1&gt;Моя визитка&lt;/h1&gt;</text>
+  <text x="100" y="334" font-family="'Consolas',monospace" font-size="13" fill="#064e3b">&lt;p&gt;Текст обо мне&lt;/p&gt;</text>
+  <text x="100" y="360" font-family="'Consolas',monospace" font-size="13" fill="#047857">тут мы и работаем</text>
+</svg>

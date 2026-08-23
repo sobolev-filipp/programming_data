@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Викторина — Урок 1: Первая страница (WEB)</title>
+<style>
+  :root{
+    --bg1:#e34f26; --bg2:#2965f1; --card:#ffffff; --ink:#1f2937;
+    --accent:#e34f26; --ok:#16a34a; --bad:#dc2626; --soft:#fdece7;
+  }
+  *{box-sizing:border-box;font-family:"Segoe UI",system-ui,sans-serif}
+  body{margin:0;min-height:100vh;display:flex;align-items:center;justify-content:center;
+    background:linear-gradient(135deg,var(--bg1),var(--bg2));padding:20px;color:var(--ink)}
+  .app{background:var(--card);width:min(760px,100%);border-radius:24px;
+    box-shadow:0 25px 60px rgba(0,0,0,.35);padding:34px 34px 28px;position:relative;overflow:hidden}
+  h1{margin:0 0 6px;font-size:26px;text-align:center}
+  .sub{text-align:center;color:#64748b;margin-bottom:22px;font-size:15px}
+  .bar{height:10px;background:var(--soft);border-radius:99px;overflow:hidden;margin-bottom:18px}
+  .bar>i{display:block;height:100%;width:0;background:var(--accent);transition:.4s}
+  .meta{display:flex;justify-content:space-between;font-size:14px;color:#64748b;margin-bottom:14px}
+  .q{font-size:22px;font-weight:700;margin:6px 0 20px;line-height:1.3}
+  .q code{background:#0f172a;color:#e2e8f0;padding:2px 8px;border-radius:6px;font-size:19px}
+  .opts{display:grid;gap:12px}
+  .opt{border:2px solid #e2e8f0;background:#fff;border-radius:14px;padding:15px 18px;font-size:18px;
+    text-align:left;cursor:pointer;transition:.15s;display:flex;align-items:center;gap:12px}
+  .opt:hover{border-color:var(--accent);background:var(--soft);transform:translateY(-2px)}
+  .opt b{background:var(--soft);color:var(--accent);width:30px;height:30px;border-radius:8px;
+    display:flex;align-items:center;justify-content:center;font-size:15px;flex:0 0 auto}
+  .opt span code{background:#0f172a;color:#e2e8f0;padding:1px 6px;border-radius:5px;font-size:16px}
+  .opt.ok{border-color:var(--ok);background:#dcfce7}
+  .opt.ok b{background:var(--ok);color:#fff}
+  .opt.bad{border-color:var(--bad);background:#fee2e2}
+  .opt.bad b{background:var(--bad);color:#fff}
+  .opt:disabled{cursor:default;transform:none}
+  .fb{margin-top:16px;padding:14px 16px;border-radius:12px;font-size:16px;display:none;line-height:1.4}
+  .fb.show{display:block}
+  .fb.good{background:#dcfce7;color:#166534}
+  .fb.no{background:#fee2e2;color:#991b1b}
+  .fb code{background:#0f172a;color:#e2e8f0;padding:1px 6px;border-radius:5px}
+  .btn{margin-top:18px;width:100%;padding:15px;border:0;border-radius:14px;background:var(--accent);
+    color:#fff;font-size:18px;font-weight:700;cursor:pointer;display:none}
+  .btn.show{display:block}
+  .btn:hover{filter:brightness(1.08)}
+  .center{text-align:center}
+  .score{font-size:64px;font-weight:800;margin:10px 0}
+  .emoji{font-size:70px}
+  .hint{color:#94a3b8;font-size:13px;text-align:center;margin-top:14px}
+</style>
+</head>
+<body>
+<div class="app" id="app"></div>
+<script>
+// Вопросы урока 1. С урока 2 сюда будут добавляться вопросы-«повторяшки» из прошлых тем.
+const QUESTIONS = [
+  {q:"Что такое HTML?",
+   a:["Программа-браузер","Язык разметки страниц","Игра","Редактор кода"],c:1,
+   e:"HTML — язык разметки: тегами размечаем содержимое, а браузер его рисует."},
+  {q:"Что делает браузер с твоим HTML-кодом?",
+   a:["Удаляет его","Читает теги сверху вниз и рисует страницу","Отправляет автору","Проверяет на ошибки в математике"],c:1,
+   e:"Браузер — «художник»: читает теги по порядку и рисует страницу."},
+  {q:"Как выглядит ПРАВИЛЬНО закрытый заголовок?",
+   a:["&lt;h1&gt;Привет&lt;h1&gt;","&lt;h1&gt;Привет&lt;/h1&gt;","h1&gt;Привет&lt;h1","&lt;h1&gt;Привет"],c:1,
+   e:"Закрывающий тег — со слешем: &lt;/h1&gt;."},
+  {q:"Какой Emmet-символ развернёт весь каркас страницы?",
+   a:["*","#","!","?"],c:2,
+   e:"Знак ! + Tab разворачивает готовый каркас HTML5."},
+  {q:"Где пишут ВИДИМЫЙ на странице текст?",
+   a:["В &lt;head&gt;","В &lt;body&gt;","В &lt;title&gt;","В &lt;!DOCTYPE&gt;"],c:1,
+   e:"Всё видимое — между &lt;body&gt; и &lt;/body&gt;. head — невидимые настройки."},
+  {q:"Что показывает тег <code>&lt;title&gt;</code>?",
+   a:["Большой заголовок на странице","Имя вкладки браузера","Название файла","Ошибку"],c:1,
+   e:"title — это надпись на вкладке. Большой заголовок на странице — это h1."},
+  {q:"Зачем нужен <code>&lt;meta charset=\"UTF-8\"&gt;</code>?",
+   a:["Для скорости","Чтобы русские буквы и эмодзи не ломались","Для картинок","Для звука"],c:1,
+   e:"Без правильной кодировки русский текст превратится в «кракозябры»."},
+  {q:"Какой тег — АБЗАЦ текста?",
+   a:["&lt;p&gt;","&lt;h1&gt;","&lt;hr&gt;","&lt;a&gt;"],c:0,
+   e:"p (paragraph) — абзац. h1 — заголовок, hr — линия."},
+  {q:"Какой тег — ОДИНОЧНЫЙ (без закрывающего)?",
+   a:["&lt;p&gt;","&lt;h2&gt;","&lt;br&gt;","&lt;title&gt;"],c:2,
+   e:"br и hr — одиночные, их не закрывают. p, h2, title — парные."},
+  {q:"Что делает тег <code>&lt;br&gt;</code>?",
+   a:["Рисует линию","Переносит строку внутри абзаца","Делает жирным","Вставляет картинку"],c:1,
+   e:"br — перенос строки ВНУТРИ абзаца. Линия — это hr."},
+  {q:"Что развернёт Emmet из <code>p*3</code>?",
+   a:["Один абзац","Три пустых абзаца &lt;p&gt;","Текст «p3»","Ошибку"],c:1,
+   e:"*3 — «повтори 3 раза»: получатся три тега &lt;p&gt;."},
+  {q:"Какой заголовок — самый ГЛАВНЫЙ (крупный)?",
+   a:["&lt;h6&gt;","&lt;h3&gt;","&lt;h1&gt;","&lt;h0&gt;"],c:2,
+   e:"h1 — самый важный и крупный, h6 — самый мелкий. h0 не существует."},
+
+  {q:"😄 Ты сохранил файл как «page.txt». Что не так?",
+   a:["Слишком длинное имя","Нужно расширение .html, а не .txt","Файл пустой","Нет интернета"],c:1,
+   e:"Веб-страница должна заканчиваться на .html — это её «паспорт»."},
+  {q:"😄 На странице вместо русских букв — «Ð¯ Ð»ÑŽÐ±Ð»ÑŽ». Что забыл?",
+   a:["Заголовок h1","Тег &lt;meta charset=\"UTF-8\"&gt;","Картинку","Кнопку"],c:1,
+   e:"Это классические «кракозябры» — не хватает charset=UTF-8."},
+  {q:"😄 Весь текст на странице стал огромным заголовком. Почему?",
+   a:["Сломался браузер","Не закрыл &lt;/h1&gt; — заголовок «съел» остальное","Много эмодзи","Так и должно быть"],c:1,
+   e:"Незакрытый h1 распространяется на весь текст ниже. Закрой тег."},
+
+  {q:"🤔 Чем отличаются &lt;title&gt; и &lt;h1&gt;?",
+   a:["Ничем","title — имя вкладки (в head), h1 — заголовок на странице (в body)","title крупнее","h1 невидим"],c:1,
+   e:"Это разные теги в разных местах: вкладка vs сама страница."},
+  {q:"🤔 Почему теги должны быть правильно вложены: &lt;a&gt;&lt;b&gt;…&lt;/b&gt;&lt;/a&gt;?",
+   a:["Так красивее","Кто открыт последним — закрывается первым, иначе браузер путается","Это необязательно","Чтобы код был длиннее"],c:1,
+   e:"Теги — как матрёшки: нельзя «перехлёстывать» их границы."},
+  {q:"🤔 Зачем вообще нужен Emmet?",
+   a:["Чтобы код был красивее","Чтобы писать HTML быстро — из короткой аббревиатуры целый кусок","Он обязателен","Он проверяет ошибки"],c:1,
+   e:"Emmet экономит время: !, *, + разворачиваются в готовый код."},
+];
+
+let i=0, score=0, locked=false;
+const app=document.getElementById('app');
+
+function shuffle(){for(let k=QUESTIONS.length-1;k>0;k--){const j=Math.floor(Math.random()*(k+1));[QUESTIONS[k],QUESTIONS[j]]=[QUESTIONS[j],QUESTIONS[k]];}for(const Q of QUESTIONS){const cc=Q.a[Q.c];for(let k=Q.a.length-1;k>0;k--){const j=Math.floor(Math.random()*(k+1));[Q.a[k],Q.a[j]]=[Q.a[j],Q.a[k]];}Q.c=Q.a.indexOf(cc);}}
+shuffle();
+
+function render(){
+  const Q=QUESTIONS[i];
+  app.innerHTML=`
+    <h1>🌐 Первая страница</h1>
+    <div class="sub">Викторина по уроку 1 · WEB (HTML)</div>
+    <div class="bar"><i style="width:${(i/QUESTIONS.length)*100}%"></i></div>
+    <div class="meta"><span>Вопрос ${i+1} из ${QUESTIONS.length}</span><span>⭐ Очки: ${score}</span></div>
+    <div class="q">${Q.q}</div>
+    <div class="opts" id="opts">
+      ${Q.a.map((t,n)=>`<button class="opt" data-n="${n}"><b>${n+1}</b><span>${t}</span></button>`).join('')}
+    </div>
+    <div class="fb" id="fb"></div>
+    <button class="btn" id="next">${i===QUESTIONS.length-1?'Показать результат →':'Следующий вопрос →'}</button>
+    <div class="hint">Можно отвечать клавишами 1–4</div>`;
+  locked=false;
+  document.querySelectorAll('.opt').forEach(b=>b.onclick=()=>choose(+b.dataset.n));
+  document.getElementById('next').onclick=next;
+}
+
+function choose(n){
+  if(locked) return; locked=true;
+  const Q=QUESTIONS[i];
+  const opts=[...document.querySelectorAll('.opt')];
+  opts.forEach(b=>b.disabled=true);
+  opts[Q.c].classList.add('ok');
+  const fb=document.getElementById('fb');
+  if(n===Q.c){ score++; fb.className='fb show good'; fb.innerHTML='✅ Верно! '+Q.e; }
+  else { opts[n].classList.add('bad'); fb.className='fb show no'; fb.innerHTML='❌ Не совсем. '+Q.e; }
+  document.querySelector('.meta').children[1].textContent='⭐ Очки: '+score;
+  document.getElementById('next').classList.add('show');
+}
+
+function next(){ i++; if(i<QUESTIONS.length) render(); else result(); }
+
+function result(){
+  const pct=Math.round(score/QUESTIONS.length*100);
+  let em,msg;
+  if(pct===100){em='🏆';msg='Идеально! Теги, каркас и Emmet — всё в кармане! 🌐';}
+  else if(pct>=70){em='🎉';msg='Отлично! Первая страница освоена уверенно.';}
+  else if(pct>=40){em='👍';msg='Неплохо! Повтори: head vs body, title ≠ h1, br/hr — одиночные.';}
+  else {em='💪';msg='Начало положено! Загляни в самоучитель — там всё по шагам.';}
+  app.innerHTML=`
+    <div class="center">
+      <div class="emoji">${em}</div>
+      <h1>Готово!</h1>
+      <div class="score">${score} / ${QUESTIONS.length}</div>
+      <div class="sub">${msg}</div>
+      <button class="btn show" id="again">🔁 Пройти заново</button>
+    </div>`;
+  document.getElementById('again').onclick=()=>{i=0;score=0;shuffle();render();};
+}
+
+document.addEventListener('keydown',e=>{
+  if(['1','2','3','4'].includes(e.key)){ const b=document.querySelector(`.opt[data-n="${+e.key-1}"]`); if(b&&!b.disabled) choose(+e.key-1); }
+  if(e.key==='Enter'){ const nb=document.getElementById('next'); if(nb&&nb.classList.contains('show')) next(); }
+});
+
+render();
+</script>
+</body>
+</html>

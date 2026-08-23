@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>3 способа подключить CSS — демо</title>
+
+    <!-- СПОСОБ 2: внутренние стили в теге <style> -->
+    <style>
+        body { background-color: #fdf6ec; text-align: center; }
+        h1   { color: #7b3f00; }
+        h2   { color: #b5651d; }
+        p    { color: #4a3728; }
+    </style>
+
+    <!-- СПОСОБ 3 (лучший): внешний файл. Раскомментируй строку ниже и создай style.css рядом:
+    <link rel="stylesheet" href="style.css">
+    -->
+</head>
+<body>
+    <h1>Три способа подключить CSS ☕</h1>
+
+    <h2>Способ 1 — inline (прямо в теге)</h2>
+    <p style="color: crimson;">Этот абзац покрашен через style прямо в теге — только он один.</p>
+
+    <h2>Способ 2 — тег &lt;style&gt; в &lt;head&gt;</h2>
+    <p>Все h1/h2/p покрашены правилами из &lt;style&gt; выше — сразу все одинаково.</p>
+
+    <h2>Способ 3 — внешний файл style.css через &lt;link&gt;</h2>
+    <p>Самый правильный: стили в отдельном файле, один на весь сайт. См. комментарий в &lt;head&gt;.</p>
+</body>
+</html>

@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
+  <rect width="200" height="200" rx="16" fill="#ffe4c4"/>
+  <ellipse cx="100" cy="120" rx="60" ry="55" fill="#f59e0b"/>
+  <path d="M55 78 L45 40 L80 66 Z" fill="#f59e0b"/>
+  <path d="M145 78 L155 40 L120 66 Z" fill="#f59e0b"/>
+  <path d="M58 74 L52 52 L72 66 Z" fill="#fcd9a0"/>
+  <path d="M142 74 L148 52 L128 66 Z" fill="#fcd9a0"/>
+  <circle cx="80" cy="110" r="9" fill="#1f2937"/>
+  <circle cx="120" cy="110" r="9" fill="#1f2937"/>
+  <circle cx="83" cy="107" r="3" fill="#fff"/>
+  <circle cx="123" cy="107" r="3" fill="#fff"/>
+  <path d="M92 128 q8 8 16 0" stroke="#1f2937" stroke-width="3" fill="none" stroke-linecap="round"/>
+  <path d="M100 122 l0 8" stroke="#1f2937" stroke-width="3" stroke-linecap="round"/>
+  <g stroke="#1f2937" stroke-width="2" stroke-linecap="round">
+    <path d="M70 124 L40 118 M70 130 L42 132"/>
+    <path d="M130 124 L160 118 M130 130 L158 132"/>
+  </g>
+  <text x="100" y="190" text-anchor="middle" font-family="Arial" font-size="14" fill="#7c3f00">кот</text>
+</svg>

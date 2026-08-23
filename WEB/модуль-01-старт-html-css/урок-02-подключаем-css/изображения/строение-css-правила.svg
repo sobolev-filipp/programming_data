@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 660 300" font-family="'Segoe UI', Arial, sans-serif">
+  <rect x="0" y="0" width="660" height="300" rx="16" fill="#f8fafc" stroke="#e2e8f0" stroke-width="2"/>
+  <text x="330" y="40" text-anchor="middle" font-size="22" font-weight="700" fill="#1e293b">Строение CSS-правила</text>
+
+  <g font-family="'Consolas','Courier New',monospace" font-size="26" font-weight="700">
+    <text x="60"  y="140" fill="#2965f1">h1</text>
+    <text x="110" y="140" fill="#64748b">{</text>
+    <text x="140" y="140" fill="#7c3aed">color</text>
+    <text x="222" y="140" fill="#64748b">:</text>
+    <text x="245" y="140" fill="#e34f26">red</text>
+    <text x="300" y="140" fill="#64748b">;</text>
+    <text x="110" y="185" fill="#64748b">}</text>
+  </g>
+
+  <g font-size="15" fill="#475569" text-anchor="middle">
+    <line x1="72" y1="152" x2="72" y2="196" stroke="#2965f1" stroke-width="2"/>
+    <text x="72" y="218" fill="#2965f1">селектор</text>
+    <text x="72" y="238" font-size="12">кого красим</text>
+
+    <line x1="180" y1="152" x2="180" y2="196" stroke="#7c3aed" stroke-width="2"/>
+    <text x="180" y="218" fill="#7c3aed">свойство</text>
+    <text x="180" y="238" font-size="12">что меняем</text>
+
+    <line x1="268" y1="152" x2="268" y2="196" stroke="#e34f26" stroke-width="2"/>
+    <text x="268" y="218" fill="#e34f26">значение</text>
+    <text x="268" y="238" font-size="12">как именно</text>
+  </g>
+
+  <text x="470" y="120" font-size="15" fill="#334155">Читается так:</text>
+  <text x="470" y="146" font-size="15" fill="#334155">«для всех h1</text>
+  <text x="470" y="168" font-size="15" fill="#334155">сделай цвет</text>
+  <text x="470" y="190" font-size="15" fill="#334155">красным».</text>
+  <text x="470" y="230" font-size="13" fill="#94a3b8">не забудь ; после</text>
+  <text x="470" y="248" font-size="13" fill="#94a3b8">каждого значения</text>
+</svg>

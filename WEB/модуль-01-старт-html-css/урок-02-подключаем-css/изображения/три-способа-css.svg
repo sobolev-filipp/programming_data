@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 400" font-family="'Segoe UI', Arial, sans-serif">
+  <rect x="0" y="0" width="720" height="400" rx="16" fill="#f8fafc" stroke="#e2e8f0" stroke-width="2"/>
+  <text x="360" y="38" text-anchor="middle" font-size="22" font-weight="700" fill="#1e293b">Три способа подключить CSS</text>
+
+  <!-- 1 inline -->
+  <rect x="30" y="62" width="205" height="300" rx="12" fill="#fff7ed" stroke="#f59e0b" stroke-width="2"/>
+  <text x="132" y="90" text-anchor="middle" font-size="17" font-weight="700" fill="#d97706">1 · inline</text>
+  <text x="132" y="112" text-anchor="middle" font-size="13" fill="#92400e">прямо в теге</text>
+  <rect x="46" y="126" width="173" height="70" rx="6" fill="#0f172a"/>
+  <text x="56" y="150" font-family="'Consolas',monospace" font-size="11" fill="#e2e8f0">&lt;h1 style=</text>
+  <text x="56" y="168" font-family="'Consolas',monospace" font-size="11" fill="#fbbf24">"color:red"&gt;</text>
+  <text x="56" y="186" font-family="'Consolas',monospace" font-size="11" fill="#e2e8f0">Привет&lt;/h1&gt;</text>
+  <text x="132" y="228" text-anchor="middle" font-size="12" fill="#16a34a">+ быстро проверить</text>
+  <text x="132" y="252" text-anchor="middle" font-size="12" fill="#dc2626">− засоряет HTML</text>
+  <text x="132" y="272" text-anchor="middle" font-size="12" fill="#dc2626">− один тег за раз</text>
+  <text x="132" y="292" text-anchor="middle" font-size="12" fill="#dc2626">− не переиспользовать</text>
+  <text x="132" y="340" text-anchor="middle" font-size="12" fill="#92400e">когда: быстрый тест</text>
+
+  <!-- 2 style -->
+  <rect x="255" y="62" width="205" height="300" rx="12" fill="#eef2ff" stroke="#6366f1" stroke-width="2"/>
+  <text x="357" y="90" text-anchor="middle" font-size="17" font-weight="700" fill="#4f46e5">2 · &lt;style&gt;</text>
+  <text x="357" y="112" text-anchor="middle" font-size="13" fill="#3730a3">в &lt;head&gt; страницы</text>
+  <rect x="271" y="126" width="173" height="70" rx="6" fill="#0f172a"/>
+  <text x="281" y="150" font-family="'Consolas',monospace" font-size="11" fill="#818cf8">&lt;style&gt;</text>
+  <text x="281" y="168" font-family="'Consolas',monospace" font-size="11" fill="#e2e8f0">h1 { color:red }</text>
+  <text x="281" y="186" font-family="'Consolas',monospace" font-size="11" fill="#818cf8">&lt;/style&gt;</text>
+  <text x="357" y="228" text-anchor="middle" font-size="12" fill="#16a34a">+ стили в одном месте</text>
+  <text x="357" y="252" text-anchor="middle" font-size="12" fill="#16a34a">+ один h1 красит все</text>
+  <text x="357" y="272" text-anchor="middle" font-size="12" fill="#dc2626">− только эта страница</text>
+  <text x="357" y="340" text-anchor="middle" font-size="12" fill="#3730a3">когда: одна страница</text>
+
+  <!-- 3 link -->
+  <rect x="480" y="62" width="210" height="300" rx="12" fill="#ecfdf5" stroke="#10b981" stroke-width="2"/>
+  <text x="585" y="90" text-anchor="middle" font-size="17" font-weight="700" fill="#059669">3 · &lt;link&gt; ⭐</text>
+  <text x="585" y="112" text-anchor="middle" font-size="13" fill="#065f46">отдельный файл .css</text>
+  <rect x="496" y="126" width="178" height="70" rx="6" fill="#0f172a"/>
+  <text x="506" y="150" font-family="'Consolas',monospace" font-size="10" fill="#e2e8f0">&lt;link rel=</text>
+  <text x="506" y="166" font-family="'Consolas',monospace" font-size="10" fill="#6ee7b7">"stylesheet"</text>
+  <text x="506" y="182" font-family="'Consolas',monospace" font-size="10" fill="#e2e8f0">href="style.css"&gt;</text>
+  <text x="585" y="228" text-anchor="middle" font-size="12" fill="#16a34a">+ один файл на весь сайт</text>
+  <text x="585" y="252" text-anchor="middle" font-size="12" fill="#16a34a">+ HTML чистый</text>
+  <text x="585" y="272" text-anchor="middle" font-size="12" fill="#16a34a">+ так делают в реальности</text>
+  <text x="585" y="340" text-anchor="middle" font-size="12" fill="#065f46">когда: почти всегда</text>
+</svg>
