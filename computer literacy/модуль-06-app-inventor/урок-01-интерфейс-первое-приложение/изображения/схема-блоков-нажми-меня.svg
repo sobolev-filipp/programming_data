@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 300" font-family="Segoe UI, system-ui, sans-serif">
+  <rect width="560" height="300" fill="#f8fafc"/>
+  <text x="280" y="30" font-size="17" font-weight="700" fill="#1e293b" text-anchor="middle">Итоговая схема блоков — «Нажми меня»</text>
+  <text x="280" y="50" font-size="12" fill="#64748b" text-anchor="middle">вкладка Blocks · собери и сверься</text>
+
+  <!-- Event C-block (gold) -->
+  <g>
+    <path d="M60 78 h380 a8 8 0 0 1 8 8 v22 h-448 v-22 a8 8 0 0 1 8 -8 z" fill="#f5b800"/>
+    <path d="M60 108 h20 v-6 a6 6 0 0 1 12 0 v6 h356 v128 a8 8 0 0 1 -8 8 h-372 a8 8 0 0 1 -8 -8 v-128 z" fill="#f5b800"/>
+    <rect x="36" y="150" width="18" height="70" fill="#f5b800"/>
+    <text x="72" y="99" font-size="15" font-weight="700" fill="#5b4500">when  Button1 . Click</text>
+    <text x="360" y="99" font-size="12" fill="#7a5c00">событие: нажали кнопку</text>
+    <text x="80" y="128" font-size="13" font-weight="600" fill="#5b4500">do</text>
+  </g>
+
+  <!-- Setter block (green) nested -->
+  <g>
+    <path d="M96 140 h300 a6 6 0 0 1 6 6 v34 a6 6 0 0 1 -6 6 h-300 a6 6 0 0 1 -6 -6 v-34 a6 6 0 0 1 6 -6 z" fill="#4a9e4a"/>
+    <text x="108" y="167" font-size="14" font-weight="700" fill="#ffffff">set  Label2 . Text  to</text>
+  </g>
+
+  <!-- Text string block (red) plugged to the right -->
+  <g>
+    <path d="M410 142 a5 5 0 0 1 5 -5 h120 a5 5 0 0 1 5 5 v28 a5 5 0 0 1 -5 5 h-120 a5 5 0 0 1 -5 -5 v-8 l-6 -6 l6 -6 z" fill="#d9453f"/>
+    <text x="418" y="161" font-size="12" font-weight="700" fill="#ffffff">" Привет! Ты</text>
+    <text x="418" y="172" font-size="10" fill="#ffe4e1">нажал кнопку! "</text>
+  </g>
+
+  <!-- reading -->
+  <text x="52" y="270" font-size="13" fill="#334155">📖 Читается: <tspan font-weight="700" fill="#0f172a">when Button1.Click → set Label2.Text to «приветствие».</tspan></text>
+  <text x="52" y="290" font-size="12" fill="#64748b">🟡 событие (when…do)   🟢 действие-установка (set…to)   🔴 текст в кавычках (string)</text>
+</svg>

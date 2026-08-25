@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 380 700" font-family="Segoe UI, system-ui, sans-serif">
+  <rect width="380" height="700" fill="#eef2ff"/>
+  <text x="190" y="34" font-size="17" font-weight="700" fill="#3730a3" text-anchor="middle">Приложение «Нажми меня» — тест на телефоне</text>
+
+  <!-- phone body -->
+  <rect x="80" y="60" width="220" height="600" rx="34" fill="#1f2937"/>
+  <rect x="80" y="60" width="220" height="600" rx="34" fill="none" stroke="#111827" stroke-width="2"/>
+  <!-- screen -->
+  <rect x="94" y="92" width="192" height="536" rx="10" fill="#ffffff"/>
+  <!-- status bar -->
+  <rect x="94" y="92" width="192" height="26" rx="10" fill="#6366f1"/>
+  <rect x="94" y="104" width="192" height="14" fill="#6366f1"/>
+  <text x="104" y="110" font-size="10" fill="#e0e7ff">MyFirstApp</text>
+  <circle cx="190" cy="646" r="10" fill="#374151"/>
+
+  <!-- Label1 заголовок -->
+  <text x="190" y="160" font-size="17" font-weight="700" fill="#111827" text-anchor="middle">Моё первое приложение</text>
+
+  <!-- Image placeholder -->
+  <rect x="126" y="185" width="128" height="128" rx="10" fill="#eef2ff" stroke="#c7d2fe" stroke-width="2"/>
+  <circle cx="190" cy="238" r="22" fill="#a5b4fc"/>
+  <rect x="150" y="270" width="80" height="12" rx="6" fill="#c7d2fe"/>
+  <text x="190" y="332" font-size="11" fill="#94a3b8" text-anchor="middle">Image1 (картинка)</text>
+
+  <!-- Button -->
+  <g>
+    <rect x="112" y="360" width="156" height="52" rx="12" fill="#6366f1">
+      <animate attributeName="fill" values="#6366f1;#6366f1;#4338ca;#4338ca;#6366f1;#6366f1"
+        keyTimes="0;0.32;0.4;0.52;0.6;1" dur="4s" repeatCount="indefinite"/>
+    </rect>
+    <rect x="112" y="360" width="156" height="52" rx="12" fill="#6366f1" opacity="0">
+      <animate attributeName="opacity" values="0;0;0.25;0;0" keyTimes="0;0.34;0.42;0.5;1" dur="4s" repeatCount="indefinite"/>
+    </rect>
+    <text x="190" y="392" font-size="17" font-weight="700" fill="#ffffff" text-anchor="middle">Нажми меня</text>
+  </g>
+
+  <!-- Answer label: two states cross-fading -->
+  <text x="190" y="452" font-size="13" fill="#64748b" text-anchor="middle">Здесь появится ответ
+    <animate attributeName="opacity" values="1;1;0;0;1" keyTimes="0;0.4;0.46;0.92;1" dur="4s" repeatCount="indefinite"/>
+  </text>
+  <text x="190" y="452" font-size="14" font-weight="700" fill="#16a34a" text-anchor="middle" opacity="0">Привет! Ты нажал кнопку!
+    <animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.4;0.46;0.92;1" dur="4s" repeatCount="indefinite"/>
+  </text>
+
+  <!-- tapping finger -->
+  <g>
+    <circle cx="190" cy="386" r="0" fill="none" stroke="#f59e0b" stroke-width="3">
+      <animate attributeName="r" values="0;0;26;0;0" keyTimes="0;0.33;0.44;0.45;1" dur="4s" repeatCount="indefinite"/>
+      <animate attributeName="opacity" values="0;0;1;0;0" keyTimes="0;0.33;0.4;0.46;1" dur="4s" repeatCount="indefinite"/>
+    </circle>
+    <text x="214" y="404" font-size="26">
+      <animate attributeName="opacity" values="0;0;1;1;0;0" keyTimes="0;0.3;0.36;0.44;0.5;1" dur="4s" repeatCount="indefinite"/>👆</text>
+  </g>
+
+  <text x="190" y="686" font-size="12" fill="#6366f1" text-anchor="middle">👀 Нажал кнопку → надпись сменилась. Это событие → действие.</text>
+</svg>
