@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🎮 Мой игровой уголок</title>
+    <style>
+        html { scroll-behavior: smooth; }
+        body {
+            background-color: #0f172a;
+            color: #e2e8f0;
+            font-family: "Segoe UI", system-ui, sans-serif;
+            text-align: center;
+            max-width: 640px;
+            margin: 0 auto;
+            padding: 24px;
+        }
+        h1 { color: #38bdf8; }
+        h2 { color: #a5b4fc; scroll-margin-top: 20px; }
+
+        /* меню-навигация */
+        nav a {
+            display: inline-block;
+            background-color: #1e293b;
+            color: #38bdf8;
+            padding: 10px 18px;
+            margin: 4px;
+            border-radius: 10px;
+            text-decoration: none;
+            transition: 0.2s;
+        }
+        nav a:hover {
+            background-color: #38bdf8;
+            color: #0f172a;
+            transform: translateY(-2px);
+        }
+
+        /* обычные ссылки в тексте */
+        p a { color: #38bdf8; }
+        p a:hover { color: #f472b6; }
+
+        .top { color: #64748b; text-decoration: none; }
+        .top:hover { color: #38bdf8; }
+        hr { border: none; border-top: 1px solid #1e293b; margin: 32px 0; }
+    </style>
+</head>
+<body>
+    <h1>🎮 Мой игровой уголок</h1>
+
+    <!-- меню-оглавление на якоря -->
+    <nav>
+        <a href="#games">Топ-игры</a>
+        <a href="#about">Обо мне</a>
+        <a href="#links">Ссылки</a>
+    </nav>
+
+    <hr>
+
+    <h2 id="games">🏆 Топ-игры</h2>
+    <p>Minecraft, The Legend of Zelda, Stardew Valley.</p>
+
+    <hr>
+
+    <h2 id="about">🙂 Обо мне</h2>
+    <p>Играю с 8 лет, люблю кооперативы и приключения. Пишите — сыграем вместе!</p>
+    <p>
+        <a href="mailto:hi@mail.ru">✉ Написать письмо</a> ·
+        <a href="tel:+79001234567">📞 Позвонить</a>
+    </p>
+
+    <hr>
+
+    <h2 id="links">🔗 Полезные ссылки</h2>
+    <p><a href="https://ru.wikipedia.org" target="_blank" rel="noopener">Про игры в Википедии (новая вкладка)</a></p>
+
+    <hr>
+
+    <p><a href="#" class="top">⬆ Наверх</a></p>
+</body>
+</html>

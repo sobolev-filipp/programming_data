@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🎮 Мой топ-5 игр</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: "Montserrat", sans-serif;
+            background: #f8fafc;
+            color: #1e293b;
+            max-width: 640px;
+            margin: 0 auto;
+            padding: 24px;
+        }
+        h1 { color: #059669; }
+        h2 { color: #0891b2; scroll-margin-top: 16px; }
+
+        /* меню из списка */
+        .menu {
+            list-style: none;
+            padding: 0;
+            margin: 0 0 24px;
+            display: flex;
+            gap: 16px;
+        }
+        .menu a {
+            display: inline-block;
+            text-decoration: none;
+            color: #fff;
+            background: #059669;
+            padding: 8px 16px;
+            border-radius: 8px;
+            font-weight: 700;
+        }
+        .menu a:hover { background: #0891b2; }
+
+        /* рейтинг */
+        .top { font-size: 18px; }
+        .top li { padding: 6px 0; }
+
+        ul { line-height: 1.8; }
+
+        /* словарик */
+        dt { font-weight: 700; color: #059669; margin-top: 10px; }
+        dd { margin: 0 0 4px 16px; color: #475569; }
+    </style>
+</head>
+<body>
+    <nav>
+        <ul class="menu">
+            <li><a href="#top">Топ</a></li>
+            <li><a href="#why">Почему</a></li>
+            <li><a href="#words">Словарик</a></li>
+        </ul>
+    </nav>
+
+    <h1 id="top">🎮 Мой топ-5 игр</h1>
+    <ol class="top">
+        <li>Minecraft — бесконечное творчество</li>
+        <li>The Legend of Zelda — огромный мир приключений</li>
+        <li>Stardew Valley — уютная ферма</li>
+        <li>Portal — головоломки с порталами</li>
+        <li>Terraria — копай, строй, сражайся</li>
+    </ol>
+
+    <h2 id="why">🤔 Почему именно они</h2>
+    <ul>
+        <li>✨ в них интересно возвращаться снова</li>
+        <li>👫 можно играть с друзьями</li>
+        <li>🧠 развивают фантазию и логику</li>
+    </ul>
+
+    <h2 id="words">📖 Мини-словарик геймера</h2>
+    <dl>
+        <dt>Кооператив</dt>
+        <dd>режим, где играешь вместе с друзьями.</dd>
+        <dt>Сэйв</dt>
+        <dd>сохранение прогресса игры.</dd>
+        <dt>Спидран</dt>
+        <dd>прохождение игры на скорость.</dd>
+    </dl>
+
+    <p><a href="#top">⬆ Наверх</a></p>
+</body>
+</html>

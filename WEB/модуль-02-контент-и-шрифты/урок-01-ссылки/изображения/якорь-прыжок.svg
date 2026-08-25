@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 360" font-family="'Segoe UI', Arial, sans-serif">
+  <rect x="0" y="0" width="720" height="360" rx="16" fill="#f8fafc" stroke="#e2e8f0" stroke-width="2"/>
+  <text x="360" y="40" text-anchor="middle" font-size="22" font-weight="700" fill="#1e293b">Якорь: прыжок внутри страницы</text>
+
+  <defs>
+    <marker id="arrow" markerWidth="12" markerHeight="12" refX="9" refY="5" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#0ea5e9"/>
+    </marker>
+  </defs>
+
+  <!-- Шаг 2: ссылка -->
+  <rect x="60" y="80" width="300" height="90" rx="12" fill="#e0f2fe" stroke="#0ea5e9" stroke-width="2"/>
+  <text x="80" y="108" font-size="14" fill="#0369a1" font-weight="700">Шаг 2 — ссылка (в оглавлении)</text>
+  <g font-family="'Consolas','Courier New',monospace" font-size="18" font-weight="700">
+    <text x="80" y="145" fill="#2965f1">&lt;a href=</text>
+    <text x="192" y="145" fill="#e34f26">&quot;#rules&quot;</text>
+    <text x="292" y="145" fill="#2965f1">&gt;</text>
+  </g>
+
+  <!-- Шаг 1: раздел -->
+  <rect x="60" y="240" width="300" height="90" rx="12" fill="#dcfce7" stroke="#16a34a" stroke-width="2"/>
+  <text x="80" y="268" font-size="14" fill="#15803d" font-weight="700">Шаг 1 — раздел (метка id)</text>
+  <g font-family="'Consolas','Courier New',monospace" font-size="18" font-weight="700">
+    <text x="80" y="305" fill="#2965f1">&lt;h2 id=</text>
+    <text x="180" y="305" fill="#e34f26">&quot;rules&quot;</text>
+    <text x="268" y="305" fill="#2965f1">&gt;</text>
+  </g>
+
+  <!-- стрелка прыжка -->
+  <path d="M 360 125 C 470 125, 470 285, 372 285" fill="none" stroke="#0ea5e9" stroke-width="3" marker-end="url(#arrow)"/>
+  <text x="500" y="200" font-size="16" fill="#0369a1" font-weight="700">прыжок</text>
+  <text x="500" y="222" font-size="16" fill="#0369a1" font-weight="700">к разделу</text>
+
+  <!-- равенство имён -->
+  <text x="500" y="292" font-size="14" fill="#64748b">имя после #</text>
+  <text x="500" y="312" font-size="14" fill="#64748b">= id раздела</text>
+</svg>

@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Викторина — Урок 2: Шрифты</title>
+<style>
+  :root{
+    --bg1:#7c3aed; --bg2:#db2777; --card:#ffffff; --ink:#1f2937;
+    --accent:#7c3aed; --ok:#16a34a; --bad:#dc2626; --soft:#f3e8ff;
+  }
+  *{box-sizing:border-box;font-family:"Segoe UI",system-ui,sans-serif}
+  body{margin:0;min-height:100vh;display:flex;align-items:center;justify-content:center;
+    background:linear-gradient(135deg,var(--bg1),var(--bg2));padding:20px;color:var(--ink)}
+  .app{background:var(--card);width:min(760px,100%);border-radius:24px;
+    box-shadow:0 25px 60px rgba(0,0,0,.35);padding:34px 34px 28px;position:relative;overflow:hidden}
+  h1{margin:0 0 6px;font-size:26px;text-align:center}
+  .sub{text-align:center;color:#64748b;margin-bottom:22px;font-size:15px}
+  .bar{height:10px;background:var(--soft);border-radius:99px;overflow:hidden;margin-bottom:18px}
+  .bar>i{display:block;height:100%;width:0;background:var(--accent);transition:.4s}
+  .meta{display:flex;justify-content:space-between;font-size:14px;color:#64748b;margin-bottom:14px}
+  .q{font-size:22px;font-weight:700;margin:6px 0 20px;line-height:1.3}
+  .q code{background:#0f172a;color:#e2e8f0;padding:2px 8px;border-radius:6px;font-size:19px}
+  .opts{display:grid;gap:12px}
+  .opt{border:2px solid #e2e8f0;background:#fff;border-radius:14px;padding:15px 18px;font-size:18px;
+    text-align:left;cursor:pointer;transition:.15s;display:flex;align-items:center;gap:12px}
+  .opt:hover{border-color:var(--accent);background:var(--soft);transform:translateY(-2px)}
+  .opt b{background:var(--soft);color:var(--accent);width:30px;height:30px;border-radius:8px;
+    display:flex;align-items:center;justify-content:center;font-size:15px;flex:0 0 auto}
+  .opt span code{background:#0f172a;color:#e2e8f0;padding:1px 6px;border-radius:5px;font-size:16px}
+  .opt.ok{border-color:var(--ok);background:#dcfce7}
+  .opt.ok b{background:var(--ok);color:#fff}
+  .opt.bad{border-color:var(--bad);background:#fee2e2}
+  .opt.bad b{background:var(--bad);color:#fff}
+  .opt:disabled{cursor:default;transform:none}
+  .fb{margin-top:16px;padding:14px 16px;border-radius:12px;font-size:16px;display:none;line-height:1.4}
+  .fb.show{display:block}
+  .fb.good{background:#dcfce7;color:#166534}
+  .fb.no{background:#fee2e2;color:#991b1b}
+  .fb code{background:#0f172a;color:#e2e8f0;padding:1px 6px;border-radius:5px}
+  .btn{margin-top:18px;width:100%;padding:15px;border:0;border-radius:14px;background:var(--accent);
+    color:#fff;font-size:18px;font-weight:700;cursor:pointer;display:none}
+  .btn.show{display:block}
+  .btn:hover{filter:brightness(1.08)}
+  .center{text-align:center}
+  .score{font-size:64px;font-weight:800;margin:10px 0}
+  .emoji{font-size:70px}
+  .hint{color:#94a3b8;font-size:13px;text-align:center;margin-top:14px}
+</style>
+</head>
+<body>
+<div class="app" id="app"></div>
+<script>
+// Урок 2 (Модуль 2): вопросы по шрифтам + 🔁 повторение ссылок и CSS + смешные + на подумать.
+const QUESTIONS = [
+  {q:"Каким свойством задают шрифт текста?",
+   a:["text-font","font-family","font-name","typeface"],c:1,
+   e:"font-family задаёт шрифт (семейство шрифтов)."},
+  {q:"Зачем в конце стека пишут <code>sans-serif</code>?",
+   a:["Для красоты","Это страховка — семейство, если нужного шрифта нет","Так быстрее","Это имя шрифта"],c:1,
+   e:"serif/sans-serif/monospace в конце — запасное семейство, чтобы страница не осталась без шрифта."},
+  {q:"Как правильно записать имя шрифта из двух слов?",
+   a:["font-family: Comic Sans MS","font-family: \"Comic Sans MS\"","font-family: Comic-Sans-MS","font-family: [Comic Sans MS]"],c:1,
+   e:"Имя с пробелами — в кавычках: \"Comic Sans MS\"."},
+  {q:"Сколько шагов, чтобы поставить шрифт с Google Fonts?",
+   a:["Один: только font-family","Два: подключить <link> и применить font-family","Три","Ноль, он уже есть"],c:1,
+   e:"Два шага: подключить <link> в <head> и применить font-family в CSS."},
+  {q:"Что делает тег <code>&lt;link&gt;</code> при подключении Google Fonts?",
+   a:["Красит текст","Скачивает шрифт с серверов Google","Задаёт размер","Делает ссылку"],c:1,
+   e:"<link> говорит браузеру скачать шрифт. font-family потом его применяет."},
+  {q:"Google Fonts — это...",
+   a:["Платная программа","Бесплатная библиотека шрифтов для сайтов","Редактор шрифтов","Игра"],c:1,
+   e:"Огромная бесплатная библиотека шрифтов, которую подключают к сайтам."},
+  {q:"Каким свойством делают текст ЖИРНЫМ?",
+   a:["font-style","font-weight","font-bold","text-weight"],c:1,
+   e:"font-weight: 700 (или bold) — жирный; 400 — обычный."},
+  {q:"Что делает <code>font-style: italic;</code>?",
+   a:["Делает жирным","Делает курсив (наклон)","Меняет цвет","Увеличивает"],c:1,
+   e:"font-style: italic — курсивное (наклонное) начертание."},
+  {q:"Каким правилом подключают СВОЙ шрифт из файла?",
+   a:["@import","@font-face","@font","@src"],c:1,
+   e:"@font-face { font-family: ...; src: url(...); } описывает свой шрифт."},
+  {q:"Что делает <code>url(\"fonts/hero.woff2\")</code> в @font-face?",
+   a:["Красит шрифт","Указывает путь к файлу шрифта","Задаёт размер","Открывает сайт"],c:1,
+   e:"url() — путь к файлу. Тут — к файлу шрифта. Как href у ссылки."},
+  {q:"Какой формат файла шрифта лучший для сайта?",
+   a:[".ttf",".woff2",".jpg",".mp3"],c:1,
+   e:".woff2 — самый лёгкий и быстрый для веба."},
+  {q:"Зачем нужен <code>font-display: swap;</code>?",
+   a:["Красит фон","Чтобы текст не пропадал, пока грузится шрифт","Меняет шрифт по клику","Ускоряет интернет"],c:1,
+   e:"Показывает текст сразу запасным шрифтом, пока грузится основной — без «мигания»."},
+  {q:"Сколько шрифтов обычно советуют на одну страницу?",
+   a:["Как можно больше","Не больше 2 (заголовок + текст)","Ровно 5","Только 1 всегда"],c:1,
+   e:"Обычно 2: один для заголовков, другой для текста. Больше — перебор."},
+
+  {q:"🔁 Урок 1: какой тег делает ссылку?",
+   a:["&lt;link&gt;","&lt;a&gt;","&lt;href&gt;","&lt;font&gt;"],c:1,
+   e:"Ссылку делает &lt;a&gt;. А &lt;link&gt; — подключение (CSS, шрифтов)."},
+  {q:"🔁 Урок 1: как открыть ссылку в новой вкладке?",
+   a:["target=\"_blank\"","new=\"tab\"","open=\"new\"","blank=\"yes\""],c:0,
+   e:"target=\"_blank\" — новая вкладка."},
+  {q:"🔁 Модуль 1: каким свойством красят фон страницы?",
+   a:["color","background-color у body","fill","font-family"],c:1,
+   e:"background-color у body красит фон всей страницы."},
+
+  {q:"😄 Подключил красивый шрифт, а русский текст стал «квадратиками». Почему?",
+   a:["Сломался интернет","У шрифта нет кириллицы","Мало памяти","Нужен другой браузер"],c:1,
+   e:"Не у всех шрифтов есть русские буквы. Выбирай шрифт с поддержкой Cyrillic."},
+  {q:"😄 Написал font-family: Comic Sans MS без кавычек — не работает. В чём дело?",
+   a:["Нет такого шрифта","Имя из нескольких слов надо в кавычки","Нужен @font-face","Слишком длинно"],c:1,
+   e:"Имя с пробелами берут в кавычки: \"Comic Sans MS\"."},
+
+  {q:"🤔 Почему нельзя просто написать font-family любого шрифта и он появится у всех?",
+   a:["Можно, появится","У пользователя может не быть этого шрифта — надо подключить","Шрифты платные","Браузер запрещает"],c:1,
+   e:"Браузер знает только системные шрифты. Красивый надо подключить (Google Fonts или @font-face)."},
+  {q:"🤔 Где ещё пригодится url(), кроме шрифтов?",
+   a:["Нигде","Для фоновых картинок, иконок, курсоров","Только в HTML","Для чисел"],c:1,
+   e:"url() — путь к файлу: фоны (background-image), маркеры, курсоры и другое."},
+];
+
+let i=0, score=0, locked=false;
+const app=document.getElementById('app');
+
+function shuffle(){for(let k=QUESTIONS.length-1;k>0;k--){const j=Math.floor(Math.random()*(k+1));[QUESTIONS[k],QUESTIONS[j]]=[QUESTIONS[j],QUESTIONS[k]];}for(const Q of QUESTIONS){const cc=Q.a[Q.c];for(let k=Q.a.length-1;k>0;k--){const j=Math.floor(Math.random()*(k+1));[Q.a[k],Q.a[j]]=[Q.a[j],Q.a[k]];}Q.c=Q.a.indexOf(cc);}}
+shuffle();
+
+function render(){
+  const Q=QUESTIONS[i];
+  app.innerHTML=`
+    <h1>🔤 Шрифты</h1>
+    <div class="sub">Викторина по уроку 2 · Модуль 2 (WEB)</div>
+    <div class="bar"><i style="width:${(i/QUESTIONS.length)*100}%"></i></div>
+    <div class="meta"><span>Вопрос ${i+1} из ${QUESTIONS.length}</span><span>⭐ Очки: ${score}</span></div>
+    <div class="q">${Q.q}</div>
+    <div class="opts" id="opts">
+      ${Q.a.map((t,n)=>`<button class="opt" data-n="${n}"><b>${n+1}</b><span>${t}</span></button>`).join('')}
+    </div>
+    <div class="fb" id="fb"></div>
+    <button class="btn" id="next">${i===QUESTIONS.length-1?'Показать результат →':'Следующий вопрос →'}</button>
+    <div class="hint">Можно отвечать клавишами 1–4</div>`;
+  locked=false;
+  document.querySelectorAll('.opt').forEach(b=>b.onclick=()=>choose(+b.dataset.n));
+  document.getElementById('next').onclick=next;
+}
+
+function choose(n){
+  if(locked) return; locked=true;
+  const Q=QUESTIONS[i];
+  const opts=[...document.querySelectorAll('.opt')];
+  opts.forEach(b=>b.disabled=true);
+  opts[Q.c].classList.add('ok');
+  const fb=document.getElementById('fb');
+  if(n===Q.c){ score++; fb.className='fb show good'; fb.innerHTML='✅ Верно! '+Q.e; }
+  else { opts[n].classList.add('bad'); fb.className='fb show no'; fb.innerHTML='❌ Не совсем. '+Q.e; }
+  document.querySelector('.meta').children[1].textContent='⭐ Очки: '+score;
+  document.getElementById('next').classList.add('show');
+}
+
+function next(){ i++; if(i<QUESTIONS.length) render(); else result(); }
+
+function result(){
+  const pct=Math.round(score/QUESTIONS.length*100);
+  let em,msg;
+  if(pct===100){em='🏆';msg='Идеально! Google Fonts и @font-face — как орешки! 🔤';}
+  else if(pct>=70){em='🎉';msg='Отлично! Шрифты освоены уверенно.';}
+  else if(pct>=40){em='👍';msg='Неплохо! Повтори: подключить+применить, font-weight и url().';}
+  else {em='💪';msg='Начало положено! Загляни в самоучитель — там по шагам.';}
+  app.innerHTML=`
+    <div class="center">
+      <div class="emoji">${em}</div>
+      <h1>Готово!</h1>
+      <div class="score">${score} / ${QUESTIONS.length}</div>
+      <div class="sub">${msg}</div>
+      <button class="btn show" id="again">🔁 Пройти заново</button>
+    </div>`;
+  document.getElementById('again').onclick=()=>{i=0;score=0;shuffle();render();};
+}
+
+document.addEventListener('keydown',e=>{
+  if(['1','2','3','4'].includes(e.key)){ const b=document.querySelector(`.opt[data-n="${+e.key-1}"]`); if(b&&!b.disabled) choose(+e.key-1); }
+  if(e.key==='Enter'){ const nb=document.getElementById('next'); if(nb&&nb.classList.contains('show')) next(); }
+});
+
+render();
+</script>
+</body>
+</html>

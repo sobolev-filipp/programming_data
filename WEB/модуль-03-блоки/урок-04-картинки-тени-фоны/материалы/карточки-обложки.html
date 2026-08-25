@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🛍 Объёмные карточки с обложкой</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: "Montserrat", system-ui, sans-serif;
+            background: #eef2f7;
+            padding: 40px;
+            color: #1e293b;
+            /* карточки в ряд — display:flex как рабочий рецепт (подробно в модуле Flexbox) */
+            display: flex;
+            flex-wrap: wrap;
+            gap: 24px;
+            justify-content: center;
+        }
+
+        .card {
+            width: 260px;
+            background: #fff;
+            border-radius: 16px;
+            overflow: hidden;                         /* обрезаем обложку по углам */
+            box-shadow: 0 6px 18px rgba(0,0,0,.12);
+            transition: 0.2s;
+        }
+        .card:hover {
+            box-shadow: 0 16px 34px rgba(0,0,0,.22);
+            transform: translateY(-6px);
+        }
+
+        .cover {
+            width: 100%;
+            aspect-ratio: 16 / 9;      /* ровная обложка при любом фото */
+            object-fit: cover;          /* фото без искажений */
+            display: block;
+        }
+
+        .body { padding: 16px; }
+        .body h3 { font-size: 18px; margin-bottom: 6px; }
+        .body p { color: #64748b; font-size: 14px; margin-bottom: 12px; }
+
+        .pill {
+            display: inline-block;
+            border-radius: 999px;
+            padding: 4px 12px;
+            background: #e0e7ff;
+            color: #4338ca;
+            font-size: 13px;
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body>
+    <!-- обложки здесь — простые SVG-«фото» (data URI), чтобы пример работал офлайн.
+         В своей работе поставь настоящее фото: <img class="cover" src="foto.jpg" alt="..."> -->
+
+    <article class="card">
+        <img class="cover" alt="Обложка: космос"
+             src="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='400' height='225'><rect width='400' height='225' fill='%230f172a'/><circle cx='300' cy='70' r='36' fill='%23fca5a5'/><circle cx='90' cy='150' r='4' fill='%23fff'/><circle cx='160' cy='60' r='3' fill='%23fff'/><circle cx='250' cy='170' r='3' fill='%23fff'/></svg>">
+        <div class="body">
+            <h3>Космический раннер</h3>
+            <p>Беги, прыгай, собирай звёзды!</p>
+            <span class="pill">Аркада</span>
+        </div>
+    </article>
+
+    <article class="card">
+        <img class="cover" alt="Обложка: закат"
+             src="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='400' height='225'><rect width='400' height='225' fill='%23fb923c'/><circle cx='200' cy='120' r='60' fill='%23fde047'/><path d='M0 225 Q200 150 400 225 Z' fill='%23065f46'/></svg>">
+        <div class="body">
+            <h3>Остров приключений</h3>
+            <p>Открой карту и найди сокровища.</p>
+            <span class="pill">Квест</span>
+        </div>
+    </article>
+
+    <article class="card">
+        <img class="cover" alt="Обложка: гонки"
+             src="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='400' height='225'><rect width='400' height='225' fill='%230ea5e9'/><rect y='150' width='400' height='75' fill='%231e293b'/><rect x='40' y='182' width='40' height='10' fill='%23fff'/><rect x='160' y='182' width='40' height='10' fill='%23fff'/><rect x='280' y='182' width='40' height='10' fill='%23fff'/></svg>">
+        <div class="body">
+            <h3>Турбо-гонки</h3>
+            <p>Обгоняй соперников на вираже!</p>
+            <span class="pill">Гонки</span>
+        </div>
+    </article>
+</body>
+</html>

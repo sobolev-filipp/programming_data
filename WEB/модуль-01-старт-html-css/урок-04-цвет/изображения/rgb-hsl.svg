@@ -2,21 +2,47 @@
   <rect x="0" y="0" width="720" height="340" rx="16" fill="#f8fafc" stroke="#e2e8f0" stroke-width="2"/>
   <text x="360" y="38" text-anchor="middle" font-size="22" font-weight="700" fill="#1e293b">Два способа «собрать» цвет</text>
 
-  <!-- RGB additive -->
+  <!-- RGB additive: диаграмма Венна через clipPath (без mix-blend-mode) -->
   <text x="185" y="72" text-anchor="middle" font-size="17" font-weight="700" fill="#334155">RGB — смешиваем свет</text>
-  <g style="mix-blend-mode:screen">
-    <circle cx="160" cy="150" r="55" fill="#ff0000"/>
-    <circle cx="210" cy="150" r="55" fill="#00ff00"/>
-    <circle cx="185" cy="195" r="55" fill="#0000ff"/>
-  </g>
-  <text x="185" y="285" text-anchor="middle" font-size="13" fill="#64748b">Красный + Зелёный + Синий</text>
-  <text x="185" y="304" text-anchor="middle" font-size="13" fill="#64748b">каждый от 0 до 255</text>
-  <text x="185" y="323" text-anchor="middle" font-size="12" font-family="'Consolas',monospace" fill="#7c3aed">rgb(255,255,255)=белый</text>
 
-  <line x1="380" y1="80" x2="380" y2="300" stroke="#e2e8f0" stroke-width="2"/>
+  <defs>
+    <clipPath id="clipG"><circle cx="207" cy="150" r="52"/></clipPath>
+    <clipPath id="clipB"><circle cx="185" cy="190" r="52"/></clipPath>
+  </defs>
+
+  <!-- три основных круга -->
+  <circle cx="163" cy="150" r="52" fill="#ff0000"/>
+  <circle cx="207" cy="150" r="52" fill="#00cc00"/>
+  <circle cx="185" cy="190" r="52" fill="#0000ff"/>
+
+  <!-- попарные пересечения -->
+  <!-- R∩G = жёлтый: рисуем красный круг, обрезанный зелёным -->
+  <circle cx="163" cy="150" r="52" fill="#ffe000" clip-path="url(#clipG)"/>
+  <!-- G∩B = голубой: зелёный круг, обрезанный синим -->
+  <circle cx="207" cy="150" r="52" fill="#00e5ff" clip-path="url(#clipB)"/>
+  <!-- R∩B = пурпурный: красный круг, обрезанный синим -->
+  <circle cx="163" cy="150" r="52" fill="#ff00ff" clip-path="url(#clipB)"/>
+  <!-- R∩G∩B = белый: красный круг, обрезанный и зелёным, и синим -->
+  <g clip-path="url(#clipG)"><circle cx="163" cy="150" r="52" fill="#ffffff" clip-path="url(#clipB)"/></g>
+
+  <!-- контуры для чёткости -->
+  <circle cx="163" cy="150" r="52" fill="none" stroke="#00000022" stroke-width="1"/>
+  <circle cx="207" cy="150" r="52" fill="none" stroke="#00000022" stroke-width="1"/>
+  <circle cx="185" cy="190" r="52" fill="none" stroke="#00000022" stroke-width="1"/>
+
+  <!-- метки букв -->
+  <text x="132" y="132" text-anchor="middle" font-size="15" font-weight="700" fill="#ffffff">R</text>
+  <text x="238" y="132" text-anchor="middle" font-size="15" font-weight="700" fill="#ffffff">G</text>
+  <text x="185" y="222" text-anchor="middle" font-size="15" font-weight="700" fill="#ffffff">B</text>
+
+  <text x="185" y="288" text-anchor="middle" font-size="13" fill="#64748b">Красный + Зелёный + Синий свет</text>
+  <text x="185" y="306" text-anchor="middle" font-size="13" fill="#64748b">в центре всё вместе = белый</text>
+  <text x="185" y="325" text-anchor="middle" font-size="12" font-family="'Consolas',monospace" fill="#7c3aed">rgb(255,255,255) = белый</text>
+
+  <line x1="385" y1="80" x2="385" y2="300" stroke="#e2e8f0" stroke-width="2"/>
 
   <!-- HSL -->
-  <text x="545" y="72" text-anchor="middle" font-size="17" font-weight="700" fill="#334155">HSL — крутим «ручки»</text>
+  <text x="550" y="72" text-anchor="middle" font-size="17" font-weight="700" fill="#334155">HSL — крутим «ручки»</text>
   <defs>
     <linearGradient id="hue" x1="0" y1="0" x2="1" y2="0">
       <stop offset="0" stop-color="#ff0000"/><stop offset="0.17" stop-color="#ffff00"/>
@@ -25,12 +51,12 @@
       <stop offset="1" stop-color="#ff0000"/>
     </linearGradient>
   </defs>
-  <rect x="430" y="100" width="230" height="30" rx="8" fill="url(#hue)"/>
-  <text x="430" y="152" font-size="13" fill="#334155">H — тон (0–360°): какой цвет</text>
-  <text x="430" y="200" font-size="13" fill="#334155">S — насыщенность (%):</text>
-  <text x="446" y="218" font-size="12" fill="#64748b">от серого до сочного</text>
-  <text x="430" y="248" font-size="13" fill="#334155">L — светлота (%):</text>
-  <text x="446" y="266" font-size="12" fill="#64748b">от чёрного до белого</text>
-  <text x="430" y="304" font-size="12" font-family="'Consolas',monospace" fill="#0d9488">hsl(120,100%,50%)=зелёный</text>
-  <text x="430" y="322" font-size="12" fill="#94a3b8">удобно подбирать оттенки!</text>
+  <rect x="435" y="100" width="230" height="30" rx="8" fill="url(#hue)"/>
+  <text x="435" y="154" font-size="13" fill="#334155">H — тон (0–360°): какой цвет</text>
+  <text x="435" y="200" font-size="13" fill="#334155">S — насыщенность (%):</text>
+  <text x="451" y="218" font-size="12" fill="#64748b">от серого до сочного</text>
+  <text x="435" y="248" font-size="13" fill="#334155">L — светлота (%):</text>
+  <text x="451" y="266" font-size="12" fill="#64748b">от чёрного до белого</text>
+  <text x="435" y="304" font-size="12" font-family="'Consolas',monospace" fill="#0d9488">hsl(120,100%,50%) = зелёный</text>
+  <text x="435" y="322" font-size="12" fill="#94a3b8">удобно подбирать оттенки!</text>
 </svg>

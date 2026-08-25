@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Викторина — Урок 1: Ссылки</title>
+<style>
+  :root{
+    --bg1:#0ea5e9; --bg2:#2563eb; --card:#ffffff; --ink:#1f2937;
+    --accent:#2563eb; --ok:#16a34a; --bad:#dc2626; --soft:#e0f2fe;
+  }
+  *{box-sizing:border-box;font-family:"Segoe UI",system-ui,sans-serif}
+  body{margin:0;min-height:100vh;display:flex;align-items:center;justify-content:center;
+    background:linear-gradient(135deg,var(--bg1),var(--bg2));padding:20px;color:var(--ink)}
+  .app{background:var(--card);width:min(760px,100%);border-radius:24px;
+    box-shadow:0 25px 60px rgba(0,0,0,.35);padding:34px 34px 28px;position:relative;overflow:hidden}
+  h1{margin:0 0 6px;font-size:26px;text-align:center}
+  .sub{text-align:center;color:#64748b;margin-bottom:22px;font-size:15px}
+  .bar{height:10px;background:var(--soft);border-radius:99px;overflow:hidden;margin-bottom:18px}
+  .bar>i{display:block;height:100%;width:0;background:var(--accent);transition:.4s}
+  .meta{display:flex;justify-content:space-between;font-size:14px;color:#64748b;margin-bottom:14px}
+  .q{font-size:22px;font-weight:700;margin:6px 0 20px;line-height:1.3}
+  .q code{background:#0f172a;color:#e2e8f0;padding:2px 8px;border-radius:6px;font-size:19px}
+  .opts{display:grid;gap:12px}
+  .opt{border:2px solid #e2e8f0;background:#fff;border-radius:14px;padding:15px 18px;font-size:18px;
+    text-align:left;cursor:pointer;transition:.15s;display:flex;align-items:center;gap:12px}
+  .opt:hover{border-color:var(--accent);background:var(--soft);transform:translateY(-2px)}
+  .opt b{background:var(--soft);color:var(--accent);width:30px;height:30px;border-radius:8px;
+    display:flex;align-items:center;justify-content:center;font-size:15px;flex:0 0 auto}
+  .opt span code{background:#0f172a;color:#e2e8f0;padding:1px 6px;border-radius:5px;font-size:16px}
+  .opt.ok{border-color:var(--ok);background:#dcfce7}
+  .opt.ok b{background:var(--ok);color:#fff}
+  .opt.bad{border-color:var(--bad);background:#fee2e2}
+  .opt.bad b{background:var(--bad);color:#fff}
+  .opt:disabled{cursor:default;transform:none}
+  .fb{margin-top:16px;padding:14px 16px;border-radius:12px;font-size:16px;display:none;line-height:1.4}
+  .fb.show{display:block}
+  .fb.good{background:#dcfce7;color:#166534}
+  .fb.no{background:#fee2e2;color:#991b1b}
+  .fb code{background:#0f172a;color:#e2e8f0;padding:1px 6px;border-radius:5px}
+  .btn{margin-top:18px;width:100%;padding:15px;border:0;border-radius:14px;background:var(--accent);
+    color:#fff;font-size:18px;font-weight:700;cursor:pointer;display:none}
+  .btn.show{display:block}
+  .btn:hover{filter:brightness(1.08)}
+  .center{text-align:center}
+  .score{font-size:64px;font-weight:800;margin:10px 0}
+  .emoji{font-size:70px}
+  .hint{color:#94a3b8;font-size:13px;text-align:center;margin-top:14px}
+</style>
+</head>
+<body>
+<div class="app" id="app"></div>
+<script>
+// Урок 1 (Модуль 2): вопросы по ссылкам + 🔁 повторение HTML/CSS модуля 1 + смешные + на подумать.
+const QUESTIONS = [
+  {q:"Какой тег делает ссылку?",
+   a:["&lt;link&gt;","&lt;a&gt;","&lt;href&gt;","&lt;url&gt;"],c:1,
+   e:"Ссылку делает тег &lt;a&gt; (anchor). &lt;link&gt; — это подключение CSS."},
+  {q:"Какой атрибут задаёт адрес ссылки?",
+   a:["src","href","rel","link"],c:1,
+   e:"href — адрес, куда ведёт ссылка. src — у картинок."},
+  {q:"Как открыть ссылку в НОВОЙ вкладке?",
+   a:["new=\"tab\"","target=\"_blank\"","open=\"new\"","href=\"_blank\""],c:1,
+   e:"target=\"_blank\" открывает ссылку в новой вкладке."},
+  {q:"Что означает адрес <code>href=\"about.html\"</code> (без https)?",
+   a:["Чужой сайт","Свою страницу, лежащую рядом","Ошибку","Картинку"],c:1,
+   e:"Без https:// и просто имя файла — это своя страница рядом."},
+  {q:"Как сделать ссылку, которая пишет письмо?",
+   a:["href=\"email:...\"","href=\"mailto:hi@mail.ru\"","href=\"send:...\"","target=\"mail\""],c:1,
+   e:"mailto: открывает почтовую программу с готовым адресом."},
+  {q:"Что делает <code>href=\"tel:+79001234567\"</code>?",
+   a:["Открывает сайт телефона","Начинает набор номера","Пишет SMS","Ничего"],c:1,
+   e:"tel: на телефоне предлагает позвонить по номеру."},
+  {q:"Как работает якорь (прыжок к разделу)?",
+   a:["href=\"#имя\" + id=\"имя\" у раздела","target=\"раздел\"","href=\"раздел\"","jump=\"имя\""],c:0,
+   e:"На разделе — id=\"имя\", в ссылке — href=\"#имя\". Имена совпадают."},
+  {q:"Куда прыгнет <code>&lt;a href=\"#\"&gt;Наверх&lt;/a&gt;</code>?",
+   a:["На другой сайт","В самый верх страницы","Никуда","В конец страницы"],c:1,
+   e:"Просто # прыгает в самый верх страницы. Удобно для кнопки «Наверх»."},
+  {q:"Как убрать подчёркивание у ссылки?",
+   a:["text-align: none","text-decoration: none","underline: off","border: none"],c:1,
+   e:"text-decoration: none убирает подчёркивание. underline — вернуть."},
+  {q:"Сколько состояний у ссылки мы разобрали?",
+   a:["Одно","Два","Четыре","Десять"],c:2,
+   e:"Четыре: :link, :visited, :hover, :active (LoVe HAte)."},
+  {q:"В каком порядке пишут псевдоклассы ссылок?",
+   a:["hover, active, link, visited","link, visited, hover, active","active, hover, visited, link","любом"],c:1,
+   e:"LoVe HAte: :link → :visited → :hover → :active. Иначе :hover может не сработать."},
+  {q:"Каким тегом оборачивают меню навигации?",
+   a:["&lt;menu&gt;","&lt;nav&gt;","&lt;list&gt;","&lt;bar&gt;"],c:1,
+   e:"&lt;nav&gt; — смысловой контейнер для навигации (меню)."},
+  {q:"Что делает Emmet <code>^</code> в строке <code>nav>a^footer</code>?",
+   a:["Повторяет тег","Поднимает на уровень вверх (footer станет рядом с nav)","Удаляет тег","Делает жирным"],c:1,
+   e:"^ выводит наружу: footer станет соседом nav, а не внутри него."},
+
+  {q:"🔁 Модуль 1: как подключить внешний CSS-файл?",
+   a:["&lt;a href=\"style.css\"&gt;","&lt;link rel=\"stylesheet\" href=\"style.css\"&gt;","&lt;style src=\"style.css\"&gt;","&lt;css&gt;"],c:1,
+   e:"&lt;link rel=\"stylesheet\" href=\"style.css\"&gt; в &lt;head&gt;. А &lt;a&gt; — это ссылка!"},
+  {q:"🔁 Модуль 1: какой тег — непарный (одиночный)?",
+   a:["&lt;p&gt;","&lt;a&gt;","&lt;img&gt;","&lt;nav&gt;"],c:2,
+   e:"&lt;img&gt; одиночный. И &lt;link&gt;, &lt;br&gt;, &lt;hr&gt; тоже. А &lt;a&gt; — парный."},
+  {q:"🔁 Модуль 1: чем красят цвет ТЕКСТА?",
+   a:["background-color","color","text-align","fill"],c:1,
+   e:"color — цвет текста, в том числе у ссылок."},
+  {q:"🔁 Модуль 1: что развернёт Emmet <code>!</code>?",
+   a:["Ссылку","Каркас HTML-страницы","Список","Ошибку"],c:1,
+   e:"! + Tab разворачивает весь каркас страницы."},
+
+  {q:"😄 Ты кликнул по якорю, а он не прыгает. Что проверить ПЕРВЫМ?",
+   a:["Перезагрузить компьютер","Совпадает ли имя #имя с id раздела","Сменить браузер","Удалить ссылку"],c:1,
+   e:"Чаще всего имя после # не совпадает с id (или разный регистр букв)."},
+  {q:"😄 Ссылка на внешний сайт ведёт «в никуда». Почему?",
+   a:["Сайт сломан","Забыл https:// в адресе","Мало текста","Нужен target"],c:1,
+   e:"Внешний адрес пиши целиком: https://... Иначе браузер ищет файл рядом."},
+
+  {q:"🤔 Почему интернет называют «паутиной» (web)?",
+   a:["Из-за пауков","Страницы связаны ссылками в сеть","Так короче","Случайно"],c:1,
+   e:"Ссылки соединяют страницы в огромную связанную сеть — паутину."},
+  {q:"🤔 Зачем к внешней ссылке с target=\"_blank\" добавляют rel=\"noopener\"?",
+   a:["Для красоты","Для безопасности — чужая страница не «дотянется» до твоей","Чтобы быстрее грузилось","Это обязательно"],c:1,
+   e:"rel=\"noopener\" — защита: новая вкладка не получит доступ к твоей странице."},
+];
+
+let i=0, score=0, locked=false;
+const app=document.getElementById('app');
+
+function shuffle(){for(let k=QUESTIONS.length-1;k>0;k--){const j=Math.floor(Math.random()*(k+1));[QUESTIONS[k],QUESTIONS[j]]=[QUESTIONS[j],QUESTIONS[k]];}for(const Q of QUESTIONS){const cc=Q.a[Q.c];for(let k=Q.a.length-1;k>0;k--){const j=Math.floor(Math.random()*(k+1));[Q.a[k],Q.a[j]]=[Q.a[j],Q.a[k]];}Q.c=Q.a.indexOf(cc);}}
+shuffle();
+
+function render(){
+  const Q=QUESTIONS[i];
+  app.innerHTML=`
+    <h1>🔗 Ссылки</h1>
+    <div class="sub">Викторина по уроку 1 · Модуль 2 (WEB)</div>
+    <div class="bar"><i style="width:${(i/QUESTIONS.length)*100}%"></i></div>
+    <div class="meta"><span>Вопрос ${i+1} из ${QUESTIONS.length}</span><span>⭐ Очки: ${score}</span></div>
+    <div class="q">${Q.q}</div>
+    <div class="opts" id="opts">
+      ${Q.a.map((t,n)=>`<button class="opt" data-n="${n}"><b>${n+1}</b><span>${t}</span></button>`).join('')}
+    </div>
+    <div class="fb" id="fb"></div>
+    <button class="btn" id="next">${i===QUESTIONS.length-1?'Показать результат →':'Следующий вопрос →'}</button>
+    <div class="hint">Можно отвечать клавишами 1–4</div>`;
+  locked=false;
+  document.querySelectorAll('.opt').forEach(b=>b.onclick=()=>choose(+b.dataset.n));
+  document.getElementById('next').onclick=next;
+}
+
+function choose(n){
+  if(locked) return; locked=true;
+  const Q=QUESTIONS[i];
+  const opts=[...document.querySelectorAll('.opt')];
+  opts.forEach(b=>b.disabled=true);
+  opts[Q.c].classList.add('ok');
+  const fb=document.getElementById('fb');
+  if(n===Q.c){ score++; fb.className='fb show good'; fb.innerHTML='✅ Верно! '+Q.e; }
+  else { opts[n].classList.add('bad'); fb.className='fb show no'; fb.innerHTML='❌ Не совсем. '+Q.e; }
+  document.querySelector('.meta').children[1].textContent='⭐ Очки: '+score;
+  document.getElementById('next').classList.add('show');
+}
+
+function next(){ i++; if(i<QUESTIONS.length) render(); else result(); }
+
+function result(){
+  const pct=Math.round(score/QUESTIONS.length*100);
+  let em,msg;
+  if(pct===100){em='🏆';msg='Идеально! Ссылки, якоря и стили — как орешки! 🔗';}
+  else if(pct>=70){em='🎉';msg='Отлично! Ссылки освоены уверенно.';}
+  else if(pct>=40){em='👍';msg='Неплохо! Повтори: href, target, якоря # и порядок LoVe HAte.';}
+  else {em='💪';msg='Начало положено! Загляни в самоучитель — там по шагам.';}
+  app.innerHTML=`
+    <div class="center">
+      <div class="emoji">${em}</div>
+      <h1>Готово!</h1>
+      <div class="score">${score} / ${QUESTIONS.length}</div>
+      <div class="sub">${msg}</div>
+      <button class="btn show" id="again">🔁 Пройти заново</button>
+    </div>`;
+  document.getElementById('again').onclick=()=>{i=0;score=0;shuffle();render();};
+}
+
+document.addEventListener('keydown',e=>{
+  if(['1','2','3','4'].includes(e.key)){ const b=document.querySelector(`.opt[data-n="${+e.key-1}"]`); if(b&&!b.disabled) choose(+e.key-1); }
+  if(e.key==='Enter'){ const nb=document.getElementById('next'); if(nb&&nb.classList.contains('show')) next(); }
+});
+
+render();
+</script>
+</body>
+</html>

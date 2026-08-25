@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 380" font-family="'Segoe UI', Arial, sans-serif">
+<rect x="0" y="0" width="720" height="380" rx="16" fill="#f8fafc" stroke="#e2e8f0" stroke-width="2"/>
+<text x="360" y="34" text-anchor="middle" font-size="22" font-weight="700" fill="#1e293b">box-sizing: одна и та же width — разный итог</text>
+<text x="360" y="58" text-anchor="middle" font-size="14" fill="#64748b">задано: width: 200px; padding: 20px; border: 5px</text>
+<text x="195" y="92" text-anchor="middle" font-size="16" font-weight="700" fill="#dc2626">content-box (по умолчанию)</text>
+<rect x="70" y="108" width="250" height="90" fill="#334155"/>
+<rect x="75" y="113" width="240" height="80" fill="#dcfce7"/>
+<rect x="95" y="133" width="200" height="40" fill="#dbeafe" stroke="#3b82f6" stroke-width="1"/>
+<text x="195" y="157" text-anchor="middle" font-size="12" fill="#1e40af" font-family="'Consolas','Courier New',monospace">content 200px</text>
+<line x1="70" y1="218" x2="320" y2="218" stroke="#dc2626" stroke-width="2"/>
+<line x1="70" y1="212" x2="70" y2="224" stroke="#dc2626" stroke-width="2"/>
+<line x1="320" y1="212" x2="320" y2="224" stroke="#dc2626" stroke-width="2"/>
+<text x="195" y="242" text-anchor="middle" font-size="14" font-weight="700" fill="#dc2626">реально 250px  ✗</text>
+<text x="530" y="92" text-anchor="middle" font-size="16" font-weight="700" fill="#16a34a">border-box  ✓</text>
+<rect x="430" y="108" width="200" height="90" fill="#334155"/>
+<rect x="435" y="113" width="190" height="80" fill="#dcfce7"/>
+<rect x="455" y="133" width="150" height="40" fill="#dbeafe" stroke="#3b82f6" stroke-width="1"/>
+<text x="530" y="157" text-anchor="middle" font-size="12" fill="#1e40af" font-family="'Consolas','Courier New',monospace">content 150px</text>
+<line x1="430" y1="218" x2="630" y2="218" stroke="#16a34a" stroke-width="2"/>
+<line x1="430" y1="212" x2="430" y2="224" stroke="#16a34a" stroke-width="2"/>
+<line x1="630" y1="212" x2="630" y2="224" stroke="#16a34a" stroke-width="2"/>
+<text x="530" y="242" text-anchor="middle" font-size="14" font-weight="700" fill="#16a34a">ровно 200px  ✓</text>
+<text x="360" y="366" text-anchor="middle" font-size="13" font-family="'Consolas','Courier New',monospace" fill="#7c3aed">* { box-sizing: border-box; } — что задал в width, то и получил</text>
+</svg>

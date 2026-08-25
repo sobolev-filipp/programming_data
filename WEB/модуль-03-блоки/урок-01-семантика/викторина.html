@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Викторина — Урок 1: Семантика</title>
+<style>
+  :root{
+    --bg1:#6366f1; --bg2:#8b5cf6; --card:#ffffff; --ink:#1f2937;
+    --accent:#6366f1; --ok:#16a34a; --bad:#dc2626; --soft:#e0e7ff;
+  }
+  *{box-sizing:border-box;font-family:"Segoe UI",system-ui,sans-serif}
+  body{margin:0;min-height:100vh;display:flex;align-items:center;justify-content:center;
+    background:linear-gradient(135deg,var(--bg1),var(--bg2));padding:20px;color:var(--ink)}
+  .app{background:var(--card);width:min(760px,100%);border-radius:24px;
+    box-shadow:0 25px 60px rgba(0,0,0,.35);padding:34px 34px 28px;position:relative;overflow:hidden}
+  h1{margin:0 0 6px;font-size:26px;text-align:center}
+  .sub{text-align:center;color:#64748b;margin-bottom:22px;font-size:15px}
+  .bar{height:10px;background:var(--soft);border-radius:99px;overflow:hidden;margin-bottom:18px}
+  .bar>i{display:block;height:100%;width:0;background:var(--accent);transition:.4s}
+  .meta{display:flex;justify-content:space-between;font-size:14px;color:#64748b;margin-bottom:14px}
+  .q{font-size:22px;font-weight:700;margin:6px 0 20px;line-height:1.3}
+  .q code{background:#0f172a;color:#e2e8f0;padding:2px 8px;border-radius:6px;font-size:19px}
+  .opts{display:grid;gap:12px}
+  .opt{border:2px solid #e2e8f0;background:#fff;border-radius:14px;padding:15px 18px;font-size:18px;
+    text-align:left;cursor:pointer;transition:.15s;display:flex;align-items:center;gap:12px}
+  .opt:hover{border-color:var(--accent);background:var(--soft);transform:translateY(-2px)}
+  .opt b{background:var(--soft);color:var(--accent);width:30px;height:30px;border-radius:8px;
+    display:flex;align-items:center;justify-content:center;font-size:15px;flex:0 0 auto}
+  .opt span code{background:#0f172a;color:#e2e8f0;padding:1px 6px;border-radius:5px;font-size:16px}
+  .opt.ok{border-color:var(--ok);background:#dcfce7}
+  .opt.ok b{background:var(--ok);color:#fff}
+  .opt.bad{border-color:var(--bad);background:#fee2e2}
+  .opt.bad b{background:var(--bad);color:#fff}
+  .opt:disabled{cursor:default;transform:none}
+  .fb{margin-top:16px;padding:14px 16px;border-radius:12px;font-size:16px;display:none;line-height:1.4}
+  .fb.show{display:block}
+  .fb.good{background:#dcfce7;color:#166534}
+  .fb.no{background:#fee2e2;color:#991b1b}
+  .fb code{background:#0f172a;color:#e2e8f0;padding:1px 6px;border-radius:5px}
+  .btn{margin-top:18px;width:100%;padding:15px;border:0;border-radius:14px;background:var(--accent);
+    color:#fff;font-size:18px;font-weight:700;cursor:pointer;display:none}
+  .btn.show{display:block}
+  .btn:hover{filter:brightness(1.08)}
+  .center{text-align:center}
+  .score{font-size:64px;font-weight:800;margin:10px 0}
+  .emoji{font-size:70px}
+  .hint{color:#94a3b8;font-size:13px;text-align:center;margin-top:14px}
+</style>
+</head>
+<body>
+<div class="app" id="app"></div>
+<script>
+// Урок 1 (Модуль 3): вопросы по семантике + 🔁 повторение модулей 1–2 + смешные + на подумать.
+const QUESTIONS = [
+  {q:"Что такое семантический тег?",
+   a:["Тег, который красит","Тег-контейнер со смыслом (понятным именем)","Тег для картинок","Тег только для текста"],c:1,
+   e:"Семантический тег — это блок со смыслом: header, nav, main и т.д."},
+  {q:"Какой тег — ШАПКА страницы?",
+   a:["&lt;head&gt;","&lt;header&gt;","&lt;top&gt;","&lt;nav&gt;"],c:1,
+   e:"&lt;header&gt; — шапка. А &lt;head&gt; — служебная часть с meta/title."},
+  {q:"Какой тег — для НАВИГАЦИИ (меню)?",
+   a:["&lt;menu&gt;","&lt;nav&gt;","&lt;main&gt;","&lt;list&gt;"],c:1,
+   e:"&lt;nav&gt; — навигация, обычно меню со ссылками."},
+  {q:"Сколько тегов &lt;main&gt; должно быть на странице?",
+   a:["Сколько угодно","Ровно один","Минимум три","Ни одного"],c:1,
+   e:"&lt;main&gt; — главное содержимое, оно одно на странице."},
+  {q:"Чем &lt;article&gt; отличается от &lt;section&gt;?",
+   a:["Ничем","&lt;article&gt; — самостоятельная единица (можно «вырезать»)","&lt;article&gt; только для текста","&lt;section&gt; — это картинка"],c:1,
+   e:"&lt;article&gt; — самодостаточная единица (новость/пост); &lt;section&gt; — раздел/группа."},
+  {q:"Для чего нужен &lt;aside&gt;?",
+   a:["Главный текст","Блок «сбоку»: похожее, реклама, теги","Шапка","Подвал"],c:1,
+   e:"&lt;aside&gt; — дополнительный блок сбоку, не главное содержимое."},
+  {q:"Какой тег — ПОДВАЛ страницы?",
+   a:["&lt;bottom&gt;","&lt;footer&gt;","&lt;end&gt;","&lt;aside&gt;"],c:1,
+   e:"&lt;footer&gt; — подвал (копирайт, контакты)."},
+  {q:"Как подписать картинку по смыслу?",
+   a:["&lt;p&gt; под картинкой","&lt;figure&gt; + &lt;figcaption&gt;","alt=\"подпись\"","&lt;caption&gt;"],c:1,
+   e:"&lt;figure&gt; оборачивает img, &lt;figcaption&gt; — подпись к нему."},
+  {q:"Семантические теги меняют ВНЕШНИЙ ВИД страницы?",
+   a:["Да, сильно","Нет — вид задаёт CSS, они про смысл","Только цвет","Только шрифт"],c:1,
+   e:"Внешне они как div (блочные). Отличие — в смысле, а вид задаёт CSS."},
+  {q:"Что развернёт Emmet <code>.card</code> (просто точка)?",
+   a:["&lt;card&gt;","&lt;div class=\"card\"&gt;","&lt;span class=\"card\"&gt;","ошибку"],c:1,
+   e:"Точка без тега = div: .card → &lt;div class=\"card\"&gt;."},
+  {q:"Куда логичнее всего положить меню-список из модуля 2?",
+   a:["В &lt;footer&gt;","В &lt;nav&gt;","В &lt;aside&gt;","В &lt;figure&gt;"],c:1,
+   e:"Меню — это навигация, ему место в &lt;nav&gt;."},
+  {q:"Когда брать голый &lt;div&gt;?",
+   a:["Всегда","Когда нет подходящего смыслового тега","Никогда","Только для текста"],c:1,
+   e:"Есть смысловой тег — бери его; div — когда смысла нет."},
+
+  {q:"🔁 Модуль 1: что делает display: inline-block?",
+   a:["Прячет элемент","Ставит в ряд, но с размерами","Только в столбик","Красит фон"],c:1,
+   e:"inline-block — в ряд + можно задать width/height/padding."},
+  {q:"🔁 Модуль 2: из чего делают меню сайта?",
+   a:["Из таблицы","Из списка &lt;ul&gt; без маркеров","Из &lt;div&gt;","Из &lt;figure&gt;"],c:1,
+   e:"Меню — список &lt;ul&gt; (list-style:none, display:flex), теперь внутри &lt;nav&gt;."},
+  {q:"🔁 Модуль 1: какой атрибут обязателен у &lt;img&gt;?",
+   a:["href","alt","target","src и alt"],c:3,
+   e:"src — путь, alt — описание. alt обязателен для доступности."},
+  {q:"🔁 Модуль 2: чем &lt;th&gt; отличается от &lt;td&gt;?",
+   a:["Ничем","&lt;th&gt; — заголовок (жирный, по центру)","&lt;th&gt; больше","&lt;th&gt; для картинок"],c:1,
+   e:"&lt;th&gt; — ячейка-заголовок таблицы."},
+
+  {q:"😄 Ты сделал 3 тега &lt;main&gt; на странице. В чём проблема?",
+   a:["Ни в чём","&lt;main&gt; должен быть один","Нужно 5","main нельзя вообще"],c:1,
+   e:"Главное содержимое одно — значит и &lt;main&gt; один."},
+  {q:"😄 Написал &lt;figcaption&gt; без &lt;figure&gt;. Что не так?",
+   a:["Всё ок","figcaption работает только внутри figure","Нужен alt","Нужна таблица"],c:1,
+   e:"Подпись figcaption должна быть внутри figure."},
+
+  {q:"🤔 Почему «суп из div» — плохо?",
+   a:["Медленно грузится","Непонятно людям, поисковикам и скринридерам","div запрещён","Ничего плохого"],c:1,
+   e:"Смысловые теги понятны браузеру, Google и незрячим; div — безымянный."},
+  {q:"🤔 Кому реально помогает семантика?",
+   a:["Никому","Поисковикам (SEO), незрячим (скринридер), разработчикам","Только дизайнерам","Только браузеру Chrome"],c:1,
+   e:"SEO, доступность и читаемость кода — три главные причины."},
+];
+
+let i=0, score=0, locked=false;
+const app=document.getElementById('app');
+
+function shuffle(){for(let k=QUESTIONS.length-1;k>0;k--){const j=Math.floor(Math.random()*(k+1));[QUESTIONS[k],QUESTIONS[j]]=[QUESTIONS[j],QUESTIONS[k]];}for(const Q of QUESTIONS){const cc=Q.a[Q.c];for(let k=Q.a.length-1;k>0;k--){const j=Math.floor(Math.random()*(k+1));[Q.a[k],Q.a[j]]=[Q.a[j],Q.a[k]];}Q.c=Q.a.indexOf(cc);}}
+shuffle();
+
+function render(){
+  const Q=QUESTIONS[i];
+  app.innerHTML=`
+    <h1>🧱 Семантика</h1>
+    <div class="sub">Викторина по уроку 1 · Модуль 3 (WEB)</div>
+    <div class="bar"><i style="width:${(i/QUESTIONS.length)*100}%"></i></div>
+    <div class="meta"><span>Вопрос ${i+1} из ${QUESTIONS.length}</span><span>⭐ Очки: ${score}</span></div>
+    <div class="q">${Q.q}</div>
+    <div class="opts" id="opts">
+      ${Q.a.map((t,n)=>`<button class="opt" data-n="${n}"><b>${n+1}</b><span>${t}</span></button>`).join('')}
+    </div>
+    <div class="fb" id="fb"></div>
+    <button class="btn" id="next">${i===QUESTIONS.length-1?'Показать результат →':'Следующий вопрос →'}</button>
+    <div class="hint">Можно отвечать клавишами 1–4</div>`;
+  locked=false;
+  document.querySelectorAll('.opt').forEach(b=>b.onclick=()=>choose(+b.dataset.n));
+  document.getElementById('next').onclick=next;
+}
+
+function choose(n){
+  if(locked) return; locked=true;
+  const Q=QUESTIONS[i];
+  const opts=[...document.querySelectorAll('.opt')];
+  opts.forEach(b=>b.disabled=true);
+  opts[Q.c].classList.add('ok');
+  const fb=document.getElementById('fb');
+  if(n===Q.c){ score++; fb.className='fb show good'; fb.innerHTML='✅ Верно! '+Q.e; }
+  else { opts[n].classList.add('bad'); fb.className='fb show no'; fb.innerHTML='❌ Не совсем. '+Q.e; }
+  document.querySelector('.meta').children[1].textContent='⭐ Очки: '+score;
+  document.getElementById('next').classList.add('show');
+}
+
+function next(){ i++; if(i<QUESTIONS.length) render(); else result(); }
+
+function result(){
+  const pct=Math.round(score/QUESTIONS.length*100);
+  let em,msg;
+  if(pct===100){em='🏆';msg='Идеально! Скелет страницы строишь как профи! 🧱';}
+  else if(pct>=70){em='🎉';msg='Отлично! Семантика освоена уверенно.';}
+  else if(pct>=40){em='👍';msg='Неплохо! Повтори: header/nav/main/footer и section vs article.';}
+  else {em='💪';msg='Начало положено! Загляни в самоучитель — там по шагам.';}
+  app.innerHTML=`
+    <div class="center">
+      <div class="emoji">${em}</div>
+      <h1>Готово!</h1>
+      <div class="score">${score} / ${QUESTIONS.length}</div>
+      <div class="sub">${msg}</div>
+      <button class="btn show" id="again">🔁 Пройти заново</button>
+    </div>`;
+  document.getElementById('again').onclick=()=>{i=0;score=0;shuffle();render();};
+}
+
+document.addEventListener('keydown',e=>{
+  if(['1','2','3','4'].includes(e.key)){ const b=document.querySelector(`.opt[data-n="${+e.key-1}"]`); if(b&&!b.disabled) choose(+e.key-1); }
+  if(e.key==='Enter'){ const nb=document.getElementById('next'); if(nb&&nb.classList.contains('show')) next(); }
+});
+
+render();
+</script>
+</body>
+</html>

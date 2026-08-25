@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 430" font-family="'Segoe UI', Arial, sans-serif">
+<rect x="0" y="0" width="720" height="430" rx="16" fill="#f8fafc" stroke="#e2e8f0" stroke-width="2"/>
+<text x="360" y="36" text-anchor="middle" font-size="22" font-weight="700" fill="#1e293b">Блочная модель: 4 слоя коробки</text>
+<rect x="70" y="72" width="480" height="300" rx="6" fill="#ffedd5" stroke="#f59e0b" stroke-width="2" stroke-dasharray="6 4"/>
+<text x="80" y="92" font-size="14" font-weight="700" fill="#b45309" font-family="'Consolas','Courier New',monospace">margin</text>
+<rect x="118" y="118" width="384" height="208" rx="4" fill="#e2e8f0" stroke="#334155" stroke-width="6"/>
+<text x="128" y="138" font-size="13" font-weight="700" fill="#334155" font-family="'Consolas','Courier New',monospace">border</text>
+<rect x="150" y="150" width="320" height="144" rx="3" fill="#dcfce7" stroke="#16a34a" stroke-width="2" stroke-dasharray="5 3"/>
+<text x="160" y="170" font-size="13" font-weight="700" fill="#15803d" font-family="'Consolas','Courier New',monospace">padding</text>
+<rect x="198" y="188" width="224" height="70" rx="3" fill="#dbeafe" stroke="#3b82f6" stroke-width="2"/>
+<text x="310" y="228" text-anchor="middle" font-size="15" font-weight="700" fill="#1e40af" font-family="'Consolas','Courier New',monospace">content</text>
+<rect x="575" y="120" width="26" height="26" rx="4" fill="#dbeafe" stroke="#3b82f6" stroke-width="2"/>
+<text x="609" y="132" font-size="15" font-weight="700" fill="#334155" font-family="'Consolas','Courier New',monospace">content</text>
+<text x="609" y="148" font-size="12" fill="#64748b">текст, картинка</text>
+<rect x="575" y="182" width="26" height="26" rx="4" fill="#dcfce7" stroke="#16a34a" stroke-width="2"/>
+<text x="609" y="194" font-size="15" font-weight="700" fill="#334155" font-family="'Consolas','Courier New',monospace">padding</text>
+<text x="609" y="210" font-size="12" fill="#64748b">воздух ВНУТРИ</text>
+<rect x="575" y="244" width="26" height="26" rx="4" fill="#e2e8f0" stroke="#334155" stroke-width="2"/>
+<text x="609" y="256" font-size="15" font-weight="700" fill="#334155" font-family="'Consolas','Courier New',monospace">border</text>
+<text x="609" y="272" font-size="12" fill="#64748b">рамка</text>
+<rect x="575" y="306" width="26" height="26" rx="4" fill="#ffedd5" stroke="#f59e0b" stroke-width="2"/>
+<text x="609" y="318" font-size="15" font-weight="700" fill="#334155" font-family="'Consolas','Courier New',monospace">margin</text>
+<text x="609" y="334" font-size="12" fill="#64748b">отступ СНАРУЖИ</text>
+<text x="360" y="410" text-anchor="middle" font-size="13" fill="#94a3b8">padding — воздух внутри блока · margin — расстояние между блоками</text>
+</svg>

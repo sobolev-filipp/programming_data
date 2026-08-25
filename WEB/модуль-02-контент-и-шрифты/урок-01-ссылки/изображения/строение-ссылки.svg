@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 300" font-family="'Segoe UI', Arial, sans-serif">
+  <rect x="0" y="0" width="720" height="300" rx="16" fill="#f8fafc" stroke="#e2e8f0" stroke-width="2"/>
+  <text x="360" y="40" text-anchor="middle" font-size="22" font-weight="700" fill="#1e293b">Строение ссылки</text>
+
+  <g font-family="'Consolas','Courier New',monospace" font-size="22" font-weight="700">
+    <text x="40"  y="140" fill="#2965f1">&lt;a</text>
+    <text x="88"  y="140" fill="#7c3aed">href</text>
+    <text x="148" y="140" fill="#64748b">=</text>
+    <text x="166" y="140" fill="#e34f26">&quot;https://ya.ru&quot;</text>
+    <text x="378" y="140" fill="#2965f1">&gt;</text>
+    <text x="398" y="140" fill="#16a34a">Открыть Яндекс</text>
+    <text x="580" y="140" fill="#2965f1">&lt;/a&gt;</text>
+  </g>
+
+  <g font-size="15" text-anchor="middle">
+    <line x1="55" y1="152" x2="55" y2="196" stroke="#2965f1" stroke-width="2"/>
+    <text x="55" y="218" fill="#2965f1" font-weight="700">тег a</text>
+    <text x="55" y="238" font-size="12" fill="#64748b">делает ссылку</text>
+
+    <line x1="108" y1="152" x2="108" y2="182" stroke="#7c3aed" stroke-width="2"/>
+    <text x="240" y="204" fill="#7c3aed" font-weight="700">href — адрес двери</text>
+    <text x="240" y="224" font-size="12" fill="#64748b">куда ведёт клик</text>
+
+    <line x1="470" y1="152" x2="470" y2="252" stroke="#16a34a" stroke-width="2"/>
+    <text x="470" y="274" fill="#16a34a" font-weight="700">текст ссылки — на что кликаешь</text>
+  </g>
+</svg>

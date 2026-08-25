@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 340" font-family="'Segoe UI', Arial, sans-serif">
+<rect x="0" y="0" width="760" height="340" rx="16" fill="#f8fafc" stroke="#e2e8f0" stroke-width="2"/>
+<text x="380" y="34" text-anchor="middle" font-size="22" font-weight="700" fill="#1e293b">object-fit: как картинка ложится в блок</text>
+<text x="380" y="58" text-anchor="middle" font-size="13" fill="#64748b">блок квадратный, а фото широкое (16:9)</text>
+<defs>
+<clipPath id="cf0"><rect x="70" y="90" width="150" height="150" rx="10"/></clipPath>
+<clipPath id="cf1"><rect x="305" y="90" width="150" height="150" rx="10"/></clipPath>
+<clipPath id="cf2"><rect x="540" y="90" width="150" height="150" rx="10"/></clipPath>
+</defs>
+<g clip-path="url(#cf0)">
+<rect x="70" y="90" width="150" height="150" fill="#bae6fd"/>
+<ellipse cx="115" cy="138" rx="22" ry="34" fill="#fde047"/>
+<path d="M 70 240 Q 145 172 220 240 Z" fill="#4ade80"/>
+</g>
+<rect x="305" y="90" width="150" height="150" rx="10" fill="#e2e8f0"/>
+<g clip-path="url(#cf1)">
+<rect x="305" y="123" width="150" height="84" fill="#bae6fd"/>
+<ellipse cx="350" cy="149" rx="24" ry="24" fill="#fde047"/>
+<path d="M 305 207 Q 380 169 455 207 Z" fill="#4ade80"/>
+</g>
+<g clip-path="url(#cf2)">
+<rect x="482" y="90" width="266" height="150" fill="#bae6fd"/>
+<ellipse cx="561" cy="138" rx="24" ry="24" fill="#fde047"/>
+<path d="M 482 240 Q 615 172 748 240 Z" fill="#4ade80"/>
+</g>
+<rect x="70" y="90" width="150" height="150" rx="10" fill="none" stroke="#334155" stroke-width="2.5"/>
+<text x="145" y="266" text-anchor="middle" font-size="16" font-weight="700" fill="#dc2626" font-family="'Consolas','Courier New',monospace">fill</text>
+<text x="145" y="286" text-anchor="middle" font-size="12" fill="#64748b">растянуто (искажение)</text>
+<rect x="305" y="90" width="150" height="150" rx="10" fill="none" stroke="#334155" stroke-width="2.5"/>
+<text x="380" y="266" text-anchor="middle" font-size="16" font-weight="700" fill="#2563eb" font-family="'Consolas','Courier New',monospace">contain</text>
+<text x="380" y="286" text-anchor="middle" font-size="12" fill="#64748b">целиком (с полями)</text>
+<rect x="540" y="90" width="150" height="150" rx="10" fill="none" stroke="#334155" stroke-width="2.5"/>
+<text x="615" y="266" text-anchor="middle" font-size="16" font-weight="700" fill="#16a34a" font-family="'Consolas','Courier New',monospace">cover</text>
+<text x="615" y="286" text-anchor="middle" font-size="12" fill="#64748b">заполняет (обрезано)</text>
+<text x="380" y="326" text-anchor="middle" font-size="12" fill="#94a3b8">Чаще всего для фото в карточках берут cover (заполняет блок без искажений).</text>
+</svg>

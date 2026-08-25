@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🏷 Бейджи, таблетки и outline</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: "Segoe UI", system-ui, sans-serif;
+            background: #f8fafc;
+            padding: 40px;
+            color: #1e293b;
+        }
+        h2 { margin: 24px 0 10px; font-size: 18px; }
+
+        /* «таблетки» */
+        .pill {
+            display: inline-block;
+            border-radius: 999px;
+            padding: 6px 14px;
+            font-size: 14px;
+            margin: 4px;
+            background: #e0e7ff;
+            color: #4338ca;
+        }
+        .pill.green { background: #dcfce7; color: #15803d; }
+        .pill.red   { background: #fee2e2; color: #b91c1c; }
+        .pill.amber { background: #fef3c7; color: #92400e; }
+
+        /* формы border-radius */
+        .shape { display: inline-block; width: 90px; height: 90px; margin: 6px; background: #93c5fd; }
+        .soft  { border-radius: 16px; }
+        .leaf  { border-radius: 40px 0 40px 0; background: #86efac; }
+        .round { border-radius: 50%; background: #fdba74; }
+
+        /* вложенное скругление: внешний 24, padding 8 → внутренний 16 */
+        .card {
+            border-radius: 24px;
+            padding: 8px;
+            background: #6366f1;
+            width: 180px;
+            margin-top: 10px;
+        }
+        .card .cover {
+            border-radius: 16px;      /* 24 − 8 = 16 → углы параллельны */
+            height: 90px;
+            background: #c7d2fe;
+        }
+
+        /* кнопки + фокус */
+        .btn {
+            display: inline-block;
+            border: none;
+            border-radius: 12px;
+            padding: 12px 22px;
+            background: #6366f1;
+            color: #fff;
+            text-decoration: none;
+            font-size: 15px;
+            cursor: pointer;
+            margin: 6px 6px 0 0;
+        }
+        .btn:focus,
+        .btn:focus-visible {
+            outline: 3px solid #a5b4fc;   /* красивая обводка выбора, не убираем! */
+            outline-offset: 3px;
+        }
+
+        /* демонстрация outline vs border */
+        .row { margin-top: 8px; }
+        .demo { display: inline-block; width: 70px; height: 50px; background: #e2e8f0; margin: 4px; vertical-align: middle; }
+        .demo.b { border: 8px solid #ef4444; }        /* занимает место — двигает соседей */
+        .demo.o { outline: 8px solid #22c55e; }        /* НЕ занимает место */
+    </style>
+</head>
+<body>
+    <h2>«Таблетки» и статусы (border-radius: 999px)</h2>
+    <span class="pill">#вёрстка</span>
+    <span class="pill">#дизайн</span>
+    <span class="pill green">✓ онлайн</span>
+    <span class="pill red">● занят</span>
+    <span class="pill amber">🏆 Pro</span>
+
+    <h2>Формы (border-radius)</h2>
+    <div class="shape soft"></div>
+    <div class="shape leaf"></div>
+    <div class="shape round"></div>
+
+    <h2>Вложенное скругление (внешний 24 − padding 8 = внутренний 16)</h2>
+    <div class="card"><div class="cover"></div></div>
+
+    <h2>Кнопки — жми Tab, чтобы увидеть :focus</h2>
+    <a href="#" class="btn">Подписаться</a>
+    <button class="btn">Сообщение</button>
+
+    <h2>border (двигает соседей) vs outline (нет)</h2>
+    <div class="row">
+        <span class="demo"></span><span class="demo b"></span><span class="demo"></span>
+        &nbsp;&nbsp;border ↑ · outline ↓&nbsp;&nbsp;
+        <span class="demo"></span><span class="demo o"></span><span class="demo"></span>
+    </div>
+</body>
+</html>

@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 360" font-family="'Segoe UI', Arial, sans-serif">
+  <rect x="0" y="0" width="720" height="360" rx="16" fill="#f8fafc" stroke="#e2e8f0" stroke-width="2"/>
+  <text x="360" y="40" text-anchor="middle" font-size="22" font-weight="700" fill="#1e293b">Виды маркеров списка (list-style-type)</text>
+
+  <!-- Левая колонка: для <ul> -->
+  <rect x="30" y="70" width="320" height="260" rx="12" fill="#ffffff" stroke="#10b981" stroke-width="2"/>
+  <text x="50" y="100" font-size="17" font-weight="700" fill="#047857">Для &lt;ul&gt; — маркированный</text>
+
+  <!-- disc -->
+  <circle cx="62" cy="135" r="6" fill="#334155"/>
+  <text x="82" y="141" font-size="16" fill="#334155">disc — закрашенная точка (по умолчанию)</text>
+  <!-- circle -->
+  <circle cx="62" cy="170" r="6" fill="none" stroke="#334155" stroke-width="2"/>
+  <text x="82" y="176" font-size="16" fill="#334155">circle — пустой кружок</text>
+  <!-- square -->
+  <rect x="56" y="199" width="12" height="12" fill="#334155"/>
+  <text x="82" y="211" font-size="16" fill="#334155">square — квадратик</text>
+  <!-- none -->
+  <text x="82" y="246" font-size="16" fill="#334155">none — без маркера</text>
+  <text x="50" y="285" font-size="14" fill="#94a3b8">Убрать маркеры: list-style: none;</text>
+  <text x="50" y="308" font-size="14" fill="#94a3b8">(нужно для меню и карточек)</text>
+
+  <!-- Правая колонка: для <ol> -->
+  <rect x="370" y="70" width="320" height="260" rx="12" fill="#ffffff" stroke="#0891b2" stroke-width="2"/>
+  <text x="390" y="100" font-size="17" font-weight="700" fill="#0e7490">Для &lt;ol&gt; — нумерованный</text>
+
+  <g font-family="'Consolas','Courier New',monospace" font-size="16" font-weight="700" fill="#334155">
+    <text x="392" y="141">1.</text>
+    <text x="392" y="176">a.</text>
+    <text x="392" y="211">I.</text>
+  </g>
+  <text x="430" y="141" font-size="16" fill="#334155">decimal — 1, 2, 3 (по умолчанию)</text>
+  <text x="430" y="176" font-size="16" fill="#334155">lower-alpha — a, b, c</text>
+  <text x="430" y="211" font-size="16" fill="#334155">upper-roman — I, II, III</text>
+  <text x="390" y="252" font-size="14" fill="#94a3b8">Атрибуты: type="A", start="5",</text>
+  <text x="390" y="273" font-size="14" fill="#94a3b8">reversed (обратный порядок)</text>
+
+  <text x="360" y="350" text-anchor="middle" font-size="13" fill="#94a3b8">ul = точки (порядок неважен) · ol = номера (порядок важен)</text>
+</svg>

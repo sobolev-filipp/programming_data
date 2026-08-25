@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 740 340" font-family="'Segoe UI', Arial, sans-serif">
+<rect x="0" y="0" width="740" height="340" rx="16" fill="#f8fafc" stroke="#e2e8f0" stroke-width="2"/>
+<text x="370" y="38" text-anchor="middle" font-size="22" font-weight="700" fill="#1e293b">border-collapse: убираем двойные рамки</text>
+<text x="170" y="78" text-anchor="middle" font-size="16" font-weight="700" fill="#dc2626">separate (по умолчанию)</text>
+<rect x="90" y="90" width="80" height="54" fill="#fff" stroke="#dc2626" stroke-width="2"/>
+<rect x="178" y="90" width="80" height="54" fill="#fff" stroke="#dc2626" stroke-width="2"/>
+<rect x="90" y="152" width="80" height="54" fill="#fff" stroke="#dc2626" stroke-width="2"/>
+<rect x="178" y="152" width="80" height="54" fill="#fff" stroke="#dc2626" stroke-width="2"/>
+<text x="170" y="240" text-anchor="middle" font-size="14" fill="#991b1b">рамки двойные, между ними щели</text>
+<text x="510" y="78" text-anchor="middle" font-size="16" font-weight="700" fill="#16a34a">collapse</text>
+<rect x="430" y="90" width="80" height="54" fill="#fff" stroke="#16a34a" stroke-width="2"/>
+<rect x="510" y="90" width="80" height="54" fill="#fff" stroke="#16a34a" stroke-width="2"/>
+<rect x="430" y="144" width="80" height="54" fill="#fff" stroke="#16a34a" stroke-width="2"/>
+<rect x="510" y="144" width="80" height="54" fill="#fff" stroke="#16a34a" stroke-width="2"/>
+<text x="510" y="232" text-anchor="middle" font-size="14" fill="#15803d">рамки одинарные, аккуратно</text>
+<text x="370" y="318" text-anchor="middle" font-size="13" font-family="'Consolas','Courier New',monospace" fill="#7c3aed">table { border-collapse: collapse; }</text>
+</svg>

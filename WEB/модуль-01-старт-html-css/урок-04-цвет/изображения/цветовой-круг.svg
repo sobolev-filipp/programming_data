@@ -1,0 +1,98 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 840 480" font-family="'Segoe UI', Arial, sans-serif">
+<rect x="0" y="0" width="840" height="480" rx="16" fill="#f8fafc" stroke="#e2e8f0" stroke-width="2"/>
+<text x="420" y="38" text-anchor="middle" font-size="22" font-weight="700" fill="#1e293b">Цветовой круг и сочетания цветов</text>
+<path d="M 210.0 265.0 L 210.0 115.0 A 150 150 0 0 1 285.0 135.1 Z" fill="hsl(15, 72%, 55%)" stroke="#f8fafc" stroke-width="2"/>
+<path d="M 210.0 265.0 L 285.0 135.1 A 150 150 0 0 1 339.9 190.0 Z" fill="hsl(45, 72%, 55%)" stroke="#f8fafc" stroke-width="2"/>
+<path d="M 210.0 265.0 L 339.9 190.0 A 150 150 0 0 1 360.0 265.0 Z" fill="hsl(75, 72%, 55%)" stroke="#f8fafc" stroke-width="2"/>
+<path d="M 210.0 265.0 L 360.0 265.0 A 150 150 0 0 1 339.9 340.0 Z" fill="hsl(105, 72%, 55%)" stroke="#f8fafc" stroke-width="2"/>
+<path d="M 210.0 265.0 L 339.9 340.0 A 150 150 0 0 1 285.0 394.9 Z" fill="hsl(135, 72%, 55%)" stroke="#f8fafc" stroke-width="2"/>
+<path d="M 210.0 265.0 L 285.0 394.9 A 150 150 0 0 1 210.0 415.0 Z" fill="hsl(165, 72%, 55%)" stroke="#f8fafc" stroke-width="2"/>
+<path d="M 210.0 265.0 L 210.0 415.0 A 150 150 0 0 1 135.0 394.9 Z" fill="hsl(195, 72%, 55%)" stroke="#f8fafc" stroke-width="2"/>
+<path d="M 210.0 265.0 L 135.0 394.9 A 150 150 0 0 1 80.1 340.0 Z" fill="hsl(225, 72%, 55%)" stroke="#f8fafc" stroke-width="2"/>
+<path d="M 210.0 265.0 L 80.1 340.0 A 150 150 0 0 1 60.0 265.0 Z" fill="hsl(255, 72%, 55%)" stroke="#f8fafc" stroke-width="2"/>
+<path d="M 210.0 265.0 L 60.0 265.0 A 150 150 0 0 1 80.1 190.0 Z" fill="hsl(285, 72%, 55%)" stroke="#f8fafc" stroke-width="2"/>
+<path d="M 210.0 265.0 L 80.1 190.0 A 150 150 0 0 1 135.0 135.1 Z" fill="hsl(315, 72%, 55%)" stroke="#f8fafc" stroke-width="2"/>
+<path d="M 210.0 265.0 L 135.0 135.1 A 150 150 0 0 1 210.0 115.0 Z" fill="hsl(345, 72%, 55%)" stroke="#f8fafc" stroke-width="2"/>
+<circle cx="210" cy="265" r="52" fill="#f8fafc"/>
+<text x="210" y="261" text-anchor="middle" font-size="15" font-weight="700" fill="#334155">Цветовой</text>
+<text x="210" y="281" text-anchor="middle" font-size="15" font-weight="700" fill="#334155">круг</text>
+<text x="250.9" y="98.4" text-anchor="middle" font-size="12" fill="#64748b">Красный</text>
+<text x="335.7" y="382.7" text-anchor="start" font-size="12" fill="#64748b">Зелёный</text>
+<text x="43.4" y="311.9" text-anchor="end" font-size="12" fill="#64748b">Синий</text>
+<circle cx="520" cy="150" r="58" fill="#ffffff" stroke="#cbd5e1" stroke-width="2"/>
+<circle cx="535.0" cy="94.0" r="3" fill="hsl(15,60%,70%)"/>
+<circle cx="561.0" cy="109.0" r="3" fill="hsl(45,60%,70%)"/>
+<circle cx="576.0" cy="135.0" r="3" fill="hsl(75,60%,70%)"/>
+<circle cx="576.0" cy="165.0" r="3" fill="hsl(105,60%,70%)"/>
+<circle cx="561.0" cy="191.0" r="3" fill="hsl(135,60%,70%)"/>
+<circle cx="535.0" cy="206.0" r="3" fill="hsl(165,60%,70%)"/>
+<circle cx="505.0" cy="206.0" r="3" fill="hsl(195,60%,70%)"/>
+<circle cx="479.0" cy="191.0" r="3" fill="hsl(225,60%,70%)"/>
+<circle cx="464.0" cy="165.0" r="3" fill="hsl(255,60%,70%)"/>
+<circle cx="464.0" cy="135.0" r="3" fill="hsl(285,60%,70%)"/>
+<circle cx="479.0" cy="109.0" r="3" fill="hsl(315,60%,70%)"/>
+<circle cx="505.0" cy="94.0" r="3" fill="hsl(345,60%,70%)"/>
+<line x1="520.0" y1="94.0" x2="520.0" y2="206.0" stroke="#334155" stroke-width="2"/>
+<circle cx="520.0" cy="94.0" r="7" fill="hsl(0,75%,52%)" stroke="#1e293b" stroke-width="1.5"/>
+<circle cx="520.0" cy="206.0" r="7" fill="hsl(180,75%,52%)" stroke="#1e293b" stroke-width="1.5"/>
+<text x="520" y="230" text-anchor="middle" font-size="14" font-weight="700" fill="#1e293b">Контраст</text>
+<text x="520" y="248" text-anchor="middle" font-size="12" fill="#64748b">противоположные (2)</text>
+<circle cx="720" cy="150" r="58" fill="#ffffff" stroke="#cbd5e1" stroke-width="2"/>
+<circle cx="735.0" cy="94.0" r="3" fill="hsl(15,60%,70%)"/>
+<circle cx="761.0" cy="109.0" r="3" fill="hsl(45,60%,70%)"/>
+<circle cx="776.0" cy="135.0" r="3" fill="hsl(75,60%,70%)"/>
+<circle cx="776.0" cy="165.0" r="3" fill="hsl(105,60%,70%)"/>
+<circle cx="761.0" cy="191.0" r="3" fill="hsl(135,60%,70%)"/>
+<circle cx="735.0" cy="206.0" r="3" fill="hsl(165,60%,70%)"/>
+<circle cx="705.0" cy="206.0" r="3" fill="hsl(195,60%,70%)"/>
+<circle cx="679.0" cy="191.0" r="3" fill="hsl(225,60%,70%)"/>
+<circle cx="664.0" cy="165.0" r="3" fill="hsl(255,60%,70%)"/>
+<circle cx="664.0" cy="135.0" r="3" fill="hsl(285,60%,70%)"/>
+<circle cx="679.0" cy="109.0" r="3" fill="hsl(315,60%,70%)"/>
+<circle cx="705.0" cy="94.0" r="3" fill="hsl(345,60%,70%)"/>
+<polygon points="720.0,94.0 768.5,178.0 671.5,178.0" fill="none" stroke="#334155" stroke-width="2"/>
+<circle cx="720.0" cy="94.0" r="7" fill="hsl(0,75%,52%)" stroke="#1e293b" stroke-width="1.5"/>
+<circle cx="768.5" cy="178.0" r="7" fill="hsl(120,75%,52%)" stroke="#1e293b" stroke-width="1.5"/>
+<circle cx="671.5" cy="178.0" r="7" fill="hsl(240,75%,52%)" stroke="#1e293b" stroke-width="1.5"/>
+<text x="720" y="230" text-anchor="middle" font-size="14" font-weight="700" fill="#1e293b">Триада</text>
+<text x="720" y="248" text-anchor="middle" font-size="12" fill="#64748b">3 через равные шаги</text>
+<circle cx="520" cy="350" r="58" fill="#ffffff" stroke="#cbd5e1" stroke-width="2"/>
+<circle cx="535.0" cy="294.0" r="3" fill="hsl(15,60%,70%)"/>
+<circle cx="561.0" cy="309.0" r="3" fill="hsl(45,60%,70%)"/>
+<circle cx="576.0" cy="335.0" r="3" fill="hsl(75,60%,70%)"/>
+<circle cx="576.0" cy="365.0" r="3" fill="hsl(105,60%,70%)"/>
+<circle cx="561.0" cy="391.0" r="3" fill="hsl(135,60%,70%)"/>
+<circle cx="535.0" cy="406.0" r="3" fill="hsl(165,60%,70%)"/>
+<circle cx="505.0" cy="406.0" r="3" fill="hsl(195,60%,70%)"/>
+<circle cx="479.0" cy="391.0" r="3" fill="hsl(225,60%,70%)"/>
+<circle cx="464.0" cy="365.0" r="3" fill="hsl(255,60%,70%)"/>
+<circle cx="464.0" cy="335.0" r="3" fill="hsl(285,60%,70%)"/>
+<circle cx="479.0" cy="309.0" r="3" fill="hsl(315,60%,70%)"/>
+<circle cx="505.0" cy="294.0" r="3" fill="hsl(345,60%,70%)"/>
+<polygon points="520.0,294.0 576.0,350.0 520.0,406.0 464.0,350.0" fill="none" stroke="#334155" stroke-width="2"/>
+<circle cx="520.0" cy="294.0" r="7" fill="hsl(0,75%,52%)" stroke="#1e293b" stroke-width="1.5"/>
+<circle cx="576.0" cy="350.0" r="7" fill="hsl(90,75%,52%)" stroke="#1e293b" stroke-width="1.5"/>
+<circle cx="520.0" cy="406.0" r="7" fill="hsl(180,75%,52%)" stroke="#1e293b" stroke-width="1.5"/>
+<circle cx="464.0" cy="350.0" r="7" fill="hsl(270,75%,52%)" stroke="#1e293b" stroke-width="1.5"/>
+<text x="520" y="430" text-anchor="middle" font-size="14" font-weight="700" fill="#1e293b">Тетрада</text>
+<text x="520" y="448" text-anchor="middle" font-size="12" fill="#64748b">4 цвета (квадрат)</text>
+<circle cx="720" cy="350" r="58" fill="#ffffff" stroke="#cbd5e1" stroke-width="2"/>
+<circle cx="735.0" cy="294.0" r="3" fill="hsl(15,60%,70%)"/>
+<circle cx="761.0" cy="309.0" r="3" fill="hsl(45,60%,70%)"/>
+<circle cx="776.0" cy="335.0" r="3" fill="hsl(75,60%,70%)"/>
+<circle cx="776.0" cy="365.0" r="3" fill="hsl(105,60%,70%)"/>
+<circle cx="761.0" cy="391.0" r="3" fill="hsl(135,60%,70%)"/>
+<circle cx="735.0" cy="406.0" r="3" fill="hsl(165,60%,70%)"/>
+<circle cx="705.0" cy="406.0" r="3" fill="hsl(195,60%,70%)"/>
+<circle cx="679.0" cy="391.0" r="3" fill="hsl(225,60%,70%)"/>
+<circle cx="664.0" cy="365.0" r="3" fill="hsl(255,60%,70%)"/>
+<circle cx="664.0" cy="335.0" r="3" fill="hsl(285,60%,70%)"/>
+<circle cx="679.0" cy="309.0" r="3" fill="hsl(315,60%,70%)"/>
+<circle cx="705.0" cy="294.0" r="3" fill="hsl(345,60%,70%)"/>
+<polygon points="692.0,301.5 720.0,294.0 748.0,301.5" fill="none" stroke="#334155" stroke-width="2"/>
+<circle cx="692.0" cy="301.5" r="7" fill="hsl(330,75%,52%)" stroke="#1e293b" stroke-width="1.5"/>
+<circle cx="720.0" cy="294.0" r="7" fill="hsl(0,75%,52%)" stroke="#1e293b" stroke-width="1.5"/>
+<circle cx="748.0" cy="301.5" r="7" fill="hsl(30,75%,52%)" stroke="#1e293b" stroke-width="1.5"/>
+<text x="720" y="430" text-anchor="middle" font-size="14" font-weight="700" fill="#1e293b">Аналоговые</text>
+<text x="720" y="448" text-anchor="middle" font-size="12" fill="#64748b">3 соседних (мягко)</text>
+</svg>

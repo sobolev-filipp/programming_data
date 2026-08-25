@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Викторина — Урок 3: Скругления и outline</title>
+<style>
+  :root{
+    --bg1:#ec4899; --bg2:#f43f5e; --card:#ffffff; --ink:#1f2937;
+    --accent:#db2777; --ok:#16a34a; --bad:#dc2626; --soft:#fce7f3;
+  }
+  *{box-sizing:border-box;font-family:"Segoe UI",system-ui,sans-serif}
+  body{margin:0;min-height:100vh;display:flex;align-items:center;justify-content:center;
+    background:linear-gradient(135deg,var(--bg1),var(--bg2));padding:20px;color:var(--ink)}
+  .app{background:var(--card);width:min(760px,100%);border-radius:24px;
+    box-shadow:0 25px 60px rgba(0,0,0,.35);padding:34px 34px 28px;position:relative;overflow:hidden}
+  h1{margin:0 0 6px;font-size:26px;text-align:center}
+  .sub{text-align:center;color:#64748b;margin-bottom:22px;font-size:15px}
+  .bar{height:10px;background:var(--soft);border-radius:99px;overflow:hidden;margin-bottom:18px}
+  .bar>i{display:block;height:100%;width:0;background:var(--accent);transition:.4s}
+  .meta{display:flex;justify-content:space-between;font-size:14px;color:#64748b;margin-bottom:14px}
+  .q{font-size:22px;font-weight:700;margin:6px 0 20px;line-height:1.3}
+  .q code{background:#0f172a;color:#e2e8f0;padding:2px 8px;border-radius:6px;font-size:19px}
+  .opts{display:grid;gap:12px}
+  .opt{border:2px solid #e2e8f0;background:#fff;border-radius:14px;padding:15px 18px;font-size:18px;
+    text-align:left;cursor:pointer;transition:.15s;display:flex;align-items:center;gap:12px}
+  .opt:hover{border-color:var(--accent);background:var(--soft);transform:translateY(-2px)}
+  .opt b{background:var(--soft);color:var(--accent);width:30px;height:30px;border-radius:8px;
+    display:flex;align-items:center;justify-content:center;font-size:15px;flex:0 0 auto}
+  .opt span code{background:#0f172a;color:#e2e8f0;padding:1px 6px;border-radius:5px;font-size:16px}
+  .opt.ok{border-color:var(--ok);background:#dcfce7}
+  .opt.ok b{background:var(--ok);color:#fff}
+  .opt.bad{border-color:var(--bad);background:#fee2e2}
+  .opt.bad b{background:var(--bad);color:#fff}
+  .opt:disabled{cursor:default;transform:none}
+  .fb{margin-top:16px;padding:14px 16px;border-radius:12px;font-size:16px;display:none;line-height:1.4}
+  .fb.show{display:block}
+  .fb.good{background:#dcfce7;color:#166534}
+  .fb.no{background:#fee2e2;color:#991b1b}
+  .fb code{background:#0f172a;color:#e2e8f0;padding:1px 6px;border-radius:5px}
+  .btn{margin-top:18px;width:100%;padding:15px;border:0;border-radius:14px;background:var(--accent);
+    color:#fff;font-size:18px;font-weight:700;cursor:pointer;display:none}
+  .btn.show{display:block}
+  .btn:hover{filter:brightness(1.08)}
+  .center{text-align:center}
+  .score{font-size:64px;font-weight:800;margin:10px 0}
+  .emoji{font-size:70px}
+  .hint{color:#94a3b8;font-size:13px;text-align:center;margin-top:14px}
+</style>
+</head>
+<body>
+<div class="app" id="app"></div>
+<script>
+// Урок 3 (Модуль 3): скругления и outline + 🔁 повторение блочной модели и модулей 1–2 + смешные + на подумать.
+const QUESTIONS = [
+  {q:"Как сделать «таблетку» (полукруглые края) любой высоты?",
+   a:["border-radius: 5px","border-radius: 999px","border: round","border-radius: 50%"],c:1,
+   e:"Большой радиус (999px) на невысоком блоке делает края полукруглыми при любой высоте."},
+  {q:"В каком порядке идут 4 угла в border-radius?",
+   a:["случайно","верх-лево, верх-право, низ-право, низ-лево (по часовой)","низ-верх-лево-право","только все сразу"],c:1,
+   e:"По часовой стрелке с верхнего-левого угла."},
+  {q:"Как посчитать радиус ВЛОЖЕННОГО блока (чтобы углы совпали)?",
+   a:["такой же, как внешний","внешний − padding","внешний + padding","всегда 0"],c:1,
+   e:"внутренний = внешний − padding → углы идут параллельно (концентрично)."},
+  {q:"Карточка: border-radius 24px, padding 8px. Радиус картинки внутри?",
+   a:["24px","32px","16px","8px"],c:2,
+   e:"24 − 8 = 16px."},
+  {q:"Главное отличие outline от border?",
+   a:["outline толще","outline НЕ занимает место (не двигает соседей)","outline только красный","они одинаковые"],c:1,
+   e:"outline рисуется поверх, снаружи, и не входит в размер блока."},
+  {q:"Что делает outline-offset?",
+   a:["Меняет цвет","Отодвигает обводку от блока (зазор)","Убирает outline","Скругляет"],c:1,
+   e:"outline-offset — расстояние между обводкой и блоком."},
+  {q:"Для чего в первую очередь нужен outline?",
+   a:["Для фона","Для обводки выбора при :focus (клавиатура)","Для теней","Для текста"],c:1,
+   e:"outline подсвечивает элемент в фокусе, не сдвигая соседей."},
+  {q:"Можно ли писать <code>outline: none</code> у кнопок?",
+   a:["Да, всегда","Нельзя без замены — иначе с клавиатуры не видно выбор","Только по вторникам","outline не существует"],c:1,
+   e:"Убирать обводку фокуса нельзя — это ломает доступность. Замени своей."},
+  {q:"Как сделать «каплю» (2 угла круглые, 2 острые)?",
+   a:["border-radius: 50%","border-radius: 40px 0 40px 0","border: drop","border-radius: 999px"],c:1,
+   e:"4 значения по часовой: два противоположных угла круглые, два — острые."},
+  {q:"border-radius: 50% даёт круг, если блок...",
+   a:["любой","квадратный (ширина = высота)","широкий","высокий"],c:1,
+   e:"На неквадратном блоке 50% даёт овал."},
+  {q:"Что скругляется свойством border-radius?",
+   a:["только outline","углы блока (и рамки, и фона)","только текст","только тень"],c:1,
+   e:"border-radius скругляет углы самого блока."},
+  {q:"Умный фокус, который срабатывает при Tab, но не при клике мышью?",
+   a:[":hover",":focus-visible",":active",":visited"],c:1,
+   e:":focus-visible — обводка при клавиатуре, без неё при клике мышью."},
+
+  {q:"🔁 Урок 2: что такое padding?",
+   a:["отступ снаружи","воздух ВНУТРИ блока","рамка","тень"],c:1,
+   e:"padding — внутренний отступ (пригодится для вложенного скругления)."},
+  {q:"🔁 Урок 2: что делает box-sizing: border-box?",
+   a:["рисует рамку","width включает padding и border","убирает padding","добавляет тень"],c:1,
+   e:"С border-box размеры предсказуемы."},
+  {q:"🔁 Урок 1: какой тег — самостоятельная единица (новость/пост)?",
+   a:["&lt;section&gt;","&lt;article&gt;","&lt;div&gt;","&lt;aside&gt;"],c:1,
+   e:"&lt;article&gt; — можно «вырезать» целиком."},
+  {q:"🔁 Модуль 1: чем красят цвет текста?",
+   a:["background-color","color","border","fill"],c:1,
+   e:"color — цвет текста."},
+
+  {q:"😄 Добавил рамку — и все соседние блоки «прыгнули». Чем заменить, чтобы не двигались?",
+   a:["margin","outline","padding","width"],c:1,
+   e:"outline рисуется поверх и не занимает место — соседи не двигаются."},
+  {q:"😄 Угол картинки в карточке «не совпадает» с углом карточки. Что не так?",
+   a:["мало цвета","радиус не по правилу (внешний − padding)","нет alt","нет тени"],c:1,
+   e:"Внутренний радиус считают как внешний − padding."},
+
+  {q:"🤔 Почему outline удобнее border для подсветки выбора?",
+   a:["он ярче","не занимает место — ничего не сдвигается","он быстрее","border нельзя красить"],c:1,
+   e:"outline не входит в размер блока — подсветка не «толкает» соседей."},
+  {q:"🤔 Зачем вообще нужно правило вложенного скругления?",
+   a:["для скорости","чтобы углы шли параллельно и выглядели аккуратно","это обязательно всегда","чтобы уменьшить код"],c:1,
+   e:"Концентричные углы = аккуратный, профессиональный вид карточек."},
+];
+
+let i=0, score=0, locked=false;
+const app=document.getElementById('app');
+
+function shuffle(){for(let k=QUESTIONS.length-1;k>0;k--){const j=Math.floor(Math.random()*(k+1));[QUESTIONS[k],QUESTIONS[j]]=[QUESTIONS[j],QUESTIONS[k]];}for(const Q of QUESTIONS){const cc=Q.a[Q.c];for(let k=Q.a.length-1;k>0;k--){const j=Math.floor(Math.random()*(k+1));[Q.a[k],Q.a[j]]=[Q.a[j],Q.a[k]];}Q.c=Q.a.indexOf(cc);}}
+shuffle();
+
+function render(){
+  const Q=QUESTIONS[i];
+  app.innerHTML=`
+    <h1>🟢 Скругления и outline</h1>
+    <div class="sub">Викторина по уроку 3 · Модуль 3 (WEB)</div>
+    <div class="bar"><i style="width:${(i/QUESTIONS.length)*100}%"></i></div>
+    <div class="meta"><span>Вопрос ${i+1} из ${QUESTIONS.length}</span><span>⭐ Очки: ${score}</span></div>
+    <div class="q">${Q.q}</div>
+    <div class="opts" id="opts">
+      ${Q.a.map((t,n)=>`<button class="opt" data-n="${n}"><b>${n+1}</b><span>${t}</span></button>`).join('')}
+    </div>
+    <div class="fb" id="fb"></div>
+    <button class="btn" id="next">${i===QUESTIONS.length-1?'Показать результат →':'Следующий вопрос →'}</button>
+    <div class="hint">Можно отвечать клавишами 1–4</div>`;
+  locked=false;
+  document.querySelectorAll('.opt').forEach(b=>b.onclick=()=>choose(+b.dataset.n));
+  document.getElementById('next').onclick=next;
+}
+
+function choose(n){
+  if(locked) return; locked=true;
+  const Q=QUESTIONS[i];
+  const opts=[...document.querySelectorAll('.opt')];
+  opts.forEach(b=>b.disabled=true);
+  opts[Q.c].classList.add('ok');
+  const fb=document.getElementById('fb');
+  if(n===Q.c){ score++; fb.className='fb show good'; fb.innerHTML='✅ Верно! '+Q.e; }
+  else { opts[n].classList.add('bad'); fb.className='fb show no'; fb.innerHTML='❌ Не совсем. '+Q.e; }
+  document.querySelector('.meta').children[1].textContent='⭐ Очки: '+score;
+  document.getElementById('next').classList.add('show');
+}
+
+function next(){ i++; if(i<QUESTIONS.length) render(); else result(); }
+
+function result(){
+  const pct=Math.round(score/QUESTIONS.length*100);
+  let em,msg;
+  if(pct===100){em='🏆';msg='Идеально! Скругления и outline — как орешки! 🟢';}
+  else if(pct>=70){em='🎉';msg='Отлично! Формы и обводки освоены уверенно.';}
+  else if(pct>=40){em='👍';msg='Неплохо! Повтори: таблетка 999px, вложенное скругление, border vs outline.';}
+  else {em='💪';msg='Начало положено! Загляни в самоучитель — там по шагам.';}
+  app.innerHTML=`
+    <div class="center">
+      <div class="emoji">${em}</div>
+      <h1>Готово!</h1>
+      <div class="score">${score} / ${QUESTIONS.length}</div>
+      <div class="sub">${msg}</div>
+      <button class="btn show" id="again">🔁 Пройти заново</button>
+    </div>`;
+  document.getElementById('again').onclick=()=>{i=0;score=0;shuffle();render();};
+}
+
+document.addEventListener('keydown',e=>{
+  if(['1','2','3','4'].includes(e.key)){ const b=document.querySelector(`.opt[data-n="${+e.key-1}"]`); if(b&&!b.disabled) choose(+e.key-1); }
+  if(e.key==='Enter'){ const nb=document.getElementById('next'); if(nb&&nb.classList.contains('show')) next(); }
+});
+
+render();
+</script>
+</body>
+</html>

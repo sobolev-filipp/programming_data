@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Викторина — Урок 2: Блочная модель</title>
+<style>
+  :root{
+    --bg1:#0d9488; --bg2:#0ea5e9; --card:#ffffff; --ink:#1f2937;
+    --accent:#0d9488; --ok:#16a34a; --bad:#dc2626; --soft:#ccfbf1;
+  }
+  *{box-sizing:border-box;font-family:"Segoe UI",system-ui,sans-serif}
+  body{margin:0;min-height:100vh;display:flex;align-items:center;justify-content:center;
+    background:linear-gradient(135deg,var(--bg1),var(--bg2));padding:20px;color:var(--ink)}
+  .app{background:var(--card);width:min(760px,100%);border-radius:24px;
+    box-shadow:0 25px 60px rgba(0,0,0,.35);padding:34px 34px 28px;position:relative;overflow:hidden}
+  h1{margin:0 0 6px;font-size:26px;text-align:center}
+  .sub{text-align:center;color:#64748b;margin-bottom:22px;font-size:15px}
+  .bar{height:10px;background:var(--soft);border-radius:99px;overflow:hidden;margin-bottom:18px}
+  .bar>i{display:block;height:100%;width:0;background:var(--accent);transition:.4s}
+  .meta{display:flex;justify-content:space-between;font-size:14px;color:#64748b;margin-bottom:14px}
+  .q{font-size:22px;font-weight:700;margin:6px 0 20px;line-height:1.3}
+  .q code{background:#0f172a;color:#e2e8f0;padding:2px 8px;border-radius:6px;font-size:19px}
+  .opts{display:grid;gap:12px}
+  .opt{border:2px solid #e2e8f0;background:#fff;border-radius:14px;padding:15px 18px;font-size:18px;
+    text-align:left;cursor:pointer;transition:.15s;display:flex;align-items:center;gap:12px}
+  .opt:hover{border-color:var(--accent);background:var(--soft);transform:translateY(-2px)}
+  .opt b{background:var(--soft);color:var(--accent);width:30px;height:30px;border-radius:8px;
+    display:flex;align-items:center;justify-content:center;font-size:15px;flex:0 0 auto}
+  .opt span code{background:#0f172a;color:#e2e8f0;padding:1px 6px;border-radius:5px;font-size:16px}
+  .opt.ok{border-color:var(--ok);background:#dcfce7}
+  .opt.ok b{background:var(--ok);color:#fff}
+  .opt.bad{border-color:var(--bad);background:#fee2e2}
+  .opt.bad b{background:var(--bad);color:#fff}
+  .opt:disabled{cursor:default;transform:none}
+  .fb{margin-top:16px;padding:14px 16px;border-radius:12px;font-size:16px;display:none;line-height:1.4}
+  .fb.show{display:block}
+  .fb.good{background:#dcfce7;color:#166534}
+  .fb.no{background:#fee2e2;color:#991b1b}
+  .fb code{background:#0f172a;color:#e2e8f0;padding:1px 6px;border-radius:5px}
+  .btn{margin-top:18px;width:100%;padding:15px;border:0;border-radius:14px;background:var(--accent);
+    color:#fff;font-size:18px;font-weight:700;cursor:pointer;display:none}
+  .btn.show{display:block}
+  .btn:hover{filter:brightness(1.08)}
+  .center{text-align:center}
+  .score{font-size:64px;font-weight:800;margin:10px 0}
+  .emoji{font-size:70px}
+  .hint{color:#94a3b8;font-size:13px;text-align:center;margin-top:14px}
+</style>
+</head>
+<body>
+<div class="app" id="app"></div>
+<script>
+// Урок 2 (Модуль 3): блочная модель + 🔁 повторение семантики и модулей 1–2 + смешные + на подумать.
+const QUESTIONS = [
+  {q:"Из скольких слоёв состоит блочная модель?",
+   a:["Из двух","Из четырёх (content, padding, border, margin)","Из десяти","Из одного"],c:1,
+   e:"content, padding, border, margin — четыре слоя коробки."},
+  {q:"Что такое padding?",
+   a:["Отступ снаружи блока","Воздух ВНУТРИ блока (между содержимым и рамкой)","Рамка","Тень"],c:1,
+   e:"padding — внутренний отступ, воздух внутри блока."},
+  {q:"Что такое margin?",
+   a:["Воздух внутри","Расстояние СНАРУЖИ, между блоками","Цвет","Шрифт"],c:1,
+   e:"margin — внешний отступ, расстояние между блоками."},
+  {q:"Что делает <code>margin: 0 auto</code> (у блока с width)?",
+   a:["Убирает блок","Центрирует блок по горизонтали","Красит фон","Делает рамку"],c:1,
+   e:"auto по бокам центрирует блок. Нужна заданная width."},
+  {q:"Что делает <code>box-sizing: border-box</code>?",
+   a:["Рисует рамку","Включает padding и border в width","Убирает padding","Добавляет тень"],c:1,
+   e:"С border-box width = content + padding + border (что задал, то и получил)."},
+  {q:"Блок: width 200, padding 20, border 5. Без border-box его ширина...",
+   a:["200px","250px (200+20+20+5+5)","195px","20px"],c:1,
+   e:"Без border-box padding и border добавляются: 200+40+10 = 250px."},
+  {q:"В каком порядке идут стороны в <code>padding: 10px 20px 30px 40px</code>?",
+   a:["лево-верх-право-низ","верх-право-низ-лево (по часовой)","право-лево-верх-низ","случайно"],c:1,
+   e:"T-R-B-L: верх, право, низ, лево — по часовой стрелке."},
+  {q:"Что значит <code>padding: 10px 20px</code> (два значения)?",
+   a:["верх-низ 10, лево-право 20","лево 10, право 20","всё по 15","верх 10, остальное 20"],c:0,
+   e:"Два значения: первое — верх-низ, второе — лево-право."},
+  {q:"Что такое схлопывание отступов (margin collapse)?",
+   a:["margin складываются","Вертикальные margin соседей не складываются — берётся больший","padding исчезает","Ошибка браузера"],c:1,
+   e:"У соседей по вертикали берётся больший margin, а не сумма."},
+  {q:"Чем смотрят блочную модель в браузере?",
+   a:["Блокнотом","DevTools (F12)","Калькулятором","Word"],c:1,
+   e:"F12 → Elements → схема content/padding/border/margin с числами."},
+  {q:"Почему <code>margin: auto</code> не центрирует блок?",
+   a:["Всегда центрирует","Не задана width блока","Нет цвета","Нужен padding"],c:1,
+   e:"Без заданной width блок занимает всё — центрировать нечего."},
+  {q:"Что обычно пишут в самом начале style.css?",
+   a:["h1 { color: red; }","* { box-sizing: border-box; margin: 0; padding: 0; }","body { }","ничего"],c:1,
+   e:"Сброс: border-box для всех + убрать стандартные отступы браузера."},
+  {q:"Из чего состоит запись <code>border: 3px solid #333</code>?",
+   a:["цвет, тип, толщина","толщина, тип (стиль), цвет","только толщина","имя и число"],c:1,
+   e:"border: толщина · тип (solid/dashed/dotted/double) · цвет."},
+  {q:"Как сделать рамку ПУНКТИРОМ (штрихами)?",
+   a:["border: 2px line","border: 2px dashed #333","border: dotted","border: 2px solid dashed"],c:1,
+   e:"dashed — штрихи. Ещё есть dotted (точки), double (двойная), solid (сплошная)."},
+
+  {q:"🔁 Урок 1: какой тег — главное содержимое (один на странице)?",
+   a:["&lt;header&gt;","&lt;main&gt;","&lt;section&gt;","&lt;div&gt;"],c:1,
+   e:"&lt;main&gt; — главное содержимое, оно одно."},
+  {q:"🔁 Урок 1: как подписать картинку по смыслу?",
+   a:["&lt;p&gt;","&lt;figure&gt; + &lt;figcaption&gt;","alt","&lt;caption&gt;"],c:1,
+   e:"&lt;figure&gt; + &lt;figcaption&gt;."},
+  {q:"🔁 Модуль 1: как сделать круглую аватарку из квадратной картинки?",
+   a:["border-radius: 50%","padding: 50%","margin: auto","width: 100%"],c:0,
+   e:"border-radius: 50% скругляет до круга."},
+  {q:"🔁 Модуль 2: чем убирают двойные рамки таблицы?",
+   a:["padding","border-collapse: collapse","margin: 0","box-sizing"],c:1,
+   e:"border-collapse: collapse."},
+
+  {q:"😄 Твоя сетка карточек «разъезжается», хотя ширина задана. Что забыл?",
+   a:["Цвет","box-sizing: border-box","Шрифт","alt"],c:1,
+   e:"Без border-box padding/border добавляют ширину — блоки шире и разъезжаются."},
+  {q:"😄 Текст в карточке липнет к рамке. Что добавить?",
+   a:["margin","padding","border","width"],c:1,
+   e:"padding даёт воздух ВНУТРИ блока."},
+
+  {q:"🤔 В чём разница: фон «вырос» при padding, но не при margin. Почему?",
+   a:["Случайность","padding внутри блока (под фоном), margin снаружи (прозрачный)","margin красит фон","Они одинаковые"],c:1,
+   e:"Фон рисуется до padding включительно; margin снаружи и прозрачный."},
+  {q:"🤔 Зачем border-box стал стандартом на всех сайтах?",
+   a:["Для красоты","Чтобы width был предсказуемым (что задал, то и ширина)","Ускоряет сайт","Так короче"],c:1,
+   e:"С border-box размеры предсказуемы — вёрстка не «ломается» от padding/border."},
+];
+
+let i=0, score=0, locked=false;
+const app=document.getElementById('app');
+
+function shuffle(){for(let k=QUESTIONS.length-1;k>0;k--){const j=Math.floor(Math.random()*(k+1));[QUESTIONS[k],QUESTIONS[j]]=[QUESTIONS[j],QUESTIONS[k]];}for(const Q of QUESTIONS){const cc=Q.a[Q.c];for(let k=Q.a.length-1;k>0;k--){const j=Math.floor(Math.random()*(k+1));[Q.a[k],Q.a[j]]=[Q.a[j],Q.a[k]];}Q.c=Q.a.indexOf(cc);}}
+shuffle();
+
+function render(){
+  const Q=QUESTIONS[i];
+  app.innerHTML=`
+    <h1>📦 Блочная модель</h1>
+    <div class="sub">Викторина по уроку 2 · Модуль 3 (WEB)</div>
+    <div class="bar"><i style="width:${(i/QUESTIONS.length)*100}%"></i></div>
+    <div class="meta"><span>Вопрос ${i+1} из ${QUESTIONS.length}</span><span>⭐ Очки: ${score}</span></div>
+    <div class="q">${Q.q}</div>
+    <div class="opts" id="opts">
+      ${Q.a.map((t,n)=>`<button class="opt" data-n="${n}"><b>${n+1}</b><span>${t}</span></button>`).join('')}
+    </div>
+    <div class="fb" id="fb"></div>
+    <button class="btn" id="next">${i===QUESTIONS.length-1?'Показать результат →':'Следующий вопрос →'}</button>
+    <div class="hint">Можно отвечать клавишами 1–4</div>`;
+  locked=false;
+  document.querySelectorAll('.opt').forEach(b=>b.onclick=()=>choose(+b.dataset.n));
+  document.getElementById('next').onclick=next;
+}
+
+function choose(n){
+  if(locked) return; locked=true;
+  const Q=QUESTIONS[i];
+  const opts=[...document.querySelectorAll('.opt')];
+  opts.forEach(b=>b.disabled=true);
+  opts[Q.c].classList.add('ok');
+  const fb=document.getElementById('fb');
+  if(n===Q.c){ score++; fb.className='fb show good'; fb.innerHTML='✅ Верно! '+Q.e; }
+  else { opts[n].classList.add('bad'); fb.className='fb show no'; fb.innerHTML='❌ Не совсем. '+Q.e; }
+  document.querySelector('.meta').children[1].textContent='⭐ Очки: '+score;
+  document.getElementById('next').classList.add('show');
+}
+
+function next(){ i++; if(i<QUESTIONS.length) render(); else result(); }
+
+function result(){
+  const pct=Math.round(score/QUESTIONS.length*100);
+  let em,msg;
+  if(pct===100){em='🏆';msg='Идеально! Padding, margin и border-box — как орешки! 📦';}
+  else if(pct>=70){em='🎉';msg='Отлично! Блочная модель освоена уверенно.';}
+  else if(pct>=40){em='👍';msg='Неплохо! Повтори: padding vs margin, border-box, центрирование.';}
+  else {em='💪';msg='Начало положено! Загляни в самоучитель — там по шагам.';}
+  app.innerHTML=`
+    <div class="center">
+      <div class="emoji">${em}</div>
+      <h1>Готово!</h1>
+      <div class="score">${score} / ${QUESTIONS.length}</div>
+      <div class="sub">${msg}</div>
+      <button class="btn show" id="again">🔁 Пройти заново</button>
+    </div>`;
+  document.getElementById('again').onclick=()=>{i=0;score=0;shuffle();render();};
+}
+
+document.addEventListener('keydown',e=>{
+  if(['1','2','3','4'].includes(e.key)){ const b=document.querySelector(`.opt[data-n="${+e.key-1}"]`); if(b&&!b.disabled) choose(+e.key-1); }
+  if(e.key==='Enter'){ const nb=document.getElementById('next'); if(nb&&nb.classList.contains('show')) next(); }
+});
+
+render();
+</script>
+</body>
+</html>

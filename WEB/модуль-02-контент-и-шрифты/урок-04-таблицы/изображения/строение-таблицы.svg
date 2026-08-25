@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 740 380" font-family="'Segoe UI', Arial, sans-serif">
+<rect x="0" y="0" width="740" height="380" rx="16" fill="#f8fafc" stroke="#e2e8f0" stroke-width="2"/>
+<text x="370" y="38" text-anchor="middle" font-size="22" font-weight="700" fill="#1e293b">Строение таблицы</text>
+<rect x="55" y="187" width="264" height="46" fill="#fef9c3"/>
+<rect x="55" y="95" width="88" height="46" fill="#2563eb" stroke="#1e3a8a" stroke-width="1"/>
+<text x="99" y="123" text-anchor="middle" font-size="15" font-weight="700" fill="#ffffff" font-family="'Consolas','Courier New',monospace">th</text>
+<rect x="143" y="95" width="88" height="46" fill="#2563eb" stroke="#1e3a8a" stroke-width="1"/>
+<text x="187" y="123" text-anchor="middle" font-size="15" font-weight="700" fill="#ffffff" font-family="'Consolas','Courier New',monospace">th</text>
+<rect x="231" y="95" width="88" height="46" fill="#2563eb" stroke="#1e3a8a" stroke-width="1"/>
+<text x="275" y="123" text-anchor="middle" font-size="15" font-weight="700" fill="#ffffff" font-family="'Consolas','Courier New',monospace">th</text>
+<rect x="55" y="141" width="88" height="46" fill="#ffffff" stroke="#94a3b8" stroke-width="1"/>
+<text x="99" y="169" text-anchor="middle" font-size="15" fill="#475569" font-family="'Consolas','Courier New',monospace">td</text>
+<rect x="143" y="141" width="88" height="46" fill="#ffffff" stroke="#94a3b8" stroke-width="1"/>
+<text x="187" y="169" text-anchor="middle" font-size="15" fill="#475569" font-family="'Consolas','Courier New',monospace">td</text>
+<rect x="231" y="141" width="88" height="46" fill="#ffffff" stroke="#94a3b8" stroke-width="1"/>
+<text x="275" y="169" text-anchor="middle" font-size="15" fill="#475569" font-family="'Consolas','Courier New',monospace">td</text>
+<rect x="55" y="187" width="88" height="46" fill="#ffffff" stroke="#94a3b8" stroke-width="1"/>
+<text x="99" y="215" text-anchor="middle" font-size="15" fill="#475569" font-family="'Consolas','Courier New',monospace">td</text>
+<rect x="143" y="187" width="88" height="46" fill="#ffffff" stroke="#94a3b8" stroke-width="1"/>
+<text x="187" y="215" text-anchor="middle" font-size="15" fill="#475569" font-family="'Consolas','Courier New',monospace">td</text>
+<rect x="231" y="187" width="88" height="46" fill="#ffffff" stroke="#94a3b8" stroke-width="1"/>
+<text x="275" y="215" text-anchor="middle" font-size="15" fill="#475569" font-family="'Consolas','Courier New',monospace">td</text>
+<rect x="55" y="95" width="264" height="138" fill="none" stroke="#1e293b" stroke-width="3"/>
+<path d="M 45 187 L 39 187 L 39 233 L 45 233" fill="none" stroke="#ca8a04" stroke-width="2"/>
+<text x="33" y="215" text-anchor="end" font-size="14" font-weight="700" fill="#a16207" font-family="'Consolas','Courier New',monospace">tr</text>
+<rect x="360" y="100" width="34" height="34" rx="4" fill="none" stroke="#1e293b" stroke-width="3"/>
+<text x="406" y="122" font-size="15" fill="#334155">table — вся таблица (контейнер)</text>
+<rect x="360" y="152" width="34" height="34" rx="4" fill="#2563eb" stroke="#1e3a8a" stroke-width="1"/>
+<text x="406" y="174" font-size="15" fill="#334155">th — ячейка-заголовок (жирная)</text>
+<rect x="360" y="204" width="34" height="34" rx="4" fill="#ffffff" stroke="#94a3b8" stroke-width="1"/>
+<text x="406" y="226" font-size="15" fill="#334155">td — ячейка с данными</text>
+<rect x="360" y="256" width="34" height="34" rx="4" fill="#fef9c3" stroke="#ca8a04" stroke-width="1"/>
+<text x="406" y="278" font-size="15" fill="#334155">tr — строка (ряд ячеек)</text>
+<text x="360" y="316" font-size="13" fill="#94a3b8">Сколько td в строке — столько столбцов.</text>
+</svg>

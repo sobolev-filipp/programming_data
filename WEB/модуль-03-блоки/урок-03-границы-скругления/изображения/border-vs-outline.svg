@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 380" font-family="'Segoe UI', Arial, sans-serif">
+<rect x="0" y="0" width="760" height="380" rx="16" fill="#f8fafc" stroke="#e2e8f0" stroke-width="2"/>
+<text x="380" y="34" text-anchor="middle" font-size="22" font-weight="700" fill="#1e293b">border vs outline — в чём разница</text>
+<text x="200" y="66" text-anchor="middle" font-size="16" font-weight="700" fill="#2563eb">border — часть коробки</text>
+<rect x="120" y="86" width="160" height="110" rx="14" fill="#dbeafe" stroke="#2563eb" stroke-width="10"/>
+<text x="200" y="146" text-anchor="middle" font-size="13" fill="#1e40af">блок</text>
+<text x="120" y="228" font-size="13" fill="#334155">• занимает место (в размере блока)</text>
+<text x="120" y="250" font-size="13" fill="#334155">• двигает соседние блоки</text>
+<text x="120" y="272" font-size="13" fill="#334155">• скругляется border-radius</text>
+<text x="120" y="294" font-size="13" fill="#334155">• можно по сторонам (border-top…)</text>
+<line x1="380" y1="70" x2="380" y2="330" stroke="#e2e8f0" stroke-width="2"/>
+<text x="565" y="66" text-anchor="middle" font-size="16" font-weight="700" fill="#f59e0b">outline — «поверх», снаружи</text>
+<rect x="485" y="92" width="160" height="98" rx="12" fill="#fef3c7" stroke="#cbd5e1" stroke-width="1"/>
+<text x="565" y="146" text-anchor="middle" font-size="13" fill="#92400e">блок</text>
+<rect x="477" y="84" width="176" height="114" rx="14" fill="none" stroke="#f59e0b" stroke-width="4"/>
+<text x="662" y="86" font-size="11" fill="#b45309">outline-offset</text>
+<text x="485" y="228" font-size="13" fill="#334155">• НЕ занимает место</text>
+<text x="485" y="250" font-size="13" fill="#334155">• НЕ двигает соседей (рисуется поверх)</text>
+<text x="485" y="272" font-size="13" fill="#334155">• для :focus (обводка при Tab)</text>
+<text x="485" y="294" font-size="13" fill="#334155">• outline-offset — отступ обводки</text>
+<text x="380" y="350" text-anchor="middle" font-size="13" font-family="'Consolas','Courier New',monospace" fill="#7c3aed">outline: 3px solid #6366f1;  outline-offset: 4px;</text>
+</svg>

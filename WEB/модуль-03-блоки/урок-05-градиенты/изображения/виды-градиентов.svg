@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 360" font-family="'Segoe UI', Arial, sans-serif">
+<rect x="0" y="0" width="760" height="360" rx="16" fill="#f8fafc" stroke="#e2e8f0" stroke-width="2"/>
+<text x="380" y="34" text-anchor="middle" font-size="22" font-weight="700" fill="#1e293b">Виды градиентов</text>
+<defs>
+<linearGradient id="lin" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#2563eb"/><stop offset="1" stop-color="#7c3aed"/></linearGradient>
+<radialGradient id="rad" cx="0.5" cy="0.5" r="0.5"><stop offset="0" stop-color="#fde047"/><stop offset="1" stop-color="#ea580c"/></radialGradient>
+</defs>
+<rect x="50" y="80" width="190" height="150" rx="14" fill="url(#lin)"/>
+<line x1="80" y1="110" x2="210" y2="200" stroke="#fff" stroke-width="3"/>
+<circle cx="210" cy="200" r="4" fill="#fff"/>
+<text x="145" y="260" text-anchor="middle" font-size="16" font-weight="700" fill="#334155" font-family="'Consolas','Courier New',monospace">linear</text>
+<text x="145" y="280" text-anchor="middle" font-size="12" fill="#64748b">линейный (по направлению)</text>
+<rect x="285" y="80" width="190" height="150" rx="14" fill="url(#rad)"/>
+<text x="380" y="260" text-anchor="middle" font-size="16" font-weight="700" fill="#334155" font-family="'Consolas','Courier New',monospace">radial</text>
+<text x="380" y="280" text-anchor="middle" font-size="12" fill="#64748b">радиальный (из центра)</text>
+<clipPath id="conclip"><rect x="520" y="80" width="190" height="150" rx="14"/></clipPath>
+<g clip-path="url(#conclip)">
+<rect x="520" y="80" width="190" height="150" fill="#fff"/>
+<path d="M 615.0 155.0 L 615.0 85.0 A 70 70 0 0 1 664.5 105.5 Z" fill="#ef4444"/>
+<path d="M 615.0 155.0 L 664.5 105.5 A 70 70 0 0 1 685.0 155.0 Z" fill="#f59e0b"/>
+<path d="M 615.0 155.0 L 685.0 155.0 A 70 70 0 0 1 664.5 204.5 Z" fill="#eab308"/>
+<path d="M 615.0 155.0 L 664.5 204.5 A 70 70 0 0 1 615.0 225.0 Z" fill="#22c55e"/>
+<path d="M 615.0 155.0 L 615.0 225.0 A 70 70 0 0 1 565.5 204.5 Z" fill="#0ea5e9"/>
+<path d="M 615.0 155.0 L 565.5 204.5 A 70 70 0 0 1 545.0 155.0 Z" fill="#6366f1"/>
+<path d="M 615.0 155.0 L 545.0 155.0 A 70 70 0 0 1 565.5 105.5 Z" fill="#a855f7"/>
+<path d="M 615.0 155.0 L 565.5 105.5 A 70 70 0 0 1 615.0 85.0 Z" fill="#ec4899"/>
+</g>
+<text x="615" y="260" text-anchor="middle" font-size="16" font-weight="700" fill="#334155" font-family="'Consolas','Courier New',monospace">conic</text>
+<text x="615" y="280" text-anchor="middle" font-size="12" fill="#64748b">конический (по кругу)</text>
+<text x="380" y="316" text-anchor="middle" font-size="13" font-family="'Consolas','Courier New',monospace" fill="#7c3aed">background: linear-gradient(135deg, #2563eb, #7c3aed);</text>
+<text x="380" y="338" text-anchor="middle" font-size="12" fill="#94a3b8">radial-gradient(circle, ...) · conic-gradient(...) — можно много цветов через запятую</text>
+</svg>
