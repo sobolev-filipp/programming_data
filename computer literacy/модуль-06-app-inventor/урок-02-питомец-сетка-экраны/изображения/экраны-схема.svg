@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 300" font-family="Segoe UI, system-ui, sans-serif">
+  <rect width="560" height="300" fill="#f8fafc"/>
+  <text x="280" y="30" font-size="18" font-weight="700" fill="#1e293b" text-anchor="middle">Два экрана и навигация</text>
+  <text x="280" y="50" font-size="12" fill="#64748b" text-anchor="middle">у каждого экрана — свои компоненты и свои блоки</text>
+
+  <!-- Screen1 -->
+  <g>
+    <rect x="70" y="72" width="150" height="200" rx="16" fill="#ffffff" stroke="#0891b2" stroke-width="3"/>
+    <rect x="70" y="72" width="150" height="30" rx="14" fill="#0891b2"/>
+    <text x="145" y="92" font-size="13" font-weight="700" fill="#fff" text-anchor="middle">Screen1 — Главная</text>
+    <circle cx="145" cy="150" r="26" fill="#fbbf24"/><circle cx="137" cy="147" r="3" fill="#1f2937"/><circle cx="153" cy="147" r="3" fill="#1f2937"/>
+    <g fill="#f97316"><rect x="92" y="196" width="26" height="26" rx="6"/><rect x="132" y="196" width="26" height="26" rx="6"/><rect x="172" y="196" width="26" height="26" rx="6"/></g>
+    <rect x="188" y="78" width="22" height="18" rx="5" fill="#e0f2fe"/><text x="199" y="91" font-size="11" text-anchor="middle">⚙️</text>
+  </g>
+
+  <!-- Screen2 -->
+  <g>
+    <rect x="340" y="72" width="150" height="200" rx="16" fill="#ffffff" stroke="#7c3aed" stroke-width="3"/>
+    <rect x="340" y="72" width="150" height="30" rx="14" fill="#7c3aed"/>
+    <text x="415" y="92" font-size="13" font-weight="700" fill="#fff" text-anchor="middle">Screen2 — Профиль</text>
+    <circle cx="415" cy="150" r="26" fill="#fbbf24"/><path d="M405 148 q10 8 20 0" stroke="#1f2937" stroke-width="3" fill="none"/>
+    <text x="415" y="200" font-size="11" fill="#475569" text-anchor="middle">Имя: Барсик</text>
+    <rect x="372" y="214" width="86" height="26" rx="8" fill="#7c3aed"/><text x="415" y="232" font-size="12" font-weight="700" fill="#fff" text-anchor="middle">◀ Назад</text>
+  </g>
+
+  <!-- arrows -->
+  <path d="M224 140 H336" stroke="#0891b2" stroke-width="3" fill="none" marker-end="url(#a1)"/>
+  <path d="M336 190 H224" stroke="#7c3aed" stroke-width="3" fill="none" marker-end="url(#a2)"/>
+  <defs>
+    <marker id="a1" markerWidth="10" markerHeight="10" refX="7" refY="3" orient="auto"><path d="M0 0 L7 3 L0 6 z" fill="#0891b2"/></marker>
+    <marker id="a2" markerWidth="10" markerHeight="10" refX="7" refY="3" orient="auto"><path d="M0 0 L7 3 L0 6 z" fill="#7c3aed"/></marker>
+  </defs>
+  <text x="280" y="132" font-size="11" font-weight="700" fill="#0891b2" text-anchor="middle">open another</text>
+  <text x="280" y="146" font-size="11" font-weight="700" fill="#0891b2" text-anchor="middle">screen "Screen2"</text>
+  <text x="280" y="184" font-size="11" font-weight="700" fill="#7c3aed" text-anchor="middle">close screen</text>
+
+  <text x="280" y="292" font-size="12" fill="#0f172a" text-anchor="middle">⚠️ Назад — через close screen, не открывай Screen1 «поверх» бесконечно.</text>
+</svg>
