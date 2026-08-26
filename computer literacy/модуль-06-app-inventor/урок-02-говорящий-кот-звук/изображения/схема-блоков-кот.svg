@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 420" font-family="Segoe UI, system-ui, sans-serif">
+  <rect width="600" height="420" fill="#f8fafc"/>
+  <text x="300" y="28" font-size="17" font-weight="700" fill="#1e293b" text-anchor="middle">Итоговая схема блоков — «Говорящий кот»</text>
+  <text x="300" y="47" font-size="12" fill="#64748b" text-anchor="middle">вкладка Blocks · три кнопки — три события</text>
+
+  <!-- Block 1: BtnMeow -->
+  <g>
+    <path d="M40 66 h250 v20 h-260 v-12 a8 8 0 0 1 8 -8 z" fill="#f5b800"/>
+    <path d="M32 86 h236 v78 a8 8 0 0 1 -8 8 h-220 a8 8 0 0 1 -8 -8 z" fill="#f5b800"/>
+    <text x="52" y="80" font-size="13" font-weight="700" fill="#5b4500">when  BtnMeow . Click   do</text>
+    <!-- set source -->
+    <rect x="52" y="94" width="205" height="30" rx="6" fill="#4a9e4a"/>
+    <text x="62" y="114" font-size="12.5" font-weight="700" fill="#fff">set Sound1.Source to</text>
+    <rect x="215" y="98" width="36" height="22" rx="5" fill="#d9453f"/>
+    <text x="222" y="113" font-size="9.5" fill="#fff">"meow"</text>
+    <!-- call play -->
+    <rect x="52" y="130" width="205" height="30" rx="6" fill="#1d76c9"/>
+    <text x="62" y="150" font-size="12.5" font-weight="700" fill="#fff">call Sound1.Play</text>
+  </g>
+
+  <!-- Block 2: BtnPurr -->
+  <g>
+    <path d="M320 66 h250 v20 h-260 v-12 a8 8 0 0 1 8 -8 z" fill="#f5b800"/>
+    <path d="M312 86 h236 v78 a8 8 0 0 1 -8 8 h-220 a8 8 0 0 1 -8 -8 z" fill="#f5b800"/>
+    <text x="332" y="80" font-size="13" font-weight="700" fill="#5b4500">when  BtnPurr . Click   do</text>
+    <rect x="332" y="94" width="205" height="30" rx="6" fill="#4a9e4a"/>
+    <text x="342" y="114" font-size="12.5" font-weight="700" fill="#fff">set Sound1.Source to</text>
+    <rect x="495" y="98" width="36" height="22" rx="5" fill="#d9453f"/>
+    <text x="501" y="113" font-size="9.5" fill="#fff">"purr"</text>
+    <rect x="332" y="130" width="205" height="30" rx="6" fill="#1d76c9"/>
+    <text x="342" y="150" font-size="12.5" font-weight="700" fill="#fff">call Sound1.Play</text>
+  </g>
+
+  <!-- Block 3: BtnSay (TextToSpeech) -->
+  <g>
+    <path d="M40 220 h420 v20 h-430 v-12 a8 8 0 0 1 8 -8 z" fill="#f5b800"/>
+    <path d="M32 240 h406 v52 a8 8 0 0 1 -8 8 h-390 a8 8 0 0 1 -8 -8 z" fill="#f5b800"/>
+    <text x="52" y="234" font-size="13" font-weight="700" fill="#5b4500">when  BtnSay . Click   do</text>
+    <rect x="52" y="250" width="230" height="32" rx="6" fill="#1d76c9"/>
+    <text x="62" y="271" font-size="12.5" font-weight="700" fill="#fff">call TextToSpeech1.Speak</text>
+    <text x="70" y="255" font-size="9" fill="#cfe6fb"> </text>
+    <text x="292" y="263" font-size="11" font-weight="600" fill="#334155">message</text>
+    <rect x="352" y="250" width="196" height="32" rx="6" fill="#d9453f"/>
+    <text x="362" y="271" font-size="11.5" fill="#fff">"Привет! Я говорящий кот!"</text>
+  </g>
+
+  <!-- legend -->
+  <text x="40" y="350" font-size="13" fill="#0f172a" font-weight="700">📖 Три кнопки — три события. Каждая: своя реакция.</text>
+  <text x="40" y="374" font-size="12" fill="#334155">🟢 set …to — меняет свойство (источник звука)   🔵 call … — действие (Play / Speak)</text>
+  <text x="40" y="394" font-size="12" fill="#334155">🔴 "текст" — строка (имя файла или фраза для озвучки)   🟡 событие when…Click</text>
+  <text x="40" y="414" font-size="12" fill="#64748b">💡 Sound играет ФАЙЛ (нужен .mp3), TextToSpeech ПРОИЗНОСИТ текст (файл не нужен).</text>
+</svg>
