@@ -1,0 +1,7 @@
+# ── git-crypt: учительские файлы курса SWIFT (шифруются; читаются только с ключом) ──
+# Маски вынесены в локальный .gitattributes курса, а НЕ в корень, потому что имя
+# Lesson_*.md встречается ещё и в C#_OLD (legacy) — там его трогать нельзя.
+# Файлы сцены урока: Урок_<N>_GameScene.swift (уроки 14+). Старый GameScene.swift
+# (урок 13, без префикса) и готовые проекты в Project/ — НЕ шифруются (решение автора).
+Урок_*_GameScene.swift   filter=git-crypt diff=git-crypt
+Lesson_*.md              filter=git-crypt diff=git-crypt
