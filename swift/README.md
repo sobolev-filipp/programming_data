@@ -22,7 +22,7 @@
   <li><a href="./Lesson/Lesson_16/Lesson_16.md">Урок 16: Управление игроком и касания</a></li>
   <li><a href="./Lesson/Lesson_17/Lesson_17.md">Урок 17: Враги, счёт и жизни</a></li>
   <li><a href="./Lesson/Lesson_18/Lesson_18.md">Урок 18: Звуки и частицы в игре</a></li>
-  <li><a href="#">Урок 19: Рекорды и меню</a></li>
+  <li><a href="./Lesson/Lesson_19/Lesson_19.md">Урок 19: Рекорды и меню</a></li>
   <li><a href="#">Урок 20: Своя игра — часть 1</a></li>
   <li><a href="#">Урок 21: Своя игра — часть 2</a></li>
   <li><a href="#">Урок 22: SwiftUI — первый взгляд</a></li>
