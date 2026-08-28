@@ -9,15 +9,16 @@ extension SKColor {
     }
 }
 
-let bestScoreKey = "bestScore"   // ключ, под которым храним рекорд в UserDefaults
+let bestScoreKey = "bestTower"   // ключ, под которым храним рекорд (высоту) в UserDefaults
 
 // MARK: - Экран меню
 
 class MenuScene: SKScene {
 
     override func didMove(to view: SKView) {
-        backgroundColor = .rgb(12, 14, 35)
+        backgroundColor = .rgb(18, 20, 46)
         setupStars()
+        setupDecorTower()
         setupTitle()
         setupBest()
         setupPlayButton()
@@ -36,13 +37,24 @@ class MenuScene: SKScene {
         }
     }
 
-    // Заголовок игры (с лёгкой пульсацией)
+    // Декоративная мини-башня внизу
+    func setupDecorTower() {
+        for i in 0..<4 {
+            let hue = (0.55 + CGFloat(i) * 0.05).truncatingRemainder(dividingBy: 1.0)
+            let color = SKColor(hue: hue, saturation: 0.65, brightness: 0.98, alpha: 1.0)
+            let block = SKSpriteNode(color: color, size: CGSize(width: 130 - CGFloat(i) * 12, height: 32))
+            block.position = CGPoint(x: size.width / 2, y: size.height * 0.15 + CGFloat(i) * 32)
+            addChild(block)
+        }
+    }
+
+    // Заголовок (с лёгкой пульсацией)
     func setupTitle() {
         let title = SKLabelNode(fontNamed: "AvenirNext-Bold")
-        title.text = "ЛОВЕЦ ЗВЁЗД"
-        title.fontSize = 42
+        title.text = "🏗 БАШНЯ"
+        title.fontSize = 46
         title.fontColor = .rgb(255, 220, 90)
-        title.position = CGPoint(x: size.width / 2, y: size.height * 0.66)
+        title.position = CGPoint(x: size.width / 2, y: size.height * 0.72)
         addChild(title)
 
         title.run(.repeatForever(.sequence([
@@ -55,10 +67,10 @@ class MenuScene: SKScene {
     func setupBest() {
         let best = UserDefaults.standard.integer(forKey: bestScoreKey)
         let label = SKLabelNode(fontNamed: "AvenirNext-Bold")
-        label.text = "🏆 Рекорд: \(best)"
+        label.text = "🏆 Рекорд: \(best) этажей"
         label.fontSize = 24
         label.fontColor = .white
-        label.position = CGPoint(x: size.width / 2, y: size.height * 0.55)
+        label.position = CGPoint(x: size.width / 2, y: size.height * 0.6)
         addChild(label)
     }
 
@@ -68,7 +80,7 @@ class MenuScene: SKScene {
         button.fillColor = .rgb(80, 180, 90)
         button.strokeColor = .white
         button.lineWidth = 2
-        button.position = CGPoint(x: size.width / 2, y: size.height * 0.38)
+        button.position = CGPoint(x: size.width / 2, y: size.height * 0.46)
         button.name = "playButton"
         addChild(button)
 
