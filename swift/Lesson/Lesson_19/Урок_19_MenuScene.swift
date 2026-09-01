@@ -16,25 +16,21 @@ let bestScoreKey = "bestTower"   // ключ, под которым храним
 class MenuScene: SKScene {
 
     override func didMove(to view: SKView) {
-        backgroundColor = .rgb(18, 20, 46)
-        setupStars()
+        backgroundColor = .rgb(18, 20, 46)   // запасной цвет, если фото не добавили
+        setupBackground()
         setupDecorTower()
         setupTitle()
         setupBest()
         setupPlayButton()
     }
 
-    // Декоративные звёзды на фоне
-    func setupStars() {
-        for _ in 0..<70 {
-            let star = SKShapeNode(circleOfRadius: CGFloat.random(in: 0.5...1.8))
-            star.fillColor = .white
-            star.strokeColor = .clear
-            star.alpha = CGFloat.random(in: 0.2...0.8)
-            star.position = CGPoint(x: CGFloat.random(in: 0...size.width),
-                                    y: CGFloat.random(in: 0...size.height))
-            addChild(star)
-        }
+    // Фоновое ФОТО (картинка "background" из Assets.xcassets), растянутое на весь экран
+    func setupBackground() {
+        let background = SKSpriteNode(imageNamed: "background")
+        background.position = CGPoint(x: size.width / 2, y: size.height / 2)  // по центру экрана
+        background.size = self.size          // растянуть ровно под размер экрана
+        background.zPosition = -100          // далеко позади всего остального
+        addChild(background)
     }
 
     // Декоративная мини-башня внизу
