@@ -1,0 +1,51 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 500" font-family="'Segoe UI', system-ui, sans-serif">
+  <rect width="900" height="500" fill="#f7f9fc"/>
+  <text x="450" y="40" text-anchor="middle" font-size="26" font-weight="700" fill="#1f2937">Экран приложения = два файла</text>
+  <text x="450" y="66" text-anchor="middle" font-size="15" fill="#64748b">XAML — внешность · C# — мозг. Они всегда работают в паре.</text>
+
+  <!-- XAML box -->
+  <rect x="40" y="95" width="380" height="330" rx="16" fill="#ffffff" stroke="#512bd4" stroke-width="2.5"/>
+  <rect x="40" y="95" width="380" height="46" rx="16" fill="#ede9fe"/>
+  <rect x="40" y="120" width="380" height="21" fill="#ede9fe"/>
+  <text x="60" y="125" font-size="18" font-weight="700" fill="#512bd4">MainPage.xaml</text>
+  <text x="300" y="125" font-size="14" fill="#7c3aed">👗 внешность</text>
+
+  <rect x="60" y="160" width="340" height="245" rx="10" fill="#0f172a"/>
+  <text x="78" y="188" font-size="14.5" font-family="Consolas, monospace" fill="#e2e8f0">&lt;VerticalStackLayout&gt;</text>
+  <text x="98" y="214" font-size="14.5" font-family="Consolas, monospace" fill="#e2e8f0">&lt;Label</text>
+  <text x="118" y="238" font-size="14.5" font-family="Consolas, monospace" fill="#7dd3fc">x:Name="CountLabel"</text>
+  <text x="118" y="262" font-size="14.5" font-family="Consolas, monospace" fill="#e2e8f0">Text="0" /&gt;</text>
+  <text x="98" y="292" font-size="14.5" font-family="Consolas, monospace" fill="#e2e8f0">&lt;Button Text="+1"</text>
+  <text x="118" y="316" font-size="14.5" font-family="Consolas, monospace" fill="#fca5a5">Clicked="OnPlusClicked"</text>
+  <text x="118" y="340" font-size="14.5" font-family="Consolas, monospace" fill="#e2e8f0">/&gt;</text>
+  <text x="78" y="370" font-size="14.5" font-family="Consolas, monospace" fill="#e2e8f0">&lt;/VerticalStackLayout&gt;</text>
+
+  <!-- C# box -->
+  <rect x="480" y="95" width="380" height="330" rx="16" fill="#ffffff" stroke="#16a34a" stroke-width="2.5"/>
+  <rect x="480" y="95" width="380" height="46" rx="16" fill="#dcfce7"/>
+  <rect x="480" y="120" width="380" height="21" fill="#dcfce7"/>
+  <text x="500" y="125" font-size="18" font-weight="700" fill="#15803d">MainPage.xaml.cs</text>
+  <text x="760" y="125" font-size="14" fill="#15803d">🧠 логика</text>
+
+  <rect x="500" y="160" width="340" height="245" rx="10" fill="#0f172a"/>
+  <text x="518" y="188" font-size="14.5" font-family="Consolas, monospace" fill="#e2e8f0">int count = 0;</text>
+  <text x="518" y="224" font-size="14.5" font-family="Consolas, monospace" fill="#fca5a5">void OnPlusClicked(...)</text>
+  <text x="518" y="248" font-size="14.5" font-family="Consolas, monospace" fill="#e2e8f0">{</text>
+  <text x="538" y="272" font-size="14.5" font-family="Consolas, monospace" fill="#e2e8f0">count++;</text>
+  <text x="538" y="300" font-size="14.5" font-family="Consolas, monospace" fill="#7dd3fc">CountLabel</text>
+  <text x="628" y="300" font-size="14.5" font-family="Consolas, monospace" fill="#e2e8f0">.Text =</text>
+  <text x="538" y="324" font-size="14.5" font-family="Consolas, monospace" fill="#e2e8f0">count.ToString();</text>
+  <text x="518" y="352" font-size="14.5" font-family="Consolas, monospace" fill="#e2e8f0">}</text>
+
+  <!-- link arrows -->
+  <path d="M 400 316 C 445 316, 445 224, 500 218" fill="none" stroke="#dc2626" stroke-width="2.5" stroke-dasharray="6 4" marker-end="url(#ar)"/>
+  <path d="M 500 296 C 450 300, 445 250, 402 250" fill="none" stroke="#0ea5e9" stroke-width="2.5" stroke-dasharray="6 4" marker-end="url(#ab)"/>
+
+  <defs>
+    <marker id="ar" markerWidth="10" markerHeight="10" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#dc2626"/></marker>
+    <marker id="ab" markerWidth="10" markerHeight="10" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#0ea5e9"/></marker>
+  </defs>
+
+  <text x="450" y="452" text-anchor="middle" font-size="13.5" fill="#dc2626">🔴 Clicked зовёт метод по имени</text>
+  <text x="450" y="474" text-anchor="middle" font-size="13.5" fill="#0ea5e9">🔵 код меняет элемент по его x:Name</text>
+</svg>

@@ -73,34 +73,73 @@ dotnet nuget locals all --clear   # очистить кэш пакетов NuGet
 
 ---
 
-## 📱 MAUI (Блоки 2–3) — забегая вперёд
+## 📱 MAUI (Блоки 2–3)
 
-Полные инструкции будут в уроках MAUI; здесь — команды для Mac под рукой.
+Приложения с окном (кнопки, поля, списки) для Windows/Android/Mac/iOS из одного кода.
 
-Установить MAUI workload:
+### 0. Установить MAUI workload (один раз)
+
+**Windows:** в **Visual Studio Installer** отметить workload **«Разработка мобильных приложений на .NET»** (*.NET Multi-platform App UI development*). Без него не будет шаблона проекта.
+
+**Mac:**
 ```bash
-dotnet workload install maui
+sudo dotnet workload install maui --source https://api.nuget.org/v3/index.json
+xcode-select --install     # инструменты Xcode (для сборки под Apple)
 ```
+Проверить установленные workload'ы: `dotnet workload list` (ждём `maui-windows`/`maccatalyst`/`android`/`ios`).
 
-Запустить MAUI-приложение на Mac (MacCatalyst):
-```bash
-dotnet build -t:Run -f net10.0-maccatalyst
-```
+### 1. Создать проект
 
-Настройки проекта (`.csproj`) для сборки под нужную платформу:
+| | Как |
+|--|-----|
+| 🪟 Windows | Создание проекта → шаблон **.NET MAUI App** → имя → .NET 10.0 |
+| 🍎 Mac | `dotnet new maui -o MyApp` затем `cd MyApp` |
+
+### 2. Структура проекта (что важно)
+
+- **`MainPage.xaml`** — внешность главного экрана (XAML);
+- **`MainPage.xaml.cs`** — логика экрана (C#, code-behind);
+- `App.xaml` / `App.xaml.cs` — глобальные ресурсы, старт;
+- `AppShell.xaml` — какая страница открывается первой;
+- `MauiProgram.cs` — «мотор» приложения;
+- `Platforms/` — платформенные файлы; `Resources/` — картинки/шрифты/цвета.
+
+90% работы — в `MainPage.xaml` и `MainPage.xaml.cs`.
+
+### 3. Запустить
+
+| | Как |
+|--|-----|
+| 🪟 Windows | платформа **Windows Machine** → ▶ / **F5** (быстрее всего); Android — через Диспетчер устройств Android |
+| 🍎 Mac | `dotnet build -t:Run -f net10.0-maccatalyst` (маковое окно) |
+
+Первый запуск долгий (до пары минут) — нормально.
+
+### 4. Настройки `.csproj` под нужную платформу
+
 ```xml
 <TargetFramework>net10.0-maccatalyst</TargetFramework>
 <RuntimeIdentifiers>maccatalyst-arm64</RuntimeIdentifiers>
 <TargetFrameworks Condition="$([MSBuild]::IsOSPlatform('windows'))">$(TargetFrameworks);net10.0-windows10.0.19041.0</TargetFrameworks>
 ```
 
-Создать вторую страницу (нужен шаблон `VijayAnand.MauiTemplates`):
+### 5. Добавить ещё одну страницу (для навигации, урок 13)
+
+Нужен шаблон `VijayAnand.MauiTemplates`:
 ```bash
 dotnet new install VijayAnand.MauiTemplates
-dotnet new maui-page -n MyPage -o Pages
+dotnet new maui-page -n MyPage -o Pages    # -n имя, -o папка
+```
+На Windows: **Add → New Item → .NET MAUI ContentPage (XAML)**.
+
+### 6. Если «капризничает» (Mac)
+```bash
+rm -rf bin obj
+dotnet restore
+dotnet build -t:Rebuild
 ```
 
-> На Windows (ученики) всё это делается кнопками в Visual Studio: **▶ Run**, менеджер NuGet, добавление страницы через **Add → New Item**.
+> На Windows (ученики) многое делается кнопками в Visual Studio: **▶ Run**, менеджер NuGet, добавление страницы через **Add → New Item**.
 
 ---
 

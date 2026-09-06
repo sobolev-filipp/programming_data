@@ -7,7 +7,7 @@
 
 | # | Урок / приложение | Новое | Статус |
 |---|-------------------|-------|--------|
-| 1 | Введение в MAUI + «Счётчик» | структура проекта, `Label`/`Button`, `Clicked`, XAML↔C# | ⏳ план |
+| 1 | [Введение в MAUI + «Счётчик»](урок-01-введение-maui-счётчик/урок.md) | среда (VS/VS Code, workload), структура проекта, `Label`/`Button`, `Clicked`, `x:Name`, XAML↔C# | ✅ готов |
 | 2 | Макеты Stack | `VerticalStackLayout`/`HorizontalStackLayout`, `Spacing`, `Padding`, `x:Name` | ⏳ план |
 | 3 | Grid: «Калькулятор» | `Grid`, строки/столбцы, `ColumnSpan` | ⏳ план |
 | 4 | Контролы ввода: «Анкета/Профиль» | `Entry`, `Editor`, `.Text`, `Placeholder` | ⏳ план |

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="CounterApp.MainPage">
+
+    <VerticalStackLayout Padding="30" Spacing="20" VerticalOptions="Center">
+
+        <Label Text="Мой счётчик"
+               FontSize="32"
+               HorizontalOptions="Center" />
+
+        <Label x:Name="CountLabel"
+               Text="0"
+               FontSize="80"
+               HorizontalOptions="Center" />
+
+        <Button Text="+1" Clicked="OnPlusClicked" />
+        <Button Text="-1" Clicked="OnMinusClicked" />
+        <Button Text="Сброс" Clicked="OnResetClicked" />
+
+    </VerticalStackLayout>
+
+</ContentPage>
