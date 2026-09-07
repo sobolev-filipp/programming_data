@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Викторина — Урок 1.2: Продвинутые конструкции Python</title>
+<style>
+  :root{
+    --bg1:#4338ca; --bg2:#06b6d4; --card:#ffffff; --ink:#1f2937;
+    --accent:#4f46e5; --ok:#16a34a; --bad:#dc2626; --soft:#e0e7ff;
+  }
+  *{box-sizing:border-box;font-family:"Segoe UI",system-ui,sans-serif}
+  body{margin:0;min-height:100vh;display:flex;align-items:center;justify-content:center;
+    background:linear-gradient(135deg,var(--bg1),var(--bg2));padding:20px;color:var(--ink)}
+  .app{background:var(--card);width:min(760px,100%);border-radius:24px;
+    box-shadow:0 25px 60px rgba(0,0,0,.35);padding:34px 34px 28px;position:relative;overflow:hidden}
+  h1{margin:0 0 6px;font-size:26px;text-align:center}
+  .sub{text-align:center;color:#64748b;margin-bottom:22px;font-size:15px}
+  .bar{height:10px;background:var(--soft);border-radius:99px;overflow:hidden;margin-bottom:18px}
+  .bar>i{display:block;height:100%;width:0;background:var(--accent);transition:.4s}
+  .meta{display:flex;justify-content:space-between;font-size:14px;color:#64748b;margin-bottom:14px}
+  .q{font-size:22px;font-weight:700;margin:6px 0 20px;line-height:1.3}
+  .q code{background:#0f172a;color:#e2e8f0;padding:2px 8px;border-radius:6px;font-size:19px}
+  .opts{display:grid;gap:12px}
+  .opt{border:2px solid #e2e8f0;background:#fff;border-radius:14px;padding:15px 18px;font-size:18px;
+    text-align:left;cursor:pointer;transition:.15s;display:flex;align-items:center;gap:12px}
+  .opt:hover{border-color:var(--accent);background:var(--soft);transform:translateY(-2px)}
+  .opt b{background:var(--soft);color:var(--accent);width:30px;height:30px;border-radius:8px;
+    display:flex;align-items:center;justify-content:center;font-size:15px;flex:0 0 auto}
+  .opt span code{background:#0f172a;color:#e2e8f0;padding:1px 6px;border-radius:5px;font-size:16px}
+  .opt.ok{border-color:var(--ok);background:#dcfce7}
+  .opt.ok b{background:var(--ok);color:#fff}
+  .opt.bad{border-color:var(--bad);background:#fee2e2}
+  .opt.bad b{background:var(--bad);color:#fff}
+  .opt:disabled{cursor:default;transform:none}
+  .fb{margin-top:16px;padding:14px 16px;border-radius:12px;font-size:16px;display:none;line-height:1.4}
+  .fb.show{display:block}
+  .fb.good{background:#dcfce7;color:#166534}
+  .fb.no{background:#fee2e2;color:#991b1b}
+  .fb code{background:#0f172a;color:#e2e8f0;padding:1px 6px;border-radius:5px}
+  .btn{margin-top:18px;width:100%;padding:15px;border:0;border-radius:14px;background:var(--accent);
+    color:#fff;font-size:18px;font-weight:700;cursor:pointer;display:none}
+  .btn.show{display:block}
+  .btn:hover{filter:brightness(1.08)}
+  .center{text-align:center}
+  .score{font-size:64px;font-weight:800;margin:10px 0}
+  .emoji{font-size:70px}
+  .hint{color:#94a3b8;font-size:13px;text-align:center;margin-top:14px}
+</style>
+</head>
+<body>
+<div class="app" id="app"></div>
+<script>
+const QUESTIONS = [
+ {
+  "q": "Что делает <code>[x**2 for x in range(5)]</code>?",
+  "a": [
+   "Ошибку",
+   "Список квадратов: [0, 1, 4, 9, 16]",
+   "Число 30",
+   "Кортеж"
+  ],
+  "c": 1,
+  "e": "Генератор списка возводит каждый x в квадрат."
+ },
+ {
+  "q": "Где здесь ФИЛЬТР: <code>[x for x in nums if x > 0]</code>?",
+  "a": [
+   "Нет фильтра",
+   "<code>if x > 0</code> в конце — включаем элемент или нет",
+   "<code>for x</code>",
+   "<code>x</code>"
+  ],
+  "c": 1,
+  "e": "if в конце генератора — это фильтр: элемент попадёт в список только если условие истинно."
+ },
+ {
+  "q": "А <code>[a if x>0 else b for x in ...]</code> — что за <code>if..else</code>?",
+  "a": [
+   "Фильтр",
+   "Выбор значения (элемент включается всегда, но a или b)",
+   "Ошибка",
+   "Цикл"
+  ],
+  "c": 1,
+  "e": "Тернарный if..else внутри выражения ВЫБИРАЕТ значение, а не фильтрует."
+ },
+ {
+  "q": "Что такое <code>lambda</code>?",
+  "a": [
+   "Класс",
+   "Функция в одну строку из одного выражения",
+   "Цикл",
+   "Модуль"
+  ],
+  "c": 1,
+  "e": "lambda — короткая безымянная функция: lambda x: x**2."
+ },
+ {
+  "q": "Где чаще всего используют lambda?",
+  "a": [
+   "Как ключ: <code>sorted(a, key=lambda x: x.score)</code>",
+   "Для печати",
+   "Для импорта",
+   "Для файлов"
+  ],
+  "c": 0,
+  "e": "Главный случай — передать lambda как key в sorted/max/min."
+ },
+ {
+  "q": "Что соберёт <code>*args</code> в <code>def f(*args)</code>?",
+  "a": [
+   "Словарь",
+   "Кортеж позиционных аргументов",
+   "Список строк",
+   "Число"
+  ],
+  "c": 1,
+  "e": "*args собирает все позиционные аргументы в кортеж."
+ },
+ {
+  "q": "А <code>**kwargs</code> соберёт...",
+  "a": [
+   "Кортеж",
+   "Словарь именованных аргументов",
+   "Множество",
+   "Строку"
+  ],
+  "c": 1,
+  "e": "**kwargs собирает именованные аргументы в словарь."
+ },
+ {
+  "q": "<code>f(1, 2, name='Ян')</code> при <code>def f(*args, **kwargs)</code>: чему равен kwargs?",
+  "a": [
+   "(1, 2)",
+   "{'name': 'Ян'}",
+   "['Ян']",
+   "1"
+  ],
+  "c": 1,
+  "e": "Позиционные 1,2 попадут в args, а name='Ян' — в kwargs как словарь."
+ },
+ {
+  "q": "Что делает <code>*</code> при ВЫЗОВЕ: <code>greet(*data)</code>?",
+  "a": [
+   "Собирает в кортеж",
+   "Распаковывает список в позиционные аргументы",
+   "Умножает",
+   "Ошибка"
+  ],
+  "c": 1,
+  "e": "При вызове * распаковывает коллекцию в отдельные аргументы (обратное к сбору)."
+ },
+ {
+  "q": "С чем работает <code>**</code> при распаковке?",
+  "a": [
+   "Со списком",
+   "Только со словарём",
+   "С числом",
+   "С файлом"
+  ],
+  "c": 1,
+  "e": "** распаковывает словарь в именованные аргументы; для списка используют *."
+ },
+ {
+  "q": "Что вернёт <code>{x: x**2 for x in range(3)}</code>?",
+  "a": [
+   "Список",
+   "Словарь {0:0, 1:1, 2:4}",
+   "Множество",
+   "Кортеж"
+  ],
+  "c": 1,
+  "e": "С двоеточием ключ:значение — это генератор словаря."
+ },
+ {
+  "q": "А <code>{len(w) for w in words}</code> — это...",
+  "a": [
+   "Словарь",
+   "Множество (set) уникальных длин",
+   "Список",
+   "Строка"
+  ],
+  "c": 1,
+  "e": "Фигурные скобки без двоеточия дают множество уникальных значений."
+ },
+ {
+  "q": "😄 Написал <code>[x if x>0 for x in nums]</code>. Почему ошибка?",
+  "a": [
+   "Мало скобок",
+   "Перепутан фильтр и тернарник: нужно <code>[x for x in nums if x>0]</code>",
+   "Нет lambda",
+   "Нужен return"
+  ],
+  "c": 1,
+  "e": "Фильтр if ставится в КОНЦЕ; if без else в начале выражения — синтаксическая ошибка."
+ },
+ {
+  "q": "🤔 Зачем эти конструкции в ML-коде?",
+  "a": [
+   "Для красоты",
+   "Короткий читаемый код: генераторы предсказаний, lambda-ключи, **kwargs у fit",
+   "Ускоряют GPU",
+   "Ни за чем"
+  ],
+  "c": 1,
+  "e": "Например model.fit(..., batch_size=32) использует **kwargs, а sorted(key=lambda ...) — постоянно."
+ }
+];
+
+let i=0, score=0, locked=false;
+const app=document.getElementById('app');
+
+function shuffle(){for(let k=QUESTIONS.length-1;k>0;k--){const j=Math.floor(Math.random()*(k+1));[QUESTIONS[k],QUESTIONS[j]]=[QUESTIONS[j],QUESTIONS[k]];}for(const Q of QUESTIONS){const cc=Q.a[Q.c];for(let k=Q.a.length-1;k>0;k--){const j=Math.floor(Math.random()*(k+1));[Q.a[k],Q.a[j]]=[Q.a[j],Q.a[k]];}Q.c=Q.a.indexOf(cc);}}
+shuffle();
+
+function render(){
+  const Q=QUESTIONS[i];
+  app.innerHTML=`
+    <h1>⚡ Продвинутые конструкции Python</h1>
+    <div class="sub">Викторина по уроку 1.2 · Нейросети</div>
+    <div class="bar"><i style="width:${(i/QUESTIONS.length)*100}%"></i></div>
+    <div class="meta"><span>Вопрос ${i+1} из ${QUESTIONS.length}</span><span>⭐ Очки: ${score}</span></div>
+    <div class="q">${Q.q}</div>
+    <div class="opts" id="opts">
+      ${Q.a.map((t,n)=>`<button class="opt" data-n="${n}"><b>${n+1}</b><span>${t}</span></button>`).join('')}
+    </div>
+    <div class="fb" id="fb"></div>
+    <button class="btn" id="next">${i===QUESTIONS.length-1?'Показать результат →':'Следующий вопрос →'}</button>
+    <div class="hint">Можно отвечать клавишами 1–4</div>`;
+  locked=false;
+  document.querySelectorAll('.opt').forEach(b=>b.onclick=()=>choose(+b.dataset.n));
+  document.getElementById('next').onclick=next;
+}
+
+function choose(n){
+  if(locked) return; locked=true;
+  const Q=QUESTIONS[i];
+  const opts=[...document.querySelectorAll('.opt')];
+  opts.forEach(b=>b.disabled=true);
+  opts[Q.c].classList.add('ok');
+  const fb=document.getElementById('fb');
+  if(n===Q.c){ score++; fb.className='fb show good'; fb.innerHTML='✅ Верно! '+Q.e; }
+  else { opts[n].classList.add('bad'); fb.className='fb show no'; fb.innerHTML='❌ Не совсем. '+Q.e; }
+  document.querySelector('.meta').children[1].textContent='⭐ Очки: '+score;
+  document.getElementById('next').classList.add('show');
+}
+
+function next(){ i++; if(i<QUESTIONS.length) render(); else result(); }
+
+function result(){
+  const pct=Math.round(score/QUESTIONS.length*100);
+  let em,msg;
+  if(pct===100){em='🏆';msg="Идеально! Генераторы, lambda, *args/**kwargs — всё под контролем! ⚡";}
+  else if(pct>=70){em='🎉';msg="Отлично! Однострочные конструкции пишешь уверенно.";}
+  else if(pct>=40){em='👍';msg="Неплохо! Повтори разницу: if в конце — фильтр, if..else внутри — выбор.";}
+  else {em='💪';msg="Ещё разок! Загляни в summary — там шпаргалка по генераторам и lambda.";}
+  app.innerHTML=`
+    <div class="center">
+      <div class="emoji">${em}</div>
+      <h1>Готово!</h1>
+      <div class="score">${score} / ${QUESTIONS.length}</div>
+      <div class="sub">${msg}</div>
+      <button class="btn show" id="again">🔁 Пройти заново</button>
+    </div>`;
+  document.getElementById('again').onclick=()=>{i=0;score=0;shuffle();render();};
+}
+
+document.addEventListener('keydown',e=>{
+  if(['1','2','3','4'].includes(e.key)){ const b=document.querySelector(`.opt[data-n="${+e.key-1}"]`); if(b&&!b.disabled) choose(+e.key-1); }
+  if(e.key==='Enter'){ const nb=document.getElementById('next'); if(nb&&nb.classList.contains('show')) next(); }
+});
+
+render();
+</script>
+</body>
+</html>

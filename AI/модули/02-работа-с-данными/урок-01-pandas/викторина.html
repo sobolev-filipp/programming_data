@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Викторина — Урок 2.1: Pandas</title>
+<style>
+  :root{
+    --bg1:#4338ca; --bg2:#06b6d4; --card:#ffffff; --ink:#1f2937;
+    --accent:#4f46e5; --ok:#16a34a; --bad:#dc2626; --soft:#e0e7ff;
+  }
+  *{box-sizing:border-box;font-family:"Segoe UI",system-ui,sans-serif}
+  body{margin:0;min-height:100vh;display:flex;align-items:center;justify-content:center;
+    background:linear-gradient(135deg,var(--bg1),var(--bg2));padding:20px;color:var(--ink)}
+  .app{background:var(--card);width:min(760px,100%);border-radius:24px;
+    box-shadow:0 25px 60px rgba(0,0,0,.35);padding:34px 34px 28px;position:relative;overflow:hidden}
+  h1{margin:0 0 6px;font-size:26px;text-align:center}
+  .sub{text-align:center;color:#64748b;margin-bottom:22px;font-size:15px}
+  .bar{height:10px;background:var(--soft);border-radius:99px;overflow:hidden;margin-bottom:18px}
+  .bar>i{display:block;height:100%;width:0;background:var(--accent);transition:.4s}
+  .meta{display:flex;justify-content:space-between;font-size:14px;color:#64748b;margin-bottom:14px}
+  .q{font-size:22px;font-weight:700;margin:6px 0 20px;line-height:1.3}
+  .q code{background:#0f172a;color:#e2e8f0;padding:2px 8px;border-radius:6px;font-size:19px}
+  .opts{display:grid;gap:12px}
+  .opt{border:2px solid #e2e8f0;background:#fff;border-radius:14px;padding:15px 18px;font-size:18px;
+    text-align:left;cursor:pointer;transition:.15s;display:flex;align-items:center;gap:12px}
+  .opt:hover{border-color:var(--accent);background:var(--soft);transform:translateY(-2px)}
+  .opt b{background:var(--soft);color:var(--accent);width:30px;height:30px;border-radius:8px;
+    display:flex;align-items:center;justify-content:center;font-size:15px;flex:0 0 auto}
+  .opt span code{background:#0f172a;color:#e2e8f0;padding:1px 6px;border-radius:5px;font-size:16px}
+  .opt.ok{border-color:var(--ok);background:#dcfce7}
+  .opt.ok b{background:var(--ok);color:#fff}
+  .opt.bad{border-color:var(--bad);background:#fee2e2}
+  .opt.bad b{background:var(--bad);color:#fff}
+  .opt:disabled{cursor:default;transform:none}
+  .fb{margin-top:16px;padding:14px 16px;border-radius:12px;font-size:16px;display:none;line-height:1.4}
+  .fb.show{display:block}
+  .fb.good{background:#dcfce7;color:#166534}
+  .fb.no{background:#fee2e2;color:#991b1b}
+  .fb code{background:#0f172a;color:#e2e8f0;padding:1px 6px;border-radius:5px}
+  .btn{margin-top:18px;width:100%;padding:15px;border:0;border-radius:14px;background:var(--accent);
+    color:#fff;font-size:18px;font-weight:700;cursor:pointer;display:none}
+  .btn.show{display:block}
+  .btn:hover{filter:brightness(1.08)}
+  .center{text-align:center}
+  .score{font-size:64px;font-weight:800;margin:10px 0}
+  .emoji{font-size:70px}
+  .hint{color:#94a3b8;font-size:13px;text-align:center;margin-top:14px}
+</style>
+</head>
+<body>
+<div class="app" id="app"></div>
+<script>
+const QUESTIONS = [
+ {
+  "q": "Что такое DataFrame?",
+  "a": [
+   "Один столбец",
+   "Главный объект Pandas — двумерная таблица",
+   "График",
+   "Число"
+  ],
+  "c": 1,
+  "e": "DataFrame — таблица со строками и столбцами, главный объект Pandas."
+ },
+ {
+  "q": "А Series — это...",
+  "a": [
+   "Таблица",
+   "Один столбец DataFrame",
+   "Файл",
+   "Функция"
+  ],
+  "c": 1,
+  "e": "Series — один столбец (одномерные данные с индексом)."
+ },
+ {
+  "q": "Как загрузить CSV в Pandas?",
+  "a": [
+   "<code>pd.open('f.csv')</code>",
+   "<code>pd.read_csv('f.csv')</code>",
+   "<code>pd.load('f.csv')</code>",
+   "<code>csv.read()</code>"
+  ],
+  "c": 1,
+  "e": "pd.read_csv читает CSV в DataFrame; работает и по URL."
+ },
+ {
+  "q": "С чего начинают осмотр любого датасета?",
+  "a": [
+   "<code>df.delete()</code>",
+   "<code>df.head()</code>, <code>df.info()</code>, <code>df.describe()</code>",
+   "<code>df.plot()</code>",
+   "<code>df.save()</code>"
+  ],
+  "c": 1,
+  "e": "head/info/describe — первый взгляд на данные: строки, типы, статистика."
+ },
+ {
+  "q": "Как выбрать ОДИН столбец 'age'?",
+  "a": [
+   "<code>df.age()</code>",
+   "<code>df['age']</code>",
+   "<code>df(age)</code>",
+   "<code>df.get(age)</code>"
+  ],
+  "c": 1,
+  "e": "df['age'] возвращает Series одного столбца."
+ },
+ {
+  "q": "Как выбрать НЕСКОЛЬКО столбцов?",
+  "a": [
+   "<code>df['a','b']</code>",
+   "<code>df[['a', 'b']]</code>",
+   "<code>df.a.b</code>",
+   "<code>df(a,b)</code>"
+  ],
+  "c": 1,
+  "e": "Двойные скобки df[['a','b']] дают DataFrame из нескольких столбцов."
+ },
+ {
+  "q": "Как отфильтровать строки, где age > 15?",
+  "a": [
+   "<code>df.filter(15)</code>",
+   "<code>df[df['age'] > 15]</code>",
+   "<code>df > 15</code>",
+   "<code>filter(df, 15)</code>"
+  ],
+  "c": 1,
+  "e": "Булева маска внутри df[...] оставляет подходящие строки."
+ },
+ {
+  "q": "Как правильно объединить два условия фильтра?",
+  "a": [
+   "<code>(a>1) and (b>2)</code>",
+   "<code>(df.a>1) & (df.b>2)</code>",
+   "<code>a>1 or b>2</code>",
+   "<code>df.and()</code>"
+  ],
+  "c": 1,
+  "e": "В Pandas условия соединяют через & и |, каждое в скобках (не and/or)."
+ },
+ {
+  "q": "Чем отличаются loc и iloc?",
+  "a": [
+   "Ничем",
+   "loc — по МЕТКАМ (граница включается), iloc — по НОМЕРАМ (как NumPy)",
+   "loc быстрее",
+   "iloc для строк"
+  ],
+  "c": 1,
+  "e": "df.loc[0:3] берёт метки 0..3 включительно; df.iloc[0:3] — номера 0,1,2."
+ },
+ {
+  "q": "Что делает <code>df['class'].value_counts()</code>?",
+  "a": [
+   "Сумму",
+   "Считает, сколько раз встречается каждое значение",
+   "Среднее",
+   "Сортирует"
+  ],
+  "c": 1,
+  "e": "value_counts показывает частоту каждого значения в столбце."
+ },
+ {
+  "q": "Как отсортировать по возрасту по убыванию?",
+  "a": [
+   "<code>df.sort('age')</code>",
+   "<code>df.sort_values('age', ascending=False)</code>",
+   "<code>df.order('age')</code>",
+   "<code>sorted(df)</code>"
+  ],
+  "c": 1,
+  "e": "sort_values с ascending=False — по убыванию."
+ },
+ {
+  "q": "Что вернёт <code>df.shape</code>?",
+  "a": [
+   "Имена столбцов",
+   "Кортеж (число строк, число столбцов)",
+   "Первые строки",
+   "Типы"
+  ],
+  "c": 1,
+  "e": "shape — размеры таблицы (строки, столбцы)."
+ },
+ {
+  "q": "🤔 Как описать Pandas одной фразой?",
+  "a": [
+   "Это язык",
+   "Это Excel в коде, только мощнее",
+   "Это график",
+   "Это база данных SQL"
+  ],
+  "c": 1,
+  "e": "Pandas — работа с таблицами в коде, гибче и мощнее Excel."
+ }
+];
+
+let i=0, score=0, locked=false;
+const app=document.getElementById('app');
+
+function shuffle(){for(let k=QUESTIONS.length-1;k>0;k--){const j=Math.floor(Math.random()*(k+1));[QUESTIONS[k],QUESTIONS[j]]=[QUESTIONS[j],QUESTIONS[k]];}for(const Q of QUESTIONS){const cc=Q.a[Q.c];for(let k=Q.a.length-1;k>0;k--){const j=Math.floor(Math.random()*(k+1));[Q.a[k],Q.a[j]]=[Q.a[j],Q.a[k]];}Q.c=Q.a.indexOf(cc);}}
+shuffle();
+
+function render(){
+  const Q=QUESTIONS[i];
+  app.innerHTML=`
+    <h1>🐼 Pandas</h1>
+    <div class="sub">Викторина по уроку 2.1 · Нейросети</div>
+    <div class="bar"><i style="width:${(i/QUESTIONS.length)*100}%"></i></div>
+    <div class="meta"><span>Вопрос ${i+1} из ${QUESTIONS.length}</span><span>⭐ Очки: ${score}</span></div>
+    <div class="q">${Q.q}</div>
+    <div class="opts" id="opts">
+      ${Q.a.map((t,n)=>`<button class="opt" data-n="${n}"><b>${n+1}</b><span>${t}</span></button>`).join('')}
+    </div>
+    <div class="fb" id="fb"></div>
+    <button class="btn" id="next">${i===QUESTIONS.length-1?'Показать результат →':'Следующий вопрос →'}</button>
+    <div class="hint">Можно отвечать клавишами 1–4</div>`;
+  locked=false;
+  document.querySelectorAll('.opt').forEach(b=>b.onclick=()=>choose(+b.dataset.n));
+  document.getElementById('next').onclick=next;
+}
+
+function choose(n){
+  if(locked) return; locked=true;
+  const Q=QUESTIONS[i];
+  const opts=[...document.querySelectorAll('.opt')];
+  opts.forEach(b=>b.disabled=true);
+  opts[Q.c].classList.add('ok');
+  const fb=document.getElementById('fb');
+  if(n===Q.c){ score++; fb.className='fb show good'; fb.innerHTML='✅ Верно! '+Q.e; }
+  else { opts[n].classList.add('bad'); fb.className='fb show no'; fb.innerHTML='❌ Не совсем. '+Q.e; }
+  document.querySelector('.meta').children[1].textContent='⭐ Очки: '+score;
+  document.getElementById('next').classList.add('show');
+}
+
+function next(){ i++; if(i<QUESTIONS.length) render(); else result(); }
+
+function result(){
+  const pct=Math.round(score/QUESTIONS.length*100);
+  let em,msg;
+  if(pct===100){em='🏆';msg="Идеально! DataFrame, фильтры, loc/iloc — Pandas освоен! 🐼";}
+  else if(pct>=70){em='🎉';msg="Отлично! Таблицы, выбор столбцов и фильтрацию ты понимаешь уверенно.";}
+  else if(pct>=40){em='👍';msg="Неплохо! Повтори loc vs iloc и фильтры через & | (не and/or).";}
+  else {em='💪';msg="Ещё разок! Загляни в summary — там шпаргалка по чтению и выбору данных.";}
+  app.innerHTML=`
+    <div class="center">
+      <div class="emoji">${em}</div>
+      <h1>Готово!</h1>
+      <div class="score">${score} / ${QUESTIONS.length}</div>
+      <div class="sub">${msg}</div>
+      <button class="btn show" id="again">🔁 Пройти заново</button>
+    </div>`;
+  document.getElementById('again').onclick=()=>{i=0;score=0;shuffle();render();};
+}
+
+document.addEventListener('keydown',e=>{
+  if(['1','2','3','4'].includes(e.key)){ const b=document.querySelector(`.opt[data-n="${+e.key-1}"]`); if(b&&!b.disabled) choose(+e.key-1); }
+  if(e.key==='Enter'){ const nb=document.getElementById('next'); if(nb&&nb.classList.contains('show')) next(); }
+});
+
+render();
+</script>
+</body>
+</html>
