@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Викторина — Урок 4 MAUI (Поля ввода)</title>
+<style>
+  :root{
+    --bg1:#512bd4; --bg2:#9b6dff; --card:#ffffff; --ink:#1f2937;
+    --accent:#512bd4; --ok:#16a34a; --bad:#dc2626; --soft:#ede9fe;
+  }
+  *{box-sizing:border-box;font-family:"Segoe UI",system-ui,sans-serif}
+  body{margin:0;min-height:100vh;display:flex;align-items:center;justify-content:center;
+    background:linear-gradient(135deg,var(--bg1),var(--bg2));padding:20px;color:var(--ink)}
+  .app{background:var(--card);width:min(760px,100%);border-radius:24px;
+    box-shadow:0 25px 60px rgba(0,0,0,.35);padding:34px 34px 28px;position:relative;overflow:hidden}
+  h1{margin:0 0 6px;font-size:26px;text-align:center}
+  .sub{text-align:center;color:#64748b;margin-bottom:22px;font-size:15px}
+  .bar{height:10px;background:var(--soft);border-radius:99px;overflow:hidden;margin-bottom:18px}
+  .bar>i{display:block;height:100%;width:0;background:var(--accent);transition:.4s}
+  .meta{display:flex;justify-content:space-between;font-size:14px;color:#64748b;margin-bottom:14px}
+  .q{font-size:22px;font-weight:700;margin:6px 0 20px;line-height:1.3}
+  .q code{background:#0f172a;color:#e2e8f0;padding:2px 8px;border-radius:6px;font-size:19px}
+  .opts{display:grid;gap:12px}
+  .opt{border:2px solid #e2e8f0;background:#fff;border-radius:14px;padding:15px 18px;font-size:18px;
+    text-align:left;cursor:pointer;transition:.15s;display:flex;align-items:center;gap:12px}
+  .opt:hover{border-color:var(--accent);background:var(--soft);transform:translateY(-2px)}
+  .opt b{background:var(--soft);color:var(--accent);width:30px;height:30px;border-radius:8px;
+    display:flex;align-items:center;justify-content:center;font-size:15px;flex:0 0 auto}
+  .opt span code{background:#0f172a;color:#e2e8f0;padding:1px 6px;border-radius:5px;font-size:16px}
+  .opt.ok{border-color:var(--ok);background:#dcfce7}
+  .opt.ok b{background:var(--ok);color:#fff}
+  .opt.bad{border-color:var(--bad);background:#fee2e2}
+  .opt.bad b{background:var(--bad);color:#fff}
+  .opt:disabled{cursor:default;transform:none}
+  .fb{margin-top:16px;padding:14px 16px;border-radius:12px;font-size:16px;display:none;line-height:1.4}
+  .fb.show{display:block}
+  .fb.good{background:#dcfce7;color:#166534}
+  .fb.no{background:#fee2e2;color:#991b1b}
+  .fb code{background:#0f172a;color:#e2e8f0;padding:1px 6px;border-radius:5px}
+  .btn{margin-top:18px;width:100%;padding:15px;border:0;border-radius:14px;background:var(--accent);
+    color:#fff;font-size:18px;font-weight:700;cursor:pointer;display:none}
+  .btn.show{display:block}
+  .btn:hover{filter:brightness(1.08)}
+  .center{text-align:center}
+  .score{font-size:64px;font-weight:800;margin:10px 0}
+  .emoji{font-size:70px}
+  .hint{color:#94a3b8;font-size:13px;text-align:center;margin-top:14px}
+</style>
+</head>
+<body>
+<div class="app" id="app"></div>
+<script>
+const QUESTIONS = [
+  {q:"Что такое <code>Entry</code>?",
+   a:["кнопка","однострочное поле ввода","картинка","макет"],c:1,
+   e:"Entry — поле, куда человек печатает одну строку."},
+  {q:"Как прочитать то, что напечатал человек?",
+   a:["<code>Entry.Value</code>","<code>Entry.Text</code>","<code>Entry.Input</code>","<code>Entry.Read()</code>"],c:1,
+   e:"Читаем свойство .Text: string name = NameEntry.Text;"},
+  {q:"На что из блока 1 больше всего похож <code>Entry</code>?",
+   a:["<code>Console.WriteLine</code>","<code>Console.ReadLine</code>","<code>for</code>","<code>Math</code>"],c:1,
+   e:"Entry = ReadLine с окном: принимает текст от человека."},
+  {q:"Что такое <code>Placeholder</code>?",
+   a:["введённый текст","бледная подсказка в пустом поле","цвет","имя поля"],c:1,
+   e:"Подсказка исчезает при наборе и НЕ является значением поля."},
+  {q:"Для чего нужен <code>Editor</code>?",
+   a:["для одной строки","для многострочного текста","для чисел","для кнопок"],c:1,
+   e:"Editor — многострочное поле (отзыв, заметка, рассказ)."},
+  {q:"Как дать полю цифровую клавиатуру на телефоне?",
+   a:["<code>Keyboard=\"Numeric\"</code>","<code>OnlyDigits</code>","<code>Number=true</code>","никак"],c:0,
+   e:"Keyboard=\"Numeric\" — удобная клавиатура для чисел."},
+  {q:"Как спрятать ввод точками (пароль)?",
+   a:["<code>Hidden=true</code>","<code>IsPassword=\"True\"</code>","<code>Secret</code>","<code>Mask</code>"],c:1,
+   e:"IsPassword=\"True\" прячет символы."},
+  {q:"Как <b>безопасно</b> превратить текст поля в число?",
+   a:["<code>Convert.ToInt32</code>","<code>int.TryParse</code>","<code>(int)</code>","<code>parseInt</code>"],c:1,
+   e:"int.TryParse не упадёт на «не числе» — вернёт false."},
+  {q:"Почему для ввода человека не берут <code>Convert.ToInt32</code>?",
+   a:["он медленный","он уронит приложение, если ввели не число","его нет в C#","он платный"],c:1,
+   e:"На «абв» Convert бросит ошибку. TryParse — безопасен."},
+  {q:"Как проверить, что поле не заполнили?",
+   a:["<code>x == 0</code>","<code>string.IsNullOrWhiteSpace(x)</code>","<code>x.Empty</code>","никак"],c:1,
+   e:"Ловит и null, и пустую строку, и пробелы."},
+  {q:"Какое событие срабатывает на <b>каждый</b> введённый символ?",
+   a:["<code>Clicked</code>","<code>TextChanged</code>","<code>Pressed</code>","<code>Loaded</code>"],c:1,
+   e:"TextChanged — «текст изменился». У кнопки — Clicked."},
+  {q:"Что лежит в <code>e.NewTextValue</code> в обработчике <code>TextChanged</code>?",
+   a:["старый текст","текст поля прямо сейчас","имя поля","цвет"],c:1,
+   e:"NewTextValue — актуальный текст поля в этот момент."},
+  {q:"Как собрать ответ «Привет, Алиса!» из переменной name?",
+   a:["<code>\"Привет\" + name</code> вручную по буквам","<code>$\"Привет, {name}!\"</code>","<code>name.Hello()</code>","никак"],c:1,
+   e:"Интерполяция строк из блока 1: $\"...{name}...\"."},
+  {q:"Полей много, на телефоне клавиатура закрывает нижние. Что использовать?",
+   a:["<code>ScrollView</code> (прокрутка)","ещё кнопку","цвет","ничего"],c:0,
+   e:"ScrollView позволяет прокрутить форму."},
+  {q:"Как очистить поле из кода?",
+   a:["<code>NameEntry.Clear</code>","<code>NameEntry.Text = \"\"</code>","<code>delete</code>","нельзя"],c:1,
+   e:"Присваиваем пустую строку: NameEntry.Text = \"\";"},
+
+  {q:"😄 Читаю поле — там пусто, хотя видна серая подсказка. Почему?",
+   a:["баг MAUI","<code>Placeholder</code> — подсказка, а не текст поля","мало памяти","нужен рестарт"],c:1,
+   e:"Пока не напечатали, .Text пустой, даже если видна подсказка."},
+  {q:"😄 Ввёл «абв» в поле возраста — приложение вылетело. Из-за чего?",
+   a:["вирус","число разбирали через <code>Convert.ToInt32</code>","много кнопок","нет интернета"],c:1,
+   e:"Convert падает на «не числе». Нужен int.TryParse."},
+  {q:"😄 Живой счётчик символов падает на первом же символе. Частая причина?",
+   a:["сломан ПК","текст был <code>null</code> / не тот параметр обработчика","мало кнопок","старый Windows"],c:1,
+   e:"У TextChanged параметр TextChangedEventArgs; и защищай от null (?? \"\")."},
+
+  {q:"🤔 <code>Entry</code> и <code>Label</code> — это как…",
+   a:["две кнопки","«уши» (принять текст) и «рот» (показать)","одно и то же","цвета"],c:1,
+   e:"Entry принимает ввод, Label показывает ответ."},
+  {q:"🤔 <code>Keyboard=\"Numeric\"</code> гарантирует, что введут только цифры?",
+   a:["да, всегда","нет — на ПК буквы наберутся, проверяй в коде","да, буквы запрещены","только на Mac"],c:1,
+   e:"Это лишь удобная клавиатура телефона. Валидируй через TryParse."},
+];
+
+let i=0, score=0, locked=false;
+const app=document.getElementById('app');
+
+function shuffle(){for(let k=QUESTIONS.length-1;k>0;k--){const j=Math.floor(Math.random()*(k+1));[QUESTIONS[k],QUESTIONS[j]]=[QUESTIONS[j],QUESTIONS[k]];}for(const Q of QUESTIONS){const cc=Q.a[Q.c];for(let k=Q.a.length-1;k>0;k--){const j=Math.floor(Math.random()*(k+1));[Q.a[k],Q.a[j]]=[Q.a[j],Q.a[k]];}Q.c=Q.a.indexOf(cc);}}
+shuffle();
+
+function render(){
+  const Q=QUESTIONS[i];
+  app.innerHTML=`
+    <h1>⌨️ Урок 4 — Поля ввода</h1>
+    <div class="sub">Проверь себя по Entry, Editor и проверкам</div>
+    <div class="bar"><i style="width:${(i/QUESTIONS.length)*100}%"></i></div>
+    <div class="meta"><span>Вопрос ${i+1} из ${QUESTIONS.length}</span><span>⭐ Очки: ${score}</span></div>
+    <div class="q">${Q.q}</div>
+    <div class="opts" id="opts">
+      ${Q.a.map((t,n)=>`<button class="opt" data-n="${n}"><b>${n+1}</b><span>${t}</span></button>`).join('')}
+    </div>
+    <div class="fb" id="fb"></div>
+    <button class="btn" id="next">${i===QUESTIONS.length-1?'Показать результат →':'Следующий вопрос →'}</button>
+    <div class="hint">Можно отвечать клавишами 1–4</div>`;
+  locked=false;
+  document.querySelectorAll('.opt').forEach(b=>b.onclick=()=>choose(+b.dataset.n));
+  document.getElementById('next').onclick=next;
+}
+
+function choose(n){
+  if(locked) return; locked=true;
+  const Q=QUESTIONS[i];
+  const opts=[...document.querySelectorAll('.opt')];
+  opts.forEach(b=>b.disabled=true);
+  opts[Q.c].classList.add('ok');
+  const fb=document.getElementById('fb');
+  if(n===Q.c){ score++; fb.className='fb show good'; fb.innerHTML='✅ Верно! '+Q.e; }
+  else { opts[n].classList.add('bad'); fb.className='fb show no'; fb.innerHTML='❌ Не совсем. '+Q.e; }
+  document.querySelector('.meta').children[1].textContent='⭐ Очки: '+score;
+  document.getElementById('next').classList.add('show');
+}
+
+function next(){ i++; if(i<QUESTIONS.length) render(); else result(); }
+
+function result(){
+  const pct=Math.round(score/QUESTIONS.length*100);
+  let em,msg;
+  if(pct===100){em='🏆';msg='Идеально! Поля ввода — под контролем.';}
+  else if(pct>=70){em='🎉';msg='Отлично! Entry, проверки и живой ввод ты понял(а).';}
+  else if(pct>=40){em='👍';msg='Неплохо! Загляни в итого.md и попробуй снова.';}
+  else {em='💪';msg='Ещё разок! Перечитай про Entry.Text и int.TryParse.';}
+  app.innerHTML=`
+    <div class="center">
+      <div class="emoji">${em}</div>
+      <h1>Урок 4 пройден!</h1>
+      <div class="score">${score} / ${QUESTIONS.length}</div>
+      <div class="sub">${msg}</div>
+      <button class="btn show" id="again">🔁 Пройти заново</button>
+    </div>`;
+  document.getElementById('again').onclick=()=>{i=0;score=0;shuffle();render();};
+}
+
+document.addEventListener('keydown',e=>{
+  if(['1','2','3','4'].includes(e.key)){ const b=document.querySelector(`.opt[data-n="${+e.key-1}"]`); if(b&&!b.disabled) choose(+e.key-1); }
+  if(e.key==='Enter'){ const nb=document.getElementById('next'); if(nb&&nb.classList.contains('show')) next(); }
+});
+
+render();
+</script>
+</body>
+</html>

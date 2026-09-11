@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="ProfileCard.MainPage"
+             BackgroundColor="#F0F4FF">
+
+    <!-- Внешняя стопка: всё содержимое карточки столбиком, по центру экрана -->
+    <VerticalStackLayout x:Name="Card" Padding="24" Spacing="18" VerticalOptions="Center">
+
+        <!-- Шапка: аватар слева + (имя над ролью) справа. Вложенные стеки! -->
+        <HorizontalStackLayout Spacing="16" HorizontalOptions="Center">
+            <Label Text="🦊" FontSize="64" VerticalOptions="Center" />
+            <VerticalStackLayout Spacing="2" VerticalOptions="Center">
+                <Label Text="Алиса" FontSize="28" FontAttributes="Bold" />
+                <Label Text="Гейм-дизайнер" FontSize="16" TextColor="Gray" />
+            </VerticalStackLayout>
+        </HorizontalStackLayout>
+
+        <!-- Строки информации: подпись и значение в ряд -->
+        <HorizontalStackLayout Spacing="8">
+            <Label Text="Город:" FontSize="18" />
+            <Label Text="Казань" FontSize="18" FontAttributes="Bold" />
+        </HorizontalStackLayout>
+
+        <HorizontalStackLayout Spacing="8">
+            <Label Text="Любит:" FontSize="18" />
+            <Label Text="платформеры" FontSize="18" FontAttributes="Bold" />
+        </HorizontalStackLayout>
+
+        <!-- Кнопка лайка со счётчиком (повтор урока 1) -->
+        <HorizontalStackLayout Spacing="10" HorizontalOptions="Center">
+            <Button Text="❤ Лайк" Clicked="OnLikeClicked" />
+            <Label x:Name="LikesLabel" Text="0" FontSize="24" VerticalOptions="Center" />
+        </HorizontalStackLayout>
+
+        <!-- Меняем макет из кода: раздвигаем карточку -->
+        <Button Text="Просторнее" Clicked="OnSpaceClicked" HorizontalOptions="Center" />
+
+    </VerticalStackLayout>
+
+</ContentPage>

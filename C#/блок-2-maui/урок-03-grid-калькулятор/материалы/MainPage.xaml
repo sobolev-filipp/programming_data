@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="CalcApp.MainPage"
+             BackgroundColor="#1E1E2E">
+
+    <!-- Сетка: 5 строк (первая под экран — 100, остальные по 70) и 4 равных столбца (*) -->
+    <Grid RowDefinitions="100,70,70,70,70"
+          ColumnDefinitions="*,*,*,*"
+          RowSpacing="10" ColumnSpacing="10" Padding="16"
+          VerticalOptions="Center">
+
+        <!-- Экран: строка 0, растянут на все 4 столбца -->
+        <Label x:Name="Display" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="4"
+               Text="0" FontSize="48" TextColor="White"
+               HorizontalOptions="End" VerticalOptions="Center" />
+
+        <!-- Строка 1: 7 8 9 ÷ -->
+        <Button Grid.Row="1" Grid.Column="0" Text="7" FontSize="24" Clicked="OnDigit" />
+        <Button Grid.Row="1" Grid.Column="1" Text="8" FontSize="24" Clicked="OnDigit" />
+        <Button Grid.Row="1" Grid.Column="2" Text="9" FontSize="24" Clicked="OnDigit" />
+        <Button Grid.Row="1" Grid.Column="3" Text="÷" FontSize="24" BackgroundColor="#F59E0B" Clicked="OnOperation" />
+
+        <!-- Строка 2: 4 5 6 × -->
+        <Button Grid.Row="2" Grid.Column="0" Text="4" FontSize="24" Clicked="OnDigit" />
+        <Button Grid.Row="2" Grid.Column="1" Text="5" FontSize="24" Clicked="OnDigit" />
+        <Button Grid.Row="2" Grid.Column="2" Text="6" FontSize="24" Clicked="OnDigit" />
+        <Button Grid.Row="2" Grid.Column="3" Text="×" FontSize="24" BackgroundColor="#F59E0B" Clicked="OnOperation" />
+
+        <!-- Строка 3: 1 2 3 − -->
+        <Button Grid.Row="3" Grid.Column="0" Text="1" FontSize="24" Clicked="OnDigit" />
+        <Button Grid.Row="3" Grid.Column="1" Text="2" FontSize="24" Clicked="OnDigit" />
+        <Button Grid.Row="3" Grid.Column="2" Text="3" FontSize="24" Clicked="OnDigit" />
+        <Button Grid.Row="3" Grid.Column="3" Text="−" FontSize="24" BackgroundColor="#F59E0B" Clicked="OnOperation" />
+
+        <!-- Строка 4: 0 C = + -->
+        <Button Grid.Row="4" Grid.Column="0" Text="0" FontSize="24" Clicked="OnDigit" />
+        <Button Grid.Row="4" Grid.Column="1" Text="C" FontSize="24" BackgroundColor="#EF4444" TextColor="White" Clicked="OnClear" />
+        <Button Grid.Row="4" Grid.Column="2" Text="=" FontSize="24" BackgroundColor="#22C55E" TextColor="White" Clicked="OnEquals" />
+        <Button Grid.Row="4" Grid.Column="3" Text="+" FontSize="24" BackgroundColor="#F59E0B" Clicked="OnOperation" />
+
+    </Grid>
+
+</ContentPage>

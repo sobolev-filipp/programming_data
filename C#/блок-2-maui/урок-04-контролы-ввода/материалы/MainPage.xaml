@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="ProfileApp.MainPage"
+             BackgroundColor="#F0F4FF">
+
+    <!-- ScrollView — чтобы форма прокручивалась, если клавиатура закроет поля -->
+    <ScrollView>
+        <VerticalStackLayout Padding="24" Spacing="14">
+
+            <Label Text="Моя анкета" FontSize="28" FontAttributes="Bold" HorizontalOptions="Center" />
+
+            <!-- Имя: обычное однострочное поле -->
+            <Label Text="Как тебя зовут?" FontSize="16" />
+            <Entry x:Name="NameEntry" Placeholder="Введи имя" TextChanged="OnNameChanged" />
+
+            <!-- Живое приветствие: меняется прямо во время набора -->
+            <Label x:Name="HelloLabel" Text="Привет!" FontSize="16" TextColor="Gray" />
+
+            <!-- Возраст: цифровая клавиатура -->
+            <Label Text="Сколько тебе лет?" FontSize="16" />
+            <Entry x:Name="AgeEntry" Placeholder="Например, 14" Keyboard="Numeric" />
+
+            <!-- О себе: многострочное поле Editor -->
+            <Label Text="Расскажи о себе:" FontSize="16" />
+            <Editor x:Name="AboutEditor" Placeholder="Пара слов о себе..." HeightRequest="100" />
+
+            <Button Text="Готово" Clicked="OnDone" />
+
+            <!-- Сюда соберём ответ -->
+            <Label x:Name="ResultLabel" FontSize="18" />
+
+        </VerticalStackLayout>
+    </ScrollView>
+
+</ContentPage>

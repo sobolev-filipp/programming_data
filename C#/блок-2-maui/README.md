@@ -8,9 +8,9 @@
 | # | Урок / приложение | Новое | Статус |
 |---|-------------------|-------|--------|
 | 1 | [Введение в MAUI + «Счётчик»](урок-01-введение-maui-счётчик/урок.md) | среда (VS/VS Code, workload), структура проекта, `Label`/`Button`, `Clicked`, `x:Name`, XAML↔C# | ✅ готов |
-| 2 | Макеты Stack | `VerticalStackLayout`/`HorizontalStackLayout`, `Spacing`, `Padding`, `x:Name` | ⏳ план |
-| 3 | Grid: «Калькулятор» | `Grid`, строки/столбцы, `ColumnSpan` | ⏳ план |
-| 4 | Контролы ввода: «Анкета/Профиль» | `Entry`, `Editor`, `.Text`, `Placeholder` | ⏳ план |
+| 2 | [Макеты Stack: «Карточка профиля»](урок-02-макеты-stack/урок.md) | `VerticalStackLayout`/`HorizontalStackLayout`, `Spacing`, `Padding`, `HorizontalOptions`/`VerticalOptions`, вложенные стеки, `x:Name` у контейнера | ✅ готов |
+| 3 | [Grid: «Калькулятор»](урок-03-grid-калькулятор/урок.md) | `Grid`, `RowDefinitions`/`ColumnDefinitions` (`*`/`Auto`), `Grid.Row`/`Grid.Column`, `ColumnSpan`, `RowSpacing`/`ColumnSpacing`, `sender` | ✅ готов |
+| 4 | [Контролы ввода: «Анкета»](урок-04-контролы-ввода/урок.md) | `Entry`, `Editor`, `.Text`, `Placeholder`, `Keyboard`/`IsPassword`, `TextChanged`, `IsNullOrWhiteSpace`/`TryParse`, `ScrollView` | ✅ готов |
 | 5 | Контролы выбора | `Switch`, `Slider`, `Stepper`, `CheckBox`, `DatePicker`, `Picker` | ⏳ план |
 | 6 | Стили и ресурсы | цвета, шрифты, `Style`, `Border`/`Frame`, изображения | ⏳ план |
 | 7 | События и логика глубже | `sender`, `DisplayAlert`, включение/выключение | ⏳ план |

@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640" font-family="'Segoe UI', system-ui, sans-serif">
+  <rect width="640" height="640" fill="#f7f9fc"/>
+  <text x="320" y="40" text-anchor="middle" font-size="26" font-weight="700" fill="#1f2937">Калькулятор на сетке 5×4</text>
+  <text x="320" y="66" text-anchor="middle" font-size="15" fill="#64748b">Экран — строка 0 на всю ширину (ColumnSpan=4). Ниже — кнопки по ячейкам.</text>
+
+  <!-- row labels -->
+  <g font-size="13" fill="#94a3b8" text-anchor="end">
+    <text x="128" y="178">Row 0</text>
+    <text x="128" y="266">Row 1</text>
+    <text x="128" y="354">Row 2</text>
+    <text x="128" y="442">Row 3</text>
+    <text x="128" y="530">Row 4</text>
+  </g>
+  <!-- column labels -->
+  <g font-size="13" fill="#94a3b8" text-anchor="middle">
+    <text x="190" y="112">Col 0</text>
+    <text x="298" y="112">Col 1</text>
+    <text x="406" y="112">Col 2</text>
+    <text x="514" y="112">Col 3</text>
+  </g>
+
+  <!-- display -->
+  <rect x="140" y="130" width="424" height="80" rx="10" fill="#1e1e2e"/>
+  <text x="548" y="182" text-anchor="end" font-size="40" font-weight="700" fill="#ffffff">0</text>
+  <text x="150" y="152" font-size="12" fill="#7dd3fc">Display · ColumnSpan=4</text>
+
+  <!-- buttons -->
+  <!-- row1 -->
+  <g>
+    <rect x="140" y="218" width="100" height="80" rx="10" fill="#e2e8f0"/><text x="190" y="268" text-anchor="middle" font-size="30" font-weight="700" fill="#1f2937">7</text>
+    <rect x="248" y="218" width="100" height="80" rx="10" fill="#e2e8f0"/><text x="298" y="268" text-anchor="middle" font-size="30" font-weight="700" fill="#1f2937">8</text>
+    <rect x="356" y="218" width="100" height="80" rx="10" fill="#e2e8f0"/><text x="406" y="268" text-anchor="middle" font-size="30" font-weight="700" fill="#1f2937">9</text>
+    <rect x="464" y="218" width="100" height="80" rx="10" fill="#f59e0b"/><text x="514" y="268" text-anchor="middle" font-size="30" font-weight="700" fill="#ffffff">÷</text>
+  </g>
+  <!-- row2 -->
+  <g>
+    <rect x="140" y="306" width="100" height="80" rx="10" fill="#e2e8f0"/><text x="190" y="356" text-anchor="middle" font-size="30" font-weight="700" fill="#1f2937">4</text>
+    <rect x="248" y="306" width="100" height="80" rx="10" fill="#e2e8f0"/><text x="298" y="356" text-anchor="middle" font-size="30" font-weight="700" fill="#1f2937">5</text>
+    <rect x="356" y="306" width="100" height="80" rx="10" fill="#e2e8f0"/><text x="406" y="356" text-anchor="middle" font-size="30" font-weight="700" fill="#1f2937">6</text>
+    <rect x="464" y="306" width="100" height="80" rx="10" fill="#f59e0b"/><text x="514" y="356" text-anchor="middle" font-size="30" font-weight="700" fill="#ffffff">×</text>
+  </g>
+  <!-- row3 -->
+  <g>
+    <rect x="140" y="394" width="100" height="80" rx="10" fill="#e2e8f0"/><text x="190" y="444" text-anchor="middle" font-size="30" font-weight="700" fill="#1f2937">1</text>
+    <rect x="248" y="394" width="100" height="80" rx="10" fill="#e2e8f0"/><text x="298" y="444" text-anchor="middle" font-size="30" font-weight="700" fill="#1f2937">2</text>
+    <rect x="356" y="394" width="100" height="80" rx="10" fill="#e2e8f0"/><text x="406" y="444" text-anchor="middle" font-size="30" font-weight="700" fill="#1f2937">3</text>
+    <rect x="464" y="394" width="100" height="80" rx="10" fill="#f59e0b"/><text x="514" y="444" text-anchor="middle" font-size="30" font-weight="700" fill="#ffffff">−</text>
+  </g>
+  <!-- row4 -->
+  <g>
+    <rect x="140" y="482" width="100" height="80" rx="10" fill="#e2e8f0"/><text x="190" y="532" text-anchor="middle" font-size="30" font-weight="700" fill="#1f2937">0</text>
+    <rect x="248" y="482" width="100" height="80" rx="10" fill="#ef4444"/><text x="298" y="532" text-anchor="middle" font-size="30" font-weight="700" fill="#ffffff">C</text>
+    <rect x="356" y="482" width="100" height="80" rx="10" fill="#22c55e"/><text x="406" y="532" text-anchor="middle" font-size="30" font-weight="700" fill="#ffffff">=</text>
+    <rect x="464" y="482" width="100" height="80" rx="10" fill="#f59e0b"/><text x="514" y="532" text-anchor="middle" font-size="30" font-weight="700" fill="#ffffff">+</text>
+  </g>
+
+  <text x="320" y="606" text-anchor="middle" font-size="13.5" fill="#64748b">Оранжевые — операции (OnOperation), красная C — сброс, зелёная = — вычисление (switch).</text>
+</svg>

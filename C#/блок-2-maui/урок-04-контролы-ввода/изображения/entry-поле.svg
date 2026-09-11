@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 480" font-family="'Segoe UI', system-ui, sans-serif">
+  <rect width="900" height="480" fill="#f7f9fc"/>
+  <text x="450" y="42" text-anchor="middle" font-size="26" font-weight="700" fill="#1f2937">Entry — это ReadLine с окном</text>
+  <text x="450" y="68" text-anchor="middle" font-size="15" fill="#64748b">Человек печатает в поле — мы читаем Entry.Text из кода.</text>
+
+  <!-- empty state -->
+  <text x="70" y="120" font-size="15" font-weight="700" fill="#334155">Пустое поле — виден Placeholder</text>
+  <rect x="70" y="132" width="360" height="52" rx="10" fill="#ffffff" stroke="#cbd5e1" stroke-width="2"/>
+  <text x="88" y="164" font-size="18" fill="#94a3b8" font-style="italic">Введи имя</text>
+  <text x="70" y="204" font-size="13" fill="#94a3b8">Entry.Text = "" (пусто!)</text>
+
+  <!-- filled state -->
+  <text x="70" y="252" font-size="15" font-weight="700" fill="#334155">Человек напечатал</text>
+  <rect x="70" y="264" width="360" height="52" rx="10" fill="#ffffff" stroke="#512bd4" stroke-width="2.5"/>
+  <text x="88" y="296" font-size="18" fill="#0f172a">Алиса</text>
+  <text x="360" y="296" font-size="16" fill="#512bd4">▮</text>
+
+  <!-- arrow to code -->
+  <path d="M 440 290 C 500 290, 500 300, 560 300" fill="none" stroke="#0ea5e9" stroke-width="2.5" marker-end="url(#a)"/>
+  <text x="500" y="282" text-anchor="middle" font-size="13" fill="#0ea5e9">.Text</text>
+
+  <!-- code box -->
+  <rect x="560" y="264" width="300" height="70" rx="10" fill="#0f172a"/>
+  <text x="578" y="298" font-size="14.5" font-family="Consolas, monospace" fill="#e2e8f0">string name =</text>
+  <text x="578" y="320" font-size="14.5" font-family="Consolas, monospace" fill="#7dd3fc">NameEntry.Text;</text>
+
+  <!-- bridge -->
+  <rect x="70" y="360" width="790" height="86" rx="12" fill="#ede9fe" stroke="#512bd4" stroke-width="1.5"/>
+  <text x="90" y="390" font-size="15" font-weight="700" fill="#512bd4">Мостик из блока 1:</text>
+  <text x="90" y="420" font-size="15" font-family="Consolas, monospace" fill="#334155">Console.ReadLine()  (консоль)   →   Entry.Text  (окно приложения)</text>
+  <text x="90" y="440" font-size="13" fill="#64748b">Проверки те же: string.IsNullOrWhiteSpace(...) и int.TryParse(...)</text>
+
+  <defs>
+    <marker id="a" markerWidth="10" markerHeight="10" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#0ea5e9"/></marker>
+  </defs>
+</svg>

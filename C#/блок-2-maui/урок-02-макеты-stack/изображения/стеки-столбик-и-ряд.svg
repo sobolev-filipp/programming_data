@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 480" font-family="'Segoe UI', system-ui, sans-serif">
+  <rect width="900" height="480" fill="#f7f9fc"/>
+  <text x="450" y="40" text-anchor="middle" font-size="26" font-weight="700" fill="#1f2937">Две стопки: столбик и ряд</text>
+  <text x="450" y="66" text-anchor="middle" font-size="15" fill="#64748b">Выбрал контейнер — выбрал направление. Spacing — между детьми, Padding — от краёв.</text>
+
+  <!-- VerticalStackLayout -->
+  <rect x="60" y="100" width="330" height="330" rx="16" fill="#ffffff" stroke="#512bd4" stroke-width="2.5"/>
+  <rect x="60" y="100" width="330" height="40" rx="16" fill="#ede9fe"/>
+  <rect x="60" y="122" width="330" height="18" fill="#ede9fe"/>
+  <text x="80" y="127" font-size="16" font-weight="700" fill="#512bd4">VerticalStackLayout</text>
+  <text x="355" y="127" font-size="14" fill="#7c3aed">↓ столбик</text>
+
+  <!-- padding hint -->
+  <rect x="90" y="160" width="270" height="250" rx="8" fill="none" stroke="#cbd5e1" stroke-width="1.5" stroke-dasharray="5 4"/>
+  <text x="95" y="182" font-size="11" fill="#94a3b8">Padding</text>
+
+  <rect x="120" y="172" width="210" height="56" rx="10" fill="#dbeafe" stroke="#3b82f6" stroke-width="2"/>
+  <text x="225" y="206" text-anchor="middle" font-size="20" font-weight="700" fill="#1e40af">A</text>
+  <rect x="120" y="256" width="210" height="56" rx="10" fill="#dbeafe" stroke="#3b82f6" stroke-width="2"/>
+  <text x="225" y="290" text-anchor="middle" font-size="20" font-weight="700" fill="#1e40af">B</text>
+  <rect x="120" y="340" width="210" height="56" rx="10" fill="#dbeafe" stroke="#3b82f6" stroke-width="2"/>
+  <text x="225" y="374" text-anchor="middle" font-size="20" font-weight="700" fill="#1e40af">C</text>
+
+  <!-- spacing arrow -->
+  <line x1="108" y1="228" x2="108" y2="256" stroke="#16a34a" stroke-width="2" marker-start="url(#up)" marker-end="url(#dn)"/>
+  <text x="102" y="247" text-anchor="end" font-size="11" fill="#16a34a">Spacing</text>
+
+  <!-- HorizontalStackLayout -->
+  <rect x="510" y="100" width="330" height="330" rx="16" fill="#ffffff" stroke="#16a34a" stroke-width="2.5"/>
+  <rect x="510" y="100" width="330" height="40" rx="16" fill="#dcfce7"/>
+  <rect x="510" y="122" width="330" height="18" fill="#dcfce7"/>
+  <text x="530" y="127" font-size="16" font-weight="700" fill="#15803d">HorizontalStackLayout</text>
+  <text x="800" y="127" font-size="14" fill="#15803d">→ ряд</text>
+
+  <rect x="540" y="230" width="270" height="90" rx="8" fill="none" stroke="#cbd5e1" stroke-width="1.5" stroke-dasharray="5 4"/>
+  <text x="545" y="224" font-size="11" fill="#94a3b8">Padding</text>
+
+  <rect x="556" y="244" width="76" height="62" rx="10" fill="#fef3c7" stroke="#f59e0b" stroke-width="2"/>
+  <text x="594" y="282" text-anchor="middle" font-size="20" font-weight="700" fill="#b45309">A</text>
+  <rect x="648" y="244" width="76" height="62" rx="10" fill="#fef3c7" stroke="#f59e0b" stroke-width="2"/>
+  <text x="686" y="282" text-anchor="middle" font-size="20" font-weight="700" fill="#b45309">B</text>
+  <rect x="740" y="244" width="76" height="62" rx="10" fill="#fef3c7" stroke="#f59e0b" stroke-width="2"/>
+  <text x="778" y="282" text-anchor="middle" font-size="20" font-weight="700" fill="#b45309">C</text>
+
+  <line x1="632" y1="336" x2="648" y2="336" stroke="#16a34a" stroke-width="2" marker-start="url(#lf)" marker-end="url(#rt)"/>
+  <text x="640" y="356" text-anchor="middle" font-size="11" fill="#16a34a">Spacing</text>
+
+  <defs>
+    <marker id="dn" markerWidth="8" markerHeight="8" refX="3" refY="6" orient="auto"><path d="M0,0 L6,0 L3,6 Z" fill="#16a34a"/></marker>
+    <marker id="up" markerWidth="8" markerHeight="8" refX="3" refY="0" orient="auto"><path d="M0,6 L6,6 L3,0 Z" fill="#16a34a"/></marker>
+    <marker id="rt" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#16a34a"/></marker>
+    <marker id="lf" markerWidth="8" markerHeight="8" refX="0" refY="3" orient="auto"><path d="M6,0 L0,3 L6,6 Z" fill="#16a34a"/></marker>
+  </defs>
+
+  <text x="450" y="462" text-anchor="middle" font-size="14" fill="#64748b">Один и тот же набор A·B·C — разный контейнер даёт разное направление.</text>
+</svg>
