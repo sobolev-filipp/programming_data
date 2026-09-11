@@ -1,0 +1,70 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 980 640" font-family="'Segoe UI', system-ui, sans-serif">
+  <rect width="980" height="640" fill="#f7f9fc"/>
+  <text x="490" y="42" text-anchor="middle" font-size="26" font-weight="700" fill="#1f2937">Контролы выбора: значение + событие</text>
+  <text x="490" y="68" text-anchor="middle" font-size="15" fill="#64748b">У каждого контрола есть значение (читаем из кода) и событие (когда выбор поменяли).</text>
+
+  <!-- ==== Switch ==== -->
+  <rect x="40" y="95" width="285" height="240" rx="14" fill="#ffffff" stroke="#512bd4" stroke-width="2"/>
+  <text x="60" y="126" font-size="19" font-weight="700" fill="#512bd4">Switch</text>
+  <rect x="215" y="110" width="86" height="34" rx="17" fill="#22c55e"/>
+  <circle cx="284" cy="127" r="13" fill="#ffffff"/>
+  <text x="60" y="168" font-size="14" fill="#334155">да / нет (тумблер)</text>
+  <text x="60" y="200" font-size="14.5" font-family="Consolas, monospace" fill="#0f172a">IsToggled  (bool)</text>
+  <text x="60" y="228" font-size="13" fill="#64748b">событие:</text>
+  <text x="60" y="250" font-size="14.5" font-family="Consolas, monospace" fill="#7c3aed">Toggled</text>
+
+  <!-- ==== CheckBox ==== -->
+  <rect x="347" y="95" width="285" height="240" rx="14" fill="#ffffff" stroke="#512bd4" stroke-width="2"/>
+  <text x="367" y="126" font-size="19" font-weight="700" fill="#512bd4">CheckBox</text>
+  <rect x="560" y="108" width="34" height="34" rx="7" fill="#512bd4"/>
+  <path d="M568 126 l6 7 l12 -14" fill="none" stroke="#ffffff" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="367" y="168" font-size="14" fill="#334155">да / нет (галочка)</text>
+  <text x="367" y="200" font-size="14.5" font-family="Consolas, monospace" fill="#0f172a">IsChecked  (bool)</text>
+  <text x="367" y="228" font-size="13" fill="#64748b">событие:</text>
+  <text x="367" y="250" font-size="14.5" font-family="Consolas, monospace" fill="#7c3aed">CheckedChanged</text>
+
+  <!-- ==== Slider ==== -->
+  <rect x="654" y="95" width="285" height="240" rx="14" fill="#ffffff" stroke="#16a34a" stroke-width="2"/>
+  <text x="674" y="126" font-size="19" font-weight="700" fill="#15803d">Slider</text>
+  <line x1="770" y1="127" x2="915" y2="127" stroke="#cbd5e1" stroke-width="4"/>
+  <line x1="770" y1="127" x2="850" y2="127" stroke="#16a34a" stroke-width="4"/>
+  <circle cx="850" cy="127" r="11" fill="#16a34a"/>
+  <text x="674" y="168" font-size="14" fill="#334155">число плавно (ползунок)</text>
+  <text x="674" y="200" font-size="14.5" font-family="Consolas, monospace" fill="#dc2626">Value  (double!)</text>
+  <text x="674" y="220" font-size="12" fill="#94a3b8">→ целое: (int)Value</text>
+  <text x="674" y="248" font-size="14.5" font-family="Consolas, monospace" fill="#15803d">ValueChanged</text>
+
+  <!-- ==== Stepper ==== -->
+  <rect x="40" y="360" width="285" height="240" rx="14" fill="#ffffff" stroke="#16a34a" stroke-width="2"/>
+  <text x="60" y="391" font-size="19" font-weight="700" fill="#15803d">Stepper</text>
+  <rect x="225" y="374" width="34" height="32" rx="7" fill="#e2e8f0"/><text x="242" y="397" text-anchor="middle" font-size="20" font-weight="700" fill="#1f2937">−</text>
+  <rect x="267" y="374" width="34" height="32" rx="7" fill="#e2e8f0"/><text x="284" y="397" text-anchor="middle" font-size="20" font-weight="700" fill="#1f2937">+</text>
+  <text x="60" y="433" font-size="14" fill="#334155">число кнопками ±</text>
+  <text x="60" y="465" font-size="14.5" font-family="Consolas, monospace" fill="#dc2626">Value  (double!)</text>
+  <text x="60" y="485" font-size="12" fill="#94a3b8">Minimum / Maximum / Increment</text>
+  <text x="60" y="513" font-size="14.5" font-family="Consolas, monospace" fill="#15803d">ValueChanged</text>
+
+  <!-- ==== Picker ==== -->
+  <rect x="347" y="360" width="285" height="240" rx="14" fill="#ffffff" stroke="#f59e0b" stroke-width="2"/>
+  <text x="367" y="391" font-size="19" font-weight="700" fill="#b45309">Picker</text>
+  <rect x="520" y="374" width="92" height="32" rx="7" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.5"/>
+  <text x="530" y="396" font-size="13" fill="#64748b">Средняя</text>
+  <text x="598" y="396" font-size="13" fill="#b45309">▼</text>
+  <text x="367" y="433" font-size="14" fill="#334155">один из списка</text>
+  <text x="367" y="463" font-size="14" font-family="Consolas, monospace" fill="#0f172a">SelectedIndex (int)</text>
+  <text x="367" y="483" font-size="12" fill="#dc2626">−1, если не выбрали!</text>
+  <text x="367" y="511" font-size="13.5" font-family="Consolas, monospace" fill="#b45309">SelectedIndexChanged</text>
+
+  <!-- ==== DatePicker ==== -->
+  <rect x="654" y="360" width="285" height="240" rx="14" fill="#ffffff" stroke="#0ea5e9" stroke-width="2"/>
+  <text x="674" y="391" font-size="19" font-weight="700" fill="#0369a1">DatePicker</text>
+  <rect x="860" y="372" width="34" height="34" rx="6" fill="#ffffff" stroke="#0ea5e9" stroke-width="1.8"/>
+  <line x1="860" y1="382" x2="894" y2="382" stroke="#0ea5e9" stroke-width="1.8"/>
+  <text x="877" y="399" text-anchor="middle" font-size="13">📅</text>
+  <text x="674" y="433" font-size="14" fill="#334155">выбор даты</text>
+  <text x="674" y="465" font-size="14.5" font-family="Consolas, monospace" fill="#dc2626">Date  (DateTime?)</text>
+  <text x="674" y="485" font-size="12" fill="#94a3b8">Date ?? DateTime.Today</text>
+  <text x="674" y="513" font-size="14.5" font-family="Consolas, monospace" fill="#0369a1">DateSelected</text>
+
+  <text x="490" y="628" text-anchor="middle" font-size="13.5" fill="#64748b">Знаешь пару «значение + событие» — знаешь любой контрол. Читаем значение, как читали Entry.Text.</text>
+</svg>

@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="PizzaApp.MainPage"
+             BackgroundColor="#FFF7ED">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="24" Spacing="14">
+
+            <Label Text="🍕 Собери пиццу" FontSize="28" FontAttributes="Bold" HorizontalOptions="Center" />
+
+            <!-- Picker: выбор из списка -->
+            <Label Text="Размер:" FontSize="16" />
+            <Picker x:Name="SizePicker" Title="Выбери размер">
+                <Picker.Items>
+                    <x:String>Маленькая</x:String>
+                    <x:String>Средняя</x:String>
+                    <x:String>Большая</x:String>
+                </Picker.Items>
+            </Picker>
+
+            <!-- Stepper: число кнопками +/- -->
+            <Label x:Name="QtyLabel" Text="Количество: 1" FontSize="16" />
+            <Stepper x:Name="QtyStepper" Minimum="1" Maximum="10" Increment="1" Value="1"
+                     ValueChanged="OnQtyChanged" HorizontalOptions="Center" />
+
+            <!-- Switch: включатель да/нет -->
+            <HorizontalStackLayout Spacing="10">
+                <Label Text="Добавить сыр (+50)" FontSize="16" VerticalOptions="Center" />
+                <Switch x:Name="CheeseSwitch" />
+            </HorizontalStackLayout>
+
+            <!-- Slider: плавная шкала -->
+            <Label x:Name="SpicyLabel" Text="Острота: 0/10" FontSize="16" />
+            <Slider x:Name="SpicySlider" Minimum="0" Maximum="10" ValueChanged="OnSpicyChanged" />
+
+            <!-- CheckBox: галочка да/нет -->
+            <HorizontalStackLayout Spacing="10">
+                <CheckBox x:Name="DeliveryCheck" />
+                <Label Text="Доставка (+150)" FontSize="16" VerticalOptions="Center" />
+            </HorizontalStackLayout>
+
+            <!-- DatePicker: выбор даты -->
+            <Label Text="Дата заказа:" FontSize="16" />
+            <DatePicker x:Name="OrderDate" />
+
+            <Button Text="Оформить заказ" Clicked="OnOrder" />
+
+            <Label x:Name="ResultLabel" FontSize="18" />
+
+        </VerticalStackLayout>
+    </ScrollView>
+
+</ContentPage>
