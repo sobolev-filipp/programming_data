@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 700 380" font-family="'Segoe UI', Arial, sans-serif">
+  <rect x="0" y="0" width="700" height="380" rx="16" fill="#f8fafc" stroke="#e2e8f0" stroke-width="2"/>
+  <text x="350" y="38" text-anchor="middle" font-size="21" font-weight="700" fill="#1e293b">Вложенный селектор: «потомок внутри родителя»</text>
+
+  <!-- правило -->
+  <rect x="200" y="56" width="300" height="44" rx="10" fill="#ffffff" stroke="#c7d2fe" stroke-width="2"/>
+  <g font-family="'Consolas','Courier New',monospace" font-size="18">
+    <text x="224" y="84" fill="#4f46e5" font-weight="700">.gallery</text>
+    <text x="316" y="84" fill="#334155">img</text>
+    <text x="352" y="84" fill="#64748b">{ ... }</text>
+  </g>
+  <text x="350" y="120" text-anchor="middle" font-size="13" fill="#64748b">пробел между ними = &quot;img, которые ВНУТРИ .gallery&quot;</text>
+
+  <!-- страница-макет -->
+  <rect x="40" y="140" width="620" height="216" rx="12" fill="#ffffff" stroke="#e2e8f0" stroke-width="2"/>
+
+  <!-- аватарка снаружи -->
+  <rect x="64" y="164" width="150" height="60" rx="8" fill="#f1f5f9" stroke="#cbd5e1" stroke-width="2"/>
+  <text x="139" y="190" text-anchor="middle" font-size="13" fill="#64748b">img (аватар)</text>
+  <text x="139" y="210" text-anchor="middle" font-size="12" fill="#94a3b8">снаружи — НЕ красится</text>
+
+  <!-- контейнер .gallery -->
+  <rect x="240" y="152" width="396" height="188" rx="10" fill="#eef2ff" stroke="#6366f1" stroke-width="2" stroke-dasharray="6 4"/>
+  <text x="256" y="174" font-size="14" fill="#4f46e5" font-weight="700" font-family="'Consolas',monospace">div.gallery</text>
+
+  <g>
+    <rect x="262" y="188" width="112" height="130" rx="8" fill="#e0e7ff" stroke="#4f46e5" stroke-width="2"/>
+    <text x="318" y="250" text-anchor="middle" font-size="13" fill="#4338ca">img</text>
+    <text x="318" y="270" text-anchor="middle" font-size="11" fill="#6366f1">красится ✓</text>
+
+    <rect x="386" y="188" width="112" height="130" rx="8" fill="#e0e7ff" stroke="#4f46e5" stroke-width="2"/>
+    <text x="442" y="250" text-anchor="middle" font-size="13" fill="#4338ca">img</text>
+    <text x="442" y="270" text-anchor="middle" font-size="11" fill="#6366f1">красится ✓</text>
+
+    <rect x="510" y="188" width="112" height="130" rx="8" fill="#e0e7ff" stroke="#4f46e5" stroke-width="2"/>
+    <text x="566" y="250" text-anchor="middle" font-size="13" fill="#4338ca">img</text>
+    <text x="566" y="270" text-anchor="middle" font-size="11" fill="#6366f1">красится ✓</text>
+  </g>
+</svg>

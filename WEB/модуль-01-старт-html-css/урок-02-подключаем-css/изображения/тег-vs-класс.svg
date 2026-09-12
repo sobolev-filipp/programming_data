@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 440" font-family="'Segoe UI', Arial, sans-serif">
+  <rect x="0" y="0" width="720" height="440" rx="16" fill="#f8fafc" stroke="#e2e8f0" stroke-width="2"/>
+  <text x="360" y="38" text-anchor="middle" font-size="22" font-weight="700" fill="#1e293b">Два вида селектора: по тегу и по классу</text>
+
+  <line x1="360" y1="60" x2="360" y2="420" stroke="#e2e8f0" stroke-width="2"/>
+
+  <!-- ЛЕВО: по тегу -->
+  <text x="180" y="86" text-anchor="middle" font-size="17" font-weight="700" fill="#0f766e">Селектор по тегу</text>
+  <rect x="40" y="100" width="280" height="56" rx="10" fill="#ffffff" stroke="#99f6e4" stroke-width="2"/>
+  <g font-family="'Consolas','Courier New',monospace" font-size="17">
+    <text x="58" y="124" fill="#0f766e" font-weight="700">p</text>
+    <text x="74" y="124" fill="#64748b">{ color:</text>
+    <text x="182" y="124" fill="#0f766e">teal;</text>
+    <text x="240" y="124" fill="#64748b">}</text>
+    <text x="58" y="146" fill="#94a3b8" font-size="13">красит ВСЕ абзацы</text>
+  </g>
+
+  <!-- мини-страница левая: все 3 покрашены -->
+  <g>
+    <rect x="40" y="176" width="280" height="220" rx="10" fill="#ffffff" stroke="#e2e8f0" stroke-width="2"/>
+    <rect x="60" y="196" width="240" height="46" rx="8" fill="#ccfbf1" stroke="#14b8a6" stroke-width="2"/>
+    <text x="76" y="224" font-size="14" fill="#0f766e">Первый абзац</text>
+    <rect x="60" y="256" width="240" height="46" rx="8" fill="#ccfbf1" stroke="#14b8a6" stroke-width="2"/>
+    <text x="76" y="284" font-size="14" fill="#0f766e">Второй абзац</text>
+    <rect x="60" y="316" width="240" height="46" rx="8" fill="#ccfbf1" stroke="#14b8a6" stroke-width="2"/>
+    <text x="76" y="344" font-size="14" fill="#0f766e">Третий абзац</text>
+    <text x="180" y="386" text-anchor="middle" font-size="13" fill="#0f766e" font-weight="600">покрасились все &#8593;</text>
+  </g>
+
+  <!-- ПРАВО: по классу -->
+  <text x="540" y="86" text-anchor="middle" font-size="17" font-weight="700" fill="#be123c">Селектор по классу</text>
+  <rect x="400" y="100" width="280" height="56" rx="10" fill="#ffffff" stroke="#fecdd3" stroke-width="2"/>
+  <g font-family="'Consolas','Courier New',monospace" font-size="17">
+    <text x="418" y="124" fill="#be123c" font-weight="700">.hit</text>
+    <text x="462" y="124" fill="#64748b">{ color:</text>
+    <text x="558" y="124" fill="#be123c">crimson;</text>
+    <text x="418" y="146" fill="#94a3b8" font-size="13">красит только class=&quot;hit&quot;</text>
+  </g>
+
+  <!-- мини-страница правая: только 1-й и 3-й -->
+  <g>
+    <rect x="400" y="176" width="280" height="220" rx="10" fill="#ffffff" stroke="#e2e8f0" stroke-width="2"/>
+    <rect x="420" y="196" width="240" height="46" rx="8" fill="#ffe4e6" stroke="#e11d48" stroke-width="2"/>
+    <text x="436" y="218" font-size="14" fill="#be123c">Первый абзац</text>
+    <text x="436" y="234" font-size="11" fill="#fb7185" font-family="'Consolas',monospace">class=&quot;hit&quot;</text>
+    <rect x="420" y="256" width="240" height="46" rx="8" fill="#f1f5f9" stroke="#cbd5e1" stroke-width="2"/>
+    <text x="436" y="284" font-size="14" fill="#94a3b8">Второй абзац (без класса)</text>
+    <rect x="420" y="316" width="240" height="46" rx="8" fill="#ffe4e6" stroke="#e11d48" stroke-width="2"/>
+    <text x="436" y="338" font-size="14" fill="#be123c">Третий абзац</text>
+    <text x="592" y="354" font-size="11" fill="#fb7185" font-family="'Consolas',monospace">class=&quot;hit&quot;</text>
+    <text x="540" y="386" text-anchor="middle" font-size="13" fill="#be123c" font-weight="600">покрасились только с классом &#8593;</text>
+  </g>
+</svg>
