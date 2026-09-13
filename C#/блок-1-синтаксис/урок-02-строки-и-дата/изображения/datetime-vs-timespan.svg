@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 430" font-family="'Segoe UI', system-ui, sans-serif">
+  <rect width="900" height="430" fill="#f7f9fc"/>
+  <text x="450" y="42" text-anchor="middle" font-size="26" font-weight="700" fill="#1f2937">DateTime — момент · TimeSpan — промежуток</text>
+  <text x="450" y="68" text-anchor="middle" font-size="15" fill="#64748b">DateTime отвечает «когда» (точка на линии времени), TimeSpan — «сколько длится» (отрезок).</text>
+
+  <!-- timeline -->
+  <line x1="90" y1="250" x2="810" y2="250" stroke="#94a3b8" stroke-width="3"/>
+  <polygon points="810,250 796,243 796,257" fill="#94a3b8"/>
+  <text x="820" y="255" font-size="14" fill="#94a3b8">время →</text>
+
+  <!-- point 1: departure -->
+  <circle cx="300" cy="250" r="10" fill="#512bd4"/>
+  <line x1="300" y1="250" x2="300" y2="150" stroke="#512bd4" stroke-width="1.5" stroke-dasharray="4 4"/>
+  <rect x="205" y="110" width="190" height="46" rx="10" fill="#ede9fe" stroke="#512bd4" stroke-width="2"/>
+  <text x="300" y="132" text-anchor="middle" font-size="15" font-weight="700" fill="#512bd4">🛫 Вылет 14:30</text>
+  <text x="300" y="150" text-anchor="middle" font-size="12" fill="#7c3aed">DateTime (момент)</text>
+
+  <!-- point 2: arrival -->
+  <circle cx="620" cy="250" r="10" fill="#512bd4"/>
+  <line x1="620" y1="250" x2="620" y2="150" stroke="#512bd4" stroke-width="1.5" stroke-dasharray="4 4"/>
+  <rect x="520" y="110" width="200" height="46" rx="10" fill="#ede9fe" stroke="#512bd4" stroke-width="2"/>
+  <text x="620" y="132" text-anchor="middle" font-size="15" font-weight="700" fill="#512bd4">🛬 Прибытие 16:45</text>
+  <text x="620" y="150" text-anchor="middle" font-size="12" fill="#7c3aed">DateTime (момент)</text>
+
+  <!-- span between -->
+  <line x1="300" y1="300" x2="620" y2="300" stroke="#16a34a" stroke-width="3" marker-start="url(#s)" marker-end="url(#e)"/>
+  <rect x="360" y="318" width="200" height="46" rx="10" fill="#dcfce7" stroke="#16a34a" stroke-width="2"/>
+  <text x="460" y="340" text-anchor="middle" font-size="15" font-weight="700" fill="#15803d">TimeSpan: 2 ч 15 мин</text>
+  <text x="460" y="358" text-anchor="middle" font-size="12" fill="#15803d">промежуток (сколько длится)</text>
+
+  <!-- rules -->
+  <text x="450" y="404" text-anchor="middle" font-size="14" fill="#334155">момент − момент = промежуток   ·   момент + промежуток = момент</text>
+
+  <defs>
+    <marker id="e" markerWidth="10" markerHeight="10" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#16a34a"/></marker>
+    <marker id="s" markerWidth="10" markerHeight="10" refX="0" refY="3" orient="auto"><path d="M7,0 L0,3 L7,6 Z" fill="#16a34a"/></marker>
+  </defs>
+</svg>
