@@ -1,4 +1,4 @@
-# Урок 1.3. Утилитные функции Python для ML — резюме
+# Урок 1.3. Функции и строки — резюме
 
 > Открой этот файл, чтобы быстро вспомнить, что было на уроке.
 
@@ -6,123 +6,114 @@
 
 ## Главные мысли
 
-1. Эти функции — твой **рабочий инструмент** до конца курса. С ними каждый кусок ML-кода читается легко.
-2. `zip`/`enumerate` — два «брата» цикла. Используй их вместо `range(len(...))`.
-3. `sorted` ≠ `sort`. Первая возвращает новый список, вторая меняет на месте.
-4. `all([])` = `True`, `any([])` = `False`. Помни про этот подвох.
+1. **`lambda`** — функция на одну строку, передаётся туда, где нужен «маленький ключ» (`sorted`, `max`, `min`).
+2. `sorted` ≠ `sort`: первая возвращает **новый** список, вторая меняет **на месте** и возвращает `None`.
+3. `all([])` = `True`, `any([])` = `False`. Помни про этот подвох.
+4. **`*args`** — «собрать любое число позиционных аргументов в кортеж», **`**kwargs`** — «в словарь именованных».
+5. **При вызове** `*` и `**` делают **обратное**: распаковывают коллекцию в аргументы.
+6. Строки чистим и собираем методами: `split`, `join`, `strip`, `lower`, `replace`; форматируем f-строками.
 
 ---
 
-## Функции-друзья цикла
+## `lambda` — шпаргалка
 
 ```python
-range(start, stop, step)      # последовательность чисел
-zip(a, b, c, ...)             # параллельный обход
-enumerate(coll, start=0)      # индекс + значение
+# Шаблон
+lambda аргументы: выражение
+
+square = lambda x: x ** 2        # один аргумент
+add = lambda a, b: a + b         # несколько
+
+# Главное применение — как ключ:
+sorted(books, key=lambda b: b["rating"])
+max(students, key=lambda s: s["score"])
+nums.sort(key=lambda x: abs(x))
 ```
 
-**Шаблоны использования:**
-```python
-for i in range(10):
-    ...
-
-for x, y in zip(xs, ys):
-    ...
-
-for i, x in enumerate(items, start=1):
-    ...
-
-# Комбо: индекс + пара
-for i, (x, y) in enumerate(zip(xs, ys)):
-    ...
-```
+**Правила:** только одно выражение в теле; не больше ~30 символов; чаще передаётся аргументом, чем сохраняется в переменную.
 
 ---
 
-## Сортировка
+## Сортировка и агрегации
 
 ```python
 sorted(coll)                              # новый список
-coll.sort()                               # на месте
-
+coll.sort()                               # на месте (вернёт None!)
 sorted(coll, reverse=True)                # по убыванию
 sorted(coll, key=len)                     # по ключу-функции
-sorted(coll, key=lambda x: x.field)       # по полю объекта
-sorted(coll, key=lambda x: (x.a, x.b))    # по нескольким полям
+sorted(coll, key=lambda x: x["field"])    # по полю словаря
+sorted(coll, key=lambda x: (x["a"], x["b"]))  # по нескольким полям
+
+sum(coll, start=0)            # сумма
+min(coll, key=...) / max(coll, key=...)   # мин/макс, можно с ключом
+len(coll) / abs(x) / round(x, n)
+all(усл for x in coll)        # все ли True
+any(усл for x in coll)        # хоть один True
 ```
 
-`reversed(coll)` — просто перевернуть (не сортирует).
+**Идиома «найти элемент с максимальным полем»:**
+```python
+best = max(students, key=lambda s: s["score"])
+```
 
 ---
 
-## Агрегации
+## `*args` и `**kwargs` — шпаргалка
+
+### Приём (в объявлении — «собрать»)
 
 ```python
-sum(coll, start=0)            # сумма
-min(coll, key=...)            # минимум, можно с ключом
-max(coll, key=...)            # максимум, можно с ключом
-len(coll)                     # длина
-abs(x)                        # модуль
-round(x, n)                   # округление до n знаков
+def f(*args, **kwargs):
+    print(args)      # кортеж позиционных
+    print(kwargs)    # словарь именованных
 
-all(условие for x in coll)    # все ли True
-any(условие for x in coll)    # хоть один True
+f(1, 2, 3, name="Иван", age=15)
+# args = (1, 2, 3)
+# kwargs = {'name': 'Иван', 'age': 15}
 ```
 
-**Идиома: «найти элемент с минимальным/максимальным полем»**
+### Передача (в вызове — «распаковать»)
+
 ```python
-best = max(students, key=lambda s: s.score)
-worst = min(books, key=lambda b: b.pages)
+def greet(name, age):
+    print(name, age)
+
+data = ["Иван", 15]
+greet(*data)                 # распаковка списка → позиционные
+
+data = {"name": "Иван", "age": 15}
+greet(**data)                # распаковка словаря → именованные
 ```
+
+Порядок в `def` строгий: обычные → `*args` → именованные с дефолтами → `**kwargs`.
 
 ---
 
 ## Методы строк (мини-шпаргалка)
 
 ```python
-# Разбить / склеить
 "a,b,c".split(",")            # ['a', 'b', 'c']
 ",".join(["a", "b", "c"])     # 'a,b,c'
 "привет мир".split()          # по пробелам
 
-# Чистка
-"  привет  ".strip()
-"   привет".lstrip()
-"привет   ".rstrip()
+"  привет  ".strip()          # обрезать пробелы по краям
+"Hello".lower() / .upper() / .title()
 
-# Регистр
-"Hello".lower()               # 'hello'
-"Hello".upper()               # 'HELLO'
-"hello".title()               # 'Hello'
-
-# Замена / поиск
 "hello".replace("l", "L")     # 'heLLo'
-"hello.py".endswith(".py")    # True
-"image.jpg".startswith("img") # False
-"hello".find("ll")            # 2 (или -1)
+"file.py".endswith(".py")     # True
+"hello".startswith("he")      # True
 "hello".count("l")            # 2
 
-# Проверки
-"123".isdigit()               # True
-"abc".isalpha()               # True
-"a1".isalnum()                # True
+"123".isdigit() / "abc".isalpha() / "a1".isalnum()
 ```
 
----
-
-## f-строки (форматирование)
+## f-строки
 
 ```python
-name = "Иван"
-val = 3.14159
-
-f"{name}"                     # 'Иван'
+name = "Иван"; val = 3.14159
 f"{val:.2f}"                  # '3.14'
-f"{val:.4f}"                  # '3.1416'
 f"{val * 100:.1f}%"           # '314.2%'
 f"{name:<10}"                 # выровнять влево, ширина 10
-f"{name:>10}"                 # вправо
-f"{name:^10}"                 # по центру
 ```
 
 ---
@@ -131,21 +122,21 @@ f"{name:^10}"                 # по центру
 
 | Ошибка | Что не так | Как исправить |
 |--------|-----------|---------------|
-| `for i in range(len(lst)): ... lst[i]` | Громоздко | `for x in lst:` или `for i, x in enumerate(lst):` |
-| `nums.sort()` и потом `if nums.sort() == ...` | `sort()` возвращает `None`! | Использовать `sorted(nums)` |
-| `dict[unknown_key]` | KeyError | `dict.get(key, default)` |
-| `print(map(str, nums))` | Выведет `<map object>` | `print(list(map(str, nums)))` или генератор |
-| Открыть файл без `with` | Может не закрыться | Всегда `with open(...) as f:` |
+| `x = nums.sort()` | `sort()` возвращает `None` | `x = sorted(nums)` |
+| `min(dicts)` без `key` | сравнивать нечего | `min(dicts, key=lambda d: d["field"])` |
+| `["a","b"].join("-")` | `join` вызывает разделитель | `"-".join(["a","b"])` |
+| `f(**list)` | `**` работает только со словарём | `f(*list)` |
+| `lambda x: print(x)` как результат | `print` возвращает `None` | если нужен результат — `lambda x: x` |
 
 ---
 
 ## Что должно остаться в голове после урока
 
-1. Я уверенно использую `zip`, `enumerate`, `sorted`, `sum`/`min`/`max`, `all`/`any`.
+1. Я пишу `lambda` как ключ для `sort`/`max`/`min`.
 2. Я знаю разницу между `sort` и `sorted`.
-3. Я могу разобрать CSV-строку через `split` и собрать обратно через `join`.
-4. Я форматирую число до 2 знаков через f-строку `f"{x:.2f}"`.
-5. Я никогда не открываю файл без `with`.
+3. Я понимаю, что `*` и `**` делают **разное** в объявлении функции и в её вызове.
+4. Я разбираю строку через `split` и собираю обратно через `join`.
+5. Я форматирую число до 2 знаков через f-строку `f"{x:.2f}"`.
 
 ---
 
@@ -154,3 +145,4 @@ f"{name:^10}"                 # по центру
 Следующий урок — **Урок 1.4. NumPy**. Первая «настоящая» ML-библиотека. Готовься: вместо списков мы начнём работать с **массивами** (`ndarray`), которые быстрее в десятки раз. И будем активно использовать всё, что прошли в Уроках 1.1–1.3.
 
 Можно перед уроком пробежаться по [официальному NumPy quickstart](https://numpy.org/doc/stable/user/quickstart.html) (через переводчик).
+</content>

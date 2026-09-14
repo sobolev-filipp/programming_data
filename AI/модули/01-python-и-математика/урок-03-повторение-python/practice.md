@@ -1,76 +1,92 @@
-# Урок 1.3. Практика на занятии (вместе с преподавателем)
+# Урок 1.3. Практика на занятии: функции и строки
 
 > ### 💻 Как работать с кодом урока
 > Весь код пишем в **одном ноутбуке** (`.ipynb`, в Google Colab или Jupyter), разбивая на **ячейки**: один логический шаг — одна ячейка, запускаем сверху вниз. Переменные сохраняются между ячейками, поэтому импорты, данные, модель и обучение держим в **разных** ячейках. Домашку продолжаем в **том же** ноутбуке (раздел `## Самостоятельная работа`), а ответы на 🤔-вопросы пишем в **Markdown-ячейках**. Отдельные `.py`-файлы не нужны — они пригодятся только для большого проекта (Модуль 9). Перед сдачей запусти ноутбук целиком («Перезапустить и выполнить всё»), чтобы проверить, что всё работает по порядку.
 
 
-> Тетрадка: `lesson-1-3-utilities.ipynb`. Все задания пишем вместе на проекторе, ученики повторяют.
+> Тетрадка: `lesson-1-3-functions-strings.ipynb`. Все задания пишем вместе на проекторе, ученики повторяют.
 
 ---
 
-## Задание 1. `zip` и `enumerate` (13 минут)
+## Задание 1. `lambda` в `sort` и `max` (15 минут)
 
-### 1.1. Простой `zip`
+Сначала знакомимся с `lambda`, а потом сразу подаём её ключом в `sort`/`max` — там она и нужна.
 
-```python
-students = ["Иван", "Мария", "Пётр", "Ольга"]
-grades = [4, 5, 3, 5]
-
-for name, grade in zip(students, grades):
-    print(f"{name}: {grade}")
-```
-
-### 1.2. `zip` с тремя списками
+### 1.1. `lambda` сама по себе
 
 ```python
-students = ["Иван", "Мария", "Пётр"]
-grades = [4, 5, 3]
-subjects = ["алгебра", "информатика", "химия"]
+square = lambda x: x ** 2
+print(square(5))     # 25
 
-for name, grade, subj in zip(students, grades, subjects):
-    print(f"{name} получил {grade} по {subj}")
+add = lambda a, b: a + b
+print(add(3, 4))     # 7
 ```
 
-### 1.3. Построить словарь через `zip`
+> Это обычная функция, просто в одну строку и без имени. Дальше почти всегда будем передавать её **внутрь** другой функции.
+
+### 1.2. Сортировка списка кортежей
+
+Список фильмов: `(название, рейтинг, год)`.
 
 ```python
-keys = ["name", "age", "grade"]
-values = ["Иван", 15, 5]
-
-profile = dict(zip(keys, values))
-# {'name': 'Иван', 'age': 15, 'grade': 5}
+movies = [
+    ("Матрица", 8.7, 1999),
+    ("Интерстеллар", 8.6, 2014),
+    ("Зелёная миля", 9.0, 1999),
+    ("Один дома", 7.7, 1990),
+]
 ```
 
-### 1.4. `enumerate` — индекс + значение
+**Сортировка по рейтингу (по возрастанию):**
+```python
+movies.sort(key=lambda m: m[1])
+```
+
+**Сортировка по году (по убыванию):**
+```python
+movies.sort(key=lambda m: m[2], reverse=True)
+```
+
+> `key=lambda m: m[1]` читается как «сравнивай фильмы по второму элементу (рейтингу)».
+
+### 1.3. Поиск максимума по ключу
+
+**Найти фильм с самым высоким рейтингом:**
+```python
+best = max(movies, key=lambda m: m[1])
+print(best)    # ('Зелёная миля', 9.0, 1999)
+```
+
+### 1.4. `sorted` vs `sort`
 
 ```python
-languages = ["Python", "JavaScript", "Rust", "Go"]
-
-for i, lang in enumerate(languages):
-    print(f"{i}: {lang}")
+movies.sort(key=lambda m: m[1])   # меняет сам movies, возвращает None
+sorted_movies = sorted(movies, key=lambda m: m[1])   # создаёт новый список
 ```
 
-**А с другого индекса?**
-```python
-for i, lang in enumerate(languages, start=1):
-    print(f"{i}. {lang}")
-# 1. Python
-# 2. JavaScript
-# 3. Rust
-# 4. Go
-```
-
-### 1.5. Комбинация `enumerate` + `zip`
+### 1.5. Сортировка списка словарей (главный ML-случай)
 
 ```python
-students = ["Иван", "Мария", "Пётр"]
-grades = [4, 5, 3]
+students = [
+    {"name": "Иван",  "score": 82},
+    {"name": "Мария", "score": 95},
+    {"name": "Пётр",  "score": 74},
+]
 
-for i, (name, grade) in enumerate(zip(students, grades), start=1):
-    print(f"{i}. {name} — {grade}")
+by_score = sorted(students, key=lambda s: s["score"], reverse=True)
+for s in by_score:
+    print(s["name"], s["score"])
 ```
 
-**Подсветить:** скобки `(name, grade)` обязательны, потому что `enumerate` отдаёт пары `(индекс, элемент)`, а элемент здесь — уже пара.
+### 1.6. Со звёздочкой: цепочка сортировок
+
+Отсортировать сначала по году, потом по рейтингу:
+
+```python
+movies.sort(key=lambda m: (m[2], m[1]))
+```
+
+> Если ключ — кортеж, Python сортирует «по первому полю; при равенстве — по второму».
 
 ---
 
@@ -153,9 +169,80 @@ def is_valid(grades):
 
 ---
 
-## Задание 3. Методы строк (15 минут)
+## Задание 3. `*args` и `**kwargs` (15 минут)
 
-### 3.1. Парсинг строки с CSV-данными
+### 3.1. `*args`: сумма любого числа аргументов
+
+```python
+def sum_all(*args):
+    total = 0
+    for x in args:
+        total += x
+    return total
+
+print(sum_all(1, 2))          # 3
+print(sum_all(1, 2, 3, 4))    # 10
+print(sum_all())              # 0
+```
+
+**Усложнение: среднее любого числа аргументов.**
+```python
+def average(*args):
+    if not args:
+        return 0
+    return sum(args) / len(args)
+```
+
+### 3.2. `**kwargs`: «карточка профиля»
+
+```python
+def print_profile(**kwargs):
+    print("--- Профиль ---")
+    for key, value in kwargs.items():
+        print(f"{key}: {value}")
+
+print_profile(name="Иван", age=15, school="Школа 42", hobby="музыка")
+```
+
+### 3.3. Комбинация всего
+
+```python
+def order(table_number, *dishes, **options):
+    print(f"Столик: {table_number}")
+    print(f"Блюда: {', '.join(dishes)}")
+    print(f"Опции: {options}")
+
+order(7, "пицца", "салат", "сок", delivery=True, payment="карта")
+# Столик: 7
+# Блюда: пицца, салат, сок
+# Опции: {'delivery': True, 'payment': 'карта'}
+```
+
+### 3.4. Распаковка при вызове
+
+```python
+def greet(name, age, city):
+    print(f"Привет, {name}, тебе {age} лет, ты из {city}")
+
+# Список:
+data_list = ["Иван", 15, "Москва"]
+greet(*data_list)
+
+# Словарь:
+data_dict = {"name": "Иван", "age": 15, "city": "Москва"}
+greet(**data_dict)
+```
+
+**Подсветите для класса:**
+- В `def f(*args):` звёздочка означает «собрать».
+- В `f(*list)` звёздочка означает «распаковать».
+- Один и тот же символ, два разных действия. Это смущает поначалу — это норма.
+
+---
+
+## Задание 4. Методы строк (12 минут)
+
+### 4.1. Парсинг строки с CSV-данными
 
 ```python
 line = "Иван,15,Москва,Python,5.0"
@@ -168,19 +255,17 @@ name, age, city, lang, rating = parts
 print(name, int(age), city, lang, float(rating))
 ```
 
-### 3.2. Чистка пользовательского ввода
+### 4.2. Чистка пользовательского ввода
 
 ```python
 user_input = "   Привет, Мир!   \n"
 
 cleaned = user_input.strip()
 print(repr(cleaned))   # 'Привет, Мир!'
-
-# В нижний регистр
 print(cleaned.lower())   # 'привет, мир!'
 ```
 
-### 3.3. Сборка из частей
+### 4.3. Сборка из частей
 
 ```python
 parts = ["2026", "06", "10"]
@@ -192,46 +277,29 @@ sentence = " ".join(words)
 print(sentence)         # 'я учу Python'
 ```
 
-### 3.4. Замена
+### 4.4. Замена и проверки
 
 ```python
 text = "Я люблю Python. Python — это здорово!"
+print(text.replace("Python", "ML"))       # заменить все
+print(text.replace("Python", "ML", 1))    # только первое
 
-# Заменить все вхождения
-print(text.replace("Python", "ML"))
-
-# Заменить только первое
-print(text.replace("Python", "ML", 1))
-```
-
-### 3.5. Проверки и фильтры
-
-```python
-filenames = ["model.pkl", "data.csv", "notebook.ipynb", "image.jpg", "log.txt"]
-
-# Все CSV-файлы
+filenames = ["model.pkl", "data.csv", "notebook.ipynb", "image.jpg"]
 csvs = [f for f in filenames if f.endswith(".csv")]
 print(csvs)
-
-# Все «модельные» файлы (.pkl, .pth, .h5, .onnx)
-model_exts = [".pkl", ".pth", ".h5", ".onnx"]
-models = [f for f in filenames if any(f.endswith(ext) for ext in model_exts)]
-print(models)
 ```
 
-> Обратите внимание — здесь сразу всё в куче: генератор списка, методы строк, `any`, `endswith`. Это и есть «реальный код».
+> Обратите внимание — тут сразу всё в куче: генератор списка (с прошлого урока), метод строки `endswith`. Это и есть «реальный код».
 
-### 3.6. f-строки с форматом числа
+### 4.5. f-строки с форматом числа
 
 ```python
 average = 4.3576
 print(f"Средний балл: {average:.2f}")     # 4.36
 
-# Процент
 ratio = 0.857
 print(f"Точность: {ratio * 100:.1f}%")    # 85.7%
 
-# Выравнивание (для таблицы)
 for name, grade in [("Иван", 5), ("Мария", 4), ("Пётр", 3)]:
     print(f"{name:<10} | {grade}")
 # Иван       | 5
@@ -241,14 +309,59 @@ for name, grade in [("Иван", 5), ("Мария", 4), ("Пётр", 3)]:
 
 ---
 
-## Тайминг (90 минут, без самостоятельной части)
+## Финальная задача: всё вместе (10 минут)
+
+Дан список словарей:
+
+```python
+students = [
+    {"name": "Иван",  "grades": [4, 5, 5, 3, 4]},
+    {"name": "Мария", "grades": [5, 5, 5, 4, 5]},
+    {"name": "Пётр",  "grades": [3, 3, 4, 3, 4]},
+    {"name": "Ольга", "grades": [4, 4, 5, 5, 4]},
+]
+```
+
+**Задача:**
+> Найди топ-2 учеников по среднему баллу.
+
+### Решение по шагам
+
+**Шаг 1.** Добавляем средний балл в каждый словарь:
+```python
+for s in students:
+    s["avg"] = sum(s["grades"]) / len(s["grades"])
+```
+
+**Шаг 2.** Сортируем по среднему по убыванию:
+```python
+students.sort(key=lambda s: s["avg"], reverse=True)
+```
+
+**Шаг 3.** Берём первые 2 и печатаем аккуратно через f-строку:
+```python
+for s in students[:2]:
+    print(f"{s['name']}: средний {s['avg']:.2f}")
+```
+
+**В одну цепочку:**
+```python
+top_2 = sorted(students, key=lambda s: sum(s["grades"]) / len(s["grades"]), reverse=True)[:2]
+```
+
+> Вот эта последняя строка — типичный «короткий ML-стиль». Включает в себя `sorted`, `lambda`, `sum` от генератора. Каждая мелочь из урока — здесь.
+
+---
+
+## Тайминг урока (90 минут)
 
 | Время | Блок |
 |------:|------|
-| 0–12 | Повторение (см. `review.md`) |
-| 12–22 | Быстрая база (`theory.md` §1) |
-| 22–35 | Задание 1 (`zip`, `enumerate`) |
-| 35–50 | Задание 2 (агрегации) |
-| 50–65 | Задание 3 (методы строк) |
-| 65–85 | Самостоятельная работа (см. `homework.md`) |
-| 85–90 | Подведение итогов |
+| 0–12 | Повторение 1.2 (см. `review.md`) |
+| 12–17 | Введение «зачем» |
+| 17–32 | `lambda` (Задание 1) |
+| 32–47 | Агрегации (Задание 2) |
+| 47–62 | `*args`/`**kwargs` (Задание 3) |
+| 62–74 | Методы строк (Задание 4) |
+| 74–90 | Самостоятельная работа (`homework.md`) |
+</content>
