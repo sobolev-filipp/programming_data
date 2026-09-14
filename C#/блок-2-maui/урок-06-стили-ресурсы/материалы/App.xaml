@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Application xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:CafeApp"
+             x:Class="CafeApp.App">
+    <Application.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Resources/Styles/Colors.xaml" />
+                <ResourceDictionary Source="Resources/Styles/Styles.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+
+            <!-- ==== ГЛОБАЛЬНЫЕ РЕСУРСЫ (видны на всех страницах) ==== -->
+            <!-- Перенеси сюда фирменные цвета/шрифты, чтобы задать тему всего приложения. -->
+            <Color x:Key="Brand">#6F4E37</Color>
+            <Color x:Key="PageBg">#FFF8F0</Color>
+            <Color x:Key="PriceColor">#B5651D</Color>
+
+            <!-- неявный стиль: все Label по умолчанию (действует на каждой странице) -->
+            <Style TargetType="Label">
+                <Setter Property="TextColor" Value="#3A2A1A" />
+                <Setter Property="FontSize" Value="15" />
+            </Style>
+        </ResourceDictionary>
+    </Application.Resources>
+</Application>

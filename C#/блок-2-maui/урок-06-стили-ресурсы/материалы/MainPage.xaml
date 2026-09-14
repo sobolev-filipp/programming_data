@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="CafeApp.MainPage"
+             BackgroundColor="{StaticResource PageBg}">
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <!-- цвета -->
+            <Color x:Key="Brand">#6F4E37</Color>
+            <Color x:Key="PageBg">#FFF8F0</Color>
+            <Color x:Key="CardBg">#FFFFFF</Color>
+            <Color x:Key="PriceColor">#B5651D</Color>
+            <!-- размеры шрифта -->
+            <x:Double x:Key="TitleSize">22</x:Double>
+            <x:Double x:Key="BodySize">15</x:Double>
+
+            <!-- неявный стиль: ВСЕ Label по умолчанию -->
+            <Style TargetType="Label">
+                <Setter Property="TextColor" Value="#3A2A1A" />
+                <Setter Property="FontSize" Value="{StaticResource BodySize}" />
+            </Style>
+
+            <!-- явный стиль карточки-Border -->
+            <Style x:Key="CardStyle" TargetType="Border">
+                <Setter Property="Background" Value="{StaticResource CardBg}" />
+                <Setter Property="Stroke" Value="#E5D5C5" />
+                <Setter Property="StrokeThickness" Value="1" />
+                <Setter Property="Padding" Value="16" />
+                <Setter Property="StrokeShape" Value="RoundRectangle 14" />
+            </Style>
+
+            <!-- явный стиль заголовка блюда -->
+            <Style x:Key="DishTitle" TargetType="Label">
+                <Setter Property="FontSize" Value="{StaticResource TitleSize}" />
+                <Setter Property="FontAttributes" Value="Bold" />
+                <Setter Property="TextColor" Value="{StaticResource Brand}" />
+            </Style>
+
+            <!-- явный стиль цены -->
+            <Style x:Key="PriceTag" TargetType="Label">
+                <Setter Property="TextColor" Value="{StaticResource PriceColor}" />
+                <Setter Property="FontAttributes" Value="Bold" />
+            </Style>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <ScrollView>
+        <VerticalStackLayout Padding="20" Spacing="16">
+
+            <Image Source="dotnet_bot.png" HeightRequest="90" Aspect="AspectFit" />
+            <Label Text="☕ Кафе «Уют»" Style="{StaticResource DishTitle}" HorizontalOptions="Center" />
+
+            <Border Style="{StaticResource CardStyle}">
+                <VerticalStackLayout Spacing="4">
+                    <Label Text="Капучино" Style="{StaticResource DishTitle}" />
+                    <Label Text="Нежная молочная пенка на эспрессо." />
+                    <Label Text="180 ₽" Style="{StaticResource PriceTag}" />
+                </VerticalStackLayout>
+            </Border>
+
+            <Border Style="{StaticResource CardStyle}">
+                <VerticalStackLayout Spacing="4">
+                    <Label Text="Чизкейк" Style="{StaticResource DishTitle}" />
+                    <Label Text="Классический десерт из сливочного сыра." />
+                    <Label Text="250 ₽" Style="{StaticResource PriceTag}" />
+                </VerticalStackLayout>
+            </Border>
+
+            <Border Style="{StaticResource CardStyle}">
+                <VerticalStackLayout Spacing="4">
+                    <Label Text="Круассан" Style="{StaticResource DishTitle}" />
+                    <Label Text="Хрустящий, с шоколадной начинкой." />
+                    <Label Text="120 ₽" Style="{StaticResource PriceTag}" />
+                </VerticalStackLayout>
+            </Border>
+
+            <Label x:Name="TableLabel" Text="Стол: 1" />
+            <Stepper x:Name="TableStepper" Minimum="1" Maximum="20" Increment="1" Value="1"
+                     ValueChanged="OnTableChanged" HorizontalOptions="Center" />
+            <Button Text="Позвать официанта" Clicked="OnCall" />
+            <Label x:Name="ResultLabel" Style="{StaticResource PriceTag}" HorizontalOptions="Center" />
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

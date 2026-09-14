@@ -1,0 +1,62 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 500" font-family="'Segoe UI', Arial, sans-serif">
+  <rect width="900" height="500" fill="#f7f9fc"/>
+  <text x="450" y="34" text-anchor="middle" font-size="22" font-weight="bold" fill="#512bd4">Словарь ресурсов кормит элементы · устройство Border</text>
+
+  <!-- ResourceDictionary box -->
+  <rect x="24" y="58" width="360" height="234" rx="14" fill="#fff" stroke="#7c5cd6" stroke-width="2"/>
+  <text x="204" y="84" text-anchor="middle" font-size="16" font-weight="bold" fill="#512bd4">ResourceDictionary (в Resources)</text>
+  <g font-family="Consolas, 'Courier New', monospace" font-size="12.5">
+    <rect x="42" y="98" width="324" height="34" rx="7" fill="#f3eeff" stroke="#7c5cd6"/>
+    <text x="54" y="120" fill="#333">&lt;Color x:Key=<tspan fill="#b23b1e">"Brand"</tspan>&gt;#6F4E37&lt;/Color&gt;</text>
+
+    <rect x="42" y="140" width="324" height="34" rx="7" fill="#f3eeff" stroke="#7c5cd6"/>
+    <text x="54" y="162" fill="#333">&lt;x:Double x:Key=<tspan fill="#b23b1e">"TitleSize"</tspan>&gt;22&lt;/&gt;</text>
+
+    <rect x="42" y="182" width="324" height="94" rx="7" fill="#f3eeff" stroke="#7c5cd6"/>
+    <text x="54" y="202" fill="#333">&lt;Style x:Key=<tspan fill="#b23b1e">"CardStyle"</tspan></text>
+    <text x="54" y="219" fill="#333">       TargetType="Border"&gt;</text>
+    <text x="54" y="236" fill="#333">  &lt;Setter Property="Padding".../&gt;</text>
+    <text x="54" y="253" fill="#333">  &lt;Setter Property="StrokeShape".../&gt;</text>
+    <text x="54" y="270" fill="#333">&lt;/Style&gt;</text>
+  </g>
+
+  <!-- Arrows -->
+  <text x="430" y="150" text-anchor="middle" font-size="13" fill="#2e9e5b" font-weight="bold">берём по имени</text>
+  <text x="430" y="170" text-anchor="middle" font-size="12.5" font-family="Consolas, monospace" fill="#1f7a45">{StaticResource ...}</text>
+  <path d="M388 130 H520" stroke="#2e9e5b" stroke-width="2.5" marker-end="url(#a)"/>
+  <path d="M388 210 H520" stroke="#2e9e5b" stroke-width="2.5" marker-end="url(#a)"/>
+  <defs>
+    <marker id="a" markerWidth="10" markerHeight="10" refX="7" refY="3" orient="auto">
+      <path d="M0,0 L7,3 L0,6 Z" fill="#2e9e5b"/>
+    </marker>
+  </defs>
+
+  <!-- elements using resources -->
+  <rect x="524" y="102" width="352" height="56" rx="9" fill="#eaf7ef" stroke="#2e9e5b"/>
+  <text x="700" y="126" text-anchor="middle" font-size="12.5" font-family="Consolas, monospace" fill="#333">&lt;Label TextColor="{StaticResource Brand}"</text>
+  <text x="700" y="145" text-anchor="middle" font-size="12.5" font-family="Consolas, monospace" fill="#333">       FontSize="{StaticResource TitleSize}"/&gt;</text>
+
+  <rect x="524" y="186" width="352" height="40" rx="9" fill="#eaf7ef" stroke="#2e9e5b"/>
+  <text x="700" y="211" text-anchor="middle" font-size="12.5" font-family="Consolas, monospace" fill="#333">&lt;Border Style="{StaticResource CardStyle}"&gt;</text>
+
+  <!-- Border anatomy -->
+  <text x="450" y="330" text-anchor="middle" font-size="16" font-weight="bold" fill="#512bd4">Border = рамка-карточка (внутри ОДИН элемент)</text>
+
+  <!-- big border -->
+  <rect x="250" y="348" width="400" height="128" rx="18" fill="#ffffff" stroke="#6F4E37" stroke-width="3"/>
+  <rect x="286" y="376" width="328" height="74" rx="10" fill="#FFF8F0" stroke="#E5D5C5"/>
+  <text x="450" y="404" text-anchor="middle" font-size="13" fill="#6F4E37" font-weight="bold">VerticalStackLayout (один ребёнок)</text>
+  <text x="450" y="426" text-anchor="middle" font-size="12" fill="#333">Label · Label · Label — внутри стека</text>
+
+  <!-- labels for border parts -->
+  <text x="150" y="360" font-size="12.5" fill="#333">Stroke — цвет рамки</text>
+  <path d="M150 364 L250 372" stroke="#888" stroke-width="1.4"/>
+  <text x="120" y="392" font-size="12.5" fill="#333">StrokeThickness</text>
+  <path d="M198 388 L250 384" stroke="#888" stroke-width="1.4"/>
+  <text x="660" y="360" font-size="12.5" fill="#333">StrokeShape="RoundRectangle 14"</text>
+  <path d="M655 356 L640 360" stroke="#888" stroke-width="1.4"/>
+  <text x="660" y="420" font-size="12.5" fill="#333">Background — заливка</text>
+  <path d="M655 416 L618 412" stroke="#888" stroke-width="1.4"/>
+  <text x="660" y="452" font-size="12.5" fill="#333">Padding — отступ до содержимого</text>
+  <path d="M655 448 L616 440" stroke="#888" stroke-width="1.4"/>
+</svg>

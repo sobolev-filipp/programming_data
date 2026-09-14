@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="QuizApp.MainPage"
+             BackgroundColor="#EEF2FF">
+    <VerticalStackLayout Padding="24" Spacing="14">
+
+        <Label Text="🎯 Викторина" FontSize="28" FontAttributes="Bold" HorizontalOptions="Center" />
+        <Label x:Name="QuestionLabel" Text="Столица Франции?" FontSize="20" HorizontalOptions="Center" />
+
+        <Button x:Name="Btn1" Text="Париж" Clicked="OnAnswer" />
+        <Button x:Name="Btn2" Text="Лондон" Clicked="OnAnswer" />
+        <Button x:Name="Btn3" Text="Берлин" Clicked="OnAnswer" />
+
+        <Label x:Name="ResultLabel" FontSize="18" HorizontalOptions="Center" />
+        <Button x:Name="RestartButton" Text="Пройти заново" Clicked="OnRestart" IsVisible="False" />
+
+    </VerticalStackLayout>
+</ContentPage>

@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 470" font-family="'Segoe UI', Arial, sans-serif">
+  <rect width="900" height="470" fill="#f7f9fc"/>
+  <text x="450" y="34" text-anchor="middle" font-size="22" font-weight="bold" fill="#512bd4">Стиль: оформление один раз вместо повтора</text>
+
+  <!-- LEFT: without style -->
+  <rect x="24" y="58" width="410" height="384" rx="14" fill="#fff" stroke="#e0623f" stroke-width="2"/>
+  <text x="229" y="86" text-anchor="middle" font-size="17" font-weight="bold" fill="#b23b1e">❌ Без стиля — повтор у каждого</text>
+
+  <g font-family="Consolas, 'Courier New', monospace" font-size="12.5" fill="#333">
+    <rect x="44" y="104" width="370" height="60" rx="7" fill="#fdeee9" stroke="#e0623f"/>
+    <text x="56" y="124">&lt;Label Text="Капучино"</text>
+    <text x="56" y="141" fill="#b23b1e">   FontSize="22" TextColor="#6F4E37"</text>
+    <text x="56" y="158" fill="#b23b1e">   FontAttributes="Bold" /&gt;</text>
+
+    <rect x="44" y="174" width="370" height="60" rx="7" fill="#fdeee9" stroke="#e0623f"/>
+    <text x="56" y="194">&lt;Label Text="Чизкейк"</text>
+    <text x="56" y="211" fill="#b23b1e">   FontSize="22" TextColor="#6F4E37"</text>
+    <text x="56" y="228" fill="#b23b1e">   FontAttributes="Bold" /&gt;</text>
+
+    <rect x="44" y="244" width="370" height="60" rx="7" fill="#fdeee9" stroke="#e0623f"/>
+    <text x="56" y="264">&lt;Label Text="Круассан"</text>
+    <text x="56" y="281" fill="#b23b1e">   FontSize="22" TextColor="#6F4E37"</text>
+    <text x="56" y="298" fill="#b23b1e">   FontAttributes="Bold" /&gt;</text>
+  </g>
+  <text x="229" y="336" text-anchor="middle" font-size="13" fill="#b23b1e">одни и те же 3 свойства — 3 раза</text>
+  <text x="229" y="360" text-anchor="middle" font-size="13" fill="#b23b1e">сменить цвет = править во всех местах</text>
+  <rect x="44" y="378" width="370" height="46" rx="8" fill="#fdeee9" stroke="#e0623f"/>
+  <text x="229" y="406" text-anchor="middle" font-size="13.5" font-weight="bold" fill="#b23b1e">долго · опасно · легко забыть</text>
+
+  <!-- RIGHT: with style -->
+  <rect x="466" y="58" width="410" height="384" rx="14" fill="#fff" stroke="#2e9e5b" stroke-width="2"/>
+  <text x="671" y="86" text-anchor="middle" font-size="17" font-weight="bold" fill="#1f7a45">✅ Со стилем — задал один раз</text>
+
+  <g font-family="Consolas, 'Courier New', monospace" font-size="12.5" fill="#333">
+    <rect x="486" y="104" width="370" height="86" rx="7" fill="#eaf7ef" stroke="#2e9e5b"/>
+    <text x="498" y="124" fill="#1f7a45">&lt;Style x:Key="DishTitle" TargetType="Label"&gt;</text>
+    <text x="498" y="141">  &lt;Setter Property="FontSize" Value="22"/&gt;</text>
+    <text x="498" y="158">  &lt;Setter Property="FontAttributes"...Bold/&gt;</text>
+    <text x="498" y="175">  &lt;Setter Property="TextColor".../&gt;   &lt;/Style&gt;</text>
+
+    <rect x="486" y="204" width="370" height="80" rx="7" fill="#f3eeff" stroke="#7c5cd6"/>
+    <text x="498" y="224">&lt;Label Text="Капучино" Style="{...DishTitle}"/&gt;</text>
+    <text x="498" y="245">&lt;Label Text="Чизкейк"  Style="{...DishTitle}"/&gt;</text>
+    <text x="498" y="266">&lt;Label Text="Круассан" Style="{...DishTitle}"/&gt;</text>
+  </g>
+  <text x="671" y="308" text-anchor="middle" font-size="13" fill="#1f7a45">свойства — в одном стиле</text>
+  <text x="671" y="330" text-anchor="middle" font-size="13" fill="#1f7a45">элементы ссылаются по имени</text>
+  <rect x="486" y="348" width="370" height="76" rx="8" fill="#eaf7ef" stroke="#2e9e5b"/>
+  <text x="671" y="374" text-anchor="middle" font-size="13.5" font-weight="bold" fill="#1f7a45">сменить цвет = правка в ОДНОМ месте</text>
+  <text x="671" y="400" text-anchor="middle" font-size="13" fill="#1f7a45">→ меняются ВСЕ сразу</text>
+  <text x="671" y="416" text-anchor="middle" font-size="12" fill="#1f7a45">коротко · надёжно · единообразно</text>
+</svg>

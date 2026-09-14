@@ -1,0 +1,51 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 470" font-family="'Segoe UI', Arial, sans-serif">
+  <rect width="900" height="470" fill="#f7f9fc"/>
+  <text x="450" y="34" text-anchor="middle" font-size="22" font-weight="bold" fill="#512bd4">DisplayAlertAsync + IsEnabled / IsVisible</text>
+
+  <!-- Info window -->
+  <text x="200" y="70" text-anchor="middle" font-size="15" font-weight="bold" fill="#333">Окно-сообщение (1 кнопка)</text>
+  <rect x="70" y="82" width="260" height="130" rx="14" fill="#fff" stroke="#512bd4" stroke-width="2"/>
+  <text x="200" y="112" text-anchor="middle" font-size="15" font-weight="bold" fill="#333">Результат</text>
+  <text x="200" y="140" text-anchor="middle" font-size="14" fill="#555">Верно! 🎉</text>
+  <rect x="150" y="162" width="100" height="34" rx="9" fill="#512bd4"/>
+  <text x="200" y="185" text-anchor="middle" font-size="14" fill="#fff">OK</text>
+  <text x="200" y="232" text-anchor="middle" font-size="11.5" font-family="Consolas, monospace" fill="#555">await DisplayAlertAsync("...","...","OK")</text>
+
+  <!-- Question window -->
+  <text x="640" y="70" text-anchor="middle" font-size="15" font-weight="bold" fill="#333">Окно-вопрос (2 кнопки → bool)</text>
+  <rect x="510" y="82" width="260" height="130" rx="14" fill="#fff" stroke="#2e9e5b" stroke-width="2"/>
+  <text x="640" y="112" text-anchor="middle" font-size="15" font-weight="bold" fill="#333">Удаление</text>
+  <text x="640" y="140" text-anchor="middle" font-size="14" fill="#555">Точно удалить?</text>
+  <rect x="536" y="162" width="100" height="34" rx="9" fill="#2e9e5b"/>
+  <text x="586" y="185" text-anchor="middle" font-size="14" fill="#fff">Да → true</text>
+  <rect x="646" y="162" width="100" height="34" rx="9" fill="#b23b1e"/>
+  <text x="696" y="185" text-anchor="middle" font-size="14" fill="#fff">Нет → false</text>
+  <text x="640" y="232" text-anchor="middle" font-size="11.5" font-family="Consolas, monospace" fill="#555">bool yes = await DisplayAlertAsync(...,"Да","Нет")</text>
+
+  <!-- async/await note -->
+  <rect x="250" y="252" width="400" height="40" rx="10" fill="#fff7e6" stroke="#e0a300"/>
+  <text x="450" y="277" text-anchor="middle" font-size="13" fill="#8a6d00">💡 Показываешь окно → метод <tspan font-family="Consolas, monospace">async</tspan>, перед вызовом <tspan font-family="Consolas, monospace">await</tspan></text>
+
+  <!-- IsEnabled / IsVisible -->
+  <line x1="60" y1="312" x2="840" y2="312" stroke="#dde3ee" stroke-width="1.5"/>
+
+  <!-- IsEnabled -->
+  <text x="230" y="340" text-anchor="middle" font-size="15" font-weight="bold" fill="#333">IsEnabled — активность</text>
+  <rect x="90" y="352" width="130" height="46" rx="10" fill="#512bd4"/>
+  <text x="155" y="380" text-anchor="middle" font-size="14" fill="#fff">включена</text>
+  <text x="155" y="416" text-anchor="middle" font-size="11.5" font-family="Consolas, monospace" fill="#555">IsEnabled=true</text>
+  <rect x="245" y="352" width="130" height="46" rx="10" fill="#c9ccd6"/>
+  <text x="310" y="380" text-anchor="middle" font-size="14" fill="#8b8f9a">серая</text>
+  <text x="310" y="416" text-anchor="middle" font-size="11.5" font-family="Consolas, monospace" fill="#555">IsEnabled=false</text>
+
+  <!-- IsVisible -->
+  <text x="650" y="340" text-anchor="middle" font-size="15" font-weight="bold" fill="#333">IsVisible — видимость</text>
+  <rect x="520" y="352" width="130" height="46" rx="10" fill="#2e9e5b"/>
+  <text x="585" y="380" text-anchor="middle" font-size="14" fill="#fff">видна</text>
+  <text x="585" y="416" text-anchor="middle" font-size="11.5" font-family="Consolas, monospace" fill="#555">IsVisible=true</text>
+  <rect x="675" y="352" width="130" height="46" rx="10" fill="none" stroke="#c9ccd6" stroke-width="2" stroke-dasharray="6 5"/>
+  <text x="740" y="380" text-anchor="middle" font-size="13" fill="#b0b4bf">спрятана</text>
+  <text x="740" y="416" text-anchor="middle" font-size="11.5" font-family="Consolas, monospace" fill="#555">IsVisible=false</text>
+
+  <text x="450" y="452" text-anchor="middle" font-size="12.5" fill="#555">серый = виден, но не нажать · спрятан = нет совсем (и место не занимает)</text>
+</svg>

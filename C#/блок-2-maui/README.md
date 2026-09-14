@@ -12,8 +12,8 @@
 | 3 | [Grid: «Калькулятор»](урок-03-grid-калькулятор/урок.md) | `Grid`, `RowDefinitions`/`ColumnDefinitions` (`*`/`Auto`), `Grid.Row`/`Grid.Column`, `ColumnSpan`, `RowSpacing`/`ColumnSpacing`, `sender` | ✅ готов |
 | 4 | [Контролы ввода: «Анкета»](урок-04-контролы-ввода/урок.md) | `Entry`, `Editor`, `.Text`, `Placeholder`, `Keyboard`/`IsPassword`, `TextChanged`, `IsNullOrWhiteSpace`/`TryParse`, `ScrollView` | ✅ готов |
 | 5 | [Контролы выбора: «Собери пиццу»](урок-05-контролы-выбора/урок.md) | `Switch`, `Slider`, `Stepper`, `CheckBox`, `DatePicker`, `Picker`, события `ValueChanged`/`Toggled`/`SelectedIndexChanged` | ✅ готов |
-| 6 | Стили и ресурсы | цвета, шрифты, `Style`, `Border`/`Frame`, изображения | ⏳ план |
-| 7 | События и логика глубже | `sender`, `DisplayAlert`, включение/выключение | ⏳ план |
+| 6 | [Стили и ресурсы: «Меню кафе»](урок-06-стили-ресурсы/урок.md) | `ResourceDictionary`, `{StaticResource}`, `Style`/`Setter` (явный + неявный), `Border`, `Image`, `App.xaml`, `AppThemeBinding` | ✅ готов |
+| 7 | [События и логика глубже: «Викторина»](урок-07-события-логика/урок.md) | `sender` (один обработчик на много кнопок), `DisplayAlertAsync` (сообщение + вопрос), `async`/`await`, `IsEnabled`/`IsVisible` | ✅ готов |
 | 8 | Списки: `CollectionView` | `ItemsSource`, `DataTemplate` | ⏳ план |
 | 9 | «To-Do List» ч.1: `ObservableCollection` | динамический список, добавить/удалить | ⏳ план |
 | 10 | «To-Do List» ч.2: привязки `{Binding}` | `BindingContext`, основы MVVM | ⏳ план |

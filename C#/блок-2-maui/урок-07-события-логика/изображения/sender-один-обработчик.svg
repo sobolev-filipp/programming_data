@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 430" font-family="'Segoe UI', Arial, sans-serif">
+  <rect width="900" height="430" fill="#f7f9fc"/>
+  <text x="450" y="36" text-anchor="middle" font-size="22" font-weight="bold" fill="#512bd4">Один обработчик на много кнопок — через sender</text>
+
+  <!-- three buttons -->
+  <g>
+    <rect x="40" y="80" width="170" height="52" rx="12" fill="#512bd4"/>
+    <text x="125" y="112" text-anchor="middle" font-size="17" fill="#fff" font-weight="bold">Париж</text>
+    <rect x="40" y="158" width="170" height="52" rx="12" fill="#7c5cd6"/>
+    <text x="125" y="190" text-anchor="middle" font-size="17" fill="#fff" font-weight="bold">Лондон</text>
+    <rect x="40" y="236" width="170" height="52" rx="12" fill="#9b6dff"/>
+    <text x="125" y="268" text-anchor="middle" font-size="17" fill="#fff" font-weight="bold">Берлин</text>
+  </g>
+  <text x="125" y="316" text-anchor="middle" font-size="13" fill="#555">три кнопки</text>
+  <text x="125" y="334" text-anchor="middle" font-size="12.5" font-family="Consolas, monospace" fill="#555">Clicked="OnAnswer"</text>
+
+  <!-- arrows converging -->
+  <path d="M214 106 C300 110, 300 200, 360 200" stroke="#2e9e5b" stroke-width="2.5" fill="none" marker-end="url(#ar)"/>
+  <path d="M214 184 H360" stroke="#2e9e5b" stroke-width="2.5" fill="none" marker-end="url(#ar)"/>
+  <path d="M214 262 C300 258, 300 205, 360 205" stroke="#2e9e5b" stroke-width="2.5" fill="none" marker-end="url(#ar)"/>
+  <defs>
+    <marker id="ar" markerWidth="10" markerHeight="10" refX="7" refY="3" orient="auto">
+      <path d="M0,0 L7,3 L0,6 Z" fill="#2e9e5b"/>
+    </marker>
+  </defs>
+  <text x="288" y="150" text-anchor="middle" font-size="12.5" fill="#2e9e5b" font-weight="bold">все в один метод</text>
+
+  <!-- handler box -->
+  <rect x="366" y="92" width="500" height="230" rx="14" fill="#fff" stroke="#512bd4" stroke-width="2"/>
+  <text x="616" y="120" text-anchor="middle" font-size="16" font-weight="bold" fill="#512bd4">Один обработчик OnAnswer</text>
+  <g font-family="Consolas, 'Courier New', monospace" font-size="13.5" fill="#333">
+    <text x="386" y="152">void OnAnswer(object? <tspan fill="#b23b1e" font-weight="bold">sender</tspan>, EventArgs e)</text>
+    <rect x="386" y="168" width="462" height="40" rx="7" fill="#f3eeff" stroke="#7c5cd6"/>
+    <text x="398" y="193">if (<tspan fill="#b23b1e">sender</tspan> is Button <tspan fill="#1f7a45">btn</tspan>) ...</text>
+    <rect x="386" y="216" width="462" height="40" rx="7" fill="#eaf7ef" stroke="#2e9e5b"/>
+    <text x="398" y="241">string answer = <tspan fill="#1f7a45">btn</tspan>.Text;  // текст нажатой</text>
+    <text x="386" y="286" fill="#555" font-family="'Segoe UI', Arial">sender = КТО нажал → достаём кнопку → читаем её .Text</text>
+  </g>
+
+  <text x="450" y="360" text-anchor="middle" font-size="14" fill="#333">Не три метода, а один: <tspan font-family="Consolas, monospace" fill="#b23b1e">sender</tspan> подсказывает, какая кнопка сработала.</text>
+  <rect x="250" y="380" width="400" height="34" rx="9" fill="#fff7e6" stroke="#e0a300"/>
+  <text x="450" y="402" text-anchor="middle" font-size="13" fill="#8a6d00">💡 sender is Button btn — безопасная версия (Button)sender из ур.3</text>
+</svg>
