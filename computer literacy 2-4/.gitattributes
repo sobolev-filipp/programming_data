@@ -1,0 +1,2 @@
+# git-crypt: в этом курсе изображения.md — учительский (шифруется), как в computer literacy
+изображения.md   filter=git-crypt diff=git-crypt
