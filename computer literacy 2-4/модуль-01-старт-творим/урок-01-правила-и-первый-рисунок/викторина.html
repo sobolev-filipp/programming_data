@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Викторина — Привет, компьютер!</title>
+<style>
+  :root{
+    --bg1:#5b7cfa; --bg2:#8a5cf6; --card:#ffffff; --ink:#2b2350;
+    --yellow:#ffd23f; --blue:#43b7ff; --green:#37c871; --red:#ff7a7a;
+    --soft:#f0f0ff;
+  }
+  *{box-sizing:border-box;font-family:'Comic Sans MS','Segoe UI',system-ui,sans-serif;}
+  body{margin:0;min-height:100vh;background:linear-gradient(135deg,var(--bg1),var(--bg2));
+    display:flex;align-items:center;justify-content:center;padding:16px;color:var(--ink);}
+  .stage{width:min(760px,100%);background:var(--card);border-radius:28px;
+    box-shadow:0 18px 50px rgba(0,0,0,.25);padding:28px 26px 32px;position:relative;overflow:hidden;}
+  .bip{width:96px;height:96px;display:block;margin:0 auto 6px;}
+  h1{text-align:center;font-size:30px;margin:6px 0 2px;color:#4a2fb0;}
+  .sub{text-align:center;color:#7a76a0;font-size:17px;margin:0 0 18px;}
+  .btn{display:block;width:100%;border:none;border-radius:18px;padding:16px 18px;margin:10px 0;
+    font-size:20px;cursor:pointer;background:var(--soft);color:var(--ink);text-align:left;
+    transition:transform .08s, background .15s;border:3px solid transparent;}
+  .btn:hover{transform:translateY(-2px);background:#e7e7ff;}
+  .btn .num{display:inline-flex;width:34px;height:34px;border-radius:10px;background:var(--blue);
+    color:#fff;align-items:center;justify-content:center;font-weight:bold;margin-right:12px;vertical-align:middle;}
+  .btn.ok{background:#d9f8e5;border-color:var(--green);}
+  .btn.no{background:#ffe1e1;border-color:var(--red);}
+  .start{background:var(--yellow);color:#6b4e00;text-align:center;font-size:24px;font-weight:bold;}
+  .start:hover{background:#ffdf6a;}
+  .pic{font-size:64px;text-align:center;margin:6px 0 10px;line-height:1;}
+  .q{font-size:26px;text-align:center;font-weight:bold;margin:4px 0 16px;}
+  .bar{display:flex;gap:6px;justify-content:center;margin-bottom:14px;flex-wrap:wrap;}
+  .dot{width:16px;height:16px;border-radius:50%;background:#ddd;}
+  .dot.done{background:var(--green);}
+  .dot.now{background:var(--yellow);transform:scale(1.25);}
+  .feedback{text-align:center;font-size:22px;min-height:30px;margin-top:8px;font-weight:bold;}
+  .count{text-align:center;font-size:20px;color:#7a76a0;margin-top:4px;}
+  .stars{font-size:52px;text-align:center;letter-spacing:4px;margin:10px 0;}
+  .next{background:var(--blue);color:#fff;text-align:center;font-size:22px;font-weight:bold;max-width:260px;margin:16px auto 0;}
+  .hint{text-align:center;color:#9a96b8;font-size:14px;margin-top:14px;}
+  .hidden{display:none;}
+</style>
+</head>
+<body>
+<div class="stage">
+  <!-- Маскот Бип -->
+  <svg class="bip" viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <line x1="60" y1="16" x2="60" y2="6" stroke="#43b7ff" stroke-width="4"/>
+    <circle cx="60" cy="6" r="6" fill="#ffd23f"/>
+    <rect x="24" y="20" width="72" height="60" rx="18" fill="#ffd23f"/>
+    <rect x="34" y="32" width="52" height="30" rx="12" fill="#2b2350"/>
+    <circle cx="50" cy="47" r="7" fill="#43b7ff"/><circle cx="72" cy="47" r="7" fill="#43b7ff"/>
+    <circle cx="50" cy="47" r="3" fill="#fff"/><circle cx="72" cy="47" r="3" fill="#fff"/>
+    <path d="M50 70 q10 8 20 0" stroke="#2b2350" stroke-width="3" fill="none" stroke-linecap="round"/>
+    <rect x="36" y="84" width="48" height="26" rx="12" fill="#43b7ff"/>
+    <rect x="16" y="88" width="14" height="8" rx="4" fill="#ffd23f"/>
+    <rect x="90" y="88" width="14" height="8" rx="4" fill="#ffd23f"/>
+  </svg>
+
+  <!-- СТАРТ -->
+  <div id="intro">
+    <h1>Викторина Бипа</h1>
+    <p class="sub">«Привет, компьютер!» 🖥️ — 10 весёлых вопросов</p>
+    <button class="btn start" onclick="startQuiz()">▶ Начать!</button>
+    <p class="hint">Учитель читает вопрос вслух. Отвечаем кнопкой или клавишами 1 · 2 · 3</p>
+  </div>
+
+  <!-- ВОПРОС -->
+  <div id="quiz" class="hidden">
+    <div class="bar" id="bar"></div>
+    <div class="pic" id="pic">🖱️</div>
+    <div class="q" id="qtext"></div>
+    <div id="answers"></div>
+    <div class="feedback" id="feedback"></div>
+  </div>
+
+  <!-- ИТОГ -->
+  <div id="result" class="hidden">
+    <h1>Ура! Молодцы! 🎉</h1>
+    <div class="stars" id="stars"></div>
+    <p class="count" id="score"></p>
+    <p class="sub" id="praise"></p>
+    <button class="btn next" onclick="location.reload()">↺ Ещё разок</button>
+  </div>
+</div>
+
+<script>
+/* Вопросы: pic — эмодзи-картинка, a — варианты, c — индекс верного (до перемешивания) */
+const QUESTIONS = [
+  { pic:"🖱️", q:"Как называется помощница, которой двигают стрелочку на экране?",
+    a:["Мышка","Кастрюлька"], c:0 },
+  { pic:"➡️", q:"Стрелочка, которая бегает по экрану за мышкой, — это…",
+    a:["Курсор","Дождик"], c:0 },
+  { pic:"🍎", q:"Можно ли есть бутерброд прямо над клавиатурой?",
+    a:["Да, вкусно!","Нельзя — крошки вредят","Только по пятницам"], c:1 },
+  { pic:"⏻", q:"Сколько раз нажимаем кнопку включения, чтобы разбудить компьютер?",
+    a:["Один раз","Десять раз подряд"], c:0 },
+  { pic:"🏃", q:"Как заходим в компьютерный класс?",
+    a:["Бежим и толкаемся","Спокойно, как черепашки"], c:1 },
+  { pic:"👆", q:"Сколько щелчков нужно, чтобы ОТКРЫТЬ программу на Рабочем столе?",
+    a:["Два быстрых (двойной клик)","Ни одного"], c:0 },
+  { pic:"🪑", q:"Как правильно сидеть за компьютером?",
+    a:["Скрючившись крючком","Спинка прямая, ножки на полу"], c:1 },
+  { pic:"🙋", q:"Что-то не получается или испугало. Что делаем?",
+    a:["Молчим и плачем","Поднимаем руку и зовём учителя","Бьём по компьютеру"], c:1 },
+  { pic:"↩️", q:"В рисовалке ошибся. Какая кнопка всё вернёт назад?",
+    a:["Кнопка «Отмена»","Такой кнопки нет"], c:0 },
+  { pic:"🐧", q:"В какой программе мы рисовали свой первый рисунок?",
+    a:["Tux Paint (пингвинёнок Тукс)","В холодильнике"], c:0 },
+];
+
+let order=[], idx=0, correct=0, answered=false;
+
+function shuffle(arr){for(let i=arr.length-1;i>0;i--){const j=Math.random()*(i+1)|0;[arr[i],arr[j]]=[arr[j],arr[i]];}return arr;}
+
+function startQuiz(){
+  order = shuffle([...Array(QUESTIONS.length).keys()]);
+  idx=0; correct=0;
+  document.getElementById('intro').classList.add('hidden');
+  document.getElementById('quiz').classList.remove('hidden');
+  buildBar();
+  showQuestion();
+}
+
+function buildBar(){
+  const bar=document.getElementById('bar'); bar.innerHTML='';
+  for(let i=0;i<order.length;i++){const d=document.createElement('div');d.className='dot';d.id='dot'+i;bar.appendChild(d);}
+}
+
+function showQuestion(){
+  answered=false;
+  const qq=QUESTIONS[order[idx]];
+  document.getElementById('pic').textContent=qq.pic;
+  document.getElementById('qtext').textContent=qq.q;
+  document.getElementById('feedback').textContent='';
+  for(let i=0;i<order.length;i++){const d=document.getElementById('dot'+i);d.className='dot'+(i<idx?' done':i===idx?' now':'');}
+  // перемешиваем варианты
+  const opts=qq.a.map((t,i)=>({t,ok:i===qq.c}));
+  shuffle(opts);
+  const box=document.getElementById('answers'); box.innerHTML='';
+  opts.forEach((o,i)=>{
+    const b=document.createElement('button');
+    b.className='btn'; b.innerHTML='<span class="num">'+(i+1)+'</span>'+o.t;
+    b.onclick=()=>choose(b,o.ok);
+    box.appendChild(b);
+  });
+}
+
+function choose(btn,ok){
+  if(answered) return; answered=true;
+  const fb=document.getElementById('feedback');
+  const buttons=[...document.querySelectorAll('#answers .btn')];
+  buttons.forEach(b=>b.onclick=null);
+  if(ok){ btn.classList.add('ok'); correct++; fb.textContent='✅ Верно! Молодец! ⭐'; fb.style.color='#37c871'; }
+  else{
+    btn.classList.add('no');
+    buttons.forEach(b=>{ if(b.textContent.replace(/^\d/,'').trim()===correctText()) b.classList.add('ok'); });
+    fb.textContent='Почти! Правильный ответ подсвечен 💛'; fb.style.color='#f0a500';
+  }
+  setTimeout(nextQuestion,1400);
+}
+function correctText(){const qq=QUESTIONS[order[idx]];return qq.a[qq.c];}
+
+function nextQuestion(){
+  idx++;
+  if(idx>=order.length){ showResult(); return; }
+  showQuestion();
+}
+
+function showResult(){
+  document.getElementById('quiz').classList.add('hidden');
+  const r=document.getElementById('result'); r.classList.remove('hidden');
+  const total=order.length;
+  const starCount=Math.max(1,Math.round(correct/total*5));
+  document.getElementById('stars').textContent='⭐'.repeat(starCount)+'☆'.repeat(5-starCount);
+  document.getElementById('score').textContent='Правильных ответов: '+correct+' из '+total;
+  let praise = correct===total ? 'Идеально! Ты настоящий знаток компьютера! 🏆'
+            : correct>=total*0.6 ? 'Здорово! Ты отлично всё запомнил! 👏'
+            : 'Молодец, что старался! В следующий раз будет ещё лучше! 💪';
+  document.getElementById('praise').textContent=praise;
+}
+
+/* Клавиши 1–3 */
+document.addEventListener('keydown',e=>{
+  if(document.getElementById('quiz').classList.contains('hidden')) return;
+  const n=parseInt(e.key); if(n>=1&&n<=3){const b=document.querySelectorAll('#answers .btn')[n-1]; if(b&&!answered) b.click();}
+});
+</script>
+</body>
+</html>
