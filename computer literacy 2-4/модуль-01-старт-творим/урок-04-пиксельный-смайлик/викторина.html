@@ -3,11 +3,11 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Викторина — Весёлая открытка</title>
+<title>Викторина — Пиксельный смайлик</title>
 <style>
   :root{
-    --bg1:#ffb03f; --bg2:#eb4d8c; --card:#ffffff; --ink:#2b2350;
-    --yellow:#ffd23f; --blue:#43b7ff; --green:#37c871; --red:#ff7a7a; --soft:#fff3e6;
+    --bg1:#43b7ff; --bg2:#37c871; --card:#ffffff; --ink:#2b2350;
+    --yellow:#ffd23f; --blue:#43b7ff; --green:#37c871; --red:#ff7a7a; --soft:#e9f7ff;
   }
   *{box-sizing:border-box;font-family:'Comic Sans MS','Segoe UI',system-ui,sans-serif;}
   body{margin:0;min-height:100vh;background:linear-gradient(135deg,var(--bg1),var(--bg2));
@@ -15,12 +15,12 @@
   .stage{width:min(760px,100%);background:var(--card);border-radius:28px;
     box-shadow:0 18px 50px rgba(0,0,0,.25);padding:28px 26px 32px;position:relative;overflow:hidden;}
   .bip{width:96px;height:96px;display:block;margin:0 auto 6px;}
-  h1{text-align:center;font-size:30px;margin:6px 0 2px;color:#d1477a;}
+  h1{text-align:center;font-size:30px;margin:6px 0 2px;color:#2e9e5b;}
   .sub{text-align:center;color:#7a76a0;font-size:17px;margin:0 0 18px;}
   .btn{display:block;width:100%;border:none;border-radius:18px;padding:16px 18px;margin:10px 0;
     font-size:20px;cursor:pointer;background:var(--soft);color:var(--ink);text-align:left;
     transition:transform .08s, background .15s;border:3px solid transparent;}
-  .btn:hover{transform:translateY(-2px);background:#ffe6cf;}
+  .btn:hover{transform:translateY(-2px);background:#d5eeff;}
   .btn .num{display:inline-flex;width:34px;height:34px;border-radius:10px;background:var(--blue);
     color:#fff;align-items:center;justify-content:center;font-weight:bold;margin-right:12px;vertical-align:middle;}
   .btn.ok{background:#d9f8e5;border-color:var(--green);}
@@ -28,7 +28,7 @@
   .start{background:var(--yellow);color:#6b4e00;text-align:center;font-size:24px;font-weight:bold;}
   .start:hover{background:#ffdf6a;}
   .pic{font-size:64px;text-align:center;margin:6px 0 10px;line-height:1;}
-  .q{font-size:24px;text-align:center;font-weight:bold;margin:4px 0 16px;}
+  .q{font-size:25px;text-align:center;font-weight:bold;margin:4px 0 16px;}
   .bar{display:flex;gap:6px;justify-content:center;margin-bottom:14px;flex-wrap:wrap;}
   .dot{width:16px;height:16px;border-radius:50%;background:#eee;}
   .dot.done{background:var(--green);}
@@ -58,14 +58,14 @@
 
   <div id="intro">
     <h1>Викторина Бипа</h1>
-    <p class="sub">«Весёлая открытка» 💌 — 10 вопросов</p>
+    <p class="sub">«Пиксельный смайлик» 🟦 — 10 вопросов</p>
     <button class="btn start" onclick="startQuiz()">▶ Начать!</button>
     <p class="hint">Учитель читает вопрос вслух. Отвечаем кнопкой или клавишами 1 · 2 · 3</p>
   </div>
 
   <div id="quiz" class="hidden">
     <div class="bar" id="bar"></div>
-    <div class="pic" id="pic">💌</div>
+    <div class="pic" id="pic">🟦</div>
     <div class="q" id="qtext"></div>
     <div id="answers"></div>
     <div class="feedback" id="feedback"></div>
@@ -82,26 +82,26 @@
 
 <script>
 const QUESTIONS = [
-  { pic:"🐧", q:"В какой программе мы делали открытку?",
-    a:["Tux Paint","Калькулятор"], c:0 },
-  { pic:"➖", q:"Нажали кнопку «свернуть» (чёрточку). Что с окном?",
-    a:["Спряталось вниз, оно живо","Пропало навсегда","Сломалось"], c:0 },
-  { pic:"❌", q:"Красный крестик на окне — это кнопка…",
-    a:["Закрыть совсем","Открыть новое"], c:0 },
-  { pic:"🪣", q:"Чтобы быстро закрасить фон открытки, берём…",
+  { pic:"🟦", q:"Из чего состоит любая картинка на экране?",
+    a:["Из пикселей-квадратиков","Из воды"], c:0 },
+  { pic:"🔍", q:"Как увидеть пиксели в картинке?",
+    a:["Сильно приблизить (зум)","Закрыть глаза"], c:0 },
+  { pic:"🟦", q:"Пиксель — это…",
+    a:["Крошечный квадратик одного цвета","Большая коробка"], c:0 },
+  { pic:"✏️", q:"В какой программе мы рисовали смайлик по клеточкам?",
+    a:["Piskel","Калькулятор"], c:0 },
+  { pic:"✏️", q:"Инструмент, который красит одну клеточку, — это…",
+    a:["Карандаш","Ножницы"], c:0 },
+  { pic:"🪣", q:"Чтобы закрасить сразу большую область, берём…",
     a:["Заливку (ведёрко)","Ластик"], c:0 },
-  { pic:"🎟️", q:"Готовые картинки (цветы, сердечки) в Tux Paint — это…",
-    a:["Штампы","Буквы"], c:0 },
-  { pic:"🅰️", q:"Чтобы написать поздравление, выбираем инструмент…",
-    a:["Текст (буква A)","Заливка"], c:0 },
-  { pic:"💾", q:"Чтобы открытка не потерялась, надо её…",
-    a:["Сохранить","Стереть"], c:0 },
-  { pic:"⚡", q:"Что будет с НЕсохранённой работой, если выключить компьютер?",
-    a:["Пропадёт","Останется навсегда"], c:0 },
-  { pic:"↩️", q:"Поставил штамп не туда. Что удобно нажать?",
+  { pic:"↩️", q:"Ошибся пикселем. Что удобно нажать?",
     a:["Отмену","Громкую музыку"], c:0 },
-  { pic:"❤️", q:"Кому можно подарить открытку?",
-    a:["Маме, другу, бабушке","Никому нельзя"], c:0 },
+  { pic:"💾", q:"Чтобы сохранить смайлик как файл, нажимаем…",
+    a:["Export (Экспорт) → PNG","Выключить компьютер"], c:0 },
+  { pic:"🖼️", q:"Одёжка нашего смайлика после сохранения — это…",
+    a:[".png (картинка)",".mp3 (музыка)"], c:0 },
+  { pic:"🕹️", q:"Крупные квадратные пиксели, как в старых играх, — это стиль…",
+    a:["Пиксель-арт","Оригами"], c:0 },
 ];
 
 let order=[], idx=0, correct=0, answered=false;
@@ -157,7 +157,7 @@ function showResult(){
   const starCount=Math.max(1,Math.round(correct/total*5));
   document.getElementById('stars').textContent='⭐'.repeat(starCount)+'☆'.repeat(5-starCount);
   document.getElementById('score').textContent='Правильных ответов: '+correct+' из '+total;
-  let praise = correct===total ? 'Идеально! Ты мастер открыток! 🏆'
+  let praise = correct===total ? 'Идеально! Ты настоящий пиксельный художник! 🏆'
             : correct>=total*0.6 ? 'Здорово! Ты отлично всё запомнил! 👏'
             : 'Молодец, что старался! В следующий раз будет ещё лучше! 💪';
   document.getElementById('praise').textContent=praise;

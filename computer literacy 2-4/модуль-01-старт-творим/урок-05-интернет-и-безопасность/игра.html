@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Игра — Можно или Нельзя?</title>
+<style>
+  :root{--bg1:#ff9d3f;--bg2:#eb4d8c;--ink:#2b2350;--yellow:#ffd23f;--green:#37c871;--red:#ff6b6b;}
+  *{box-sizing:border-box;margin:0;font-family:'Comic Sans MS','Segoe UI',system-ui,sans-serif;user-select:none;}
+  body{min-height:100vh;background:linear-gradient(135deg,var(--bg1),var(--bg2));display:flex;
+    align-items:center;justify-content:center;padding:16px;color:var(--ink);}
+  .stage{width:min(720px,100%);background:#fff;border-radius:28px;box-shadow:0 18px 50px rgba(0,0,0,.25);
+    padding:24px 22px 30px;text-align:center;}
+  .bip{width:82px;height:auto;margin-bottom:2px;}
+  h1{font-size:28px;color:#d1477a;margin:2px 0;}
+  .sub{color:#7a76a0;font-size:16px;margin-bottom:12px;}
+  .bar{display:flex;gap:6px;justify-content:center;margin-bottom:12px;flex-wrap:wrap;}
+  .dot{width:15px;height:15px;border-radius:50%;background:#eee;}
+  .dot.done{background:var(--green);}.dot.now{background:var(--yellow);transform:scale(1.25);}
+  .pic{font-size:70px;margin:4px 0;line-height:1;}
+  .q{font-size:25px;font-weight:bold;margin:4px auto 18px;max-width:20ch;color:var(--ink);min-height:64px;
+    display:flex;align-items:center;justify-content:center;}
+  .btns{display:flex;gap:16px;justify-content:center;flex-wrap:wrap;}
+  .big{flex:1;min-width:180px;max-width:250px;border:none;border-radius:20px;padding:22px 10px;font-size:26px;
+    font-weight:bold;cursor:pointer;color:#fff;transition:transform .08s;}
+  .big:hover{transform:translateY(-3px);}
+  .yes{background:var(--green);} .no{background:var(--red);}
+  .fb{font-size:20px;font-weight:bold;min-height:56px;margin-top:16px;padding:0 6px;}
+  .start,.next{border:none;border-radius:18px;background:var(--yellow);color:#6b4e00;font-size:23px;
+    font-weight:bold;padding:14px 30px;margin-top:12px;cursor:pointer;}
+  .start:hover,.next:hover{background:#ffdf6a;}
+  .med{font-size:56px;margin:6px 0;}
+  .hidden{display:none !important;}
+  .tip{color:#9a96b8;font-size:13px;margin-top:12px;}
+</style>
+</head>
+<body>
+<div class="stage">
+  <svg class="bip" viewBox="0 0 120 130" xmlns="http://www.w3.org/2000/svg">
+    <line x1="60" y1="18" x2="60" y2="8" stroke="#43b7ff" stroke-width="5"/><circle cx="60" cy="7" r="7" fill="#ffd23f"/>
+    <rect x="22" y="22" width="76" height="62" rx="20" fill="#ffd23f"/><rect x="33" y="34" width="54" height="32" rx="13" fill="#2b2350"/>
+    <circle cx="50" cy="50" r="8" fill="#43b7ff"/><circle cx="72" cy="50" r="8" fill="#43b7ff"/>
+    <circle cx="50" cy="50" r="3.5" fill="#fff"/><circle cx="72" cy="50" r="3.5" fill="#fff"/>
+    <path d="M49 73 q11 9 22 0" stroke="#2b2350" stroke-width="4" fill="none" stroke-linecap="round"/>
+    <rect x="34" y="88" width="52" height="30" rx="14" fill="#43b7ff"/>
+  </svg>
+
+  <div id="intro">
+    <h1>Можно или Нельзя? 🛡️</h1>
+    <p class="sub">Реши, что безопасно делать в интернете!</p>
+    <button class="start" onclick="startGame()">▶ Играть!</button>
+    <p class="tip">Учитель читает ситуацию. Дети отвечают: ✅ Можно или 🚫 Нельзя.</p>
+  </div>
+
+  <div id="game" class="hidden">
+    <div class="bar" id="bar"></div>
+    <div class="pic" id="pic">🛡️</div>
+    <div class="q" id="q"></div>
+    <div class="btns">
+      <button class="big yes" onclick="answer(true)">✅ Можно</button>
+      <button class="big no" onclick="answer(false)">🚫 Нельзя</button>
+    </div>
+    <div class="fb" id="fb"></div>
+  </div>
+
+  <div id="result" class="hidden">
+    <div class="med" id="med">🛡️</div>
+    <h1 id="resTitle">Молодец!</h1>
+    <p class="sub" id="resText"></p>
+    <button class="next" onclick="location.reload()">↺ Ещё разок</button>
+  </div>
+</div>
+
+<script>
+// ok:true = «Можно», ok:false = «Нельзя»
+const CASES = [
+  {em:"🏠", t:"Рассказать незнакомцу в игре свой домашний адрес", ok:false, why:"Адрес — секрет! Незнакомцам не говорим."},
+  {em:"🎮", t:"Спросить у мамы разрешение скачать игру", ok:true,  why:"Правильно — спрашиваем взрослых!"},
+  {em:"👋", t:"Вежливо написать другу «привет» в чате", ok:true,  why:"Доброта нужна и в интернете."},
+  {em:"🎁", t:"Нажать на окно «Ты выиграл миллион!»", ok:false, why:"Это обман. Не нажимаем, зовём взрослого."},
+  {em:"🔑", t:"Сказать кому-то свой секретный пароль", ok:false, why:"Пароль — как ключ от дома. Никому!"},
+  {em:"📸", t:"Выложить в сеть фото своих документов", ok:false, why:"Документы — личное, не выкладываем."},
+  {em:"🤝", t:"Пойти одному на встречу с незнакомцем из сети", ok:false, why:"Никогда! Обязательно расскажи взрослому."},
+  {em:"🙋", t:"Позвать взрослого, если что-то напугало", ok:true,  why:"Молодец! Это смело и правильно."},
+  {em:"😡", t:"Обзывать других в комментариях", ok:false, why:"Обижать нельзя — ни в жизни, ни в сети."},
+  {em:"🔎", t:"Искать картинку котика вместе с учителем", ok:true,  why:"Можно! Ищем на добрые темы вместе."},
+];
+
+let order=[], idx=0, correct=0, answered=false;
+function shuffle(a){for(let i=a.length-1;i>0;i--){const j=Math.random()*(i+1)|0;[a[i],a[j]]=[a[j],a[i]];}return a;}
+
+function startGame(){
+  order=shuffle([...Array(CASES.length).keys()]);
+  idx=0; correct=0;
+  document.getElementById('intro').classList.add('hidden');
+  document.getElementById('result').classList.add('hidden');
+  document.getElementById('game').classList.remove('hidden');
+  const bar=document.getElementById('bar'); bar.innerHTML='';
+  order.forEach((_,i)=>{const d=document.createElement('div');d.className='dot';d.id='d'+i;bar.appendChild(d);});
+  show();
+}
+function show(){
+  answered=false;
+  const c=CASES[order[idx]];
+  document.getElementById('pic').textContent=c.em;
+  document.getElementById('q').textContent=c.t;
+  document.getElementById('fb').textContent='';
+  order.forEach((_,i)=>{document.getElementById('d'+i).className='dot'+(i<idx?' done':i===idx?' now':'');});
+}
+function answer(choice){
+  if(answered) return; answered=true;
+  const c=CASES[order[idx]];
+  const fb=document.getElementById('fb');
+  if(choice===c.ok){ correct++; fb.textContent='✅ Верно! '+c.why; fb.style.color='#2e9e5b'; }
+  else{ fb.textContent=(c.ok?'✅ Тут можно. ':'🚫 Тут нельзя. ')+c.why; fb.style.color='#e0555f'; }
+  setTimeout(next,2000);
+}
+function next(){ idx++; if(idx>=order.length){ result(); return; } show(); }
+function result(){
+  document.getElementById('game').classList.add('hidden');
+  document.getElementById('result').classList.remove('hidden');
+  const total=order.length;
+  document.getElementById('med').textContent = correct>=total?'🏆':correct>=total*0.7?'🥇':'🛡️';
+  document.getElementById('resTitle').textContent = correct>=total*0.7?'Ты знаешь правила! 🎉':'Молодец, что старался!';
+  document.getElementById('resText').textContent='Верных ответов: '+correct+' из '+total+'. Помни: что-то не так — зови взрослого! ⭐';
+}
+document.addEventListener('keydown',e=>{
+  if(document.getElementById('game').classList.contains('hidden')) return;
+  if(e.key==='1') answer(true);
+  if(e.key==='2') answer(false);
+});
+</script>
+</body>
+</html>

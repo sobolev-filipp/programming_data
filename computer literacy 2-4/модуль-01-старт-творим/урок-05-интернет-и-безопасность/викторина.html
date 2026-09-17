@@ -3,11 +3,11 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Викторина — Весёлая открытка</title>
+<title>Викторина — Интернет и безопасность</title>
 <style>
   :root{
-    --bg1:#ffb03f; --bg2:#eb4d8c; --card:#ffffff; --ink:#2b2350;
-    --yellow:#ffd23f; --blue:#43b7ff; --green:#37c871; --red:#ff7a7a; --soft:#fff3e6;
+    --bg1:#eb4d8c; --bg2:#8a5cf6; --card:#ffffff; --ink:#2b2350;
+    --yellow:#ffd23f; --blue:#43b7ff; --green:#37c871; --red:#ff7a7a; --soft:#fdeaf3;
   }
   *{box-sizing:border-box;font-family:'Comic Sans MS','Segoe UI',system-ui,sans-serif;}
   body{margin:0;min-height:100vh;background:linear-gradient(135deg,var(--bg1),var(--bg2));
@@ -15,12 +15,12 @@
   .stage{width:min(760px,100%);background:var(--card);border-radius:28px;
     box-shadow:0 18px 50px rgba(0,0,0,.25);padding:28px 26px 32px;position:relative;overflow:hidden;}
   .bip{width:96px;height:96px;display:block;margin:0 auto 6px;}
-  h1{text-align:center;font-size:30px;margin:6px 0 2px;color:#d1477a;}
+  h1{text-align:center;font-size:30px;margin:6px 0 2px;color:#c23a76;}
   .sub{text-align:center;color:#7a76a0;font-size:17px;margin:0 0 18px;}
   .btn{display:block;width:100%;border:none;border-radius:18px;padding:16px 18px;margin:10px 0;
     font-size:20px;cursor:pointer;background:var(--soft);color:var(--ink);text-align:left;
     transition:transform .08s, background .15s;border:3px solid transparent;}
-  .btn:hover{transform:translateY(-2px);background:#ffe6cf;}
+  .btn:hover{transform:translateY(-2px);background:#fbdcea;}
   .btn .num{display:inline-flex;width:34px;height:34px;border-radius:10px;background:var(--blue);
     color:#fff;align-items:center;justify-content:center;font-weight:bold;margin-right:12px;vertical-align:middle;}
   .btn.ok{background:#d9f8e5;border-color:var(--green);}
@@ -58,14 +58,14 @@
 
   <div id="intro">
     <h1>Викторина Бипа</h1>
-    <p class="sub">«Весёлая открытка» 💌 — 10 вопросов</p>
+    <p class="sub">«Интернет и безопасность» 🛡️ — 10 вопросов</p>
     <button class="btn start" onclick="startQuiz()">▶ Начать!</button>
     <p class="hint">Учитель читает вопрос вслух. Отвечаем кнопкой или клавишами 1 · 2 · 3</p>
   </div>
 
   <div id="quiz" class="hidden">
     <div class="bar" id="bar"></div>
-    <div class="pic" id="pic">💌</div>
+    <div class="pic" id="pic">🌍</div>
     <div class="q" id="qtext"></div>
     <div id="answers"></div>
     <div class="feedback" id="feedback"></div>
@@ -82,26 +82,26 @@
 
 <script>
 const QUESTIONS = [
-  { pic:"🐧", q:"В какой программе мы делали открытку?",
-    a:["Tux Paint","Калькулятор"], c:0 },
-  { pic:"➖", q:"Нажали кнопку «свернуть» (чёрточку). Что с окном?",
-    a:["Спряталось вниз, оно живо","Пропало навсегда","Сломалось"], c:0 },
-  { pic:"❌", q:"Красный крестик на окне — это кнопка…",
-    a:["Закрыть совсем","Открыть новое"], c:0 },
-  { pic:"🪣", q:"Чтобы быстро закрасить фон открытки, берём…",
-    a:["Заливку (ведёрко)","Ластик"], c:0 },
-  { pic:"🎟️", q:"Готовые картинки (цветы, сердечки) в Tux Paint — это…",
-    a:["Штампы","Буквы"], c:0 },
-  { pic:"🅰️", q:"Чтобы написать поздравление, выбираем инструмент…",
-    a:["Текст (буква A)","Заливка"], c:0 },
-  { pic:"💾", q:"Чтобы открытка не потерялась, надо её…",
-    a:["Сохранить","Стереть"], c:0 },
-  { pic:"⚡", q:"Что будет с НЕсохранённой работой, если выключить компьютер?",
-    a:["Пропадёт","Останется навсегда"], c:0 },
-  { pic:"↩️", q:"Поставил штамп не туда. Что удобно нажать?",
-    a:["Отмену","Громкую музыку"], c:0 },
-  { pic:"❤️", q:"Кому можно подарить открытку?",
-    a:["Маме, другу, бабушке","Никому нельзя"], c:0 },
+  { pic:"🌍", q:"Огромный «город» из соединённых компьютеров всего мира — это…",
+    a:["Интернет","Огород"], c:0 },
+  { pic:"🧭", q:"Окошко-дверь, через которое заходим в интернет, — это…",
+    a:["Браузер","Холодильник"], c:0 },
+  { pic:"🔎", q:"Как найти картинку в интернете?",
+    a:["Написать словами в поиске","Крикнуть в окно"], c:0 },
+  { pic:"🏠", q:"Незнакомец в игре просит твой домашний адрес. Что делать?",
+    a:["Не говорить — это секрет","Сказать сразу"], c:0 },
+  { pic:"🎁", q:"Выскочило окно «ты выиграл приз, нажми!». Что делать?",
+    a:["Не нажимать, позвать взрослого","Скорее нажать"], c:0 },
+  { pic:"🔑", q:"Можно ли говорить кому-то свой пароль?",
+    a:["Нет, пароль — секрет","Да, можно всем"], c:0 },
+  { pic:"🙋", q:"Что-то в интернете напугало. Что делать?",
+    a:["Позвать взрослого","Молчать и бояться"], c:0 },
+  { pic:"💛", q:"Как вести себя с другими в интернете?",
+    a:["Вежливо и по-доброму","Обзываться"], c:0 },
+  { pic:"🤝", q:"Незнакомец из интернета зовёт встретиться одному. Это…",
+    a:["Опасно — зову взрослого","Здорово, иду один"], c:0 },
+  { pic:"🔎", q:"Чтобы найти именно рыжего кота, слова в поиске нужно…",
+    a:["Сделать точнее","Прокричать громче"], c:0 },
 ];
 
 let order=[], idx=0, correct=0, answered=false;
@@ -157,9 +157,9 @@ function showResult(){
   const starCount=Math.max(1,Math.round(correct/total*5));
   document.getElementById('stars').textContent='⭐'.repeat(starCount)+'☆'.repeat(5-starCount);
   document.getElementById('score').textContent='Правильных ответов: '+correct+' из '+total;
-  let praise = correct===total ? 'Идеально! Ты мастер открыток! 🏆'
+  let praise = correct===total ? 'Идеально! Ты знаешь все правила безопасности! 🏆'
             : correct>=total*0.6 ? 'Здорово! Ты отлично всё запомнил! 👏'
-            : 'Молодец, что старался! В следующий раз будет ещё лучше! 💪';
+            : 'Молодец, что старался! Помни: что-то не так — зови взрослого! 💪';
   document.getElementById('praise').textContent=praise;
 }
 document.addEventListener('keydown',e=>{

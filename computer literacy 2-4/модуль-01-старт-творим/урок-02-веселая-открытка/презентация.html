@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Урок 2 — Компьютер — наш друг</title>
+<title>Урок 2 — Весёлая открытка</title>
 <style>
   :root{--ink:#2b2350;--yellow:#ffd23f;--blue:#43b7ff;--green:#37c871;--pink:#ff7ab6;--purple:#8a5cf6;}
   *{box-sizing:border-box;margin:0;padding:0;font-family:'Comic Sans MS','Segoe UI',system-ui,sans-serif;}
@@ -19,8 +19,8 @@
   p{font-size:clamp(20px,3.6vh,34px);color:#fff;max-width:22ch;margin-top:10px;line-height:1.35;}
   .card{background:#fff;border-radius:30px;padding:4vh 5vw;max-width:900px;box-shadow:0 16px 40px rgba(0,0,0,.3);}
   .card h2,.card p,.card h1{color:var(--ink);text-shadow:none;}
-  .row{display:flex;gap:22px;flex-wrap:wrap;justify-content:center;margin-top:12px;}
-  .chip{background:#ffffff;border-radius:22px;padding:14px 18px;font-size:clamp(18px,3vh,28px);color:var(--ink);
+  .row{display:flex;gap:20px;flex-wrap:wrap;justify-content:center;margin-top:12px;}
+  .chip{background:#ffffff;border-radius:22px;padding:14px 18px;font-size:clamp(17px,2.8vh,26px);color:var(--ink);
     box-shadow:0 8px 18px rgba(0,0,0,.18);min-width:130px;}
   .chip .e{font-size:clamp(34px,7vh,58px);display:block;}
   .nav{position:fixed;bottom:14px;right:18px;display:flex;gap:10px;align-items:center;z-index:10;}
@@ -34,7 +34,7 @@
 </head>
 <body>
 
-<div class="tag">🖥 Урок 2 · Модуль 1</div>
+<div class="tag">💌 Урок 2 · Модуль 1</div>
 <div class="hintkey">← → или пробел листают слайды</div>
 <div id="deck"></div>
 <div class="counter" id="counter"></div>
@@ -56,42 +56,25 @@ const BIP = `<svg viewBox="0 0 120 130" width="130" height="140" xmlns="http://w
 </svg>`;
 
 const SLIDES = [
-  {bg:['#43b7ff','#37c871'], html:`${BIP}<h1>Компьютер — наш друг</h1><p>Узнаем, из чего он и как им управлять 🤖</p>`},
-  {bg:['#5b7cfa','#43b7ff'], html:`<div class="art">🧐</div><h2>Сегодня узнаем:</h2><p>из каких частей компьютер · кто «живёт» внутри · как управлять окнами</p>`},
-  {bg:['#8a5cf6','#43b7ff'], html:`<h2 style="color:#fff">Компьютер снаружи</h2>
-     <div class="row">
-       <div class="chip"><span class="e">🖥️</span>Монитор</div>
-       <div class="chip"><span class="e">🖱️</span>Мышка</div>
-       <div class="chip"><span class="e">⌨️</span>Клавиатура</div>
-       <div class="chip"><span class="e">📦</span>Системный<br>блок</div>
-     </div>`},
-  {bg:['#43b7ff','#5b7cfa'], html:`<div class="art">🖥️</div><div class="card"><h2>Монитор</h2><p>Экран — как телевизор компьютера. Тут мы <b>всё видим</b>.</p></div>`},
-  {bg:['#37c871','#43b7ff'], html:`<div class="art">🖱️</div><div class="card"><h2>Мышка</h2><p>Двигаем — бежит <b>стрелочка</b>. Щёлкаем — <b>выбираем</b>.</p></div>`},
-  {bg:['#ffb03f','#ff7ab6'], html:`<div class="art">⌨️</div><div class="card"><h2>Клавиатура</h2><p>Доска с кнопками-буквами — тут мы <b>печатаем</b>.</p></div>`},
-  {bg:['#8a5cf6','#5b7cfa'], html:`<div class="art">📦</div><div class="card"><h2>Системный блок</h2><p>«Голова» компьютера — тут он <b>думает</b>. У ноутбука она спрятана внутри.</p></div>`},
-  {bg:['#37c871','#8a5cf6'], html:`<div class="art">🤖💪</div><h1>Физминутка «Собираем робота»</h1><p>Топнули — ножки, руки в стороны — руки, покрутили головой — включили!</p>`},
-  {bg:['#5b7cfa','#43b7ff'], html:`<div class="art">🔎🤖</div><h1>Что внутри?</h1><p>Целая <b>команда работников</b>! Смотрим мультик Бипа 🎬</p>`},
-  {bg:['#ff7ab6','#8a5cf6'], html:`<div class="art">🧠</div><div class="card"><h2>Директор-умник</h2><p>Думает, считает и всеми командует. Самый умный в команде!</p></div>`},
-  {bg:['#43b7ff','#37c871'], html:`<div class="art">🖐️</div><div class="card"><h2>Рабочий столик</h2><p>Держит под рукой то, что делаем <b>сейчас</b>. Выключил — столик убрали.</p></div>`},
-  {bg:['#ffb03f','#43b7ff'], html:`<div class="art">📦</div><div class="card"><h2>Кладовщик</h2><p>Хранит всё <b>навсегда</b>: рисунки, игры, фото. Большой склад-шкаф.</p></div>`},
-  {bg:['#8a5cf6','#ff7ab6'], html:`<div class="art">🎨</div><div class="card"><h2>Художник</h2><p>Рисует всё, что ты видишь на экране: мультики, игры, красоту.</p></div>`},
-  {bg:['#37c871','#ffb03f'], html:`<div class="art">🧠🖐️📦🎨</div><h1>Кто за это отвечает?</h1><p>Играем: думает · держит под рукой · хранит · рисует</p>`},
-  {bg:['#43b7ff','#8a5cf6'], html:`<h2 style="color:#fff">Рабочий стол</h2>
-     <div class="row">
-       <div class="chip"><span class="e">🔲</span>Значки</div>
-       <div class="chip"><span class="e">▶️</span>«Пуск»</div>
-       <div class="chip"><span class="e">▬</span>Панель<br>задач</div>
-     </div>`},
-  {bg:['#5b7cfa','#ffb03f'], html:`<h2 style="color:#fff">Три кнопки окна</h2>
+  {bg:['#ffb03f','#eb4d8c'], html:`${BIP}<h1>Весёлая открытка</h1><p>Делаем подарок своими руками 💌</p>`},
+  {bg:['#eb4d8c','#8a5cf6'], html:`<div class="art">💌🅰️💾</div><h2>Сегодня:</h2><p>сделаем открытку · научимся окнам · напишем текст · сохраним</p>`},
+  {bg:['#43b7ff','#37c871'], html:`<div class="art">🎁❤️</div><div class="card"><h2>Кому подарим?</h2><p>Маме, другу, бабушке — на праздник или просто так, чтобы порадовать!</p></div>`},
+  {bg:['#5b7cfa','#43b7ff'], html:`<h2 style="color:#fff">Три кнопки окна</h2>
      <div class="row">
        <div class="chip"><span class="e">➖</span>Свернуть</div>
        <div class="chip"><span class="e">🔲</span>Развернуть</div>
        <div class="chip"><span class="e">❌</span>Закрыть</div>
      </div>`},
-  {bg:['#37c871','#43b7ff'], html:`<div class="art">➖</div><div class="card"><h2>Свернуть — не потерять!</h2><p>Окно спряталось вниз и <b>ждёт</b>. Клик по нему — вернулось!</p></div>`},
-  {bg:['#ff7ab6','#8a5cf6'], html:`<div class="art">❌</div><div class="card"><h2>Красный крестик</h2><p>Это «закрыть совсем». <b>Свернуть ≠ закрыть!</b></p></div>`},
-  {bg:['#ffb03f','#37c871'], html:`<div class="art">🔀</div><div class="card"><h2>Два окна</h2><p>Панель задач — как <b>пульт</b>: щёлкаешь и переключаешь программы.</p></div>`},
-  {bg:['#37c871','#8a5cf6'], html:`${BIP}<h1>Вы — молодцы! 🎉</h1><p>Компьютер теперь понятный друг. Викторина и звёзды ⭐</p>`},
+  {bg:['#37c871','#43b7ff'], html:`<div class="art">➖≠❌</div><div class="card"><h2>Свернул — не закрыл!</h2><p>➖ окно спряталось вниз и ждёт. ❌ красный крестик — закрыл совсем.</p></div>`},
+  {bg:['#8a5cf6','#ff7ab6'], html:`<div class="art">🎁🤗</div><h1>Физминутка</h1><p>«Дарим открытку»: протянули руки — «дарю!», обняли себя, помахали!</p>`},
+  {bg:['#ffd23f','#ffb03f'], html:`<div class="art">🪣</div><div class="card"><h2>Шаг 1 — Фон</h2><p>Заливкой выбери цвет и закрась фон открытки.</p></div>`},
+  {bg:['#ff7ab6','#8a5cf6'], html:`<div class="art">🌸❤️⭐🎈</div><div class="card"><h2>Шаг 2 — Штампы</h2><p>Укрась открытку: цветы, сердечки, звёзды, шарики.</p></div>`},
+  {bg:['#43b7ff','#37c871'], html:`<div class="art">🅰️</div><div class="card"><h2>Шаг 3 — Текст</h2><p>Инструмент «Текст» → щёлкни → напечатай «Поздравляю!» или имя.</p></div>`},
+  {bg:['#37c871','#ffb03f'], html:`<div class="art">🪣✨</div><div class="card"><h2>Секрет</h2><p>Заливка красит весь фон одним щелчком — быстро и ровно!</p></div>`},
+  {bg:['#8a5cf6','#43b7ff'], html:`<div class="art">💾</div><div class="card"><h2>Сохраняем!</h2><p>Нажми «Сохранить» (дискета) — открытка стала <b>файлом</b>. Не потеряется!</p></div>`},
+  {bg:['#eb4d8c','#ffb03f'], html:`<div class="art">⚡💾</div><div class="card"><h2>Сохраняйся почаще</h2><p>Несохранённая работа живёт только на экране. Выключил — пропала! Сохраняй важное.</p></div>`},
+  {bg:['#ffb03f','#eb4d8c'], html:`<div class="art">⌨️🔤</div><h1>Поймай букву!</h1><p>Тренируем пальчики: на экране буква — нажми её на клавиатуре.</p>`},
+  {bg:['#37c871','#8a5cf6'], html:`${BIP}<h1>Ты — мастер открыток! 🎉</h1><p>Молодец! Звёздочки твои ⭐</p>`},
 ];
 
 const deck=document.getElementById('deck');

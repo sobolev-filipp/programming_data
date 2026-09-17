@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Игра — Пиксельный художник</title>
+<style>
+  :root{--bg1:#43b7ff;--bg2:#37c871;--ink:#2b2350;--yellow:#ffd23f;--dark:#2b2350;}
+  *{box-sizing:border-box;margin:0;font-family:'Comic Sans MS','Segoe UI',system-ui,sans-serif;user-select:none;}
+  body{min-height:100vh;background:linear-gradient(135deg,var(--bg1),var(--bg2));display:flex;
+    align-items:center;justify-content:center;padding:14px;color:var(--ink);}
+  .stage{width:min(700px,100%);background:#fff;border-radius:26px;box-shadow:0 18px 50px rgba(0,0,0,.25);
+    padding:22px 20px 26px;text-align:center;}
+  .bip{width:74px;height:auto;margin-bottom:2px;}
+  h1{font-size:27px;color:#2e9e5b;margin:2px 0;}
+  .sub{color:#7a76a0;font-size:16px;margin-bottom:10px;}
+  .top{display:flex;gap:18px;justify-content:center;align-items:flex-start;flex-wrap:wrap;}
+  .block{display:flex;flex-direction:column;align-items:center;gap:6px;}
+  .lbl{font-size:15px;color:#7a76a0;font-weight:bold;}
+  .grid{display:grid;grid-template-columns:repeat(10,1fr);border:3px solid #2b2350;border-radius:8px;overflow:hidden;
+    touch-action:none;}
+  .big .cell{width:30px;height:30px;border:1px solid #eee;cursor:pointer;}
+  .mini{grid-template-columns:repeat(10,1fr);}
+  .mini .cell{width:15px;height:15px;}
+  .palette{display:flex;gap:12px;justify-content:center;margin:14px 0 6px;}
+  .pen{width:56px;height:56px;border-radius:14px;border:4px solid #ddd;cursor:pointer;display:flex;
+    align-items:center;justify-content:center;font-size:13px;color:#2b2350;font-weight:bold;}
+  .pen.sel{border-color:#2b2350;transform:scale(1.08);}
+  .prog{height:20px;background:#eee;border-radius:10px;overflow:hidden;margin:12px auto 4px;max-width:360px;}
+  .prog > div{height:100%;width:0;background:linear-gradient(90deg,#43b7ff,#37c871);transition:width .2s;}
+  .pct{font-size:18px;font-weight:bold;color:#2b2350;}
+  .start,.next{border:none;border-radius:18px;background:var(--yellow);color:#6b4e00;font-size:23px;
+    font-weight:bold;padding:14px 28px;margin-top:12px;cursor:pointer;}
+  .start:hover,.next:hover{background:#ffdf6a;}
+  .big2{font-size:56px;margin:6px 0;}
+  .hidden{display:none !important;}
+  .tip{color:#9a96b8;font-size:13px;margin-top:10px;}
+</style>
+</head>
+<body>
+<div class="stage">
+  <svg class="bip" viewBox="0 0 120 130" xmlns="http://www.w3.org/2000/svg">
+    <line x1="60" y1="18" x2="60" y2="8" stroke="#43b7ff" stroke-width="5"/><circle cx="60" cy="7" r="7" fill="#ffd23f"/>
+    <rect x="22" y="22" width="76" height="62" rx="20" fill="#ffd23f"/><rect x="33" y="34" width="54" height="32" rx="13" fill="#2b2350"/>
+    <circle cx="50" cy="50" r="8" fill="#43b7ff"/><circle cx="72" cy="50" r="8" fill="#43b7ff"/>
+    <circle cx="50" cy="50" r="3.5" fill="#fff"/><circle cx="72" cy="50" r="3.5" fill="#fff"/>
+    <path d="M49 73 q11 9 22 0" stroke="#2b2350" stroke-width="4" fill="none" stroke-linecap="round"/>
+    <rect x="34" y="88" width="52" height="30" rx="14" fill="#43b7ff"/>
+  </svg>
+
+  <div id="intro">
+    <h1>Пиксельный художник! 🟦</h1>
+    <p class="sub">Раскрась смайлик по клеточкам — как на образце!</p>
+    <button class="start" onclick="startGame()">▶ Играть!</button>
+    <p class="tip">Выбери цвет и крась клеточки. Можно вести мышкой с зажатой кнопкой.</p>
+  </div>
+
+  <div id="game" class="hidden">
+    <div class="top">
+      <div class="block"><div class="lbl">Образец 🎯</div><div class="grid mini" id="target"></div></div>
+      <div class="block"><div class="lbl">Твой холст ✏️</div><div class="grid big" id="canvas"></div></div>
+    </div>
+    <div class="palette" id="palette"></div>
+    <div class="prog"><div id="bar"></div></div>
+    <div class="pct" id="pct">Раскрашено верно: 0%</div>
+  </div>
+
+  <div id="result" class="hidden">
+    <div class="big2">🏆</div>
+    <h1>Смайлик готов! 🎉</h1>
+    <p class="sub">Ты раскрасил его по клеточкам — как настоящий пиксельный художник! ⭐</p>
+    <button class="next" onclick="location.reload()">↺ Ещё разок</button>
+  </div>
+</div>
+
+<script>
+// 0 = белый (пусто), 1 = жёлтый, 2 = тёмный
+const TARGET = [
+  [0,0,1,1,1,1,1,1,0,0],
+  [0,1,1,1,1,1,1,1,1,0],
+  [1,1,1,1,1,1,1,1,1,1],
+  [1,1,2,1,1,1,1,2,1,1],
+  [1,1,2,1,1,1,1,2,1,1],
+  [1,1,1,1,1,1,1,1,1,1],
+  [1,2,1,1,1,1,1,1,2,1],
+  [1,1,2,2,2,2,2,2,1,1],
+  [0,1,1,1,1,1,1,1,1,0],
+  [0,0,1,1,1,1,1,1,0,0],
+];
+const COLORS = {0:'#ffffff',1:'#ffd23f',2:'#2b2350'};
+const PENS = [{i:1,nm:'Жёлтый'},{i:2,nm:'Чёрный'},{i:0,nm:'Ластик'}];
+let canvasState=[], sel=1, painting=false;
+
+function startGame(){
+  document.getElementById('intro').classList.add('hidden');
+  document.getElementById('result').classList.add('hidden');
+  document.getElementById('game').classList.remove('hidden');
+  canvasState = TARGET.map(row=>row.map(()=>0));
+  renderTarget(); renderCanvas(); renderPalette(); updateProgress();
+}
+
+function renderTarget(){
+  const g=document.getElementById('target'); g.innerHTML='';
+  TARGET.forEach(row=>row.forEach(v=>{
+    const c=document.createElement('div'); c.className='cell'; c.style.background=COLORS[v]; g.appendChild(c);
+  }));
+}
+function renderCanvas(){
+  const g=document.getElementById('canvas'); g.innerHTML='';
+  for(let r=0;r<10;r++)for(let col=0;col<10;col++){
+    const c=document.createElement('div'); c.className='cell';
+    c.style.background=COLORS[canvasState[r][col]];
+    c.dataset.r=r; c.dataset.c=col;
+    c.addEventListener('pointerdown',e=>{painting=true; paint(r,col); e.preventDefault();});
+    c.addEventListener('pointerenter',()=>{ if(painting) paint(r,col); });
+    g.appendChild(c);
+  }
+}
+document.addEventListener('pointerup',()=>painting=false);
+
+function renderPalette(){
+  const p=document.getElementById('palette'); p.innerHTML='';
+  PENS.forEach(pen=>{
+    const b=document.createElement('div'); b.className='pen'+(pen.i===sel?' sel':'');
+    b.style.background=COLORS[pen.i]; b.textContent=pen.nm;
+    if(pen.i===2) b.style.color='#fff';
+    b.onclick=()=>{sel=pen.i; renderPalette();};
+    p.appendChild(b);
+  });
+}
+
+function paint(r,col){
+  canvasState[r][col]=sel;
+  const cell=document.querySelector('#canvas .cell[data-r="'+r+'"][data-c="'+col+'"]');
+  if(cell) cell.style.background=COLORS[sel];
+  updateProgress();
+}
+
+function updateProgress(){
+  let ok=0;
+  for(let r=0;r<10;r++)for(let col=0;col<10;col++) if(canvasState[r][col]===TARGET[r][col]) ok++;
+  const pct=Math.round(ok/100*100);
+  document.getElementById('bar').style.width=pct+'%';
+  document.getElementById('pct').textContent='Раскрашено верно: '+pct+'%';
+  if(ok===100) setTimeout(win,300);
+}
+function win(){
+  document.getElementById('game').classList.add('hidden');
+  document.getElementById('result').classList.remove('hidden');
+}
+</script>
+</body>
+</html>
