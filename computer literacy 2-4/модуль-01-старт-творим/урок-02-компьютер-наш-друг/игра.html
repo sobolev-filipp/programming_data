@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Игра — Кто есть кто?</title>
+<style>
+  :root{--bg1:#37c871;--bg2:#43b7ff;--ink:#2b2350;--yellow:#ffd23f;--green:#37c871;--red:#ff7a7a;}
+  *{box-sizing:border-box;margin:0;font-family:'Comic Sans MS','Segoe UI',system-ui,sans-serif;user-select:none;}
+  body{min-height:100vh;background:linear-gradient(135deg,var(--bg1),var(--bg2));display:flex;
+    align-items:center;justify-content:center;padding:16px;color:var(--ink);}
+  .stage{width:min(760px,100%);background:#fff;border-radius:28px;box-shadow:0 18px 50px rgba(0,0,0,.25);
+    padding:26px 24px 30px;text-align:center;}
+  .bip{width:88px;height:auto;margin-bottom:2px;}
+  h1{font-size:30px;color:#2e9e5b;margin:4px 0;}
+  .sub{color:#7a76a0;font-size:17px;margin-bottom:14px;}
+  .bar{display:flex;gap:6px;justify-content:center;margin-bottom:14px;flex-wrap:wrap;}
+  .dot{width:15px;height:15px;border-radius:50%;background:#ddd;}
+  .dot.done{background:var(--green);}.dot.now{background:var(--yellow);transform:scale(1.25);}
+  .q{font-size:26px;font-weight:bold;margin:6px 0 16px;color:var(--ink);}
+  .opts{display:flex;gap:16px;justify-content:center;flex-wrap:wrap;}
+  .opt{width:150px;border:4px solid #eee;border-radius:22px;background:#f7f7ff;padding:14px 8px;cursor:pointer;
+    transition:transform .08s,border-color .15s,background .15s;}
+  .opt:hover{transform:translateY(-3px);background:#eef0ff;}
+  .opt .em{font-size:60px;line-height:1;}
+  .opt .nm{font-size:18px;margin-top:6px;color:var(--ink);}
+  .opt.ok{border-color:var(--green);background:#d9f8e5;}
+  .opt.no{border-color:var(--red);background:#ffe1e1;}
+  .fb{font-size:22px;font-weight:bold;min-height:30px;margin-top:14px;}
+  .start,.next{border:none;border-radius:18px;background:var(--yellow);color:#6b4e00;font-size:24px;
+    font-weight:bold;padding:15px 30px;margin-top:14px;cursor:pointer;}
+  .start:hover,.next:hover{background:#ffdf6a;}
+  .big{font-size:60px;margin:6px 0;}
+  .hidden{display:none !important;}
+  .hint{color:#9a96b8;font-size:14px;margin-top:14px;}
+</style>
+</head>
+<body>
+<div class="stage">
+  <svg class="bip" viewBox="0 0 120 130" xmlns="http://www.w3.org/2000/svg">
+    <line x1="60" y1="18" x2="60" y2="8" stroke="#43b7ff" stroke-width="5"/><circle cx="60" cy="7" r="7" fill="#ffd23f"/>
+    <rect x="22" y="22" width="76" height="62" rx="20" fill="#ffd23f"/><rect x="33" y="34" width="54" height="32" rx="13" fill="#2b2350"/>
+    <circle cx="50" cy="50" r="8" fill="#43b7ff"/><circle cx="72" cy="50" r="8" fill="#43b7ff"/>
+    <circle cx="50" cy="50" r="3.5" fill="#fff"/><circle cx="72" cy="50" r="3.5" fill="#fff"/>
+    <path d="M49 73 q11 9 22 0" stroke="#2b2350" stroke-width="4" fill="none" stroke-linecap="round"/>
+    <rect x="34" y="88" width="52" height="30" rx="14" fill="#43b7ff"/>
+  </svg>
+
+  <div id="intro">
+    <h1>Кто есть кто? 🤖</h1>
+    <p class="sub">Угадай, какая часть компьютера за это отвечает!</p>
+    <button class="start" onclick="startGame()">▶ Играть!</button>
+    <p class="hint">Учитель читает вопрос. Дети выбирают картинку. Клавиши 1 · 2 · 3</p>
+  </div>
+
+  <div id="game" class="hidden">
+    <div class="bar" id="bar"></div>
+    <div class="q" id="qtext"></div>
+    <div class="opts" id="opts"></div>
+    <div class="fb" id="fb"></div>
+  </div>
+
+  <div id="result" class="hidden">
+    <div class="big" id="medal">⭐</div>
+    <h1 id="resTitle">Молодец!</h1>
+    <p class="sub" id="resText"></p>
+    <button class="next" onclick="location.reload()">↺ Ещё разок</button>
+  </div>
+</div>
+
+<script>
+const ITEMS = [
+  {em:"🧠", nm:"Директор-умник", q:"Кто думает и решает?"},
+  {em:"🖐", nm:"Рабочий столик", q:"Кто держит под рукой то, что делаем сейчас?"},
+  {em:"📦", nm:"Кладовщик", q:"Кто хранит всё навсегда?"},
+  {em:"🎨", nm:"Художник", q:"Кто рисует картинку на экране?"},
+  {em:"🖱", nm:"Мышка", q:"Чем двигают стрелочку?"},
+  {em:"⌨️", nm:"Клавиатура", q:"На чём печатают буквы?"},
+  {em:"🖥", nm:"Монитор", q:"На чём мы всё видим?"},
+];
+
+let order=[], idx=0, correct=0, answered=false;
+function shuffle(a){for(let i=a.length-1;i>0;i--){const j=Math.random()*(i+1)|0;[a[i],a[j]]=[a[j],a[i]];}return a;}
+
+function startGame(){
+  order=shuffle([...Array(ITEMS.length).keys()]);
+  idx=0; correct=0;
+  document.getElementById('intro').classList.add('hidden');
+  document.getElementById('game').classList.remove('hidden');
+  const bar=document.getElementById('bar'); bar.innerHTML='';
+  order.forEach((_,i)=>{const d=document.createElement('div');d.className='dot';d.id='d'+i;bar.appendChild(d);});
+  showRound();
+}
+
+function showRound(){
+  answered=false;
+  const item=ITEMS[order[idx]];
+  document.getElementById('qtext').textContent=item.q;
+  document.getElementById('fb').textContent='';
+  order.forEach((_,i)=>{document.getElementById('d'+i).className='dot'+(i<idx?' done':i===idx?' now':'');});
+  // варианты: правильный + 2 случайных
+  const others=shuffle(ITEMS.filter(x=>x!==item)).slice(0,2);
+  const opts=shuffle([item,...others]);
+  const box=document.getElementById('opts'); box.innerHTML='';
+  opts.forEach((o,i)=>{
+    const b=document.createElement('div'); b.className='opt';
+    b.innerHTML='<div class="em">'+o.em+'</div><div class="nm">'+(i+1)+'. '+o.nm+'</div>';
+    b.onclick=()=>choose(b,o===item,item);
+    box.appendChild(b);
+  });
+}
+
+function choose(el,isOk,item){
+  if(answered) return; answered=true;
+  const opts=[...document.querySelectorAll('.opt')];
+  opts.forEach(o=>o.onclick=null);
+  const fb=document.getElementById('fb');
+  if(isOk){ el.classList.add('ok'); correct++; fb.textContent='✅ Верно! Молодец! ⭐'; fb.style.color='#37c871'; }
+  else{
+    el.classList.add('no');
+    opts.forEach(o=>{ if(o.querySelector('.nm').textContent.includes(item.nm)) o.classList.add('ok'); });
+    fb.textContent='Почти! Правильный — '+item.em+' '+item.nm; fb.style.color='#f0a500';
+  }
+  setTimeout(next,1500);
+}
+
+function next(){ idx++; if(idx>=order.length){ result(); return; } showRound(); }
+
+function result(){
+  document.getElementById('game').classList.add('hidden');
+  const r=document.getElementById('result'); r.classList.remove('hidden');
+  const total=order.length;
+  const medal = correct===total?'🏆':correct>=total*0.7?'🥇':correct>=total*0.4?'🌟':'⭐';
+  document.getElementById('medal').textContent=medal;
+  document.getElementById('resTitle').textContent = correct>=total*0.7?'Супер! Ты знаешь компьютер!':'Молодец, что старался!';
+  document.getElementById('resText').textContent='Угадано правильно: '+correct+' из '+total+' ⭐';
+}
+
+document.addEventListener('keydown',e=>{
+  if(document.getElementById('game').classList.contains('hidden')) return;
+  const n=parseInt(e.key); if(n>=1&&n<=3){const o=document.querySelectorAll('.opt')[n-1]; if(o&&!answered)o.click();}
+});
+</script>
+</body>
+</html>
