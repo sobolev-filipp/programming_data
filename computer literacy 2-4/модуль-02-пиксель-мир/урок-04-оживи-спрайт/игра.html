@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Игра — Собери мультик</title>
+<style>
+  :root{--bg1:#43b7ff;--bg2:#37c871;--ink:#2b2350;--yellow:#ffd23f;--green:#37c871;--red:#ff7a7a;}
+  *{box-sizing:border-box;margin:0;font-family:'Comic Sans MS','Segoe UI',system-ui,sans-serif;}
+  body{min-height:100vh;background:linear-gradient(135deg,var(--bg1),var(--bg2));display:flex;
+    align-items:center;justify-content:center;padding:16px;color:var(--ink);}
+  .stage{width:min(760px,100%);background:#fff;border-radius:28px;box-shadow:0 18px 50px rgba(0,0,0,.25);
+    padding:24px 22px 28px;text-align:center;}
+  .bip{width:76px;height:auto;margin-bottom:2px;}
+  h1{font-size:26px;color:#1e86c9;margin:4px 0;}
+  .sub{color:#7a76a0;font-size:16px;margin-bottom:12px;}
+  .bar{display:flex;gap:6px;justify-content:center;margin-bottom:12px;flex-wrap:wrap;}
+  .dot{width:15px;height:15px;border-radius:50%;background:#ddd;}
+  .dot.done{background:var(--green);}.dot.now{background:var(--yellow);transform:scale(1.25);}
+  .slots{display:flex;gap:12px;justify-content:center;margin:6px 0 4px;}
+  .slot{width:88px;height:88px;border:4px dashed #b9b9d0;border-radius:14px;display:flex;align-items:center;justify-content:center;
+    background:#f4f4fb;position:relative;}
+  .slot .n{position:absolute;top:-12px;left:-8px;width:26px;height:26px;border-radius:50%;background:#43b7ff;color:#fff;
+    font-size:15px;display:flex;align-items:center;justify-content:center;font-weight:bold;}
+  .qm{font-size:34px;color:#c7c7d8;}
+  .cards{display:flex;gap:14px;justify-content:center;margin:14px 0 4px;flex-wrap:wrap;}
+  .card{width:96px;border:4px solid #eee;border-radius:16px;background:#fff8ec;padding:6px;cursor:pointer;
+    transition:transform .08s,border-color .15s;}
+  .card:hover{transform:translateY(-3px);border-color:#ffce54;}
+  .card.used{opacity:.35;pointer-events:none;}
+  .card .cnum{font-size:14px;color:#7a76a0;}
+  .grid{display:grid;grid-template-columns:repeat(9,1fr);width:100%;aspect-ratio:1;
+    border:2px solid #2b2350;border-radius:6px;overflow:hidden;background:#fff;}
+  .grid div{width:100%;aspect-ratio:1;}
+  .gridbig{width:min(40vh,180px);}
+  .fb{font-size:22px;font-weight:bold;min-height:30px;margin-top:12px;}
+  .start,.next,.reset{border:none;border-radius:16px;font-size:20px;font-weight:bold;padding:12px 22px;margin-top:10px;cursor:pointer;}
+  .start,.next{background:var(--yellow);color:#6b4e00;}
+  .start:hover,.next:hover{background:#ffdf6a;}
+  .reset{background:#e7e7f2;color:#4a4a6a;font-size:16px;padding:9px 16px;margin-left:8px;}
+  .preview{margin:6px auto;}
+  .big{font-size:56px;margin:6px 0;}
+  .hidden{display:none !important;}
+  .hint{color:#9a96b8;font-size:14px;margin-top:14px;}
+</style>
+</head>
+<body>
+<div class="stage">
+  <svg class="bip" viewBox="0 0 120 130" xmlns="http://www.w3.org/2000/svg">
+    <line x1="60" y1="18" x2="60" y2="8" stroke="#43b7ff" stroke-width="5"/><circle cx="60" cy="7" r="7" fill="#ffd23f"/>
+    <rect x="22" y="22" width="76" height="62" rx="20" fill="#ffd23f"/><rect x="33" y="34" width="54" height="32" rx="13" fill="#2b2350"/>
+    <circle cx="50" cy="50" r="8" fill="#43b7ff"/><circle cx="72" cy="50" r="8" fill="#43b7ff"/>
+    <circle cx="50" cy="50" r="3.5" fill="#fff"/><circle cx="72" cy="50" r="3.5" fill="#fff"/>
+    <path d="M49 73 q11 9 22 0" stroke="#2b2350" stroke-width="4" fill="none" stroke-linecap="round"/>
+    <rect x="34" y="88" width="52" height="30" rx="14" fill="#43b7ff"/>
+  </svg>
+
+  <div id="intro">
+    <h1>Собери мультик! 🎬</h1>
+    <p class="sub">Кадры перепутались! Расставь их по порядку — и картинка оживёт.</p>
+    <button class="start" onclick="startGame()">▶ Играть!</button>
+    <p class="hint">Нажимай кадры по порядку: сначала первый, потом второй, потом третий. Клавиши 1 · 2 · 3</p>
+  </div>
+
+  <div id="game" class="hidden">
+    <div class="bar" id="bar"></div>
+    <p class="sub" id="task">Что здесь происходит? Расставь кадры по порядку 👇</p>
+    <div class="slots" id="slots"></div>
+    <div class="cards" id="cards"></div>
+    <div class="fb" id="fb"></div>
+    <button class="reset" onclick="resetSlots()">↺ Сбросить</button>
+  </div>
+
+  <div id="result" class="hidden">
+    <div class="big" id="medal">🏆</div>
+    <h1 id="resTitle">Молодец!</h1>
+    <p class="sub" id="resText"></p>
+    <button class="next" onclick="location.reload()">↺ Ещё разок</button>
+  </div>
+</div>
+
+<script>
+// кадры анимаций (9x9) строим программно, чтобы не ошибиться руками.
+// Каждый ANIMSET[i].frames — В ПРАВИЛЬНОМ порядке (его и нужно собрать).
+function ballFrame(topRow){ // мяч 3x3 на строках topRow..topRow+2, земля на строке 8
+  const rows=[];
+  for(let r=0;r<9;r++){
+    let s='';
+    for(let c=0;c<9;c++){
+      if(r===8) s+='g';
+      else if(r>=topRow && r<=topRow+2 && c>=3 && c<=5) s+='o';
+      else s+='.';
+    }
+    rows.push(s);
+  }
+  return rows;
+}
+function diamondFrame(size){ // size 1..3 — растущий ромб 'y', центр (4,4)
+  const rows=[];
+  for(let r=0;r<9;r++){
+    let s='';
+    for(let c=0;c<9;c++){
+      s += (Math.abs(r-4)+Math.abs(c-4) <= size) ? 'y' : '.';
+    }
+    rows.push(s);
+  }
+  return rows;
+}
+function heartFrame(size){ // растущее сердце 'h': size 1..3
+  const base={
+    1:["...h.h...","..hhhhh..","...hhh...","....h....","................................".slice(0,9)],
+    2:["..h...h..",".hhh.hhh.",".hhhhhhh.","..hhhhh..","...hhh...","....h...."],
+    3:[".hh...hh.","hhhhhhhhh","hhhhhhhhh",".hhhhhhh.","..hhhhh..","...hhh...","....h...."]
+  };
+  // выравниваем в 9x9 (центрируем по вертикали)
+  const src=base[size];
+  const rows=[];
+  const pad=Math.floor((9-src.length)/2);
+  for(let r=0;r<9;r++){
+    const i=r-pad;
+    rows.push((i>=0 && i<src.length) ? (src[i]+'.........').slice(0,9) : '.........');
+  }
+  return rows;
+}
+
+const ANIMSET = [
+  { nm:"Мячик прыгает", frames:[ballFrame(5), ballFrame(3), ballFrame(0)] },
+  { nm:"Звезда растёт", frames:[diamondFrame(1), diamondFrame(2), diamondFrame(4)] },
+  { nm:"Сердечко растёт", frames:[heartFrame(1), heartFrame(2), heartFrame(3)] },
+];
+const CO={'.':'transparent','o':'#ff9a3f','g':'#c9c9d6','y':'#ffd23f','h':'#ff5a7a'};
+
+function gridHTML(rows,cls){
+  return '<div class="grid '+(cls||'')+'">'+rows.join('').split('').map(ch=>'<div style="background:'+CO[ch]+'"></div>').join('')+'</div>';
+}
+
+let order=[], idx=0, solved=0;
+let slots=[], playTimer=null;
+function shuffle(a){for(let i=a.length-1;i>0;i--){const j=Math.random()*(i+1)|0;[a[i],a[j]]=[a[j],a[i]];}return a;}
+
+function startGame(){
+  document.getElementById('intro').classList.add('hidden');
+  document.getElementById('result').classList.add('hidden');
+  document.getElementById('game').classList.remove('hidden');
+  order=shuffle([...Array(ANIMSET.length).keys()]);
+  idx=0; solved=0;
+  const bar=document.getElementById('bar'); bar.innerHTML='';
+  order.forEach((_,i)=>{const d=document.createElement('div');d.className='dot';d.id='d'+i;bar.appendChild(d);});
+  showRound();
+}
+
+function showRound(){
+  if(playTimer){clearInterval(playTimer);playTimer=null;}
+  slots=[];
+  document.getElementById('fb').textContent='';
+  document.getElementById('task').textContent='«'+ANIMSET[order[idx]].nm+'» — расставь кадры по порядку 👇';
+  order.forEach((_,i)=>{document.getElementById('d'+i).className='dot'+(i<idx?' done':i===idx?' now':'');});
+  const frames=ANIMSET[order[idx]].frames;
+  // слоты
+  const sBox=document.getElementById('slots'); sBox.innerHTML='';
+  for(let i=0;i<frames.length;i++){
+    const s=document.createElement('div'); s.className='slot'; s.id='slot'+i;
+    s.innerHTML='<div class="n">'+(i+1)+'</div><div class="qm">?</div>';
+    sBox.appendChild(s);
+  }
+  // карточки (перемешанные кадры)
+  const cardOrder=shuffle(frames.map((f,i)=>({oi:i,rows:f})));
+  const cBox=document.getElementById('cards'); cBox.innerHTML='';
+  cardOrder.forEach((card,pos)=>{
+    const el=document.createElement('div'); el.className='card'; el.dataset.oi=card.oi;
+    el.innerHTML=gridHTML(card.rows)+'<div class="cnum">кадр</div>';
+    el.onclick=()=>pickCard(el,card.oi);
+    cBox.appendChild(el);
+  });
+}
+
+function pickCard(el,oi){
+  if(el.classList.contains('used')) return;
+  if(slots.length>=ANIMSET[order[idx]].frames.length) return;
+  const pos=slots.length;
+  slots.push(oi);
+  el.classList.add('used');
+  const slot=document.getElementById('slot'+pos);
+  slot.innerHTML='<div class="n">'+(pos+1)+'</div>'+gridHTML(ANIMSET[order[idx]].frames[oi]);
+  if(slots.length===ANIMSET[order[idx]].frames.length) checkOrder();
+}
+
+function resetSlots(){ if(!playTimer) showRound(); }
+
+function checkOrder(){
+  const correct = slots.every((oi,i)=>oi===i);
+  const fb=document.getElementById('fb');
+  if(correct){
+    solved++;
+    fb.textContent='✅ Верно! Смотри, как оживает! ⭐'; fb.style.color='#37c871';
+    playAnimation(()=>setTimeout(next,700));
+  } else {
+    fb.textContent='Кадры перепутались! Попробуй снова 🔁'; fb.style.color='#f0a500';
+    setTimeout(showRound,1300);
+  }
+}
+
+function playAnimation(done){
+  const frames=ANIMSET[order[idx]].frames;
+  const sBox=document.getElementById('slots');
+  sBox.innerHTML=gridHTML(frames[0],'gridbig preview');
+  let f=0, loops=0;
+  playTimer=setInterval(()=>{
+    f=(f+1)%frames.length; if(f===0) loops++;
+    sBox.innerHTML=gridHTML(frames[f],'gridbig preview');
+    if(loops>=2){ clearInterval(playTimer); playTimer=null; if(done) done(); }
+  },420);
+}
+
+function next(){ idx++; if(idx>=order.length){ result(); return; } showRound(); }
+
+function result(){
+  document.getElementById('game').classList.add('hidden');
+  const r=document.getElementById('result'); r.classList.remove('hidden');
+  document.getElementById('medal').textContent='🏆';
+  document.getElementById('resTitle').textContent='Ты собрал все мультики!';
+  document.getElementById('resText').textContent='Собрано: '+solved+' из '+order.length+' ⭐ Анимация — это кадры по порядку!';
+}
+
+document.addEventListener('keydown',e=>{
+  if(document.getElementById('game').classList.contains('hidden')) return;
+  const n=parseInt(e.key);
+  if(n>=1&&n<=3){ const c=document.querySelectorAll('.cards .card')[n-1]; if(c) c.click(); }
+});
+</script>
+</body>
+</html>
