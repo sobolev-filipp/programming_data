@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Урок 5 — Моя картина-мечта</title>
+<style>
+  :root{--ink:#2b2350;--yellow:#ffd23f;--blue:#43b7ff;--green:#37c871;--pink:#ff7ab6;--purple:#8a5cf6;}
+  *{box-sizing:border-box;margin:0;padding:0;font-family:'Comic Sans MS','Segoe UI',system-ui,sans-serif;}
+  html,body{height:100%;}
+  body{background:#1c1740;overflow:hidden;color:var(--ink);}
+  .slide{position:fixed;inset:0;display:none;flex-direction:column;align-items:center;justify-content:center;
+    text-align:center;padding:5vh 6vw;}
+  .slide.active{display:flex;animation:pop .4s ease;}
+  @keyframes pop{from{opacity:0;transform:scale(.96)}to{opacity:1;transform:scale(1)}}
+  .art{font-size:clamp(70px,16vh,150px);line-height:1;margin:10px 0 4px;}
+  h1{font-size:clamp(30px,6.5vh,64px);color:#fff;text-shadow:0 4px 0 rgba(0,0,0,.15);}
+  h2{font-size:clamp(26px,5.2vh,50px);color:#fff;margin-bottom:8px;}
+  p{font-size:clamp(20px,3.6vh,34px);color:#fff;max-width:22ch;margin-top:10px;line-height:1.35;}
+  .card{background:#fff;border-radius:30px;padding:4vh 5vw;max-width:900px;box-shadow:0 16px 40px rgba(0,0,0,.3);}
+  .card h2,.card p,.card h1{color:var(--ink);text-shadow:none;}
+  .steps{list-style:none;text-align:left;font-size:clamp(19px,3.4vh,30px);color:var(--ink);margin-top:10px;}
+  .steps li{margin:10px 0;display:flex;gap:14px;align-items:center;}
+  .bignum{display:inline-flex;min-width:44px;height:44px;border-radius:14px;background:var(--blue);color:#fff;
+    align-items:center;justify-content:center;font-weight:bold;font-size:24px;}
+  .nav{position:fixed;bottom:14px;right:18px;display:flex;gap:10px;align-items:center;z-index:10;}
+  .nav button{border:none;background:rgba(255,255,255,.9);border-radius:12px;font-size:24px;width:52px;height:46px;cursor:pointer;}
+  .nav button:active{transform:translateY(2px);}
+  .counter{position:fixed;bottom:20px;left:18px;color:#fff;font-size:18px;opacity:.7;z-index:10;}
+  .tag{position:fixed;top:16px;left:20px;color:#fff;opacity:.65;font-size:17px;z-index:10;}
+  .hintkey{position:fixed;top:16px;right:20px;color:#fff;opacity:.55;font-size:15px;z-index:10;}
+  @media(max-width:600px){.hintkey{display:none;}}
+</style>
+</head>
+<body>
+
+<div class="tag">🏆 Урок 5 · Финиш модуля 1</div>
+<div class="hintkey">← → или пробел листают слайды</div>
+<div id="deck"></div>
+<div class="counter" id="counter"></div>
+<div class="nav">
+  <button onclick="go(-1)">◀</button>
+  <button onclick="go(1)">▶</button>
+</div>
+
+<script>
+const BIP = `<svg viewBox="0 0 120 130" width="130" height="140" xmlns="http://www.w3.org/2000/svg">
+  <line x1="60" y1="18" x2="60" y2="8" stroke="#43b7ff" stroke-width="5"/><circle cx="60" cy="7" r="7" fill="#ffd23f"/>
+  <rect x="22" y="22" width="76" height="62" rx="20" fill="#ffd23f"/>
+  <rect x="33" y="34" width="54" height="32" rx="13" fill="#2b2350"/>
+  <circle cx="50" cy="50" r="8" fill="#43b7ff"/><circle cx="72" cy="50" r="8" fill="#43b7ff"/>
+  <circle cx="50" cy="50" r="3.5" fill="#fff"/><circle cx="72" cy="50" r="3.5" fill="#fff"/>
+  <path d="M49 73 q11 9 22 0" stroke="#2b2350" stroke-width="4" fill="none" stroke-linecap="round"/>
+  <rect x="34" y="88" width="52" height="30" rx="14" fill="#43b7ff"/>
+  <rect x="12" y="92" width="16" height="9" rx="4" fill="#ffd23f"/><rect x="92" y="92" width="16" height="9" rx="4" fill="#ffd23f"/>
+</svg>`;
+
+const SLIDES = [
+  {bg:['#ffb03f','#37c871'], html:`${BIP}<h1>Моя картина-мечта</h1><p>Финиш модуля 1 — рисуем мечту! 🏆</p>`},
+  {bg:['#43b7ff','#8a5cf6'], html:`<div class="art">🎓</div><div class="card"><h2>Чему мы научились</h2><p>Включать ПК · рисовать · писать · сохранять · наводить порядок · знать про ИИ. Молодцы!</p></div>`},
+  {bg:['#8a5cf6','#ffb03f'], html:`<div class="art">🎨❓</div><h1>Игра-повтор</h1><p>«Что каким инструментом?» — вспомним инструменты Tux Paint!</p>`},
+  {bg:['#ff7ab6','#8a5cf6'], html:`<div class="art">💭✨</div><h1>Рисуем картину мечты!</h1><p>Свободная тема: подводный мир, космос, замок, город будущего — о чём мечтаешь!</p>`},
+  {bg:['#43b7ff','#37c871'], html:`<div class="card"><h2>Строим картину</h2>
+     <ul class="steps">
+       <li><span class="bignum">1</span> 🪣 Фон (заливка)</li>
+       <li><span class="bignum">2</span> 🖌 Главные герои и предметы</li>
+       <li><span class="bignum">3</span> 🎟✨ Детали и волшебство</li>
+       <li><span class="bignum">4</span> 🅰️ Название · 💾 Сохранить</li>
+     </ul></div>`},
+  {bg:['#37c871','#8a5cf6'], html:`<div class="art">⭐🙌</div><h1>Физминутка</h1><p>«Мечта сбывается»: потянулись к небу, поймали звезду, улыбнулись!</p>`},
+  {bg:['#8a5cf6','#43b7ff'], html:`<div class="art">🖼️👀</div><div class="card"><h2>Показываем картины</h2><p>Подними руку и скажи одну фразу: «Это мой…». Или пройдём «тихой галереей».</p></div>`},
+  {bg:['#ffd23f','#ffb03f'], html:`<div class="art">🎖️</div><div class="card"><h2>Значок «Юный художник»!</h2><p>Ты прошёл первый модуль — получай награду! Ты настоящий художник. 🏆</p></div>`},
+  {bg:['#ffb03f','#eb4d8c'], html:`<div class="art">⌨️🔤</div><h1>Поймай букву!</h1><p>Тренируем пальчики — мини-турнир печати!</p>`},
+  {bg:['#37c871','#8a5cf6'], html:`${BIP}<h1>Модуль 1 пройден! 🎉</h1><p>Дальше — пиксельные герои, мультики и игры! Звёздочки твои ⭐</p>`},
+];
+
+const deck=document.getElementById('deck');
+SLIDES.forEach((s,i)=>{
+  const d=document.createElement('div');
+  d.className='slide'; d.id='s'+i;
+  d.style.background=`linear-gradient(135deg,${s.bg[0]},${s.bg[1]})`;
+  d.innerHTML=s.html;
+  deck.appendChild(d);
+});
+
+let cur=0;
+function show(n){
+  document.getElementById('s'+cur).classList.remove('active');
+  cur=Math.max(0,Math.min(SLIDES.length-1,n));
+  document.getElementById('s'+cur).classList.add('active');
+  document.getElementById('counter').textContent=(cur+1)+' / '+SLIDES.length;
+}
+function go(step){show(cur+step);}
+show(0);
+
+document.addEventListener('keydown',e=>{
+  if(e.key==='ArrowRight'||e.key===' '||e.key==='ArrowDown'){e.preventDefault();go(1);}
+  if(e.key==='ArrowLeft'||e.key==='ArrowUp'){e.preventDefault();go(-1);}
+  if(e.key==='Home')show(0);
+  if(e.key==='End')show(SLIDES.length-1);
+});
+document.addEventListener('click',e=>{if(!e.target.closest('.nav'))go(1);});
+</script>
+</body>
+</html>

@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Игра — Кто это?</title>
+<style>
+  :root{--bg1:#43b7ff;--bg2:#8a5cf6;--ink:#2b2350;--yellow:#ffd23f;--green:#37c871;--red:#ff7a7a;}
+  *{box-sizing:border-box;margin:0;font-family:'Comic Sans MS','Segoe UI',system-ui,sans-serif;}
+  body{min-height:100vh;background:linear-gradient(135deg,var(--bg1),var(--bg2));display:flex;
+    align-items:center;justify-content:center;padding:16px;color:var(--ink);}
+  .stage{width:min(720px,100%);background:#fff;border-radius:28px;box-shadow:0 18px 50px rgba(0,0,0,.25);
+    padding:24px 22px 28px;text-align:center;}
+  .bip{width:78px;height:auto;margin-bottom:2px;}
+  h1{font-size:26px;color:#1e86c9;margin:4px 0;}
+  .sub{color:#7a76a0;font-size:16px;margin-bottom:12px;}
+  .bar{display:flex;gap:6px;justify-content:center;margin-bottom:12px;flex-wrap:wrap;}
+  .dot{width:15px;height:15px;border-radius:50%;background:#ddd;}
+  .dot.done{background:var(--green);}.dot.now{background:var(--yellow);transform:scale(1.25);}
+  .grid{display:grid;grid-template-columns:repeat(9,1fr);width:min(56vh,300px);aspect-ratio:1;
+    margin:4px auto 10px;border:4px solid #2b2350;border-radius:10px;overflow:hidden;background:#f4f4fb;}
+  .grid div{width:100%;aspect-ratio:1;transition:background .2s;}
+  .opts{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:6px;}
+  .opt{min-width:150px;border:4px solid #eee;border-radius:18px;background:#eef4ff;padding:12px 14px;cursor:pointer;
+    font-size:20px;transition:transform .08s,border-color .15s,background .15s;}
+  .opt:hover{transform:translateY(-3px);background:#dfeaff;}
+  .opt .num{display:inline-flex;width:30px;height:30px;border-radius:9px;background:#43b7ff;color:#fff;
+    align-items:center;justify-content:center;font-weight:bold;margin-right:8px;vertical-align:middle;}
+  .opt.ok{border-color:var(--green);background:#d9f8e5;}
+  .opt.no{border-color:var(--red);background:#ffe1e1;}
+  .more{border:none;border-radius:14px;background:#ffe08a;color:#6b4e00;font-size:18px;font-weight:bold;
+    padding:10px 18px;margin:12px 0 4px;cursor:pointer;}
+  .more:hover{background:#ffd76a;}
+  .fb{font-size:22px;font-weight:bold;min-height:30px;margin-top:10px;}
+  .start,.next{border:none;border-radius:18px;background:var(--yellow);color:#6b4e00;font-size:24px;
+    font-weight:bold;padding:15px 30px;margin-top:14px;cursor:pointer;}
+  .start:hover,.next:hover{background:#ffdf6a;}
+  .big{font-size:60px;margin:6px 0;}
+  .hidden{display:none !important;}
+  .hint{color:#9a96b8;font-size:14px;margin-top:14px;}
+</style>
+</head>
+<body>
+<div class="stage">
+  <svg class="bip" viewBox="0 0 120 130" xmlns="http://www.w3.org/2000/svg">
+    <line x1="60" y1="18" x2="60" y2="8" stroke="#43b7ff" stroke-width="5"/><circle cx="60" cy="7" r="7" fill="#ffd23f"/>
+    <rect x="22" y="22" width="76" height="62" rx="20" fill="#ffd23f"/><rect x="33" y="34" width="54" height="32" rx="13" fill="#2b2350"/>
+    <circle cx="50" cy="50" r="8" fill="#43b7ff"/><circle cx="72" cy="50" r="8" fill="#43b7ff"/>
+    <circle cx="50" cy="50" r="3.5" fill="#fff"/><circle cx="72" cy="50" r="3.5" fill="#fff"/>
+    <path d="M49 73 q11 9 22 0" stroke="#2b2350" stroke-width="4" fill="none" stroke-linecap="round"/>
+    <rect x="34" y="88" width="52" height="30" rx="14" fill="#43b7ff"/>
+  </svg>
+
+  <div id="intro">
+    <h1>Кто это? 🔍</h1>
+    <p class="sub">Пиксельный герой проявляется по клеточкам. Угадай, кто это!</p>
+    <button class="start" onclick="startGame()">▶ Играть!</button>
+    <p class="hint">Учитель читает варианты. Дети угадывают. Клавиши 1 · 2 · 3</p>
+  </div>
+
+  <div id="game" class="hidden">
+    <div class="bar" id="bar"></div>
+    <div class="grid" id="grid"></div>
+    <button class="more" id="moreBtn" onclick="revealMore(5)">🔍 Показать ещё клетки</button>
+    <div class="opts" id="opts"></div>
+    <div class="fb" id="fb"></div>
+  </div>
+
+  <div id="result" class="hidden">
+    <div class="big" id="medal">🏆</div>
+    <h1 id="resTitle">Молодец!</h1>
+    <p class="sub" id="resText"></p>
+    <button class="next" onclick="location.reload()">↺ Ещё разок</button>
+  </div>
+</div>
+
+<script>
+// каждый спрайт: 9 строк по 9 символов; символ = ключ цвета, '.' = пусто
+const SPRITES = [
+  { nm:"Сердце", em:"❤️", rows:[
+    ".hh...hh.",
+    "hhhhhhhhh",
+    "hhhhhhhhh",
+    "hhhhhhhhh",
+    ".hhhhhhh.",
+    "..hhhhh..",
+    "...hhh...",
+    "....h....",
+    "........."] },
+  { nm:"Домик", em:"🏠", rows:[
+    "....r....",
+    "...rrr...",
+    "..rrrrr..",
+    ".rrrrrrr.",
+    "rrrrrrrrr",
+    ".wwwwwww.",
+    ".wwdddww.",
+    ".wwdddww.",
+    ".wwwwwww."] },
+  { nm:"Звезда", em:"⭐", rows:[
+    "....y....",
+    "....y....",
+    "..yyyyy..",
+    ".yyyyyyy.",
+    "yyyyyyyyy",
+    ".yyyyyyy.",
+    "..yy.yy..",
+    ".yy...yy.",
+    ".y.....y."] },
+  { nm:"Гриб", em:"🍄", rows:[
+    "..ccccc..",
+    ".ccccccc.",
+    "ccdcccdcc",
+    "ccccccccc",
+    "cccdccccc",
+    ".ccccccc.",
+    "...sss...",
+    "...sss...",
+    "..sssss.."] },
+  { nm:"Яблоко", em:"🍎", rows:[
+    "....t....",
+    "...ll....",
+    "..aaaaa..",
+    ".aaaaaaa.",
+    ".aaaaaaa.",
+    ".aaaaaaa.",
+    ".aaaaaaa.",
+    "..aaaaa..",
+    "...aaa..."] },
+];
+const CO={'.':'transparent','h':'#ff5a7a','w':'#ffce54','r':'#ff5a7a','d':'#2b2350',
+  'y':'#ffd23f','c':'#ff5a7a','s':'#fff2cc','a':'#ff5a5a','l':'#37c871','t':'#8a5a2b'};
+const FOG='#c9c9d6';
+
+let order=[], idx=0, solved=0, answered=false;
+let cells=[], flat=[], paintedOrder=[], revealed=0;
+
+function shuffle(a){for(let i=a.length-1;i>0;i--){const j=Math.random()*(i+1)|0;[a[i],a[j]]=[a[j],a[i]];}return a;}
+
+function startGame(){
+  document.getElementById('intro').classList.add('hidden');
+  document.getElementById('result').classList.add('hidden');
+  document.getElementById('game').classList.remove('hidden');
+  order=shuffle([...Array(SPRITES.length).keys()]);
+  idx=0; solved=0;
+  const bar=document.getElementById('bar'); bar.innerHTML='';
+  order.forEach((_,i)=>{const d=document.createElement('div');d.className='dot';d.id='d'+i;bar.appendChild(d);});
+  showRound();
+}
+
+function showRound(){
+  answered=false;
+  document.getElementById('fb').textContent='';
+  document.getElementById('moreBtn').classList.remove('hidden');
+  order.forEach((_,i)=>{document.getElementById('d'+i).className='dot'+(i<idx?' done':i===idx?' now':'');});
+  const sp=SPRITES[order[idx]];
+  flat=sp.rows.join('').split('');
+  // строим сетку из закрытых клеток
+  const grid=document.getElementById('grid'); grid.innerHTML=''; cells=[];
+  flat.forEach(()=>{const c=document.createElement('div');c.style.background=FOG;grid.appendChild(c);cells.push(c);});
+  // порядок открытия — только закрашенные клетки
+  paintedOrder=shuffle(flat.map((v,i)=>v!=='.'?i:-1).filter(i=>i>=0));
+  revealed=0;
+  revealMore(Math.max(3,Math.round(paintedOrder.length*0.3))); // стартовое проявление ~30%
+  buildOpts(sp);
+}
+
+function revealMore(n){
+  for(let k=0;k<n && revealed<paintedOrder.length;k++){
+    const i=paintedOrder[revealed++];
+    cells[i].style.background=CO[flat[i]];
+  }
+  if(revealed>=paintedOrder.length){ document.getElementById('moreBtn').classList.add('hidden'); }
+}
+
+function revealAll(){
+  flat.forEach((v,i)=>{cells[i].style.background=CO[v];});
+  document.getElementById('moreBtn').classList.add('hidden');
+}
+
+function buildOpts(sp){
+  const others=shuffle(SPRITES.filter(x=>x!==sp)).slice(0,2);
+  const opts=shuffle([sp,...others]);
+  const box=document.getElementById('opts'); box.innerHTML='';
+  opts.forEach((o,i)=>{
+    const b=document.createElement('div'); b.className='opt';
+    b.innerHTML='<span class="num">'+(i+1)+'</span>'+o.em+' '+o.nm;
+    b.onclick=()=>choose(b,o===sp);
+    box.appendChild(b);
+  });
+}
+
+function choose(el,isOk){
+  if(answered) return;
+  const fb=document.getElementById('fb');
+  if(isOk){
+    answered=true;
+    el.classList.add('ok'); solved++; revealAll();
+    [...document.querySelectorAll('.opt')].forEach(o=>o.onclick=null);
+    fb.textContent='✅ Верно! Это '+SPRITES[order[idx]].em+' ⭐'; fb.style.color='#37c871';
+    setTimeout(next,1500);
+  } else {
+    el.classList.add('no'); el.onclick=null;
+    revealMore(4); // подсказка — открываем ещё клетки
+    fb.textContent='Почти! Смотри, проявилось ещё — попробуй снова 👀'; fb.style.color='#f0a500';
+  }
+}
+
+function next(){ idx++; if(idx>=order.length){ result(); return; } showRound(); }
+
+function result(){
+  document.getElementById('game').classList.add('hidden');
+  const r=document.getElementById('result'); r.classList.remove('hidden');
+  document.getElementById('medal').textContent='🏆';
+  document.getElementById('resTitle').textContent='Ты угадал всех героев!';
+  document.getElementById('resText').textContent='Отгадано: '+solved+' из '+order.length+' ⭐ Пиксели складываются в картинку!';
+}
+
+document.addEventListener('keydown',e=>{
+  if(document.getElementById('game').classList.contains('hidden')) return;
+  const n=parseInt(e.key); if(n>=1&&n<=3){const o=document.querySelectorAll('.opt')[n-1]; if(o) o.click();}
+});
+</script>
+</body>
+</html>
