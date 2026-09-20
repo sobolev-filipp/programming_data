@@ -9,31 +9,45 @@
   *{box-sizing:border-box;margin:0;font-family:'Comic Sans MS','Segoe UI',system-ui,sans-serif;user-select:none;}
   body{height:100vh;overflow:hidden;background:linear-gradient(135deg,var(--bg1),var(--bg2));color:#fff;}
   #hud{position:fixed;top:0;left:0;right:0;display:flex;justify-content:space-between;align-items:center;
-    padding:12px 20px;font-size:26px;font-weight:bold;text-shadow:0 2px 0 rgba(0,0,0,.2);z-index:5;}
+    padding:10px 18px;font-size:24px;font-weight:bold;text-shadow:0 2px 0 rgba(0,0,0,.2);z-index:5;gap:10px;}
+  #hud>div{white-space:nowrap;}
   #play{position:fixed;inset:0;}
-  .star{position:absolute;font-size:56px;cursor:pointer;transform:scale(0);animation:grow .2s forwards;
-    filter:drop-shadow(0 3px 4px rgba(0,0,0,.25));}
-  @keyframes grow{to{transform:scale(1)}}
-  .pop{animation:pop .3s forwards;pointer-events:none;}
-  @keyframes pop{to{transform:scale(1.8);opacity:0}}
+  .ent{position:absolute;cursor:pointer;filter:drop-shadow(0 3px 4px rgba(0,0,0,.25));
+    will-change:left,top,transform;line-height:1;}
+  .ent.grow{animation:grow .18s forwards;}
+  @keyframes grow{from{transform:scale(0)}to{transform:scale(1)}}
+  .pop{animation:pop .3s forwards !important;pointer-events:none;}
+  @keyframes pop{to{transform:scale(1.9);opacity:0}}
+  .boom{animation:boom .4s forwards !important;pointer-events:none;}
+  @keyframes boom{to{transform:scale(2.2) rotate(20deg);opacity:0}}
+  .boss{filter:drop-shadow(0 0 10px #ffd23f);}
+  .bosshp{position:absolute;top:-22px;left:50%;transform:translateX(-50%);font-size:16px;font-weight:bold;
+    background:#2b2350;color:#ffd23f;border-radius:10px;padding:1px 8px;white-space:nowrap;}
+  .flash{position:fixed;left:50%;top:40%;transform:translateX(-50%);font-size:40px;font-weight:bold;
+    color:#fff;text-shadow:0 3px 0 rgba(0,0,0,.25);z-index:8;pointer-events:none;animation:fl 1s forwards;}
+  @keyframes fl{0%{opacity:0;transform:translateX(-50%) translateY(10px) scale(.6)}
+    20%{opacity:1;transform:translateX(-50%) translateY(0) scale(1.1)}100%{opacity:0;transform:translateX(-50%) translateY(-30px)}}
   .screen{position:fixed;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;
     text-align:center;padding:24px;z-index:10;}
-  .card{background:#fff;color:var(--ink);border-radius:28px;padding:30px 34px;box-shadow:0 16px 40px rgba(0,0,0,.3);max-width:520px;}
-  h1{font-size:34px;color:#4a2fb0;margin-bottom:6px;}
-  p{font-size:20px;margin:10px 0;}
-  button{border:none;border-radius:18px;background:var(--yellow);color:#6b4e00;font-size:26px;font-weight:bold;
-    padding:16px 30px;margin-top:14px;cursor:pointer;}
+  .card{background:#fff;color:var(--ink);border-radius:28px;padding:26px 32px;box-shadow:0 16px 40px rgba(0,0,0,.3);max-width:560px;}
+  h1{font-size:32px;color:#4a2fb0;margin-bottom:6px;}
+  p{font-size:19px;margin:9px 0;line-height:1.35;}
+  .rules{text-align:left;font-size:19px;margin:12px auto;max-width:420px;}
+  .rules li{margin:8px 0;list-style:none;}
+  button{border:none;border-radius:18px;background:var(--yellow);color:#6b4e00;font-size:25px;font-weight:bold;
+    padding:15px 30px;margin-top:14px;cursor:pointer;}
   button:hover{background:#ffdf6a;}
-  .bip{width:92px;height:auto;margin-bottom:4px;}
-  .big{font-size:60px;margin:8px 0;}
+  .bip{width:88px;height:auto;margin-bottom:4px;}
+  .big{font-size:58px;margin:8px 0;}
   .hidden{display:none !important;}
 </style>
 </head>
 <body>
 
 <div id="hud" class="hidden">
-  <div>⭐ Поймано: <span id="score">0</span></div>
-  <div>⏱ <span id="time">45</span></div>
+  <div>⭐ <span id="score">0</span></div>
+  <div id="lives">❤️❤️❤️</div>
+  <div>⏱ <span id="time">50</span></div>
 </div>
 <div id="play" class="hidden"></div>
 
@@ -49,8 +63,13 @@
       <rect x="34" y="88" width="52" height="30" rx="14" fill="#43b7ff"/>
     </svg>
     <h1>Догони звёздочку! ⭐</h1>
-    <p>На экране появляются звёздочки. <b>Наводи стрелочку мышкой и щёлкай</b> по ним — лови как можно больше!</p>
-    <p>Это тренировка для мышки. Готов?</p>
+    <p>Тренируем мышку — наводи стрелочку и щёлкай!</p>
+    <ul class="rules">
+      <li>⭐ Лови звёздочки — за каждую очко. Они умеют <b>убегать и ускоряться!</b></li>
+      <li>💣 <b>Не трогай бомбочки!</b> За бомбу теряешь ❤️ жизнь.</li>
+      <li>🌟 Иногда прилетает <b>звезда-босс</b> — щёлкай по ней много раз, чтобы поймать!</li>
+      <li>⏱ Чем дальше — тем быстрее. Успеешь?</li>
+    </ul>
     <button onclick="startGame()">▶ Играть!</button>
   </div>
 </div>
@@ -66,56 +85,176 @@
 </div>
 
 <script>
-const EMOJIS = ["⭐","🌟","✨","💫"];
-let score=0, timeLeft=45, spawnT=null, tickT=null, running=false;
 const play=document.getElementById('play');
+const STARS=["⭐","🌟","✨","💫"];
+let W=window.innerWidth, H=window.innerHeight;
+window.addEventListener('resize',()=>{W=window.innerWidth;H=window.innerHeight;});
+
+let score=0, lives=3, timeLeft=50, running=false;
+let ents=[], loopT=null, spawnT=null, tickT=null, bossT=null, lastFrame=0;
 
 function startGame(){
   document.getElementById('intro').classList.add('hidden');
+  document.getElementById('over').classList.add('hidden');
   document.getElementById('hud').classList.remove('hidden');
   play.classList.remove('hidden');
-  score=0; timeLeft=45; running=true;
+  score=0; lives=3; timeLeft=50; running=true; ents=[];
   document.getElementById('score').textContent=0;
-  document.getElementById('time').textContent=45;
-  spawnT=setInterval(spawnStar, 850);
-  tickT=setInterval(tick, 1000);
-  spawnStar();
+  document.getElementById('time').textContent=50;
+  updateLives();
+  lastFrame=performance.now();
+  loopT=requestAnimationFrame(loop);
+  scheduleSpawn();
+  tickT=setInterval(tick,1000);
+  bossT=setInterval(spawnBoss,14000);
+}
+
+function elapsed(){ return 50-timeLeft; }
+
+function scheduleSpawn(){
+  if(!running) return;
+  const t=elapsed();
+  const interval=Math.max(470, 900 - t*9); // со временем спавн чаще
+  spawnT=setTimeout(()=>{ spawn(); scheduleSpawn(); }, interval);
 }
 
 function tick(){
   timeLeft--;
-  document.getElementById('time').textContent=timeLeft;
-  if(timeLeft<=0) endGame();
+  document.getElementById('time').textContent=Math.max(0,timeLeft);
+  if(timeLeft<=0) endGame(true);
 }
 
-function spawnStar(){
+function rnd(a,b){return a+Math.random()*(b-a);}
+
+function spawn(){
   if(!running) return;
-  const s=document.createElement('div');
-  s.className='star';
-  s.textContent=EMOJIS[Math.random()*EMOJIS.length|0];
-  const m=70;
-  const x=m+Math.random()*(window.innerWidth-2*m);
-  const y=80+Math.random()*(window.innerHeight-160);
-  s.style.left=x+'px'; s.style.top=y+'px';
-  s.addEventListener('click',()=>{
-    if(!running) return;
-    score++; document.getElementById('score').textContent=score;
-    s.className='star pop';
-    setTimeout(()=>s.remove(),300);
-  });
-  play.appendChild(s);
-  setTimeout(()=>{ if(s.parentNode&&!s.classList.contains('pop')) s.remove(); }, 2200);
+  const t=elapsed();
+  const bombChance=Math.min(0.30, 0.05 + t*0.005);
+  const fastChance=t>8 ? Math.min(0.40,(t-8)*0.012) : 0;
+  const r=Math.random();
+  if(r<bombChance) makeEnt('bomb');
+  else if(r<bombChance+fastChance) makeEnt('fast');
+  else makeEnt('star');
 }
 
-function endGame(){
-  running=false; clearInterval(spawnT); clearInterval(tickT);
-  play.innerHTML=''; play.classList.add('hidden');
+function makeEnt(type){
+  const el=document.createElement('div');
+  el.className='ent grow';
+  const size = type==='bomb'?52 : type==='fast'?48 : 56;
+  el.style.fontSize=size+'px';
+  const m=70;
+  const x=rnd(m, W-m-size), y=rnd(80, H-90-size);
+  const ent={el, x, y, vx:0, vy:0, type, born:performance.now(), size,
+    life: type==='star'? Math.max(1500,2400-elapsed()*20) : type==='fast'? 4000 : 2600, dead:false};
+  if(type==='star'){ el.textContent=STARS[Math.random()*STARS.length|0]; }
+  else if(type==='fast'){
+    el.textContent=STARS[Math.random()*STARS.length|0];
+    const sp=rnd(90,150)+elapsed()*3; const ang=rnd(0,Math.PI*2);
+    ent.vx=Math.cos(ang)*sp; ent.vy=Math.sin(ang)*sp;
+  } else { el.textContent='💣'; }
+  el.style.left=x+'px'; el.style.top=y+'px';
+  el.addEventListener('pointerdown',()=>hit(ent));
+  play.appendChild(el);
+  ents.push(ent);
+}
+
+function hit(ent){
+  if(!running || ent.dead) return;
+  if(ent.type==='bomb'){
+    ent.dead=true; ent.el.className='ent boom'; setTimeout(()=>ent.el.remove(),400);
+    loseLife(); flash('💥 −1 жизнь!');
+    return;
+  }
+  // звезда или быстрая звезда
+  ent.dead=true;
+  const pts = ent.type==='fast'?2:1;
+  score+=pts; document.getElementById('score').textContent=score;
+  ent.el.className='ent pop'; setTimeout(()=>ent.el.remove(),300);
+  if(ent.type==='fast') flash('+2 ⚡');
+}
+
+let boss=null;
+function spawnBoss(){
+  if(!running || boss) return;
+  const el=document.createElement('div');
+  el.className='ent grow boss'; el.style.fontSize='92px';
+  const size=92;
+  const x=rnd(80,W-80-size), y=rnd(100,H-120-size);
+  const hp=5;
+  boss={el, x, y, vx:rnd(-60,60), vy:rnd(-40,40), type:'boss', born:performance.now(), size,
+    life:9000, dead:false, hp};
+  el.innerHTML='🌟<div class="bosshp">Тыкай! '+hp+'</div>';
+  el.style.left=x+'px'; el.style.top=y+'px';
+  el.addEventListener('pointerdown',()=>hitBoss());
+  play.appendChild(el);
+  ents.push(boss);
+  flash('🌟 Звезда-босс!');
+}
+function hitBoss(){
+  if(!running || !boss || boss.dead) return;
+  boss.hp--;
+  boss.el.querySelector('.bosshp').textContent='Тыкай! '+boss.hp;
+  boss.el.animate([{transform:'scale(1.12)'},{transform:'scale(1)'}],{duration:120});
+  // ускоряется, когда бьём
+  boss.vx*=1.12; boss.vy*=1.12;
+  if(boss.hp<=0){
+    boss.dead=true; boss.el.className='ent boom'; setTimeout(()=>boss.el.remove(),400);
+    score+=5; document.getElementById('score').textContent=score;
+    flash('🏆 Босс пойман! +5'); boss=null;
+  }
+}
+
+function loseLife(){
+  lives--; updateLives();
+  if(lives<=0) endGame(false);
+}
+function updateLives(){
+  document.getElementById('lives').textContent='❤️'.repeat(Math.max(0,lives))+'🖤'.repeat(3-Math.max(0,lives));
+}
+
+function flash(text){
+  const f=document.createElement('div'); f.className='flash'; f.textContent=text;
+  document.body.appendChild(f); setTimeout(()=>f.remove(),1000);
+}
+
+function loop(now){
+  if(!running) return;
+  const dt=Math.min(0.05,(now-lastFrame)/1000); lastFrame=now;
+  for(const e of ents){
+    if(e.dead) continue;
+    // движение
+    if(e.vx||e.vy){
+      // случайное ускорение звёзд
+      if(e.type==='fast' && Math.random()<0.02){ e.vx*=1.25; e.vy*=1.25; }
+      e.x+=e.vx*dt; e.y+=e.vy*dt;
+      // отскок от краёв
+      if(e.x<60){e.x=60;e.vx=Math.abs(e.vx);} if(e.x>W-e.size-10){e.x=W-e.size-10;e.vx=-Math.abs(e.vx);}
+      if(e.y<80){e.y=80;e.vy=Math.abs(e.vy);} if(e.y>H-e.size-20){e.y=H-e.size-20;e.vy=-Math.abs(e.vy);}
+      e.el.style.left=e.x+'px'; e.el.style.top=e.y+'px';
+    }
+    // истечение времени жизни
+    if(now-e.born>e.life){
+      e.dead=true;
+      if(e===boss){ boss=null; }
+      e.el.remove();
+    }
+  }
+  ents=ents.filter(e=>!e.dead);
+  loopT=requestAnimationFrame(loop);
+}
+
+function endGame(byTime){
+  running=false;
+  cancelAnimationFrame(loopT); clearTimeout(spawnT); clearInterval(tickT); clearInterval(bossT);
+  ents=[]; boss=null; play.innerHTML=''; play.classList.add('hidden');
   document.getElementById('hud').classList.add('hidden');
-  const medal = score>=25?'🏆':score>=15?'🥇':score>=8?'🌟':'⭐';
-  const title = score>=15?'Супер! Ты мастер мыши!':score>=8?'Здорово получается!':'Молодец, что старался!';
+  const medal = score>=30?'🏆':score>=18?'🥇':score>=9?'🌟':'⭐';
+  let title;
+  if(!byTime) title='Ой, жизни кончились!';
+  else title = score>=18?'Супер! Ты мастер мыши!':score>=9?'Здорово получается!':'Молодец, что старался!';
   document.getElementById('medal').textContent=medal;
   document.getElementById('resTitle').textContent=title;
-  document.getElementById('resText').textContent='Ты поймал ⭐ '+score+' звёздочек!';
+  document.getElementById('resText').textContent='Ты набрал ⭐ '+score+' очков!'+(byTime?'':' Бомбочки — мимо! 💣');
   document.getElementById('over').classList.remove('hidden');
 }
 </script>

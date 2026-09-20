@@ -3,32 +3,54 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Тренажёр печати — Поймай букву</title>
+<title>Тренажёр печати — Бип учит клавиатуру</title>
 <style>
-  :root{--bg1:#43b7ff;--bg2:#37c871;--ink:#2b2350;--yellow:#ffd23f;--green:#37c871;--red:#ff7a7a;}
+  :root{--bg1:#43b7ff;--bg2:#37c871;--ink:#2b2350;--yellow:#ffd23f;--green:#37c871;--red:#ff7a7a;--blue:#43b7ff;}
   *{box-sizing:border-box;margin:0;font-family:'Comic Sans MS','Segoe UI',system-ui,sans-serif;user-select:none;}
   body{min-height:100vh;background:linear-gradient(135deg,var(--bg1),var(--bg2));display:flex;
-    align-items:center;justify-content:center;padding:16px;color:var(--ink);}
-  .stage{width:min(680px,100%);background:#fff;border-radius:28px;box-shadow:0 18px 50px rgba(0,0,0,.25);
-    padding:26px 24px 32px;text-align:center;}
-  .bip{width:80px;height:auto;margin-bottom:2px;}
-  h1{font-size:28px;color:#1e86c9;margin:2px 0;}
-  .sub{color:#7a76a0;font-size:16px;margin-bottom:12px;}
-  .letter{font-size:150px;font-weight:bold;line-height:1.1;color:#2b2350;margin:6px 0;
-    transition:transform .1s,color .1s;}
-  .letter.ok{color:var(--green);transform:scale(1.15);}
+    align-items:center;justify-content:center;padding:14px;color:var(--ink);}
+  .stage{width:min(860px,100%);background:#fff;border-radius:26px;box-shadow:0 18px 50px rgba(0,0,0,.25);
+    padding:20px 20px 24px;text-align:center;}
+  .bip{width:72px;height:auto;margin-bottom:2px;}
+  h1{font-size:26px;color:#1e86c9;margin:2px 0;}
+  .sub{color:#7a76a0;font-size:15px;margin-bottom:10px;}
+  .lvl{display:inline-block;background:#eef4ff;color:#4a4a6a;border-radius:12px;padding:3px 12px;font-size:14px;margin-bottom:8px;}
+  .modes{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:8px;}
+  .mode{flex:1;min-width:200px;max-width:250px;border:none;border-radius:18px;cursor:pointer;padding:16px 14px;
+    background:#f3f7ff;transition:transform .1s,background .15s;text-align:center;}
+  .mode:hover{transform:translateY(-3px);background:#e6efff;}
+  .mode .ic{font-size:40px;display:block;}
+  .mode .nm{font-size:19px;font-weight:bold;color:#2b2350;margin:6px 0 2px;}
+  .mode .ds{font-size:14px;color:#7a76a0;}
+  .target{font-size:16px;color:#7a76a0;margin:2px 0;}
+  .letter{font-size:96px;font-weight:bold;line-height:1.05;color:#2b2350;transition:transform .1s,color .1s;}
+  .letter.ok{color:var(--green);transform:scale(1.12);}
   .letter.no{color:var(--red);animation:shake .3s;}
-  @keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-10px)}75%{transform:translateX(10px)}}
-  .say{font-size:22px;font-weight:bold;min-height:30px;margin-top:4px;}
-  .prog{height:20px;background:#eee;border-radius:10px;overflow:hidden;margin:14px auto 4px;max-width:360px;}
+  @keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-8px)}75%{transform:translateX(8px)}}
+  .word{font-size:52px;font-weight:bold;letter-spacing:4px;margin:6px 0;}
+  .word span{color:#c7c7d8;transition:color .1s;}
+  .word span.done{color:var(--green);}
+  .word span.cur{color:#2b2350;border-bottom:5px solid var(--yellow);}
+  .say{font-size:18px;font-weight:bold;min-height:26px;margin:4px 0;}
+  .info{display:flex;gap:18px;justify-content:center;font-size:17px;color:#4a4a6a;margin:4px 0 8px;}
+  .info b{color:#2b2350;}
+  .prog{height:16px;background:#eee;border-radius:9px;overflow:hidden;margin:6px auto;max-width:420px;}
   .prog>div{height:100%;width:0;background:linear-gradient(90deg,#43b7ff,#37c871);transition:width .2s;}
-  .cnt{font-size:18px;color:#7a76a0;}
-  .start,.next{border:none;border-radius:18px;background:var(--yellow);color:#6b4e00;font-size:24px;
-    font-weight:bold;padding:15px 30px;margin-top:14px;cursor:pointer;}
+  .kb{display:flex;flex-direction:column;gap:6px;align-items:center;margin-top:10px;}
+  .krow{display:flex;gap:5px;justify-content:center;}
+  .key{width:min(7.2vw,44px);height:min(7.2vw,44px);border-radius:9px;background:#eef1f7;color:#2b2350;
+    display:flex;align-items:center;justify-content:center;font-size:min(3.4vw,20px);font-weight:bold;box-shadow:0 2px 0 #d3d8e3;}
+  .key.space{width:min(30vw,200px);}
+  .key.hl{background:var(--yellow);color:#6b4e00;box-shadow:0 2px 0 #d9a900;transform:translateY(1px);}
+  .key.press{background:var(--green);color:#fff;}
+  .start,.next,.back{border:none;border-radius:16px;font-size:20px;font-weight:bold;padding:12px 24px;margin:12px 6px 0;cursor:pointer;}
+  .start,.next{background:var(--yellow);color:#6b4e00;}
   .start:hover,.next:hover{background:#ffdf6a;}
-  .med{font-size:56px;margin:6px 0;}
+  .back{background:#e7e7f2;color:#4a4a6a;font-size:16px;padding:10px 18px;}
+  .med{font-size:54px;margin:4px 0;}
+  .stars{font-size:40px;letter-spacing:4px;}
   .hidden{display:none !important;}
-  .tip{color:#9a96b8;font-size:14px;margin-top:12px;}
+  .tip{color:#9a96b8;font-size:13px;margin-top:10px;}
 </style>
 </head>
 <body>
@@ -42,74 +64,234 @@
     <rect x="34" y="88" width="52" height="30" rx="14" fill="#43b7ff"/>
   </svg>
 
+  <!-- ВЫБОР РЕЖИМА -->
   <div id="intro">
-    <h1>Поймай букву! ⌨️</h1>
-    <p class="sub">На экране появится буква — найди и нажми её на клавиатуре!</p>
-    <button class="start" onclick="startGame()">▶ Играть!</button>
-    <p class="tip">Тренируем пальчики. Не спеши — ищи букву спокойно.</p>
+    <h1>Тренажёр печати ⌨️</h1>
+    <div class="lvl" id="lvlLabel">Уровень 1</div>
+    <p class="sub">Выбери режим. Начни со «Знакомства», потом попробуй сложнее!</p>
+    <div class="modes">
+      <button class="mode" onclick="startMode(1)"><span class="ic">🐣</span><span class="nm">Знакомство</span><span class="ds">Буква подсвечивается на клавиатуре — найди и нажми. Без спешки.</span></button>
+      <button class="mode" onclick="startMode(2)"><span class="ic">⚡</span><span class="nm">На скорость</span><span class="ds">Лови буквы быстро! Считаем, сколько поймал за минуту.</span></button>
+      <button class="mode" onclick="startMode(3)"><span class="ic">📝</span><span class="nm">Пишем слова</span><span class="ds">Напечатай слово по буквам. Как настоящий печатник!</span></button>
+    </div>
   </div>
 
+  <!-- ИГРА -->
   <div id="game" class="hidden">
-    <div class="letter" id="letter">А</div>
-    <div class="say" id="say">Нажми эту букву 👆</div>
+    <div class="target" id="target"></div>
+    <div class="letter" id="letter"></div>
+    <div class="word hidden" id="word"></div>
+    <div class="say" id="say"></div>
+    <div class="info" id="info"></div>
     <div class="prog"><div id="bar"></div></div>
-    <div class="cnt" id="cnt">Поймано: 0 из 12</div>
+    <div class="kb" id="kb"></div>
+    <button class="back" onclick="location.reload()">↩ Выбрать режим</button>
   </div>
 
+  <!-- ИТОГ -->
   <div id="result" class="hidden">
     <div class="med" id="med">🏆</div>
-    <h1>Молодец! 🎉</h1>
+    <h1 id="resTitle">Молодец!</h1>
+    <div class="stars" id="stars"></div>
     <p class="sub" id="resText"></p>
-    <button class="next" onclick="location.reload()">↺ Ещё разок</button>
+    <button class="next" onclick="restart()">↺ Ещё разок</button>
+    <button class="back" onclick="location.reload()">↩ Выбрать режим</button>
   </div>
 </div>
 
 <script>
-const POOL = ['А','О','М','П','К','Т','Н','Р','С','Л','В','Е','И','У','Д','Б','Я','Ш'];
-const TOTAL = 12;
-let queue=[], idx=0, done=0;
+// ⬇️ УРОВЕНЬ усложняется от урока к уроку (меняется при копировании тренажёра в новый урок): 1..9
+const LESSON_LEVEL = 7;
 
+// Раскладка ЙЦУКЕН: физическая клавиша (e.code) → буква. Работает при ЛЮБОЙ раскладке ОС.
+const CODEMAP = {
+  KeyQ:'Й',KeyW:'Ц',KeyE:'У',KeyR:'К',KeyT:'Е',KeyY:'Н',KeyU:'Г',KeyI:'Ш',KeyO:'Щ',KeyP:'З',BracketLeft:'Х',BracketRight:'Ъ',
+  KeyA:'Ф',KeyS:'Ы',KeyD:'В',KeyF:'А',KeyG:'П',KeyH:'Р',KeyJ:'О',KeyK:'Л',KeyL:'Д',Semicolon:'Ж',Quote:'Э',
+  KeyZ:'Я',KeyX:'Ч',KeyC:'С',KeyV:'М',KeyB:'И',KeyN:'Т',KeyM:'Ь',Comma:'Б',Period:'Ю',Space:' '
+};
+const ROWS = [
+  ['Й','Ц','У','К','Е','Н','Г','Ш','Щ','З','Х','Ъ'],
+  ['Ф','Ы','В','А','П','Р','О','Л','Д','Ж','Э'],
+  ['Я','Ч','С','М','И','Т','Ь','Б','Ю'],
+];
+
+// Пул букв растёт с уровнем
+const POOLS = {
+  1:'ОАМПНТКИ', 2:'ОАМПНТКИРСЛВЕ', 3:'ОАМПНТКИРСЛВЕУДБЯ',
+  4:'ОАМПНТКИРСЛВЕУДБЯГЗЖХШ', 5:'ОАМПНТКИРСЛВЕУДБЯГЗЖХШЙЦЕНЧ'
+};
+function pool(){ return POOLS[Math.min(5, Math.max(1,LESSON_LEVEL>4?5:LESSON_LEVEL))].split(''); }
+
+// Слова/фразы по уровню
+const WORDBANK = {
+  1:['КОТ','ДОМ','МЯЧ','СОК','НОС','РОТ','СЫР','ЛЕС'],
+  2:['МАМА','ПАПА','ЛЕТО','РЕКА','ЛУНА','РОЗА','КНИГА','ОКНО'],
+  3:['РОБОТ','ЗАЯЦ','ПАРК','МИШКА','КОШКА','ПЕНАЛ','ШКОЛА'],
+  4:['РАКЕТА','ПИКСЕЛЬ','ДРАКОН','КОМПЬЮТЕР','РИСУНОК'],
+  5:['МОЙ КОТ','ЯРКОЕ ЛЕТО','ПИКСЕЛЬ АРТ','ДОБРЫЙ БИП']
+};
+function words(){ return WORDBANK[Math.min(5, Math.max(1,LESSON_LEVEL>4?5:LESSON_LEVEL))]; }
+
+document.getElementById('lvlLabel').textContent='Уровень '+LESSON_LEVEL;
+
+// ---- Экранная клавиатура ----
+const kb=document.getElementById('kb');
+function buildKeyboard(){
+  kb.innerHTML='';
+  ROWS.forEach(row=>{
+    const r=document.createElement('div'); r.className='krow';
+    row.forEach(l=>{ const k=document.createElement('div'); k.className='key'; k.dataset.l=l; k.textContent=l; r.appendChild(k); });
+    kb.appendChild(r);
+  });
+  const r=document.createElement('div'); r.className='krow';
+  const sp=document.createElement('div'); sp.className='key space'; sp.dataset.l=' '; sp.textContent='пробел'; sp.style.fontSize='14px';
+  r.appendChild(sp); kb.appendChild(r);
+}
+function keyEl(l){ return [...kb.querySelectorAll('.key')].find(k=>k.dataset.l===l); }
+function highlight(l){ kb.querySelectorAll('.key.hl').forEach(k=>k.classList.remove('hl')); if(l){const k=keyEl(l); if(k)k.classList.add('hl');} }
+function flashKey(l,cls){ const k=keyEl(l); if(k){k.classList.add(cls); setTimeout(()=>k.classList.remove(cls),160);} }
+
+// ---- Общее состояние ----
+let mode=0, total=0, done=0, correct=0, target='', word='', wpos=0;
+let timeLeft=0, timer=null, useHint=true, finished=false, startTime=0, busy=false;
+
+function show(id){ ['intro','game','result'].forEach(x=>document.getElementById(x).classList.add('hidden')); document.getElementById(id).classList.remove('hidden'); }
 function shuffle(a){for(let i=a.length-1;i>0;i--){const j=Math.random()*(i+1)|0;[a[i],a[j]]=[a[j],a[i]];}return a;}
 
-function startGame(){
-  document.getElementById('intro').classList.add('hidden');
-  document.getElementById('result').classList.add('hidden');
-  document.getElementById('game').classList.remove('hidden');
-  queue=[]; for(let i=0;i<TOTAL;i++) queue.push(POOL[Math.random()*POOL.length|0]);
-  idx=0; done=0;
-  showLetter();
+function startMode(m){
+  mode=m; finished=false; busy=false; done=0; correct=0;
+  buildKeyboard(); show('game');
+  document.getElementById('word').classList.add('hidden');
+  document.getElementById('letter').classList.remove('hidden');
+  document.getElementById('say').textContent='';
+  if(m===1){ // Знакомство
+    total=10; useHint=true;
+    document.getElementById('target').textContent='Найди букву на клавиатуре и нажми её:';
+    queue=[]; for(let i=0;i<total;i++) queue.push(rndLetter());
+    nextLetter();
+  } else if(m===2){ // На скорость
+    total=15; useHint=false; timeLeft=45; startTime=performance.now();
+    document.getElementById('target').textContent='Лови буквы! Нажимай их на клавиатуре:';
+    queue=[]; for(let i=0;i<total;i++) queue.push(rndLetter());
+    timer=setInterval(()=>{ timeLeft--; updateInfo(); if(timeLeft<=0) finish(); },1000);
+    nextLetter();
+  } else { // Пишем слова
+    total=4; useHint=(LESSON_LEVEL<=3);
+    document.getElementById('letter').classList.add('hidden');
+    document.getElementById('word').classList.remove('hidden');
+    document.getElementById('target').textContent='Напечатай слово по буквам:';
+    queue=shuffle([...words()]).slice(0,total);
+    nextWord();
+  }
+  updateInfo();
 }
-function showLetter(){
-  const el=document.getElementById('letter');
-  el.className='letter'; el.textContent=queue[idx];
-  document.getElementById('say').textContent='Нажми эту букву 👆';
+let queue=[], qi=0;
+function rndLetter(){ const p=pool(); return p[Math.random()*p.length|0]; }
+
+function nextLetter(){
+  busy=false;
+  if(done>=total){ finish(); return; }
+  target=queue[done];
+  const el=document.getElementById('letter'); el.className='letter'; el.textContent=target;
+  document.getElementById('say').textContent = mode===1?'Где буква «'+target+'»? 👇' : 'Нажми «'+target+'»';
   document.getElementById('say').style.color='#2b2350';
+  highlight(useHint?target:null);
+  updateInfo();
 }
-function updateProg(){
-  document.getElementById('bar').style.width=Math.round(done/TOTAL*100)+'%';
-  document.getElementById('cnt').textContent='Поймано: '+done+' из '+TOTAL;
+
+function nextWord(){
+  busy=false;
+  if(done>=total){ finish(); return; }
+  word=queue[done]; wpos=0;
+  renderWord();
+  document.getElementById('say').textContent='Печатай по одной букве';
+  document.getElementById('say').style.color='#2b2350';
+  highlight(useHint?word[0]:null);
+  updateInfo();
 }
+function renderWord(){
+  const w=document.getElementById('word'); w.innerHTML='';
+  [...word].forEach((ch,i)=>{ const s=document.createElement('span');
+    s.textContent = ch===' '?'␣':ch; s.className = i<wpos?'done':i===wpos?'cur':'';
+    w.appendChild(s); });
+}
+
+function updateInfo(){
+  const info=document.getElementById('info');
+  if(mode===2) info.innerHTML='Поймано: <b>'+correct+'</b> из '+total+' &nbsp;·&nbsp; ⏱ <b>'+Math.max(0,timeLeft)+'</b>';
+  else if(mode===3) info.innerHTML='Слово <b>'+(done+ (finished?0:1))+'</b> из '+total;
+  else info.innerHTML='Поймано: <b>'+done+'</b> из '+total;
+  document.getElementById('bar').style.width=Math.round((mode===2?correct:done)/total*100)+'%';
+}
+
+function press(letter,code){
+  if(finished||busy) return;
+  const want = mode===3 ? word[wpos] : target;
+  const okByKey = letter===want;
+  const okByCode = code && CODEMAP[code]===want;
+  const ok = okByKey || okByCode;
+  if(mode===3){
+    if(ok){
+      flashKey(want,'press'); wpos++; correct++;
+      if(wpos>=word.length){ // слово готово
+        done++; busy=true; document.getElementById('say').textContent='✅ Слово готово! Молодец!'; document.getElementById('say').style.color='#37c871';
+        renderWord(); highlight(null);
+        setTimeout(()=>{ if(!finished) nextWord(); }, 700);
+      } else { renderWord(); highlight(useHint?word[wpos]:null); }
+    } else {
+      document.getElementById('say').textContent='Не та клавиша — ищи «'+(want===' '?'пробел':want)+'» 👀'; document.getElementById('say').style.color='#e0555f';
+    }
+    return;
+  }
+  // режимы 1 и 2 (одиночные буквы)
+  const el=document.getElementById('letter');
+  if(ok){
+    el.className='letter ok'; flashKey(want,'press'); busy=true;
+    document.getElementById('say').textContent='✅ Верно!'; document.getElementById('say').style.color='#37c871';
+    done++; correct++; highlight(null);
+    setTimeout(()=>{ if(!finished){ if(mode===2 && done>=total){ finish(); } else nextLetter(); } }, mode===1?420:260);
+  } else {
+    el.className='letter no';
+    document.getElementById('say').textContent = mode===1?'Не та — жми подсвеченную клавишу 💛':'Не та буква — ищи «'+want+'»';
+    document.getElementById('say').style.color='#e0555f';
+    setTimeout(()=>{ if(!finished) el.className='letter'; },320);
+  }
+  updateInfo();
+}
+
 document.addEventListener('keydown',e=>{
   if(document.getElementById('game').classList.contains('hidden')) return;
-  if(e.key.length!==1) return; // игнор служебных клавиш
-  const want=queue[idx];
-  const el=document.getElementById('letter');
-  const say=document.getElementById('say');
-  if(e.key.toUpperCase()===want){
-    el.className='letter ok'; say.textContent='✅ Верно!'; say.style.color='#37c871';
-    done++; updateProg();
-    setTimeout(()=>{ idx++; if(idx>=TOTAL){ finish(); } else { showLetter(); } }, 500);
-  } else {
-    el.className='letter no'; say.textContent='Не та буква — ищи «'+want+'» 👀'; say.style.color='#e0555f';
-    setTimeout(()=>{ if(!document.getElementById('game').classList.contains('hidden')){ el.className='letter'; } }, 350);
-  }
+  let letter=null;
+  if(e.code==='Space'){ letter=' '; }
+  else if(e.key && e.key.length===1){ letter=e.key.toUpperCase(); }
+  if(letter===null && !CODEMAP[e.code]) return;
+  if(e.code==='Space') e.preventDefault();
+  press(letter, e.code);
 });
+
 function finish(){
-  document.getElementById('game').classList.add('hidden');
-  document.getElementById('result').classList.remove('hidden');
-  document.getElementById('med').textContent='🏆';
-  document.getElementById('resText').textContent='Ты поймал все '+TOTAL+' букв! Пальчики стали быстрее ⭐';
+  finished=true; busy=false; if(timer){clearInterval(timer);timer=null;}
+  show('result');
+  let stars, title, text, med;
+  if(mode===2){
+    const secs=Math.max(1,Math.round((performance.now()-startTime)/1000));
+    const perMin=Math.round(correct/secs*60);
+    stars=Math.max(1,Math.min(5,Math.round(correct/total*5)));
+    med = correct>=total?'🏆':correct>=total*0.6?'🥇':'⭐';
+    title='Скорость!'; text='Поймано '+correct+' из '+total+'. Это ≈ '+perMin+' букв в минуту! ⚡';
+  } else if(mode===3){
+    stars=Math.max(1,Math.min(5,Math.round(done/total*5)));
+    med = done>=total?'🏆':done>=total*0.6?'🥇':'⭐';
+    title='Готово!'; text='Напечатано слов: '+done+' из '+total+'. Ты — печатник! 📝';
+  } else {
+    stars=5; med='🏆'; title='Отлично!'; text='Ты нашёл все '+total+' букв на клавиатуре! Пальчики запоминают. ⌨️';
+  }
+  document.getElementById('med').textContent=med;
+  document.getElementById('resTitle').textContent=title;
+  document.getElementById('stars').textContent='⭐'.repeat(stars)+'☆'.repeat(5-stars);
+  document.getElementById('resText').textContent=text;
 }
+function restart(){ startMode(mode); }
 </script>
 </body>
 </html>
