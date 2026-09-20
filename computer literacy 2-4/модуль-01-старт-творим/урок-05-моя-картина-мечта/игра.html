@@ -3,137 +3,179 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Игра — Что каким инструментом?</title>
+<title>Игра — Хватай инструмент!</title>
 <style>
-  :root{--bg1:#ffb03f;--bg2:#37c871;--ink:#2b2350;--yellow:#ffd23f;--green:#37c871;--red:#ff7a7a;}
-  *{box-sizing:border-box;margin:0;font-family:'Comic Sans MS','Segoe UI',system-ui,sans-serif;}
-  body{min-height:100vh;background:linear-gradient(135deg,var(--bg1),var(--bg2));display:flex;
-    align-items:center;justify-content:center;padding:16px;color:var(--ink);}
-  .stage{width:min(760px,100%);background:#fff;border-radius:28px;box-shadow:0 18px 50px rgba(0,0,0,.25);
-    padding:26px 24px 30px;text-align:center;}
-  .bip{width:88px;height:auto;margin-bottom:2px;}
-  h1{font-size:28px;color:#d98a00;margin:4px 0;}
-  .sub{color:#7a76a0;font-size:16px;margin-bottom:14px;}
-  .bar{display:flex;gap:6px;justify-content:center;margin-bottom:14px;flex-wrap:wrap;}
-  .dot{width:15px;height:15px;border-radius:50%;background:#ddd;}
-  .dot.done{background:var(--green);}.dot.now{background:var(--yellow);transform:scale(1.25);}
-  .q{font-size:26px;font-weight:bold;margin:6px 0 16px;color:var(--ink);}
-  .opts{display:flex;gap:16px;justify-content:center;flex-wrap:wrap;}
-  .opt{width:150px;border:4px solid #eee;border-radius:22px;background:#fff8ec;padding:14px 8px;cursor:pointer;
-    transition:transform .08s,border-color .15s,background .15s;}
-  .opt:hover{transform:translateY(-3px);background:#fdeccb;}
-  .opt .em{font-size:56px;line-height:1;}
-  .opt .nm{font-size:17px;margin-top:6px;color:var(--ink);}
-  .opt.ok{border-color:var(--green);background:#d9f8e5;}
-  .opt.no{border-color:var(--red);background:#ffe1e1;}
-  .fb{font-size:22px;font-weight:bold;min-height:30px;margin-top:14px;}
-  .start,.next{border:none;border-radius:18px;background:var(--yellow);color:#6b4e00;font-size:24px;
-    font-weight:bold;padding:15px 30px;margin-top:14px;cursor:pointer;}
-  .start:hover,.next:hover{background:#ffdf6a;}
-  .big{font-size:60px;margin:6px 0;}
+  :root{--bg1:#ffb03f;--bg2:#ff7ab6;--ink:#2b2350;--yellow:#ffd23f;--green:#37c871;--red:#ff5a7a;--blue:#43b7ff;}
+  *{box-sizing:border-box;margin:0;font-family:'Comic Sans MS','Segoe UI',system-ui,sans-serif;user-select:none;}
+  body{height:100vh;overflow:hidden;background:linear-gradient(135deg,var(--bg1),var(--bg2));color:#fff;}
+  #hud{position:fixed;top:0;left:0;right:0;display:flex;justify-content:space-between;align-items:center;
+    padding:10px 18px;font-size:23px;font-weight:bold;text-shadow:0 2px 0 rgba(0,0,0,.2);z-index:50;gap:8px;}
+  #task{position:fixed;top:48px;left:0;right:0;text-align:center;z-index:40;padding:0 12px;}
+  #task .t{display:inline-block;background:rgba(255,255,255,.95);color:var(--ink);border-radius:16px;padding:8px 18px;
+    font-size:20px;font-weight:bold;box-shadow:0 6px 16px rgba(0,0,0,.2);max-width:92%;}
+  #tbar{width:min(360px,80%);height:12px;background:rgba(255,255,255,.4);border-radius:8px;margin:8px auto 0;overflow:hidden;}
+  #tbar>div{height:100%;width:100%;background:var(--yellow);transition:none;}
+  #field{position:fixed;left:0;right:0;top:120px;bottom:0;}
+  .tool{position:absolute;width:84px;height:84px;border-radius:50%;background:#fff;display:flex;align-items:center;justify-content:center;
+    font-size:44px;cursor:pointer;box-shadow:0 8px 18px rgba(0,0,0,.28);will-change:left,top;}
+  .tool:hover{outline:4px solid rgba(255,255,255,.7);}
+  .tool.ok{background:#d9f8e5;transform:scale(1.15);} .tool.no{background:#ffdada;animation:shake .3s;}
+  @keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-8px)}75%{transform:translateX(8px)}}
+  .flash{position:fixed;left:50%;top:44%;transform:translateX(-50%);font-size:32px;font-weight:bold;color:#fff;
+    text-shadow:0 3px 0 rgba(0,0,0,.25);z-index:60;pointer-events:none;animation:fl 1s forwards;}
+  @keyframes fl{0%{opacity:0;transform:translateX(-50%) translateY(10px) scale(.7)}20%{opacity:1;transform:translateX(-50%) scale(1.1)}100%{opacity:0;transform:translateX(-50%) translateY(-24px)}}
+  .screen{position:fixed;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:24px;z-index:80;}
+  .card{background:#fff;color:var(--ink);border-radius:28px;padding:24px 30px;box-shadow:0 16px 40px rgba(0,0,0,.3);max-width:560px;}
+  h1{font-size:31px;color:#d1477a;margin-bottom:6px;}
+  p{font-size:19px;margin:8px 0;line-height:1.35;}
+  .rules{text-align:left;font-size:18px;margin:12px auto;max-width:430px;}
+  .rules li{margin:8px 0;list-style:none;}
+  button.play{border:none;border-radius:18px;background:var(--yellow);color:#6b4e00;font-size:24px;font-weight:bold;padding:14px 30px;margin-top:14px;cursor:pointer;}
+  button.play:hover{background:#ffdf6a;}
+  .bip{width:84px;height:auto;margin-bottom:4px;}
+  .big{font-size:56px;margin:6px 0;}
   .hidden{display:none !important;}
-  .hint{color:#9a96b8;font-size:14px;margin-top:14px;}
 </style>
 </head>
 <body>
-<div class="stage">
-  <svg class="bip" viewBox="0 0 120 130" xmlns="http://www.w3.org/2000/svg">
-    <line x1="60" y1="18" x2="60" y2="8" stroke="#43b7ff" stroke-width="5"/><circle cx="60" cy="7" r="7" fill="#ffd23f"/>
-    <rect x="22" y="22" width="76" height="62" rx="20" fill="#ffd23f"/><rect x="33" y="34" width="54" height="32" rx="13" fill="#2b2350"/>
-    <circle cx="50" cy="50" r="8" fill="#43b7ff"/><circle cx="72" cy="50" r="8" fill="#43b7ff"/>
-    <circle cx="50" cy="50" r="3.5" fill="#fff"/><circle cx="72" cy="50" r="3.5" fill="#fff"/>
-    <path d="M49 73 q11 9 22 0" stroke="#2b2350" stroke-width="4" fill="none" stroke-linecap="round"/>
-    <rect x="34" y="88" width="52" height="30" rx="14" fill="#43b7ff"/>
-  </svg>
 
-  <div id="intro">
-    <h1>Что каким инструментом? 🎨</h1>
-    <p class="sub">Вспомним инструменты Tux Paint — выбери правильный!</p>
-    <button class="start" onclick="startGame()">▶ Играть!</button>
-    <p class="hint">Учитель читает вопрос. Дети выбирают картинку. Клавиши 1 · 2 · 3</p>
+<div id="hud" class="hidden">
+  <div>🎯 <span id="score">0</span></div>
+  <div id="lives">❤️❤️❤️</div>
+  <div>⏱ <span id="time">50</span></div>
+</div>
+<div id="task" class="hidden"><div class="t" id="taskText"></div><div id="tbar"><div id="tfill"></div></div></div>
+<div id="field" class="hidden"></div>
+
+<div id="intro" class="screen">
+  <div class="card">
+    <svg class="bip" viewBox="0 0 120 130" xmlns="http://www.w3.org/2000/svg">
+      <line x1="60" y1="18" x2="60" y2="8" stroke="#43b7ff" stroke-width="5"/><circle cx="60" cy="7" r="7" fill="#ffd23f"/>
+      <rect x="22" y="22" width="76" height="62" rx="20" fill="#ffd23f"/><rect x="33" y="34" width="54" height="32" rx="13" fill="#2b2350"/>
+      <circle cx="50" cy="50" r="8" fill="#43b7ff"/><circle cx="72" cy="50" r="8" fill="#43b7ff"/>
+      <circle cx="50" cy="50" r="3.5" fill="#fff"/><circle cx="72" cy="50" r="3.5" fill="#fff"/>
+      <path d="M49 73 q11 9 22 0" stroke="#2b2350" stroke-width="4" fill="none" stroke-linecap="round"/>
+      <rect x="34" y="88" width="52" height="30" rx="14" fill="#43b7ff"/>
+    </svg>
+    <h1>Хватай инструмент! 🎯</h1>
+    <p>Бип говорит, что нужно сделать — а ты быстро лови нужный инструмент Tux Paint!</p>
+    <ul class="rules">
+      <li>🖌 кисть · 🪣 заливка · 🧽 ластик · 🅰️ текст · 🎟️ штамп · ↩️ отмена · 💾 сохранить.</li>
+      <li>✅ Поймал верный — очко. ❌ Ошибся или не успел — −❤️ (их три).</li>
+      <li>⚡ Инструменты плавают и <b>ускоряются</b>. Быстрые задания дают <b>бонус +2!</b></li>
+    </ul>
+    <button class="play" onclick="startGame()">▶ Играть!</button>
   </div>
+</div>
 
-  <div id="game" class="hidden">
-    <div class="bar" id="bar"></div>
-    <div class="q" id="qtext"></div>
-    <div class="opts" id="opts"></div>
-    <div class="fb" id="fb"></div>
-  </div>
-
-  <div id="result" class="hidden">
-    <div class="big" id="medal">⭐</div>
+<div id="over" class="screen hidden">
+  <div class="card">
+    <div class="big" id="medal">🎯</div>
     <h1 id="resTitle">Молодец!</h1>
-    <p class="sub" id="resText"></p>
-    <button class="next" onclick="location.reload()">↺ Ещё разок</button>
+    <p id="resText"></p>
+    <button class="play" onclick="location.reload()">↺ Ещё разок</button>
   </div>
 </div>
 
 <script>
-const ITEMS = [
-  {em:"🪣", nm:"Заливка", q:"Чем закрасить весь фон сразу?"},
-  {em:"🖌️", nm:"Кисть", q:"Чем рисуют линии?"},
-  {em:"🎟️", nm:"Штамп", q:"Чем поставить готовую картинку (цветок, звёздочку)?"},
-  {em:"🅰️", nm:"Текст", q:"Чем написать название картины?"},
-  {em:"↩️", nm:"Отмена", q:"Что нажать, если ошибся?"},
-  {em:"💾", nm:"Сохранить", q:"Что нажать, чтобы работа не потерялась?"},
-  {em:"📁", nm:"Папка", q:"Куда складывают файлы?"},
+const field=document.getElementById('field');
+const TOOLS=[
+  {k:'fill',e:'🪣',n:'Заливка'},{k:'brush',e:'🖌️',n:'Кисть'},{k:'eraser',e:'🧽',n:'Ластик'},
+  {k:'text',e:'🅰️',n:'Текст'},{k:'stamp',e:'🎟️',n:'Штамп'},{k:'undo',e:'↩️',n:'Отмена'},{k:'save',e:'💾',n:'Сохранить'}
 ];
+const TASKS=[
+  {k:'fill',t:'Закрасить весь фон одним цветом'},
+  {k:'brush',t:'Нарисовать линию или усы'},
+  {k:'eraser',t:'Стереть лишнюю кляксу'},
+  {k:'text',t:'Написать название картины'},
+  {k:'stamp',t:'Поставить готовую звёздочку'},
+  {k:'undo',t:'Ой, ошибка! Вернуть назад'},
+  {k:'save',t:'Чтобы работа не потерялась'},
+];
+let W,H,score=0,lives=3,timeLeft=50,running=false,bubbles=[],curKey='',taskTime=0,taskLeft=0,fast=false;
+let rafId=null,tickT=null,lastFrame=0;
 
-let order=[], idx=0, correct=0, answered=false;
-function shuffle(a){for(let i=a.length-1;i>0;i--){const j=Math.random()*(i+1)|0;[a[i],a[j]]=[a[j],a[i]];}return a;}
+function sizeField(){ W=field.clientWidth; H=field.clientHeight; }
 
 function startGame(){
-  order=shuffle([...Array(ITEMS.length).keys()]);
-  idx=0; correct=0;
   document.getElementById('intro').classList.add('hidden');
-  document.getElementById('result').classList.add('hidden');
-  document.getElementById('game').classList.remove('hidden');
-  const bar=document.getElementById('bar'); bar.innerHTML='';
-  order.forEach((_,i)=>{const d=document.createElement('div');d.className='dot';d.id='d'+i;bar.appendChild(d);});
-  showRound();
-}
-function showRound(){
-  answered=false;
-  const item=ITEMS[order[idx]];
-  document.getElementById('qtext').textContent=item.q;
-  document.getElementById('fb').textContent='';
-  order.forEach((_,i)=>{document.getElementById('d'+i).className='dot'+(i<idx?' done':i===idx?' now':'');});
-  const others=shuffle(ITEMS.filter(x=>x!==item)).slice(0,2);
-  const opts=shuffle([item,...others]);
-  const box=document.getElementById('opts'); box.innerHTML='';
-  opts.forEach((o,i)=>{
-    const b=document.createElement('div'); b.className='opt';
-    b.innerHTML='<div class="em">'+o.em+'</div><div class="nm">'+(i+1)+'. '+o.nm+'</div>';
-    b.onclick=()=>choose(b,o===item,item);
-    box.appendChild(b);
+  document.getElementById('over').classList.add('hidden');
+  document.getElementById('hud').classList.remove('hidden');
+  document.getElementById('task').classList.remove('hidden');
+  field.classList.remove('hidden'); field.innerHTML='';
+  sizeField(); score=0;lives=3;timeLeft=50;running=true;bubbles=[];
+  document.getElementById('score').textContent=0; document.getElementById('time').textContent=50; updateLives();
+  // создаём пузырьки инструментов
+  TOOLS.forEach(tool=>{
+    const el=document.createElement('div'); el.className='tool'; el.textContent=tool.e; el.title=tool.n;
+    const b={el,key:tool.k,x:Math.random()*(W-84),y:Math.random()*(H-84),vx:0,vy:0};
+    el.addEventListener('pointerdown',()=>pick(b));
+    field.appendChild(el); bubbles.push(b);
   });
+  newTask();
+  lastFrame=performance.now(); rafId=requestAnimationFrame(loop);
+  tickT=setInterval(tick,1000);
 }
-function choose(el,isOk,item){
-  if(answered) return; answered=true;
-  const opts=[...document.querySelectorAll('.opt')];
-  opts.forEach(o=>o.onclick=null);
-  const fb=document.getElementById('fb');
-  if(isOk){ el.classList.add('ok'); correct++; fb.textContent='✅ Верно! Молодец! ⭐'; fb.style.color='#37c871'; }
-  else{
-    el.classList.add('no');
-    opts.forEach(o=>{ if(o.querySelector('.nm').textContent.includes(item.nm)) o.classList.add('ok'); });
-    fb.textContent='Почти! Правильный — '+item.em+' '+item.nm; fb.style.color='#f0a500';
+function elapsed(){return 50-timeLeft;}
+function tick(){ timeLeft--; document.getElementById('time').textContent=Math.max(0,timeLeft); if(timeLeft<=0) endGame(true); }
+function updateLives(){ document.getElementById('lives').textContent='❤️'.repeat(Math.max(0,lives))+'🖤'.repeat(3-Math.max(0,lives)); }
+function flash(t){ const f=document.createElement('div'); f.className='flash'; f.textContent=t; document.body.appendChild(f); setTimeout(()=>f.remove(),1000); }
+
+function newTask(){
+  const task=TASKS[Math.random()*TASKS.length|0];
+  curKey=task.k;
+  fast=Math.random()<0.25 && elapsed()>6;
+  document.getElementById('taskText').textContent=(fast?'⚡ БЫСТРО! ':'')+'Бипу нужно: '+task.t;
+  taskTime=Math.max(2.0, (fast?2.6:4.0) - elapsed()*0.035); taskLeft=taskTime;
+  // задаём скорость пузырькам (растёт со временем)
+  const sp=70+elapsed()*4+(fast?60:0);
+  bubbles.forEach(b=>{ const a=Math.random()*Math.PI*2; b.vx=Math.cos(a)*sp; b.vy=Math.sin(a)*sp; });
+}
+
+function pick(b){
+  if(!running) return;
+  if(b.key===curKey){
+    b.el.classList.add('ok'); setTimeout(()=>b.el.classList.remove('ok'),200);
+    const pts=fast?2:1; score+=pts; document.getElementById('score').textContent=score;
+    if(fast) flash('⚡ Бонус +2!');
+    newTask();
+  } else {
+    b.el.classList.add('no'); setTimeout(()=>b.el.classList.remove('no'),300);
+    loseLife(); flash('❌ Не тот! −❤️');
+    if(running) newTask();
   }
-  setTimeout(next,1500);
 }
-function next(){ idx++; if(idx>=order.length){ result(); return; } showRound(); }
-function result(){
-  document.getElementById('game').classList.add('hidden');
-  const r=document.getElementById('result'); r.classList.remove('hidden');
-  const total=order.length;
-  document.getElementById('medal').textContent = correct===total?'🏆':correct>=total*0.7?'🥇':'⭐';
-  document.getElementById('resTitle').textContent = correct>=total*0.7?'Ты знаешь все инструменты!':'Молодец, что старался!';
-  document.getElementById('resText').textContent='Правильно: '+correct+' из '+total+' ⭐';
+function loseLife(){ lives--; updateLives(); if(lives<=0) endGame(false); }
+
+function loop(now){
+  if(!running) return;
+  const dt=Math.min(0.05,(now-lastFrame)/1000); lastFrame=now;
+  // таймер задания
+  taskLeft-=dt;
+  document.getElementById('tfill').style.width=Math.max(0,taskLeft/taskTime*100)+'%';
+  document.getElementById('tfill').style.background = taskLeft<taskTime*0.35?'#ff5a7a':'#ffd23f';
+  if(taskLeft<=0){ loseLife(); flash('⌛ Не успел! −❤️'); if(running) newTask(); }
+  // движение пузырьков
+  for(const b of bubbles){
+    b.x+=b.vx*dt; b.y+=b.vy*dt;
+    if(b.x<0){b.x=0;b.vx=Math.abs(b.vx);} if(b.x>W-84){b.x=W-84;b.vx=-Math.abs(b.vx);}
+    if(b.y<0){b.y=0;b.vy=Math.abs(b.vy);} if(b.y>H-84){b.y=H-84;b.vy=-Math.abs(b.vy);}
+    b.el.style.left=b.x+'px'; b.el.style.top=b.y+'px';
+  }
+  rafId=requestAnimationFrame(loop);
 }
-document.addEventListener('keydown',e=>{
-  if(document.getElementById('game').classList.contains('hidden')) return;
-  const n=parseInt(e.key); if(n>=1&&n<=3){const o=document.querySelectorAll('.opt')[n-1]; if(o&&!answered)o.click();}
-});
+
+function endGame(byTime){
+  running=false; cancelAnimationFrame(rafId); clearInterval(tickT);
+  field.innerHTML=''; field.classList.add('hidden');
+  document.getElementById('hud').classList.add('hidden'); document.getElementById('task').classList.add('hidden');
+  const medal=score>=25?'🏆':score>=15?'🥇':score>=8?'🌟':'🎯';
+  let title=!byTime?'Ой, жизни кончились!':score>=15?'Супер! Ты знаешь все инструменты!':score>=8?'Здорово получается!':'Молодец, что старался!';
+  document.getElementById('medal').textContent=medal;
+  document.getElementById('resTitle').textContent=title;
+  document.getElementById('resText').textContent='Ты поймал 🎯 '+score+' инструментов!';
+  document.getElementById('over').classList.remove('hidden');
+}
 </script>
 </body>
 </html>
