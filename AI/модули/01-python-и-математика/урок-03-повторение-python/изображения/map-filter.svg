@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 860 380" font-family="'Segoe UI',system-ui,sans-serif">
+  <rect x="0" y="0" width="860" height="380" fill="#f7f9fc"/>
+  <text x="430" y="34" font-size="23" font-weight="700" fill="#1f2937" text-anchor="middle">🔧 map и filter — куда тоже подаётся маленькая функция</text>
+
+  <!-- MAP -->
+  <text x="40" y="78" font-size="15" font-weight="700" fill="#4f46e5">map</text>
+  <text x="90" y="78" font-size="13.5" fill="#334155">— преобразует КАЖДЫЙ элемент</text>
+  <g font-family="monospace" font-size="15">
+    <rect x="70" y="92" width="42" height="34" rx="7" fill="#eef2ff" stroke="#6366f1" stroke-width="1.5"/><text x="91" y="114" fill="#3730a3" text-anchor="middle">1</text>
+    <rect x="116" y="92" width="42" height="34" rx="7" fill="#eef2ff" stroke="#6366f1" stroke-width="1.5"/><text x="137" y="114" fill="#3730a3" text-anchor="middle">2</text>
+    <rect x="162" y="92" width="42" height="34" rx="7" fill="#eef2ff" stroke="#6366f1" stroke-width="1.5"/><text x="183" y="114" fill="#3730a3" text-anchor="middle">3</text>
+    <rect x="208" y="92" width="42" height="34" rx="7" fill="#eef2ff" stroke="#6366f1" stroke-width="1.5"/><text x="229" y="114" fill="#3730a3" text-anchor="middle">4</text>
+    <rect x="254" y="92" width="42" height="34" rx="7" fill="#eef2ff" stroke="#6366f1" stroke-width="1.5"/><text x="275" y="114" fill="#3730a3" text-anchor="middle">5</text>
+  </g>
+  <text x="380" y="103" font-size="12.5" font-family="monospace" fill="#7c3aed" text-anchor="middle">lambda x: x**2</text>
+  <line x1="308" y1="109" x2="452" y2="109" stroke="#7c3aed" stroke-width="2.5"/><polygon points="460,109 448,103 448,115" fill="#7c3aed"/>
+  <text x="380" y="127" font-size="11" fill="#94a3b8" text-anchor="middle">(к каждому)</text>
+  <g font-family="monospace" font-size="15">
+    <rect x="472" y="92" width="42" height="34" rx="7" fill="#dcfce7" stroke="#16a34a" stroke-width="1.5"/><text x="493" y="114" fill="#166534" text-anchor="middle">1</text>
+    <rect x="518" y="92" width="42" height="34" rx="7" fill="#dcfce7" stroke="#16a34a" stroke-width="1.5"/><text x="539" y="114" fill="#166534" text-anchor="middle">4</text>
+    <rect x="564" y="92" width="42" height="34" rx="7" fill="#dcfce7" stroke="#16a34a" stroke-width="1.5"/><text x="585" y="114" fill="#166534" text-anchor="middle">9</text>
+    <rect x="610" y="92" width="48" height="34" rx="7" fill="#dcfce7" stroke="#16a34a" stroke-width="1.5"/><text x="634" y="114" fill="#166534" text-anchor="middle">16</text>
+    <rect x="662" y="92" width="48" height="34" rx="7" fill="#dcfce7" stroke="#16a34a" stroke-width="1.5"/><text x="686" y="114" fill="#166534" text-anchor="middle">25</text>
+  </g>
+
+  <line x1="40" y1="168" x2="820" y2="168" stroke="#e2e8f0" stroke-width="1.5"/>
+
+  <!-- FILTER -->
+  <text x="40" y="210" font-size="15" font-weight="700" fill="#db2777">filter</text>
+  <text x="105" y="210" font-size="13.5" fill="#334155">— оставляет только ПОДХОДЯЩИЕ (где условие True)</text>
+  <g font-family="monospace" font-size="15">
+    <rect x="70" y="224" width="42" height="34" rx="7" fill="#f1f5f9" stroke="#cbd5e1" stroke-width="1.5"/><text x="91" y="246" fill="#94a3b8" text-anchor="middle" text-decoration="line-through">1</text>
+    <rect x="116" y="224" width="42" height="34" rx="7" fill="#fce7f3" stroke="#db2777" stroke-width="1.5"/><text x="137" y="246" fill="#9d174d" text-anchor="middle">2</text>
+    <rect x="162" y="224" width="42" height="34" rx="7" fill="#f1f5f9" stroke="#cbd5e1" stroke-width="1.5"/><text x="183" y="246" fill="#94a3b8" text-anchor="middle" text-decoration="line-through">3</text>
+    <rect x="208" y="224" width="42" height="34" rx="7" fill="#fce7f3" stroke="#db2777" stroke-width="1.5"/><text x="229" y="246" fill="#9d174d" text-anchor="middle">4</text>
+    <rect x="254" y="224" width="42" height="34" rx="7" fill="#f1f5f9" stroke="#cbd5e1" stroke-width="1.5"/><text x="275" y="246" fill="#94a3b8" text-anchor="middle" text-decoration="line-through">5</text>
+  </g>
+  <text x="380" y="235" font-size="12.5" font-family="monospace" fill="#db2777" text-anchor="middle">lambda x: x%2==0</text>
+  <line x1="308" y1="241" x2="452" y2="241" stroke="#db2777" stroke-width="2.5"/><polygon points="460,241 448,235 448,247" fill="#db2777"/>
+  <text x="380" y="259" font-size="11" fill="#94a3b8" text-anchor="middle">(проверка True/False)</text>
+  <g font-family="monospace" font-size="15">
+    <rect x="472" y="224" width="42" height="34" rx="7" fill="#dcfce7" stroke="#16a34a" stroke-width="1.5"/><text x="493" y="246" fill="#166534" text-anchor="middle">2</text>
+    <rect x="518" y="224" width="42" height="34" rx="7" fill="#dcfce7" stroke="#16a34a" stroke-width="1.5"/><text x="539" y="246" fill="#166534" text-anchor="middle">4</text>
+  </g>
+
+  <rect x="70" y="300" width="720" height="54" rx="12" fill="#fef9c3" stroke="#eab308" stroke-width="1.5"/>
+  <text x="430" y="323" font-size="13.5" fill="#713f12" text-anchor="middle">💡 <tspan font-family="monospace">map</tspan> — «сделай что-то с каждым», <tspan font-family="monospace">filter</tspan> — «оставь только нужных».</text>
+  <text x="430" y="343" font-size="13" fill="#713f12" text-anchor="middle">В своём коде пиши генераторы (<tspan font-family="monospace">[x**2 for x in nums]</tspan>), а map/filter узнавай в чужом.</text>
+</svg>

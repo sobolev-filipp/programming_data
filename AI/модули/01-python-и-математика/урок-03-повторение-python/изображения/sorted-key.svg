@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 860 440" font-family="'Segoe UI',system-ui,sans-serif">
+  <rect x="0" y="0" width="860" height="440" fill="#f7f9fc"/>
+  <text x="430" y="34" font-size="23" font-weight="700" fill="#1f2937" text-anchor="middle">🔽 sorted(words, key=lambda w: w[1])</text>
+  <text x="430" y="58" font-size="13.5" fill="#64748b" text-anchor="middle"><tspan font-family="monospace" fill="#4f46e5">key</tspan> — это ПРАВИЛО «что взять у каждого слова». sorted применит его к каждому и отсортирует по результату.</text>
+
+  <!-- headers -->
+  <text x="140" y="92" font-size="13" font-weight="700" fill="#334155" text-anchor="middle">слова</text>
+  <text x="405" y="92" font-size="13" font-weight="700" fill="#334155" text-anchor="middle">key берёт w[1] (2-я буква)</text>
+  <text x="700" y="92" font-size="13" font-weight="700" fill="#166534" text-anchor="middle">sorted по этой букве</text>
+
+  <!-- col1 words -->
+  <g font-family="monospace" font-size="14">
+    <rect x="65" y="104" width="150" height="32" rx="7" fill="#eef2ff" stroke="#6366f1" stroke-width="1.5"/><text x="140" y="125" fill="#3730a3" text-anchor="middle">"банан"</text>
+    <rect x="65" y="144" width="150" height="32" rx="7" fill="#eef2ff" stroke="#6366f1" stroke-width="1.5"/><text x="140" y="165" fill="#3730a3" text-anchor="middle">"яблоко"</text>
+    <rect x="65" y="184" width="150" height="32" rx="7" fill="#eef2ff" stroke="#6366f1" stroke-width="1.5"/><text x="140" y="205" fill="#3730a3" text-anchor="middle">"кот"</text>
+    <rect x="65" y="224" width="150" height="32" rx="7" fill="#eef2ff" stroke="#6366f1" stroke-width="1.5"/><text x="140" y="245" fill="#3730a3" text-anchor="middle">"слон"</text>
+  </g>
+
+  <!-- arrows col1->col2 -->
+  <g stroke="#7c3aed" stroke-width="2"><line x1="220" y1="120" x2="358" y2="120"/><line x1="220" y1="160" x2="358" y2="160"/><line x1="220" y1="200" x2="358" y2="200"/><line x1="220" y1="240" x2="358" y2="240"/></g>
+  <g fill="#7c3aed"><polygon points="366,120 354,114 354,126"/><polygon points="366,160 354,154 354,166"/><polygon points="366,200 354,194 354,206"/><polygon points="366,240 354,234 354,246"/></g>
+
+  <!-- col2 letters -->
+  <g font-family="monospace" font-size="15">
+    <rect x="372" y="104" width="66" height="32" rx="7" fill="#ede9fe" stroke="#7c3aed" stroke-width="1.5"/><text x="405" y="125" fill="#5b21b6" text-anchor="middle">'а'</text>
+    <rect x="372" y="144" width="66" height="32" rx="7" fill="#ede9fe" stroke="#7c3aed" stroke-width="1.5"/><text x="405" y="165" fill="#5b21b6" text-anchor="middle">'б'</text>
+    <rect x="372" y="184" width="66" height="32" rx="7" fill="#ede9fe" stroke="#7c3aed" stroke-width="1.5"/><text x="405" y="205" fill="#5b21b6" text-anchor="middle">'о'</text>
+    <rect x="372" y="224" width="66" height="32" rx="7" fill="#ede9fe" stroke="#7c3aed" stroke-width="1.5"/><text x="405" y="245" fill="#5b21b6" text-anchor="middle">'л'</text>
+  </g>
+
+  <!-- arrow col2->col3 -->
+  <text x="530" y="166" font-size="12" fill="#16a34a" text-anchor="middle">а&lt;б&lt;л&lt;о</text>
+  <line x1="450" y1="180" x2="612" y2="180" stroke="#16a34a" stroke-width="2.5"/><polygon points="620,180 608,174 608,186" fill="#16a34a"/>
+
+  <!-- col3 sorted -->
+  <g font-family="monospace" font-size="14">
+    <rect x="625" y="104" width="150" height="32" rx="7" fill="#dcfce7" stroke="#16a34a" stroke-width="1.5"/><text x="700" y="125" fill="#166534" text-anchor="middle">"банан"  (а)</text>
+    <rect x="625" y="144" width="150" height="32" rx="7" fill="#dcfce7" stroke="#16a34a" stroke-width="1.5"/><text x="700" y="165" fill="#166534" text-anchor="middle">"яблоко" (б)</text>
+    <rect x="625" y="184" width="150" height="32" rx="7" fill="#dcfce7" stroke="#16a34a" stroke-width="1.5"/><text x="700" y="205" fill="#166534" text-anchor="middle">"слон"  (л)</text>
+    <rect x="625" y="224" width="150" height="32" rx="7" fill="#dcfce7" stroke="#16a34a" stroke-width="1.5"/><text x="700" y="245" fill="#166534" text-anchor="middle">"кот"   (о)</text>
+  </g>
+
+  <!-- comparison -->
+  <rect x="65" y="300" width="345" height="110" rx="12" fill="#dcfce7" stroke="#16a34a" stroke-width="2"/>
+  <text x="85" y="326" font-size="14" font-weight="700" fill="#166534">✅ key=lambda w: w[1]</text>
+  <text x="85" y="350" font-size="12.5" fill="#166534">Это ПРАВИЛО (функция): «у каждого</text>
+  <text x="85" y="368" font-size="12.5" fill="#166534">слова взять 2-ю букву». sorted подставит</text>
+  <text x="85" y="386" font-size="12.5" fill="#166534">сюда каждое слово по очереди.</text>
+
+  <rect x="450" y="300" width="345" height="110" rx="12" fill="#fee2e2" stroke="#dc2626" stroke-width="2"/>
+  <text x="470" y="326" font-size="14" font-weight="700" fill="#991b1b">❌ key=words[1]</text>
+  <text x="470" y="350" font-size="12.5" fill="#991b1b">Это одно ЗНАЧЕНИЕ — слово "яблоко"</text>
+  <text x="470" y="368" font-size="12.5" fill="#991b1b">(2-й элемент списка). Не функция →</text>
+  <text x="470" y="386" font-size="12.5" fill="#991b1b">sorted не сможет применить к каждому.</text>
+</svg>

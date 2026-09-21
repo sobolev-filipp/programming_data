@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 860 470" font-family="'Segoe UI',system-ui,sans-serif">
+  <rect x="0" y="0" width="860" height="470" fill="#f7f9fc"/>
+  <text x="430" y="34" font-size="23" font-weight="700" fill="#1f2937" text-anchor="middle">🔑 key=get_score — передаём функцию, а не вызываем её</text>
+  <text x="430" y="58" font-size="13.5" fill="#64748b" text-anchor="middle">Скобки и аргумент <tspan font-family="monospace" fill="#4f46e5">(s)</tspan> добавит сам max — для каждого студента по очереди.</text>
+
+  <!-- what you write -->
+  <text x="430" y="90" font-size="13.5" font-weight="700" fill="#334155" text-anchor="middle">Что пишешь ТЫ:</text>
+  <rect x="215" y="100" width="430" height="42" rx="10" fill="#0f172a"/>
+  <text x="430" y="127" font-size="16" font-family="monospace" fill="#e2e8f0" text-anchor="middle">best = max(students, key=<tspan fill="#a5b4fc" font-weight="700">get_score</tspan>)</text>
+  <text x="430" y="162" font-size="12.5" fill="#7c3aed" text-anchor="middle">↑ без скобок, без (s) — отдаём max саму функцию, как «рецепт»</text>
+
+  <!-- what max does -->
+  <text x="430" y="196" font-size="13.5" font-weight="700" fill="#334155" text-anchor="middle">Что делает max САМ (подставляет каждого студента в s):</text>
+
+  <!-- lane 1 -->
+  <rect x="55" y="212" width="205" height="34" rx="8" fill="#eef2ff" stroke="#6366f1" stroke-width="1.5"/>
+  <text x="157" y="234" font-size="13" font-family="monospace" fill="#3730a3" text-anchor="middle">{"name":"Иван", 82}</text>
+  <line x1="262" y1="229" x2="338" y2="229" stroke="#6366f1" stroke-width="2.5"/><polygon points="346,229 334,223 334,235" fill="#6366f1"/>
+  <text x="304" y="222" font-size="11" font-family="monospace" fill="#6366f1" text-anchor="middle">get_score(s)</text>
+  <rect x="350" y="212" width="66" height="34" rx="8" fill="#e0e7ff" stroke="#4f46e5" stroke-width="1.5"/><text x="383" y="234" font-size="15" font-family="monospace" fill="#3730a3" text-anchor="middle">82</text>
+
+  <!-- lane 2 (winner) -->
+  <rect x="55" y="254" width="205" height="34" rx="8" fill="#dcfce7" stroke="#16a34a" stroke-width="2"/>
+  <text x="157" y="276" font-size="13" font-family="monospace" fill="#166534" text-anchor="middle">{"name":"Мария", 95}</text>
+  <line x1="262" y1="271" x2="338" y2="271" stroke="#16a34a" stroke-width="2.5"/><polygon points="346,271 334,265 334,277" fill="#16a34a"/>
+  <text x="304" y="264" font-size="11" font-family="monospace" fill="#16a34a" text-anchor="middle">get_score(s)</text>
+  <rect x="350" y="254" width="66" height="34" rx="8" fill="#bbf7d0" stroke="#16a34a" stroke-width="2"/><text x="383" y="276" font-size="15" font-family="monospace" fill="#166534" text-anchor="middle">95</text>
+
+  <!-- lane 3 -->
+  <rect x="55" y="296" width="205" height="34" rx="8" fill="#eef2ff" stroke="#6366f1" stroke-width="1.5"/>
+  <text x="157" y="318" font-size="13" font-family="monospace" fill="#3730a3" text-anchor="middle">{"name":"Пётр", 74}</text>
+  <line x1="262" y1="313" x2="338" y2="313" stroke="#6366f1" stroke-width="2.5"/><polygon points="346,313 334,307 334,319" fill="#6366f1"/>
+  <text x="304" y="306" font-size="11" font-family="monospace" fill="#6366f1" text-anchor="middle">get_score(s)</text>
+  <rect x="350" y="296" width="66" height="34" rx="8" fill="#e0e7ff" stroke="#4f46e5" stroke-width="1.5"/><text x="383" y="318" font-size="15" font-family="monospace" fill="#3730a3" text-anchor="middle">74</text>
+
+  <!-- brace to result -->
+  <path d="M 430 219 q 14 0 14 14 v 24 q 0 14 14 14 q -14 0 -14 14 v 24 q 0 14 -14 14" fill="none" stroke="#94a3b8" stroke-width="2"/>
+  <text x="470" y="252" font-size="12.5" fill="#334155">max берёт</text>
+  <text x="470" y="270" font-size="12.5" fill="#334155">наибольший →</text>
+  <rect x="600" y="243" width="210" height="52" rx="12" fill="#dcfce7" stroke="#16a34a" stroke-width="2.5"/>
+  <text x="705" y="266" font-size="17" font-weight="700" fill="#166534" text-anchor="middle">🏆 Мария</text>
+  <text x="705" y="285" font-size="12" fill="#166534" text-anchor="middle">(наибольший балл 95)</text>
+
+  <!-- tip -->
+  <rect x="70" y="392" width="720" height="56" rx="12" fill="#fef9c3" stroke="#eab308" stroke-width="1.5"/>
+  <text x="430" y="416" font-size="13.5" fill="#713f12" text-anchor="middle">💡 <tspan font-family="monospace">get_score</tspan> ты сам НЕ вызываешь. Ты только даёшь его в <tspan font-family="monospace">key</tspan>, как рецепт.</text>
+  <text x="430" y="436" font-size="13.5" fill="#713f12" text-anchor="middle">Скобки <tspan font-family="monospace">(s)</tspan> поставит max — столько раз, сколько студентов, подставляя каждого в <tspan font-family="monospace">s</tspan>.</text>
+</svg>
