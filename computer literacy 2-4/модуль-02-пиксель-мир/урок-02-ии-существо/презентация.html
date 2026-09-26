@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Урок 7 — Мой пиксельный герой</title>
+<title>Урок 4 — ИИ придумывает существо</title>
 <style>
   :root{--ink:#2b2350;--yellow:#ffd23f;--blue:#43b7ff;--green:#37c871;--pink:#ff7ab6;--purple:#8a5cf6;}
   *{box-sizing:border-box;margin:0;padding:0;font-family:'Comic Sans MS','Segoe UI',system-ui,sans-serif;}
@@ -21,15 +21,12 @@
   .card h2,.card p,.card h1{color:var(--ink);text-shadow:none;}
   .steps{list-style:none;text-align:left;font-size:clamp(20px,3.6vh,32px);color:var(--ink);margin-top:10px;}
   .steps li{margin:12px 0;display:flex;gap:14px;align-items:center;}
-  .bignum{display:inline-flex;min-width:46px;height:46px;border-radius:14px;background:var(--blue);color:#fff;
+  .bignum{display:inline-flex;min-width:46px;height:46px;border-radius:14px;background:var(--purple);color:#fff;
     align-items:center;justify-content:center;font-weight:bold;font-size:26px;}
   .row{display:flex;gap:20px;flex-wrap:wrap;justify-content:center;margin-top:12px;}
   .chip{background:#ffffff;border-radius:22px;padding:14px 18px;font-size:clamp(17px,2.8vh,26px);color:var(--ink);
     box-shadow:0 8px 18px rgba(0,0,0,.18);min-width:130px;}
   .chip .e{font-size:clamp(34px,7vh,58px);display:block;}
-  .pixface{display:grid;grid-template-columns:repeat(11,1fr);width:min(52vh,300px);aspect-ratio:1;
-    border:4px solid #2b2350;border-radius:10px;overflow:hidden;margin:8px auto 0;background:#fff;}
-  .pixface div{width:100%;aspect-ratio:1;}
   .nav{position:fixed;bottom:14px;right:18px;display:flex;gap:10px;align-items:center;z-index:10;}
   .nav button{border:none;background:rgba(255,255,255,.9);border-radius:12px;font-size:24px;width:52px;height:46px;cursor:pointer;}
   .nav button:active{transform:translateY(2px);}
@@ -41,7 +38,7 @@
 </head>
 <body>
 
-<div class="tag">🟦 Урок 7 · Модуль 2 «Пиксель-мир»</div>
+<div class="tag">🟦 Урок 4 · Модуль 2 «Пиксель-мир»</div>
 <div class="hintkey">← → или пробел листают слайды</div>
 <div id="deck"></div>
 <div class="counter" id="counter"></div>
@@ -62,50 +59,30 @@ const BIP = `<svg viewBox="0 0 120 130" width="130" height="140" xmlns="http://w
   <rect x="12" y="92" width="16" height="9" rx="4" fill="#ffd23f"/><rect x="92" y="92" width="16" height="9" rx="4" fill="#ffd23f"/>
 </svg>`;
 
-// пиксельный герой-робот для слайда (11x11)
-const HERO = [
-  [0,0,0,1,1,1,1,1,0,0,0],
-  [0,0,0,1,1,1,1,1,0,0,0],
-  [0,0,1,1,3,1,3,1,1,0,0],
-  [0,0,1,1,1,1,1,1,1,0,0],
-  [0,0,1,1,4,4,4,1,1,0,0],
-  [2,2,1,1,1,1,1,1,1,2,2],
-  [2,2,1,1,1,1,1,1,1,2,2],
-  [0,0,1,1,1,1,1,1,1,0,0],
-  [0,0,1,1,0,0,0,1,1,0,0],
-  [0,0,5,5,0,0,0,5,5,0,0],
-  [0,0,5,5,0,0,0,5,5,0,0],
-];
-const CO={0:'transparent',1:'#43b7ff',2:'#ff7a7a',3:'#ffffff',4:'#2b2350',5:'#2b2350'};
-function hero(){return '<div class="pixface">'+HERO.flat().map(v=>'<div style="background:'+CO[v]+'"></div>').join('')+'</div>';}
-
 const SLIDES = [
-  {bg:['#43b7ff','#8a5cf6'], html:`${BIP}<h1>Мой пиксельный герой</h1><p>Рисуем своего персонажа по клеточкам! 🦸</p>`},
-  {bg:['#8a5cf6','#43b7ff'], html:`<div class="art">🕹️🦸</div><h2>Сегодня:</h2><p>узнаем, что герой игры — из пикселей, и нарисуем своего</p>`},
-  {bg:['#37c871','#43b7ff'], html:`<div class="art">🦸🟦</div><div class="card"><h2>Герой = картинка из пикселей</h2><p>Марио, грибочки, монстрики — все нарисованы по клеточкам!</p></div>`},
-  {bg:['#43b7ff','#37c871'], html:`<div class="art">🦸</div><div class="card"><h2>Это спрайт</h2><p>Герой-картинка, нарисованный по клеточкам. У каждой игры свои спрайты!</p></div>`},
-  {bg:['#ffb03f','#ff7ab6'], html:`<div class="art">🕹️</div><h2>А вы знали?</h2><p>Первые герои игр были всего 16 клеточек в ширину! Но их узнавали все.</p>`},
-  {bg:['#8a5cf6','#37c871'], html:`${hero()}<h2 style="color:#fff;margin-top:14px">Соберём героя из клеточек!</h2>`},
-  {bg:['#37c871','#8a5cf6'], html:`<div class="art">🤖🕺</div><h1>Физминутка</h1><p>«Робот-герой»: двигаемся по клеточкам — шаг влево, шаг вправо, руки вверх!</p>`},
-  {bg:['#43b7ff','#5b7cfa'], html:`<h2 style="color:#fff">Готовим холст в Piskel</h2>
-     <div class="row">
-       <div class="chip"><span class="e">🔍</span>Увеличь клетки</div>
-       <div class="chip"><span class="e">🎨</span>Выбери цвета</div>
-       <div class="chip"><span class="e">⬇️</span>Рисуй сверху вниз</div>
-     </div>`},
-  {bg:['#ffd23f','#ffb03f'], html:`<div class="card"><h2>Рисуем героя по шагам</h2>
+  {bg:['#8a5cf6','#43b7ff'], html:`${BIP}<h1>ИИ придумывает существо</h1><p>Волшебство нейросети + пиксели! 🤖</p>`},
+  {bg:['#43b7ff','#8a5cf6'], html:`<div class="art">🤖✨</div><h2>Сегодня:</h2><p>опишем существо словами, ИИ его нарисует, а мы сделаем пиксель-версию</p>`},
+  {bg:['#37c871','#8a5cf6'], html:`<div class="art">🗣️➡️🖼️</div><div class="card"><h2>Что такое ИИ</h2><p>Умный помощник-художник. Скажи словами, кого нарисовать, — и он придумает!</p></div>`},
+  {bg:['#ffb03f','#8a5cf6'], html:`<div class="card"><h2>Три вопроса для ИИ</h2>
      <ul class="steps">
-       <li><span class="bignum">1</span> 🟤 Голова</li>
-       <li><span class="bignum">2</span> 👀 Лицо (глаза, рот)</li>
-       <li><span class="bignum">3</span> 🟦 Тело</li>
-       <li><span class="bignum">4</span> 💪 Руки и ноги</li>
-       <li><span class="bignum">5</span> 🌈 Детали</li>
+       <li><span class="bignum">?</span> 🐾 Кто? (дракончик, котик)</li>
+       <li><span class="bignum">?</span> 🎨 Какой? (синий, пушистый)</li>
+       <li><span class="bignum">?</span> 🌍 Где? (в лесу, в космосе)</li>
      </ul></div>`},
-  {bg:['#37c871','#43b7ff'], html:`<div class="art">🪞🟦</div><div class="card"><h2>Секрет: считай клеточки</h2><p>Две клетки слева — глаз, две справа — глаз. Симметрично = ровно и красиво!</p></div>`},
-  {bg:['#8a5cf6','#5b7cfa'], html:`<div class="art">💾</div><div class="card"><h2>Сохраняем героя</h2><p>Export → PNG → Download. Появился файл-картинка <b>.png</b>!</p></div>`},
-  {bg:['#43b7ff','#37c871'], html:`<div class="art">🖼️➡️📁</div><div class="card"><h2>Кладём в «Мои работы»</h2><p>Перетащи героя в свою папку — рядом со смайликом.</p></div>`},
+  {bg:['#43b7ff','#37c871'], html:`<div class="art">🐲</div><div class="card"><h2>Собираем описание</h2><p>«Синий пушистый дракончик с рожками в волшебном лесу»</p></div>`},
+  {bg:['#ff7ab6','#ffb03f'], html:`<div class="art">🤖⚠️</div><h2>А вы знали?</h2><p>ИИ иногда ошибается — рисует лишнюю лапу или три глаза! Он не живой. Художник нужен!</p>`},
+  {bg:['#8a5cf6','#37c871'], html:`<div class="art">🎮🐲</div><h2>Игра «Собери монстрика»</h2><p>Соберём существо из частей и опишем его — как для ИИ!</p>`},
+  {bg:['#43b7ff','#5b7cfa'], html:`<div class="art">🖥️🤖</div><div class="card"><h2>ИИ рисует наше существо</h2><p>Учитель впишет наше описание в бесплатный сервис (draw.freeforai.com) — смотрим, как рождается картинка!</p></div>`},
+  {bg:['#37c871','#8a5cf6'], html:`<div class="art">🐉🕺</div><h1>Физминутка</h1><p>Покажем, как двигался бы наш монстрик: прыжки, взмахи «крыльями», топот!</p>`},
+  {bg:['#43b7ff','#8a5cf6'], html:`<div class="card"><h2>Пиксель-версия в Piskel</h2>
+     <ul class="steps">
+       <li><span class="bignum">1</span> 👀 Смотрим на существо от ИИ</li>
+       <li><span class="bignum">2</span> 🟤 Рисуем по клеточкам сверху вниз</li>
+       <li><span class="bignum">3</span> 🌈 Можно улучшить по-своему!</li>
+     </ul></div>`},
+  {bg:['#8a5cf6','#5b7cfa'], html:`<div class="art">💾➡️📁</div><div class="card"><h2>Сохраняем существо</h2><p>Export → PNG → Download → в папку «Мои работы». Уже целая коллекция!</p></div>`},
   {bg:['#ffb03f','#43b7ff'], html:`<div class="art">⌨️🔤</div><h1>Поймай букву!</h1><p>Тренируем пальчики — найди букву на клавиатуре и нажми!</p>`},
-  {bg:['#37c871','#8a5cf6'], html:`${BIP}<h1>Ты — геймдизайнер! 🎉</h1><p>Викторина и звёзды ⭐</p>`},
+  {bg:['#37c871','#8a5cf6'], html:`${BIP}<h1>Ты командовал ИИ! 🎉</h1><p>Викторина и звёзды ⭐</p>`},
 ];
 
 const deck=document.getElementById('deck');

@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Урок 6 — Пиксельный смайлик</title>
+<title>Урок 3 — Пиксели: смайлик и герой</title>
 <style>
   :root{--ink:#2b2350;--yellow:#ffd23f;--blue:#43b7ff;--green:#37c871;--pink:#ff7ab6;--purple:#8a5cf6;}
   *{box-sizing:border-box;margin:0;padding:0;font-family:'Comic Sans MS','Segoe UI',system-ui,sans-serif;}
@@ -41,7 +41,7 @@
 </head>
 <body>
 
-<div class="tag">🟦 Урок 6 · Модуль 2 «Пиксель-мир»</div>
+<div class="tag">🟦 Урок 3 · Модуль 2 «Пиксель-мир»</div>
 <div class="hintkey">← → или пробел листают слайды</div>
 <div id="deck"></div>
 <div class="counter" id="counter"></div>
@@ -72,7 +72,7 @@ const CO={0:'transparent',1:'#ffd23f',2:'#2b2350'};
 function face(){return '<div class="pixface">'+SM.flat().map(v=>'<div style="background:'+CO[v]+'"></div>').join('')+'</div>';}
 
 const SLIDES = [
-  {bg:['#43b7ff','#37c871'], html:`${BIP}<h1>Пиксельный смайлик</h1><p>Раскроем тайну картинок! 🟦</p>`},
+  {bg:['#43b7ff','#37c871'], html:`${BIP}<h1>Пиксели: смайлик и герой</h1><p>Раскроем тайну картинок! 🟦</p>`},
   {bg:['#37c871','#43b7ff'], html:`<div class="art">🔍🖼️</div><h2>Сегодня:</h2><p>узнаем, из чего сделаны картинки, и нарисуем смайлик по клеточкам</p>`},
   {bg:['#8a5cf6','#43b7ff'], html:`<div class="art">🖼️➡️🟦🟦</div><div class="card"><h2>Тайна картинок</h2><p>Приблизь картинку сильно-сильно — и она рассыпется на квадратики!</p></div>`},
   {bg:['#43b7ff','#8a5cf6'], html:`<div class="art">🟦</div><div class="card"><h2>Это пиксель</h2><p>Крошечный квадратик одного цвета — кирпичик картинки. Много пикселей = картинка!</p></div>`},
