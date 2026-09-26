@@ -124,11 +124,11 @@ function pool(){ return POOLS[Math.min(5, Math.max(1,LESSON_LEVEL>4?5:LESSON_LEV
 
 // Слова/фразы по уровню
 const WORDBANK = {
-  1:['КОТ','ДОМ','МЯЧ','СОК','НОС','РОТ','СЫР','ЛЕС'],
-  2:['МАМА','ПАПА','ЛЕТО','РЕКА','ЛУНА','РОЗА','КНИГА','ОКНО'],
-  3:['РОБОТ','ЗАЯЦ','ПАРК','МИШКА','КОШКА','ПЕНАЛ','ШКОЛА'],
-  4:['РАКЕТА','ПИКСЕЛЬ','ДРАКОН','КОМПЬЮТЕР','РИСУНОК'],
-  5:['МОЙ КОТ','ЯРКОЕ ЛЕТО','ПИКСЕЛЬ АРТ','ДОБРЫЙ БИП']
+  1:['КОТ','ДОМ','МЯЧ','СОК','НОС','РОТ','СЫР','ЛЕС','РАК','ЛУК','КИТ','СОН'],
+  2:['МАМА','ПАПА','ЛЕТО','РЕКА','ЛУНА','РОЗА','КНИГА','ОКНО','ЗИМА','МОРЕ','ПАРТА','НЕБО'],
+  3:['РОБОТ','ЗАЯЦ','ПАРК','МИШКА','КОШКА','ПЕНАЛ','ШКОЛА','ЦВЕТОК','РАДУГА','МЕДВЕДЬ'],
+  4:['РАКЕТА','ПИКСЕЛЬ','ДРАКОН','КОМПЬЮТЕР','РИСУНОК','КЛАВИАТУРА','ПРОГРАММА','МОНИТОР','ХУДОЖНИК'],
+  5:['МОЙ КОТ','ЯРКОЕ ЛЕТО','ПИКСЕЛЬ АРТ','ДОБРЫЙ БИП','МОЯ ИГРА','НОВЫЙ ГЕРОЙ','ЖИВОЙ РОБОТ','ЛЕТАЮ В КОСМОС']
 };
 function words(){ return WORDBANK[Math.min(5, Math.max(1,LESSON_LEVEL>4?5:LESSON_LEVEL))]; }
 
@@ -164,23 +164,25 @@ function startMode(m){
   document.getElementById('word').classList.add('hidden');
   document.getElementById('letter').classList.remove('hidden');
   document.getElementById('say').textContent='';
-  if(m===1){ // Знакомство
-    total=10; useHint=true;
+  if(m===1){ // Знакомство — полный тур по клавишам уровня (каждую хотя бы раз)
+    useHint=true;
+    const p=pool();
+    queue=shuffle([...p]); while(queue.length<14) queue.push(...shuffle([...p])); // не короче 14
+    total=queue.length;
     document.getElementById('target').textContent='Найди букву на клавиатуре и нажми её:';
-    queue=[]; for(let i=0;i<total;i++) queue.push(rndLetter());
     nextLetter();
-  } else if(m===2){ // На скорость
-    total=15; useHint=false; timeLeft=45; startTime=performance.now();
-    document.getElementById('target').textContent='Лови буквы! Нажимай их на клавиатуре:';
-    queue=[]; for(let i=0;i<total;i++) queue.push(rndLetter());
+  } else if(m===2){ // На скорость — целую минуту, лови сколько успеешь
+    total=999; useHint=false; timeLeft=60; startTime=performance.now();
+    document.getElementById('target').textContent='Целую минуту лови буквы! Сколько успеешь?';
+    queue=[];
     timer=setInterval(()=>{ timeLeft--; updateInfo(); if(timeLeft<=0) finish(); },1000);
     nextLetter();
-  } else { // Пишем слова
-    total=4; useHint=(LESSON_LEVEL<=3);
+  } else { // Пишем слова — 8 слов
+    useHint=(LESSON_LEVEL<=3);
+    queue=shuffle([...words()]); total=Math.min(8, queue.length); queue=queue.slice(0,total);
     document.getElementById('letter').classList.add('hidden');
     document.getElementById('word').classList.remove('hidden');
     document.getElementById('target').textContent='Напечатай слово по буквам:';
-    queue=shuffle([...words()]).slice(0,total);
     nextWord();
   }
   updateInfo();
@@ -190,8 +192,8 @@ function rndLetter(){ const p=pool(); return p[Math.random()*p.length|0]; }
 
 function nextLetter(){
   busy=false;
-  if(done>=total){ finish(); return; }
-  target=queue[done];
+  if(mode===2){ target=rndLetter(); }        // режим скорости — бесконечно, до конца минуты
+  else { if(done>=total){ finish(); return; } target=queue[done]; }
   const el=document.getElementById('letter'); el.className='letter'; el.textContent=target;
   document.getElementById('say').textContent = mode===1?'Где буква «'+target+'»? 👇' : 'Нажми «'+target+'»';
   document.getElementById('say').style.color='#2b2350';
@@ -218,10 +220,14 @@ function renderWord(){
 
 function updateInfo(){
   const info=document.getElementById('info');
-  if(mode===2) info.innerHTML='Поймано: <b>'+correct+'</b> из '+total+' &nbsp;·&nbsp; ⏱ <b>'+Math.max(0,timeLeft)+'</b>';
-  else if(mode===3) info.innerHTML='Слово <b>'+(done+ (finished?0:1))+'</b> из '+total;
+  if(mode===2){
+    info.innerHTML='Поймано: <b>'+correct+'</b> букв &nbsp;·&nbsp; ⏱ осталось <b>'+Math.max(0,timeLeft)+'</b> сек';
+    document.getElementById('bar').style.width=Math.round(Math.max(0,timeLeft)/60*100)+'%';
+    return;
+  }
+  if(mode===3) info.innerHTML='Слово <b>'+Math.min(total,(done+ (finished?0:1)))+'</b> из '+total;
   else info.innerHTML='Поймано: <b>'+done+'</b> из '+total;
-  document.getElementById('bar').style.width=Math.round((mode===2?correct:done)/total*100)+'%';
+  document.getElementById('bar').style.width=Math.round(done/total*100)+'%';
 }
 
 function press(letter,code){
@@ -276,9 +282,9 @@ function finish(){
   if(mode===2){
     const secs=Math.max(1,Math.round((performance.now()-startTime)/1000));
     const perMin=Math.round(correct/secs*60);
-    stars=Math.max(1,Math.min(5,Math.round(correct/total*5)));
-    med = correct>=total?'🏆':correct>=total*0.6?'🥇':'⭐';
-    title='Скорость!'; text='Поймано '+correct+' из '+total+'. Это ≈ '+perMin+' букв в минуту! ⚡';
+    stars = correct>=40?5:correct>=30?4:correct>=20?3:correct>=10?2:1;
+    med = correct>=40?'🏆':correct>=25?'🥇':'⭐';
+    title='Скорость!'; text='За минуту поймано '+correct+' букв — это ≈ '+perMin+' в минуту! ⚡';
   } else if(mode===3){
     stars=Math.max(1,Math.min(5,Math.round(done/total*5)));
     med = done>=total?'🏆':done>=total*0.6?'🥇':'⭐';

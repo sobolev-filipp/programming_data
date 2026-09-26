@@ -67,36 +67,79 @@
 
   <div id="result" class="hidden">
     <div class="big2">🏆</div>
-    <h1>Смайлик готов! 🎉</h1>
-    <p class="sub">Ты раскрасил его по клеточкам — как настоящий пиксельный художник! ⭐</p>
+    <h1>Все картинки готовы! 🎉</h1>
+    <p class="sub">Ты раскрасил по клеточкам смайлик, сердечко, звезду и ёлочку — как настоящий пиксельный художник! ⭐</p>
     <button class="next" onclick="location.reload()">↺ Ещё разок</button>
   </div>
 </div>
 
 <script>
-// 0 = белый (пусто), 1 = жёлтый, 2 = тёмный
-const TARGET = [
-  [0,0,1,1,1,1,1,1,0,0],
-  [0,1,1,1,1,1,1,1,1,0],
-  [1,1,1,1,1,1,1,1,1,1],
-  [1,1,2,1,1,1,1,2,1,1],
-  [1,1,2,1,1,1,1,2,1,1],
-  [1,1,1,1,1,1,1,1,1,1],
-  [1,2,1,1,1,1,1,1,2,1],
-  [1,1,2,2,2,2,2,2,1,1],
-  [0,1,1,1,1,1,1,1,1,0],
-  [0,0,1,1,1,1,1,1,0,0],
+// 0 = белый (пусто), 1 = жёлтый, 2 = тёмный, 3 = красный, 4 = зелёный
+const TARGETS = [
+  { nm:'Смайлик', grid:[
+    [0,0,1,1,1,1,1,1,0,0],
+    [0,1,1,1,1,1,1,1,1,0],
+    [1,1,1,1,1,1,1,1,1,1],
+    [1,1,2,1,1,1,1,2,1,1],
+    [1,1,2,1,1,1,1,2,1,1],
+    [1,1,1,1,1,1,1,1,1,1],
+    [1,2,1,1,1,1,1,1,2,1],
+    [1,1,2,2,2,2,2,2,1,1],
+    [0,1,1,1,1,1,1,1,1,0],
+    [0,0,1,1,1,1,1,1,0,0],
+  ]},
+  { nm:'Сердечко', grid:[
+    [0,0,3,3,0,0,3,3,0,0],
+    [0,3,3,3,3,3,3,3,3,0],
+    [3,3,3,3,3,3,3,3,3,3],
+    [3,3,3,3,3,3,3,3,3,3],
+    [0,3,3,3,3,3,3,3,3,0],
+    [0,0,3,3,3,3,3,3,0,0],
+    [0,0,0,3,3,3,3,0,0,0],
+    [0,0,0,0,3,3,0,0,0,0],
+    [0,0,0,0,0,0,0,0,0,0],
+    [0,0,0,0,0,0,0,0,0,0],
+  ]},
+  { nm:'Звёздочка', grid:[
+    [0,0,0,0,1,1,0,0,0,0],
+    [0,0,0,0,1,1,0,0,0,0],
+    [0,0,1,1,1,1,1,1,0,0],
+    [0,1,1,1,1,1,1,1,1,0],
+    [1,1,1,1,1,1,1,1,1,1],
+    [0,1,1,1,1,1,1,1,1,0],
+    [0,0,1,1,0,0,1,1,0,0],
+    [0,1,1,0,0,0,0,1,1,0],
+    [0,1,0,0,0,0,0,0,1,0],
+    [0,0,0,0,0,0,0,0,0,0],
+  ]},
+  { nm:'Ёлочка', grid:[
+    [0,0,0,0,4,4,0,0,0,0],
+    [0,0,0,4,4,4,4,0,0,0],
+    [0,0,4,4,4,4,4,4,0,0],
+    [0,4,4,4,4,4,4,4,4,0],
+    [4,4,4,4,4,4,4,4,4,4],
+    [0,0,4,4,4,4,4,4,0,0],
+    [0,4,4,4,4,4,4,4,4,0],
+    [4,4,4,4,4,4,4,4,4,4],
+    [0,0,0,0,2,2,0,0,0,0],
+    [0,0,0,0,2,2,0,0,0,0],
+  ]},
 ];
-const COLORS = {0:'#ffffff',1:'#ffd23f',2:'#2b2350'};
-const PENS = [{i:1,nm:'Жёлтый'},{i:2,nm:'Чёрный'},{i:0,nm:'Ластик'}];
-let canvasState=[], sel=1, painting=false;
+const COLORS = {0:'#ffffff',1:'#ffd23f',2:'#2b2350',3:'#ff5a7a',4:'#37c871'};
+const PENS = [{i:1,nm:'Жёлтый'},{i:3,nm:'Красный'},{i:4,nm:'Зелёный'},{i:2,nm:'Чёрный'},{i:0,nm:'Ластик'}];
+let TARGET=TARGETS[0].grid, picIdx=0, canvasState=[], sel=1, painting=false;
 
 function startGame(){
   document.getElementById('intro').classList.add('hidden');
   document.getElementById('result').classList.add('hidden');
   document.getElementById('game').classList.remove('hidden');
+  picIdx=0; loadPic();
+  renderPalette();
+}
+function loadPic(){
+  TARGET=TARGETS[picIdx].grid;
   canvasState = TARGET.map(row=>row.map(()=>0));
-  renderTarget(); renderCanvas(); renderPalette(); updateProgress();
+  renderTarget(); renderCanvas(); updateProgress();
 }
 
 function renderTarget(){
@@ -136,13 +179,21 @@ function paint(r,col){
   updateProgress();
 }
 
+let advancing=false;
 function updateProgress(){
   let ok=0;
   for(let r=0;r<10;r++)for(let col=0;col<10;col++) if(canvasState[r][col]===TARGET[r][col]) ok++;
   const pct=Math.round(ok/100*100);
   document.getElementById('bar').style.width=pct+'%';
-  document.getElementById('pct').textContent='Раскрашено верно: '+pct+'%';
-  if(ok===100) setTimeout(win,300);
+  document.getElementById('pct').textContent='Картинка '+(picIdx+1)+' из '+TARGETS.length+' («'+TARGETS[picIdx].nm+'») · раскрашено верно: '+pct+'%';
+  if(ok===100 && !advancing){
+    advancing=true;
+    if(picIdx<TARGETS.length-1){
+      setTimeout(()=>{ picIdx++; loadPic(); advancing=false; }, 700);
+    } else {
+      setTimeout(win,400);
+    }
+  }
 }
 function win(){
   document.getElementById('game').classList.add('hidden');

@@ -90,26 +90,36 @@ const STARS=["⭐","🌟","✨","💫"];
 let W=window.innerWidth, H=window.innerHeight;
 window.addEventListener('resize',()=>{W=window.innerWidth;H=window.innerHeight;});
 
-let score=0, lives=3, timeLeft=50, running=false;
-let ents=[], loopT=null, spawnT=null, tickT=null, bossT=null, lastFrame=0;
+const GAME_TIME=75;
+let score=0, lives=3, timeLeft=GAME_TIME, running=false;
+let ents=[], loopT=null, spawnT=null, tickT=null, bossT=null, waveT=null, lastFrame=0;
 
 function startGame(){
   document.getElementById('intro').classList.add('hidden');
   document.getElementById('over').classList.add('hidden');
   document.getElementById('hud').classList.remove('hidden');
   play.classList.remove('hidden');
-  score=0; lives=3; timeLeft=50; running=true; ents=[];
+  score=0; lives=3; timeLeft=GAME_TIME; running=true; ents=[];
   document.getElementById('score').textContent=0;
-  document.getElementById('time').textContent=50;
+  document.getElementById('time').textContent=GAME_TIME;
   updateLives();
   lastFrame=performance.now();
   loopT=requestAnimationFrame(loop);
   scheduleSpawn();
   tickT=setInterval(tick,1000);
-  bossT=setInterval(spawnBoss,14000);
+  bossT=setInterval(spawnBoss,11000);
+  waveT=setInterval(starRain,17000); // звёздный дождь для азарта
 }
 
-function elapsed(){ return 50-timeLeft; }
+// бонус-волна: сыплется горсть звёзд (в т.ч. быстрых)
+function starRain(){
+  if(!running) return;
+  flash('🌠 Звёздный дождь!');
+  const n=5+Math.floor(elapsed()/12);
+  for(let i=0;i<n;i++) setTimeout(()=>{ if(running) makeEnt(Math.random()<0.35?'fast':'star'); }, i*120);
+}
+
+function elapsed(){ return GAME_TIME-timeLeft; }
 
 function scheduleSpawn(){
   if(!running) return;
@@ -245,13 +255,13 @@ function loop(now){
 
 function endGame(byTime){
   running=false;
-  cancelAnimationFrame(loopT); clearTimeout(spawnT); clearInterval(tickT); clearInterval(bossT);
+  cancelAnimationFrame(loopT); clearTimeout(spawnT); clearInterval(tickT); clearInterval(bossT); clearInterval(waveT);
   ents=[]; boss=null; play.innerHTML=''; play.classList.add('hidden');
   document.getElementById('hud').classList.add('hidden');
-  const medal = score>=30?'🏆':score>=18?'🥇':score>=9?'🌟':'⭐';
+  const medal = score>=45?'🏆':score>=28?'🥇':score>=14?'🌟':'⭐';
   let title;
   if(!byTime) title='Ой, жизни кончились!';
-  else title = score>=18?'Супер! Ты мастер мыши!':score>=9?'Здорово получается!':'Молодец, что старался!';
+  else title = score>=28?'Супер! Ты мастер мыши!':score>=14?'Здорово получается!':'Молодец, что старался!';
   document.getElementById('medal').textContent=medal;
   document.getElementById('resTitle').textContent=title;
   document.getElementById('resText').textContent='Ты набрал ⭐ '+score+' очков!'+(byTime?'':' Бомбочки — мимо! 💣');

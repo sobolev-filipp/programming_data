@@ -55,7 +55,7 @@
   </div>
 
   <div id="game" class="hidden">
-    <div class="top"><div>Пары: <b id="pairs">0</b>/6</div><div>Ходы: <b id="moves">0</b></div></div>
+    <div class="top"><div>Пары: <b id="pairs">0</b>/<span id="totalPairs">8</span></div><div>Ходы: <b id="moves">0</b></div></div>
     <div class="board" id="board"></div>
   </div>
 
@@ -68,7 +68,7 @@
 </div>
 
 <script>
-const PETS = ['🐱','🐶','🐰','🐸','🐭','🦊'];
+const PETS = ['🐱','🐶','🐰','🐸','🐭','🦊','🐼','🦁'];
 let deck=[], first=null, lock=false, pairs=0, moves=0;
 
 function shuffle(a){for(let i=a.length-1;i>0;i--){const j=Math.random()*(i+1)|0;[a[i],a[j]]=[a[j],a[i]];}return a;}
@@ -112,8 +112,8 @@ function flip(c){
 function win(){
   document.getElementById('game').classList.add('hidden');
   const r=document.getElementById('result'); r.classList.remove('hidden');
-  let praise = moves<=9 ? 'Невероятная память! 🏆' : moves<=14 ? 'Отличная память! 👏' : 'Молодец, все пары найдены! 💪';
-  document.getElementById('resText').textContent='Ты нашёл все 6 пар за '+moves+' ходов! ⭐ '+praise;
+  let praise = moves<=12 ? 'Невероятная память! 🏆' : moves<=20 ? 'Отличная память! 👏' : 'Молодец, все пары найдены! 💪';
+  document.getElementById('resText').textContent='Ты нашёл все '+PETS.length+' пар за '+moves+' ходов! ⭐ '+praise;
 }
 </script>
 </body>

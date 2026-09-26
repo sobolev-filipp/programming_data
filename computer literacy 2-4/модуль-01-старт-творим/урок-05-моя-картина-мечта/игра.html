@@ -92,7 +92,7 @@ const TASKS=[
   {k:'undo',t:'Ой, ошибка! Вернуть назад'},
   {k:'save',t:'Чтобы работа не потерялась'},
 ];
-let W,H,score=0,lives=3,timeLeft=50,running=false,bubbles=[],curKey='',taskTime=0,taskLeft=0,fast=false;
+let W,H,score=0,lives=3,timeLeft=70,running=false,bubbles=[],curKey='',taskTime=0,taskLeft=0,fast=false;
 let rafId=null,tickT=null,lastFrame=0;
 
 function sizeField(){ W=field.clientWidth; H=field.clientHeight; }
@@ -103,8 +103,8 @@ function startGame(){
   document.getElementById('hud').classList.remove('hidden');
   document.getElementById('task').classList.remove('hidden');
   field.classList.remove('hidden'); field.innerHTML='';
-  sizeField(); score=0;lives=3;timeLeft=50;running=true;bubbles=[];
-  document.getElementById('score').textContent=0; document.getElementById('time').textContent=50; updateLives();
+  sizeField(); score=0;lives=3;timeLeft=70;running=true;bubbles=[];
+  document.getElementById('score').textContent=0; document.getElementById('time').textContent=70; updateLives();
   // создаём пузырьки инструментов
   TOOLS.forEach(tool=>{
     const el=document.createElement('div'); el.className='tool'; el.textContent=tool.e; el.title=tool.n;
@@ -116,7 +116,7 @@ function startGame(){
   lastFrame=performance.now(); rafId=requestAnimationFrame(loop);
   tickT=setInterval(tick,1000);
 }
-function elapsed(){return 50-timeLeft;}
+function elapsed(){return 70-timeLeft;}
 function tick(){ timeLeft--; document.getElementById('time').textContent=Math.max(0,timeLeft); if(timeLeft<=0) endGame(true); }
 function updateLives(){ document.getElementById('lives').textContent='❤️'.repeat(Math.max(0,lives))+'🖤'.repeat(3-Math.max(0,lives)); }
 function flash(t){ const f=document.createElement('div'); f.className='flash'; f.textContent=t; document.body.appendChild(f); setTimeout(()=>f.remove(),1000); }
@@ -169,8 +169,8 @@ function endGame(byTime){
   running=false; cancelAnimationFrame(rafId); clearInterval(tickT);
   field.innerHTML=''; field.classList.add('hidden');
   document.getElementById('hud').classList.add('hidden'); document.getElementById('task').classList.add('hidden');
-  const medal=score>=25?'🏆':score>=15?'🥇':score>=8?'🌟':'🎯';
-  let title=!byTime?'Ой, жизни кончились!':score>=15?'Супер! Ты знаешь все инструменты!':score>=8?'Здорово получается!':'Молодец, что старался!';
+  const medal=score>=32?'🏆':score>=20?'🥇':score>=10?'🌟':'🎯';
+  let title=!byTime?'Ой, жизни кончились!':score>=20?'Супер! Ты знаешь все инструменты!':score>=10?'Здорово получается!':'Молодец, что старался!';
   document.getElementById('medal').textContent=medal;
   document.getElementById('resTitle').textContent=title;
   document.getElementById('resText').textContent='Ты поймал 🎯 '+score+' инструментов!';

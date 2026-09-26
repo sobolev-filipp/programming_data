@@ -87,7 +87,7 @@
 const play=document.getElementById('play');
 let W=innerWidth,H=innerHeight; addEventListener('resize',()=>{W=innerWidth;H=innerHeight;});
 const JUNK=[['📢','Реклама!'],['🎁','Ты выиграл приз!'],['💰','Скидки −90%!'],['👑','Кликни сюда!'],['🍬','Дареные конфеты'],['⭐','Супер-игра!']];
-let score=0,lives=3,timeLeft=45,running=false,wins=[],virusOn=false;
+let score=0,lives=3,timeLeft=70,running=false,wins=[],virusOn=false;
 let spawnT=null,tickT=null,virusT=null;
 
 function startGame(){
@@ -95,11 +95,11 @@ function startGame(){
   document.getElementById('over').classList.add('hidden');
   document.getElementById('hud').classList.remove('hidden');
   play.classList.remove('hidden'); play.innerHTML='';
-  score=0;lives=3;timeLeft=45;running=true;wins=[];virusOn=false;
-  document.getElementById('score').textContent=0; document.getElementById('time').textContent=45; updateLives();
-  scheduleSpawn(); tickT=setInterval(tick,1000); virusT=setInterval(spawnVirus,12000);
+  score=0;lives=3;timeLeft=70;running=true;wins=[];virusOn=false;
+  document.getElementById('score').textContent=0; document.getElementById('time').textContent=70; updateLives();
+  scheduleSpawn(); tickT=setInterval(tick,1000); virusT=setInterval(spawnVirus,10000);
 }
-function elapsed(){return 45-timeLeft;}
+function elapsed(){return 70-timeLeft;}
 function tick(){ timeLeft--; document.getElementById('time').textContent=Math.max(0,timeLeft); if(timeLeft<=0) endGame(true); }
 function scheduleSpawn(){ if(!running)return; const t=elapsed(); const gap=Math.max(520,1100-t*13); spawnT=setTimeout(()=>{spawn(); scheduleSpawn();},gap); }
 function rnd(a,b){return a+Math.random()*(b-a);}
@@ -155,8 +155,8 @@ function endGame(byTime){
   running=false; clearTimeout(spawnT); clearInterval(tickT); clearInterval(virusT);
   wins.forEach(o=>{ if(o.life)clearTimeout(o.life); }); wins=[]; play.innerHTML=''; play.classList.add('hidden');
   document.getElementById('hud').classList.add('hidden');
-  const medal=score>=30?'🏆':score>=18?'🥇':score>=9?'🌟':'🧹';
-  let title = !byTime?'Ой, окошки победили!':score>=18?'Супер! Ты — мастер порядка!':score>=9?'Здорово получается!':'Молодец, что старался!';
+  const medal=score>=42?'🏆':score>=26?'🥇':score>=13?'🌟':'🧹';
+  let title = !byTime?'Ой, окошки победили!':score>=26?'Супер! Ты — мастер порядка!':score>=13?'Здорово получается!':'Молодец, что старался!';
   document.getElementById('medal').textContent=medal;
   document.getElementById('resTitle').textContent=title;
   document.getElementById('resText').textContent='Ты закрыл 🧹 '+score+' окошек!'+(byTime?'':' Береги свою работу и бойся вирусов! 🦠');

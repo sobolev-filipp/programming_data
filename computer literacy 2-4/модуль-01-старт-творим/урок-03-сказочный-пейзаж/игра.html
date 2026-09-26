@@ -95,20 +95,20 @@ const FILES={
   trash:[['🦠','вирус.exe'],['🗑️','спам!'],['📢','реклама']]
 };
 const TYPES=['text','img','music','trash'];
-let score=0,lives=3,timeLeft=50,running=false,cur=null,rafId=null,tickT=null;
+let score=0,lives=3,timeLeft=72,running=false,cur=null,rafId=null,tickT=null;
 
 function startGame(){
   document.getElementById('intro').classList.add('hidden');
   document.getElementById('over').classList.add('hidden');
   document.getElementById('hud').classList.remove('hidden');
   field.classList.remove('hidden'); document.getElementById('folders').classList.remove('hidden');
-  field.innerHTML=''; score=0;lives=3;timeLeft=50;running=true;
-  document.getElementById('score').textContent=0; document.getElementById('time').textContent=50; updateLives();
+  field.innerHTML=''; score=0;lives=3;timeLeft=72;running=true;
+  document.getElementById('score').textContent=0; document.getElementById('time').textContent=72; updateLives();
   tickT=setInterval(tick,1000);
   document.querySelectorAll('.folder').forEach(b=> b.onclick=()=>choose(b.dataset.t,b));
   nextFile();
 }
-function elapsed(){return 50-timeLeft;}
+function elapsed(){return 72-timeLeft;}
 function tick(){ timeLeft--; document.getElementById('time').textContent=Math.max(0,timeLeft); if(timeLeft<=0) endGame(true); }
 function updateLives(){ document.getElementById('lives').textContent='❤️'.repeat(Math.max(0,lives))+'🖤'.repeat(3-Math.max(0,lives)); }
 function flash(t){ const f=document.createElement('div'); f.className='flash'; f.textContent=t; document.body.appendChild(f); setTimeout(()=>f.remove(),1000); }
@@ -163,8 +163,8 @@ function endGame(byTime){
   running=false; cancelAnimationFrame(rafId); clearInterval(tickT);
   field.innerHTML=''; field.classList.add('hidden'); document.getElementById('folders').classList.add('hidden');
   document.getElementById('hud').classList.add('hidden');
-  const medal=score>=25?'🏆':score>=15?'🥇':score>=8?'🌟':'📦';
-  let title=!byTime?'Ой, файлы завалили!':score>=15?'Супер! Ты — мастер порядка!':score>=8?'Здорово получается!':'Молодец, что старался!';
+  const medal=score>=36?'🏆':score>=22?'🥇':score>=11?'🌟':'📦';
+  let title=!byTime?'Ой, файлы завалили!':score>=22?'Супер! Ты — мастер порядка!':score>=11?'Здорово получается!':'Молодец, что старался!';
   document.getElementById('medal').textContent=medal;
   document.getElementById('resTitle').textContent=title;
   document.getElementById('resText').textContent='Ты разложил 📦 '+score+' файлов!'+(byTime?'':' Спам — в корзину, а работы — по папкам! 🗑️');

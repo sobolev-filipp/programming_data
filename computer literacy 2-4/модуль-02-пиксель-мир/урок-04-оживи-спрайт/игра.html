@@ -123,10 +123,34 @@ function heartFrame(size){ // растущее сердце 'h': size 1..3
   return rows;
 }
 
+function ballRollFrame(leftCol){ // мяч катится по земле (слева направо)
+  const rows=[];
+  for(let r=0;r<9;r++){ let s='';
+    for(let c=0;c<9;c++){
+      if(r===8) s+='g';
+      else if(r>=4&&r<=6&&c>=leftCol&&c<=leftCol+2) s+='o';
+      else s+='.';
+    } rows.push(s);
+  } return rows;
+}
+function rocketFrame(topRow){ // ракета взлетает (снизу вверх)
+  const rows=[];
+  for(let r=0;r<9;r++){ let s='';
+    for(let c=0;c<9;c++){
+      if(r===topRow && c===4) s+='h';                          // нос
+      else if(r>topRow && r<=topRow+2 && c>=3 && c<=5) s+='h';  // корпус
+      else if(r===topRow+3 && c===4) s+='o';                    // огонь
+      else s+='.';
+    } rows.push(s);
+  } return rows;
+}
+
 const ANIMSET = [
   { nm:"Мячик прыгает", frames:[ballFrame(5), ballFrame(3), ballFrame(0)] },
   { nm:"Звезда растёт", frames:[diamondFrame(1), diamondFrame(2), diamondFrame(4)] },
   { nm:"Сердечко растёт", frames:[heartFrame(1), heartFrame(2), heartFrame(3)] },
+  { nm:"Мячик катится", frames:[ballRollFrame(1), ballRollFrame(3), ballRollFrame(6)] },
+  { nm:"Ракета взлетает", frames:[rocketFrame(5), rocketFrame(3), rocketFrame(1)] },
 ];
 const CO={'.':'transparent','o':'#ff9a3f','g':'#c9c9d6','y':'#ffd23f','h':'#ff5a7a'};
 
