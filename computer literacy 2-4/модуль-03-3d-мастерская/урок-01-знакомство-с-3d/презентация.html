@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Урок 4 — Знакомство с 3D: кубик-персонаж</title>
+<title>Урок 4 — Знакомство с 3D: герой и меч</title>
 <style>
   :root{--ink:#2b2350;--yellow:#ffd23f;--blue:#43b7ff;--green:#37c871;--pink:#ff7ab6;--purple:#8a5cf6;--violet:#5b7cfa;}
   *{box-sizing:border-box;margin:0;padding:0;font-family:'Comic Sans MS','Segoe UI',system-ui,sans-serif;}
@@ -67,36 +67,44 @@ function cube(top,side,face,s){s=s||120;return `<svg width="${s}" height="${s}" 
 
 const SLIDES = [
   {bg:['#5b7cfa','#8a5cf6'], html:`${BIP}<h1>Знакомство с 3D</h1><p>Сегодня лепим настоящую объёмную фигурку! 🧊</p>`},
-  {bg:['#8a5cf6','#5b7cfa'], html:`${cube('#7be3a0','#2fae62','#49c97a')}<h2>Что сделаем сегодня</h2><p>Соберём <b>3D-персонажа из кубиков</b> в программе BlockBench и покрутим его камерой со всех сторон!</p>`},
+  {bg:['#8a5cf6','#5b7cfa'], html:`${cube('#7be3a0','#2fae62','#49c97a')}<h2>Что сделаем сегодня</h2><p>Соберём <b>3D-героя из кубиков</b>, выкуем ему <b>меч</b> ⚔️ и покрутим камерой со всех сторон!</p>`},
   {bg:['#43b7ff','#8a5cf6'], html:`<div class="art">🖼️➡️🧊</div><div class="card"><h2>2D и 3D — в чём разница?</h2><p><b>2D</b> — плоское, как лист бумаги (наш пиксельный герой). <b>3D</b> — объёмное, можно обойти вокруг и посмотреть сбоку и сзади!</p></div>`},
   {bg:['#8a5cf6','#37c871'], html:`<div class="art">🧱🧱🧱</div><div class="card"><h2>3D лепят из кубиков</h2><p>Многие игры (например, Minecraft) собраны из объёмных кубиков. Мы тоже будем строить из них — как из конструктора LEGO!</p></div>`},
   {bg:['#37c871','#43b7ff'], html:`<div class="art">🖥️</div><div class="card"><h2>Программа BlockBench</h2><p>Открываем <b>BlockBench</b> → <b>New (Новый)</b> → <b>Generic Model</b>. Появилось 3D-поле с сеткой — наша мастерская!</p></div>`},
-  {bg:['#5b7cfa','#8a5cf6'], html:`<div class="art">🧭</div><div class="card"><h2>🆕 Новый приём: крути камеру!</h2><p>Зажми <b>левую кнопку мыши</b> и веди — камера <b>облетает</b> модель вокруг. Колёсико — <b>приблизить</b>. Так мы видим фигурку со всех сторон!</p></div>`},
-  {bg:['#8a5cf6','#5b7cfa'], html:`<h2>Три направления — оси</h2>
-     <div class="axes">
-       <span style="background:#e04b4b">X — вправо</span>
-       <span style="background:#2fae62">Y — вверх</span>
-       <span style="background:#3b8ae0">Z — вперёд</span>
+  {bg:['#5b7cfa','#8a5cf6'], html:`<div class="art">🖱️</div><div class="card"><h2>🆕 Крути камеру ПРАВОЙ кнопкой!</h2><p>Зажми <b>правую кнопку мыши</b> и веди — камера <b>облетает</b> модель вокруг, как дрон. Колёсико — <b>приблизить</b>. Левая кнопка — <b>выбрать</b> кубик.</p></div>`},
+  {bg:['#37c871','#8a5cf6'], html:`<div class="art">🚁🔄</div><h1>Физминутка «Я — камера»</h1><p>Встали, медленно повернулись вокруг себя — как камера облетает модель по правой кнопке! Посмотрели вверх, вниз, вбок.</p>`},
+  {bg:['#43b7ff','#37c871'], html:`<div class="card"><h2>Начинаем проект</h2>
+     <ul class="steps">
+       <li><span class="bignum">1</span> 🖥️ <b>New → Generic Model</b></li>
+       <li><span class="bignum">2</span> ✏️ Написать имя → <b>Confirm</b></li>
+       <li><span class="bignum">3</span> 🧊 Кнопка <b>Add Cube</b> — появился кубик</li>
+     </ul></div>`},
+  {bg:['#43b7ff','#5b7cfa'], html:`<h2 style="color:#fff">Три волшебные клавиши</h2>
+     <div class="row">
+       <div class="chip"><span class="e">✋</span><b>W</b><br>двигать</div>
+       <div class="chip"><span class="e">📏</span><b>S</b><br>размер</div>
+       <div class="chip"><span class="e">🔄</span><b>E</b><br>повернуть</div>
      </div>
-     <p>Кубик можно двигать по трём стрелкам-осям: вправо, вверх и вперёд.</p>`},
-  {bg:['#37c871','#8a5cf6'], html:`<div class="art">🧍🔄</div><h1>Физминутка</h1><p>Встали, повернулись вокруг себя — как камера вокруг модели! Посмотрели вверх (ось Y), вправо (ось X), вперёд (ось Z).</p>`},
-  {bg:['#43b7ff','#5b7cfa'], html:`<div class="card"><h2>Как добавить кубик</h2>
+     <p>W — двигать · S — растянуть · E — повернуть. Ctrl+Z — отмена!</p>`},
+  {bg:['#8a5cf6','#5b7cfa'], html:`<div class="card"><h2>Тяни за нужную стрелку</h2>
+     <div class="axes">
+       <span style="background:#e04b4b">🔴 вбок</span>
+       <span style="background:#2fae62">🟢 вверх</span>
+       <span style="background:#3b8ae0">🔵 вперёд</span>
+     </div>
+     <p>У кубика три цветные стрелки. Тяни за нужный цвет — поедет ровно!</p></div>`},
+  {bg:['#ffd23f','#ffb03f'], html:`<div class="card"><h2>Собираем героя</h2>
      <ul class="steps">
-       <li><span class="bignum">1</span> 🧊 Кнопка <b>Add Cube</b> (Добавить куб)</li>
-       <li><span class="bignum">2</span> ✋ Тяни за <b>стрелки-оси</b> — двигай куб</li>
-       <li><span class="bignum">3</span> ↔️ Тяни за <b>грань</b> — меняй размер</li>
+       <li><span class="bignum">1</span> 🟦 Широкий куб (S) — <b>тело</b></li>
+       <li><span class="bignum">2</span> 🟩 Куб сверху (W вверх) — <b>голова</b></li>
+       <li><span class="bignum">3</span> 🦵 Узкие кубы снизу — <b>ножки</b></li>
      </ul></div>`},
-  {bg:['#ffd23f','#ffb03f'], html:`<div class="card"><h2>Собираем кубик-персонажа</h2>
-     <ul class="steps">
-       <li><span class="bignum">1</span> 🟦 Большой куб — <b>тело</b></li>
-       <li><span class="bignum">2</span> 🟩 Куб поменьше сверху — <b>голова</b></li>
-       <li><span class="bignum">3</span> 🦵 Два узких куба снизу — <b>ножки</b></li>
-     </ul></div>`},
-  {bg:['#8a5cf6','#43b7ff'], html:`${cube('#c79dff','#7b45d0','#a06ef0')}<div class="card"><h2>Покрути и посмотри!</h2><p>Облети героя камерой: спереди — лицо, сзади — спинка, сверху — макушка. Настоящий объём!</p></div>`},
+  {bg:['#8a5cf6','#43b7ff'], html:`<div class="art">⚔️</div><div class="card"><h2>🆕 Куём меч! (Rotate — E)</h2><p>Длинный тонкий куб (S) — <b>лезвие</b>, короткий — <b>рукоять</b>. Нажми <b>E</b> и поверни за кольцо — меч наклонится, как в руке героя!</p></div>`},
+  {bg:['#43b7ff','#8a5cf6'], html:`${cube('#c79dff','#7b45d0','#a06ef0')}<div class="card"><h2>Покрути и посмотри!</h2><p>Облети героя правой кнопкой: спереди — лицо, сзади — спинка, сверху — макушка. Настоящий объём!</p></div>`},
   {bg:['#5b7cfa','#37c871'], html:`<div class="art">🧊🎮</div><h1>Игра «Собери кубики»</h1><p>Лови кубики нужного цвета для 3D-модели, не хватай бомбы!</p>`},
-  {bg:['#8a5cf6','#5b7cfa'], html:`<div class="art">💾</div><div class="card"><h2>Сохраняем проект (быстро!)</h2><p><b>File → Save</b> — сохранит наш 3D-проект, чтобы завтра продолжить. Позже научимся раскрашивать!</p></div>`},
+  {bg:['#8a5cf6','#5b7cfa'], html:`<div class="art">💾</div><div class="card"><h2>Сохраняем проект (быстро!)</h2><p><b>File → Save</b> — сохранит наш 3D-проект. Завтра раскрасим героя и меч!</p></div>`},
   {bg:['#ffb03f','#43b7ff'], html:`<div class="art">⌨️🔤</div><h1>Тренажёр печати</h1><p>Разомнём пальчики — три режима, ловим буквы и печатаем слова!</p>`},
-  {bg:['#37c871','#8a5cf6'], html:`${BIP}<div class="art">🎉</div><h1>Ты — 3D-строитель!</h1><p>Викторина и звёзды ⭐</p>`},
+  {bg:['#37c871','#8a5cf6'], html:`${BIP}<div class="art">⚔️🎉</div><h1>Ты — 3D-мастер!</h1><p>Викторина и звёзды ⭐</p>`},
 ];
 
 const deck=document.getElementById('deck');
