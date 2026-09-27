@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Маляр Бип — раскрась кубики</title>
+<style>
+  :root{--bg1:#37c871;--bg2:#43b7ff;--ink:#2b2350;--yellow:#ffd23f;--green:#37c871;--red:#ff5a7a;--blue:#43b7ff;}
+  *{box-sizing:border-box;margin:0;font-family:'Comic Sans MS','Segoe UI',system-ui,sans-serif;user-select:none;-webkit-user-select:none;}
+  body{min-height:100vh;background:linear-gradient(135deg,var(--bg1),var(--bg2));display:flex;align-items:center;justify-content:center;padding:12px;color:var(--ink);}
+  .stage{width:min(760px,100%);background:#fff;border-radius:24px;box-shadow:0 18px 50px rgba(0,0,0,.3);padding:16px 18px 20px;text-align:center;}
+  h1{font-size:24px;color:#2e9e5b;margin:2px 0;}
+  .sub{color:#7a76a0;font-size:15px;margin-bottom:8px;}
+  .hud{display:flex;justify-content:space-between;align-items:center;gap:8px;font-size:19px;margin-bottom:8px;}
+  .hud .box{background:#f3f7f2;border-radius:12px;padding:6px 12px;font-weight:bold;}
+  .arena{position:relative;min-height:300px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;}
+  .order{font-size:22px;font-weight:bold;color:#2b2350;}
+  .order .sw{display:inline-block;width:30px;height:30px;border-radius:7px;vertical-align:middle;margin-left:6px;border:2px solid #0002;}
+  .cubewrap{margin:4px 0;}
+  .timebar{height:14px;width:min(360px,80%);background:#eee;border-radius:8px;overflow:hidden;margin:2px auto;}
+  .timebar>div{height:100%;width:100%;background:linear-gradient(90deg,#37c871,#43b7ff);transition:width .1s linear;}
+  .palette{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:8px;}
+  .paint{width:60px;height:60px;border-radius:14px;border:4px solid #fff;box-shadow:0 4px 0 #0002;cursor:pointer;transition:transform .06s;}
+  .paint:active{transform:translateY(3px);}
+  .say{font-size:18px;font-weight:bold;min-height:24px;margin-top:6px;}
+  .center{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;background:rgba(255,255,255,.95);border-radius:16px;padding:16px;z-index:5;}
+  .center.hidden{display:none !important;}
+  .bip{width:80px;height:auto;margin-bottom:6px;}
+  .btn{border:none;border-radius:16px;background:var(--yellow);color:#6b4e00;font-size:22px;font-weight:bold;padding:12px 28px;margin-top:12px;cursor:pointer;box-shadow:0 5px 0 #d9a900;}
+  .btn:active{transform:translateY(3px);box-shadow:0 2px 0 #d9a900;}
+  .big{font-size:25px;color:#2e9e5b;margin:4px 0;}
+  .stars{font-size:40px;letter-spacing:3px;}
+  .tip{color:#9a96b8;font-size:13px;margin-top:10px;}
+  .pop{position:absolute;font-size:24px;font-weight:bold;pointer-events:none;animation:rise .7s ease-out forwards;z-index:6;}
+  @keyframes rise{from{opacity:1;transform:translateY(0)}to{opacity:0;transform:translateY(-40px)}}
+  .hidden{display:none !important;}
+</style>
+</head>
+<body>
+<div class="stage">
+  <h1>🎨 Маляр Бип</h1>
+  <div class="sub">Бип называет цвет — быстро выбери нужную краску и покрась кубик!</div>
+  <div class="hud">
+    <span class="box">🏆 <span id="score">0</span></span>
+    <span class="box">🔥 серия <span id="streak">0</span></span>
+    <span class="box">❤️ <span id="lives">❤️❤️❤️</span></span>
+  </div>
+  <div class="arena" id="arena">
+    <div class="order" id="order"></div>
+    <div class="cubewrap" id="cubewrap"></div>
+    <div class="timebar"><div id="tbar"></div></div>
+    <div class="say" id="say"></div>
+
+    <div class="center" id="startScreen">
+      <svg class="bip" viewBox="0 0 120 130" xmlns="http://www.w3.org/2000/svg">
+        <line x1="60" y1="18" x2="60" y2="8" stroke="#43b7ff" stroke-width="5"/><circle cx="60" cy="7" r="7" fill="#ffd23f"/>
+        <rect x="22" y="22" width="76" height="62" rx="20" fill="#ffd23f"/><rect x="33" y="34" width="54" height="32" rx="13" fill="#2b2350"/>
+        <circle cx="50" cy="50" r="8" fill="#43b7ff"/><circle cx="72" cy="50" r="8" fill="#43b7ff"/>
+        <circle cx="50" cy="50" r="3.5" fill="#fff"/><circle cx="72" cy="50" r="3.5" fill="#fff"/>
+        <path d="M49 73 q11 9 22 0" stroke="#2b2350" stroke-width="4" fill="none" stroke-linecap="round"/>
+        <rect x="34" y="88" width="52" height="30" rx="14" fill="#43b7ff"/>
+      </svg>
+      <div class="big">Раскрась кубики нужным цветом!</div>
+      <p style="max-width:34ch;color:#5a5680">Бип показывает цвет заказа — жми <b>краску того же цвета</b>, пока не кончилось время полоски. Успевай! Чем дольше серия — тем больше очков. Большой заказ 🌈 — два цвета подряд!</p>
+      <button class="btn" onclick="startGame()">▶ Играть!</button>
+      <p class="tip">Кликай по банкам с краской внизу. 3 жизни.</p>
+    </div>
+
+    <div class="center hidden" id="overScreen">
+      <div class="big" id="overTitle">Смена окончена! 🎉</div>
+      <div class="stars" id="stars"></div>
+      <p class="big" id="finalScore"></p>
+      <p style="color:#5a5680" id="praise"></p>
+      <button class="btn" onclick="startGame()">↺ Ещё разок</button>
+    </div>
+  </div>
+</div>
+
+<script>
+const COLORS = [
+  {name:'КРАСНЫЙ',  hex:'#ff5a5a'},
+  {name:'СИНИЙ',    hex:'#43a0ff'},
+  {name:'ЗЕЛЁНЫЙ',  hex:'#37c871'},
+  {name:'ЖЁЛТЫЙ',   hex:'#ffce3a'},
+  {name:'ФИОЛЕТОВЫЙ',hex:'#a06ef0'},
+];
+const arena=document.getElementById('arena'), orderEl=document.getElementById('order'),
+      cubewrap=document.getElementById('cubewrap'), tbar=document.getElementById('tbar'),
+      sayEl=document.getElementById('say'), scoreEl=document.getElementById('score'),
+      streakEl=document.getElementById('streak'), livesEl=document.getElementById('lives');
+
+let score=0, streak=0, lives=3, running=false;
+let queue=[], step=0, cubeTime=2200, tLeft=0, tRaf=null, lastTs=0, locked=false;
+
+function cubeSVG(hex,s){s=s||120;
+  // затемнённые/светлые грани для объёма
+  function shade(h,f){ // f<1 темнее
+    const n=parseInt(h.slice(1),16); let r=(n>>16)&255,g=(n>>8)&255,b=n&255;
+    r=Math.round(r*f);g=Math.round(g*f);b=Math.round(b*f);
+    return '#'+((1<<24)+(r<<16)+(g<<8)+b).toString(16).slice(1);
+  }
+  return `<svg width="${s}" height="${s}" viewBox="0 0 100 100">
+    <polygon points="50,6 92,28 50,50 8,28" fill="${lighten(hex)}"/>
+    <polygon points="8,28 50,50 50,96 8,74" fill="${shade(hex,.7)}"/>
+    <polygon points="92,28 50,50 50,96 92,74" fill="${hex}"/></svg>`;
+}
+function lighten(h){const n=parseInt(h.slice(1),16);let r=(n>>16)&255,g=(n>>8)&255,b=n&255;
+  r=Math.min(255,Math.round(r*1.2+20));g=Math.min(255,Math.round(g*1.2+20));b=Math.min(255,Math.round(b*1.2+20));
+  return '#'+((1<<24)+(r<<16)+(g<<8)+b).toString(16).slice(1);}
+const grayCube = cubeSVG('#b9bccc');
+
+function buildPalette(){
+  let old=document.querySelector('.palette'); if(old) old.remove();
+  const p=document.createElement('div'); p.className='palette';
+  COLORS.forEach((c,i)=>{
+    const b=document.createElement('div'); b.className='paint'; b.style.background=c.hex; b.title=c.name;
+    b.onclick=()=>choose(i);
+    p.appendChild(b);
+  });
+  arena.parentElement.appendChild(p);
+}
+
+function pop(txt,color){ const p=document.createElement('div'); p.className='pop'; p.style.left='50%'; p.style.top='40%'; p.style.color=color; p.textContent=txt; arena.appendChild(p); setTimeout(()=>p.remove(),700); }
+
+function newOrder(){
+  locked=false;
+  // раз в ~8 — большой заказ (2 цвета)
+  const big = score>0 && score%8===0;
+  const c1=Math.random()*COLORS.length|0;
+  if(big){ let c2=Math.random()*COLORS.length|0; queue=[c1,c2]; step=0; renderOrder(true); }
+  else { queue=[c1]; step=0; renderOrder(false); }
+  cubeTime = Math.max(950, 2200 - score*45);
+  tLeft = cubeTime; lastTs=0;
+  cubewrap.innerHTML = grayCube;
+  sayEl.textContent=''; sayEl.style.color='#2b2350';
+  if(tRaf) cancelAnimationFrame(tRaf);
+  tRaf=requestAnimationFrame(tick);
+}
+function renderOrder(big){
+  const c=COLORS[queue[step]];
+  orderEl.innerHTML = (big?'🌈 Большой заказ! ':'Покрась в: ')+'<b>'+c.name+'</b><span class="sw" style="background:'+c.hex+'"></span>'+
+     (queue.length>1?' ('+(step+1)+' из '+queue.length+')':'');
+}
+function tick(ts){
+  if(!running||locked){ return; }
+  if(!lastTs) lastTs=ts;
+  tLeft -= (ts-lastTs); lastTs=ts;
+  tbar.style.width = Math.max(0, tLeft/cubeTime*100)+'%';
+  if(tLeft<=0){ miss(); return; }
+  tRaf=requestAnimationFrame(tick);
+}
+
+function choose(i){
+  if(!running||locked) return;
+  const want=queue[step];
+  if(i===want){
+    cubewrap.innerHTML = cubeSVG(COLORS[i].hex);
+    if(step<queue.length-1){ step++; renderOrder(queue.length>1); return; }
+    // заказ выполнен
+    locked=true; if(tRaf)cancelAnimationFrame(tRaf);
+    score++; streak++; scoreEl.textContent=score; streakEl.textContent=streak;
+    const bonus = queue.length>1?' +бонус!':'';
+    sayEl.textContent='✅ Готово!'+bonus; sayEl.style.color='#37c871';
+    pop('+'+queue.length, '#37c871');
+    setTimeout(()=>{ if(running) newOrder(); }, 500);
+  } else {
+    // не тот цвет
+    locked=true; if(tRaf)cancelAnimationFrame(tRaf);
+    streak=0; streakEl.textContent=0;
+    sayEl.textContent='❌ Не тот цвет! Нужен '+COLORS[want].name; sayEl.style.color='#e0555f';
+    loseLife();
+    if(running) setTimeout(newOrder,700);
+  }
+}
+function miss(){
+  locked=true; streak=0; streakEl.textContent=0;
+  sayEl.textContent='⏰ Не успел! Быстрее!'; sayEl.style.color='#e0555f';
+  loseLife();
+  if(running) setTimeout(newOrder,700);
+}
+function loseLife(){
+  lives--; livesEl.textContent='❤️'.repeat(Math.max(0,lives))+'🖤'.repeat(3-Math.max(0,lives));
+  if(lives<=0) endGame();
+}
+
+function startGame(){
+  document.getElementById('startScreen').classList.add('hidden');
+  document.getElementById('overScreen').classList.add('hidden');
+  score=0; streak=0; lives=3; running=true;
+  scoreEl.textContent='0'; streakEl.textContent='0'; livesEl.textContent='❤️❤️❤️';
+  buildPalette();
+  newOrder();
+}
+function endGame(){
+  running=false; locked=true; if(tRaf)cancelAnimationFrame(tRaf);
+  const over=document.getElementById('overScreen'); over.classList.remove('hidden');
+  document.getElementById('overTitle').textContent='Смена окончена! 🎨';
+  const st = score>=30?5:score>=22?4:score>=14?3:score>=7?2:1;
+  document.getElementById('stars').textContent='⭐'.repeat(st)+'☆'.repeat(5-st);
+  document.getElementById('finalScore').textContent='Покрашено кубиков: '+score;
+  document.getElementById('praise').textContent = st>=4?'Мастер-маляр! 🎨🏆':st>=2?'Здорово! Ещё разок — и рекорд! 💪':'Тренируйся — рука станет быстрой! 😊';
+}
+document.addEventListener('keydown',e=>{
+  if(!running||locked) return;
+  const n=parseInt(e.key); if(n>=1&&n<=COLORS.length) choose(n-1);
+});
+</script>
+</body>
+</html>
