@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 360" font-family="'Segoe UI',system-ui,sans-serif">
+  <rect x="0" y="0" width="900" height="360" fill="#f7f9fc"/>
+  <text x="450" y="34" font-size="23" font-weight="700" fill="#1f2937" text-anchor="middle">📐 Один и тот же «массив чисел» разной размерности</text>
+  <text x="450" y="58" font-size="13.5" fill="#64748b" text-anchor="middle">Добавляем измерение → следующий тип. Сегодня нужны 1D (вектор) и 2D (матрица).</text>
+
+  <!-- Скаляр 0D -->
+  <text x="115" y="92" font-size="15" font-weight="700" fill="#4f46e5" text-anchor="middle">Скаляр · 0D</text>
+  <text x="115" y="110" font-size="12" fill="#64748b" text-anchor="middle">одно число</text>
+  <rect x="85" y="150" width="60" height="60" rx="8" fill="#e0e7ff" stroke="#4f46e5" stroke-width="2"/>
+  <text x="115" y="188" font-size="22" font-family="monospace" fill="#3730a3" text-anchor="middle">5</text>
+
+  <!-- Вектор 1D -->
+  <text x="320" y="92" font-size="15" font-weight="700" fill="#4f46e5" text-anchor="middle">Вектор (массив) · 1D</text>
+  <text x="320" y="110" font-size="12" fill="#64748b" text-anchor="middle">ряд чисел</text>
+  <g font-family="monospace" font-size="18" text-anchor="middle">
+    <rect x="230" y="165" width="44" height="44" rx="7" fill="#dbeafe" stroke="#2563eb" stroke-width="1.5"/><text x="252" y="193" fill="#1e40af">1</text>
+    <rect x="276" y="165" width="44" height="44" rx="7" fill="#dbeafe" stroke="#2563eb" stroke-width="1.5"/><text x="298" y="193" fill="#1e40af">2</text>
+    <rect x="322" y="165" width="44" height="44" rx="7" fill="#dbeafe" stroke="#2563eb" stroke-width="1.5"/><text x="344" y="193" fill="#1e40af">3</text>
+    <rect x="368" y="165" width="44" height="44" rx="7" fill="#dbeafe" stroke="#2563eb" stroke-width="1.5"/><text x="390" y="193" fill="#1e40af">7</text>
+  </g>
+  <text x="320" y="230" font-size="12" font-family="monospace" fill="#64748b" text-anchor="middle">shape (4,)</text>
+
+  <!-- Матрица 2D -->
+  <text x="575" y="92" font-size="15" font-weight="700" fill="#4f46e5" text-anchor="middle">Матрица · 2D</text>
+  <text x="575" y="110" font-size="12" fill="#64748b" text-anchor="middle">таблица (строки × столбцы)</text>
+  <g font-family="monospace" font-size="16" text-anchor="middle">
+    <rect x="513" y="150" width="40" height="40" rx="6" fill="#dcfce7" stroke="#16a34a" stroke-width="1.5"/><text x="533" y="176" fill="#166534">5</text>
+    <rect x="555" y="150" width="40" height="40" rx="6" fill="#dcfce7" stroke="#16a34a" stroke-width="1.5"/><text x="575" y="176" fill="#166534">4</text>
+    <rect x="597" y="150" width="40" height="40" rx="6" fill="#dcfce7" stroke="#16a34a" stroke-width="1.5"/><text x="617" y="176" fill="#166534">5</text>
+    <rect x="513" y="192" width="40" height="40" rx="6" fill="#dcfce7" stroke="#16a34a" stroke-width="1.5"/><text x="533" y="218" fill="#166534">4</text>
+    <rect x="555" y="192" width="40" height="40" rx="6" fill="#dcfce7" stroke="#16a34a" stroke-width="1.5"/><text x="575" y="218" fill="#166534">5</text>
+    <rect x="597" y="192" width="40" height="40" rx="6" fill="#dcfce7" stroke="#16a34a" stroke-width="1.5"/><text x="617" y="218" fill="#166534">3</text>
+  </g>
+  <text x="575" y="252" font-size="12" font-family="monospace" fill="#64748b" text-anchor="middle">shape (2, 3)</text>
+
+  <!-- Тензор 3D -->
+  <text x="800" y="92" font-size="15" font-weight="700" fill="#4f46e5" text-anchor="middle">Тензор · 3D+</text>
+  <text x="800" y="110" font-size="12" fill="#64748b" text-anchor="middle">«куб» чисел (напр. картинка)</text>
+  <g font-family="monospace" font-size="13" text-anchor="middle">
+    <rect x="755" y="158" width="70" height="60" rx="6" fill="#ede9fe" stroke="#7c3aed" stroke-width="1.5"/>
+    <rect x="765" y="150" width="70" height="60" rx="6" fill="#f5f3ff" stroke="#7c3aed" stroke-width="1.5"/>
+    <rect x="775" y="142" width="70" height="60" rx="6" fill="#faf5ff" stroke="#7c3aed" stroke-width="1.5"/>
+    <text x="810" y="177" fill="#5b21b6">▦ ▦ ▦</text>
+  </g>
+  <text x="800" y="246" font-size="12" font-family="monospace" fill="#64748b" text-anchor="middle">(выс, шир, 3)</text>
+
+  <!-- arrows between -->
+  <g fill="#94a3b8" font-size="20" text-anchor="middle">
+    <text x="188" y="188">→</text><text x="455" y="188">→</text><text x="683" y="188">→</text>
+  </g>
+
+  <rect x="120" y="296" width="660" height="44" rx="12" fill="#fef9c3" stroke="#eab308" stroke-width="1.5"/>
+  <text x="450" y="323" font-size="13" fill="#713f12" text-anchor="middle">💡 «Вектор» и «массив» — одно и то же слово из математики и программирования. Матрица = таблица чисел.</text>
+</svg>

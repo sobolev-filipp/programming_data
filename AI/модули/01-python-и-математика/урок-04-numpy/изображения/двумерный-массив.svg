@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 860 420" font-family="'Segoe UI',system-ui,sans-serif">
+  <rect x="0" y="0" width="860" height="420" fill="#f7f9fc"/>
+  <text x="430" y="34" font-size="23" font-weight="700" fill="#1f2937" text-anchor="middle">🔢 Двумерный массив (матрица) = таблица строки × столбцы</text>
+  <text x="430" y="58" font-size="13.5" fill="#64748b" text-anchor="middle">Список списков превращается в таблицу. Форма (shape) = (строк, столбцов).</text>
+
+  <!-- left: code -->
+  <rect x="55" y="120" width="300" height="150" rx="10" fill="#0f172a"/>
+  <text x="75" y="150" font-size="14" font-family="monospace" fill="#e2e8f0">m = np.array([</text>
+  <text x="95" y="176" font-size="14" font-family="monospace" fill="#a5b4fc">[1, 2, 3],</text>
+  <text x="330" y="176" font-size="12" font-family="monospace" fill="#64748b" text-anchor="end">← строка 0</text>
+  <text x="95" y="200" font-size="14" font-family="monospace" fill="#a5b4fc">[4, 5, 6],</text>
+  <text x="330" y="200" font-size="12" font-family="monospace" fill="#64748b" text-anchor="end">← строка 1</text>
+  <text x="75" y="224" font-size="14" font-family="monospace" fill="#e2e8f0">])</text>
+
+  <!-- arrow -->
+  <text x="405" y="192" font-size="26" fill="#4f46e5" text-anchor="middle">→</text>
+
+  <!-- right: grid -->
+  <!-- column headers -->
+  <g font-size="12.5" fill="#7c3aed" text-anchor="middle" font-family="monospace">
+    <text x="530" y="112">столбец 0</text><text x="600" y="112">столбец 1</text><text x="670" y="112">столбец 2</text>
+  </g>
+  <g font-family="monospace" font-size="20" text-anchor="middle">
+    <!-- row 0 -->
+    <rect x="500" y="122" width="60" height="52" rx="7" fill="#dcfce7" stroke="#16a34a" stroke-width="1.5"/><text x="530" y="156" fill="#166534">1</text>
+    <rect x="570" y="122" width="60" height="52" rx="7" fill="#dcfce7" stroke="#16a34a" stroke-width="1.5"/><text x="600" y="156" fill="#166534">2</text>
+    <rect x="640" y="122" width="60" height="52" rx="7" fill="#dcfce7" stroke="#16a34a" stroke-width="1.5"/><text x="670" y="156" fill="#166534">3</text>
+    <!-- row 1 -->
+    <rect x="500" y="180" width="60" height="52" rx="7" fill="#d1fae5" stroke="#16a34a" stroke-width="1.5"/><text x="530" y="214" fill="#166534">4</text>
+    <rect x="570" y="180" width="60" height="52" rx="7" fill="#d1fae5" stroke="#16a34a" stroke-width="1.5"/><text x="600" y="214" fill="#166534">5</text>
+    <rect x="640" y="180" width="60" height="52" rx="7" fill="#d1fae5" stroke="#16a34a" stroke-width="1.5"/><text x="670" y="214" fill="#166534">6</text>
+  </g>
+  <!-- row labels -->
+  <g font-size="12.5" fill="#7c3aed" font-family="monospace">
+    <text x="712" y="153">строка 0</text><text x="712" y="211">строка 1</text>
+  </g>
+
+  <!-- shape callout -->
+  <rect x="500" y="256" width="270" height="60" rx="10" fill="#eef2ff" stroke="#6366f1" stroke-width="1.5"/>
+  <text x="635" y="282" font-size="15" font-family="monospace" font-weight="700" fill="#3730a3" text-anchor="middle">m.shape → (2, 3)</text>
+  <text x="635" y="304" font-size="12.5" fill="#3730a3" text-anchor="middle">2 строки, 3 столбца · всего 6 чисел</text>
+
+  <rect x="55" y="360" width="750" height="44" rx="12" fill="#fef9c3" stroke="#eab308" stroke-width="1.5"/>
+  <text x="430" y="387" font-size="13.5" fill="#713f12" text-anchor="middle">💡 В shape ПЕРВОЕ число — всегда строки, ВТОРОЕ — столбцы. Это правило работает по всему NumPy.</text>
+</svg>

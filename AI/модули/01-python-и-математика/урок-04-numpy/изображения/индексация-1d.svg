@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 860 400" font-family="'Segoe UI',system-ui,sans-serif">
+  <rect x="0" y="0" width="860" height="400" fill="#f7f9fc"/>
+  <text x="430" y="34" font-size="23" font-weight="700" fill="#1f2937" text-anchor="middle">🎯 Индексы и срезы одномерного массива</text>
+  <text x="430" y="58" font-size="13.5" fill="#64748b" text-anchor="middle">Индекс с начала — с 0; с конца — с −1. Срез a[start:stop] берёт stop НЕ включая.</text>
+
+  <!-- positive indices -->
+  <g font-size="13" fill="#4f46e5" text-anchor="middle" font-family="monospace">
+    <text x="130" y="104">0</text><text x="250" y="104">1</text><text x="370" y="104">2</text><text x="490" y="104">3</text><text x="610" y="104">4</text>
+  </g>
+  <!-- cells -->
+  <g font-family="monospace" font-size="24" text-anchor="middle">
+    <rect x="80" y="112" width="100" height="60" rx="8" fill="#e0e7ff" stroke="#4f46e5" stroke-width="2"/><text x="130" y="152" fill="#3730a3">10</text>
+    <rect x="200" y="112" width="100" height="60" rx="8" fill="#e0e7ff" stroke="#4f46e5" stroke-width="2"/><text x="250" y="152" fill="#3730a3">20</text>
+    <rect x="320" y="112" width="100" height="60" rx="8" fill="#e0e7ff" stroke="#4f46e5" stroke-width="2"/><text x="370" y="152" fill="#3730a3">30</text>
+    <rect x="440" y="112" width="100" height="60" rx="8" fill="#e0e7ff" stroke="#4f46e5" stroke-width="2"/><text x="490" y="152" fill="#3730a3">40</text>
+    <rect x="560" y="112" width="100" height="60" rx="8" fill="#e0e7ff" stroke="#4f46e5" stroke-width="2"/><text x="610" y="152" fill="#3730a3">50</text>
+  </g>
+  <!-- negative indices -->
+  <g font-size="13" fill="#db2777" text-anchor="middle" font-family="monospace">
+    <text x="130" y="192">−5</text><text x="250" y="192">−4</text><text x="370" y="192">−3</text><text x="490" y="192">−2</text><text x="610" y="192">−1</text>
+  </g>
+
+  <!-- examples -->
+  <g font-family="monospace" font-size="14">
+    <rect x="70" y="228" width="220" height="40" rx="8" fill="#dcfce7" stroke="#16a34a" stroke-width="1.5"/>
+    <text x="88" y="253" fill="#166534">a[0]  →  10</text>
+    <rect x="320" y="228" width="220" height="40" rx="8" fill="#dcfce7" stroke="#16a34a" stroke-width="1.5"/>
+    <text x="338" y="253" fill="#166534">a[-1]  →  50</text>
+    <rect x="570" y="228" width="220" height="40" rx="8" fill="#dcfce7" stroke="#16a34a" stroke-width="1.5"/>
+    <text x="588" y="253" fill="#166534">a[1:4] → [20 30 40]</text>
+  </g>
+  <!-- slice highlight -->
+  <rect x="200" y="108" width="340" height="68" rx="10" fill="none" stroke="#16a34a" stroke-width="2.5" stroke-dasharray="6 4"/>
+  <text x="370" y="300" font-size="13" fill="#16a34a" text-anchor="middle">a[1:4] — с индекса 1 до 4 (индекс 4 = число 50 НЕ входит)</text>
+
+  <rect x="70" y="330" width="720" height="46" rx="12" fill="#fef9c3" stroke="#eab308" stroke-width="1.5"/>
+  <text x="430" y="351" font-size="13" fill="#713f12" text-anchor="middle">💡 Всё как в списках Python: a[start:stop:step]. a[::-1] — перевернуть массив.</text>
+  <text x="430" y="369" font-size="12.5" fill="#713f12" text-anchor="middle" font-family="monospace">a[::-1] → [50 40 30 20 10]</text>
+</svg>

@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 860 450" font-family="'Segoe UI',system-ui,sans-serif">
+  <rect x="0" y="0" width="860" height="450" fill="#f7f9fc"/>
+  <text x="430" y="34" font-size="23" font-weight="700" fill="#1f2937" text-anchor="middle">🧱 Если ML — это дом, то NumPy — кирпичи</text>
+  <text x="430" y="58" font-size="13.5" fill="#64748b" text-anchor="middle">Pandas, scikit-learn, PyTorch, TensorFlow — внутри у всех NumPy-массивы.</text>
+
+  <!-- roof -->
+  <polygon points="430,86 690,168 170,168" fill="#4f46e5"/>
+  <text x="430" y="150" font-size="18" font-weight="700" fill="#ffffff" text-anchor="middle">🏠 ML · нейросети</text>
+
+  <!-- frameworks floor -->
+  <g font-size="13.5" font-weight="700" text-anchor="middle">
+    <rect x="175" y="180" width="120" height="46" rx="8" fill="#e0e7ff" stroke="#6366f1" stroke-width="1.5"/><text x="235" y="208" fill="#3730a3">Pandas</text>
+    <rect x="303" y="180" width="120" height="46" rx="8" fill="#e0e7ff" stroke="#6366f1" stroke-width="1.5"/><text x="363" y="208" fill="#3730a3">scikit-learn</text>
+    <rect x="431" y="180" width="120" height="46" rx="8" fill="#e0e7ff" stroke="#6366f1" stroke-width="1.5"/><text x="491" y="208" fill="#3730a3">PyTorch</text>
+    <rect x="559" y="180" width="120" height="46" rx="8" fill="#e0e7ff" stroke="#6366f1" stroke-width="1.5"/><text x="619" y="208" fill="#3730a3">TensorFlow</text>
+  </g>
+  <text x="430" y="250" font-size="12.5" fill="#64748b" text-anchor="middle">↓ все они стоят на одном фундаменте ↓</text>
+
+  <!-- foundation: bricks -->
+  <rect x="175" y="264" width="504" height="96" rx="6" fill="#fde68a" stroke="#d97706" stroke-width="2"/>
+  <g stroke="#d97706" stroke-width="1" opacity="0.7">
+    <line x1="175" y1="296" x2="679" y2="296"/><line x1="175" y1="328" x2="679" y2="328"/>
+    <line x1="259" y1="264" x2="259" y2="296"/><line x1="343" y1="264" x2="343" y2="296"/><line x1="427" y1="264" x2="427" y2="296"/><line x1="511" y1="264" x2="511" y2="296"/><line x1="595" y1="264" x2="595" y2="296"/>
+    <line x1="217" y1="296" x2="217" y2="328"/><line x1="301" y1="296" x2="301" y2="328"/><line x1="385" y1="296" x2="385" y2="328"/><line x1="469" y1="296" x2="469" y2="328"/><line x1="553" y1="296" x2="553" y2="328"/><line x1="637" y1="296" x2="637" y2="328"/>
+    <line x1="259" y1="328" x2="259" y2="360"/><line x1="343" y1="328" x2="343" y2="360"/><line x1="427" y1="328" x2="427" y2="360"/><line x1="511" y1="328" x2="511" y2="360"/><line x1="595" y1="328" x2="595" y2="360"/>
+  </g>
+  <text x="427" y="302" font-size="22" font-weight="800" fill="#7c2d12" text-anchor="middle">NumPy</text>
+  <text x="427" y="346" font-size="13" fill="#7c2d12" text-anchor="middle" font-family="monospace">массивы чисел — [1 2 3], матрицы, тензоры</text>
+
+  <!-- tip -->
+  <rect x="120" y="392" width="620" height="44" rx="12" fill="#fef9c3" stroke="#eab308" stroke-width="1.5"/>
+  <text x="430" y="419" font-size="13.5" fill="#713f12" text-anchor="middle">💡 Освоишь кирпичи (NumPy) — и весь «дом» ML станет понятнее: он держится на них.</text>
+</svg>
