@@ -1,0 +1,7 @@
+# ── git-crypt: учительские файлы курса AI (шифруются; читаются только с ключом) ──
+# Локальный .gitattributes курса, чтобы шифровать Справочник.md ТОЛЬКО в AI/.
+# В swift/ одноимённый Справочник.md — ученический (не шифруется), поэтому маску
+# нельзя выносить в корневой .gitattributes (он действует на весь репозиторий).
+# Остальные учительские файлы AI (theory.md, lesson.md, review.md, solutions.md,
+# METHODOLOGY.md, HANDOFF.md) шифруются масками из корневого .gitattributes.
+Справочник.md            filter=git-crypt diff=git-crypt
