@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Урок 6 — Мой 3D-герой: семья блоков</title>
+<title>Урок 6 — Живой сундук сокровищ</title>
 <style>
   :root{--ink:#2b2350;--yellow:#ffd23f;--blue:#43b7ff;--green:#37c871;--pink:#ff7ab6;--purple:#8a5cf6;--violet:#5b7cfa;}
   *{box-sizing:border-box;margin:0;padding:0;font-family:'Comic Sans MS','Segoe UI',system-ui,sans-serif;}
@@ -37,7 +37,7 @@
 </style>
 </head>
 <body>
-<div class="tag">🤖 Урок 6 · Модуль 3 «3D-мастерская»</div>
+<div class="tag">🧰 Урок 6 · Модуль 3 «3D-мастерская»</div>
 <div class="hintkey">← → или пробел листают слайды</div>
 <div id="deck"></div>
 <div class="counter" id="counter"></div>
@@ -59,34 +59,33 @@ const BIP = `<svg viewBox="0 0 120 130" width="130" height="140" xmlns="http://w
 </svg>`;
 
 const SLIDES = [
-  {bg:['#8a5cf6','#43b7ff'], html:`${BIP}<h1>Мой 3D-герой</h1><p>Секрет «семьи блоков»: научим героя двигаться! 🤖</p>`},
-  {bg:['#43b7ff','#8a5cf6'], html:`<div class="art">🤖✋</div><h2>Что сделаем сегодня</h2><p>Соберём робота и сделаем так, чтобы его <b>рука махала</b>, а голова поворачивалась — как живая!</p>`},
-  {bg:['#ff7ab6','#8a5cf6'], html:`<div class="art">🤖➡️🧩</div><div class="card"><h2>Задачка!</h2><p>Робот пошёл гулять. Двигаем тело — а руки и голова <b>остались висеть в воздухе!</b> 😱 Почему? Они «не в семье».</p></div>`},
-  {bg:['#8a5cf6','#5b7cfa'], html:`<div class="card"><h2>🆕 Секрет: папки (семья блоков)</h2><p>В панели <b>Outliner</b> (справа) создаём <b>папку-семью</b>. Кладём кубики внутрь — теперь они <b>едут вместе</b>. Папка — мама, кубики — детки!</p></div>`},
+  {bg:['#8a5cf6','#43b7ff'], html:`${BIP}<h1>Живой сундук сокровищ</h1><p>Секрет «семьи блоков»: крышка откроется сама! 🧰</p>`},
+  {bg:['#43b7ff','#8a5cf6'], html:`<div class="art">🧰🔓</div><h2>Что сделаем сегодня</h2><p>Соберём <b>сундук с кладом</b>, у которого <b>открывается крышка</b> — на петле, как у настоящего!</p>`},
+  {bg:['#ff7ab6','#8a5cf6'], html:`<div class="art">🧰➡️🧩</div><div class="card"><h2>Задачка!</h2><p>Двигаем ящик — а крышка <b>осталась висеть в воздухе!</b> 😱 Почему? Они «не в одной семье».</p></div>`},
+  {bg:['#8a5cf6','#5b7cfa'], html:`<div class="card"><h2>🆕 Секрет: папки (семья блоков)</h2><p>В панели <b>Outliner</b> (справа) создаём <b>папку-семью</b>. Кладём детали внутрь — теперь они <b>едут вместе</b>. Папка — мама, кубики — детки!</p></div>`},
   {bg:['#43b7ff','#37c871'], html:`<div class="card"><h2>Как создать папку</h2>
      <ul class="steps">
        <li><span class="bignum">1</span> 📁 В Outliner нажми <b>иконку папки</b></li>
-       <li><span class="bignum">2</span> ✏️ 2 клика — <b>переименуй</b> (HEAD, RUKA)</li>
+       <li><span class="bignum">2</span> ✏️ 2 клика — <b>переименуй</b> (CHEST, LID)</li>
        <li><span class="bignum">3</span> ✋ Перетащи кубик <b>на папку</b></li>
      </ul></div>`},
   {bg:['#5b7cfa','#8a5cf6'], html:`<h2 style="color:#fff">Семья: папка в папке</h2>
-     <div class="tree">📁 ROBOT (весь робот)<br>&nbsp;&nbsp;└ 📁 HEAD (голова)<br>&nbsp;&nbsp;&nbsp;&nbsp;└ 🧊 глаза, антенна<br>&nbsp;&nbsp;└ 📁 RUKA (рука)</div>
-     <p>Двигаешь ROBOT — едет весь. Двигаешь HEAD — только голова!</p>`},
-  {bg:['#37c871','#8a5cf6'], html:`<div class="art">🧍🔄</div><h1>Физминутка</h1><p>«Робот проснулся»: подвигали головой, помахали руками в плечах, потопали. Части двигаются, но не отваливаются!</p>`},
-  {bg:['#43b7ff','#5b7cfa'], html:`<div class="card"><h2>Хитрость: вторая рука за секунду</h2><p>Не лепи руку заново! Нажми на папку RUKA <b>правой кнопкой → Duplicate</b> (Дублировать). Готова вторая рука — просто передвинь на другой бок!</p></div>`},
-  {bg:['#ffd23f','#ffb03f'], html:`<div class="card"><h2>🆕 Где у робота сустав? (Pivot)</h2><p>Повернул руку (E) — а она крутится, как пропеллер из центра! 🌀 У людей рука крутится в <b>плече</b>. Исправим это!</p></div>`},
-  {bg:['#8a5cf6','#43b7ff'], html:`<div class="card"><h2>Ставим сустав — Pivot Tool (P)</h2>
+     <div class="tree">📁 CHEST (весь сундук)<br>&nbsp;&nbsp;└ 🧊 ящик, золото<br>&nbsp;&nbsp;└ 📁 LID (крышка)<br>&nbsp;&nbsp;&nbsp;&nbsp;└ 🧊 крышка, замок</div>
+     <p>Двигаешь CHEST — едет весь сундук. Двигаешь LID — только крышка!</p>`},
+  {bg:['#37c871','#8a5cf6'], html:`<div class="art">🙌</div><h1>Физминутка «Открываем сундук»</h1><p>Присели — «сундук закрыт». Медленно подняли руки-крышку вверх через спину (как петля) — «открылся, внутри клад!».</p>`},
+  {bg:['#ffd23f','#ffb03f'], html:`<div class="card"><h2>🆕 Где у крышки петля? (Pivot)</h2><p>Повернул крышку (E) — а она крутится из центра и разрезает сундук! 🌀 У настоящего сундука петли <b>сзади</b>. Исправим!</p></div>`},
+  {bg:['#8a5cf6','#43b7ff'], html:`<div class="card"><h2>Ставим петлю — Pivot Tool (P)</h2>
      <ul class="steps">
-       <li><span class="bignum">1</span> 🎯 Выбери папку RUKA</li>
+       <li><span class="bignum">1</span> 🎯 Выбери папку LID</li>
        <li><span class="bignum">2</span> 🅿️ Возьми <b>Pivot Tool</b> (клавиша P)</li>
-       <li><span class="bignum">3</span> ✋ Перетащи точку в <b>плечо</b></li>
-       <li><span class="bignum">4</span> 🔄 E — рука машет по-настоящему!</li>
+       <li><span class="bignum">3</span> ✋ Перетащи точку к <b>заднему ребру</b></li>
+       <li><span class="bignum">4</span> 🔄 E — крышка откидывается назад!</li>
      </ul></div>`},
-  {bg:['#5b7cfa','#37c871'], html:`<div class="art">📡</div><div class="card"><h2>Живая антенна</h2><p>Сделай папку ANTENNA на голове, поставь её сустав (P) в самый низ — и антенна будет качаться, не отрываясь!</p></div>`},
-  {bg:['#8a5cf6','#5b7cfa'], html:`<div class="art">🤖🎮</div><h1>Игра «Робо-конструктор»</h1><p>Запомни порядок сборки и повтори — цепочка растёт!</p>`},
-  {bg:['#43b7ff','#8a5cf6'], html:`<div class="art">💾</div><div class="card"><h2>Сохраняем (быстро!)</h2><p><b>File → Save</b>. Наш робот с суставами готов — завтра мы его <b>оживим</b> (анимация)!</p></div>`},
+  {bg:['#5b7cfa','#37c871'], html:`<div class="art">💰💎</div><div class="card"><h2>Клад внутрь!</h2><p>Золотые слитки (Duplicate), голубой самоцвет (поворот 45°), замок спереди. Закрыл крышку — клада не видно, открыл — вот он!</p></div>`},
+  {bg:['#8a5cf6','#5b7cfa'], html:`<div class="art">🔐🎮</div><h1>Игра «Код от сундука»</h1><p>Запомни секретный код из самоцветов и повтори — открой сундук!</p>`},
+  {bg:['#43b7ff','#8a5cf6'], html:`<div class="art">💾</div><div class="card"><h2>Сохраняем (быстро!)</h2><p><b>File → Save</b>. Наш сундук с петлёй готов — завтра слепим транспорт, а потом всё <b>оживим</b>!</p></div>`},
   {bg:['#ffb03f','#43b7ff'], html:`<div class="art">⌨️🔤</div><h1>Тренажёр печати</h1><p>Три режима, уровень 6 — букв и слов ещё больше!</p>`},
-  {bg:['#37c871','#8a5cf6'], html:`${BIP}<div class="art">🤖🎉</div><h1>Ты — 3D-инженер!</h1><p>Викторина и звёзды ⭐</p>`},
+  {bg:['#37c871','#8a5cf6'], html:`${BIP}<div class="art">🧰🎉</div><h1>Ты — 3D-инженер!</h1><p>Викторина и звёзды ⭐</p>`},
 ];
 
 const deck=document.getElementById('deck');

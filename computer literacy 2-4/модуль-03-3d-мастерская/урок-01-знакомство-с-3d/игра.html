@@ -140,9 +140,10 @@ function spawnCube(kind){
   else if(kind==='boss'){ el.innerHTML=starCubeSVG(size); data={kind:'boss', hits:6}; }
   else { const ci=Math.random()*COLORS.length|0; el.innerHTML=cubeSVG(COLORS[ci],size); data={kind:'cube', color:ci}; }
   // скорость подъёма растёт со временем
-  const base = 0.6 + elapsed()*0.028;
-  data.vy = -(base + Math.random()*0.5);
-  data.vx = (Math.random()-0.5)*0.6;
+  // медленный подъём для малышей, плавно ускоряется со временем
+  const base = 0.11 + elapsed()*0.0035;
+  data.vy = -(base + Math.random()*0.05);
+  data.vx = (Math.random()-0.5)*0.12;
   data.x=x; data.y=y; data.size=size; data.el=el;
   el.addEventListener('click',ev=>{ ev.stopPropagation(); hitCube(data); });
   arena.appendChild(el); cubes.push(data);

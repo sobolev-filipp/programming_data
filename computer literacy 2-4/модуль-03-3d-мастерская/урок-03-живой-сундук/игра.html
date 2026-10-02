@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Робо-конструктор — повтори сборку</title>
+<title>Код от сундука — повтори и открой</title>
 <style>
   :root{--bg1:#8a5cf6;--bg2:#43b7ff;--ink:#2b2350;--yellow:#ffd23f;--green:#37c871;--red:#ff5a7a;--blue:#43b7ff;}
   *{box-sizing:border-box;margin:0;font-family:'Comic Sans MS','Segoe UI',system-ui,sans-serif;user-select:none;-webkit-user-select:none;}
@@ -35,11 +35,11 @@
 </head>
 <body>
 <div class="stage">
-  <h1>🤖 Робо-конструктор</h1>
-  <div class="sub">Бип показывает порядок сборки — запомни и повтори! Цепочка растёт.</div>
+  <h1>🔐 Код от сундука</h1>
+  <div class="sub">Бип показывает секретный код — запомни и повтори, чтобы открыть сундук! Код растёт.</div>
   <div class="hud">
-    <span class="box">🏆 уровень <span id="level">1</span></span>
-    <span class="box">🧩 длина <span id="len">1</span></span>
+    <span class="box">🏆 сундук <span id="level">1</span></span>
+    <span class="box">🔢 код <span id="len">1</span></span>
     <span class="box">❤️ <span id="lives">❤️❤️❤️</span></span>
   </div>
   <div class="say" id="say"></div>
@@ -56,10 +56,10 @@
         <path d="M49 73 q11 9 22 0" stroke="#2b2350" stroke-width="4" fill="none" stroke-linecap="round"/>
         <rect x="34" y="88" width="52" height="30" rx="14" fill="#43b7ff"/>
       </svg>
-      <div class="big">Повтори порядок сборки робота!</div>
-      <p style="max-width:34ch;color:#5a5680;margin:0 auto">Бип по очереди подсвечивает детали (голова, тело, рука, нога). Смотри внимательно, а потом нажми их в <b>том же порядке</b>. Каждый круг цепочка становится длиннее!</p>
+      <div class="big">Открой сундук — запомни код!</div>
+      <p style="max-width:34ch;color:#5a5680;margin:0 auto">Бип по очереди подсвечивает самоцветы — это <b>секретный код</b> от сундука. Смотри внимательно, а потом нажми их в <b>том же порядке</b>. Каждый новый сундук — код длиннее!</p>
       <button class="btn" onclick="startGame()">▶ Играть!</button>
-      <p class="tip">Кликай детали. Клавиши 1–4 тоже работают. 3 жизни.</p>
+      <p class="tip">Кликай самоцветы. Клавиши 1–4 тоже работают. 3 жизни.</p>
     </div>
 
     <div class="over hidden" id="overScreen">
@@ -74,10 +74,10 @@
 
 <script>
 const PARTS = [
-  {name:'ГОЛОВА', ic:'🟡', bg:'#ffe58a'},
-  {name:'ТЕЛО',   ic:'🟦', bg:'#a9d4ff'},
-  {name:'РУКА',   ic:'🦾', bg:'#a7edc0'},
-  {name:'НОГА',   ic:'🦵', bg:'#d9c2ff'},
+  {name:'РУБИН',   ic:'🔴', bg:'#ffb3b3'},
+  {name:'САПФИР',  ic:'🔷', bg:'#a9d4ff'},
+  {name:'ИЗУМРУД', ic:'🟢', bg:'#a7edc0'},
+  {name:'ЗОЛОТО',  ic:'🟡', bg:'#ffe58a'},
 ];
 const partsEl=document.getElementById('parts'), sayEl=document.getElementById('say'),
       levelEl=document.getElementById('level'), lenEl=document.getElementById('len'), livesEl=document.getElementById('lives');
@@ -101,7 +101,7 @@ function nextRound(){
   // добавляем ещё одну деталь в цепочку
   seq.push(Math.random()*PARTS.length|0);
   lenEl.textContent=seq.length; levelEl.textContent=level;
-  sayEl.textContent='👀 Смотри порядок…';
+  sayEl.textContent='👀 Смотри код…';
   // скорость показа растёт с уровнем
   const onT=Math.max(360, 700 - level*25), offT=220;
   let k=0;
@@ -109,7 +109,7 @@ function nextRound(){
     if(k>0) lit(seq[k-1],false);
     if(k>=seq.length){
       showing=false; setDisabled(false);
-      sayEl.textContent='✅ Твой ход — повтори!';
+      sayEl.textContent='✅ Твой ход — набери код!';
       return;
     }
     lit(seq[k],true);
@@ -126,7 +126,7 @@ function choose(i){
     input++;
     if(input>=seq.length){
       // цепочка повторена верно
-      level++; sayEl.textContent='🎉 Верно! Собираем дальше…';
+      level++; sayEl.textContent='🎉 Сундук открыт! Следующий…';
       setDisabled(true);
       setTimeout(()=>{ if(running) nextRound(); }, 800);
     }
@@ -134,7 +134,7 @@ function choose(i){
     // ошибка
     buttons[i].classList.add('wrong'); setTimeout(()=>buttons[i].classList.remove('wrong'),400);
     lives--; livesEl.textContent='❤️'.repeat(Math.max(0,lives))+'🖤'.repeat(3-Math.max(0,lives));
-    sayEl.textContent='❌ Не тот! Нужна: '+PARTS[seq[input]].name;
+    sayEl.textContent='❌ Не тот самоцвет! Нужен: '+PARTS[seq[input]].name;
     if(lives<=0){ endGame(); return; }
     // повторить ту же цепочку заново
     setDisabled(true);
@@ -164,11 +164,11 @@ function endGame(){
   running=false; setDisabled(true);
   const over=document.getElementById('overScreen'); over.classList.remove('hidden');
   const reached=seq.length-1; // последняя успешная длина
-  document.getElementById('overTitle').textContent='Сборка окончена! 🤖';
+  document.getElementById('overTitle').textContent='Сундуки закрылись! 🔐';
   const st = reached>=8?5:reached>=6?4:reached>=4?3:reached>=2?2:1;
   document.getElementById('stars').textContent='⭐'.repeat(st)+'☆'.repeat(5-st);
-  document.getElementById('finalScore').textContent='Самая длинная цепочка: '+Math.max(0,reached);
-  document.getElementById('praise').textContent = st>=4?'Супер-память! Настоящий инженер! 🏆':st>=2?'Здорово! Ещё разок — и рекорд! 💪':'Тренируй память — получится! 😊';
+  document.getElementById('finalScore').textContent='Самый длинный код: '+Math.max(0,reached);
+  document.getElementById('praise').textContent = st>=4?'Супер-память! Все сундуки открыты! 🏆':st>=2?'Здорово! Ещё разок — и рекорд! 💪':'Тренируй память — получится! 😊';
 }
 document.addEventListener('keydown',e=>{
   if(!running||showing) return;
