@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 820 420" font-family="'Segoe UI',system-ui,sans-serif">
+  <rect x="0" y="0" width="820" height="420" fill="#f7f9fc"/>
+  <text x="410" y="36" font-size="23" font-weight="700" fill="#1f2937" text-anchor="middle">📥 Параметры — «окошки» для данных на входе</text>
+  <text x="410" y="60" font-size="14" fill="#64748b" text-anchor="middle">Что передашь в скобках при вызове — попадёт в параметр внутри функции.</text>
+
+  <!-- calls -->
+  <text x="150" y="104" font-size="15" font-weight="700" fill="#334155" text-anchor="middle">Вызовы</text>
+  <g font-family="monospace" font-size="15" font-weight="700">
+    <rect x="40" y="120" width="230" height="44" rx="9" fill="#fce7f3" stroke="#e11d48" stroke-width="1.8"/>
+    <text x="58" y="148" fill="#be123c">privet("Аня")</text>
+    <rect x="40" y="178" width="230" height="44" rx="9" fill="#fce7f3" stroke="#e11d48" stroke-width="1.8"/>
+    <text x="58" y="206" fill="#be123c">privet("Боря")</text>
+    <rect x="40" y="236" width="230" height="44" rx="9" fill="#fce7f3" stroke="#e11d48" stroke-width="1.8"/>
+    <text x="58" y="264" fill="#be123c">privet("Вера")</text>
+  </g>
+
+  <!-- function box -->
+  <rect x="420" y="112" width="360" height="190" rx="14" fill="#f0fdf4" stroke="#16a34a" stroke-width="2"/>
+  <text x="600" y="142" font-size="15" font-weight="700" fill="#15803d" text-anchor="middle" font-family="monospace">def privet(name):</text>
+  <!-- the parameter slot -->
+  <rect x="470" y="158" width="260" height="40" rx="9" fill="#fef9c3" stroke="#f59e0b" stroke-width="2"/>
+  <text x="600" y="184" font-size="15" font-family="monospace" fill="#92400e" text-anchor="middle">name = сюда попадёт имя</text>
+  <text x="600" y="232" font-size="14" font-family="monospace" fill="#334155" text-anchor="middle">print("Привет,", name)</text>
+  <text x="600" y="262" font-size="13" fill="#64748b" text-anchor="middle" font-style="italic">name каждый раз РАЗНЫЙ —</text>
+  <text x="600" y="280" font-size="13" fill="#64748b" text-anchor="middle" font-style="italic">какой передали, такой и внутри</text>
+
+  <!-- arrows -->
+  <defs>
+    <marker id="pa" markerWidth="11" markerHeight="11" refX="8" refY="4" orient="auto"><path d="M0,0 L9,4 L0,8 z" fill="#f59e0b"/></marker>
+  </defs>
+  <path d="M 270 142 C 350 150, 390 175, 468 178" fill="none" stroke="#f59e0b" stroke-width="2.4" marker-end="url(#pa)"/>
+  <path d="M 270 200 C 340 194, 400 185, 468 182" fill="none" stroke="#f59e0b" stroke-width="2" opacity="0.5"/>
+  <path d="M 270 258 C 350 220, 390 195, 468 186" fill="none" stroke="#f59e0b" stroke-width="2" opacity="0.5"/>
+
+  <!-- output -->
+  <rect x="40" y="330" width="740" height="56" rx="10" fill="#0f172a"/>
+  <text x="58" y="354" font-family="monospace" font-size="14" fill="#e2e8f0">Привет, Аня</text>
+  <text x="58" y="374" font-family="monospace" font-size="14" fill="#e2e8f0">Привет, Боря    Привет, Вера</text>
+
+  <text x="410" y="408" font-size="13" fill="#7c3aed" text-anchor="middle" font-style="italic">💡 Одна функция — а работает по-разному в зависимости от того, что ей дали на вход.</text>
+</svg>

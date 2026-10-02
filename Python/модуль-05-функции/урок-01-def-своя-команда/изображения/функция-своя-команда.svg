@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 820 430" font-family="'Segoe UI',system-ui,sans-serif">
+  <rect x="0" y="0" width="820" height="430" fill="#f7f9fc"/>
+  <text x="410" y="36" font-size="23" font-weight="700" fill="#1f2937" text-anchor="middle">🧩 Функция — это своя новая команда</text>
+  <text x="410" y="60" font-size="14" fill="#64748b" text-anchor="middle">Описываешь действие один раз под именем — и зовёшь его сколько нужно.</text>
+
+  <!-- LEFT: without function -->
+  <text x="40" y="100" font-size="16" font-weight="700" fill="#dc2626">❌ Без функции — копируем код</text>
+  <g font-family="monospace" font-size="13.5" fill="#334155">
+    <rect x="40" y="114" width="330" height="236" rx="12" fill="#fef2f2" stroke="#dc2626" stroke-width="1.8"/>
+    <text x="58" y="142">print("+-------+")</text>
+    <text x="58" y="164">print("| ПРИВЕТ|")</text>
+    <text x="58" y="186">print("+-------+")</text>
+    <text x="58" y="214">print("+-------+")</text>
+    <text x="58" y="236">print("| ПРИВЕТ|")</text>
+    <text x="58" y="258">print("+-------+")</text>
+    <text x="58" y="286">print("+-------+")</text>
+    <text x="58" y="308">print("| ПРИВЕТ|")</text>
+    <text x="58" y="330">print("+-------+")</text>
+  </g>
+  <text x="205" y="372" font-size="12.5" fill="#dc2626" text-anchor="middle" font-style="italic">одно и то же 3 раза — длинно и легко ошибиться</text>
+
+  <!-- RIGHT: with function -->
+  <text x="450" y="100" font-size="16" font-weight="700" fill="#16a34a">✅ С функцией — описал раз, зовёшь по имени</text>
+  <g font-family="monospace" font-size="14" fill="#334155">
+    <rect x="450" y="114" width="330" height="128" rx="12" fill="#f0fdf4" stroke="#16a34a" stroke-width="1.8"/>
+    <text x="468" y="142" fill="#e11d48" font-weight="700">def ramka():</text>
+    <text x="486" y="166">print("+-------+")</text>
+    <text x="486" y="188">print("| ПРИВЕТ|")</text>
+    <text x="486" y="210">print("+-------+")</text>
+  </g>
+  <text x="615" y="232" font-size="12" fill="#16a34a" text-anchor="middle" font-style="italic">описали команду один раз</text>
+
+  <g font-family="monospace" font-size="15" fill="#1d4ed8" font-weight="700">
+    <rect x="450" y="262" width="330" height="92" rx="12" fill="#eff6ff" stroke="#2563eb" stroke-width="1.8"/>
+    <text x="468" y="290">ramka()</text>
+    <text x="468" y="314">ramka()</text>
+    <text x="468" y="338">ramka()</text>
+  </g>
+  <text x="615" y="376" font-size="12.5" fill="#2563eb" text-anchor="middle" font-style="italic">зовём по имени — коротко и понятно</text>
+
+  <text x="410" y="414" font-size="13.5" fill="#7c3aed" text-anchor="middle" font-style="italic">💡 Повторяется код — заведи функцию: имя для действия вместо копий.</text>
+</svg>

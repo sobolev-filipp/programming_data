@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Викторина — Урок 1 «Функции def» (Python)</title>
+<style>
+  :root{
+    --bg1:#fda4af; --bg2:#e11d48; --card:#ffffff; --ink:#1f2937;
+    --accent:#e11d48; --ok:#16a34a; --bad:#dc2626; --soft:#ffe4e6;
+  }
+  *{box-sizing:border-box;font-family:"Segoe UI",system-ui,sans-serif}
+  body{margin:0;min-height:100vh;display:flex;align-items:center;justify-content:center;
+    background:linear-gradient(135deg,var(--bg1),var(--bg2));padding:20px;color:var(--ink)}
+  .app{background:var(--card);width:min(760px,100%);border-radius:24px;
+    box-shadow:0 25px 60px rgba(0,0,0,.35);padding:34px 34px 28px;position:relative;overflow:hidden}
+  h1{margin:0 0 6px;font-size:26px;text-align:center}
+  .sub{text-align:center;color:#64748b;margin-bottom:22px;font-size:15px}
+  .bar{height:10px;background:var(--soft);border-radius:99px;overflow:hidden;margin-bottom:18px}
+  .bar>i{display:block;height:100%;width:0;background:var(--accent);transition:.4s}
+  .meta{display:flex;justify-content:space-between;font-size:14px;color:#64748b;margin-bottom:14px}
+  .q{font-size:22px;font-weight:700;margin:6px 0 20px;line-height:1.3}
+  .q code{background:#0f172a;color:#e2e8f0;padding:2px 8px;border-radius:6px;font-size:18px}
+  .opts{display:grid;gap:12px}
+  .opt{border:2px solid #e2e8f0;background:#fff;border-radius:14px;padding:15px 18px;font-size:18px;
+    text-align:left;cursor:pointer;transition:.15s;display:flex;align-items:center;gap:12px}
+  .opt:hover{border-color:var(--accent);background:var(--soft);transform:translateY(-2px)}
+  .opt b{background:var(--soft);color:var(--accent);width:30px;height:30px;border-radius:8px;
+    display:flex;align-items:center;justify-content:center;font-size:15px;flex:0 0 auto}
+  .opt span code{background:#0f172a;color:#e2e8f0;padding:1px 6px;border-radius:5px;font-size:16px}
+  .opt.ok{border-color:var(--ok);background:#dcfce7}
+  .opt.ok b{background:var(--ok);color:#fff}
+  .opt.bad{border-color:var(--bad);background:#fee2e2}
+  .opt.bad b{background:var(--bad);color:#fff}
+  .opt:disabled{cursor:default;transform:none}
+  .fb{margin-top:16px;padding:14px 16px;border-radius:12px;font-size:16px;display:none;line-height:1.4}
+  .fb.show{display:block}
+  .fb.good{background:#dcfce7;color:#166534}
+  .fb.no{background:#fee2e2;color:#991b1b}
+  .fb code{background:#0f172a;color:#e2e8f0;padding:1px 6px;border-radius:5px}
+  .btn{margin-top:18px;width:100%;padding:15px;border:0;border-radius:14px;background:var(--accent);
+    color:#fff;font-size:18px;font-weight:700;cursor:pointer;display:none}
+  .btn.show{display:block}
+  .btn:hover{filter:brightness(1.08)}
+  .center{text-align:center}
+  .score{font-size:64px;font-weight:800;margin:10px 0}
+  .emoji{font-size:70px}
+  .hint{color:#94a3b8;font-size:13px;text-align:center;margin-top:14px}
+</style>
+</head>
+<body>
+<div class="app" id="app"></div>
+<script>
+const QUESTIONS = [
+  {q:"Что делает ключевое слово <code>def</code>?",
+   a:["сразу выполняет код","ОБЪЯВЛЯЕТ (создаёт) новую функцию","удаляет функцию","печатает текст"],c:1,
+   e:"def описывает свою команду. Чтобы она сработала — её надо ещё вызвать."},
+  {q:"Что выведет программа, где есть только <code>def privet(): print(\"Hi\")</code> и больше ничего?",
+   a:["Hi","ничего (функцию не вызвали)","ошибку","def"],c:1,
+   e:"Объявить ≠ выполнить. Без вызова privet() на экране пусто."},
+  {q:"Как ВЫЗВАТЬ функцию с именем <code>menu</code>?",
+   a:["<code>menu</code>","<code>menu()</code>","<code>def menu</code>","<code>call menu</code>"],c:1,
+   e:"Вызов — всегда имя со скобками: menu()."},
+  {q:"Что отделяет тело функции от заголовка?",
+   a:["точка с запятой","ОТСТУП (и двоеточие после скобок)","кавычки","ничего"],c:1,
+   e:"После def имя(): строки тела пишутся с отступом, как у if и for."},
+  {q:"Что такое ПАРАМЕТР функции?",
+   a:["имя функции","переменная в скобках, куда попадут данные на входе","результат","цикл"],c:1,
+   e:"def privet(name): — name это параметр, окошко для данных."},
+  {q:"Что окажется в <code>name</code> после вызова <code>privet(\"Аня\")</code>?",
+   a:['"privet"',  '"Аня"', 'пусто', 'ошибка'],c:1,
+   e:"Аргумент из скобок при вызове попадает в параметр: name = \"Аня\"."},
+  {q:"Сколько раз можно вызвать одну функцию?",
+   a:["один раз","сколько угодно","максимум два","только в цикле"],c:1,
+   e:"Описал один раз через def — зовёшь сколько нужно."},
+  {q:"Где должно стоять определение <code>def</code> относительно вызова?",
+   a:["ниже вызова","ВЫШЕ вызова","без разницы","в другом файле"],c:1,
+   e:"Python читает сверху вниз: def должен быть выше вызова."},
+  {q:"У функции <code>def summa(a, b)</code> два параметра. Как её правильно вызвать?",
+   a:["<code>summa()</code>","<code>summa(3, 5)</code>","<code>summa(3)</code>","<code>summa[3,5]</code>"],c:1,
+   e:"Сколько параметров — столько аргументов, по порядку, в круглых скобках."},
+  {q:"Зачем вообще нужны функции?",
+   a:["чтобы код был длиннее","чтобы НЕ копировать один и тот же код","чтобы замедлить программу","только для черепашки"],c:1,
+   e:"Повторяется действие — заведи функцию: короче и правится в одном месте."},
+  {q:"Что напечатает: <code>print(\"A\"); hi(); print(\"B\")</code>, где hi печатает <code>X</code> и <code>Y</code>?",
+   a:["A B X Y","A X Y B","X Y A B","A B"],c:1,
+   e:"Вызов = прыжок в тело и возврат: A, потом X и Y, потом B."},
+  {q:"🐢 В песочнице дана <code>paint(x, y)</code>. Как своей командой закрасить ряд клеток?",
+   a:["никак","завести def hline с циклом for, внутри звать paint","скопировать paint 10 раз","поменять paint"],c:1,
+   e:"Своя функция прячет цикл: def hline(x1,x2,y): for x in range(...): paint(x,y)."},
+
+  {q:"😄 Запустил файл с функцией — тишина, пусто. Что забыл?",
+   a:["import","ВЫЗВАТЬ функцию (имя со скобками)","поставить эмодзи","кавычки"],c:1,
+   e:"Классика: объявил def, а позвать забыл. Добавь имя()."},
+  {q:"😄 Написал <code>ramka</code> без скобок — вместо рамки вылезло <code>&lt;function ramka at 0x...&gt;</code>. Почему?",
+   a:["Python сломался","без скобок функция не вызывается, а печатается сама","мало памяти","нужен import"],c:1,
+   e:"Вызов — только со скобками: ramka(). Без них это просто имя-объект."},
+  {q:"😄 <code>privet()</code> стоит ВЫШЕ своего <code>def</code>. Что скажет Python?",
+   a:["всё ок","NameError: name 'privet' is not defined","SyntaxError","напечатает дважды"],c:1,
+   e:"На момент вызова функции ещё 'не существует'. Перенеси def вверх."},
+
+  {q:"🤔 <code>def card(name, age)</code>, а вызвали <code>card(\"Аня\")</code>. Что будет?",
+   a:["age станет 0","TypeError: не хватает аргумента age","Аня выведется дважды","ничего"],c:1,
+   e:"Сколько параметров — столько аргументов. Одного не хватает → TypeError."},
+  {q:"🤔 <code>def otkrytka(name, age)</code>, вызвали <code>otkrytka(12, \"Аня\")</code> (name и age перепутали). Что не так?",
+   a:["Python сам исправит","данные встанут не в те параметры — выйдет бессмыслица","будет ошибка импорта","ничего, порядок не важен"],c:1,
+   e:"Аргументы расставляются ПО ПОРЯДКУ: первый в name, второй в age. Следи за порядком."},
+  {q:"🤔 Функция A внутри себя вызывает функцию B. Когда это сработает?",
+   a:["никогда","если к моменту вызова обе уже объявлены (def выше)","только если B короче A","только в цикле"],c:1,
+   e:"Функция может звать другую — главное, чтобы обе были определены до вызова."},
+];
+
+let i=0, score=0, locked=false;
+const app=document.getElementById('app');
+
+function shuffle(){for(let k=QUESTIONS.length-1;k>0;k--){const j=Math.floor(Math.random()*(k+1));[QUESTIONS[k],QUESTIONS[j]]=[QUESTIONS[j],QUESTIONS[k]];}for(const Q of QUESTIONS){const cc=Q.a[Q.c];for(let k=Q.a.length-1;k>0;k--){const j=Math.floor(Math.random()*(k+1));[Q.a[k],Q.a[j]]=[Q.a[j],Q.a[k]];}Q.c=Q.a.indexOf(cc);}}
+shuffle();
+
+function render(){
+  const Q=QUESTIONS[i];
+  app.innerHTML=`
+    <h1>🧩 Викторина: свои функции def</h1>
+    <div class="sub">Урок 1 · Модуль 5 «Функции» · Python</div>
+    <div class="bar"><i style="width:${(i/QUESTIONS.length)*100}%"></i></div>
+    <div class="meta"><span>Вопрос ${i+1} из ${QUESTIONS.length}</span><span>⭐ Очки: ${score}</span></div>
+    <div class="q">${Q.q}</div>
+    <div class="opts" id="opts">
+      ${Q.a.map((t,n)=>`<button class="opt" data-n="${n}"><b>${n+1}</b><span>${t}</span></button>`).join('')}
+    </div>
+    <div class="fb" id="fb"></div>
+    <button class="btn" id="next">${i===QUESTIONS.length-1?'Показать результат →':'Следующий вопрос →'}</button>
+    <div class="hint">Можно отвечать клавишами 1–4</div>`;
+  locked=false;
+  document.querySelectorAll('.opt').forEach(b=>b.onclick=()=>choose(+b.dataset.n));
+  document.getElementById('next').onclick=next;
+}
+
+function choose(n){
+  if(locked) return; locked=true;
+  const Q=QUESTIONS[i];
+  const opts=[...document.querySelectorAll('.opt')];
+  opts.forEach(b=>b.disabled=true);
+  opts[Q.c].classList.add('ok');
+  const fb=document.getElementById('fb');
+  if(n===Q.c){ score++; fb.className='fb show good'; fb.innerHTML='✅ Верно! '+Q.e; }
+  else { opts[n].classList.add('bad'); fb.className='fb show no'; fb.innerHTML='❌ Не совсем. '+Q.e; }
+  document.querySelector('.meta').children[1].textContent='⭐ Очки: '+score;
+  document.getElementById('next').classList.add('show');
+}
+
+function next(){ i++; if(i<QUESTIONS.length) render(); else result(); }
+
+function result(){
+  const pct=Math.round(score/QUESTIONS.length*100);
+  let em,msg;
+  if(pct===100){em='🏆';msg='Идеально! def, вызов и параметры освоены — вперёд к return! 🔥';}
+  else if(pct>=70){em='🎉';msg='Отлично! Свои команды получаются, вперёд в Урок 2.';}
+  else if(pct>=40){em='👍';msg='Неплохо! Загляни в итого.md — про объявить/вызвать и параметры.';}
+  else {em='💪';msg='Ещё разок! Открой итого.md и повтори def → вызов → параметры.';}
+  app.innerHTML=`
+    <div class="center">
+      <div class="emoji">${em}</div>
+      <h1>Готово!</h1>
+      <div class="score">${score} / ${QUESTIONS.length}</div>
+      <div class="sub">${msg}</div>
+      <button class="btn show" id="again">🔁 Пройти заново</button>
+    </div>`;
+  document.getElementById('again').onclick=()=>{i=0;score=0;shuffle();render();};
+}
+
+document.addEventListener('keydown',e=>{
+  if(['1','2','3','4'].includes(e.key)){ const b=document.querySelector(`.opt[data-n="${+e.key-1}"]`); if(b&&!b.disabled) choose(+e.key-1); }
+  if(e.key==='Enter'){ const nb=document.getElementById('next'); if(nb&&nb.classList.contains('show')) next(); }
+});
+
+render();
+</script>
+</body>
+</html>

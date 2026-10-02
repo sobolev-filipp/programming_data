@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 820 450" font-family="'Segoe UI',system-ui,sans-serif">
+  <rect x="0" y="0" width="820" height="450" fill="#f7f9fc"/>
+  <text x="410" y="36" font-size="23" font-weight="700" fill="#1f2937" text-anchor="middle">🚦 Как работает вызов: прыжок в тело и возврат назад</text>
+  <text x="410" y="60" font-size="14" fill="#64748b" text-anchor="middle">Встретив имя функции, Python прыгает в её тело, выполняет его и возвращается на то же место.</text>
+
+  <!-- MAIN program column -->
+  <text x="150" y="98" font-size="15" font-weight="700" fill="#334155" text-anchor="middle">Главная программа</text>
+  <g font-family="monospace" font-size="14" fill="#334155">
+    <rect x="40" y="112" width="250" height="40" rx="9" fill="#eef2ff" stroke="#6366f1" stroke-width="1.6"/>
+    <text x="58" y="138">print("Старт")</text>
+
+    <rect x="40" y="186" width="250" height="40" rx="9" fill="#fce7f3" stroke="#e11d48" stroke-width="2.2"/>
+    <text x="58" y="212" fill="#be123c" font-weight="700">privet()</text>
+
+    <rect x="40" y="326" width="250" height="40" rx="9" fill="#eef2ff" stroke="#6366f1" stroke-width="1.6"/>
+    <text x="58" y="352">print("Конец")</text>
+  </g>
+  <text x="165" y="300" font-size="12.5" fill="#94a3b8" text-anchor="middle" font-style="italic">...тут Python ждёт,</text>
+  <text x="165" y="316" font-size="12.5" fill="#94a3b8" text-anchor="middle" font-style="italic">пока функция отработает</text>
+
+  <!-- FUNCTION body -->
+  <text x="610" y="98" font-size="15" font-weight="700" fill="#16a34a" text-anchor="middle">Тело функции privet()</text>
+  <g font-family="monospace" font-size="14" fill="#334155">
+    <rect x="470" y="112" width="300" height="130" rx="12" fill="#f0fdf4" stroke="#16a34a" stroke-width="1.8"/>
+    <text x="488" y="140" fill="#15803d" font-weight="700">def privet():</text>
+    <text x="506" y="168">print("Привет!")</text>
+    <text x="506" y="196">print("Как дела?")</text>
+    <text x="506" y="224" fill="#64748b">← дошли до конца тела</text>
+  </g>
+
+  <!-- arrows: call jumps in -->
+  <path d="M 290 206 C 370 206, 400 150, 468 150" fill="none" stroke="#e11d48" stroke-width="2.6" marker-end="url(#ar1)"/>
+  <text x="378" y="168" font-size="12.5" fill="#e11d48" font-weight="700">1. прыжок в тело</text>
+
+  <!-- arrow: return back -->
+  <path d="M 468 224 C 390 250, 360 330, 292 344" fill="none" stroke="#2563eb" stroke-width="2.6" stroke-dasharray="6 4" marker-end="url(#ar2)"/>
+  <text x="372" y="300" font-size="12.5" fill="#2563eb" font-weight="700">2. возврат на то же место</text>
+
+  <defs>
+    <marker id="ar1" markerWidth="11" markerHeight="11" refX="8" refY="4" orient="auto"><path d="M0,0 L9,4 L0,8 z" fill="#e11d48"/></marker>
+    <marker id="ar2" markerWidth="11" markerHeight="11" refX="8" refY="4" orient="auto"><path d="M0,0 L9,4 L0,8 z" fill="#2563eb"/></marker>
+  </defs>
+
+  <!-- output -->
+  <rect x="40" y="392" width="730" height="40" rx="9" fill="#0f172a"/>
+  <text x="58" y="418" font-family="monospace" font-size="14.5" fill="#e2e8f0">Старт → Привет! → Как дела? → Конец</text>
+
+  <text x="410" y="382" font-size="13" fill="#7c3aed" text-anchor="middle" font-style="italic">💡 Вызов не «вставляет» код — Python сам сходит в функцию и вернётся продолжать дальше.</text>
+</svg>
