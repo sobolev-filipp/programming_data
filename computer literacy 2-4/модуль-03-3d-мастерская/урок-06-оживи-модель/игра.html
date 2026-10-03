@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Поймай кадр — тайминг аниматора</title>
+<style>
+  :root{--bg1:#37c871;--bg2:#43b7ff;--ink:#2b2350;--yellow:#ffd23f;--green:#37c871;--red:#ff5a7a;--blue:#43b7ff;}
+  *{box-sizing:border-box;margin:0;font-family:'Comic Sans MS','Segoe UI',system-ui,sans-serif;user-select:none;-webkit-user-select:none;}
+  body{min-height:100vh;background:linear-gradient(135deg,var(--bg1),var(--bg2));display:flex;align-items:center;justify-content:center;padding:12px;color:var(--ink);}
+  .stage{width:min(620px,100%);background:#fff;border-radius:24px;box-shadow:0 18px 50px rgba(0,0,0,.3);padding:16px 18px 20px;text-align:center;}
+  h1{font-size:24px;color:#2e9e5b;margin:2px 0;}
+  .sub{color:#7a76a0;font-size:14px;margin-bottom:10px;}
+  .hud{display:flex;justify-content:space-between;align-items:center;gap:8px;font-size:18px;margin-bottom:10px;}
+  .hud .box{background:#eef7f0;border-radius:12px;padding:6px 12px;font-weight:bold;}
+  .hero{font-size:72px;line-height:1;margin:4px 0;transition:transform .12s;}
+  .say{font-size:18px;font-weight:bold;min-height:24px;margin:4px 0 8px;color:#2b2350;}
+  .track{position:relative;height:46px;background:#eef1f7;border-radius:14px;margin:6px 0 2px;overflow:hidden;border:3px solid #dde3ef;}
+  .zone{position:absolute;top:0;bottom:0;background:linear-gradient(#b6f0c8,#7fe0a0);border-left:2px dashed #2e9e5b;border-right:2px dashed #2e9e5b;}
+  .marker{position:absolute;top:-3px;bottom:-3px;width:8px;background:#2b2350;border-radius:5px;box-shadow:0 0 8px rgba(0,0,0,.4);}
+  .tapbtn{border:none;border-radius:16px;background:var(--yellow);color:#6b4e00;font-size:22px;font-weight:bold;padding:14px 10px;margin-top:12px;cursor:pointer;box-shadow:0 5px 0 #d9a900;width:100%;}
+  .tapbtn:active{transform:translateY(3px);box-shadow:0 2px 0 #d9a900;}
+  .center{position:relative;}
+  .over,.startc{background:rgba(255,255,255,.97);border-radius:16px;padding:14px;}
+  .bip{width:76px;height:auto;margin-bottom:4px;}
+  .btn{border:none;border-radius:16px;background:var(--yellow);color:#6b4e00;font-size:21px;font-weight:bold;padding:11px 26px;margin-top:10px;cursor:pointer;box-shadow:0 5px 0 #d9a900;}
+  .btn:active{transform:translateY(3px);box-shadow:0 2px 0 #d9a900;}
+  .big{font-size:24px;color:#2e9e5b;margin:4px 0;}
+  .stars{font-size:38px;letter-spacing:3px;}
+  .tip{color:#9a96b8;font-size:12px;margin-top:9px;}
+  .hidden{display:none !important;}
+</style>
+</head>
+<body>
+<div class="stage">
+  <h1>🎬 Поймай кадр</h1>
+  <div class="sub">Жми, когда бегунок попадёт в зелёную зону — собери плавную анимацию!</div>
+  <div class="hud">
+    <span class="box">🎞 кадры <span id="score">0</span></span>
+    <span class="box">🔥 подряд <span id="streak">0</span></span>
+    <span class="box">❤️ <span id="lives">❤️❤️❤️</span></span>
+  </div>
+
+  <div class="hero" id="hero">🤖</div>
+  <div class="say" id="say"></div>
+  <div class="track" id="track">
+    <div class="zone" id="zone"></div>
+    <div class="marker" id="marker"></div>
+  </div>
+
+  <div class="center">
+    <button class="tapbtn" id="tapbtn" onclick="tap()">🎬 Поймать кадр! (или ПРОБЕЛ)</button>
+
+    <div class="startc" id="startScreen" style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;">
+      <svg class="bip" viewBox="0 0 120 130" xmlns="http://www.w3.org/2000/svg">
+        <line x1="60" y1="18" x2="60" y2="8" stroke="#43b7ff" stroke-width="5"/><circle cx="60" cy="7" r="7" fill="#ffd23f"/>
+        <rect x="22" y="22" width="76" height="62" rx="20" fill="#ffd23f"/><rect x="33" y="34" width="54" height="32" rx="13" fill="#2b2350"/>
+        <circle cx="50" cy="50" r="8" fill="#43b7ff"/><circle cx="72" cy="50" r="8" fill="#43b7ff"/>
+        <circle cx="50" cy="50" r="3.5" fill="#fff"/><circle cx="72" cy="50" r="3.5" fill="#fff"/>
+        <path d="M49 73 q11 9 22 0" stroke="#2b2350" stroke-width="4" fill="none" stroke-linecap="round"/>
+        <rect x="34" y="88" width="52" height="30" rx="14" fill="#43b7ff"/>
+      </svg>
+      <div class="big">Собери плавную анимацию!</div>
+      <p style="max-width:34ch;color:#5a5680;margin:0 auto">Бегунок бегает туда-сюда. Жми кнопку (или **ПРОБЕЛ**) ровно тогда, когда он в <b>зелёной зоне</b> — это «поймать кадр». Чем больше кадров подряд — тем живее герой! Зона двигается и сужается.</p>
+      <button class="btn" onclick="startGame()">▶ Играть!</button>
+      <p class="tip">Кнопка или ПРОБЕЛ. 3 жизни.</p>
+    </div>
+
+    <div class="over hidden" id="overScreen" style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;">
+      <div class="big" id="overTitle">Готово! 🎉</div>
+      <div class="stars" id="stars"></div>
+      <p class="big" id="finalScore"></p>
+      <p style="color:#5a5680" id="praise"></p>
+      <button class="btn" onclick="startGame()">↺ Ещё раз</button>
+    </div>
+  </div>
+</div>
+
+<script>
+const track=document.getElementById('track'), zoneEl=document.getElementById('zone'), markerEl=document.getElementById('marker'),
+      heroEl=document.getElementById('hero'), sayEl=document.getElementById('say'),
+      scoreEl=document.getElementById('score'), streakEl=document.getElementById('streak'), livesEl=document.getElementById('lives');
+const HEROES=['🤖','🐉','🚁','🐱','⚔️'];
+
+let score=0, streak=0, lives=3, running=false;
+let pos=0, dir=1, speed=0.22, zoneStart=40, zoneW=28, raf=null, lastTs=0;
+
+function trackW(){ return track.clientWidth; }
+function placeZone(){
+  const W=trackW();
+  const wPx=Math.max(34, W*zoneW/100);
+  let x=10+Math.random()*(W-wPx-20);
+  zoneEl.style.left=x+'px'; zoneEl.style.width=wPx+'px';
+  zoneEl._x=x; zoneEl._w=wPx;
+}
+function loop(ts){
+  if(!running) return;
+  if(!lastTs) lastTs=ts;
+  const dt=Math.min(40, ts-lastTs); lastTs=ts;
+  const W=trackW();
+  pos += dir*speed*dt;
+  if(pos<0){pos=0;dir=1;} if(pos>W-8){pos=W-8;dir=-1;}
+  markerEl.style.left=pos+'px';
+  raf=requestAnimationFrame(loop);
+}
+function tap(){
+  if(!running) return;
+  const mx=pos+4;
+  if(mx>=zoneEl._x && mx<=zoneEl._x+zoneEl._w){
+    // попал в кадр!
+    score++; streak++; scoreEl.textContent=score; streakEl.textContent=streak;
+    sayEl.textContent='✅ Кадр пойман! +1'; sayEl.style.color='#37c871';
+    heroEl.textContent=HEROES[score%HEROES.length];
+    heroEl.style.transform='scale(1.2) rotate('+(score%2?8:-8)+'deg)';
+    setTimeout(()=>heroEl.style.transform='',140);
+    // усложняем: быстрее и зона уже
+    speed=Math.min(0.75, speed+0.022);
+    zoneW=Math.max(12, zoneW-1.1);
+    placeZone();
+  } else {
+    streak=0; streakEl.textContent=0; lives--;
+    livesEl.textContent='❤️'.repeat(Math.max(0,lives))+'🖤'.repeat(3-Math.max(0,lives));
+    sayEl.textContent='❌ Мимо зоны! Лови точнее'; sayEl.style.color='#e0555f';
+    heroEl.style.transform='translateX(-6px)'; setTimeout(()=>heroEl.style.transform='',140);
+    if(lives<=0) endGame();
+  }
+}
+function startGame(){
+  document.getElementById('startScreen').classList.add('hidden');
+  document.getElementById('overScreen').classList.add('hidden');
+  score=0; streak=0; lives=3; running=true; lastTs=0;
+  pos=0; dir=1; speed=0.22; zoneW=28;
+  scoreEl.textContent='0'; streakEl.textContent='0'; livesEl.textContent='❤️❤️❤️';
+  heroEl.textContent='🤖'; sayEl.textContent='Лови зелёную зону!'; sayEl.style.color='#2b2350';
+  placeZone();
+  if(raf)cancelAnimationFrame(raf);
+  raf=requestAnimationFrame(loop);
+}
+function endGame(){
+  running=false; if(raf)cancelAnimationFrame(raf);
+  document.getElementById('overScreen').classList.remove('hidden');
+  document.getElementById('overTitle').textContent='Мультик снят! 🎬';
+  const st = score>=24?5:score>=18?4:score>=12?3:score>=6?2:1;
+  document.getElementById('stars').textContent='⭐'.repeat(st)+'☆'.repeat(5-st);
+  document.getElementById('finalScore').textContent='Поймано кадров: '+score;
+  document.getElementById('praise').textContent = st>=4?'Великий аниматор! 🏆':st>=2?'Здорово! Ещё разок — и рекорд! 💪':'Тренируй глазомер — получится! 😊';
+}
+document.addEventListener('keydown',e=>{
+  if(e.code==='Space'){ e.preventDefault(); if(running) tap(); }
+});
+window.addEventListener('resize',()=>{ if(running) placeZone(); });
+</script>
+</body>
+</html>
