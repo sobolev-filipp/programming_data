@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Гонка Бипа — руль и уворот</title>
+<style>
+  :root{--bg1:#43b7ff;--bg2:#5b7cfa;--ink:#2b2350;--yellow:#ffd23f;--green:#37c871;--red:#ff5a7a;}
+  *{box-sizing:border-box;margin:0;font-family:'Comic Sans MS','Segoe UI',system-ui,sans-serif;user-select:none;-webkit-user-select:none;}
+  body{min-height:100vh;background:linear-gradient(135deg,var(--bg1),var(--bg2));display:flex;align-items:center;justify-content:center;padding:12px;color:var(--ink);}
+  .stage{width:min(560px,100%);background:#fff;border-radius:24px;box-shadow:0 18px 50px rgba(0,0,0,.3);padding:14px 16px 18px;text-align:center;}
+  h1{font-size:23px;color:#2e6fd0;margin:2px 0;}
+  .sub{color:#7a76a0;font-size:14px;margin-bottom:8px;}
+  .hud{display:flex;justify-content:space-between;align-items:center;gap:8px;font-size:18px;margin-bottom:8px;}
+  .hud .box{background:#eef3ff;border-radius:12px;padding:6px 12px;font-weight:bold;}
+  #road{position:relative;height:min(62vh,460px);background:repeating-linear-gradient(#5a6472,#5a6472 38px,#636d7c 38px,#636d7c 76px);
+    border-radius:16px;overflow:hidden;border:4px solid #3c4450;touch-action:none;}
+  .lane-line{position:absolute;top:0;bottom:0;width:4px;background:repeating-linear-gradient(#fff,#fff 20px,transparent 20px,transparent 44px);opacity:.7;}
+  .obj{position:absolute;width:48px;height:48px;display:flex;align-items:center;justify-content:center;font-size:40px;line-height:1;}
+  .car{position:absolute;bottom:10px;width:54px;height:60px;transition:left .09s;z-index:3;display:flex;align-items:center;justify-content:center;font-size:46px;}
+  .pop{position:absolute;font-size:22px;font-weight:bold;pointer-events:none;animation:rise .7s ease-out forwards;z-index:6;}
+  @keyframes rise{from{opacity:1;transform:translateY(0)}to{opacity:0;transform:translateY(-34px)}}
+  .flash{position:absolute;left:50%;top:10px;transform:translateX(-50%);background:rgba(43,35,80,.9);color:#fff;padding:7px 16px;border-radius:18px;font-size:17px;font-weight:bold;pointer-events:none;opacity:0;transition:opacity .2s;z-index:5;}
+  .flash.on{opacity:1;}
+  .center{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;background:rgba(255,255,255,.95);text-align:center;padding:16px;z-index:10;}
+  .center.hidden{display:none !important;}
+  .bip{width:76px;height:auto;margin-bottom:4px;}
+  .btn{border:none;border-radius:16px;background:var(--yellow);color:#6b4e00;font-size:21px;font-weight:bold;padding:11px 26px;margin-top:10px;cursor:pointer;box-shadow:0 5px 0 #d9a900;}
+  .btn:active{transform:translateY(3px);box-shadow:0 2px 0 #d9a900;}
+  .big{font-size:24px;color:#2e6fd0;margin:4px 0;}
+  .stars{font-size:38px;letter-spacing:3px;}
+  .tip{color:#9a96b8;font-size:12px;margin-top:9px;}
+  .arrows{display:flex;gap:16px;justify-content:center;margin-top:10px;}
+  .arrows button{width:84px;height:52px;border:none;border-radius:14px;background:#eef3ff;font-size:28px;cursor:pointer;box-shadow:0 4px 0 #cdd8ee;}
+  .arrows button:active{transform:translateY(3px);box-shadow:0 1px 0 #cdd8ee;}
+  .hidden{display:none !important;}
+</style>
+</head>
+<body>
+<div class="stage">
+  <h1>🚗 Гонка Бипа</h1>
+  <div class="sub">Веди машинку между рядами: лови 🪙 монетки, уворачивайся от 🚧 преград!</div>
+  <div class="hud">
+    <span class="box">🪙 <span id="score">0</span></span>
+    <span class="box">❤️ <span id="lives">❤️❤️❤️</span></span>
+    <span class="box">🏁 <span id="dist">0</span> м</span>
+  </div>
+  <div id="road">
+    <div class="flash" id="flash"></div>
+    <div class="car" id="car">🚗</div>
+
+    <div class="center" id="startScreen">
+      <svg class="bip" viewBox="0 0 120 130" xmlns="http://www.w3.org/2000/svg">
+        <line x1="60" y1="18" x2="60" y2="8" stroke="#43b7ff" stroke-width="5"/><circle cx="60" cy="7" r="7" fill="#ffd23f"/>
+        <rect x="22" y="22" width="76" height="62" rx="20" fill="#ffd23f"/><rect x="33" y="34" width="54" height="32" rx="13" fill="#2b2350"/>
+        <circle cx="50" cy="50" r="8" fill="#43b7ff"/><circle cx="72" cy="50" r="8" fill="#43b7ff"/>
+        <circle cx="50" cy="50" r="3.5" fill="#fff"/><circle cx="72" cy="50" r="3.5" fill="#fff"/>
+        <path d="M49 73 q11 9 22 0" stroke="#2b2350" stroke-width="4" fill="none" stroke-linecap="round"/>
+        <rect x="34" y="88" width="52" height="30" rx="14" fill="#43b7ff"/>
+      </svg>
+      <div class="big">Доедь до финиша и собери монетки!</div>
+      <p style="max-width:32ch;color:#5a5680;margin:0 auto">Меняй ряд стрелками ← → (или кнопками внизу). Лови 🪙 монетки и ⛽ топливо, объезжай 🚧 и 🪨. Дорога едет всё быстрее!</p>
+      <button class="btn" onclick="startGame()">▶ Поехали!</button>
+      <p class="tip">← → на клавиатуре или кнопки. 3 жизни.</p>
+    </div>
+
+    <div class="center hidden" id="overScreen">
+      <div class="big" id="overTitle">Финиш! 🏁</div>
+      <div class="stars" id="stars"></div>
+      <p class="big" id="finalScore"></p>
+      <p style="color:#5a5680" id="praise"></p>
+      <button class="btn" onclick="startGame()">↺ Ещё заезд</button>
+    </div>
+  </div>
+  <div class="arrows">
+    <button onclick="move(-1)" aria-label="влево">⬅️</button>
+    <button onclick="move(1)" aria-label="вправо">➡️</button>
+  </div>
+</div>
+
+<script>
+const LANES=3;
+const road=document.getElementById('car').parentElement;
+const carEl=document.getElementById('car'), scoreEl=document.getElementById('score'),
+      livesEl=document.getElementById('lives'), distEl=document.getElementById('dist'), flashEl=document.getElementById('flash');
+
+let carLane=1, score=0, lives=3, dist=0, running=false;
+let objs=[], raf=null, spawnT=null, lastTs=0, lineEls=[];
+
+function laneX(lane){ const w=road.clientWidth; return (w/LANES)*(lane+0.5); }
+function placeCar(){ carEl.style.left=(laneX(carLane)-27)+'px'; }
+
+function buildLines(){
+  lineEls.forEach(l=>l.remove()); lineEls=[];
+  for(let i=1;i<LANES;i++){ const l=document.createElement('div'); l.className='lane-line'; l.style.left=((road.clientWidth/LANES)*i-2)+'px'; road.appendChild(l); lineEls.push(l); }
+}
+function flash(msg){ flashEl.textContent=msg; flashEl.classList.add('on'); clearTimeout(flash._t); flash._t=setTimeout(()=>flashEl.classList.remove('on'),900); }
+function pop(x,y,txt,color){ const p=document.createElement('div'); p.className='pop'; p.style.left=x+'px'; p.style.top=y+'px'; p.style.color=color; p.textContent=txt; road.appendChild(p); setTimeout(()=>p.remove(),700); }
+
+function move(dir){ if(!running) return; carLane=Math.max(0,Math.min(LANES-1,carLane+dir)); placeCar(); }
+
+function spawnObj(){
+  const good = Math.random()<0.62;
+  const lane=Math.random()*LANES|0;
+  const el=document.createElement('div'); el.className='obj';
+  let kind;
+  if(good){ const coin=Math.random()<0.8; el.textContent=coin?'🪙':'⛽'; kind={type:'good', val:coin?1:2, ic:el.textContent}; }
+  else { el.textContent=Math.random()<0.5?'🚧':'🪨'; kind={type:'bad'}; }
+  el.style.left=(laneX(lane)-24)+'px'; el.style.top='-50px';
+  road.appendChild(el);
+  kind.lane=lane; kind.y=-50; kind.el=el;
+  objs.push(kind);
+}
+
+function loop(ts){
+  if(!running) return;
+  if(!lastTs) lastTs=ts;
+  const dt=Math.min(40, ts-lastTs); lastTs=ts;
+  // медленный старт, плавный разгон
+  const speed = 0.09 + dist*0.00016;   // px/ms
+  dist += speed*dt*0.25; distEl.textContent=Math.floor(dist);
+  const H=road.clientHeight;
+  const carTop = H-70; // верх машинки
+  objs.forEach(o=>{
+    if(o.hit) return;
+    o.y += speed*dt; o.el.style.top=o.y+'px';
+    // столкновение: тот же ряд и объект дошёл до машинки
+    if(!o.scored && o.lane===carLane && o.y> carTop-30 && o.y< carTop+40){
+      o.hit=true; o.scored=true; o.el.remove();
+      const px=laneX(carLane)-10, py=carTop;
+      if(o.type==='good'){ score+=o.val; scoreEl.textContent=score; pop(px,py, '+'+o.val, '#ffe066'); }
+      else { loseLife(); pop(px,py,'💥','#ff5a7a'); flash('🚧 Берегись!'); }
+      return;
+    }
+    if(o.y>H+30){ o.hit=true; o.el.remove(); }
+  });
+  objs=objs.filter(o=>!o.hit);
+  raf=requestAnimationFrame(loop);
+}
+
+function loseLife(){
+  lives--; livesEl.textContent='❤️'.repeat(Math.max(0,lives))+'🖤'.repeat(3-Math.max(0,lives));
+  if(lives<=0) endGame();
+}
+
+function startGame(){
+  document.getElementById('startScreen').classList.add('hidden');
+  document.getElementById('overScreen').classList.add('hidden');
+  objs.forEach(o=>o.el&&o.el.remove()); objs=[];
+  carLane=1; score=0; lives=3; dist=0; running=true; lastTs=0;
+  scoreEl.textContent='0'; livesEl.textContent='❤️❤️❤️'; distEl.textContent='0';
+  buildLines(); placeCar();
+  clearInterval(spawnT); if(raf)cancelAnimationFrame(raf);
+  function scheduleSpawn(){
+    const gap=Math.max(520, 1100 - dist*0.9);
+    spawnT=setTimeout(()=>{ if(running){ spawnObj(); scheduleSpawn(); } }, gap);
+  }
+  scheduleSpawn();
+  raf=requestAnimationFrame(loop);
+}
+function endGame(){
+  running=false; clearInterval(spawnT); if(raf)cancelAnimationFrame(raf);
+  objs.forEach(o=>o.el&&o.el.remove()); objs=[];
+  const over=document.getElementById('overScreen'); over.classList.remove('hidden');
+  document.getElementById('overTitle').textContent='Гонка окончена! 🏁';
+  const st = score>=30?5:score>=22?4:score>=14?3:score>=7?2:1;
+  document.getElementById('stars').textContent='⭐'.repeat(st)+'☆'.repeat(5-st);
+  document.getElementById('finalScore').textContent='Собрано монеток: '+score+'  ·  '+Math.floor(dist)+' м';
+  document.getElementById('praise').textContent = st>=4?'Супер-гонщик! 🏆':st>=2?'Здорово! Ещё заезд — и рекорд! 💪':'Тренируйся — станешь асом! 😊';
+}
+document.addEventListener('keydown',e=>{
+  if(!running) return;
+  if(e.key==='ArrowLeft'){ e.preventDefault(); move(-1); }
+  if(e.key==='ArrowRight'){ e.preventDefault(); move(1); }
+});
+// тап по половине дороги
+road.addEventListener('click',e=>{
+  if(!running) return;
+  const r=road.getBoundingClientRect();
+  move(e.clientX - r.left < r.width/2 ? -1 : 1);
+});
+window.addEventListener('resize',()=>{ if(running){ buildLines(); placeCar(); } });
+</script>
+</body>
+</html>
