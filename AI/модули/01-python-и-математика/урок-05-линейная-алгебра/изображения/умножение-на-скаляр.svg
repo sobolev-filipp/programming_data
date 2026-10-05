@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 780 420" font-family="'Segoe UI',system-ui,sans-serif">
+  <rect x="0" y="0" width="780" height="420" fill="#f7f9fc"/>
+  <text x="390" y="32" font-size="22" font-weight="700" fill="#1f2937" text-anchor="middle">✖️ Умножение на число: стрелка растягивается</text>
+
+  <!-- grid -->
+  <g stroke="#e2e8f0" stroke-width="1">
+    <line x1="70" y1="90" x2="70" y2="340"/><line x1="120" y1="90" x2="120" y2="340"/><line x1="170" y1="90" x2="170" y2="340"/><line x1="220" y1="90" x2="220" y2="340"/><line x1="270" y1="90" x2="270" y2="340"/><line x1="320" y1="90" x2="320" y2="340"/>
+    <line x1="70" y1="340" x2="320" y2="340"/><line x1="70" y1="290" x2="320" y2="290"/><line x1="70" y1="240" x2="320" y2="240"/><line x1="70" y1="190" x2="320" y2="190"/><line x1="70" y1="140" x2="320" y2="140"/><line x1="70" y1="90" x2="320" y2="90"/>
+  </g>
+  <line x1="70" y1="340" x2="340" y2="340" stroke="#475569" stroke-width="2"/><polygon points="348,340 336,334 336,346" fill="#475569"/>
+  <line x1="70" y1="340" x2="70" y2="82" stroke="#475569" stroke-width="2"/><polygon points="70,74 64,86 76,86" fill="#475569"/>
+  <g font-size="11" fill="#94a3b8" font-family="monospace" text-anchor="middle"><text x="120" y="356">1</text><text x="170" y="356">2</text><text x="220" y="356">3</text><text x="270" y="356">4</text></g>
+
+  <!-- 2v (longer, behind) -->
+  <line x1="70" y1="340" x2="266" y2="242" stroke="#dc2626" stroke-width="6" opacity="0.5"/><polygon points="270,240 257,241 262,251" fill="#dc2626" opacity="0.6"/>
+  <text x="215" y="214" font-size="13" font-weight="700" fill="#b91c1c" text-anchor="middle">2·v = [4, 2]</text>
+  <!-- v (on top) -->
+  <line x1="70" y1="340" x2="166" y2="291" stroke="#4f46e5" stroke-width="3.5"/><polygon points="170,290 158,291 163,300" fill="#4f46e5"/>
+  <text x="128" y="334" font-size="13" font-weight="700" fill="#4f46e5">v = [2, 1]</text>
+
+  <!-- panel -->
+  <rect x="430" y="92" width="310" height="70" rx="10" fill="#0f172a"/>
+  <text x="450" y="118" font-size="14" font-family="monospace" fill="#e2e8f0">v = np.array([2, 1])</text>
+  <text x="450" y="142" font-size="14" font-family="monospace" fill="#a5b4fc">2 * v  →  [4 2]</text>
+
+  <text x="430" y="196" font-size="14" fill="#334155">Каждый элемент × число:</text>
+  <text x="448" y="222" font-size="14" font-family="monospace" fill="#16a34a">2 * 2 = 4   (по X)</text>
+  <text x="448" y="244" font-size="14" font-family="monospace" fill="#16a34a">2 * 1 = 2   (по Y)</text>
+
+  <rect x="430" y="276" width="310" height="98" rx="12" fill="#fef9c3" stroke="#eab308" stroke-width="1.5"/>
+  <text x="448" y="302" font-size="13" fill="#713f12">💡 Направление то же, а длина — в 2 раза</text>
+  <text x="448" y="324" font-size="13" fill="#713f12">больше. Умножение на дробь (0.5) —</text>
+  <text x="448" y="346" font-size="13" fill="#713f12">укоротит; на отрицательное (−1) —</text>
+  <text x="448" y="368" font-size="13" fill="#713f12">развернёт в обратную сторону.</text>
+</svg>

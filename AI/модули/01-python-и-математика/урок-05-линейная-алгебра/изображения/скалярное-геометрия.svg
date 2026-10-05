@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 840 380" font-family="'Segoe UI',system-ui,sans-serif">
+  <rect x="0" y="0" width="840" height="380" fill="#f7f9fc"/>
+  <text x="420" y="32" font-size="22" font-weight="700" fill="#1f2937" text-anchor="middle">📐 Что скалярное произведение значит геометрически</text>
+  <text x="420" y="58" font-size="15" font-family="monospace" fill="#4f46e5" text-anchor="middle">a · b = |a| · |b| · cos(угол между ними)</text>
+  <text x="420" y="80" font-size="13" fill="#64748b" text-anchor="middle">«насколько два вектора смотрят в одну сторону»</text>
+
+  <!-- panel A: 0 deg -->
+  <line x1="90" y1="250" x2="200" y2="150" stroke="#16a34a" stroke-width="3"/><polygon points="204,146 191,150 197,159" fill="#16a34a"/>
+  <line x1="90" y1="250" x2="185" y2="178" stroke="#22c55e" stroke-width="3"/><polygon points="190,174 177,177 182,186" fill="#22c55e"/>
+  <text x="150" y="285" font-size="13.5" font-weight="700" fill="#166534" text-anchor="middle">угол ≈ 0°</text>
+  <text x="150" y="306" font-size="12.5" fill="#166534" text-anchor="middle">cos = 1</text>
+  <text x="150" y="332" font-size="13.5" font-weight="700" fill="#166534" text-anchor="middle">a·b — МАКСИМУМ (+)</text>
+
+  <!-- panel B: 90 deg -->
+  <line x1="390" y1="250" x2="390" y2="150" stroke="#ea580c" stroke-width="3"/><polygon points="390,146 385,158 395,158" fill="#ea580c"/>
+  <line x1="390" y1="250" x2="490" y2="250" stroke="#f59e0b" stroke-width="3"/><polygon points="494,250 482,245 482,255" fill="#f59e0b"/>
+  <rect x="390" y="234" width="16" height="16" fill="none" stroke="#94a3b8" stroke-width="1.5"/>
+  <text x="430" y="285" font-size="13.5" font-weight="700" fill="#9a3412" text-anchor="middle">угол 90°</text>
+  <text x="430" y="306" font-size="12.5" fill="#9a3412" text-anchor="middle">cos = 0</text>
+  <text x="430" y="332" font-size="13.5" font-weight="700" fill="#9a3412" text-anchor="middle">a·b = 0</text>
+
+  <!-- panel C: 180 deg -->
+  <line x1="700" y1="200" x2="790" y2="200" stroke="#dc2626" stroke-width="3"/><polygon points="794,200 782,195 782,205" fill="#dc2626"/>
+  <line x1="700" y1="200" x2="620" y2="200" stroke="#f87171" stroke-width="3"/><polygon points="616,200 628,195 628,205" fill="#f87171"/>
+  <circle cx="700" cy="200" r="3.5" fill="#475569"/>
+  <text x="705" y="285" font-size="13.5" font-weight="700" fill="#991b1b" text-anchor="middle">угол 180°</text>
+  <text x="705" y="306" font-size="12.5" fill="#991b1b" text-anchor="middle">cos = −1</text>
+  <text x="705" y="332" font-size="13.5" font-weight="700" fill="#991b1b" text-anchor="middle">a·b — ОТРИЦАТЕЛЬНО (−)</text>
+
+  <line x1="290" y1="120" x2="290" y2="330" stroke="#e2e8f0" stroke-width="1.5"/>
+  <line x1="580" y1="120" x2="580" y2="330" stroke="#e2e8f0" stroke-width="1.5"/>
+</svg>

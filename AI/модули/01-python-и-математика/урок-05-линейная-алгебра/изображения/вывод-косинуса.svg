@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 840 470" font-family="'Segoe UI',system-ui,sans-serif">
+  <rect x="0" y="0" width="840" height="470" fill="#f7f9fc"/>
+  <text x="420" y="32" font-size="22" font-weight="700" fill="#1f2937" text-anchor="middle">🔑 Откуда формула похожести — её ВЫВОДЯТ, а не зубрят</text>
+  <text x="420" y="56" font-size="13" fill="#64748b" text-anchor="middle">Тот же приём, что в уравнении 3·x = 12: чтобы найти x, делим обе части на 3 → x = 4.</text>
+
+  <!-- step 1 -->
+  <text x="60" y="94" font-size="13.5" font-weight="700" fill="#334155">1) Знаем из части 3.3:</text>
+  <rect x="60" y="102" width="720" height="44" rx="10" fill="#eef2ff" stroke="#6366f1" stroke-width="1.5"/>
+  <text x="420" y="130" font-size="18" font-family="monospace" fill="#3730a3" text-anchor="middle">a · b  =  |a| · |b| · cos(угол)</text>
+
+  <!-- step 2 -->
+  <text x="60" y="184" font-size="13.5" font-weight="700" fill="#334155">2) Хотим найти cos — делим ОБЕ части на |a| · |b|:</text>
+
+  <!-- left fraction (a·b)/(|a||b|) -->
+  <text x="225" y="222" font-size="16" font-family="monospace" fill="#1f2937" text-anchor="middle">a · b</text>
+  <line x1="170" y1="234" x2="280" y2="234" stroke="#1f2937" stroke-width="1.8"/>
+  <text x="225" y="256" font-size="16" font-family="monospace" fill="#1f2937" text-anchor="middle">|a| · |b|</text>
+
+  <text x="320" y="245" font-size="20" fill="#64748b" text-anchor="middle">=</text>
+
+  <!-- right fraction (|a||b|·cos)/(|a||b|) with cancellation -->
+  <text x="480" y="222" font-size="16" font-family="monospace" fill="#1f2937" text-anchor="middle">|a| · |b| · cos</text>
+  <line x1="370" y1="234" x2="590" y2="234" stroke="#1f2937" stroke-width="1.8"/>
+  <text x="480" y="256" font-size="16" font-family="monospace" fill="#1f2937" text-anchor="middle">|a| · |b|</text>
+  <!-- cancel strikes -->
+  <line x1="398" y1="217" x2="478" y2="217" stroke="#dc2626" stroke-width="2.5"/>
+  <line x1="440" y1="251" x2="520" y2="251" stroke="#dc2626" stroke-width="2.5"/>
+
+  <text x="628" y="245" font-size="20" fill="#16a34a" text-anchor="middle">→</text>
+  <text x="690" y="250" font-size="20" font-family="monospace" font-weight="700" fill="#166534">cos</text>
+  <text x="480" y="286" font-size="12" fill="#dc2626" text-anchor="middle">|a| · |b| сверху и снизу сокращается</text>
+
+  <!-- step 3 result -->
+  <text x="60" y="328" font-size="13.5" font-weight="700" fill="#334155">3) Готово — это и есть косинусная похожесть:</text>
+  <rect x="60" y="338" width="720" height="48" rx="10" fill="#dcfce7" stroke="#16a34a" stroke-width="2.5"/>
+  <text x="420" y="368" font-size="18" font-family="monospace" font-weight="700" fill="#166534" text-anchor="middle">cos(угол) = (a · b) / (|a| · |b|)</text>
+
+  <!-- step 4 code -->
+  <rect x="60" y="400" width="720" height="48" rx="10" fill="#0f172a"/>
+  <text x="420" y="430" font-size="15" font-family="monospace" fill="#a5b4fc" text-anchor="middle">cos = (a @ b) / (np.linalg.norm(a) * np.linalg.norm(b))</text>
+</svg>

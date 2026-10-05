@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 820 380" font-family="'Segoe UI',system-ui,sans-serif">
+  <rect x="0" y="0" width="820" height="380" fill="#f7f9fc"/>
+  <text x="410" y="32" font-size="22" font-weight="700" fill="#1f2937" text-anchor="middle">🔄 Транспонирование: строки становятся столбцами</text>
+  <text x="410" y="58" font-size="13.5" fill="#64748b" text-anchor="middle">A.T «переворачивает» матрицу по диагонали. Форма (2, 3) → (3, 2).</text>
+
+  <!-- A -->
+  <text x="190" y="100" font-size="15" font-weight="700" fill="#334155" text-anchor="middle">A — форма (2, 3)</text>
+  <g font-family="monospace" font-size="20" text-anchor="middle">
+    <rect x="110" y="114" width="54" height="46" rx="6" fill="#dbeafe" stroke="#2563eb" stroke-width="1.8"/><text x="137" y="144" fill="#1e40af">1</text>
+    <rect x="166" y="114" width="54" height="46" rx="6" fill="#dbeafe" stroke="#2563eb" stroke-width="1.8"/><text x="193" y="144" fill="#1e40af">2</text>
+    <rect x="222" y="114" width="54" height="46" rx="6" fill="#dbeafe" stroke="#2563eb" stroke-width="1.8"/><text x="249" y="144" fill="#1e40af">3</text>
+    <rect x="110" y="162" width="54" height="46" rx="6" fill="#ffedd5" stroke="#ea580c" stroke-width="1.8"/><text x="137" y="192" fill="#9a3412">4</text>
+    <rect x="166" y="162" width="54" height="46" rx="6" fill="#ffedd5" stroke="#ea580c" stroke-width="1.8"/><text x="193" y="192" fill="#9a3412">5</text>
+    <rect x="222" y="162" width="54" height="46" rx="6" fill="#ffedd5" stroke="#ea580c" stroke-width="1.8"/><text x="249" y="192" fill="#9a3412">6</text>
+  </g>
+  <text x="300" y="140" font-size="12" fill="#2563eb">← строка 0</text>
+  <text x="300" y="188" font-size="12" fill="#ea580c">← строка 1</text>
+
+  <!-- arrow -->
+  <text x="410" y="160" font-size="15" font-family="monospace" font-weight="700" fill="#4f46e5" text-anchor="middle">.T</text>
+  <line x1="375" y1="175" x2="445" y2="175" stroke="#4f46e5" stroke-width="2.5"/><polygon points="453,175 441,169 441,181" fill="#4f46e5"/>
+
+  <!-- A.T -->
+  <text x="600" y="100" font-size="15" font-weight="700" fill="#334155" text-anchor="middle">A.T — форма (3, 2)</text>
+  <g font-family="monospace" font-size="20" text-anchor="middle">
+    <rect x="545" y="114" width="54" height="46" rx="6" fill="#dbeafe" stroke="#2563eb" stroke-width="1.8"/><text x="572" y="144" fill="#1e40af">1</text>
+    <rect x="601" y="114" width="54" height="46" rx="6" fill="#ffedd5" stroke="#ea580c" stroke-width="1.8"/><text x="628" y="144" fill="#9a3412">4</text>
+    <rect x="545" y="162" width="54" height="46" rx="6" fill="#dbeafe" stroke="#2563eb" stroke-width="1.8"/><text x="572" y="192" fill="#1e40af">2</text>
+    <rect x="601" y="162" width="54" height="46" rx="6" fill="#ffedd5" stroke="#ea580c" stroke-width="1.8"/><text x="628" y="192" fill="#9a3412">5</text>
+    <rect x="545" y="210" width="54" height="46" rx="6" fill="#dbeafe" stroke="#2563eb" stroke-width="1.8"/><text x="572" y="240" fill="#1e40af">3</text>
+    <rect x="601" y="210" width="54" height="46" rx="6" fill="#ffedd5" stroke="#ea580c" stroke-width="1.8"/><text x="628" y="240" fill="#9a3412">6</text>
+  </g>
+  <text x="572" y="278" font-size="12" fill="#2563eb" text-anchor="middle">↑ столбец 0</text>
+  <text x="628" y="278" font-size="12" fill="#ea580c" text-anchor="middle">↑ столбец 1</text>
+
+  <rect x="110" y="312" width="600" height="46" rx="12" fill="#fef9c3" stroke="#eab308" stroke-width="1.5"/>
+  <text x="410" y="340" font-size="13.5" fill="#713f12" text-anchor="middle">💡 Синяя строка [1 2 3] стала синим СТОЛБЦОМ; оранжевая [4 5 6] — оранжевым столбцом.</text>
+</svg>

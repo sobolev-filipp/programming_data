@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 820 400" font-family="'Segoe UI',system-ui,sans-serif">
+  <rect x="0" y="0" width="820" height="400" fill="#f7f9fc"/>
+  <text x="410" y="32" font-size="22" font-weight="700" fill="#1f2937" text-anchor="middle">🎯 Скалярное произведение: перемножь пары и сложи</text>
+  <text x="410" y="56" font-size="13.5" fill="#64748b" text-anchor="middle">[1, 2, 3] · [4, 5, 6] — два вектора ОДНОЙ длины дают ОДНО число.</text>
+
+  <!-- a row -->
+  <text x="70" y="108" font-size="14" font-family="monospace" fill="#334155" text-anchor="end">a</text>
+  <g font-family="monospace" font-size="22" text-anchor="middle">
+    <rect x="100" y="84" width="80" height="46" rx="8" fill="#e0e7ff" stroke="#4f46e5" stroke-width="1.8"/><text x="140" y="115" fill="#3730a3">1</text>
+    <rect x="230" y="84" width="80" height="46" rx="8" fill="#e0e7ff" stroke="#4f46e5" stroke-width="1.8"/><text x="270" y="115" fill="#3730a3">2</text>
+    <rect x="360" y="84" width="80" height="46" rx="8" fill="#e0e7ff" stroke="#4f46e5" stroke-width="1.8"/><text x="400" y="115" fill="#3730a3">3</text>
+  </g>
+  <!-- b row -->
+  <text x="70" y="168" font-size="14" font-family="monospace" fill="#334155" text-anchor="end">b</text>
+  <g font-family="monospace" font-size="22" text-anchor="middle">
+    <rect x="100" y="144" width="80" height="46" rx="8" fill="#dbeafe" stroke="#2563eb" stroke-width="1.8"/><text x="140" y="175" fill="#1e40af">4</text>
+    <rect x="230" y="144" width="80" height="46" rx="8" fill="#dbeafe" stroke="#2563eb" stroke-width="1.8"/><text x="270" y="175" fill="#1e40af">5</text>
+    <rect x="360" y="144" width="80" height="46" rx="8" fill="#dbeafe" stroke="#2563eb" stroke-width="1.8"/><text x="400" y="175" fill="#1e40af">6</text>
+  </g>
+  <!-- multiply arrows -->
+  <g stroke="#7c3aed" stroke-width="2"><line x1="140" y1="196" x2="140" y2="238"/><line x1="270" y1="196" x2="270" y2="238"/><line x1="400" y1="196" x2="400" y2="238"/></g>
+  <g fill="#7c3aed"><polygon points="140,246 134,234 146,234"/><polygon points="270,246 264,234 276,234"/><polygon points="400,246 394,234 406,234"/></g>
+  <g font-size="13" font-family="monospace" fill="#7c3aed" text-anchor="middle"><text x="166" y="222">1·4</text><text x="296" y="222">2·5</text><text x="426" y="222">3·6</text></g>
+  <!-- products -->
+  <g font-family="monospace" font-size="20" text-anchor="middle">
+    <rect x="104" y="250" width="72" height="44" rx="8" fill="#ede9fe" stroke="#7c3aed" stroke-width="1.8"/><text x="140" y="279" fill="#5b21b6">4</text>
+    <rect x="234" y="250" width="72" height="44" rx="8" fill="#ede9fe" stroke="#7c3aed" stroke-width="1.8"/><text x="270" y="279" fill="#5b21b6">10</text>
+    <rect x="364" y="250" width="72" height="44" rx="8" fill="#ede9fe" stroke="#7c3aed" stroke-width="1.8"/><text x="400" y="279" fill="#5b21b6">18</text>
+  </g>
+  <text x="200" y="279" font-size="22" fill="#64748b" text-anchor="middle">+</text>
+  <text x="330" y="279" font-size="22" fill="#64748b" text-anchor="middle">+</text>
+
+  <!-- sum -->
+  <text x="470" y="279" font-size="22" fill="#64748b">=</text>
+  <rect x="500" y="248" width="150" height="48" rx="12" fill="#dcfce7" stroke="#16a34a" stroke-width="2.5"/>
+  <text x="575" y="279" font-size="22" font-family="monospace" font-weight="700" fill="#166534" text-anchor="middle">32</text>
+
+  <!-- code panel -->
+  <rect x="500" y="84" width="290" height="120" rx="10" fill="#0f172a"/>
+  <text x="518" y="110" font-size="13.5" font-family="monospace" fill="#e2e8f0">a @ b          # 32</text>
+  <text x="518" y="134" font-size="13.5" font-family="monospace" fill="#e2e8f0">np.dot(a, b)   # 32</text>
+  <text x="518" y="158" font-size="13.5" font-family="monospace" fill="#a5b4fc">(a * b).sum()  # 32</text>
+  <text x="518" y="186" font-size="12" font-family="monospace" fill="#64748b">a*b=[4 10 18] → сумма 32</text>
+
+  <rect x="70" y="330" width="720" height="54" rx="12" fill="#fef9c3" stroke="#eab308" stroke-width="1.5"/>
+  <text x="430" y="353" font-size="13.5" fill="#713f12" text-anchor="middle">💡 Результат — ОДНО число (скаляр), потому и «скалярное». Оператор @ в NumPy делает это за нас.</text>
+  <text x="430" y="373" font-size="12.5" fill="#713f12" text-anchor="middle">Это ровно то, что считает один нейрон: вход · веса.</text>
+</svg>

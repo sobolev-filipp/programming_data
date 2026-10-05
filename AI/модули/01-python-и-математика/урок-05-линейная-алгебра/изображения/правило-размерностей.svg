@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 820 380" font-family="'Segoe UI',system-ui,sans-serif">
+  <rect x="0" y="0" width="820" height="380" fill="#f7f9fc"/>
+  <text x="410" y="32" font-size="22" font-weight="700" fill="#1f2937" text-anchor="middle">📏 Правило размерностей: средние совпадают, крайние остаются</text>
+  <text x="410" y="56" font-size="13.5" fill="#64748b" text-anchor="middle">Поставь формы рядом. Два СРЕДНИХ числа должны быть равны, два КРАЙНИХ — форма результата.</text>
+
+  <!-- ✅ case -->
+  <text x="55" y="118" font-size="16" font-weight="700" fill="#16a34a">✅</text>
+  <g font-family="monospace" font-size="22" text-anchor="middle">
+    <!-- A (2,3) -->
+    <rect x="95" y="96" width="50" height="48" rx="7" fill="#dbeafe" stroke="#2563eb" stroke-width="2"/><text x="120" y="128" fill="#1e40af">2</text>
+    <rect x="145" y="96" width="50" height="48" rx="7" fill="#ffedd5" stroke="#ea580c" stroke-width="2"/><text x="170" y="128" fill="#9a3412">3</text>
+    <text x="216" y="128" fill="#64748b">@</text>
+    <!-- B (3,4) -->
+    <rect x="238" y="96" width="50" height="48" rx="7" fill="#ffedd5" stroke="#ea580c" stroke-width="2"/><text x="263" y="128" fill="#9a3412">3</text>
+    <rect x="288" y="96" width="50" height="48" rx="7" fill="#dbeafe" stroke="#2563eb" stroke-width="2"/><text x="313" y="128" fill="#1e40af">4</text>
+    <text x="360" y="128" fill="#64748b">=</text>
+    <!-- result (2,4) -->
+    <rect x="382" y="96" width="50" height="48" rx="7" fill="#dcfce7" stroke="#16a34a" stroke-width="2.5"/><text x="407" y="128" fill="#166534">2</text>
+    <rect x="432" y="96" width="50" height="48" rx="7" fill="#dcfce7" stroke="#16a34a" stroke-width="2.5"/><text x="457" y="128" fill="#166534">4</text>
+  </g>
+  <!-- inner arc -->
+  <path d="M 170 150 Q 216 182 263 150" fill="none" stroke="#ea580c" stroke-width="2"/>
+  <text x="216" y="200" font-size="12.5" fill="#9a3412" text-anchor="middle">средние: 3 = 3 ✓ совпали → умножать можно</text>
+  <!-- outer note -->
+  <text x="620" y="118" font-size="13" fill="#2563eb">крайние 2 и 4 →</text>
+  <text x="620" y="136" font-size="13" font-weight="700" fill="#166534">форма результата (2, 4)</text>
+
+  <line x1="55" y1="228" x2="765" y2="228" stroke="#e2e8f0" stroke-width="1.5"/>
+
+  <!-- ❌ case -->
+  <text x="55" y="290" font-size="16" font-weight="700" fill="#dc2626">❌</text>
+  <g font-family="monospace" font-size="22" text-anchor="middle">
+    <rect x="95" y="268" width="50" height="48" rx="7" fill="#dbeafe" stroke="#2563eb" stroke-width="2"/><text x="120" y="300" fill="#1e40af">2</text>
+    <rect x="145" y="268" width="50" height="48" rx="7" fill="#fee2e2" stroke="#dc2626" stroke-width="2"/><text x="170" y="300" fill="#991b1b">3</text>
+    <text x="216" y="300" fill="#64748b">@</text>
+    <rect x="238" y="268" width="50" height="48" rx="7" fill="#fee2e2" stroke="#dc2626" stroke-width="2"/><text x="263" y="300" fill="#991b1b">4</text>
+    <rect x="288" y="268" width="50" height="48" rx="7" fill="#dbeafe" stroke="#2563eb" stroke-width="2"/><text x="313" y="300" fill="#1e40af">3</text>
+  </g>
+  <path d="M 170 322 Q 216 352 263 322" fill="none" stroke="#dc2626" stroke-width="2"/>
+  <text x="216" y="368" font-size="12.5" fill="#991b1b" text-anchor="middle">средние: 3 ≠ 4 ✗ не совпали → умножать НЕЛЬЗЯ</text>
+  <text x="470" y="296" font-size="14" font-weight="700" fill="#991b1b">(2, 3) @ (4, 3) — ошибка</text>
+</svg>

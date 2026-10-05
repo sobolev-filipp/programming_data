@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 400" font-family="'Segoe UI',system-ui,sans-serif">
+  <rect x="0" y="0" width="900" height="400" fill="#f7f9fc"/>
+  <text x="450" y="32" font-size="22" font-weight="700" fill="#1f2937" text-anchor="middle">🧠 Нейросеть = цепочка «матрица весов × вектор»</text>
+  <text x="450" y="56" font-size="13.5" fill="#64748b" text-anchor="middle">Выход одного слоя становится входом следующего. Длины стыкуются как домино.</text>
+
+  <!-- pipeline -->
+  <!-- input -->
+  <rect x="40" y="96" width="120" height="76" rx="10" fill="#e0e7ff" stroke="#4f46e5" stroke-width="2"/>
+  <text x="100" y="130" font-size="24" font-family="monospace" font-weight="700" fill="#3730a3" text-anchor="middle">784</text>
+  <text x="100" y="152" font-size="11.5" fill="#3730a3" text-anchor="middle">вход (28×28)</text>
+
+  <!-- arrow 1 -->
+  <line x1="164" y1="134" x2="246" y2="134" stroke="#7c3aed" stroke-width="2.5"/><polygon points="254,134 242,128 242,140" fill="#7c3aed"/>
+  <text x="205" y="116" font-size="12" font-weight="700" fill="#7c3aed" text-anchor="middle">× W1</text>
+  <text x="205" y="164" font-size="11" font-family="monospace" fill="#7c3aed" text-anchor="middle">128×784</text>
+
+  <!-- box 128 -->
+  <rect x="258" y="96" width="86" height="76" rx="10" fill="#ede9fe" stroke="#7c3aed" stroke-width="2"/>
+  <text x="301" y="142" font-size="24" font-family="monospace" font-weight="700" fill="#5b21b6" text-anchor="middle">128</text>
+
+  <!-- arrow 2 -->
+  <line x1="348" y1="134" x2="430" y2="134" stroke="#7c3aed" stroke-width="2.5"/><polygon points="438,134 426,128 426,140" fill="#7c3aed"/>
+  <text x="389" y="116" font-size="12" font-weight="700" fill="#7c3aed" text-anchor="middle">× W2</text>
+  <text x="389" y="164" font-size="11" font-family="monospace" fill="#7c3aed" text-anchor="middle">64×128</text>
+
+  <!-- box 64 -->
+  <rect x="442" y="96" width="86" height="76" rx="10" fill="#ede9fe" stroke="#7c3aed" stroke-width="2"/>
+  <text x="485" y="142" font-size="24" font-family="monospace" font-weight="700" fill="#5b21b6" text-anchor="middle">64</text>
+
+  <!-- arrow 3 -->
+  <line x1="532" y1="134" x2="614" y2="134" stroke="#7c3aed" stroke-width="2.5"/><polygon points="622,134 610,128 610,140" fill="#7c3aed"/>
+  <text x="573" y="116" font-size="12" font-weight="700" fill="#7c3aed" text-anchor="middle">× W3</text>
+  <text x="573" y="164" font-size="11" font-family="monospace" fill="#7c3aed" text-anchor="middle">10×64</text>
+
+  <!-- output -->
+  <rect x="626" y="96" width="150" height="76" rx="10" fill="#dcfce7" stroke="#16a34a" stroke-width="2.5"/>
+  <text x="701" y="130" font-size="24" font-family="monospace" font-weight="700" fill="#166534" text-anchor="middle">10</text>
+  <text x="701" y="152" font-size="11.5" fill="#166534" text-anchor="middle">уверенности 0–9</text>
+
+  <!-- domino shapes -->
+  <text x="60" y="226" font-size="13.5" font-weight="700" fill="#334155">Как стыкуются формы (правило средних из части 5):</text>
+  <g font-size="16" font-family="monospace">
+    <text x="80" y="258" fill="#1f2937">(128, <tspan fill="#ea580c" font-weight="700">784</tspan>) @ (<tspan fill="#ea580c" font-weight="700">784</tspan>,)  →  (128,)</text>
+    <text x="520" y="258" font-size="12" font-family="'Segoe UI'" fill="#9a3412">средние 784 совпали</text>
+    <text x="80" y="286" fill="#1f2937">(64, <tspan fill="#ea580c" font-weight="700">128</tspan>) @ (<tspan fill="#ea580c" font-weight="700">128</tspan>,)  →  (64,)</text>
+    <text x="520" y="286" font-size="12" font-family="'Segoe UI'" fill="#9a3412">средние 128 совпали</text>
+    <text x="80" y="314" fill="#1f2937">(10, <tspan fill="#ea580c" font-weight="700">64</tspan>) @ (<tspan fill="#ea580c" font-weight="700">64</tspan>,)  →  (10,)</text>
+    <text x="520" y="314" font-size="12" font-family="'Segoe UI'" fill="#9a3412">средние 64 совпали</text>
+  </g>
+
+  <rect x="60" y="340" width="780" height="46" rx="12" fill="#fef9c3" stroke="#eab308" stroke-width="1.5"/>
+  <text x="450" y="361" font-size="13" fill="#713f12" text-anchor="middle">💡 Каждый слой = умножение матрицы весов на вектор (+ смещение + нелинейность).</text>
+  <text x="450" y="379" font-size="13" fill="#713f12" text-anchor="middle">Сегодняшняя операция @ — главный кирпичик всей нейросети.</text>
+</svg>

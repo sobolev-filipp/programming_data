@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 430" font-family="'Segoe UI',system-ui,sans-serif">
+  <rect x="0" y="0" width="880" height="430" fill="#f7f9fc"/>
+  <text x="440" y="34" font-size="23" font-weight="700" fill="#1f2937" text-anchor="middle">⚖️ Веса: насколько каждый признак влияет на цену</text>
+  <text x="440" y="58" font-size="13.5" fill="#64748b" text-anchor="middle">Каждый признак умножаем на его вес, всё складываем → цена. Это и есть скалярное произведение.</text>
+
+  <!-- headers -->
+  <text x="140" y="92" font-size="12.5" font-weight="700" fill="#334155" text-anchor="middle">признак</text>
+  <text x="330" y="92" font-size="12.5" font-weight="700" fill="#7c3aed" text-anchor="middle">× вес</text>
+  <text x="500" y="92" font-size="12.5" font-weight="700" fill="#166534" text-anchor="middle">вклад в цену</text>
+
+  <!-- lane 1 RAM -->
+  <rect x="50" y="104" width="180" height="40" rx="8" fill="#eef2ff" stroke="#6366f1" stroke-width="1.5"/><text x="140" y="130" font-size="14" font-family="monospace" fill="#3730a3" text-anchor="middle">RAM = 16</text>
+  <line x1="232" y1="124" x2="420" y2="124" stroke="#7c3aed" stroke-width="2"/><polygon points="428,124 416,118 416,130" fill="#7c3aed"/>
+  <text x="330" y="117" font-size="13" font-family="monospace" fill="#7c3aed" text-anchor="middle">× 1000</text>
+  <rect x="432" y="104" width="136" height="40" rx="8" fill="#dcfce7" stroke="#16a34a" stroke-width="1.5"/><text x="500" y="130" font-size="14" font-family="monospace" fill="#166534" text-anchor="middle">16 000</text>
+
+  <!-- lane 2 SSD -->
+  <rect x="50" y="154" width="180" height="40" rx="8" fill="#eef2ff" stroke="#6366f1" stroke-width="1.5"/><text x="140" y="180" font-size="14" font-family="monospace" fill="#3730a3" text-anchor="middle">SSD = 512</text>
+  <line x1="232" y1="174" x2="420" y2="174" stroke="#7c3aed" stroke-width="2"/><polygon points="428,174 416,168 416,180" fill="#7c3aed"/>
+  <text x="330" y="167" font-size="13" font-family="monospace" fill="#7c3aed" text-anchor="middle">× 200</text>
+  <rect x="432" y="154" width="136" height="40" rx="8" fill="#dcfce7" stroke="#16a34a" stroke-width="1.5"/><text x="500" y="180" font-size="14" font-family="monospace" fill="#166534" text-anchor="middle">102 400</text>
+
+  <!-- lane 3 Year -->
+  <rect x="50" y="204" width="180" height="40" rx="8" fill="#eef2ff" stroke="#6366f1" stroke-width="1.5"/><text x="140" y="230" font-size="13" font-family="monospace" fill="#3730a3" text-anchor="middle">Год−2000 = 24</text>
+  <line x1="232" y1="224" x2="420" y2="224" stroke="#7c3aed" stroke-width="2"/><polygon points="428,224 416,218 416,230" fill="#7c3aed"/>
+  <text x="330" y="217" font-size="13" font-family="monospace" fill="#7c3aed" text-anchor="middle">× 150</text>
+  <rect x="432" y="204" width="136" height="40" rx="8" fill="#dcfce7" stroke="#16a34a" stroke-width="1.5"/><text x="500" y="230" font-size="14" font-family="monospace" fill="#166534" text-anchor="middle">3 600</text>
+
+  <!-- brace to sum -->
+  <path d="M 582 110 q 12 0 12 14 v 34 q 0 14 12 14 q -12 0 -12 14 v 34 q 0 14 -12 14" fill="none" stroke="#94a3b8" stroke-width="2"/>
+  <text x="625" y="169" font-size="20" fill="#334155">Σ</text>
+  <line x1="645" y1="174" x2="690" y2="174" stroke="#334155" stroke-width="2"/><polygon points="698,174 686,168 686,180" fill="#334155"/>
+  <rect x="700" y="146" width="150" height="56" rx="12" fill="#fde68a" stroke="#d97706" stroke-width="2.5"/>
+  <text x="775" y="169" font-size="15" font-weight="700" fill="#7c2d12" text-anchor="middle">Цена</text>
+  <text x="775" y="190" font-size="15" font-family="monospace" font-weight="700" fill="#7c2d12" text-anchor="middle">122 000 ₽</text>
+
+  <rect x="50" y="300" width="800" height="100" rx="12" fill="#fef9c3" stroke="#eab308" stroke-width="1.5"/>
+  <text x="70" y="326" font-size="13.5" fill="#713f12">💡 <tspan font-weight="700">Вес = «цена за одну единицу признака».</tspan> Вес RAM = 1000 → каждый гигабайт добавляет к цене 1000 ₽.</text>
+  <text x="70" y="350" font-size="13.5" fill="#713f12">Чем больше вес — тем сильнее этот признак двигает итог. Маленький вес (150) — влияет слабо.</text>
+  <text x="70" y="378" font-size="13.5" fill="#713f12">Здесь мы задали веса сами, для примера. В настоящем ML модель <tspan font-weight="700">сама подбирает</tspan> их по данным — это и есть «обучение».</text>
+</svg>
