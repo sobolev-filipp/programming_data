@@ -1,0 +1,38 @@
+<svg viewBox="0 0 794 1123" xmlns="http://www.w3.org/2000/svg">
+  <rect width="794" height="1123" fill="#ffffff"/>
+  <!-- header -->
+  <text x="60" y="64" font-family="Segoe UI, Arial, sans-serif" font-size="30" font-weight="800" fill="#B45309">⚡ Трафарет: молния Пером (по точкам)</text>
+  <text x="60" y="92" font-family="Segoe UI, Arial, sans-serif" font-size="15" fill="#64748B">Ставь опорные точки Пером (Pen, P) строго по номерам 1→6 и вернись в точку 1, чтобы ЗАМКНУТЬ контур. Только КЛИК — все углы острые.</text>
+  <line x1="60" y1="108" x2="734" y2="108" stroke="#E2E8F0" stroke-width="2"/>
+
+  <!-- ===== ОБРАЗЕЦ ===== -->
+  <text x="60" y="150" font-family="Segoe UI, Arial, sans-serif" font-size="18" font-weight="700" fill="#0F766E">Образец — обведи по номерам</text>
+  <!-- filled bolt -->
+  <polygon points="388,182 228,374 372,374 356,502 516,310 372,310" fill="#FFDF45" stroke="#B45309" stroke-width="2.5" stroke-dasharray="6 5" stroke-linejoin="round"/>
+  <!-- numbered anchor points -->
+  <g font-family="Segoe UI, Arial, sans-serif" font-size="14" font-weight="800" text-anchor="middle">
+    <circle cx="388" cy="182" r="13" fill="#2563EB"/><text x="388" y="187" fill="#fff">1</text>
+    <circle cx="228" cy="374" r="13" fill="#334155"/><text x="228" y="379" fill="#fff">2</text>
+    <circle cx="372" cy="374" r="13" fill="#334155"/><text x="372" y="379" fill="#fff">3</text>
+    <circle cx="356" cy="502" r="13" fill="#334155"/><text x="356" y="507" fill="#fff">4</text>
+    <circle cx="516" cy="310" r="13" fill="#334155"/><text x="516" y="315" fill="#fff">5</text>
+    <circle cx="372" cy="310" r="13" fill="#334155"/><text x="372" y="315" fill="#fff">6</text>
+  </g>
+  <text x="300" y="540" font-family="Segoe UI, Arial, sans-serif" font-size="13" fill="#2563EB">1 = старт. После точки 6 кликни снова по точке 1 — контур замкнётся.</text>
+
+  <!-- ===== ПРАКТИКА ===== -->
+  <text x="60" y="600" font-family="Segoe UI, Arial, sans-serif" font-size="18" font-weight="700" fill="#0F766E">Практика — поставь точки сам(а)</text>
+  <polygon points="388,632 228,824 372,824 356,952 516,760 372,760" fill="none" stroke="#CBD5E1" stroke-width="2" stroke-dasharray="3 7" stroke-linejoin="round"/>
+  <g font-family="Segoe UI, Arial, sans-serif" font-size="12" font-weight="700" fill="#CBD5E1" text-anchor="middle">
+    <circle cx="388" cy="632" r="10" fill="none" stroke="#93C5FD" stroke-width="2"/><text x="388" y="636" fill="#93C5FD">1</text>
+    <circle cx="228" cy="824" r="10" fill="none" stroke="#CBD5E1" stroke-width="2"/><text x="228" y="828">2</text>
+    <circle cx="372" cy="824" r="10" fill="none" stroke="#CBD5E1" stroke-width="2"/><text x="372" y="828">3</text>
+    <circle cx="356" cy="952" r="10" fill="none" stroke="#CBD5E1" stroke-width="2"/><text x="356" y="956">4</text>
+    <circle cx="516" cy="760" r="10" fill="none" stroke="#CBD5E1" stroke-width="2"/><text x="516" y="764">5</text>
+    <circle cx="372" cy="760" r="10" fill="none" stroke="#CBD5E1" stroke-width="2"/><text x="372" y="764">6</text>
+  </g>
+
+  <!-- tip -->
+  <line x1="60" y1="1030" x2="734" y2="1030" stroke="#E2E8F0" stroke-width="2"/>
+  <text x="60" y="1060" font-family="Segoe UI, Arial, sans-serif" font-size="13" fill="#475569">💡 Ошибся точкой — Ctrl+Z. Готовый контур залей жёлтым (#FFDF45) — выйдет молния для иконки «Гроза».</text>
+</svg>
