@@ -1,0 +1,79 @@
+<svg viewBox="0 0 740 500" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#1A1038"/><stop offset="1" stop-color="#2A1A5E"/>
+    </linearGradient>
+    <linearGradient id="metal" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#3C4252"/><stop offset="0.5" stop-color="#9AA3B2"/><stop offset="1" stop-color="#3C4252"/>
+    </linearGradient>
+    <radialGradient id="potion" cx="0.5" cy="0.4" r="0.7">
+      <stop offset="0" stop-color="#A7F3D0"/><stop offset="1" stop-color="#10B981"/>
+    </radialGradient>
+    <!-- half-silhouette (right side) of the cauldron, axis at x=0, top rim y=-60 -->
+    <path id="prof" d="M0,-60 L48,-60 C68,-54 68,8 48,40 C40,56 24,70 0,72"/>
+  </defs>
+
+  <rect width="740" height="500" fill="url(#bg)"/>
+  <!-- twinkling stars -->
+  <g fill="#E0E7FF">
+    <circle cx="90" cy="70" r="2"/><circle cx="260" cy="54" r="2.4"/><circle cx="470" cy="78" r="1.8"/>
+    <circle cx="650" cy="62" r="2.4"/><circle cx="610" cy="150" r="1.6"/><circle cx="130" cy="150" r="1.6"/>
+    <animate attributeName="opacity" values="0.4;1;0.4" dur="2.6s" repeatCount="indefinite"/>
+  </g>
+
+  <text x="370" y="40" font-family="Segoe UI, Arial, sans-serif" font-size="22" font-weight="700" fill="#E9E5FF" text-anchor="middle">Тело вращения: профиль → вращение вокруг оси → объём</text>
+
+  <!-- ===== LEFT: profile beside the axis ===== -->
+  <g transform="translate(170,250)">
+    <!-- rotation axis -->
+    <line x1="0" y1="-120" x2="0" y2="120" stroke="#8B85C0" stroke-width="2.5" stroke-dasharray="7 7"/>
+    <text x="8" y="-104" font-family="Segoe UI, Arial, sans-serif" font-size="15" fill="#A89FE0">ось</text>
+    <!-- the profile (half silhouette) -->
+    <use xlink:href="#prof" fill="none" stroke="#34D399" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- control dots on the profile -->
+    <g fill="#A7F3D0"><circle cx="0" cy="-60" r="4"/><circle cx="48" cy="-60" r="4"/><circle cx="48" cy="40" r="4"/><circle cx="0" cy="72" r="4"/></g>
+    <text x="54" y="4" font-family="Segoe UI, Arial, sans-serif" font-size="15" font-weight="700" fill="#34D399">профиль</text>
+    <!-- small spinning arrow hinting rotation -->
+    <g transform="translate(24,96)">
+      <path d="M-16,0 A16,7 0 1 1 14,4" fill="none" stroke="#FBBF24" stroke-width="3" stroke-linecap="round"/>
+      <polygon points="14,-2 22,5 11,8" fill="#FBBF24"/>
+      <animateTransform attributeName="transform" type="rotate" from="0 0 0" to="360 0 0" dur="3.5s" repeatCount="indefinite" additive="sum"/>
+    </g>
+  </g>
+
+  <!-- ===== MIDDLE arrow ===== -->
+  <g transform="translate(370,250)">
+    <line x1="-28" y1="0" x2="28" y2="0" stroke="#C7CEEA" stroke-width="4" stroke-linecap="round"/>
+    <polygon points="28,-9 46,0 28,9" fill="#C7CEEA"/>
+    <text x="9" y="-18" font-family="Segoe UI, Arial, sans-serif" font-size="15" font-weight="700" fill="#C7CEEA" text-anchor="middle">360°</text>
+  </g>
+
+  <!-- ===== RIGHT: the revolved solid (cauldron) ===== -->
+  <g transform="translate(560,250)">
+    <!-- rotation axis (faint) -->
+    <line x1="0" y1="-118" x2="0" y2="118" stroke="#5B5496" stroke-width="2" stroke-dasharray="6 8" opacity="0.7"/>
+    <!-- solid body (full silhouette: profile + mirror) -->
+    <path d="M0,-60 L48,-60 C68,-54 68,8 48,40 C40,56 24,70 0,72 C-24,70 -40,56 -48,40 C-68,8 -68,-54 -48,-60 Z"
+          fill="url(#metal)" stroke="#20242E" stroke-width="2"/>
+    <!-- bottom shadow ellipse -->
+    <ellipse cx="0" cy="72" rx="26" ry="7" fill="#15102E" opacity="0.5"/>
+    <!-- glowing potion surface -->
+    <ellipse cx="0" cy="-56" rx="42" ry="11" fill="url(#potion)">
+      <animate attributeName="opacity" values="0.7;1;0.7" dur="2.2s" repeatCount="indefinite"/>
+    </ellipse>
+    <!-- rim lip -->
+    <ellipse cx="0" cy="-60" rx="48" ry="12" fill="none" stroke="#C7CEEA" stroke-width="3"/>
+    <!-- sweeping meridian = the profile rotating around the axis -->
+    <g>
+      <use xlink:href="#prof" fill="none" stroke="#6EE7B7" stroke-width="3.5" stroke-linecap="round" opacity="0.95"/>
+      <animateTransform attributeName="transform" type="scale" values="1 1;0 1;-1 1;0 1;1 1" dur="4s" repeatCount="indefinite"/>
+    </g>
+    <!-- a point that rides around the rim to show the revolution -->
+    <circle r="5.5" fill="#FDE047">
+      <animateMotion dur="4s" repeatCount="indefinite"
+        path="M48,-60 A48,12 0 1 1 -48,-60 A48,12 0 1 1 48,-60 Z"/>
+    </circle>
+  </g>
+
+  <text x="370" y="474" font-family="Segoe UI, Arial, sans-serif" font-size="15" font-weight="700" fill="#C7CEEA" text-anchor="middle">Профиль × вращение 360° = объём: ваза, котёл, бутылочка 🧪</text>
+</svg>
