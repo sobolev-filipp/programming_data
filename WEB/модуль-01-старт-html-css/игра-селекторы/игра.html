@@ -8,183 +8,166 @@
   :root{
     --bg1:#f59e0b; --bg2:#ef4444; --card:#fffdf7; --ink:#3a2c1a;
     --accent:#ea580c; --ok:#16a34a; --bad:#dc2626; --soft:#fff1e0;
-    --wood:#c88a4a; --wood2:#a86a2c;
+    --wood:#c88a4a; --wood2:#a86a2c; --sync:#2563eb;
   }
   *{box-sizing:border-box;font-family:"Segoe UI",system-ui,sans-serif}
   body{margin:0;min-height:100vh;display:flex;align-items:flex-start;justify-content:center;
-    background:linear-gradient(135deg,var(--bg1),var(--bg2));padding:20px;color:var(--ink)}
-  .app{background:var(--card);width:min(820px,100%);border-radius:24px;
-    box-shadow:0 25px 60px rgba(0,0,0,.35);padding:26px 26px 22px;position:relative;overflow:hidden}
-  h1{margin:0 0 4px;font-size:25px;text-align:center}
-  .sub{text-align:center;color:#a1663b;margin-bottom:14px;font-size:14px}
-  .meta{display:flex;justify-content:space-between;align-items:center;font-size:14px;color:#8a6a45;margin-bottom:10px}
-  .bar{height:9px;background:var(--soft);border-radius:99px;overflow:hidden;flex:1;margin:0 12px}
+    background:linear-gradient(135deg,var(--bg1),var(--bg2));padding:16px;color:var(--ink)}
+  .app{background:var(--card);width:min(980px,100%);border-radius:22px;
+    box-shadow:0 25px 60px rgba(0,0,0,.35);padding:22px 22px 18px;position:relative;overflow:hidden}
+  h1{margin:0 0 3px;font-size:24px;text-align:center}
+  .sub{text-align:center;color:#a1663b;margin-bottom:12px;font-size:13.5px}
+  .meta{display:flex;justify-content:space-between;align-items:center;font-size:13.5px;color:#8a6a45;margin-bottom:10px;gap:10px}
+  .bar{height:9px;background:var(--soft);border-radius:99px;overflow:hidden;flex:1}
   .bar>i{display:block;height:100%;width:0;background:var(--accent);transition:.4s}
-  .goal{background:var(--soft);border:2px solid #fed7aa;border-radius:14px;padding:12px 16px;
-    font-size:18px;font-weight:700;margin-bottom:14px;line-height:1.35}
+  .goal{background:var(--soft);border:2px solid #fed7aa;border-radius:14px;padding:11px 15px;
+    font-size:17px;font-weight:700;margin-bottom:14px;line-height:1.35}
   .goal .tag{color:var(--accent)}
+
+  /* двухколоночная раскладка */
+  .wrap{display:grid;grid-template-columns:1.45fr 1fr;gap:16px;align-items:start}
+  @media(max-width:780px){ .wrap{grid-template-columns:1fr} }
 
   /* СТОЛ */
   .table{background:linear-gradient(180deg,var(--wood),var(--wood2));border-radius:16px;
-    padding:20px 16px 14px;min-height:132px;display:flex;flex-wrap:wrap;align-items:flex-end;
+    padding:20px 14px 14px;min-height:130px;display:flex;flex-wrap:wrap;align-items:flex-end;
     gap:12px;justify-content:center;box-shadow:inset 0 6px 18px rgba(0,0,0,.25)}
-  /* элементы «еды» — это настоящие DOM-узлы, по ним и работает селектор */
   plate,apple,pizza,cake,bowl,banana{display:inline-flex;flex-direction:column;align-items:center;
-    justify-content:flex-end;position:relative;transition:.15s;cursor:default}
+    justify-content:flex-end;position:relative;transition:.12s;cursor:pointer}
   .food{font-size:40px;line-height:1;filter:drop-shadow(0 3px 4px rgba(0,0,0,.3))}
-  plate{background:#f4f4f5;border:3px solid #d4d4d8;border-radius:50%;
-    min-width:64px;min-height:64px;padding:8px;gap:6px}
-  bowl{background:#fde68a;border:3px solid #f59e0b;border-radius:0 0 26px 26px;padding:8px;gap:6px;min-width:60px}
+  plate{background:#f4f4f5;border:3px solid #d4d4d8;border-radius:50%;min-width:62px;min-height:62px;padding:8px;gap:6px}
+  bowl{background:#fde68a;border:3px solid #f59e0b;border-radius:0 0 26px 26px;padding:8px;gap:6px;min-width:58px}
   plate .food{font-size:30px}
-  /* контейнеры с детьми становятся шире */
   plate:has(*),bowl:has(*){flex-direction:row;flex-wrap:wrap;min-width:auto}
-  /* подсветка попадания */
-  .hit{outline:5px solid #22c55e;outline-offset:3px;border-radius:12px;
-    animation:pop .3s ease}
-  plate.hit,bowl.hit{border-radius:50%}
-  bowl.hit{border-radius:0 0 26px 26px}
-  @keyframes pop{0%{transform:scale(.8)}60%{transform:scale(1.15)}100%{transform:scale(1)}}
-  .lbl{font-size:10px;color:#57534e;background:#ffffffcc;border-radius:6px;padding:0 4px;margin-top:3px;
-    font-family:"Consolas",monospace;white-space:nowrap}
+  /* попадание в цель (верный ответ) */
+  .hit{outline:5px solid #22c55e;outline-offset:3px;animation:pop .3s ease}
+  @keyframes pop{0%{transform:scale(.82)}60%{transform:scale(1.15)}100%{transform:scale(1)}}
+  /* подсветка связи стол ↔ разметка (наведение) */
+  #table [data-ref].sync{outline:4px dashed var(--sync);outline-offset:3px}
 
   /* ВВОД */
-  .row{display:flex;gap:10px;margin:14px 0 6px}
-  #inp{flex:1;font-family:"Consolas","Courier New",monospace;font-size:20px;padding:12px 14px;
-    border:2px solid #fdba74;border-radius:12px;background:#fff;color:#7c2d12;outline:none}
+  .row{display:flex;gap:10px;margin:14px 0 0;flex-wrap:wrap}
+  #inp{flex:1 1 180px;font-family:"Consolas","Courier New",monospace;font-size:19px;padding:11px 14px;
+    border:2px solid #fdba74;border-radius:12px;background:#fff;color:#7c2d12;outline:none;min-width:0}
   #inp:focus{border-color:var(--accent);box-shadow:0 0 0 4px #fed7aa}
-  .btn{border:0;border-radius:12px;padding:12px 18px;font-size:16px;font-weight:700;cursor:pointer}
+  .btn{border:0;border-radius:12px;padding:11px 16px;font-size:15px;font-weight:700;cursor:pointer}
   .btn.go{background:var(--accent);color:#fff}
   .btn.go:hover{filter:brightness(1.08)}
-  .btn.ghost{background:var(--soft);color:var(--accent)}
+  .btn.ghost{background:var(--soft);color:var(--accent);flex:1 1 auto}
   .btn.ghost:hover{background:#ffe4c4}
-  .fb{min-height:24px;font-size:15px;margin:6px 2px;line-height:1.4}
+  .fb{min-height:22px;font-size:14.5px;margin:10px 2px 0;line-height:1.4}
   .fb.good{color:#166534;font-weight:700}
   .fb.no{color:#991b1b}
 
-  /* HTML-разметка уровня */
-  details.code{margin-top:12px;background:#1f2937;border-radius:12px;overflow:hidden}
-  details.code>summary{cursor:pointer;padding:10px 14px;color:#e5e7eb;font-size:14px;font-weight:600;list-style:none}
-  details.code>summary::-webkit-details-marker{display:none}
-  pre{margin:0;padding:0 16px 14px;color:#e5e7eb;font-family:"Consolas","Courier New",monospace;
-    font-size:14px;line-height:1.6;overflow-x:auto}
-  .t{color:#7dd3fc}.c{color:#fbbf24}.i{color:#f9a8d4}
+  /* БОКОВАЯ ПАНЕЛЬ */
+  .side{display:flex;flex-direction:column;gap:12px}
+  .panel{border-radius:14px;overflow:hidden}
+  .teach{background:var(--soft);border:2px solid #fed7aa}
+  .teach .h{background:#ffe4c4;color:var(--accent);font-weight:700;padding:9px 14px;font-size:14px}
+  .teach .body{padding:12px 14px}
+  .teach .name{font-weight:800;font-size:16px;margin-bottom:5px;color:#7c2d12}
+  .teach .how{font-size:14px;line-height:1.5}
+  .teach .ex{margin-top:9px;font-size:13.5px;color:#7c4a1d;background:#fff;border:1px dashed #fdba74;border-radius:9px;padding:7px 10px}
+  .teach code{background:#1f2937;color:#e5e7eb;padding:1px 6px;border-radius:5px;font-size:13.5px}
 
-  /* Справочник */
-  details.ref{margin-top:12px;background:var(--soft);border:2px solid #fed7aa;border-radius:12px}
-  details.ref>summary{cursor:pointer;padding:11px 15px;font-weight:700;color:var(--accent)}
-  .ref table{width:100%;border-collapse:collapse;font-size:14px}
-  .ref td{padding:7px 15px;border-top:1px solid #fed7aa;vertical-align:top}
-  .ref code{background:#1f2937;color:#e5e7eb;padding:1px 7px;border-radius:5px;font-size:14px}
-  .note{font-size:12.5px;color:#a1663b;text-align:center;margin-top:12px}
+  .mk .h{background:#111827;color:#e5e7eb;font-weight:600;padding:9px 14px;font-size:13.5px;display:flex;justify-content:space-between;align-items:center;gap:8px}
+  .mk .h span{color:#9ca3af;font-weight:400;font-size:12px}
+  pre{margin:0;padding:12px 14px;background:#1f2937;color:#e5e7eb;font-family:"Consolas","Courier New",monospace;
+    font-size:13.5px;line-height:1.7;overflow-x:auto;max-height:260px;overflow-y:auto}
+  .node{border-radius:5px;padding:0 2px;cursor:pointer;transition:.1s}
+  .node .a-c{color:#fbbf24;font-style:normal}
+  .node .a-i{color:#f9a8d4;font-style:normal}
+  .node b{color:#7dd3fc;font-weight:400}
+  .node.sync{background:#fde047;color:#1f2937}
+  .node.sync b,.node.sync .a-c,.node.sync .a-i{color:#1f2937}
 
-  /* Победа */
-  .win{text-align:center;padding:20px 0}
+  .note{font-size:12px;color:#a1663b;text-align:center;margin-top:12px;line-height:1.5}
+  details.ref{margin-top:10px;background:var(--soft);border:2px solid #fed7aa;border-radius:12px}
+  details.ref>summary{cursor:pointer;padding:10px 14px;font-weight:700;color:var(--accent);font-size:14px}
+  .ref table{width:100%;border-collapse:collapse;font-size:13.5px}
+  .ref td{padding:6px 14px;border-top:1px solid #fed7aa;vertical-align:top}
+  .ref code{background:#1f2937;color:#e5e7eb;padding:1px 6px;border-radius:5px}
+
+  .win{text-align:center;padding:24px 0}
   .win .emoji{font-size:72px}
-  .win h2{font-size:28px;margin:6px 0}
+  .win h2{font-size:26px;margin:6px 0}
 </style>
 </head>
 <body>
 <div class="app" id="app"></div>
 
 <script>
-/* ================== УРОВНИ ==================
-   board — настоящая HTML-разметка «стола». По ней реально работает querySelectorAll.
-   target — эталонный селектор (по нему считаем «правильный набор»; засчитываем ЛЮБОЙ
-            селектор, который выделяет ровно тот же набор элементов).
-   Разрешены: тег, .класс, #id, группировка (A, B), вложенность (A B),
-   прямой потомок (A>B), соседи (A+B, A~B), * . БЕЗ псевдоклассов/элементов/атрибутов. */
+/* ===== УРОВНИ =====
+   board  — настоящая HTML-разметка «стола»; по ней реально работает querySelectorAll.
+   target — эталонный селектор (им считаем «правильный набор»); засчитываем ЛЮБОЙ
+            селектор, выделяющий тот же набор. teach — пояснение «как работает» + пример. */
 const EMOJI={plate:"🍽️",apple:"🍎",pizza:"🍕",cake:"🍰",bowl:"🥣",banana:"🍌"};
+const TAGS=["plate","apple","pizza","cake","bowl","banana"];
 
 const LEVELS=[
   { goal:'Выбери <span class="tag">обе тарелки</span> — по названию тега.',
-    board:'<plate></plate><plate></plate><apple></apple>',
-    target:'plate',
-    hint:'Селектор по тегу — это просто имя элемента, без точки и решётки. Тарелка — это <code>plate</code>.' },
+    board:'<plate></plate><plate></plate><apple></apple>', target:'plate',
+    teach:{name:'Селектор по тегу', how:'Просто имя элемента — <b>без точки и решётки</b>. Выберет <b>все</b> такие элементы на странице.', ex:'<code>apple</code> — все яблоки'},
+    hint:'Имя тега тарелки — <code>plate</code>. Одно слово, без точки.' },
 
   { goal:'Выбери <span class="tag">оба яблока</span>.',
-    board:'<apple></apple><pizza></pizza><apple></apple>',
-    target:'apple',
-    hint:'Имя тега яблока — <code>apple</code>. Одно слово выделит все такие элементы.' },
+    board:'<apple></apple><pizza></pizza><apple></apple>', target:'apple',
+    teach:{name:'Снова тег', how:'Тег-селектор работает для <b>любого</b> имени элемента: <code>p</code>, <code>img</code>, <code>pizza</code>…', ex:'<code>pizza</code> — все пиццы'},
+    hint:'Имя тега яблока — <code>apple</code>.' },
 
   { goal:'Выбери всё <span class="tag">маленькое</span> — у него класс <code>small</code>.',
-    board:'<apple class="small"></apple><apple></apple><pizza class="small"></pizza>',
-    target:'.small',
-    hint:'Класс в CSS пишут <b>с точкой</b>: <code>.small</code>. Он найдёт все элементы с <code>class="small"</code>, даже разные теги.' },
+    board:'<apple class="small"></apple><apple></apple><pizza class="small"></pizza>', target:'.small',
+    teach:{name:'Селектор по классу', how:'Имя класса пишут <b>с точкой</b>. Найдёт все элементы с <code>class="small"</code> — даже разные теги.', ex:'<code>.small</code> · <code>.hot</code>'},
+    hint:'Класс в CSS — с точкой: <code>.small</code>.' },
 
-  { goal:'Выбери только <span class="tag">острое ЯБЛОКО</span> (яблоко с классом <code>spicy</code>). Пиццу не трогай!',
-    board:'<apple class="spicy"></apple><apple></apple><pizza class="spicy"></pizza>',
-    target:'apple.spicy',
-    hint:'Соедини тег и класс <b>без пробела</b>: <code>apple.spicy</code> = «яблоко, у которого класс spicy». Просто <code>.spicy</code> заденет и пиццу.' },
-
-  { goal:'Выбери <span class="tag">особую пиццу</span> — у неё <code>id="special"</code>.',
-    board:'<pizza></pizza><pizza id="special"></pizza><pizza></pizza>',
-    target:'#special',
-    hint:'id пишут <b>с решёткой</b>: <code>#special</code>. id на странице уникален — такой элемент один.' },
+  { goal:'Выбери только <span class="tag">острое ЯБЛОКО</span> (класс <code>spicy</code>). Пиццу не трогай!',
+    board:'<apple class="spicy"></apple><apple></apple><pizza class="spicy"></pizza>', target:'apple.spicy',
+    teach:{name:'Тег + класс', how:'Соедини тег и класс <b>без пробела</b> — выберет только тот тег, у которого есть этот класс.', ex:'<code>apple.spicy</code> = яблоко с классом spicy'},
+    hint:'<code>apple.spicy</code> — без пробела. Просто <code>.spicy</code> заденет и пиццу.' },
 
   { goal:'Выбери <span class="tag">яблоко и торт</span> одним селектором.',
-    board:'<apple></apple><pizza></pizza><cake></cake>',
-    target:'apple, cake',
-    hint:'Группировка — через запятую: <code>apple, cake</code>. Так одно правило выберет и то, и другое.' },
+    board:'<apple></apple><pizza></pizza><cake></cake>', target:'apple, cake',
+    teach:{name:'Группировка (запятая)', how:'Через запятую — одно правило для <b>нескольких</b> селекторов сразу.', ex:'<code>apple, cake</code> — и яблоки, и торты'},
+    hint:'Перечисли через запятую: <code>apple, cake</code>.' },
 
-  { goal:'Выбери яблоко, которое <span class="tag">ВНУТРИ тарелки</span> (то, что снаружи, — не трогай).',
-    board:'<plate><apple></apple></plate><apple></apple>',
-    target:'plate apple',
-    hint:'Вложенность — через <b>пробел</b>: <code>plate apple</code> = «яблоко внутри тарелки».' },
+  { goal:'Выбери яблоко <span class="tag">внутри тарелки</span> (то, что снаружи, — не трогай).',
+    board:'<plate><apple></apple></plate><apple></apple>', target:'plate apple',
+    teach:{name:'Вложенность (пробел)', how:'Пробел между именами = <b>«внутри»</b>. Выберет элементы, лежащие внутри другого.', ex:'<code>plate apple</code> = яблоки внутри тарелки'},
+    hint:'Пробел = «внутри»: <code>plate apple</code>.' },
 
-  { goal:'Выбери яблоко — <span class="tag">прямого ребёнка тарелки</span>. То, что лежит в миске, — не считается!',
-    board:'<plate><apple></apple><bowl><apple></apple></bowl></plate>',
-    target:'plate > apple',
-    hint:'Прямой потомок — через <code>&gt;</code>: <code>plate &gt; apple</code>. Возьмёт яблоко сразу в тарелке, но не то, что спрятано в миске (оно «внук»).' },
+  { goal:'Выбери <span class="tag">особую пиццу</span> — у неё <code>id="special"</code>.',
+    board:'<pizza></pizza><pizza id="special"></pizza><pizza></pizza>', target:'#special',
+    teach:{name:'Селектор по id', how:'id пишут <b>с решёткой</b>. id уникален — такой элемент <b>один</b> на странице.', ex:'<code>#special</code>'},
+    hint:'id — с решёткой: <code>#special</code>.' },
 
-  { goal:'Выбери <span class="tag">ВСЁ на столе</span> одним символом.',
-    board:'<plate></plate><apple></apple><pizza></pizza><cake></cake>',
-    target:'*',
-    hint:'Универсальный селектор — звёздочка <code>*</code>. Выбирает вообще все элементы.' },
+  { goal:'Выбери яблоко — <span class="tag">прямого ребёнка тарелки</span>. То, что в миске, — не считается!',
+    board:'<plate><apple></apple><bowl><apple></apple></bowl></plate>', target:'plate > apple',
+    teach:{name:'Прямой потомок (&gt;)', how:'Знак <code>&gt;</code> = только <b>прямой</b> ребёнок (на один уровень внутрь), а не «внук».', ex:'<code>plate &gt; apple</code>'},
+    hint:'<code>plate &gt; apple</code> — возьмёт яблоко прямо в тарелке, но не то, что спрятано в миске.' },
 
-  { goal:'Выбери яблоко, которое стоит <span class="tag">сразу после тарелки</span> (соседнее). Второе яблоко — мимо.',
-    board:'<plate></plate><apple></apple><apple></apple>',
-    target:'plate + apple',
-    hint:'Соседний элемент — через <code>+</code>: <code>plate + apple</code> = «яблоко сразу за тарелкой». Только одно, ближайшее.' },
+  { goal:'Выбери <span class="tag">всё на столе</span> одним символом.',
+    board:'<plate></plate><apple></apple><pizza></pizza><cake></cake>', target:'*',
+    teach:{name:'Универсальный (*)', how:'Звёздочка выбирает <b>вообще все</b> элементы.', ex:'<code>*</code>'},
+    hint:'Это звёздочка: <code>*</code>.' },
 
-  { goal:'Выбери <span class="tag">все яблоки после пиццы</span> (на том же уровне стола). Яблоко перед пиццей — не считается!',
-    board:'<apple></apple><pizza></pizza><apple></apple><cake></cake><apple></apple>',
-    target:'pizza ~ apple',
-    hint:'Все следующие соседи — через <code>~</code>: <code>pizza ~ apple</code> = «все яблоки, идущие после пиццы». Первое яблоко (до пиццы) не попадёт.' },
+  { goal:'Выбери яблоко <span class="tag">сразу после тарелки</span> (соседнее). Второе яблоко — мимо.',
+    board:'<plate></plate><apple></apple><apple></apple>', target:'plate + apple',
+    teach:{name:'Соседний (+)', how:'Знак <code>+</code> = элемент <b>сразу после</b> другого (один, ближайший сосед).', ex:'<code>plate + apple</code>'},
+    hint:'<code>plate + apple</code> — только ближайшее яблоко за тарелкой.' },
+
+  { goal:'Выбери <span class="tag">все яблоки после пиццы</span> (на том же уровне). Яблоко перед пиццей — не считается!',
+    board:'<apple></apple><pizza></pizza><apple></apple><cake></cake><apple></apple>', target:'pizza ~ apple',
+    teach:{name:'Все соседи (~)', how:'Знак <code>~</code> = <b>все</b> следующие соседи того же уровня.', ex:'<code>pizza ~ apple</code>'},
+    hint:'<code>pizza ~ apple</code> — все яблоки после пиццы, кроме того, что перед ней.' },
 
   { goal:'Финал! Выбери <span class="tag">горячую пиццу внутри меню</span> (id <code>menu</code>). Пиццу снаружи — не трогай.',
-    board:'<plate id="menu"><pizza class="hot"></pizza><pizza></pizza></plate><pizza class="hot"></pizza>',
-    target:'#menu .hot',
-    hint:'Соедини несколько приёмов: <code>#menu .hot</code> = «элемент с классом hot внутри #menu». Пробел — это вложенность.' },
+    board:'<plate id="menu"><pizza class="hot"></pizza><pizza></pizza></plate><pizza class="hot"></pizza>', target:'#menu .hot',
+    teach:{name:'Комбо!', how:'Приёмы <b>соединяются</b>: пробел — вложенность, точка — класс, решётка — id.', ex:'<code>#menu .hot</code> = hot внутри #menu'},
+    hint:'Соедини id и класс через пробел: <code>#menu .hot</code>.' },
 ];
 
 let cur=0, solved=0;
 const app=document.getElementById('app');
-
-/* ---- рендер разметки уровня в читаемый цветной HTML ---- */
-function markup(html){
-  const box=document.createElement('div'); box.innerHTML=html;
-  let out='';
-  const walk=(node,depth)=>{
-    node.childNodes.forEach(n=>{
-      if(n.nodeType!==1) return;
-      const pad='  '.repeat(depth);
-      const tag=n.tagName.toLowerCase();
-      let attrs='';
-      if(n.id) attrs+=' <span class="i">id="'+n.id+'"</span>';
-      if(n.className) attrs+=' <span class="c">class="'+n.className+'"</span>';
-      const kids=[...n.childNodes].some(c=>c.nodeType===1);
-      if(kids){
-        out+=pad+'<span class="t">&lt;'+tag+'&gt;</span>'.replace('&gt;',attrs+'&gt;')+'\n';
-        walk(n,depth+1);
-        out+=pad+'<span class="t">&lt;/'+tag+'&gt;</span>\n';
-      } else {
-        out+=pad+'<span class="t">&lt;'+tag+attrs+'&gt;&lt;/'+tag+'&gt;</span>\n';
-      }
-    });
-  };
-  walk(box,0);
-  return out;
-}
 
 function render(){
   const L=LEVELS[cur];
@@ -193,76 +176,119 @@ function render(){
     <div class="sub">Пиши CSS-селектор и «лови» нужную еду на столе · WEB (CSS)</div>
     <div class="meta"><span>Уровень ${cur+1} из ${LEVELS.length}</span>
       <div class="bar"><i style="width:${(cur/LEVELS.length)*100}%"></i></div>
-      <span>✅ Решено: ${solved}</span></div>
+      <span>✅ ${solved}</span></div>
     <div class="goal">🎯 ${L.goal}</div>
-    <div class="table" id="table">${L.board}</div>
-    <div class="row">
-      <input id="inp" placeholder="напиши селектор, напр. apple.small" autocomplete="off" spellcheck="false">
-      <button class="btn go" id="go">Проверить</button>
+    <div class="wrap">
+      <div class="left">
+        <div class="table" id="table">${L.board}</div>
+        <div class="row">
+          <input id="inp" placeholder="напр. apple.small" autocomplete="off" spellcheck="false" autocapitalize="off">
+          <button class="btn go" id="go">Проверить</button>
+        </div>
+        <div class="row">
+          <button class="btn ghost" id="hint">💡 Подсказка</button>
+          <button class="btn ghost" id="skip">Пропустить →</button>
+        </div>
+        <div class="fb" id="fb"></div>
+      </div>
+      <aside class="side">
+        <div class="panel teach">
+          <div class="h">📖 Как это работает</div>
+          <div class="body">
+            <div class="name">${L.teach.name}</div>
+            <div class="how">${L.teach.how}</div>
+            <div class="ex">Пример: ${L.teach.ex}</div>
+          </div>
+        </div>
+        <div class="panel mk">
+          <div class="h">👀 Разметка стола <span>наведи — подсветится</span></div>
+          <pre id="markup"></pre>
+        </div>
+      </aside>
     </div>
-    <div class="row" style="margin-top:0">
-      <button class="btn ghost" id="hint">💡 Подсказка</button>
-      <button class="btn ghost" id="skip">Пропустить →</button>
-    </div>
-    <div class="fb" id="fb"></div>
-    <details class="code"><summary>👀 Показать HTML-разметку стола</summary><pre>${markup(L.board)}</pre></details>
-    ${refPanel()}
-    <div class="note">Разрешены: тег · <b>.класс</b> · <b>#id</b> · группировка <b>A, B</b> · вложенность <b>A B</b> · потомок <b>A&gt;B</b> · соседи <b>A+B</b>, <b>A~B</b> · <b>*</b>. Псевдоклассы (<code>:hover</code>) и атрибуты сюда не входят.</div>`;
+    <div class="note">Разрешены: тег · <b>.класс</b> · <b>#id</b> · группировка <b>A, B</b> · вложенность <b>A B</b> · потомок <b>A&gt;B</b> · соседи <b>A+B</b>, <b>A~B</b> · <b>*</b>. Псевдоклассы (<code>:hover</code>) и атрибуты (<code>[]</code>) сюда не входят.</div>
+    ${refPanel()}`;
 
-  // подписи-теги под каждым элементом верхнего уровня
   const table=document.getElementById('table');
   labelize(table);
+  let r=0;
+  table.querySelectorAll(TAGS.join(',')).forEach(el=>el.dataset.ref=r++);
+  document.getElementById('markup').innerHTML=buildMarkup(table);
+  wireHover();
 
-  const inp=document.getElementById('inp');
-  inp.focus();
+  const inp=document.getElementById('inp'); inp.focus();
   document.getElementById('go').onclick=check;
   inp.onkeydown=e=>{ if(e.key==='Enter') check(); };
-  document.getElementById('hint').onclick=()=>{ setFb('💡 '+L.hint,''); };
+  document.getElementById('hint').onclick=()=>setFb('💡 '+L.hint,'');
   document.getElementById('skip').onclick=()=>{ cur=(cur+1)%LEVELS.length; render(); };
 }
 
 function labelize(root){
-  root.querySelectorAll('plate,apple,pizza,cake,bowl,banana').forEach(el=>{
-    // эмодзи-«еда» + подпись-тег, если ещё нет
-    if(!el.querySelector(':scope>.food') && !el.children.length){
-      el.innerHTML='<span class="food">'+(EMOJI[el.tagName.toLowerCase()]||'❓')+'</span>';
-    } else if(!el.querySelector(':scope>.food')){
-      el.insertAdjacentHTML('afterbegin','<span class="food">'+(EMOJI[el.tagName.toLowerCase()]||'❓')+'</span>');
-    }
+  root.querySelectorAll(TAGS.join(',')).forEach(el=>{
+    if(el.querySelector(':scope>.food')) return;
+    el.insertAdjacentHTML('afterbegin','<span class="food">'+(EMOJI[el.tagName.toLowerCase()]||'❓')+'</span>');
+  });
+}
+
+/* строим разметку по ЖИВОМУ столу — data-ref у тега и у строки совпадают */
+function buildMarkup(root){
+  let out='';
+  const walk=(node,depth)=>{
+    [...node.children].forEach(n=>{
+      const tag=n.tagName.toLowerCase();
+      if(!TAGS.includes(tag)) return;            // пропускаем .food-спаны
+      const pad='  '.repeat(depth), ref=n.dataset.ref;
+      let attrs='';
+      if(n.id) attrs+=' <i class="a-i">id="'+n.id+'"</i>';
+      const cls=n.getAttribute('class');
+      if(cls) attrs+=' <i class="a-c">class="'+cls+'"</i>';
+      const kids=[...n.children].some(c=>TAGS.includes(c.tagName.toLowerCase()));
+      if(kids){
+        out+=pad+'<span class="node" data-ref="'+ref+'"><b>&lt;'+tag+'</b>'+attrs+'<b>&gt;</b></span>\n';
+        walk(n,depth+1);
+        out+=pad+'<span class="node" data-ref="'+ref+'"><b>&lt;/'+tag+'&gt;</b></span>\n';
+      } else {
+        out+=pad+'<span class="node" data-ref="'+ref+'"><b>&lt;'+tag+'</b>'+attrs+'<b>&gt;&lt;/'+tag+'&gt;</b></span>\n';
+      }
+    });
+  };
+  walk(root,0);
+  return out;
+}
+
+/* двусторонняя подсветка: стол ↔ разметка по совпадающему data-ref */
+function wireHover(){
+  const setSync=(ref,on)=>document.querySelectorAll('[data-ref="'+ref+'"]').forEach(e=>e.classList.toggle('sync',on));
+  document.querySelectorAll('#table [data-ref], #markup .node').forEach(el=>{
+    const ref=el.dataset.ref;
+    el.addEventListener('mouseenter',()=>setSync(ref,true));
+    el.addEventListener('mouseleave',()=>setSync(ref,false));
   });
 }
 
 function setFb(msg,cls){ const fb=document.getElementById('fb'); fb.className='fb '+cls; fb.innerHTML=msg; }
 
 function check(){
-  const L=LEVELS[cur];
-  const table=document.getElementById('table');
+  const L=LEVELS[cur], table=document.getElementById('table');
   const raw=document.getElementById('inp').value.trim();
   table.querySelectorAll('.hit').forEach(e=>e.classList.remove('hit'));
-
   if(!raw){ setFb('Сначала напиши селектор в поле 🙂',''); return; }
-  if(/[:\[\]]/.test(raw)){ setFb('❌ Тут только базовые селекторы и комбинаторы. Псевдоклассы (<code>:</code>) и атрибуты (<code>[]</code>) — в этой игре не нужны.','no'); return; }
-
+  if(/[:\[\]]/.test(raw)){ setFb('❌ Тут только базовые селекторы и комбинаторы. Псевдоклассы (<code>:</code>) и атрибуты (<code>[]</code>) в этой игре не нужны.','no'); return; }
   let got;
   try{ got=[...table.querySelectorAll(raw)]; }
   catch(e){ setFb('❌ Не получилось прочитать селектор — проверь запись.','no'); return; }
-
-  const want=[...table.querySelectorAll(L.target)];
-  const wantSet=new Set(want);
-  const sameLen=got.length===want.length;
-  const sameAll=got.every(el=>wantSet.has(el));
-
-  if(!got.length){ setFb('🤔 Никого не поймал. Загляни в HTML-разметку или нажми «Подсказка».','no'); return; }
-
-  if(sameLen && sameAll){
-    got.forEach(el=>el.classList.add('hit'));
+  const want=[...table.querySelectorAll(L.target)], wantSet=new Set(want);
+  if(!got.length){ setFb('🤔 Никого не поймал. Загляни в разметку справа или нажми «Подсказка».','no'); return; }
+  const correct = got.length===want.length && got.every(el=>wantSet.has(el));
+  got.forEach(el=>el.classList.add('hit'));
+  if(correct){
     solved++;
-    setFb('✅ Точно в цель! '+ (cur<LEVELS.length-1?'Едем дальше…':'Это был последний!'),'good');
-    setTimeout(()=>{ cur++; if(cur<LEVELS.length) render(); else win(); }, 950);
+    setFb('✅ Точно в цель! '+(cur<LEVELS.length-1?'Едем дальше…':'Это был последний!'),'good');
+    setTimeout(()=>{ cur++; if(cur<LEVELS.length) render(); else win(); },950);
+  } else if(got.length>want.length){
+    setFb('Почти! Ты выделил <b>лишнее</b> — сузь селектор, чтобы попасть только в цель.','no');
   } else {
-    got.forEach(el=>el.classList.add('hit'));
-    if(got.length>want.length) setFb('Почти! Ты выделил <b>лишнее</b> — сузь селектор, чтобы попасть только в цель.','no');
-    else setFb('Почти! Ты поймал <b>не всех</b> нужных. Проверь: точно ли это те элементы из цели?','no');
+    setFb('Почти! Ты поймал <b>не всех</b> нужных. Сверься с целью и разметкой справа.','no');
   }
 }
 
@@ -277,14 +303,14 @@ function win(){
 }
 
 function refPanel(){
-  return `<details class="ref"><summary>📖 Шпаргалка по селекторам</summary>
+  return `<details class="ref"><summary>📖 Полная шпаргалка по селекторам</summary>
     <table>
       <tr><td><code>apple</code></td><td>по тегу — все такие элементы</td></tr>
       <tr><td><code>.small</code></td><td>по классу — все с <code>class="small"</code></td></tr>
       <tr><td><code>apple.small</code></td><td>тег + класс вместе (без пробела)</td></tr>
       <tr><td><code>#special</code></td><td>по id — уникальный элемент</td></tr>
       <tr><td><code>apple, cake</code></td><td>группировка — и то, и другое</td></tr>
-      <tr><td><code>plate apple</code></td><td>вложенность (пробел) — apple ВНУТРИ plate</td></tr>
+      <tr><td><code>plate apple</code></td><td>вложенность (пробел) — apple внутри plate</td></tr>
       <tr><td><code>plate &gt; apple</code></td><td>прямой потомок — apple сразу в plate</td></tr>
       <tr><td><code>plate + apple</code></td><td>сосед — apple сразу после plate</td></tr>
       <tr><td><code>plate ~ apple</code></td><td>все apple-соседи после plate</td></tr>
