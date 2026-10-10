@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Угадай мир — слова и картинка</title>
+<style>
+  :root{--bg1:#8a5cf6;--bg2:#22d3ee;--ink:#2b2350;--yellow:#ffd23f;--green:#37c871;--red:#ff5a7a;--blue:#43b7ff;}
+  *{box-sizing:border-box;margin:0;font-family:'Comic Sans MS','Segoe UI',system-ui,sans-serif;user-select:none;-webkit-user-select:none;}
+  body{min-height:100vh;background:linear-gradient(135deg,var(--bg1),var(--bg2));display:flex;align-items:center;justify-content:center;padding:12px;color:var(--ink);}
+  .stage{width:min(600px,100%);background:#fff;border-radius:24px;box-shadow:0 18px 50px rgba(0,0,0,.3);padding:16px 18px 20px;text-align:center;}
+  h1{font-size:24px;color:#2b9fb3;margin:2px 0;}
+  .sub{color:#7a76a0;font-size:14px;margin-bottom:10px;}
+  .hud{display:flex;justify-content:space-between;align-items:center;gap:8px;font-size:18px;margin-bottom:10px;}
+  .hud .box{background:#eaf7fb;border-radius:12px;padding:6px 12px;font-weight:bold;}
+  .center{position:relative;}
+  .prompt{background:#f4f1ff;border-radius:16px;padding:14px;margin-bottom:10px;border:3px solid #e6defc;}
+  .prompt .lbl{font-size:14px;color:#8a7fb5;}
+  .prompt .words{font-size:24px;font-weight:bold;color:#5a3fb0;margin-top:3px;}
+  .track{height:14px;background:#eef1f7;border-radius:8px;overflow:hidden;margin:4px 0 12px;border:2px solid #dde3ef;}
+  .fill{height:100%;width:100%;background:linear-gradient(90deg,#37c871,#ffd23f,#ff5a7a);transition:none;}
+  .opts{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;}
+  .opt{border:none;border-radius:16px;background:#f6f6fb;cursor:pointer;padding:14px 6px;box-shadow:0 5px 0 #d8d8ea;transition:transform .08s;}
+  .opt:active{transform:translateY(3px);box-shadow:0 2px 0 #d8d8ea;}
+  .opt .em{font-size:46px;display:block;}
+  .opt .kk{font-size:12px;color:#9a96b8;}
+  .opt.ok{background:#d9f8e5;box-shadow:0 5px 0 #8fe3b0;}
+  .opt.no{background:#ffe1e6;box-shadow:0 5px 0 #f3a8b6;}
+  .say{min-height:22px;font-size:16px;font-weight:bold;margin:10px 0 2px;color:#2b9fb3;}
+  .over,.startc{background:rgba(255,255,255,.97);border-radius:16px;padding:14px;position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;}
+  .bip{width:76px;height:auto;margin-bottom:4px;}
+  .btn{border:none;border-radius:16px;background:var(--yellow);color:#6b4e00;font-size:21px;font-weight:bold;padding:11px 26px;margin-top:10px;cursor:pointer;box-shadow:0 5px 0 #d9a900;}
+  .btn:active{transform:translateY(3px);box-shadow:0 2px 0 #d9a900;}
+  .big{font-size:24px;color:#2b9fb3;margin:4px 0;}
+  .stars{font-size:38px;letter-spacing:3px;}
+  .tip{color:#9a96b8;font-size:12px;margin-top:9px;}
+  .hidden{display:none !important;}
+</style>
+</head>
+<body>
+<div class="stage">
+  <h1>🌍 Угадай мир</h1>
+  <div class="sub">Бип описал мир словами — выбери подходящую картинку! (клик или клавиши 1–4)</div>
+  <div class="hud">
+    <span class="box">⭐ <span id="score">0</span></span>
+    <span class="box">🔥 подряд <span id="streak">0</span></span>
+    <span class="box">❤️ <span id="lives">❤️❤️❤️</span></span>
+  </div>
+
+  <div class="center">
+    <div class="prompt"><div class="lbl">Мир, где есть:</div><div class="words" id="words">…</div></div>
+    <div class="track"><div class="fill" id="fill"></div></div>
+    <div class="opts" id="opts"></div>
+    <div class="say" id="say"></div>
+
+    <div class="startc" id="startScreen">
+      <svg class="bip" viewBox="0 0 120 130" xmlns="http://www.w3.org/2000/svg">
+        <line x1="60" y1="18" x2="60" y2="8" stroke="#43b7ff" stroke-width="5"/><circle cx="60" cy="7" r="7" fill="#ffd23f"/>
+        <rect x="22" y="22" width="76" height="62" rx="20" fill="#ffd23f"/><rect x="33" y="34" width="54" height="32" rx="13" fill="#2b2350"/>
+        <circle cx="50" cy="50" r="8" fill="#43b7ff"/><circle cx="72" cy="50" r="8" fill="#43b7ff"/>
+        <circle cx="50" cy="50" r="3.5" fill="#fff"/><circle cx="72" cy="50" r="3.5" fill="#fff"/>
+        <path d="M49 73 q11 9 22 0" stroke="#2b2350" stroke-width="4" fill="none" stroke-linecap="round"/>
+        <rect x="34" y="88" width="52" height="30" rx="14" fill="#43b7ff"/>
+      </svg>
+      <div class="big">Свяжи слова и картинку!</div>
+      <p style="max-width:34ch;color:#5a5680;margin:0 auto">Так «думает» ИИ: читает слова и выбирает картинку. Прочитай слова и успей выбрать нужный мир, пока бежит полоска. Чем дальше — тем быстрее!</p>
+      <button class="btn" onclick="startGame()">▶ Играть!</button>
+      <p class="tip">Клик или клавиши 1–4. 3 жизни.</p>
+    </div>
+
+    <div class="over hidden" id="overScreen">
+      <div class="big" id="overTitle">Готово! 🎉</div>
+      <div class="stars" id="stars"></div>
+      <p class="big" id="finalScore"></p>
+      <p style="color:#5a5680" id="praise"></p>
+      <button class="btn" onclick="startGame()">↺ Ещё раз</button>
+    </div>
+  </div>
+</div>
+
+<script>
+const WORLDS=[
+  {w:'вода, рыбки, водоросли', e:'🌊'},
+  {w:'звёзды, ракета, планета', e:'🌌'},
+  {w:'деревья, грибы, трава', e:'🌳'},
+  {w:'дома, дорога, машины', e:'🏙️'},
+  {w:'песок, кактусы, жара', e:'🏜️'},
+  {w:'снег, лёд, холод', e:'❄️'},
+  {w:'замок, рыцари, флаги', e:'🏰'},
+  {w:'горы, снежные вершины', e:'⛰️'},
+  {w:'вулкан, лава, дым', e:'🌋'},
+  {w:'радуга, облака, небо', e:'🌈'},
+];
+const wordsEl=document.getElementById('words'), optsEl=document.getElementById('opts'), fillEl=document.getElementById('fill'),
+      sayEl=document.getElementById('say'),
+      scoreEl=document.getElementById('score'), streakEl=document.getElementById('streak'), livesEl=document.getElementById('lives');
+
+let score=0, streak=0, lives=3, running=false, busy=false;
+let target=null, deadline=0, roundMs=4200, raf=null;
+
+function shuffle(a){for(let i=a.length-1;i>0;i--){const j=Math.random()*(i+1)|0;[a[i],a[j]]=[a[j],a[i]];}return a;}
+function roundTime(){ return Math.max(1900, 4200 - score*120); }
+
+function newRound(){
+  busy=false;
+  target=WORLDS[Math.random()*WORLDS.length|0];
+  // 4 варианта: цель + 3 разных
+  const others=shuffle(WORLDS.filter(x=>x!==target)).slice(0,3);
+  const opts=shuffle([target,...others]);
+  wordsEl.textContent=target.w;
+  optsEl.innerHTML='';
+  opts.forEach((o,i)=>{
+    const b=document.createElement('button');
+    b.className='opt'; b.innerHTML='<span class="em">'+o.e+'</span><span class="kk">'+(i+1)+'</span>';
+    b.onclick=()=>choose(o,b);
+    optsEl.appendChild(b);
+  });
+  roundMs=roundTime(); deadline=performance.now()+roundMs;
+  fillEl.style.width='100%';
+}
+function loop(ts){
+  if(!running) return;
+  if(!busy){
+    const left=deadline-ts;
+    const pct=Math.max(0, left/roundMs*100);
+    fillEl.style.width=pct+'%';
+    if(left<=0) timeUp();
+  }
+  raf=requestAnimationFrame(loop);
+}
+function markButtons(chosenBtn,ok){
+  [...optsEl.children].forEach(b=>{
+    const em=b.querySelector('.em').textContent;
+    if(em===target.e) b.classList.add('ok');
+  });
+  if(!ok && chosenBtn) chosenBtn.classList.add('no');
+}
+function choose(o,btn){
+  if(!running||busy) return;
+  busy=true;
+  const ok=(o===target);
+  markButtons(btn,ok);
+  if(ok){
+    score++; streak++; scoreEl.textContent=score; streakEl.textContent=streak;
+    sayEl.textContent='✅ Верно! +1'; sayEl.style.color='#37c871';
+    setTimeout(()=>{ if(running) newRound(); },500);
+  } else {
+    streak=0; streakEl.textContent=0; lives--;
+    livesEl.textContent='❤️'.repeat(Math.max(0,lives))+'🖤'.repeat(3-Math.max(0,lives));
+    sayEl.textContent='❌ Это мир «'+target.w+'»'; sayEl.style.color='#e0555f';
+    if(lives<=0){ setTimeout(endGame,600); return; }
+    setTimeout(()=>{ if(running) newRound(); },800);
+  }
+}
+function timeUp(){
+  if(busy) return; busy=true;
+  markButtons(null,false);
+  streak=0; streakEl.textContent=0; lives--;
+  livesEl.textContent='❤️'.repeat(Math.max(0,lives))+'🖤'.repeat(3-Math.max(0,lives));
+  sayEl.textContent='⌛ Не успел! Это «'+target.w+'»'; sayEl.style.color='#e0555f';
+  if(lives<=0){ setTimeout(endGame,600); return; }
+  setTimeout(()=>{ if(running) newRound(); },900);
+}
+function startGame(){
+  document.getElementById('startScreen').classList.add('hidden');
+  document.getElementById('overScreen').classList.add('hidden');
+  score=0; streak=0; lives=3; running=true;
+  scoreEl.textContent='0'; streakEl.textContent='0'; livesEl.textContent='❤️❤️❤️';
+  sayEl.textContent='Читай слова и выбирай!'; sayEl.style.color='#2b9fb3';
+  newRound();
+  if(raf)cancelAnimationFrame(raf);
+  raf=requestAnimationFrame(loop);
+}
+function endGame(){
+  running=false; if(raf)cancelAnimationFrame(raf);
+  document.getElementById('overScreen').classList.remove('hidden');
+  document.getElementById('overTitle').textContent='Миры угаданы! 🌍';
+  const st = score>=20?5:score>=15?4:score>=10?3:score>=5?2:1;
+  document.getElementById('stars').textContent='⭐'.repeat(st)+'☆'.repeat(5-st);
+  document.getElementById('finalScore').textContent='Угадано миров: '+score;
+  document.getElementById('praise').textContent = st>=4?'Великий знаток миров! 🏆':st>=2?'Здорово! Ещё разок — и рекорд! 💪':'Читай внимательно — получится! 😊';
+}
+document.addEventListener('keydown',e=>{
+  if(!running||busy) return;
+  const n=parseInt(e.key);
+  if(n>=1&&n<=4){ const b=optsEl.children[n-1]; if(b) b.click(); }
+});
+</script>
+</body>
+</html>
