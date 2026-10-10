@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Хлопушка киношника — реакция</title>
+<style>
+  :root{--bg1:#ff9e45;--bg2:#ff7ab6;--ink:#2b2350;--yellow:#ffd23f;--green:#37c871;--red:#ff5a7a;--blue:#43b7ff;}
+  *{box-sizing:border-box;margin:0;font-family:'Comic Sans MS','Segoe UI',system-ui,sans-serif;user-select:none;-webkit-user-select:none;}
+  body{min-height:100vh;background:linear-gradient(135deg,var(--bg1),var(--bg2));display:flex;align-items:center;justify-content:center;padding:12px;color:var(--ink);}
+  .stage{width:min(560px,100%);background:#fff;border-radius:24px;box-shadow:0 18px 50px rgba(0,0,0,.3);padding:16px 18px 20px;text-align:center;}
+  h1{font-size:24px;color:#e07a2e;margin:2px 0;}
+  .sub{color:#7a76a0;font-size:14px;margin-bottom:10px;}
+  .hud{display:flex;justify-content:space-between;align-items:center;gap:8px;font-size:18px;margin-bottom:10px;}
+  .hud .box{background:#fff2e6;border-radius:12px;padding:6px 12px;font-weight:bold;}
+  .center{position:relative;}
+  .board{height:170px;border-radius:18px;display:flex;flex-direction:column;align-items:center;justify-content:center;background:#3a3550;color:#fff;transition:background .1s;}
+  .board .em{font-size:60px;line-height:1;}
+  .board .txt{font-size:26px;font-weight:bold;margin-top:6px;}
+  .board.wait{background:#5a5470;}
+  .board.go{background:#2e9e5b;}
+  .board.bad{background:#c0455e;}
+  .tapbtn{border:none;border-radius:16px;background:var(--yellow);color:#6b4e00;font-size:22px;font-weight:bold;padding:16px 10px;margin-top:12px;cursor:pointer;box-shadow:0 5px 0 #d9a900;width:100%;}
+  .tapbtn:active{transform:translateY(3px);box-shadow:0 2px 0 #d9a900;}
+  .say{min-height:22px;font-size:16px;font-weight:bold;margin:8px 0 2px;color:#e07a2e;}
+  .over,.startc{background:rgba(255,255,255,.97);border-radius:16px;padding:14px;position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;}
+  .bip{width:76px;height:auto;margin-bottom:4px;}
+  .btn{border:none;border-radius:16px;background:var(--yellow);color:#6b4e00;font-size:21px;font-weight:bold;padding:11px 26px;margin-top:10px;cursor:pointer;box-shadow:0 5px 0 #d9a900;}
+  .btn:active{transform:translateY(3px);box-shadow:0 2px 0 #d9a900;}
+  .big{font-size:24px;color:#e07a2e;margin:4px 0;}
+  .stars{font-size:38px;letter-spacing:3px;}
+  .tip{color:#9a96b8;font-size:12px;margin-top:9px;}
+  .hidden{display:none !important;}
+</style>
+</head>
+<body>
+<div class="stage">
+  <h1>🎬 Хлопушка киношника</h1>
+  <div class="sub">Жди команду «МОТОР!» и жми как можно быстрее — сними дубль!</div>
+  <div class="hud">
+    <span class="box">🎬 дубли <span id="score">0</span></span>
+    <span class="box">🔥 подряд <span id="streak">0</span></span>
+    <span class="box">❤️ <span id="lives">❤️❤️❤️</span></span>
+  </div>
+
+  <div class="center">
+    <div class="board wait" id="board"><div class="em" id="bem">🎬</div><div class="txt" id="btxt">Приготовься…</div></div>
+    <button class="tapbtn" id="tapbtn" onclick="press()">🎬 СНЯТЬ ДУБЛЬ! (или ПРОБЕЛ)</button>
+    <div class="say" id="say"></div>
+
+    <div class="startc" id="startScreen">
+      <svg class="bip" viewBox="0 0 120 130" xmlns="http://www.w3.org/2000/svg">
+        <line x1="60" y1="18" x2="60" y2="8" stroke="#43b7ff" stroke-width="5"/><circle cx="60" cy="7" r="7" fill="#ffd23f"/>
+        <rect x="22" y="22" width="76" height="62" rx="20" fill="#ffd23f"/><rect x="33" y="34" width="54" height="32" rx="13" fill="#2b2350"/>
+        <circle cx="50" cy="50" r="8" fill="#43b7ff"/><circle cx="72" cy="50" r="8" fill="#43b7ff"/>
+        <circle cx="50" cy="50" r="3.5" fill="#fff"/><circle cx="72" cy="50" r="3.5" fill="#fff"/>
+        <path d="M49 73 q11 9 22 0" stroke="#2b2350" stroke-width="4" fill="none" stroke-linecap="round"/>
+        <rect x="34" y="88" width="52" height="30" rx="14" fill="#43b7ff"/>
+      </svg>
+      <div class="big">Реакция режиссёра!</div>
+      <p style="max-width:34ch;color:#5a5680;margin:0 auto">Экран станет зелёным и покажет «МОТОР!». Жми кнопку (или **ПРОБЕЛ**) как можно быстрее — снимешь дубль! Но не жми раньше времени — это фальстарт. Чем дальше — тем быстрее надо успеть.</p>
+      <button class="btn" onclick="startGame()">▶ Играть!</button>
+      <p class="tip">Кнопка или ПРОБЕЛ. 3 жизни.</p>
+    </div>
+
+    <div class="over hidden" id="overScreen">
+      <div class="big" id="overTitle">Готово! 🎉</div>
+      <div class="stars" id="stars"></div>
+      <p class="big" id="finalScore"></p>
+      <p style="color:#5a5680" id="praise"></p>
+      <button class="btn" onclick="startGame()">↺ Ещё раз</button>
+    </div>
+  </div>
+</div>
+
+<script>
+const board=document.getElementById('board'), bem=document.getElementById('bem'), btxt=document.getElementById('btxt'),
+      sayEl=document.getElementById('say'),
+      scoreEl=document.getElementById('score'), streakEl=document.getElementById('streak'), livesEl=document.getElementById('lives');
+
+let score=0, streak=0, lives=3, running=false;
+let state='idle', armTimer=null, missTimer=null, armedAt=0;
+
+function reactLimit(){ return Math.max(600, 1100 - score*35); }  // окно реакции, сужается
+function setBoard(cls, em, txt){ board.className='board '+cls; bem.textContent=em; btxt.textContent=txt; }
+
+function newRound(){
+  state='waiting';
+  setBoard('wait','🎬','Приготовься…');
+  const delay=1200+Math.random()*1600;   // непредсказуемо
+  armTimer=setTimeout(arm, delay);
+}
+function arm(){
+  if(!running) return;
+  state='armed';
+  setBoard('go','🟢','МОТОР!');
+  armedAt=performance.now();
+  missTimer=setTimeout(()=>resolve(false,'slow'), reactLimit());
+}
+function press(){
+  if(!running) return;
+  if(state==='waiting'){
+    clearTimeout(armTimer);
+    resolve(false,'early'); return;
+  }
+  if(state==='armed'){
+    clearTimeout(missTimer);
+    const rt=Math.round(performance.now()-armedAt);
+    resolve(true, rt); return;
+  }
+}
+function resolve(ok, info){
+  state='result';
+  if(ok){
+    score++; streak++; scoreEl.textContent=score; streakEl.textContent=streak;
+    setBoard('go','🎬','Снято! '+info+' мс');
+    sayEl.textContent='✅ Отличный дубль! +1'; sayEl.style.color='#37c871';
+  } else {
+    streak=0; streakEl.textContent=0; lives--;
+    livesEl.textContent='❤️'.repeat(Math.max(0,lives))+'🖤'.repeat(3-Math.max(0,lives));
+    if(info==='early'){ setBoard('bad','✋','Рано! Фальстарт'); sayEl.textContent='❌ Не жми до «МОТОР!»'; }
+    else { setBoard('bad','🐢','Поздно! Дубль испорчен'); sayEl.textContent='❌ Жми быстрее!'; }
+    sayEl.style.color='#e0555f';
+  }
+  if(lives<=0){ setTimeout(endGame,900); return; }
+  setTimeout(()=>{ if(running) newRound(); }, 1100);
+}
+function clearTimers(){ if(armTimer)clearTimeout(armTimer); if(missTimer)clearTimeout(missTimer); }
+function startGame(){
+  document.getElementById('startScreen').classList.add('hidden');
+  document.getElementById('overScreen').classList.add('hidden');
+  clearTimers();
+  score=0; streak=0; lives=3; running=true;
+  scoreEl.textContent='0'; streakEl.textContent='0'; livesEl.textContent='❤️❤️❤️';
+  sayEl.textContent='Жди «МОТОР!»…'; sayEl.style.color='#e07a2e';
+  newRound();
+}
+function endGame(){
+  running=false; clearTimers();
+  document.getElementById('overScreen').classList.remove('hidden');
+  document.getElementById('overTitle').textContent='Фильм снят! 🎬';
+  const st = score>=20?5:score>=15?4:score>=10?3:score>=5?2:1;
+  document.getElementById('stars').textContent='⭐'.repeat(st)+'☆'.repeat(5-st);
+  document.getElementById('finalScore').textContent='Снято дублей: '+score;
+  document.getElementById('praise').textContent = st>=4?'Великий режиссёр! 🏆':st>=2?'Здорово! Ещё разок — и рекорд! 💪':'Тренируй реакцию — получится! 😊';
+}
+document.addEventListener('keydown',e=>{
+  if(e.code==='Space'){ e.preventDefault(); if(running) press(); }
+});
+</script>
+</body>
+</html>
