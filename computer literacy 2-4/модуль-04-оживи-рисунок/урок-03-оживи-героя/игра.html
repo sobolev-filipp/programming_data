@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Кадр за кадром — собери порядок</title>
+<style>
+  :root{--bg1:#37c871;--bg2:#8a5cf6;--ink:#2b2350;--yellow:#ffd23f;--green:#37c871;--red:#ff5a7a;--blue:#43b7ff;}
+  *{box-sizing:border-box;margin:0;font-family:'Comic Sans MS','Segoe UI',system-ui,sans-serif;user-select:none;-webkit-user-select:none;}
+  body{min-height:100vh;background:linear-gradient(135deg,var(--bg1),var(--bg2));display:flex;align-items:center;justify-content:center;padding:12px;color:var(--ink);}
+  .stage{width:min(600px,100%);background:#fff;border-radius:24px;box-shadow:0 18px 50px rgba(0,0,0,.3);padding:16px 18px 20px;text-align:center;}
+  h1{font-size:24px;color:#2e9e5b;margin:2px 0;}
+  .sub{color:#7a76a0;font-size:14px;margin-bottom:10px;}
+  .hud{display:flex;justify-content:space-between;align-items:center;gap:8px;font-size:18px;margin-bottom:10px;}
+  .hud .box{background:#eef7f0;border-radius:12px;padding:6px 12px;font-weight:bold;}
+  .center{position:relative;}
+  .task{background:#f1f7f3;border-radius:14px;padding:10px;margin-bottom:10px;border:3px solid #dcefe3;}
+  .task .lbl{font-size:14px;color:#6f9a82;}
+  .task .nm{font-size:22px;font-weight:bold;color:#2e9e5b;margin-top:2px;}
+  .task .arrow{font-size:14px;color:#9a96b8;margin-top:2px;}
+  .cards{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin:6px 0;}
+  .card{position:relative;width:84px;height:84px;border:none;border-radius:16px;background:#f6f6fb;cursor:pointer;font-size:46px;display:flex;align-items:center;justify-content:center;box-shadow:0 5px 0 #d8d8ea;transition:transform .08s;}
+  .card:active{transform:translateY(3px);box-shadow:0 2px 0 #d8d8ea;}
+  .card.placed{background:#d9f8e5;box-shadow:0 5px 0 #8fe3b0;}
+  .card.shake{animation:sh .3s;}
+  @keyframes sh{0%,100%{transform:translateX(0)}25%{transform:translateX(-7px)}75%{transform:translateX(7px)}}
+  .card .badge{position:absolute;top:-8px;left:-8px;width:26px;height:26px;border-radius:50%;background:#37c871;color:#fff;font-size:15px;display:flex;align-items:center;justify-content:center;font-weight:bold;}
+  .card .kk{position:absolute;bottom:3px;right:6px;font-size:11px;color:#9a96b8;}
+  .say{min-height:22px;font-size:16px;font-weight:bold;margin:10px 0 2px;color:#2e9e5b;}
+  .over,.startc{background:rgba(255,255,255,.97);border-radius:16px;padding:14px;position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;}
+  .bip{width:76px;height:auto;margin-bottom:4px;}
+  .btn{border:none;border-radius:16px;background:var(--yellow);color:#6b4e00;font-size:21px;font-weight:bold;padding:11px 26px;margin-top:10px;cursor:pointer;box-shadow:0 5px 0 #d9a900;}
+  .btn:active{transform:translateY(3px);box-shadow:0 2px 0 #d9a900;}
+  .big{font-size:24px;color:#2e9e5b;margin:4px 0;}
+  .stars{font-size:38px;letter-spacing:3px;}
+  .tip{color:#9a96b8;font-size:12px;margin-top:9px;}
+  .hidden{display:none !important;}
+</style>
+</head>
+<body>
+<div class="stage">
+  <h1>🎞 Кадр за кадром</h1>
+  <div class="sub">Кадры перепутались! Нажимай их по порядку — от начала к концу.</div>
+  <div class="hud">
+    <span class="box">⭐ <span id="score">0</span></span>
+    <span class="box">🎬 собрано <span id="streak">0</span></span>
+    <span class="box">❤️ <span id="lives">❤️❤️❤️</span></span>
+  </div>
+
+  <div class="center">
+    <div class="task"><div class="lbl">Собери мультик:</div><div class="nm" id="tname">…</div><div class="arrow">👉 от первого кадра к последнему</div></div>
+    <div class="cards" id="cards"></div>
+    <div class="say" id="say"></div>
+
+    <div class="startc" id="startScreen">
+      <svg class="bip" viewBox="0 0 120 130" xmlns="http://www.w3.org/2000/svg">
+        <line x1="60" y1="18" x2="60" y2="8" stroke="#43b7ff" stroke-width="5"/><circle cx="60" cy="7" r="7" fill="#ffd23f"/>
+        <rect x="22" y="22" width="76" height="62" rx="20" fill="#ffd23f"/><rect x="33" y="34" width="54" height="32" rx="13" fill="#2b2350"/>
+        <circle cx="50" cy="50" r="8" fill="#43b7ff"/><circle cx="72" cy="50" r="8" fill="#43b7ff"/>
+        <circle cx="50" cy="50" r="3.5" fill="#fff"/><circle cx="72" cy="50" r="3.5" fill="#fff"/>
+        <path d="M49 73 q11 9 22 0" stroke="#2b2350" stroke-width="4" fill="none" stroke-linecap="round"/>
+        <rect x="34" y="88" width="52" height="30" rx="14" fill="#43b7ff"/>
+      </svg>
+      <div class="big">Собери кадры по порядку!</div>
+      <p style="max-width:34ch;color:#5a5680;margin:0 auto">Аниматор раскладывает кадры от первого к последнему. Нажимай картинки по порядку — от начала движения к концу. Ошибся — минус жизнь!</p>
+      <button class="btn" onclick="startGame()">▶ Играть!</button>
+      <p class="tip">Клик по кадрам или клавиши 1–4. 3 жизни.</p>
+    </div>
+
+    <div class="over hidden" id="overScreen">
+      <div class="big" id="overTitle">Готово! 🎉</div>
+      <div class="stars" id="stars"></div>
+      <p class="big" id="finalScore"></p>
+      <p style="color:#5a5680" id="praise"></p>
+      <button class="btn" onclick="startGame()">↺ Ещё раз</button>
+    </div>
+  </div>
+</div>
+
+<script>
+const MOTIONS=[
+  {nm:'Из семечка — цветок', seq:['🌱','🌿','🌷']},
+  {nm:'Луна растёт', seq:['🌑','🌓','🌕']},
+  {nm:'Гусеница — бабочка', seq:['🥚','🐛','🦋']},
+  {nm:'Лёд тает', seq:['🧊','💧','💨']},
+  {nm:'Солнце встаёт', seq:['🌙','🌅','☀️']},
+  {nm:'Дерево растёт', seq:['🌰','🌱','🌳']},
+  {nm:'Костёр разгорается', seq:['🪵','🔥','🎇']},
+  {nm:'Грустный — весёлый', seq:['😴','🙂','😄']},
+  {nm:'Из яйца — петушок', seq:['🥚','🐣','🐥','🐓']},
+  {nm:'Семечко — подсолнух', seq:['🌱','🌿','🌾','🌻']},
+];
+const cardsEl=document.getElementById('cards'), tnameEl=document.getElementById('tname'), sayEl=document.getElementById('say'),
+      scoreEl=document.getElementById('score'), streakEl=document.getElementById('streak'), livesEl=document.getElementById('lives');
+
+let score=0, solved=0, lives=3, running=false, busy=false;
+let seq=[], expected=0;
+
+function shuffle(a){for(let i=a.length-1;i>0;i--){const j=Math.random()*(i+1)|0;[a[i],a[j]]=[a[j],a[i]];}return a;}
+
+function newRound(){
+  busy=false; expected=0;
+  // короткие (3) пока мало очков, потом можно 4
+  const pool = solved>=3 ? MOTIONS : MOTIONS.filter(m=>m.seq.length===3);
+  const m = pool[Math.random()*pool.length|0];
+  seq = m.seq.slice();
+  tnameEl.textContent=m.nm;
+  const disp = shuffle(seq.map((e,i)=>({e,order:i})));
+  cardsEl.innerHTML='';
+  disp.forEach((c,i)=>{
+    const b=document.createElement('button');
+    b.className='card'; b.dataset.order=c.order;
+    b.innerHTML=c.e+'<span class="kk">'+(i+1)+'</span>';
+    b.onclick=()=>pick(b);
+    cardsEl.appendChild(b);
+  });
+}
+function pick(b){
+  if(!running||busy) return;
+  if(b.classList.contains('placed')) return;
+  const ord=parseInt(b.dataset.order);
+  if(ord===expected){
+    b.classList.add('placed');
+    const bd=document.createElement('span'); bd.className='badge'; bd.textContent=(expected+1);
+    b.appendChild(bd);
+    expected++;
+    sayEl.textContent='✅ Кадр '+expected+'!'; sayEl.style.color='#37c871';
+    if(expected===seq.length){
+      busy=true;
+      score++; solved++; scoreEl.textContent=score; streakEl.textContent=solved;
+      sayEl.textContent='🎬 Мультик собран! +1'; sayEl.style.color='#2e9e5b';
+      setTimeout(()=>{ if(running) newRound(); },700);
+    }
+  } else {
+    b.classList.add('shake'); setTimeout(()=>b.classList.remove('shake'),300);
+    lives--; livesEl.textContent='❤️'.repeat(Math.max(0,lives))+'🖤'.repeat(3-Math.max(0,lives));
+    sayEl.textContent='❌ Не этот кадр! Ищи начало'; sayEl.style.color='#e0555f';
+    if(lives<=0) endGame();
+  }
+}
+function startGame(){
+  document.getElementById('startScreen').classList.add('hidden');
+  document.getElementById('overScreen').classList.add('hidden');
+  score=0; solved=0; lives=3; running=true;
+  scoreEl.textContent='0'; streakEl.textContent='0'; livesEl.textContent='❤️❤️❤️';
+  sayEl.textContent='С какого кадра начинается?'; sayEl.style.color='#2e9e5b';
+  newRound();
+}
+function endGame(){
+  running=false;
+  document.getElementById('overScreen').classList.remove('hidden');
+  document.getElementById('overTitle').textContent='Монтаж окончен! 🎬';
+  const st = score>=12?5:score>=9?4:score>=6?3:score>=3?2:1;
+  document.getElementById('stars').textContent='⭐'.repeat(st)+'☆'.repeat(5-st);
+  document.getElementById('finalScore').textContent='Собрано мультиков: '+score;
+  document.getElementById('praise').textContent = st>=4?'Великий монтажёр! 🏆':st>=2?'Здорово! Ещё разок — и рекорд! 💪':'Думай о порядке — получится! 😊';
+}
+document.addEventListener('keydown',e=>{
+  if(!running||busy) return;
+  const n=parseInt(e.key); if(n>=1&&n<=4){ const b=cardsEl.children[n-1]; if(b) b.click(); }
+});
+</script>
+</body>
+</html>
