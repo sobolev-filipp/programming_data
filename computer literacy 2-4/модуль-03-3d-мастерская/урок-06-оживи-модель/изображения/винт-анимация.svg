@@ -1,0 +1,38 @@
+<svg viewBox="0 0 800 400" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="sky2" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#BFE3FF"/><stop offset="1" stop-color="#E9F6FF"/></linearGradient>
+    <linearGradient id="body" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#8B5CF6"/><stop offset="1" stop-color="#6D28D9"/></linearGradient>
+  </defs>
+  <rect width="800" height="400" fill="url(#sky2)"/>
+  <text x="400" y="40" font-family="Segoe UI, Arial, sans-serif" font-size="21" font-weight="800" fill="#6D28D9" text-anchor="middle">Винт крутится: поворот в ключевых кадрах 🔁</text>
+
+  <!-- clouds -->
+  <g fill="#FFFFFF" opacity="0.9">
+    <ellipse cx="160" cy="110" rx="48" ry="22"/><ellipse cx="200" cy="100" rx="38" ry="20"/>
+    <ellipse cx="650" cy="150" rx="52" ry="24"/><ellipse cx="610" cy="140" rx="36" ry="18"/>
+    <animateTransform attributeName="transform" type="translate" values="0 0;-30 0;0 0" dur="6s" repeatCount="indefinite"/>
+  </g>
+
+  <!-- plane (blocky) -->
+  <g>
+    <animateTransform attributeName="transform" type="translate" values="0 0;0 -12;0 0;0 10;0 0" dur="3s" repeatCount="indefinite"/>
+    <!-- wings (two stacked = biplane) -->
+    <rect x="330" y="205" width="200" height="16" rx="4" fill="#A78BFA"/>
+    <rect x="330" y="255" width="200" height="16" rx="4" fill="#A78BFA"/>
+    <!-- fuselage -->
+    <rect x="300" y="215" width="250" height="60" rx="26" fill="url(#body)"/>
+    <!-- tail -->
+    <polygon points="300,230 255,215 255,275 300,262" fill="#6D28D9"/>
+    <!-- cabin glass -->
+    <circle cx="470" cy="245" r="20" fill="#CFFAFE" stroke="#22D3EE" stroke-width="3"/>
+    <!-- nose hub -->
+    <circle cx="556" cy="245" r="12" fill="#4C1D95"/>
+    <!-- spinning propeller around nose hub (556,245) -->
+    <g>
+      <animateTransform attributeName="transform" type="rotate" from="0 556 245" to="360 556 245" dur="0.45s" repeatCount="indefinite"/>
+      <rect x="549" y="200" width="14" height="90" rx="7" fill="#312E81"/>
+      <rect x="511" y="238" width="90" height="14" rx="7" fill="#312E81"/>
+      <circle cx="556" cy="245" r="7" fill="#FDE047"/>
+    </g>
+  </g>
+</svg>

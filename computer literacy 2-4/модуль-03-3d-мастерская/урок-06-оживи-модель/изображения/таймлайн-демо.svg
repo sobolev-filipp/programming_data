@@ -1,0 +1,58 @@
+<svg viewBox="0 0 800 440" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bgT" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#EEF4FF"/><stop offset="1" stop-color="#D8E6FA"/></linearGradient>
+    <linearGradient id="cTop" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FFE7A0"/><stop offset="1" stop-color="#FFCB57"/></linearGradient>
+    <linearGradient id="cFront" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FFCB57"/><stop offset="1" stop-color="#F3A712"/></linearGradient>
+    <linearGradient id="cSide" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#E8950C"/><stop offset="1" stop-color="#C87A04"/></linearGradient>
+  </defs>
+  <rect width="800" height="440" fill="url(#bgT)"/>
+  <text x="400" y="38" font-family="Segoe UI, Arial, sans-serif" font-size="21" font-weight="800" fill="#1D4ED8" text-anchor="middle">Ползунок бежит по кадрам — кубик двигается сам 🎬</text>
+
+  <!-- floor -->
+  <rect x="0" y="300" width="800" height="18" fill="#B9C9DE"/>
+  <line x1="0" y1="300" x2="800" y2="300" stroke="#8FA6C0" stroke-width="2"/>
+
+  <!-- shadow -->
+  <ellipse cx="400" cy="307" rx="40" ry="9" fill="#334155">
+    <animate attributeName="rx" values="28;46;28" keyTimes="0;0.5;1" dur="2.4s" repeatCount="indefinite"/>
+    <animate attributeName="opacity" values="0.15;0.30;0.15" keyTimes="0;0.5;1" dur="2.4s" repeatCount="indefinite"/>
+  </ellipse>
+
+  <!-- animated cube: down (frame 0) -> up (frame 10) -> down (frame 20) -->
+  <g>
+    <animateTransform attributeName="transform" type="translate" values="0 110;0 0;0 110" keyTimes="0;0.5;1" dur="2.4s" repeatCount="indefinite" calcMode="spline" keySplines="0.2 0 0.4 1;0.6 0 0.8 1"/>
+    <polygon points="360,150 400,130 440,150 400,170" fill="url(#cTop)"/>
+    <polygon points="360,150 400,170 400,240 360,220" fill="url(#cFront)"/>
+    <polygon points="440,150 400,170 400,240 440,220" fill="url(#cSide)"/>
+    <circle cx="376" cy="196" r="4.5" fill="#5A3A00"/>
+    <circle cx="390" cy="202" r="4.5" fill="#5A3A00"/>
+  </g>
+
+  <!-- TIMELINE -->
+  <g font-family="Segoe UI, Arial, sans-serif">
+    <text x="58" y="383" font-size="17" font-weight="700" fill="#33415C">Таймлайн ⏱</text>
+    <rect x="120" y="372" width="560" height="14" rx="7" fill="#C7D6EA"/>
+    <g fill="#5B6E86" font-size="13" text-anchor="middle">
+      <text x="120" y="412">Кадр 0</text>
+      <text x="400" y="412">Кадр 10</text>
+      <text x="680" y="412">Кадр 20</text>
+    </g>
+
+    <!-- keyframe glows -->
+    <circle cx="120" cy="379" r="15" fill="#FDE047"><animate attributeName="opacity" values="0.9;0;0;0.9" keyTimes="0;0.1;0.9;1" dur="2.4s" repeatCount="indefinite"/></circle>
+    <circle cx="400" cy="379" r="15" fill="#FDE047"><animate attributeName="opacity" values="0;0;0.9;0;0" keyTimes="0;0.42;0.5;0.58;1" dur="2.4s" repeatCount="indefinite"/></circle>
+    <circle cx="680" cy="379" r="15" fill="#FDE047"><animate attributeName="opacity" values="0;0;0.9" keyTimes="0;0.9;1" dur="2.4s" repeatCount="indefinite"/></circle>
+
+    <!-- keyframe diamonds -->
+    <rect x="112" y="371" width="16" height="16" rx="3" fill="#EF4444" transform="rotate(45 120 379)"/>
+    <rect x="392" y="371" width="16" height="16" rx="3" fill="#EF4444" transform="rotate(45 400 379)"/>
+    <rect x="672" y="371" width="16" height="16" rx="3" fill="#EF4444" transform="rotate(45 680 379)"/>
+
+    <!-- playhead -->
+    <g>
+      <animateTransform attributeName="transform" type="translate" values="0 0;560 0" keyTimes="0;1" dur="2.4s" repeatCount="indefinite"/>
+      <line x1="120" y1="360" x2="120" y2="398" stroke="#1D4ED8" stroke-width="3"/>
+      <polygon points="120,356 112,347 128,347" fill="#1D4ED8"/>
+    </g>
+  </g>
+</svg>
