@@ -1,0 +1,78 @@
+<svg viewBox="0 0 740 500" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#1A1038"/><stop offset="1" stop-color="#2A1A5E"/>
+    </linearGradient>
+    <linearGradient id="stone" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#5A6172"/><stop offset="0.5" stop-color="#D7DCE6"/><stop offset="1" stop-color="#5A6172"/>
+    </linearGradient>
+  </defs>
+  <rect width="740" height="500" fill="url(#bg)"/>
+
+  <text x="370" y="40" font-family="Segoe UI, Arial, sans-serif" font-size="22" font-weight="700" fill="#E9E5FF" text-anchor="middle">Как нарисовать профиль фигуры</text>
+
+  <!-- ===== LEFT: drawing the profile ===== -->
+  <g transform="translate(210,255)">
+    <!-- axis -->
+    <line x1="0" y1="-130" x2="0" y2="140" stroke="#EF6A6A" stroke-width="2.5" stroke-dasharray="7 7"/>
+    <text x="6" y="-116" font-family="Segoe UI, Arial, sans-serif" font-size="14" fill="#F4A3A3">ось</text>
+
+    <!-- width double-arrow -->
+    <g stroke="#FBBF24" stroke-width="2">
+      <line x1="2" y1="104" x2="42" y2="104"/>
+      <polygon points="2,100 -6,104 2,108" fill="#FBBF24" stroke="none"/>
+      <polygon points="42,100 50,104 42,108" fill="#FBBF24" stroke="none"/>
+    </g>
+    <text x="58" y="108" font-family="Segoe UI, Arial, sans-serif" font-size="13.5" fill="#FBBF24">ширина = расстояние от оси</text>
+
+    <!-- the profile (half silhouette of a pawn) -->
+    <path id="prof" d="M0,110 L44,110 L40,94 C34,86 22,84 18,78 L15,34 L13,-6 C13,-12 24,-14 28,-18 C20,-24 14,-26 10,-30 C34,-36 36,-70 0,-84"
+          fill="none" stroke="#38E0A5" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- draw-on animation -->
+    <path d="M0,110 L44,110 L40,94 C34,86 22,84 18,78 L15,34 L13,-6 C13,-12 24,-14 28,-18 C20,-24 14,-26 10,-30 C34,-36 36,-70 0,-84"
+          fill="none" stroke="#BDF5E0" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"
+          stroke-dasharray="460" stroke-dashoffset="460">
+      <animate attributeName="stroke-dashoffset" values="460;0;0;460" dur="4s" repeatCount="indefinite"/>
+    </path>
+
+    <!-- control points -->
+    <g fill="#BDF5E0" stroke="#0E2A20" stroke-width="1">
+      <circle cx="44" cy="110" r="4"/><circle cx="18" cy="78" r="4"/><circle cx="15" cy="34" r="4"/>
+      <circle cx="13" cy="-6" r="4"/><circle cx="28" cy="-18" r="4"/><circle cx="10" cy="-30" r="4"/>
+    </g>
+    <!-- start/end on axis (highlighted green) -->
+    <circle cx="0" cy="110" r="6" fill="#22C55E" stroke="#fff" stroke-width="1.5"/>
+    <circle cx="0" cy="-84" r="6" fill="#22C55E" stroke="#fff" stroke-width="1.5"/>
+
+    <!-- labels -->
+    <g font-family="Segoe UI, Arial, sans-serif" font-size="13.5" font-weight="700">
+      <text x="-150" y="114" fill="#4ADE80">① низ — на оси</text>
+      <text x="-150" y="-80" fill="#4ADE80">② верх — на оси</text>
+    </g>
+    <!-- E hint -->
+    <g transform="translate(40,20)">
+      <rect x="0" y="-12" width="24" height="20" rx="4" fill="#0E1630" stroke="#6EA8FE"/>
+      <text x="12" y="3" font-family="Segoe UI, Arial, sans-serif" font-size="13" font-weight="700" fill="#9CC2FF" text-anchor="middle">E</text>
+      <text x="30" y="3" font-family="Segoe UI, Arial, sans-serif" font-size="12.5" fill="#9CC2FF">ведём вверх</text>
+    </g>
+  </g>
+
+  <!-- ===== MIDDLE arrow ===== -->
+  <g transform="translate(400,255)">
+    <line x1="-18" y1="0" x2="34" y2="0" stroke="#C7CEEA" stroke-width="4" stroke-linecap="round"/>
+    <polygon points="34,-9 52,0 34,9" fill="#C7CEEA"/>
+    <text x="17" y="-16" font-family="Segoe UI, Arial, sans-serif" font-size="14" font-weight="700" fill="#C7CEEA" text-anchor="middle">Spin 360°</text>
+  </g>
+
+  <!-- ===== RIGHT: revolved pawn ===== -->
+  <g transform="translate(560,255)">
+    <line x1="0" y1="-120" x2="0" y2="130" stroke="#5B5496" stroke-width="2" stroke-dasharray="6 8" opacity="0.6"/>
+    <ellipse cx="0" cy="110" rx="30" ry="7" fill="#15102E" opacity="0.5"/>
+    <path d="M0,110 L44,110 L40,94 C34,86 22,84 18,78 L15,34 L13,-6 C13,-12 24,-14 28,-18 C20,-24 14,-26 10,-30 C34,-36 36,-70 0,-84 C-36,-70 -34,-36 -10,-30 C-14,-26 -20,-24 -28,-18 C-24,-14 -13,-12 -13,-6 L-15,34 L-18,78 C-22,84 -34,86 -40,94 L-44,110 Z"
+          fill="url(#stone)" stroke="#20242E" stroke-width="2"/>
+    <ellipse cx="-6" cy="-56" rx="8" ry="12" fill="#ffffff" opacity="0.35"/>
+    <text x="0" y="134" font-family="Segoe UI, Arial, sans-serif" font-size="13" fill="#A89FE0" text-anchor="middle">пешка</text>
+  </g>
+
+  <text x="370" y="478" font-family="Segoe UI, Arial, sans-serif" font-size="15" font-weight="700" fill="#C7CEEA" text-anchor="middle">Рисуй ПОЛОВИНУ силуэта: низ и верх — на оси, точки — справа. Spin достроит объём.</text>
+</svg>
