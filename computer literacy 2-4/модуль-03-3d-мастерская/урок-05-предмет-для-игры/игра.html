@@ -5,32 +5,39 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Зельевар — свари зелье по рецепту</title>
 <style>
-  :root{--bg1:#8a5cf6;--bg2:#37c871;--ink:#2b2350;--yellow:#ffd23f;--green:#37c871;--red:#ff5a7a;--blue:#43b7ff;}
+  :root{--bg1:#8a5cf6;--bg2:#37c871;--ink:#2b2350;--yellow:#ffd23f;--green:#37c871;--red:#ff5a7a;--blue:#43b7ff;--purple:#8a5cf6;}
   *{box-sizing:border-box;margin:0;font-family:'Comic Sans MS','Segoe UI',system-ui,sans-serif;user-select:none;-webkit-user-select:none;}
   body{min-height:100vh;background:linear-gradient(135deg,var(--bg1),var(--bg2));display:flex;align-items:center;justify-content:center;padding:12px;color:var(--ink);}
-  .stage{width:min(620px,100%);background:#fff;border-radius:24px;box-shadow:0 18px 50px rgba(0,0,0,.3);padding:16px 18px 20px;text-align:center;}
+  .stage{position:relative;width:min(620px,100%);background:#fff;border-radius:24px;box-shadow:0 18px 50px rgba(0,0,0,.3);padding:16px 18px 20px;text-align:center;overflow:hidden;}
   h1{font-size:24px;color:#6b45c9;margin:2px 0;}
   .sub{color:#7a76a0;font-size:14px;margin-bottom:8px;}
-  .hud{display:flex;justify-content:space-between;align-items:center;gap:8px;font-size:18px;margin-bottom:10px;}
-  .hud .box{background:#f3f2fb;border-radius:12px;padding:6px 12px;font-weight:bold;}
-  .recipe{background:#fff7db;border:3px solid var(--yellow);border-radius:16px;padding:8px 10px;margin-bottom:8px;}
-  .recipe .lbl{font-size:15px;color:#6b4e00;font-weight:bold;}
-  .recipe .icons{font-size:34px;letter-spacing:4px;margin-top:2px;}
-  .recipe .icons .done{filter:grayscale(1);opacity:.4;}
-  .cauldron{font-size:70px;line-height:1;margin:6px 0 2px;transition:transform .1s;}
-  .cauldron.bubble{transform:scale(1.1);}
+  .hud{display:flex;justify-content:space-between;align-items:center;gap:8px;font-size:17px;margin-bottom:8px;}
+  .hud .box{background:#f3f2fb;border-radius:12px;padding:6px 10px;font-weight:bold;}
+  .recipe{background:#fff7db;border:3px solid var(--yellow);border-radius:16px;padding:7px 10px;margin-bottom:7px;}
+  .recipe .lbl{font-size:14px;color:#6b4e00;font-weight:bold;}
+  .recipe .icons{font-size:32px;letter-spacing:5px;margin-top:2px;min-height:38px;}
+  .recipe .icons .done{filter:grayscale(1);opacity:.35;}
+  .recipe .icons .next{display:inline-block;transform:scale(1.25);filter:drop-shadow(0 0 6px #ffcf33);}
+  .track{height:13px;background:#eee7fb;border-radius:8px;overflow:hidden;margin:0 0 8px;border:2px solid #e0d7f5;}
+  .tfill{height:100%;width:100%;background:linear-gradient(90deg,#37c871,#ffd23f,#ff5a7a);}
+  .brew{display:flex;align-items:flex-end;justify-content:center;gap:10px;margin:2px 0 2px;}
+  .cauldron{font-size:60px;line-height:1;transition:transform .1s;}
+  .cauldron.bubble{transform:scale(1.15) rotate(-3deg);}
+  .fillwrap{width:26px;height:58px;border:3px solid #b9a7e8;border-radius:7px;background:#f1ecfb;position:relative;overflow:hidden;}
+  .fillwrap .liq{position:absolute;left:0;right:0;bottom:0;height:0%;background:linear-gradient(#b17cff,#8a5cf6);transition:height .25s;}
   .say{font-size:18px;font-weight:bold;min-height:24px;margin:4px 0 8px;color:#2b2350;}
-  .ingredients{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;max-width:460px;margin:0 auto;}
-  .ing{border:none;border-radius:16px;cursor:pointer;padding:12px 6px;background:#f0ecfb;box-shadow:0 5px 0 #d8cff0;transition:transform .07s;}
-  .ing:active{transform:translateY(3px);box-shadow:0 2px 0 #d8cff0;}
-  .ing .ic{font-size:40px;display:block;line-height:1;}
-  .ing .nm{font-size:13px;color:#5a5680;margin-top:2px;}
-  .center{position:relative;}
-  .over,.startc{background:rgba(255,255,255,.97);border-radius:16px;padding:14px;}
-  .bip{width:76px;height:auto;margin-bottom:4px;}
+  .ingredients{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;max-width:460px;margin:0 auto;}
+  .ing{position:relative;border:none;border-radius:16px;cursor:pointer;padding:10px 6px;background:#f0ecfb;box-shadow:0 5px 0 #d8cff0;transition:transform .07s;animation:bob 2.4s ease-in-out infinite;}
+  @keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
+  .ing:active{transform:translateY(3px) scale(.96);box-shadow:0 2px 0 #d8cff0;}
+  .ing .ic{font-size:38px;display:block;line-height:1;}
+  .ing .nm{font-size:12px;color:#5a5680;margin-top:1px;}
+  .ing .kk{position:absolute;top:3px;right:7px;font-size:11px;color:#b3add0;}
+  .overlay{position:absolute;inset:0;background:rgba(255,255,255,.97);border-radius:24px;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:18px;overflow:auto;}
+  .bip{width:72px;height:auto;margin-bottom:2px;}
   .btn{border:none;border-radius:16px;background:var(--yellow);color:#6b4e00;font-size:21px;font-weight:bold;padding:11px 26px;margin-top:10px;cursor:pointer;box-shadow:0 5px 0 #d9a900;}
   .btn:active{transform:translateY(3px);box-shadow:0 2px 0 #d9a900;}
-  .big{font-size:24px;color:#6b45c9;margin:4px 0;}
+  .big{font-size:23px;color:#6b45c9;margin:4px 0;}
   .stars{font-size:38px;letter-spacing:3px;}
   .tip{color:#9a96b8;font-size:12px;margin-top:9px;}
   .hidden{display:none !important;}
@@ -39,113 +46,163 @@
 <body>
 <div class="stage">
   <h1>⚗️ Зельевар</h1>
-  <div class="sub">Бип диктует рецепт — брось в котёл нужные ингредиенты по порядку!</div>
+  <div class="sub">Бросай ингредиенты по рецепту, пока не кончилось время!</div>
   <div class="hud">
     <span class="box">🏆 зелья <span id="score">0</span></span>
-    <span class="box">📜 рецепт <span id="rlen">2</span></span>
+    <span class="box">🔥 подряд <span id="streak">0</span></span>
     <span class="box">❤️ <span id="lives">❤️❤️❤️</span></span>
   </div>
 
   <div class="recipe">
-    <div class="lbl">Рецепт зелья:</div>
+    <div class="lbl">📜 Рецепт зелья:</div>
     <div class="icons" id="recipeIcons">—</div>
   </div>
-  <div class="cauldron" id="cauldron">🥣</div>
+
+  <div class="track"><div class="tfill" id="tfill"></div></div>
+
+  <div class="brew">
+    <div class="cauldron" id="cauldron">🥣</div>
+    <div class="fillwrap"><div class="liq" id="liq"></div></div>
+  </div>
   <div class="say" id="say"></div>
 
-  <div class="center">
-    <div class="ingredients" id="ings"></div>
+  <div class="ingredients" id="ings"></div>
 
-    <div class="startc" id="startScreen" style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;">
-      <svg class="bip" viewBox="0 0 120 130" xmlns="http://www.w3.org/2000/svg">
-        <line x1="60" y1="18" x2="60" y2="8" stroke="#43b7ff" stroke-width="5"/><circle cx="60" cy="7" r="7" fill="#ffd23f"/>
-        <rect x="22" y="22" width="76" height="62" rx="20" fill="#ffd23f"/><rect x="33" y="34" width="54" height="32" rx="13" fill="#2b2350"/>
-        <circle cx="50" cy="50" r="8" fill="#43b7ff"/><circle cx="72" cy="50" r="8" fill="#43b7ff"/>
-        <circle cx="50" cy="50" r="3.5" fill="#fff"/><circle cx="72" cy="50" r="3.5" fill="#fff"/>
-        <path d="M49 73 q11 9 22 0" stroke="#2b2350" stroke-width="4" fill="none" stroke-linecap="round"/>
-        <rect x="34" y="88" width="52" height="30" rx="14" fill="#43b7ff"/>
-      </svg>
-      <div class="big">Свари волшебное зелье!</div>
-      <p style="max-width:34ch;color:#5a5680;margin:0 auto">Бип показывает рецепт — какие ингредиенты и в каком порядке бросать в котёл. Жми их **по порядку**! Ошибся — зелье шипит. Каждый раз рецепт длиннее!</p>
-      <button class="btn" onclick="startGame()">▶ Варить!</button>
-      <p class="tip">Кликай ингредиенты. Клавиши 1–4. 3 жизни.</p>
-    </div>
+  <div class="overlay" id="startScreen">
+    <svg class="bip" viewBox="0 0 120 130" xmlns="http://www.w3.org/2000/svg">
+      <line x1="60" y1="18" x2="60" y2="8" stroke="#43b7ff" stroke-width="5"/><circle cx="60" cy="7" r="7" fill="#ffd23f"/>
+      <rect x="22" y="22" width="76" height="62" rx="20" fill="#ffd23f"/><rect x="33" y="34" width="54" height="32" rx="13" fill="#2b2350"/>
+      <circle cx="50" cy="50" r="8" fill="#43b7ff"/><circle cx="72" cy="50" r="8" fill="#43b7ff"/>
+      <circle cx="50" cy="50" r="3.5" fill="#fff"/><circle cx="72" cy="50" r="3.5" fill="#fff"/>
+      <path d="M49 73 q11 9 22 0" stroke="#2b2350" stroke-width="4" fill="none" stroke-linecap="round"/>
+      <rect x="34" y="88" width="52" height="30" rx="14" fill="#43b7ff"/>
+    </svg>
+    <div class="big">Свари волшебное зелье!</div>
+    <p style="max-width:32ch;color:#5a5680;margin:4px auto 0;font-size:15px">Бип подсвечивает, какой ингредиент бросать следующим — он крупный и сияет 🌟. Жми его, пока не убежала зелёная полоска! Котёл наполняется — и зелье готово. Ингредиенты прыгают и меняются местами — будь внимателен!</p>
+    <button class="btn" onclick="startGame()">▶ Варить!</button>
+    <p class="tip">Клик по ингредиенту или клавиши 1–6 · 3 жизни · время тикает!</p>
+  </div>
 
-    <div class="over hidden" id="overScreen" style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;">
-      <div class="big" id="overTitle">Готово! 🎉</div>
-      <div class="stars" id="stars"></div>
-      <p class="big" id="finalScore"></p>
-      <p style="color:#5a5680" id="praise"></p>
-      <button class="btn" onclick="startGame()">↺ Ещё раз</button>
-    </div>
+  <div class="overlay hidden" id="overScreen">
+    <div class="big" id="overTitle">Готово! 🎉</div>
+    <div class="stars" id="stars"></div>
+    <p class="big" id="finalScore"></p>
+    <p style="color:#5a5680;max-width:32ch" id="praise"></p>
+    <button class="btn" onclick="startGame()">↺ Ещё раз</button>
   </div>
 </div>
 
 <script>
 const ING = [
-  {name:'гриб',   ic:'🍄', bg:'#ffd0d0'},
-  {name:'травка', ic:'🌿', bg:'#c9f0d0'},
-  {name:'капля',  ic:'💧', bg:'#cfe6ff'},
-  {name:'искра',  ic:'✨', bg:'#fff0bf'},
+  {name:'гриб',    ic:'🍄', bg:'#ffd0d0'},
+  {name:'травка',  ic:'🌿', bg:'#c9f0d0'},
+  {name:'капля',   ic:'💧', bg:'#cfe6ff'},
+  {name:'искра',   ic:'✨', bg:'#fff0bf'},
+  {name:'цветок',  ic:'🌸', bg:'#ffd9ef'},
+  {name:'кристалл',ic:'💎', bg:'#d6f3ff'},
 ];
+const POTIONS=['Зелье скорости! 🏃','Зелье силы! 💪','Зелье смеха! 😂','Зелье невидимости! 👻','Зелье прыгучести! 🦘','Зелье храбрости! 🦁','Зелье роста! 🌱','Зелье огня! 🔥'];
+
 const ingsEl=document.getElementById('ings'), recipeEl=document.getElementById('recipeIcons'),
+      tfillEl=document.getElementById('tfill'), liqEl=document.getElementById('liq'),
       sayEl=document.getElementById('say'), scoreEl=document.getElementById('score'),
-      rlenEl=document.getElementById('rlen'), livesEl=document.getElementById('lives'),
+      streakEl=document.getElementById('streak'), livesEl=document.getElementById('lives'),
       cauldron=document.getElementById('cauldron');
 
-let recipe=[], pos=0, score=0, lives=3, rlen=2, running=false, locked=false;
+let recipe=[], pos=0, score=0, streak=0, lives=3, rlen=2, running=false, paused=false;
+let deadline=0, stepMs=4000, raf=null;
+
+function shuffle(a){for(let i=a.length-1;i>0;i--){const j=Math.random()*(i+1)|0;[a[i],a[j]]=[a[j],a[i]];}return a;}
+function curStepMs(){ return Math.max(1900, 4000 - score*110); }  // медленный старт для малышей
 
 function buildButtons(){
+  // раскладываем ингредиенты в случайном порядке (каждое зелье — новый порядок)
   ingsEl.innerHTML='';
-  ING.forEach((g,i)=>{
+  const order=shuffle([...Array(ING.length).keys()]);
+  order.forEach((realIdx,slot)=>{
+    const g=ING[realIdx];
     const b=document.createElement('button'); b.className='ing'; b.style.background=g.bg;
-    b.innerHTML='<span class="ic">'+g.ic+'</span><span class="nm">'+g.name+'</span>';
-    b.onclick=()=>add(i);
+    b.style.animationDelay=(slot*0.18)+'s';           // прыгают вразнобой
+    b.dataset.real=realIdx;
+    b.innerHTML='<span class="ic">'+g.ic+'</span><span class="nm">'+g.name+'</span><span class="kk">'+(slot+1)+'</span>';
+    b.onclick=()=>add(realIdx,b);
     ingsEl.appendChild(b);
   });
 }
 function newRecipe(){
-  locked=false; pos=0;
+  paused=false; pos=0;
+  rlen = Math.min(6, 2 + (score/3|0));               // рецепт постепенно длиннее
   recipe=[]; for(let k=0;k<rlen;k++) recipe.push(Math.random()*ING.length|0);
+  buildButtons();                                    // новый порядок кнопок
   renderRecipe();
-  rlenEl.textContent=rlen;
+  liqEl.style.height='0%';
   cauldron.textContent='🥣';
-  sayEl.textContent='Вари по порядку! 👇'; sayEl.style.color='#2b2350';
+  sayEl.textContent='Какой ингредиент сияет? 🌟'; sayEl.style.color='#2b2350';
+  armStep();
 }
 function renderRecipe(){
-  recipeEl.innerHTML = recipe.map((i,k)=>'<span class="'+(k<pos?'done':'')+'">'+ING[i].ic+'</span>').join('');
+  recipeEl.innerHTML = recipe.map((idx,k)=>{
+    const cls = k<pos ? 'done' : (k===pos ? 'next' : '');
+    return '<span class="'+cls+'">'+ING[idx].ic+'</span>';
+  }).join('');
 }
-function add(i){
-  if(!running||locked) return;
-  if(i===recipe[pos]){
+function armStep(){ deadline = performance.now() + curStepMs(); }
+function loop(ts){
+  if(!running){ return; }
+  if(!paused){
+    const left = deadline - ts;
+    tfillEl.style.width = Math.max(0, left/curStepMs()*100) + '%';
+    if(left<=0) timeUp();
+  }
+  raf=requestAnimationFrame(loop);
+}
+function add(realIdx,btn){
+  if(!running||paused) return;
+  if(realIdx===recipe[pos]){
     pos++; renderRecipe();
+    liqEl.style.height = Math.round(pos/recipe.length*100)+'%';
     cauldron.classList.add('bubble'); setTimeout(()=>cauldron.classList.remove('bubble'),120);
     if(pos>=recipe.length){
       // зелье готово!
-      locked=true; score++; scoreEl.textContent=score;
-      cauldron.textContent='🧪'; sayEl.textContent='✅ Зелье готово! +1'; sayEl.style.color='#37c871';
-      if(score%3===0 && rlen<6) rlen++; // усложняем
-      setTimeout(()=>{ if(running) newRecipe(); }, 850);
+      paused=true; score++; streak++; scoreEl.textContent=score; streakEl.textContent=streak;
+      tfillEl.style.width='100%';
+      cauldron.textContent='🧪';
+      const pot=POTIONS[Math.random()*POTIONS.length|0];
+      sayEl.textContent='✅ '+pot+' +1'; sayEl.style.color='#37c871';
+      setTimeout(()=>{ if(running) newRecipe(); }, 950);
+    } else {
+      sayEl.textContent='👍 Так держать!'; sayEl.style.color='#37c871';
+      armStep();                                     // на следующий ингредиент — свежее время
     }
   } else {
-    // ошибка — шипит
-    locked=true; lives--;
+    paused=true; streak=0; streakEl.textContent=0; lives--;
     livesEl.textContent='❤️'.repeat(Math.max(0,lives))+'🖤'.repeat(3-Math.max(0,lives));
-    cauldron.textContent='💨'; sayEl.textContent='❌ Пшш! Не тот ингредиент (нужен '+ING[recipe[pos]].ic+')'; sayEl.style.color='#e0555f';
-    if(lives<=0){ setTimeout(endGame,700); return; }
-    setTimeout(()=>{ if(running){ pos=0; renderRecipe(); cauldron.textContent='🥣'; sayEl.textContent='Начни рецепт заново 👇'; sayEl.style.color='#2b2350'; locked=false; } }, 900);
+    cauldron.textContent='💨';
+    sayEl.textContent='❌ Пшш! Нужен '+ING[recipe[pos]].ic+', начни заново'; sayEl.style.color='#e0555f';
+    if(btn){ btn.style.background='#ffd0d6'; }
+    if(lives<=0){ setTimeout(endGame,750); return; }
+    setTimeout(()=>{ if(running){ pos=0; liqEl.style.height='0%'; renderRecipe(); cauldron.textContent='🥣'; sayEl.textContent='Жми сияющий ингредиент 🌟'; sayEl.style.color='#2b2350'; buildButtons(); paused=false; armStep(); } }, 950);
   }
+}
+function timeUp(){
+  paused=true; streak=0; streakEl.textContent=0; lives--;
+  livesEl.textContent='❤️'.repeat(Math.max(0,lives))+'🖤'.repeat(3-Math.max(0,lives));
+  cauldron.textContent='⏳';
+  sayEl.textContent='⌛ Ингредиент убежал! Быстрее!'; sayEl.style.color='#e0555f';
+  if(lives<=0){ setTimeout(endGame,750); return; }
+  setTimeout(()=>{ if(running){ pos=0; liqEl.style.height='0%'; renderRecipe(); cauldron.textContent='🥣'; sayEl.textContent='Жми сияющий ингредиент 🌟'; sayEl.style.color='#2b2350'; buildButtons(); paused=false; armStep(); } }, 950);
 }
 function startGame(){
   document.getElementById('startScreen').classList.add('hidden');
   document.getElementById('overScreen').classList.add('hidden');
-  buildButtons();
-  score=0; lives=3; rlen=2; running=true;
-  scoreEl.textContent='0'; livesEl.textContent='❤️❤️❤️';
+  score=0; streak=0; lives=3; running=true;
+  scoreEl.textContent='0'; streakEl.textContent='0'; livesEl.textContent='❤️❤️❤️';
   newRecipe();
+  if(raf)cancelAnimationFrame(raf);
+  raf=requestAnimationFrame(loop);
 }
 function endGame(){
-  running=false; locked=true;
+  running=false; if(raf)cancelAnimationFrame(raf);
   document.getElementById('overScreen').classList.remove('hidden');
   document.getElementById('overTitle').textContent='Зелья закончились! ⚗️';
   const st = score>=12?5:score>=9?4:score>=6?3:score>=3?2:1;
@@ -154,8 +211,9 @@ function endGame(){
   document.getElementById('praise').textContent = st>=4?'Великий зельевар! 🏆':st>=2?'Здорово! Ещё разок — и рекорд! 💪':'Тренируйся — станешь магом! 😊';
 }
 document.addEventListener('keydown',e=>{
-  if(!running||locked) return;
-  const n=parseInt(e.key); if(n>=1&&n<=ING.length) add(n-1);
+  if(!running||paused) return;
+  const n=parseInt(e.key);
+  if(n>=1&&n<=ING.length){ const b=ingsEl.children[n-1]; if(b) b.click(); }
 });
 </script>
 </body>
