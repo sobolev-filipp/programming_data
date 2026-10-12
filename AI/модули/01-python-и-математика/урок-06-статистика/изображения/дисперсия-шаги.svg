@@ -29,7 +29,7 @@
   <text x="225" y="438" font-size="14" font-family="monospace" fill="#3730a3" text-anchor="middle">np.var(data) = 0.56</text>
 
   <rect x="430" y="392" width="370" height="58" rx="10" fill="#dcfce7" stroke="#16a34a" stroke-width="2"/>
-  <text x="615" y="416" font-size="13.5" font-weight="700" fill="#166534" text-anchor="middle">Шаг 6. std = корень из дисперсии</text>
+  <text x="615" y="416" font-size="13.5" font-weight="700" fill="#166534" text-anchor="middle">Шаг 6. Стандартное отклонение (std)</text>
   <text x="615" y="438" font-size="14" font-family="monospace" fill="#166534" text-anchor="middle">np.std(data) = √0.56 ≈ 0.75</text>
 
   <!-- why square callout -->

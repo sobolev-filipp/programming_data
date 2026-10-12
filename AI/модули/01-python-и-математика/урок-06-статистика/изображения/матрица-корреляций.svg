@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 700 450" font-family="'Segoe UI',system-ui,sans-serif">
+  <rect x="0" y="0" width="700" height="450" fill="#f7f9fc"/>
+  <text x="350" y="32" font-size="20" font-weight="700" fill="#1f2937" text-anchor="middle">Матрица корреляций 2×2 — почему берём [0, 1]</text>
+  <text x="350" y="54" font-size="12.5" fill="#64748b" text-anchor="middle">np.corrcoef считает корреляцию каждого ряда с каждым</text>
+
+  <!-- column headers -->
+  <text x="330" y="96" font-size="14" font-weight="700" fill="#334155" text-anchor="middle">рост</text>
+  <text x="480" y="96" font-size="14" font-weight="700" fill="#334155" text-anchor="middle">вес</text>
+  <text x="330" y="80" font-size="11" fill="#94a3b8" text-anchor="middle">столбец 0</text>
+  <text x="480" y="80" font-size="11" fill="#94a3b8" text-anchor="middle">столбец 1</text>
+
+  <!-- row headers -->
+  <text x="238" y="166" font-size="14" font-weight="700" fill="#334155" text-anchor="end">рост</text>
+  <text x="238" y="266" font-size="14" font-weight="700" fill="#334155" text-anchor="end">вес</text>
+  <text x="238" y="150" font-size="11" fill="#94a3b8" text-anchor="end">строка 0</text>
+  <text x="238" y="250" font-size="11" fill="#94a3b8" text-anchor="end">строка 1</text>
+
+  <!-- cells -->
+  <!-- [0,0] -->
+  <rect x="255" y="110" width="150" height="100" fill="#f1f5f9" stroke="#cbd5e1" stroke-width="1.5"/>
+  <text x="264" y="128" font-size="11" font-family="monospace" fill="#94a3b8">[0,0]</text>
+  <text x="330" y="168" font-size="26" font-weight="700" fill="#94a3b8" text-anchor="middle">1.0</text>
+  <!-- [0,1] highlighted -->
+  <rect x="405" y="110" width="150" height="100" fill="#dcfce7" stroke="#16a34a" stroke-width="3.5"/>
+  <text x="414" y="128" font-size="11" font-family="monospace" fill="#166534">[0,1]</text>
+  <text x="480" y="168" font-size="26" font-weight="800" fill="#166534" text-anchor="middle">0.994</text>
+  <!-- [1,0] -->
+  <rect x="255" y="210" width="150" height="100" fill="#eef2ff" stroke="#c7d2fe" stroke-width="1.5"/>
+  <text x="264" y="228" font-size="11" font-family="monospace" fill="#6366f1">[1,0]</text>
+  <text x="330" y="268" font-size="26" font-weight="700" fill="#6366f1" text-anchor="middle">0.994</text>
+  <!-- [1,1] -->
+  <rect x="405" y="210" width="150" height="100" fill="#f1f5f9" stroke="#cbd5e1" stroke-width="1.5"/>
+  <text x="414" y="228" font-size="11" font-family="monospace" fill="#94a3b8">[1,1]</text>
+  <text x="480" y="268" font-size="26" font-weight="700" fill="#94a3b8" text-anchor="middle">1.0</text>
+
+  <!-- callout to [0,1] -->
+  <line x1="580" y1="130" x2="558" y2="150" stroke="#16a34a" stroke-width="2.5"/><polygon points="555,153 565,149 561,159" fill="#16a34a"/>
+  <text x="585" y="128" font-size="13.5" font-weight="700" fill="#166534">берём это!</text>
+  <text x="585" y="146" font-size="11.5" fill="#166534">связь роста</text>
+  <text x="585" y="161" font-size="11.5" fill="#166534">и веса</text>
+
+  <!-- diagonal note -->
+  <line x1="300" y1="195" x2="455" y2="235" stroke="#f59e0b" stroke-width="2" stroke-dasharray="5 4"/>
+  <text x="300" y="345" font-size="12.5" fill="#92400e">↘ на диагонали — связь величины с самой собой = 1.0 (бесполезно)</text>
+
+  <!-- code panel -->
+  <rect x="150" y="364" width="400" height="38" rx="9" fill="#0f172a"/>
+  <text x="350" y="388" font-size="14" font-family="monospace" fill="#86efac" text-anchor="middle">np.corrcoef(height, weight)[0, 1] → 0.994</text>
+
+  <rect x="150" y="410" width="400" height="30" rx="8" fill="#fef9c3" stroke="#eab308" stroke-width="1.5"/>
+  <text x="350" y="430" font-size="12.5" fill="#713f12" text-anchor="middle">💡 [строка, столбец], нумерация с нуля. Берём число сбоку, не с диагонали.</text>
+</svg>

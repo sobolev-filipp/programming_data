@@ -1,0 +1,51 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 420" font-family="'Segoe UI',system-ui,sans-serif">
+  <rect x="0" y="0" width="640" height="420" fill="#f7f9fc"/>
+  <text x="320" y="30" font-size="19" font-weight="700" fill="#1f2937" text-anchor="middle">Рост и вес 10 учеников (scatter)</text>
+  <text x="320" y="51" font-size="12.5" fill="#64748b" text-anchor="middle">каждая точка — один ученик: (его рост, его вес)</text>
+
+  <!-- plot frame -->
+  <rect x="90" y="70" width="470" height="260" fill="#ffffff" stroke="#e2e8f0" stroke-width="1"/>
+  <!-- axes -->
+  <line x1="90" y1="330" x2="560" y2="330" stroke="#475569" stroke-width="2"/>
+  <line x1="90" y1="330" x2="90" y2="70" stroke="#475569" stroke-width="2"/>
+
+  <!-- trend line -->
+  <line x1="150" y1="304" x2="460" y2="126" stroke="#dc2626" stroke-width="2" stroke-dasharray="7 4"/>
+
+  <!-- points -->
+  <g fill="#4f46e5" stroke="#312e81" stroke-width="1">
+    <circle cx="150" cy="304" r="6"/>
+    <circle cx="160" cy="289" r="6"/>
+    <circle cx="220" cy="253" r="6"/>
+    <circle cx="244" cy="238" r="6"/>
+    <circle cx="280" cy="228" r="6"/>
+    <circle cx="316" cy="202" r="6"/>
+    <circle cx="340" cy="187" r="6"/>
+    <circle cx="364" cy="167" r="6"/>
+    <circle cx="400" cy="151" r="6"/>
+    <circle cx="460" cy="126" r="6"/>
+  </g>
+
+  <!-- x ticks -->
+  <g font-size="11" fill="#94a3b8" font-family="monospace" text-anchor="middle">
+    <line x1="100" y1="330" x2="100" y2="335" stroke="#94a3b8"/><text x="100" y="349">160</text>
+    <line x1="280" y1="330" x2="280" y2="335" stroke="#94a3b8"/><text x="280" y="349">175</text>
+    <line x1="460" y1="330" x2="460" y2="335" stroke="#94a3b8"/><text x="460" y="349">190</text>
+  </g>
+  <!-- y ticks -->
+  <g font-size="11" fill="#94a3b8" font-family="monospace" text-anchor="end">
+    <line x1="85" y1="304" x2="90" y2="304" stroke="#94a3b8"/><text x="82" y="308">55</text>
+    <line x1="85" y1="228" x2="90" y2="228" stroke="#94a3b8"/><text x="82" y="232">70</text>
+    <line x1="85" y1="126" x2="90" y2="126" stroke="#94a3b8"/><text x="82" y="130">90</text>
+  </g>
+
+  <text x="325" y="372" font-size="13" font-weight="700" fill="#334155" text-anchor="middle">Рост (см) →</text>
+  <text x="40" y="200" font-size="13" font-weight="700" fill="#334155" text-anchor="middle" transform="rotate(-90 40 200)">Вес (кг) →</text>
+
+  <!-- r label -->
+  <rect x="112" y="88" width="150" height="30" rx="8" fill="#dcfce7" stroke="#16a34a" stroke-width="1.5"/>
+  <text x="187" y="108" font-size="13.5" font-weight="700" fill="#166534" text-anchor="middle">r ≈ +0.994</text>
+
+  <rect x="90" y="388" width="470" height="26" rx="8" fill="#fef9c3" stroke="#eab308" stroke-width="1.5"/>
+  <text x="104" y="406" font-size="12.5" fill="#713f12">💡 Точки идут ровной «лесенкой» вверх → сильная положительная связь: выше → тяжелее.</text>
+</svg>
