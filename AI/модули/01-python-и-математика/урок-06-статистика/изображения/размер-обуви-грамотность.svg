@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 840 430" font-family="'Segoe UI',system-ui,sans-serif">
+  <rect x="0" y="0" width="840" height="430" fill="#f7f9fc"/>
+  <text x="420" y="30" font-size="21" font-weight="700" fill="#1f2937" text-anchor="middle">Размер обуви и грамотность: виноват возраст</text>
+
+  <!-- scatter -->
+  <rect x="80" y="70" width="440" height="270" fill="#ffffff" stroke="#e2e8f0" stroke-width="1"/>
+  <line x1="80" y1="340" x2="520" y2="340" stroke="#475569" stroke-width="2"/>
+  <line x1="80" y1="340" x2="80" y2="70" stroke="#475569" stroke-width="2"/>
+  <text x="300" y="364" font-size="12.5" font-weight="700" fill="#334155" text-anchor="middle">Размер обуви →</text>
+  <text x="60" y="205" font-size="12.5" font-weight="700" fill="#334155" text-anchor="middle" transform="rotate(-90 60 205)">Грамотность →</text>
+
+  <!-- overall trend -->
+  <line x1="110" y1="315" x2="490" y2="120" stroke="#dc2626" stroke-width="2" stroke-dasharray="7 4"/>
+  <text x="300" y="195" font-size="12" font-weight="700" fill="#dc2626" transform="rotate(-27 300 195)">общий тренд r≈0.85</text>
+
+  <!-- group 6yo (red cluster, bottom-left) -->
+  <g fill="#ef4444" stroke="#991b1b" stroke-width="0.8">
+    <circle cx="120" cy="300" r="5"/><circle cx="140" cy="312" r="5"/><circle cx="160" cy="295" r="5"/><circle cx="135" cy="305" r="5"/><circle cx="155" cy="308" r="5"/><circle cx="125" cy="315" r="5"/>
+  </g>
+  <line x1="112" y1="305" x2="170" y2="305" stroke="#991b1b" stroke-width="1.5" stroke-dasharray="3 2"/>
+  <text x="140" y="333" font-size="10.5" fill="#991b1b" text-anchor="middle">6 лет</text>
+
+  <!-- group 10yo (blue cluster, middle) -->
+  <g fill="#3b82f6" stroke="#1e40af" stroke-width="0.8">
+    <circle cx="270" cy="215" r="5"/><circle cx="290" cy="225" r="5"/><circle cx="310" cy="210" r="5"/><circle cx="285" cy="205" r="5"/><circle cx="305" cy="222" r="5"/><circle cx="275" cy="230" r="5"/>
+  </g>
+  <line x1="262" y1="218" x2="320" y2="218" stroke="#1e40af" stroke-width="1.5" stroke-dasharray="3 2"/>
+  <text x="292" y="250" font-size="10.5" fill="#1e40af" text-anchor="middle">10 лет</text>
+
+  <!-- group 14yo (green cluster, top-right) -->
+  <g fill="#22c55e" stroke="#166534" stroke-width="0.8">
+    <circle cx="420" cy="135" r="5"/><circle cx="440" cy="145" r="5"/><circle cx="460" cy="128" r="5"/><circle cx="435" cy="122" r="5"/><circle cx="455" cy="140" r="5"/><circle cx="425" cy="150" r="5"/>
+  </g>
+  <line x1="412" y1="135" x2="470" y2="135" stroke="#166534" stroke-width="1.5" stroke-dasharray="3 2"/>
+  <text x="442" y="170" font-size="10.5" fill="#166534" text-anchor="middle">14 лет</text>
+
+  <!-- explanation panel -->
+  <rect x="548" y="90" width="262" height="250" rx="12" fill="#eef2ff" stroke="#6366f1" stroke-width="1.5"/>
+  <text x="568" y="118" font-size="14" font-weight="700" fill="#3730a3">Фокус в цвете</text>
+  <text x="568" y="146" font-size="12.5" fill="#3730a3">Смотрим на ВСЕ точки вместе</text>
+  <text x="568" y="164" font-size="12.5" fill="#3730a3">→ красная линия ползёт вверх</text>
+  <text x="568" y="182" font-size="12.5" fill="#3730a3">(будто обувь «помогает» писать).</text>
+  <text x="568" y="212" font-size="12.5" fill="#3730a3">Смотрим внутри ОДНОГО цвета</text>
+  <text x="568" y="230" font-size="12.5" fill="#3730a3">(один возраст) → облачко плоское,</text>
+  <text x="568" y="248" font-size="12.5" font-weight="700" fill="#4f46e5">связь ≈ 0.</text>
+  <text x="568" y="278" font-size="12.5" fill="#3730a3">Значит обувь ни при чём —</text>
+  <text x="568" y="296" font-size="12.5" fill="#3730a3">и ногу, и грамотность растит</text>
+  <text x="568" y="314" font-size="12.5" font-weight="700" fill="#991b1b">возраст (скрытая переменная).</text>
+
+  <rect x="80" y="388" width="730" height="34" rx="9" fill="#fef9c3" stroke="#eab308" stroke-width="1.5"/>
+  <text x="98" y="410" font-size="13" fill="#713f12">💡 «Контроль на возраст» = сравниваем только ровесников. Тогда мнимая связь исчезает.</text>
+</svg>

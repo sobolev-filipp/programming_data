@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 430" font-family="'Segoe UI',system-ui,sans-serif">
+  <rect x="0" y="0" width="760" height="430" fill="#f7f9fc"/>
+  <text x="380" y="30" font-size="20" font-weight="700" fill="#1f2937" text-anchor="middle">Равномерное распределение — «забор»</text>
+  <text x="380" y="52" font-size="12.5" fill="#64748b" text-anchor="middle">np.random.uniform(0, 10, 1000) → plt.hist(data, bins=20)</text>
+
+  <!-- axes -->
+  <line x1="90" y1="330" x2="700" y2="330" stroke="#475569" stroke-width="2"/>
+  <line x1="90" y1="330" x2="90" y2="90" stroke="#475569" stroke-width="2"/>
+
+  <!-- 20 bars ~equal with jitter -->
+  <g fill="#93c5fd" stroke="#2563eb" stroke-width="1">
+    <rect x="94" y="135" width="26" height="195"/>
+    <rect x="124" y="128" width="26" height="202"/>
+    <rect x="154" y="142" width="26" height="188"/>
+    <rect x="184" y="130" width="26" height="200"/>
+    <rect x="214" y="138" width="26" height="192"/>
+    <rect x="244" y="125" width="26" height="205"/>
+    <rect x="274" y="140" width="26" height="190"/>
+    <rect x="304" y="132" width="26" height="198"/>
+    <rect x="334" y="145" width="26" height="185"/>
+    <rect x="364" y="128" width="26" height="202"/>
+    <rect x="394" y="136" width="26" height="194"/>
+    <rect x="424" y="130" width="26" height="200"/>
+    <rect x="454" y="143" width="26" height="187"/>
+    <rect x="484" y="126" width="26" height="204"/>
+    <rect x="514" y="139" width="26" height="191"/>
+    <rect x="544" y="133" width="26" height="197"/>
+    <rect x="574" y="141" width="26" height="189"/>
+    <rect x="604" y="129" width="26" height="201"/>
+    <rect x="634" y="137" width="26" height="193"/>
+    <rect x="664" y="134" width="26" height="196"/>
+  </g>
+
+  <!-- level line -->
+  <line x1="90" y1="133" x2="700" y2="133" stroke="#dc2626" stroke-width="2" stroke-dasharray="6 4"/>
+  <text x="500" y="124" font-size="12" font-weight="700" fill="#dc2626">примерно одна высота у всех</text>
+
+  <text x="395" y="360" font-size="13" font-weight="700" fill="#334155" text-anchor="middle">Значение (0…10)</text>
+  <text x="58" y="210" font-size="13" font-weight="700" fill="#334155" text-anchor="middle" transform="rotate(-90 58 210)">Сколько чисел</text>
+
+  <rect x="90" y="382" width="610" height="36" rx="9" fill="#fef9c3" stroke="#eab308" stroke-width="1.5"/>
+  <text x="108" y="405" font-size="13" fill="#713f12">💡 Все столбики ≈ равны → каждое значение от 0 до 10 выпадает одинаково часто. Это «равновероятно».</text>
+</svg>

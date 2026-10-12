@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 840 470" font-family="'Segoe UI',system-ui,sans-serif">
+  <rect x="0" y="0" width="840" height="470" fill="#f7f9fc"/>
+  <text x="420" y="32" font-size="22" font-weight="700" fill="#1f2937" text-anchor="middle">Дисперсия и std — по шагам</text>
+
+  <!-- step 1 -->
+  <text x="40" y="78" font-size="13.5" font-weight="700" fill="#4f46e5">Шаг 1. Данные</text>
+  <rect x="40" y="88" width="760" height="40" rx="8" fill="#0f172a"/>
+  <text x="58" y="113" font-size="14" font-family="monospace" fill="#e2e8f0">data = [4, 5, 5, 3, 4, 5, 4, 3, 4, 5]</text>
+
+  <!-- step 2 -->
+  <text x="40" y="160" font-size="13.5" font-weight="700" fill="#4f46e5">Шаг 2. Среднее</text>
+  <rect x="40" y="170" width="760" height="40" rx="8" fill="#0f172a"/>
+  <text x="58" y="195" font-size="14" font-family="monospace" fill="#e2e8f0">mean = (4+5+5+3+4+5+4+3+4+5) / 10  =  </text>
+  <text x="520" y="195" font-size="14" font-family="monospace" fill="#a5b4fc">4.2</text>
+
+  <!-- step 3 -->
+  <text x="40" y="242" font-size="13.5" font-weight="700" fill="#ea580c">Шаг 3. Отклонения от среднего (x − 4.2)</text>
+  <rect x="40" y="252" width="760" height="40" rx="8" fill="#0f172a"/>
+  <text x="58" y="277" font-size="13" font-family="monospace" fill="#fdba74">[-0.2, 0.8, 0.8, -1.2, -0.2, 0.8, -0.2, -1.2, -0.2, 0.8]</text>
+
+  <!-- step 4 -->
+  <text x="40" y="324" font-size="13.5" font-weight="700" fill="#16a34a">Шаг 4. Квадраты отклонений (минусы исчезают)</text>
+  <rect x="40" y="334" width="760" height="40" rx="8" fill="#0f172a"/>
+  <text x="58" y="359" font-size="13" font-family="monospace" fill="#86efac">[0.04, 0.64, 0.64, 1.44, 0.04, 0.64, 0.04, 1.44, 0.04, 0.64]</text>
+
+  <!-- step 5 + 6 -->
+  <rect x="40" y="392" width="370" height="58" rx="10" fill="#e0e7ff" stroke="#4f46e5" stroke-width="2"/>
+  <text x="225" y="416" font-size="13.5" font-weight="700" fill="#3730a3" text-anchor="middle">Шаг 5. Дисперсия = среднее квадратов</text>
+  <text x="225" y="438" font-size="14" font-family="monospace" fill="#3730a3" text-anchor="middle">np.var(data) = 0.56</text>
+
+  <rect x="430" y="392" width="370" height="58" rx="10" fill="#dcfce7" stroke="#16a34a" stroke-width="2"/>
+  <text x="615" y="416" font-size="13.5" font-weight="700" fill="#166534" text-anchor="middle">Шаг 6. std = корень из дисперсии</text>
+  <text x="615" y="438" font-size="14" font-family="monospace" fill="#166534" text-anchor="middle">np.std(data) = √0.56 ≈ 0.75</text>
+
+  <!-- why square callout -->
+  <rect x="528" y="246" width="272" height="52" rx="10" fill="#fef9c3" stroke="#eab308" stroke-width="1.5"/>
+  <text x="544" y="267" font-size="12" fill="#713f12">💡 Сложить сами отклонения нельзя:</text>
+  <text x="544" y="285" font-size="12" font-family="monospace" fill="#713f12">их сумма всегда = 0 (плюсы ↔ минусы)</text>
+</svg>

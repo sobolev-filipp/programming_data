@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 860 360" font-family="'Segoe UI',system-ui,sans-serif">
+  <rect x="0" y="0" width="860" height="360" fill="#f7f9fc"/>
+  <text x="430" y="30" font-size="21" font-weight="700" fill="#1f2937" text-anchor="middle">Корреляция: от +1 до −1 (каждая точка — один объект)</text>
+
+  <!-- panel 1: +1 -->
+  <text x="110" y="70" font-size="15" font-weight="700" fill="#16a34a" text-anchor="middle">r = +1</text>
+  <rect x="50" y="82" width="120" height="130" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.5"/>
+  <g fill="#16a34a"><circle cx="58" cy="203" r="4"/><circle cx="70" cy="191" r="4"/><circle cx="82" cy="179" r="4"/><circle cx="94" cy="167" r="4"/><circle cx="106" cy="155" r="4"/><circle cx="118" cy="143" r="4"/><circle cx="130" cy="131" r="4"/><circle cx="142" cy="119" r="4"/><circle cx="154" cy="107" r="4"/><circle cx="162" cy="95" r="4"/></g>
+  <text x="110" y="232" font-size="11.5" fill="#64748b" text-anchor="middle">растут вместе</text>
+
+  <!-- panel 2: +0.5 -->
+  <text x="262" y="70" font-size="15" font-weight="700" fill="#4f46e5" text-anchor="middle">r = +0.5</text>
+  <rect x="202" y="82" width="120" height="130" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.5"/>
+  <g fill="#4f46e5"><circle cx="212" cy="198" r="4"/><circle cx="228" cy="200" r="4"/><circle cx="236" cy="172" r="4"/><circle cx="252" cy="185" r="4"/><circle cx="262" cy="160" r="4"/><circle cx="276" cy="170" r="4"/><circle cx="284" cy="140" r="4"/><circle cx="298" cy="150" r="4"/><circle cx="306" cy="118" r="4"/><circle cx="314" cy="132" r="4"/></g>
+  <text x="262" y="232" font-size="11.5" fill="#64748b" text-anchor="middle">скорее вместе</text>
+
+  <!-- panel 3: 0 -->
+  <text x="414" y="70" font-size="15" font-weight="700" fill="#64748b" text-anchor="middle">r = 0</text>
+  <rect x="354" y="82" width="120" height="130" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.5"/>
+  <g fill="#94a3b8"><circle cx="372" cy="150" r="4"/><circle cx="400" cy="120" r="4"/><circle cx="420" cy="190" r="4"/><circle cx="388" cy="175" r="4"/><circle cx="440" cy="135" r="4"/><circle cx="410" cy="160" r="4"/><circle cx="460" cy="185" r="4"/><circle cx="366" cy="110" r="4"/><circle cx="446" cy="105" r="4"/><circle cx="430" cy="200" r="4"/></g>
+  <text x="414" y="232" font-size="11.5" fill="#64748b" text-anchor="middle">нет связи</text>
+
+  <!-- panel 4: -0.5 -->
+  <text x="566" y="70" font-size="15" font-weight="700" fill="#ea580c" text-anchor="middle">r = −0.5</text>
+  <rect x="506" y="82" width="120" height="130" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.5"/>
+  <g fill="#ea580c"><circle cx="514" cy="110" r="4"/><circle cx="528" cy="128" r="4"/><circle cx="540" cy="115" r="4"/><circle cx="554" cy="145" r="4"/><circle cx="566" cy="135" r="4"/><circle cx="580" cy="165" r="4"/><circle cx="592" cy="155" r="4"/><circle cx="604" cy="188" r="4"/><circle cx="614" cy="175" r="4"/><circle cx="620" cy="200" r="4"/></g>
+  <text x="566" y="232" font-size="11.5" fill="#64748b" text-anchor="middle">скорее наоборот</text>
+
+  <!-- panel 5: -1 -->
+  <text x="718" y="70" font-size="15" font-weight="700" fill="#dc2626" text-anchor="middle">r = −1</text>
+  <rect x="658" y="82" width="120" height="130" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.5"/>
+  <g fill="#dc2626"><circle cx="666" cy="95" r="4"/><circle cx="678" cy="107" r="4"/><circle cx="690" cy="119" r="4"/><circle cx="702" cy="131" r="4"/><circle cx="714" cy="143" r="4"/><circle cx="726" cy="155" r="4"/><circle cx="738" cy="167" r="4"/><circle cx="750" cy="179" r="4"/><circle cx="762" cy="191" r="4"/><circle cx="770" cy="203" r="4"/></g>
+  <text x="718" y="232" font-size="11.5" fill="#64748b" text-anchor="middle">зеркально</text>
+
+  <rect x="50" y="268" width="728" height="70" rx="12" fill="#eef2ff" stroke="#6366f1" stroke-width="1.5"/>
+  <text x="70" y="294" font-size="13.5" fill="#3730a3">Чем ближе точки к <tspan font-weight="700">прямой линии</tspan>, тем корреляция ближе к ±1. Чем больше «облако» — тем ближе к 0.</text>
+  <text x="70" y="316" font-size="13.5" fill="#3730a3">Знак (+ или −) говорит <tspan font-weight="700">направление</tspan>: «+» — вверх вместе, «−» — одно вверх, другое вниз.</text>
+  <text x="70" y="332" font-size="12" fill="#6366f1">⚠️ r замечает только ПРЯМУЮ линию: кривую (дугу) связь он может показать как 0, хотя связь есть.</text>
+</svg>

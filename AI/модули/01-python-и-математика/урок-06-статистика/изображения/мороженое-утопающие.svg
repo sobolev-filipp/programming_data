@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 860 430" font-family="'Segoe UI',system-ui,sans-serif">
+  <rect x="0" y="0" width="860" height="430" fill="#f7f9fc"/>
+  <text x="430" y="30" font-size="21" font-weight="700" fill="#1f2937" text-anchor="middle">Мороженое и утопающие: корреляция ≠ причина</text>
+
+  <!-- LEFT scatter -->
+  <text x="225" y="62" font-size="13.5" font-weight="700" fill="#334155" text-anchor="middle">Что видно в данных (12 месяцев)</text>
+  <rect x="70" y="78" width="310" height="255" fill="#ffffff" stroke="#e2e8f0" stroke-width="1"/>
+  <line x1="70" y1="333" x2="380" y2="333" stroke="#475569" stroke-width="2"/>
+  <line x1="70" y1="333" x2="70" y2="78" stroke="#475569" stroke-width="2"/>
+  <!-- points -->
+  <g fill="#0ea5e9" stroke="#0369a1" stroke-width="1">
+    <circle cx="75" cy="323" r="5"/><circle cx="77" cy="326" r="5"/><circle cx="82" cy="323" r="5"/>
+    <circle cx="95" cy="318" r="5"/><circle cx="107" cy="310" r="5"/><circle cx="145" cy="278" r="5"/>
+    <circle cx="170" cy="262" r="5"/><circle cx="270" cy="188" r="5"/><circle cx="320" cy="138" r="5"/>
+    <circle cx="370" cy="105" r="5"/>
+  </g>
+  <!-- trend -->
+  <line x1="78" y1="320" x2="372" y2="112" stroke="#dc2626" stroke-width="2" stroke-dasharray="6 4"/>
+  <text x="225" y="356" font-size="12" font-weight="700" fill="#334155" text-anchor="middle">Продажи мороженого →</text>
+  <text x="52" y="205" font-size="12" font-weight="700" fill="#334155" text-anchor="middle" transform="rotate(-90 52 205)">Утонувших →</text>
+  <text x="300" y="300" font-size="12" font-weight="700" fill="#dc2626">r ≈ +0.98</text>
+
+  <!-- RIGHT hidden-variable diagram -->
+  <text x="630" y="62" font-size="13.5" font-weight="700" fill="#334155" text-anchor="middle">Что на самом деле</text>
+  <!-- heat box -->
+  <rect x="540" y="78" width="180" height="44" rx="10" fill="#fef3c7" stroke="#f59e0b" stroke-width="2"/>
+  <text x="630" y="100" font-size="14" font-weight="700" fill="#92400e" text-anchor="middle">☀️ Жара / лето</text>
+  <text x="630" y="116" font-size="10.5" fill="#92400e" text-anchor="middle">скрытая переменная</text>
+  <!-- arrows down -->
+  <line x1="590" y1="122" x2="540" y2="160" stroke="#f59e0b" stroke-width="2.5"/><polygon points="536,163 544,152 548,160" fill="#f59e0b"/>
+  <line x1="670" y1="122" x2="720" y2="160" stroke="#f59e0b" stroke-width="2.5"/><polygon points="724,163 712,160 716,152" fill="#f59e0b"/>
+  <!-- two mid boxes -->
+  <rect x="468" y="166" width="150" height="40" rx="9" fill="#e0e7ff" stroke="#6366f1" stroke-width="1.5"/>
+  <text x="543" y="191" font-size="12" fill="#3730a3" text-anchor="middle">едят мороженое</text>
+  <rect x="648" y="166" width="150" height="40" rx="9" fill="#e0e7ff" stroke="#6366f1" stroke-width="1.5"/>
+  <text x="723" y="191" font-size="12" fill="#3730a3" text-anchor="middle">чаще купаются</text>
+  <!-- arrows down 2 -->
+  <line x1="543" y1="206" x2="543" y2="240" stroke="#6366f1" stroke-width="2.5"/><polygon points="543,244 538,234 548,234" fill="#6366f1"/>
+  <line x1="723" y1="206" x2="723" y2="240" stroke="#6366f1" stroke-width="2.5"/><polygon points="723,244 718,234 728,234" fill="#6366f1"/>
+  <!-- bottom boxes -->
+  <rect x="468" y="246" width="150" height="40" rx="9" fill="#dcfce7" stroke="#16a34a" stroke-width="1.5"/>
+  <text x="543" y="271" font-size="12" fill="#166534" text-anchor="middle">продажи ↑</text>
+  <rect x="648" y="246" width="150" height="40" rx="9" fill="#dcfce7" stroke="#16a34a" stroke-width="1.5"/>
+  <text x="723" y="271" font-size="12" fill="#166534" text-anchor="middle">утонувших ↑</text>
+  <!-- fake link -->
+  <line x1="618" y1="266" x2="648" y2="266" stroke="#dc2626" stroke-width="2" stroke-dasharray="5 3"/>
+  <text x="633" y="310" font-size="11.5" fill="#dc2626" text-anchor="middle">видна «связь»,</text>
+  <text x="633" y="326" font-size="11.5" fill="#dc2626" text-anchor="middle">но прямой стрелки НЕТ</text>
+
+  <rect x="70" y="382" width="728" height="40" rx="10" fill="#fef9c3" stroke="#eab308" stroke-width="1.5"/>
+  <text x="88" y="407" font-size="13" fill="#713f12">💡 Закрой магазин мороженого — утопления не исчезнут. Виновата жара, а не мороженое. Это «скрытая переменная».</text>
+</svg>

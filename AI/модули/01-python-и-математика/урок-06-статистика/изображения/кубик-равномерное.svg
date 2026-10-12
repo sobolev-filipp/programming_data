@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 740 430" font-family="'Segoe UI',system-ui,sans-serif">
+  <rect x="0" y="0" width="740" height="430" fill="#f7f9fc"/>
+  <text x="370" y="30" font-size="20" font-weight="700" fill="#1f2937" text-anchor="middle">Бросаем кубик 6000 раз — равномерное распределение</text>
+  <text x="370" y="52" font-size="12.5" fill="#64748b" text-anchor="middle">каждая грань 1–6 выпадает примерно одинаково часто (~1000 раз)</text>
+
+  <!-- axes -->
+  <line x1="90" y1="330" x2="700" y2="330" stroke="#475569" stroke-width="2"/>
+  <line x1="90" y1="330" x2="90" y2="90" stroke="#475569" stroke-width="2"/>
+
+  <!-- 6 bars with tiny jitter -->
+  <g fill="#93c5fd" stroke="#2563eb" stroke-width="1.5">
+    <rect x="115" y="150" width="70" height="180"/>
+    <rect x="210" y="142" width="70" height="188"/>
+    <rect x="305" y="156" width="70" height="174"/>
+    <rect x="400" y="146" width="70" height="184"/>
+    <rect x="495" y="152" width="70" height="178"/>
+    <rect x="590" y="148" width="70" height="182"/>
+  </g>
+
+  <!-- level line -->
+  <line x1="90" y1="150" x2="700" y2="150" stroke="#dc2626" stroke-width="2" stroke-dasharray="6 4"/>
+  <text x="400" y="140" font-size="12" font-weight="700" fill="#dc2626" text-anchor="middle">уровень ≈ 1000 — у всех одинаковый</text>
+
+  <!-- die faces under bars -->
+  <g font-size="22" font-weight="700" fill="#1e3a8a" text-anchor="middle">
+    <text x="150" y="360">1</text><text x="245" y="360">2</text><text x="340" y="360">3</text>
+    <text x="435" y="360">4</text><text x="530" y="360">5</text><text x="625" y="360">6</text>
+  </g>
+
+  <text x="395" y="388" font-size="13" font-weight="700" fill="#334155" text-anchor="middle">Грань кубика</text>
+  <text x="56" y="210" font-size="13" font-weight="700" fill="#334155" text-anchor="middle" transform="rotate(-90 56 210)">Сколько раз выпало</text>
+
+  <rect x="90" y="400" width="610" height="26" rx="8" fill="#fef9c3" stroke="#eab308" stroke-width="1.5"/>
+  <text x="104" y="418" font-size="12.5" fill="#713f12">💡 Ни одна грань не «любимее» других → распределение равномерное (как ровный забор).</text>
+</svg>
