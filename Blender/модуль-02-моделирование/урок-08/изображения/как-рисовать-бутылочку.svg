@@ -1,0 +1,92 @@
+<svg viewBox="0 0 740 500" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#1A1038"/><stop offset="1" stop-color="#2A1A5E"/>
+    </linearGradient>
+    <linearGradient id="glass" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#2FA8B8"/><stop offset="0.5" stop-color="#BdF0F5"/><stop offset="1" stop-color="#2FA8B8"/>
+    </linearGradient>
+    <radialGradient id="potion" cx="0.5" cy="0.45" r="0.7">
+      <stop offset="0" stop-color="#A7F3D0"/><stop offset="1" stop-color="#10B981"/>
+    </radialGradient>
+    <path id="prof" d="M0,112 L40,110 C56,104 56,60 48,30 C42,8 20,0 16,-18 L14,-66 L22,-70 L22,-80 L12,-80"/>
+  </defs>
+  <rect width="740" height="500" fill="url(#bg)"/>
+
+  <text x="370" y="40" font-family="Segoe UI, Arial, sans-serif" font-size="22" font-weight="700" fill="#E9E5FF" text-anchor="middle">Как нарисовать профиль бутылочки</text>
+
+  <!-- ===== LEFT: drawing the profile ===== -->
+  <g transform="translate(205,250)">
+    <!-- axis -->
+    <line x1="0" y1="-120" x2="0" y2="140" stroke="#EF6A6A" stroke-width="2.5" stroke-dasharray="7 7"/>
+    <text x="6" y="-108" font-family="Segoe UI, Arial, sans-serif" font-size="14" fill="#F4A3A3">ось</text>
+
+    <!-- width double-arrow at the belly -->
+    <g stroke="#FBBF24" stroke-width="2">
+      <line x1="2" y1="48" x2="50" y2="48"/>
+      <polygon points="2,44 -6,48 2,52" fill="#FBBF24" stroke="none"/>
+      <polygon points="50,44 58,48 50,52" fill="#FBBF24" stroke="none"/>
+    </g>
+    <text x="64" y="52" font-family="Segoe UI, Arial, sans-serif" font-size="13.5" fill="#FBBF24">ширина = расстояние от оси</text>
+
+    <!-- profile line -->
+    <use xlink:href="#prof" fill="none" stroke="#38E0A5" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" xmlns:xlink="http://www.w3.org/1999/xlink"/>
+    <!-- draw-on animation -->
+    <path d="M0,112 L40,110 C56,104 56,60 48,30 C42,8 20,0 16,-18 L14,-66 L22,-70 L22,-80 L12,-80"
+          fill="none" stroke="#BDF5E0" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"
+          stroke-dasharray="520" stroke-dashoffset="520">
+      <animate attributeName="stroke-dashoffset" values="520;0;0;520" dur="4.5s" repeatCount="indefinite"/>
+    </path>
+
+    <!-- control points -->
+    <g fill="#BDF5E0" stroke="#0E2A20" stroke-width="1">
+      <circle cx="40" cy="110" r="4"/><circle cx="48" cy="30" r="4"/><circle cx="16" cy="-18" r="4"/>
+      <circle cx="14" cy="-66" r="4"/><circle cx="22" cy="-80" r="4"/>
+    </g>
+    <!-- bottom on axis (closed) -->
+    <circle cx="0" cy="112" r="6" fill="#22C55E" stroke="#fff" stroke-width="1.5"/>
+    <!-- top lip (open mouth) -->
+    <circle cx="12" cy="-80" r="5.5" fill="#60A5FA" stroke="#fff" stroke-width="1.5"/>
+
+    <!-- labels -->
+    <g font-family="Segoe UI, Arial, sans-serif" font-size="13" font-weight="700">
+      <text x="-150" y="116" fill="#4ADE80">дно — на оси</text>
+      <text x="-150" y="112" dy="16" fill="#4ADE80" font-weight="400" font-size="11.5">(закрыто)</text>
+      <text x="30" y="-90" fill="#93C5FD">горлышко</text>
+      <text x="30" y="-90" dy="15" fill="#93C5FD" font-weight="400" font-size="11.5">открытое, узкое</text>
+    </g>
+    <!-- E hint -->
+    <g transform="translate(34,-30)">
+      <rect x="0" y="-12" width="24" height="20" rx="4" fill="#0E1630" stroke="#6EA8FE"/>
+      <text x="12" y="3" font-family="Segoe UI, Arial, sans-serif" font-size="13" font-weight="700" fill="#9CC2FF" text-anchor="middle">E</text>
+      <text x="30" y="3" font-family="Segoe UI, Arial, sans-serif" font-size="12" fill="#9CC2FF">ведём вверх</text>
+    </g>
+  </g>
+
+  <!-- ===== MIDDLE arrow ===== -->
+  <g transform="translate(400,250)">
+    <line x1="-20" y1="0" x2="32" y2="0" stroke="#C7CEEA" stroke-width="4" stroke-linecap="round"/>
+    <polygon points="32,-9 50,0 32,9" fill="#C7CEEA"/>
+    <text x="15" y="-16" font-family="Segoe UI, Arial, sans-serif" font-size="14" font-weight="700" fill="#C7CEEA" text-anchor="middle">Screw 360°</text>
+  </g>
+
+  <!-- ===== RIGHT: revolved glass bottle ===== -->
+  <g transform="translate(560,250)">
+    <line x1="0" y1="-118" x2="0" y2="140" stroke="#5B5496" stroke-width="2" stroke-dasharray="6 8" opacity="0.6"/>
+    <ellipse cx="0" cy="112" rx="34" ry="8" fill="#15102E" opacity="0.5"/>
+    <!-- glass body (full outline) -->
+    <path d="M0,112 L40,110 C56,104 56,60 48,30 C42,8 20,0 16,-18 L14,-66 L22,-70 L22,-80 L12,-80 L-12,-80 L-22,-80 L-22,-70 L-14,-66 L-16,-18 C-20,0 -42,8 -48,30 C-56,60 -56,104 -40,110 L0,112 Z"
+          fill="url(#glass)" stroke="#1A3A42" stroke-width="2" opacity="0.92"/>
+    <!-- potion inside -->
+    <ellipse cx="0" cy="52" rx="42" ry="30" fill="url(#potion)">
+      <animate attributeName="opacity" values="0.75;1;0.75" dur="2.2s" repeatCount="indefinite"/>
+    </ellipse>
+    <!-- glass highlight -->
+    <path d="M-30,30 C-38,55 -36,90 -22,104" fill="none" stroke="#ffffff" stroke-width="4" stroke-linecap="round" opacity="0.4"/>
+    <!-- cork -->
+    <rect x="-11" y="-96" width="22" height="20" rx="4" fill="#C08A4E" stroke="#7A5126" stroke-width="1.5"/>
+    <text x="0" y="135" font-family="Segoe UI, Arial, sans-serif" font-size="13" fill="#A89FE0" text-anchor="middle">бутылочка зелья</text>
+  </g>
+
+  <text x="370" y="480" font-family="Segoe UI, Arial, sans-serif" font-size="15" font-weight="700" fill="#C7CEEA" text-anchor="middle">Рисуем половину силуэта: дно — на оси, горлышко — узкое и открытое. Screw достроит объём.</text>
+</svg>
