@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Игра — Собери скрипт</title>
+<style>
+  :root{--ink:#1f2a52;--yellow:#ffd23f;--blue:#4c97ff;--green:#4cbb5c;--purple:#9966ff;--sound:#cf63cf;--red:#ff6b6b;--orange:#ff8c1a;}
+  *{box-sizing:border-box;font-family:'Comic Sans MS','Segoe UI',system-ui,sans-serif;margin:0;padding:0;}
+  body{min-height:100vh;background:linear-gradient(135deg,#4c97ff,#9966ff);display:flex;align-items:center;justify-content:center;padding:14px;color:var(--ink);}
+  .wrap{width:min(820px,100%);background:#fff;border-radius:26px;box-shadow:0 18px 50px rgba(0,0,0,.3);padding:18px 20px 22px;position:relative;overflow:hidden;}
+  h1{text-align:center;color:#2f6fd0;font-size:27px;margin:2px 0 2px;}
+  .sub{text-align:center;color:#7a86a8;font-size:16px;margin-bottom:10px;}
+  .hud{display:flex;justify-content:space-around;align-items:center;background:#eaf2ff;border-radius:16px;padding:8px 10px;font-size:19px;font-weight:bold;margin-bottom:10px;}
+  .hud span{color:var(--ink);}
+  .stage{position:relative;height:150px;background:linear-gradient(#bfe3ff,#eaf7ff);border-radius:16px;overflow:hidden;border:3px solid #cfe3ff;margin-bottom:10px;}
+  .ground{position:absolute;left:0;right:0;bottom:0;height:26px;background:#bdebc6;}
+  .catpos{position:absolute;bottom:22px;left:30px;transition:transform .4s ease;}
+  #cat{font-size:54px;display:inline-block;transform-origin:50% 80%;}
+  #cat.jump{animation:jmp .5s ease;}
+  #cat.spin{animation:spn .5s linear;}
+  #cat.dance{animation:dnc .5s ease;}
+  #cat.grow{animation:grw .5s ease;}
+  #cat.think{animation:thk .5s ease;}
+  @keyframes jmp{0%,100%{transform:translateY(0)}40%{transform:translateY(-48px)}}
+  @keyframes spn{from{transform:rotate(0)}to{transform:rotate(360deg)}}
+  @keyframes dnc{0%,100%{transform:rotate(0)}25%{transform:rotate(-18deg)}75%{transform:rotate(18deg)}}
+  @keyframes grw{0%,100%{transform:scale(1)}50%{transform:scale(1.5)}}
+  @keyframes thk{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px) rotate(-6deg)}}
+  .bubble{position:absolute;top:8px;left:50%;transform:translateX(-50%);background:#fff;border:3px solid var(--purple);border-radius:14px;padding:6px 14px;font-size:20px;font-weight:bold;color:var(--ink);opacity:0;transition:opacity .2s;}
+  .bubble.show{opacity:1;}
+  .stage.flash{animation:flash .4s;}
+  @keyframes flash{0%,100%{background:linear-gradient(#bfe3ff,#eaf7ff)}50%{background:#ffd0d0}}
+  .label{font-size:16px;color:#7a86a8;margin:4px 0 4px;font-weight:bold;}
+  .goal{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;min-height:46px;}
+  .gchip{background:#fff6d6;border:2px solid var(--yellow);border-radius:12px;padding:6px 12px;font-size:17px;font-weight:bold;color:#6b4e00;display:flex;align-items:center;gap:6px;}
+  .gchip .n{background:var(--orange);color:#fff;border-radius:8px;width:24px;height:24px;display:inline-flex;align-items:center;justify-content:center;font-size:14px;}
+  .slots{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;min-height:50px;margin-bottom:6px;}
+  .slot{width:118px;height:44px;border-radius:12px;border:3px dashed #c3d3ee;display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:bold;color:#9aa4bf;background:#f6f9ff;}
+  .slot.filled{border-style:solid;color:#fff;}
+  .slot.mv{background:var(--blue);border-color:var(--blue);}
+  .slot.lk{background:var(--purple);border-color:var(--purple);}
+  .slot.sd{background:var(--sound);border-color:var(--sound);}
+  .palette{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:8px;}
+  .blk{border:none;border-radius:12px;color:#fff;padding:12px 16px;font-size:18px;font-weight:bold;cursor:pointer;box-shadow:0 5px 0 rgba(0,0,0,.18);transition:transform .08s;display:flex;align-items:center;gap:7px;}
+  .blk:active{transform:translateY(3px);box-shadow:0 2px 0 rgba(0,0,0,.18);}
+  .blk .kn{background:rgba(255,255,255,.35);border-radius:7px;width:22px;height:22px;display:inline-flex;align-items:center;justify-content:center;font-size:13px;}
+  .blk.mv{background:var(--blue);}.blk.lk{background:var(--purple);}.blk.sd{background:var(--sound);}
+  .blk.bad{animation:shake .3s;}
+  @keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-7px)}75%{transform:translateX(7px)}}
+  .timebar{height:14px;background:#eee;border-radius:8px;overflow:hidden;margin-top:12px;}
+  .timefill{height:100%;background:linear-gradient(90deg,var(--green),var(--yellow));width:100%;transition:width .1s linear;}
+  .msg{text-align:center;font-size:19px;font-weight:bold;min-height:26px;margin-top:8px;color:var(--ink);}
+  .run{display:block;margin:10px auto 0;background:var(--green);color:#fff;border:none;border-radius:14px;padding:10px 26px;font-size:20px;font-weight:bold;cursor:pointer;}
+  .start{background:var(--yellow);color:#6b4e00;border:none;border-radius:16px;padding:16px 30px;font-size:24px;font-weight:bold;cursor:pointer;display:block;margin:14px auto;}
+  .hint{text-align:center;color:#9aa4bf;font-size:14px;margin-top:10px;}
+  .stars{font-size:48px;text-align:center;letter-spacing:4px;}
+  .hidden{display:none !important;}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>🧱 Собери скрипт</h1>
+
+  <div id="intro">
+    <p class="sub">Бип говорит, что должен сделать котик. Собери блоки <b>в правильном порядке</b> и запусти программу ▶</p>
+    <div class="stage"><div class="ground"></div><div class="catpos"><span id="cat">🐱</span></div></div>
+    <button class="start" onclick="startGame()">▶ Играть!</button>
+    <p class="hint">Жми блоки мышкой или цифрами на клавиатуре. Без ошибок — серия 🔥 и бонус! Успей, пока не кончилось время.</p>
+  </div>
+
+  <div id="game" class="hidden">
+    <div class="hud">
+      <span>🏆 <b id="score">0</b></span>
+      <span>Раунд <b id="round">1</b></span>
+      <span id="lives">❤️❤️❤️</span>
+    </div>
+    <div class="stage" id="stage">
+      <div class="ground"></div>
+      <div class="bubble" id="bubble"></div>
+      <div class="catpos" id="catpos"><span id="cat2">🐱</span></div>
+    </div>
+    <div class="label">🤖 Бип просит котика:</div>
+    <div class="goal" id="goal"></div>
+    <div class="label">🛠 Твоя стопка (жми блоки по порядку):</div>
+    <div class="slots" id="slots"></div>
+    <div class="palette" id="palette"></div>
+    <div class="timebar"><div class="timefill" id="timefill"></div></div>
+    <div class="msg" id="msg"></div>
+  </div>
+
+  <div id="over" class="hidden">
+    <h1>Игра окончена! 🎉</h1>
+    <div class="stars" id="stars"></div>
+    <p class="sub" id="finalscore"></p>
+    <p class="sub" id="praise"></p>
+    <button class="start" onclick="location.reload()">↺ Ещё разок</button>
+  </div>
+</div>
+
+<script>
+const CMDS = {
+  walk:  {label:'идти',        emoji:'🐾', cls:'mv'},
+  jump:  {label:'прыгнуть',    emoji:'⬆️', cls:'mv'},
+  spin:  {label:'повернуться', emoji:'🔄', cls:'mv'},
+  grow:  {label:'вырасти',     emoji:'🔎', cls:'lk'},
+  dance: {label:'танцевать',   emoji:'💃', cls:'lk'},
+  say:   {label:'говорить',    emoji:'💬', cls:'lk'},
+  think: {label:'думать',      emoji:'💭', cls:'lk'},
+  meow:  {label:'мяукнуть',    emoji:'🔊', cls:'sd'},
+};
+const ALL = Object.keys(CMDS);
+
+let state='intro', score=0, round=1, lives=3, streak=0, mistakes=0;
+let goal=[], fillIdx=0, palette=[], remaining=0, roundTime=0, last=0, rafId=0;
+
+function shuffle(a){for(let i=a.length-1;i>0;i--){const j=Math.random()*(i+1)|0;[a[i],a[j]]=[a[j],a[i]];}return a;}
+function roundLen(){ return Math.min(5, 2 + Math.floor((round-1)/2)); } // 2,2,3,3,4,4,5,5...
+function distractorCount(){ return round<3?1 : round<6?2 : 3; }
+function roundTimeMs(){ return roundLen() * Math.max(2400, 3600 - round*110); }
+
+function startGame(){
+  score=0; round=1; lives=3; streak=0;
+  document.getElementById('intro').classList.add('hidden');
+  document.getElementById('game').classList.remove('hidden');
+  updateHud();
+  startRound();
+  last=0; rafId=requestAnimationFrame(loop);
+}
+
+function updateHud(){
+  document.getElementById('score').textContent=score;
+  document.getElementById('round').textContent=round;
+  document.getElementById('lives').textContent='❤️'.repeat(lives)+'🖤'.repeat(Math.max(0,3-lives));
+}
+
+function startRound(){
+  state='build'; fillIdx=0; mistakes=0;
+  const L=roundLen();
+  // build goal
+  goal=[]; for(let i=0;i<L;i++){ goal.push(ALL[Math.random()*ALL.length|0]); }
+  // palette = unique goal cmds + distractors (not already in goal)
+  const uniq=[...new Set(goal)];
+  const pool=shuffle(ALL.filter(k=>!uniq.includes(k)));
+  palette=shuffle([...uniq, ...pool.slice(0, distractorCount())]);
+  remaining=roundTimeMs(); roundTime=remaining;
+  renderGoal(); renderSlots(); renderPalette();
+  bubble(''); resetCat();
+  document.getElementById('msg').textContent='';
+  updateTime();
+}
+
+function renderGoal(){
+  const g=document.getElementById('goal'); g.innerHTML='';
+  goal.forEach((k,i)=>{
+    const c=CMDS[k];
+    const el=document.createElement('div'); el.className='gchip';
+    el.innerHTML='<span class="n">'+(i+1)+'</span>'+c.emoji+' '+c.label;
+    g.appendChild(el);
+  });
+}
+function renderSlots(){
+  const s=document.getElementById('slots'); s.innerHTML='';
+  goal.forEach((k,i)=>{
+    const el=document.createElement('div'); el.className='slot'; el.id='slot'+i;
+    el.textContent=(i+1);
+    s.appendChild(el);
+  });
+}
+function renderPalette(){
+  const p=document.getElementById('palette'); p.innerHTML='';
+  palette.forEach((k,i)=>{
+    const c=CMDS[k];
+    const b=document.createElement('button');
+    b.className='blk '+c.cls; b.dataset.key=k;
+    b.innerHTML='<span class="kn">'+(i+1)+'</span>'+c.emoji+' '+c.label;
+    b.onclick=()=>pick(k,b);
+    p.appendChild(b);
+  });
+}
+
+function pick(k,btn){
+  if(state!=='build') return;
+  if(k===goal[fillIdx]){
+    const c=CMDS[k];
+    const slot=document.getElementById('slot'+fillIdx);
+    slot.className='slot filled '+c.cls;
+    slot.innerHTML=c.emoji+' '+c.label;
+    fillIdx++;
+    if(fillIdx>=goal.length){ runSequence(); }
+  } else {
+    // wrong block for this position
+    mistakes++;
+    btn.classList.remove('bad'); void btn.offsetWidth; btn.classList.add('bad');
+    remaining=Math.max(0, remaining-700);
+    document.getElementById('msg').textContent='Не тот блок по порядку! Смотри на номера 🔢';
+  }
+}
+
+function resetCat(){
+  const cp=document.getElementById('catpos'); if(cp) cp.style.transform='translateX(0)';
+  const cat=document.getElementById('cat2'); if(cat) cat.className='';
+}
+function bubble(text){
+  const b=document.getElementById('bubble'); if(!b) return;
+  if(text){ b.textContent=text; b.classList.add('show'); }
+  else { b.classList.remove('show'); }
+}
+
+function runSequence(){
+  state='run';
+  document.getElementById('msg').textContent='▶ Запускаем программу…';
+  const cat=document.getElementById('cat2');
+  const cp=document.getElementById('catpos');
+  let i=0, tx=0;
+  function step(){
+    if(i>=goal.length){ finishRound(); return; }
+    const k=goal[i];
+    cat.className='';
+    bubble('');
+    if(k==='walk'){ tx+=30; cp.style.transform='translateX('+tx+'px)'; }
+    else if(k==='jump'){ void cat.offsetWidth; cat.className='jump'; }
+    else if(k==='spin'){ void cat.offsetWidth; cat.className='spin'; }
+    else if(k==='dance'){ void cat.offsetWidth; cat.className='dance'; }
+    else if(k==='grow'){ void cat.offsetWidth; cat.className='grow'; }
+    else if(k==='think'){ void cat.offsetWidth; cat.className='think'; bubble('💭 Хм…'); }
+    else if(k==='say'){ bubble('Привет!'); }
+    else if(k==='meow'){ bubble('Мяу! 🔊'); }
+    i++;
+    setTimeout(step, 560);
+  }
+  step();
+}
+
+function finishRound(){
+  const timeBonus=Math.round(remaining/1000)*2;
+  let comboBonus=0, comboMsg='';
+  if(mistakes===0){ streak++; comboBonus=streak*5; comboMsg=' 🔥 Серия ×'+streak+' (+'+comboBonus+')'; }
+  else { streak=0; }
+  const gained=goal.length*10+timeBonus+comboBonus;
+  score+=gained; updateHud();
+  let m='Готово! 🎉 +'+gained+' очков'+comboMsg;
+  if(round===5) m='🏆 Супер! Уже раунд 5! '+m;
+  if(round===9) m='🏅 Ты мастер скриптов! '+m;
+  document.getElementById('msg').textContent=m;
+  round++;
+  setTimeout(()=>{ if(state!=='over'){ startRound(); } }, 1400);
+}
+
+function loseLife(){
+  lives--; streak=0; updateHud();
+  const st=document.getElementById('stage');
+  st.classList.remove('flash'); void st.offsetWidth; st.classList.add('flash');
+  if(lives<=0){ gameOver(); return; }
+  document.getElementById('msg').textContent='⏰ Время вышло! Пробуем ещё раз.';
+  setTimeout(()=>{ if(state!=='over'){ startRound(); } }, 900);
+  state='wait';
+}
+
+function updateTime(){
+  const pct=roundTime>0?Math.max(0,remaining/roundTime*100):0;
+  const f=document.getElementById('timefill'); if(f) f.style.width=pct+'%';
+}
+
+function loop(ts){
+  if(state==='over') return;
+  if(!last) last=ts;
+  const dt=ts-last; last=ts;
+  if(state==='build'){
+    remaining-=dt;
+    if(remaining<=0){ remaining=0; updateTime(); loseLife(); rafId=requestAnimationFrame(loop); return; }
+    updateTime();
+  }
+  rafId=requestAnimationFrame(loop);
+}
+
+function gameOver(){
+  state='over';
+  document.getElementById('game').classList.add('hidden');
+  document.getElementById('over').classList.remove('hidden');
+  let stars = score>=160?5 : score>=100?4 : score>=60?3 : score>=30?2 : 1;
+  document.getElementById('stars').textContent='⭐'.repeat(stars)+'☆'.repeat(5-stars);
+  document.getElementById('finalscore').textContent='Очков: '+score+' · раундов пройдено: '+(round-1);
+  document.getElementById('praise').textContent = score>=100?'Ты настоящий программист! 🏆' : score>=50?'Отлично собираешь скрипты! 👏' : 'Молодец, что старался! Попробуй ещё! 💪';
+}
+
+document.addEventListener('keydown',e=>{
+  if(state!=='build') return;
+  const n=parseInt(e.key);
+  if(n>=1&&n<=palette.length){ const b=document.querySelectorAll('#palette .blk')[n-1]; if(b) b.click(); }
+});
+</script>
+</body>
+</html>
