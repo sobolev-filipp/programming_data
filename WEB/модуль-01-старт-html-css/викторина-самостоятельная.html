@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Проверь себя — Модуль 1 (с оценкой)</title>
+<style>
+  :root{
+    --bg1:#4f46e5; --bg2:#7c3aed; --card:#ffffff; --ink:#1f2937;
+    --accent:#4f46e5; --ok:#16a34a; --bad:#dc2626; --soft:#eef2ff;
+  }
+  *{box-sizing:border-box;font-family:"Segoe UI",system-ui,sans-serif}
+  body{margin:0;min-height:100vh;display:flex;align-items:center;justify-content:center;
+    background:linear-gradient(135deg,var(--bg1),var(--bg2));padding:20px;color:var(--ink)}
+  .app{background:var(--card);width:min(780px,100%);border-radius:24px;
+    box-shadow:0 25px 60px rgba(0,0,0,.35);padding:34px 34px 28px;position:relative;overflow:hidden}
+  h1{margin:0 0 6px;font-size:25px;text-align:center}
+  .sub{text-align:center;color:#64748b;margin-bottom:20px;font-size:15px}
+  .bar{height:10px;background:var(--soft);border-radius:99px;overflow:hidden;margin-bottom:16px}
+  .bar>i{display:block;height:100%;width:0;background:var(--accent);transition:.4s}
+  .meta{display:flex;justify-content:space-between;font-size:14px;color:#64748b;margin-bottom:14px}
+  .q{font-size:21px;font-weight:700;margin:6px 0 20px;line-height:1.35}
+  .q code{background:#0f172a;color:#e2e8f0;padding:2px 8px;border-radius:6px;font-size:18px}
+  .opts{display:grid;gap:12px}
+  .opt{border:2px solid #e2e8f0;background:#fff;border-radius:14px;padding:14px 16px;font-size:17px;
+    text-align:left;cursor:pointer;transition:.15s;display:flex;align-items:center;gap:12px}
+  .opt:hover{border-color:var(--accent);background:var(--soft);transform:translateY(-2px)}
+  .opt b{background:var(--soft);color:var(--accent);width:30px;height:30px;border-radius:8px;
+    display:flex;align-items:center;justify-content:center;font-size:15px;flex:0 0 auto}
+  .opt span code{background:#0f172a;color:#e2e8f0;padding:1px 6px;border-radius:5px;font-size:15px}
+  .opt.ok{border-color:var(--ok);background:#dcfce7}
+  .opt.ok b{background:var(--ok);color:#fff}
+  .opt.bad{border-color:var(--bad);background:#fee2e2}
+  .opt.bad b{background:var(--bad);color:#fff}
+  .opt:disabled{cursor:default;transform:none}
+  .fb{margin-top:16px;padding:14px 16px;border-radius:12px;font-size:16px;display:none;line-height:1.4}
+  .fb.show{display:block}
+  .fb.good{background:#dcfce7;color:#166534}
+  .fb.no{background:#fee2e2;color:#991b1b}
+  .fb code{background:#0f172a;color:#e2e8f0;padding:1px 6px;border-radius:5px}
+  .btn{margin-top:18px;width:100%;padding:15px;border:0;border-radius:14px;background:var(--accent);
+    color:#fff;font-size:18px;font-weight:700;cursor:pointer;display:none}
+  .btn.show{display:block}
+  .btn:hover{filter:brightness(1.08)}
+  .center{text-align:center}
+  .emoji{font-size:64px}
+  .gradeword{font-size:14px;color:#64748b;text-transform:uppercase;letter-spacing:3px;margin-top:6px}
+  .grade{font-size:92px;font-weight:800;line-height:1;margin:2px 0}
+  .score{font-size:20px;font-weight:700;margin:6px 0 2px}
+  .hint{color:#94a3b8;font-size:13px;text-align:center;margin-top:14px}
+</style>
+</head>
+<body>
+<div class="app" id="app"></div>
+<script>
+/* ВИКТОРИНА К САМОСТОЯТЕЛЬНОЙ · Модуль 1 — все темы (кроме Emmet), с оценкой.
+   ВАЖНО про варианты ответов: длина ответа НЕ должна выдавать правильный.
+   Дети заметили «где больше текста — то и верно», поэтому правильные ответы
+   сделаны разной длины, и у многих вопросов самый ДЛИННЫЙ вариант — НЕВЕРНЫЙ. */
+const QUESTIONS = [
+  {q:"Что отвечает за СОДЕРЖАНИЕ страницы (какой на ней текст и картинки)?",
+   a:["HTML","CSS","Интернет","Мышка"],c:0,
+   e:"HTML — содержание (что есть). CSS — оформление (как выглядит)."},
+  {q:"За что отвечает CSS?",
+   a:["За содержание страницы — какой на ней текст и какие картинки","За оформление","За скорость интернета","За питание компьютера"],c:1,
+   e:"CSS — оформление (цвета, размеры, расположение). Содержание — это HTML."},
+  {q:"Какой тег — ОДИНОЧНЫЙ (непарный)?",
+   a:["&lt;p&gt;","&lt;br&gt;","&lt;h1&gt;","&lt;div&gt;"],c:1,
+   e:"br, hr, img, meta, link — одиночные. p, h1, div — парные."},
+  {q:"Где находится тег &lt;title&gt; и что он делает?",
+   a:["В &lt;head&gt;; это надпись на вкладке браузера","В &lt;body&gt;; это самый крупный и главный заголовок на странице","В &lt;body&gt;; это кнопка","В &lt;head&gt;; это картинка"],c:0,
+   e:"title — в head, это надпись на вкладке. Заголовок на странице — это h1 (в body)."},
+  {q:"Сколько тегов &lt;h1&gt; обычно должно быть на странице?",
+   a:["Один","Сколько захочешь, хоть десять подряд","Минимум пять штук","Ровно три"],c:0,
+   e:"h1 — один, это название страницы. Дальше h2, h3 по важности."},
+  {q:"Как правильно записывается правило CSS?",
+   a:["селектор { свойство: значение; }","значение { селектор: свойство }","свойство = значение","просто пишем цвет без скобок"],c:0,
+   e:"селектор { свойство: значение; } — например h1 { color: red; }."},
+  {q:"Что здесь СЕЛЕКТОР: <code>p { color: blue; }</code>?",
+   a:["color","blue","p","точка с запятой"],c:2,
+   e:"p — кого красим (селектор). color — свойство, blue — значение."},
+  {q:"Какой способ подключить CSS — самый правильный для настоящего сайта?",
+   a:["Писать style в каждом теге по очереди, в каждом свой","Внешний файл style.css через &lt;link&gt;","Тег &lt;style&gt; в &lt;head&gt;","Можно вообще без CSS"],c:1,
+   e:"Внешний style.css через link — один стиль на весь сайт, чистый HTML."},
+  {q:"Что покрасит правило <code>p { color: green; }</code>?",
+   a:["все абзацы на странице","только самый первый абзац","только те абзацы, которым заранее дали специальное имя или класс","ничего, так писать нельзя"],c:0,
+   e:"Селектор по тегу красит ВСЕ такие элементы. Чтобы выбрать только нужные — дают класс."},
+  {q:"Как в CSS написать правило для класса <code>card</code>?",
+   a:["card { }","#card { }",".card { }","&lt;card&gt; { }"],c:2,
+   e:"Класс в CSS — с точкой: .card. Решётка # — это уже id."},
+  {q:"А в HTML как повесить на тег класс <code>hit</code>?",
+   a:["class=\"hit\"","class=\".hit\"","id=\"hit\"","&lt;hit&gt;"],c:0,
+   e:"В HTML — class=\"hit\", без точки. Точка у класса только в CSS."},
+  {q:"Если один тег покрасили двумя способами, что сильнее?",
+   a:["Стиль прямо в теге (inline)","Стиль из внешнего файла","Они складываются вместе","Тот вариант, где больше букв"],c:0,
+   e:"inline-стиль в теге перебивает правило из файла (каскад)."},
+  {q:"Каким свойством задают цвет ТЕКСТА?",
+   a:["color","background-color","text-align","font-size"],c:0,
+   e:"color — цвет текста. background-color — цвет фона."},
+  {q:"А каким свойством задают цвет ФОНА?",
+   a:["background-color","просто color","свойство fill, как в программах для рисования","background-text"],c:0,
+   e:"background-color — цвет фона. color — цвет текста."},
+  {q:"Что делает <code>text-align: center;</code>?",
+   a:["Ставит текст по центру","Делает буквы жирными и крупными одновременно","Красит текст в центральный цвет","Выравнивает картинки по вертикали"],c:0,
+   e:"text-align — выравнивание текста: left, center, right."},
+  {q:"Тег &lt;img&gt; — какой?",
+   a:["Одиночный (непарный)","Парный, нужен закрывающий &lt;/img&gt;","Это не тег, а свойство CSS","Парный, как &lt;p&gt;"],c:0,
+   e:"img одиночный: пишется один раз, без закрывающего тега."},
+  {q:"Что указывает атрибут <code>src</code> у картинки?",
+   a:["Путь к файлу картинки","Текст-замену на случай, если картинка не загрузится","Ширину картинки в пикселях","Цвет рамки вокруг картинки"],c:0,
+   e:"src — путь к файлу. alt — текст-замена, width — ширина."},
+  {q:"Картинка не загрузилась, но у неё есть <code>alt</code>. Что покажет браузер?",
+   a:["текст из alt","большую ошибку на весь экран","случайную картинку, скачанную из интернета","ничего, и вся страница сломается"],c:0,
+   e:"alt — текст-замена: он виден, если файл не найден, и его читают программы для незрячих."},
+  {q:"Как задавать размер картинки, чтобы она не исказилась?",
+   a:["Только ширину (width)","Только высоту","И ширину, и высоту наугад, покрупнее","Размер картинки вообще нельзя менять"],c:0,
+   e:"Задаёшь только ширину — высота подстроится, пропорции сохранятся."},
+  {q:"Как сделать круглую аватарку из квадратной картинки?",
+   a:["border-radius: 50%","border: circle","width: 50%","никак, кругом сделать нельзя"],c:0,
+   e:"border-radius: 50% превращает квадратную картинку в круг."},
+  {q:"Как сделать картинку кликабельной (ссылкой)?",
+   a:["Обернуть &lt;img&gt; в тег &lt;a&gt;","Дописать атрибут href прямо внутрь тега &lt;img&gt;","Написать link=\"...\" у картинки","Картинку нельзя сделать ссылкой"],c:0,
+   e:"&lt;a href=\"...\"&gt;&lt;img&gt;&lt;/a&gt; — картинка внутри ссылки."},
+  {q:"Тег &lt;span&gt; — это обёртка для чего?",
+   a:["кусочка текста внутри строки","целого раздела страницы во всю ширину","подключения файла стилей","картинки с подписью"],c:0,
+   e:"span — строчный, для части текста. div — блочный контейнер во всю ширину."},
+  {q:"Что означает пробел в селекторе <code>.gallery img</code>?",
+   a:["img, которые находятся ВНУТРИ .gallery","и .gallery, и все img по отдельности на всей странице","вообще все картинки сайта","ошибку: пробел ставить нельзя"],c:0,
+   e:"Пробел = вложенность: только картинки внутри .gallery, снаружи не тронет."},
+  {q:"Какой цвет даёт запись <code>rgb(255, 0, 0)</code>?",
+   a:["красный","зелёный","смесь всех цветов сразу — получается белый","чёрный, ведь там есть нули"],c:0,
+   e:"RGB — красный, зелёный, синий (0–255). 255,0,0 — только красный на максимум."},
+  {q:"Что означает последнее число в <code>rgba(0, 0, 0, 0.5)</code>?",
+   a:["прозрачность (0 — прозрачный, 1 — плотный)","насколько крупный шрифт в пикселях у этого цвета","порядковый номер цвета в палитре","яркость экрана монитора"],c:0,
+   e:"Четвёртое число (alpha) — прозрачность: 0 невидимо, 1 плотно."},
+  {q:"Какое значение <code>display</code> ставит блоки В РЯД, но позволяет задать им ширину и отступы?",
+   a:["inline-block","block, когда каждый элемент идёт с новой строки","none","inline, но тогда ширина не работает"],c:0,
+   e:"inline-block — в ряд и слушается размеров. Именно для карточек в линию."},
+  {q:"Три карточки с классом <code>card</code>. Что задаёт этот общий класс?",
+   a:["общий стиль для всех (размер, отступы, скругление)","ошибку, ведь двух одинаковых классов не бывает","уникальное имя, которое можно дать лишь одному элементу на всей странице","цвет фона всей страницы"],c:0,
+   e:"Общее — в .card, а отличие (цвет) — в маленьком классе .c1. Классы пишут через пробел."},
+  {q:"Чем <code>id</code> отличается от класса?",
+   a:["id — для одного уникального элемента","id можно повесить на сколько угодно элементов, а класс только на один-единственный","между ними вообще нет никакой разницы","id работает только в &lt;head&gt;"],c:0,
+   e:"id уникален (один на странице), с решёткой. Класс можно вешать на многих."},
+  {q:"Каким свойством делают текст ЖИРНЫМ?",
+   a:["font-weight","font-style","text-shadow","letter-spacing"],c:0,
+   e:"font-weight: bold (или 700). font-style: italic — это курсив."},
+  {q:"Что делает <code>font-style: italic;</code>?",
+   a:["наклоняет буквы — делает курсив","делает буквы жирными и крупными сразу","растягивает расстояние между буквами","убирает подчёркивание у ссылок"],c:0,
+   e:"italic — курсив (наклонный). Жирный — это font-weight."},
+  {q:"Как убрать подчёркивание у ссылки?",
+   a:["text-decoration: none","text-align: none","underline: off","font-style: normal"],c:0,
+   e:"text-decoration: none убирает линию-подчёркивание у ссылки."},
+  {q:"Когда срабатывает правило <code>.btn:hover</code>?",
+   a:["когда на кнопку навели мышь","когда страница только загрузилась и ещё ничего не трогали","каждые пять секунд само по себе","когда кнопку удалили со страницы"],c:0,
+   e:":hover — стиль при наведении курсора. Частый приём для кнопок и ссылок."},
+  {q:"Что означает <code>width: 100%</code> у блока?",
+   a:["во всю ширину родителя","ровно 100 пикселей, всегда одинаково на любом экране","сто одинаковых блоков подряд","высоту сто пикселей"],c:0,
+   e:"% — доля от родителя. 100% — на всю ширину родителя. px — жёсткий размер."},
+  {q:"Что лучше использовать, чтобы по клику ПЕРЕЙТИ на другую страницу?",
+   a:["ссылку &lt;a&gt;, оформленную как кнопка","тег &lt;button&gt; — он сам перенесёт на другую страницу без всякой ссылки","тег &lt;hr&gt;","тег &lt;title&gt;"],c:0,
+   e:"Для перехода — ссылка-кнопка (a). button сам никуда не ведёт (ему нужен JS)."},
+  {q:"Что произойдёт, если забыть <code>&lt;meta charset=\"UTF-8\"&gt;</code>?",
+   a:["русские буквы могут превратиться в «кракозябры»","страница станет чёрно-белой","пропадут все картинки","браузер не откроет файл совсем"],c:0,
+   e:"charset=UTF-8 отвечает за правильное отображение русских букв."},
+];
+
+let i=0, score=0, locked=false;
+const app=document.getElementById('app');
+
+function shuffle(){for(let k=QUESTIONS.length-1;k>0;k--){const j=Math.floor(Math.random()*(k+1));[QUESTIONS[k],QUESTIONS[j]]=[QUESTIONS[j],QUESTIONS[k]];}for(const Q of QUESTIONS){const cc=Q.a[Q.c];for(let k=Q.a.length-1;k>0;k--){const j=Math.floor(Math.random()*(k+1));[Q.a[k],Q.a[j]]=[Q.a[j],Q.a[k]];}Q.c=Q.a.indexOf(cc);}}
+shuffle();
+
+function render(){
+  const Q=QUESTIONS[i];
+  app.innerHTML=`
+    <h1>📝 Проверь себя: весь Модуль 1</h1>
+    <div class="sub">Все темы модуля (кроме Emmet) · в конце выставим оценку</div>
+    <div class="bar"><i style="width:${(i/QUESTIONS.length)*100}%"></i></div>
+    <div class="meta"><span>Вопрос ${i+1} из ${QUESTIONS.length}</span><span>⭐ Верных: ${score}</span></div>
+    <div class="q">${Q.q}</div>
+    <div class="opts" id="opts">
+      ${Q.a.map((t,n)=>`<button class="opt" data-n="${n}"><b>${n+1}</b><span>${t}</span></button>`).join('')}
+    </div>
+    <div class="fb" id="fb"></div>
+    <button class="btn" id="next">${i===QUESTIONS.length-1?'Показать оценку →':'Следующий вопрос →'}</button>
+    <div class="hint">Можно отвечать клавишами 1–4</div>`;
+  locked=false;
+  document.querySelectorAll('.opt').forEach(b=>b.onclick=()=>choose(+b.dataset.n));
+  document.getElementById('next').onclick=next;
+}
+
+function choose(n){
+  if(locked) return; locked=true;
+  const Q=QUESTIONS[i];
+  const opts=[...document.querySelectorAll('.opt')];
+  opts.forEach(b=>b.disabled=true);
+  opts[Q.c].classList.add('ok');
+  const fb=document.getElementById('fb');
+  if(n===Q.c){ score++; fb.className='fb show good'; fb.innerHTML='✅ Верно! '+Q.e; }
+  else { opts[n].classList.add('bad'); fb.className='fb show no'; fb.innerHTML='❌ Не совсем. '+Q.e; }
+  document.querySelector('.meta').children[1].textContent='⭐ Верных: '+score;
+  document.getElementById('next').classList.add('show');
+}
+
+function next(){ i++; if(i<QUESTIONS.length) render(); else result(); }
+
+function result(){
+  const pct=Math.round(score/QUESTIONS.length*100);
+  let grade,em,msg,color;
+  if(pct>=90){grade=5;em='🏆';color='#16a34a';msg='Отлично! Ты уверенно знаешь весь первый модуль.';}
+  else if(pct>=70){grade=4;em='🎉';color='#16a34a';msg='Хорошо! Темы освоены — повтори пару мелочей, и будет 5.';}
+  else if(pct>=50){grade=3;em='👍';color='#f59e0b';msg='Нормально. Загляни в итого.md и справочник по слабым темам и попробуй ещё.';}
+  else {grade=2;em='💪';color='#dc2626';msg='Пока рановато. Повтори уроки модуля и пройди викторину снова — всё получится!';}
+  app.innerHTML=`
+    <div class="center">
+      <div class="emoji">${em}</div>
+      <div class="gradeword">Твоя оценка</div>
+      <div class="grade" style="color:${color}">${grade}</div>
+      <div class="score">${score} из ${QUESTIONS.length} верных · ${pct}%</div>
+      <div class="sub">${msg}</div>
+      <button class="btn show" id="again">🔁 Пройти заново</button>
+    </div>`;
+  document.getElementById('again').onclick=()=>{i=0;score=0;shuffle();render();};
+}
+
+document.addEventListener('keydown',e=>{
+  if(['1','2','3','4'].includes(e.key)){ const b=document.querySelector(`.opt[data-n="${+e.key-1}"]`); if(b&&!b.disabled) choose(+e.key-1); }
+  if(e.key==='Enter'){ const nb=document.getElementById('next'); if(nb&&nb.classList.contains('show')) next(); }
+});
+
+render();
+</script>
+</body>
+</html>
