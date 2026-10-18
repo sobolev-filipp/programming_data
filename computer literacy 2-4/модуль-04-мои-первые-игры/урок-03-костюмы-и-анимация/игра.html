@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Игра — Продолжи анимацию</title>
+<style>
+  :root{--ink:#1f2a52;--yellow:#ffd23f;--blue:#4c97ff;--green:#4cbb5c;--purple:#9966ff;--orange:#ff8c1a;--red:#ff6b6b;}
+  *{box-sizing:border-box;font-family:'Comic Sans MS','Segoe UI',system-ui,sans-serif;margin:0;padding:0;}
+  body{min-height:100vh;background:linear-gradient(135deg,#9966ff,#ff8c1a);display:flex;align-items:center;justify-content:center;padding:14px;color:var(--ink);}
+  .wrap{width:min(760px,100%);background:#fff;border-radius:26px;box-shadow:0 18px 50px rgba(0,0,0,.3);padding:18px 20px 22px;position:relative;overflow:hidden;}
+  h1{text-align:center;color:#7a4fd6;font-size:27px;margin:2px 0;}
+  .sub{text-align:center;color:#7a76a0;font-size:16px;margin-bottom:10px;}
+  .hud{display:flex;justify-content:space-around;align-items:center;background:#f1ecfe;border-radius:16px;padding:8px 10px;font-size:19px;font-weight:bold;margin-bottom:10px;}
+  .film{display:flex;gap:8px;justify-content:center;align-items:center;background:#241546;border-radius:16px;padding:14px 10px;margin-bottom:6px;flex-wrap:wrap;min-height:84px;}
+  .cell{width:56px;height:56px;border-radius:10px;background:#fff;display:flex;align-items:center;justify-content:center;font-size:34px;box-shadow:inset 0 0 0 2px #3a2a66;}
+  .cell.q{background:#ffe08a;box-shadow:inset 0 0 0 3px var(--orange);font-size:30px;color:#6b4e00;}
+  .dots{color:#9c8cd6;font-size:28px;font-weight:bold;}
+  .label{font-size:16px;color:#7a76a0;margin:6px 0;font-weight:bold;text-align:center;}
+  .choices{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:6px;}
+  .ch{width:72px;height:72px;border-radius:16px;border:none;background:#f1ecfe;font-size:40px;cursor:pointer;box-shadow:0 5px 0 rgba(0,0,0,.14);transition:transform .08s;}
+  .ch:active{transform:translateY(3px);box-shadow:0 2px 0 rgba(0,0,0,.14);}
+  .ch.bad{animation:shake .3s;}
+  @keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-7px)}75%{transform:translateX(7px)}}
+  .timebar{height:14px;background:#eee;border-radius:8px;overflow:hidden;margin-top:12px;}
+  .timefill{height:100%;background:linear-gradient(90deg,var(--green),var(--yellow));width:100%;}
+  .msg{text-align:center;font-size:19px;font-weight:bold;min-height:26px;margin-top:8px;color:var(--ink);}
+  .start{background:var(--yellow);color:#6b4e00;border:none;border-radius:16px;padding:16px 30px;font-size:24px;font-weight:bold;cursor:pointer;display:block;margin:14px auto;}
+  .hint{text-align:center;color:#9a96b8;font-size:14px;margin-top:10px;}
+  .stars{font-size:48px;text-align:center;letter-spacing:4px;}
+  .hidden{display:none !important;}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>🎞 Продолжи анимацию</h1>
+
+  <div id="intro">
+    <p class="sub">Киноплёнка повторяет узор из кадров. Угадай, <b>какой кадр следующий</b>, и выбери его!</p>
+    <div class="film"><div class="cell">🧍</div><div class="cell">🚶</div><div class="cell">🧍</div><div class="cell">🚶</div><div class="cell q">?</div></div>
+    <button class="start" onclick="startGame()">▶ Играть!</button>
+    <p class="hint">Жми нужный кадр мышкой или клавишами 1 · 2 · 3 · 4. Успей, пока идёт время!</p>
+  </div>
+
+  <div id="game" class="hidden">
+    <div class="hud">
+      <span>🏆 <b id="score">0</b></span>
+      <span>Уровень <b id="level">1</b></span>
+      <span id="lives">❤️❤️❤️</span>
+    </div>
+    <div class="film" id="film"></div>
+    <div class="label">Какой кадр продолжит узор? 👇</div>
+    <div class="choices" id="choices"></div>
+    <div class="timebar"><div class="timefill" id="timefill"></div></div>
+    <div class="msg" id="msg"></div>
+  </div>
+
+  <div id="over" class="hidden">
+    <h1>Игра окончена! 🎉</h1>
+    <div class="stars" id="stars"></div>
+    <p class="sub" id="finalscore"></p>
+    <p class="sub" id="praise"></p>
+    <button class="start" onclick="location.reload()">↺ Ещё разок</button>
+  </div>
+</div>
+
+<script>
+const POSES = ['🧍','🚶','🏃','🤸','🙆','🧎','🕺','🙌','🤾','🧗'];
+
+let state='intro', score=0, level=1, lives=3, combo=0, correctStreak=0;
+let pattern=[], shown=[], remaining=0, pickTime=0, last=0, rafId=0;
+
+function shuffle(a){for(let i=a.length-1;i>0;i--){const j=Math.random()*(i+1)|0;[a[i],a[j]]=[a[j],a[i]];}return a;}
+function patternLen(){ return Math.min(4, 2 + Math.floor((level-1)/1)); } // 2,3,4,4...
+function pickTimeMs(){ return Math.max(2600, 5500 - level*350); }
+
+function startGame(){
+  score=0; level=1; lives=3; combo=0; correctStreak=0;
+  document.getElementById('intro').classList.add('hidden');
+  document.getElementById('game').classList.remove('hidden');
+  updateHud(); newPattern();
+  last=0; rafId=requestAnimationFrame(loop);
+}
+function updateHud(){
+  document.getElementById('score').textContent=score;
+  document.getElementById('level').textContent=level;
+  document.getElementById('lives').textContent='❤️'.repeat(lives)+'🖤'.repeat(Math.max(0,3-lives));
+}
+
+function newPattern(){
+  const p=patternLen();
+  const pool=shuffle([...POSES]).slice(0, Math.max(p+1,3));
+  pattern=[]; for(let i=0;i<p;i++) pattern.push(pool[i % pool.length]);
+  // ensure not all identical
+  if(new Set(pattern).size===1) pattern[p-1]=pool[(0+1)%pool.length];
+  shown = pattern.concat(pattern.slice(0, Math.min(p, 2))); // show ~1.5 repeats
+  nextPick();
+}
+
+function nextPick(){
+  state='play';
+  renderFilm(); renderChoices();
+  remaining=pickTimeMs(); pickTime=remaining; updateTime();
+  document.getElementById('msg').textContent='';
+}
+
+function renderFilm(){
+  const f=document.getElementById('film'); f.innerHTML='';
+  const tail=shown.slice(-7);
+  if(shown.length>7){ const d=document.createElement('div'); d.className='dots'; d.textContent='…'; f.appendChild(d); }
+  tail.forEach(p=>{ const c=document.createElement('div'); c.className='cell'; c.textContent=p; f.appendChild(c); });
+  const q=document.createElement('div'); q.className='cell q'; q.textContent='?'; f.appendChild(q);
+}
+
+function correctNext(){ return pattern[shown.length % pattern.length]; }
+
+function renderChoices(){
+  const right=correctNext();
+  const others=shuffle(POSES.filter(p=>p!==right)).slice(0,3);
+  const opts=shuffle([right, ...others]);
+  const box=document.getElementById('choices'); box.innerHTML='';
+  opts.forEach((p,i)=>{
+    const b=document.createElement('button');
+    b.className='ch'; b.textContent=p; b.dataset.pose=p;
+    b.onclick=()=>pick(p,b);
+    box.appendChild(b);
+  });
+}
+
+function pick(p,btn){
+  if(state!=='play') return;
+  if(p===correctNext()){
+    shown.push(p);
+    combo++; correctStreak++;
+    const gained=5+Math.min(combo,6);
+    score+=gained; updateHud();
+    document.getElementById('msg').textContent='✅ Верно! +'+gained+(combo>2?' 🔥 серия '+combo:'');
+    state='wait';
+    if(correctStreak % 6 === 0){ level++; updateHud(); setTimeout(()=>{ if(state!=='over'){ document.getElementById('msg').textContent='🏅 Уровень '+level+'!'; newPattern(); } }, 700); }
+    else { setTimeout(()=>{ if(state!=='over') nextPick(); }, 500); }
+  } else {
+    btn.classList.remove('bad'); void btn.offsetWidth; btn.classList.add('bad');
+    combo=0;
+    loseLife('Не тот кадр! Смотри на узор 🔁');
+  }
+}
+
+function loseLife(text){
+  lives--; combo=0; updateHud();
+  if(lives<=0){ gameOver(); return; }
+  document.getElementById('msg').textContent=text||'Мимо!';
+  state='wait';
+  setTimeout(()=>{ if(state!=='over') nextPick(); }, 800);
+}
+
+function updateTime(){
+  const pct=pickTime>0?Math.max(0,remaining/pickTime*100):0;
+  const f=document.getElementById('timefill'); if(f) f.style.width=pct+'%';
+}
+
+function loop(ts){
+  if(state==='over') return;
+  if(!last) last=ts;
+  const dt=ts-last; last=ts;
+  if(state==='play'){
+    remaining-=dt;
+    if(remaining<=0){ remaining=0; updateTime(); loseLife('⏰ Время вышло!'); rafId=requestAnimationFrame(loop); return; }
+    updateTime();
+  }
+  rafId=requestAnimationFrame(loop);
+}
+
+function gameOver(){
+  state='over';
+  document.getElementById('game').classList.add('hidden');
+  document.getElementById('over').classList.remove('hidden');
+  let stars = score>=140?5 : score>=90?4 : score>=55?3 : score>=25?2 : 1;
+  document.getElementById('stars').textContent='⭐'.repeat(stars)+'☆'.repeat(5-stars);
+  document.getElementById('finalscore').textContent='Очков: '+score+' · уровень: '+level;
+  document.getElementById('praise').textContent = score>=90?'Ты видишь любой узор! 🏆' : score>=45?'Отлично продолжаешь анимацию! 👏' : 'Молодец, тренируйся ещё! 💪';
+}
+
+document.addEventListener('keydown',e=>{
+  if(state!=='play') return;
+  const n=parseInt(e.key);
+  if(n>=1&&n<=4){ const b=document.querySelectorAll('#choices .ch')[n-1]; if(b) b.click(); }
+});
+</script>
+</body>
+</html>

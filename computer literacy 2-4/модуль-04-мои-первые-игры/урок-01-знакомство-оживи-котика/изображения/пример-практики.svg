@@ -1,0 +1,51 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 330" font-family="'Segoe UI',system-ui,sans-serif">
+  <defs>
+    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#bfe3ff"/><stop offset="1" stop-color="#eaf7ff"/>
+    </linearGradient>
+  </defs>
+  <rect x="0" y="0" width="640" height="330" fill="#f5f7fb"/>
+  <text x="320" y="32" font-size="20" font-weight="800" fill="#1f2937" text-anchor="middle">🎯 Примерно что получится — а герой у тебя СВОЙ!</text>
+  <text x="320" y="54" font-size="13" fill="#64748b" text-anchor="middle">Герой сам ходит по сцене + отвечает надписью по клику (без звука)</text>
+
+  <!-- stage -->
+  <rect x="30" y="72" width="580" height="210" rx="16" fill="url(#sky)" stroke="#cbd5e1" stroke-width="2"/>
+  <rect x="30" y="246" width="580" height="36" rx="0" fill="#8fd16a"/>
+  <rect x="30" y="246" width="580" height="8" fill="#79c057"/>
+  <!-- green flag badge -->
+  <g transform="translate(48,90)">
+    <rect x="-4" y="-14" width="64" height="24" rx="8" fill="#fff" stroke="#22c55e" stroke-width="2"/>
+    <path d="M4 -10 l0 16" stroke="#16a34a" stroke-width="3" stroke-linecap="round"/>
+    <path d="M6 -10 l14 4 l-14 4 z" fill="#22c55e"/>
+    <text x="26" y="3" font-size="11" font-weight="700" fill="#16a34a">СТАРТ</text>
+  </g>
+
+  <!-- hero 1: dog -->
+  <g transform="translate(150,235)">
+    <g transform="translate(-6,-78)"><rect x="-44" y="0" width="100" height="34" rx="12" fill="#fff" stroke="#9966ff" stroke-width="2"/>
+      <path d="M-28 34 l-6 12 l16 -12 z" fill="#fff" stroke="#9966ff" stroke-width="2"/>
+      <text x="6" y="22" font-size="13" font-weight="700" fill="#334155" text-anchor="middle">Гав! Поиграем?</text></g>
+    <text x="0" y="0" font-size="48" text-anchor="middle">🐶</text>
+    <text x="0" y="24" font-size="11" fill="#475569" text-anchor="middle">ходит туда-сюда</text>
+  </g>
+
+  <!-- hero 2: robot -->
+  <g transform="translate(330,235)">
+    <g transform="translate(-6,-82)"><rect x="-52" y="0" width="112" height="34" rx="12" fill="#fff" stroke="#4c97ff" stroke-width="2"/>
+      <path d="M-30 34 l-6 12 l16 -12 z" fill="#fff" stroke="#4c97ff" stroke-width="2"/>
+      <text x="4" y="22" font-size="12" font-weight="700" fill="#334155" text-anchor="middle">Бип-боп, на страже</text></g>
+    <text x="0" y="0" font-size="48" text-anchor="middle">🤖</text>
+    <text x="0" y="24" font-size="11" fill="#475569" text-anchor="middle">следит за мышкой</text>
+  </g>
+
+  <!-- hero 3: dino -->
+  <g transform="translate(510,235)">
+    <g transform="translate(-6,-78)"><rect x="-46" y="0" width="100" height="34" rx="12" fill="#fff" stroke="#37c871" stroke-width="2"/>
+      <path d="M-28 34 l-6 12 l16 -12 z" fill="#fff" stroke="#37c871" stroke-width="2"/>
+      <text x="4" y="22" font-size="13" font-weight="700" fill="#334155" text-anchor="middle">Я добрый дино!</text></g>
+    <text x="0" y="0" font-size="48" text-anchor="middle">🦖</text>
+    <text x="0" y="24" font-size="11" fill="#475569" text-anchor="middle">топает по сцене</text>
+  </g>
+
+  <text x="320" y="310" font-size="13" fill="#16a34a" font-weight="700" text-anchor="middle">👆 Щёлкни по герою → он покажет СВОЮ надпись. Придумай своего!</text>
+</svg>

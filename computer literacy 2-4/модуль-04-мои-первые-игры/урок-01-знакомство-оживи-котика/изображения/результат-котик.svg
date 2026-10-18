@@ -79,7 +79,7 @@
     <animate attributeName="opacity" values="0;0;1;1;0;0" keyTimes="0;0.6;0.65;0.8;0.85;1" dur="6s" repeatCount="indefinite"/>
     <rect x="0" y="0" width="80" height="30" rx="14" fill="#fff" stroke="#94a3b8" stroke-width="1.5"/>
     <path d="M14 30 l-6 12 l18 -12 z" fill="#fff" stroke="#94a3b8" stroke-width="1.5"/>
-    <text x="40" y="20" font-size="14" font-weight="700" fill="#334155" text-anchor="middle">Мяу! 🔊</text>
+    <text x="40" y="20" font-size="14" font-weight="700" fill="#334155" text-anchor="middle">Мяу!</text>
   </g>
 
   <!-- ================= SCRIPT preview ================= -->
@@ -103,6 +103,6 @@
       <rect x="0" y="158" width="152" height="12" rx="6" fill="#ff8c1a"/>
     </g>
     <text x="0" y="196" font-size="11" font-weight="500" fill="#94a3b8">клик по котику →</text>
-    <text x="0" y="212" font-size="11" font-weight="500" fill="#94a3b8">играть звук «Мяу» 🔊</text>
+    <text x="0" y="212" font-size="11" font-weight="500" fill="#94a3b8">говорить «Мяу!»</text>
   </g>
 </svg>
