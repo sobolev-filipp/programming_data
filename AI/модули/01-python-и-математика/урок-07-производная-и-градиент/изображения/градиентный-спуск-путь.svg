@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 700 460" font-family="'Segoe UI',system-ui,sans-serif">
+  <rect x="0" y="0" width="700" height="460" fill="#f7f9fc"/>
+  <text x="350" y="30" font-size="20" font-weight="700" fill="#1f2937" text-anchor="middle">Градиентный спуск: «шарик» скатывается в минимум</text>
+  <text x="350" y="52" font-size="12.5" fill="#64748b" text-anchor="middle">старт (5, 7) → каждый шаг против градиента → дно (0, 0)</text>
+
+  <!-- contours -->
+  <g fill="none" stroke="#c7d2fe" stroke-width="2">
+    <circle cx="300" cy="250" r="190"/><circle cx="300" cy="250" r="140"/><circle cx="300" cy="250" r="95"/><circle cx="300" cy="250" r="55"/><circle cx="300" cy="250" r="25"/>
+  </g>
+
+  <!-- path -->
+  <polyline points="410,96 388,127 370,151 356,171 345,187 336,200 329,210 323,218 318,224 314,230 310,236 300,250" fill="none" stroke="#dc2626" stroke-width="2.5" stroke-dasharray="1 0"/>
+  <g fill="#dc2626">
+    <circle cx="410" cy="96" r="6"/><circle cx="388" cy="127" r="5"/><circle cx="370" cy="151" r="4.5"/><circle cx="356" cy="171" r="4"/><circle cx="345" cy="187" r="3.6"/><circle cx="336" cy="200" r="3.2"/><circle cx="329" cy="210" r="2.8"/><circle cx="323" cy="218" r="2.5"/>
+  </g>
+
+  <!-- start / min -->
+  <text x="420" y="92" font-size="12.5" font-weight="700" fill="#991b1b">старт (5, 7)</text>
+  <circle cx="300" cy="250" r="6" fill="#16a34a"/>
+  <text x="300" y="272" font-size="12" font-weight="700" fill="#166534" text-anchor="middle">минимум (0, 0)</text>
+
+  <!-- step arrows note -->
+  <text x="430" y="150" font-size="11.5" fill="#dc2626">большие шаги</text>
+  <text x="340" y="300" font-size="11.5" fill="#dc2626" text-anchor="middle">у дна шаги мельче</text>
+
+  <!-- code panel -->
+  <rect x="470" y="300" width="210" height="110" rx="12" fill="#0f172a"/>
+  <text x="488" y="328" font-size="13" font-family="monospace" fill="#86efac">цикл спуска:</text>
+  <text x="488" y="354" font-size="12.5" font-family="monospace" fill="#e2e8f0">grad = gradient(f, p)</text>
+  <text x="488" y="378" font-size="12.5" font-family="monospace" fill="#fca5a5">p = p − lr * grad</text>
+  <text x="488" y="400" font-size="11.5" font-family="monospace" fill="#a5b4fc">(минус = идём вниз)</text>
+
+  <rect x="30" y="420" width="650" height="30" rx="8" fill="#fef9c3" stroke="#eab308" stroke-width="1.5"/>
+  <text x="46" y="440" font-size="12.5" fill="#713f12">💡 Чем ближе к минимуму, тем меньше градиент → тем короче шаги. Так шарик плавно «тормозит» у дна.</text>
+</svg>

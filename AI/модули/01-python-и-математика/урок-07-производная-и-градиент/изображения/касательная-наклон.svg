@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 430" font-family="'Segoe UI',system-ui,sans-serif">
+  <rect x="0" y="0" width="720" height="430" fill="#f7f9fc"/>
+  <text x="360" y="30" font-size="20" font-weight="700" fill="#1f2937" text-anchor="middle">Производная = наклон касательной</text>
+
+  <!-- grid -->
+  <g stroke="#e8edf5" stroke-width="1">
+    <line x1="70" y1="370" x2="70" y2="70"/><line x1="125" y1="370" x2="125" y2="70"/><line x1="235" y1="370" x2="235" y2="70"/><line x1="290" y1="370" x2="290" y2="70"/><line x1="345" y1="370" x2="345" y2="70"/>
+    <line x1="70" y1="310" x2="460" y2="310"/><line x1="70" y1="240" x2="460" y2="240"/><line x1="70" y1="120" x2="460" y2="120"/>
+  </g>
+  <!-- axes -->
+  <line x1="180" y1="370" x2="470" y2="370" stroke="#475569" stroke-width="2"/><polygon points="478,370 466,364 466,376" fill="#475569"/>
+  <line x1="180" y1="385" x2="180" y2="62" stroke="#475569" stroke-width="2"/><polygon points="180,54 174,66 186,66" fill="#475569"/>
+  <text x="474" y="388" font-size="12" fill="#94a3b8">x</text>
+
+  <!-- parabola f(x)=x^2 -->
+  <path d="M 70 240 Q 125 330, 180 360 Q 235 330, 345 90" fill="none" stroke="#4f46e5" stroke-width="3"/>
+  <text x="90" y="225" font-size="13.5" font-weight="700" fill="#4f46e5">f(x) = x²</text>
+
+  <!-- tangent at x=2 (point (290,240)) -->
+  <line x1="225" y1="380" x2="355" y2="100" stroke="#dc2626" stroke-width="2.5"/>
+  <text x="300" y="150" font-size="13.5" font-weight="700" fill="#dc2626" transform="rotate(-58 300 150)">касательная</text>
+
+  <!-- point -->
+  <circle cx="290" cy="240" r="6" fill="#1f2937"/>
+  <text x="298" y="236" font-size="12" font-weight="700" fill="#1f2937">точка x=2</text>
+
+  <!-- rise/run triangle -->
+  <line x1="290" y1="240" x2="345" y2="240" stroke="#16a34a" stroke-width="2.5"/>
+  <text x="312" y="258" font-size="12.5" font-weight="700" fill="#16a34a">Δx</text>
+  <line x1="345" y1="240" x2="345" y2="120" stroke="#ea580c" stroke-width="2.5"/>
+  <text x="350" y="185" font-size="12.5" font-weight="700" fill="#ea580c">Δy</text>
+
+  <!-- formula panel -->
+  <rect x="500" y="90" width="200" height="150" rx="12" fill="#0f172a"/>
+  <text x="520" y="122" font-size="14" font-family="monospace" fill="#e2e8f0">наклон = Δy / Δx</text>
+  <text x="520" y="150" font-size="13.5" font-family="monospace" fill="#a5b4fc">= производная f'(x)</text>
+  <text x="520" y="186" font-size="13" font-family="monospace" fill="#86efac">в точке x=2:</text>
+  <text x="520" y="210" font-size="13" font-family="monospace" fill="#86efac">f'(2) = 2·2 = 4</text>
+
+  <rect x="500" y="256" width="200" height="90" rx="10" fill="#fef9c3" stroke="#eab308" stroke-width="1.5"/>
+  <text x="516" y="280" font-size="12" fill="#713f12">💡 Круче график —</text>
+  <text x="516" y="300" font-size="12" fill="#713f12">больше наклон —</text>
+  <text x="516" y="320" font-size="12" fill="#713f12">больше производная.</text>
+
+  <rect x="70" y="392" width="630" height="30" rx="8" fill="#eef2ff" stroke="#6366f1" stroke-width="1.5"/>
+  <text x="86" y="412" font-size="12.5" fill="#3730a3">Касательная «прислоняется» к кривой в одной точке и идёт в ту же сторону. Её наклон и есть производная.</text>
+</svg>

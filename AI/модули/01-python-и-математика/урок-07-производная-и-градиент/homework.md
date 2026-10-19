@@ -10,25 +10,25 @@
 
 ## Шпаргалка (готовые инструменты — просто используй)
 
+`derivative` и `numerical_gradient` лежат в файле-библиотеке **`mlmath.py`** (его давали на уроке). Положи файл рядом с ноутбуком и подключи одной строкой — писать их заново не нужно:
+
 ```python
 import numpy as np
+from mlmath import derivative, numerical_gradient   # наши готовые инструменты
 
-def derivative(f, x, h=1e-4):
-    return (f(x + h) - f(x - h)) / (2 * h)
+# derivative(f, x)          -> наклон функции f в точке x
+# numerical_gradient(f, p)  -> градиент функции f в точке-массиве p
+```
 
-def numerical_gradient(f, point, h=1e-4):
-    grad = np.zeros_like(point)
-    for i in range(len(point)):
-        p_plus = point.copy(); p_minus = point.copy()
-        p_plus[i] += h; p_minus[i] -= h
-        grad[i] = (f(p_plus) - f(p_minus)) / (2 * h)
-    return grad
-
-point = np.array([5.0, 7.0]); lr = 0.1
+**Шаблон градиентного спуска** (его будешь применять в задачах):
+```python
+point = np.array([5.0, 7.0]); lr = 0.1    # старт (float!) и размер шага
 for _ in range(50):
     grad = numerical_gradient(f, point)
-    point = point - lr * grad    # МИНУС!
+    point = point - lr * grad             # МИНУС! шаг вниз, против градиента
 ```
+
+> Если библиотеки нет под рукой — те же функции можно просто вписать в ячейку (их код разбирали в теории, части 4 и 5).
 
 ---
 

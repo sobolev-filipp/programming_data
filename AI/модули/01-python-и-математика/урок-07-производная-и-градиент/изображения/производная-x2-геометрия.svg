@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 420" font-family="'Segoe UI',system-ui,sans-serif">
+  <rect x="0" y="0" width="720" height="420" fill="#f7f9fc"/>
+  <text x="360" y="30" font-size="20" font-weight="700" fill="#1f2937" text-anchor="middle">Почему (x²)′ = 2x: чем дальше от 0, тем круче</text>
+
+  <!-- axes -->
+  <line x1="120" y1="370" x2="600" y2="370" stroke="#475569" stroke-width="2"/><polygon points="608,370 596,364 596,376" fill="#475569"/>
+  <line x1="120" y1="390" x2="120" y2="60" stroke="#475569" stroke-width="2"/><polygon points="120,52 114,64 126,64" fill="#475569"/>
+  <g font-size="11" fill="#94a3b8" font-family="monospace" text-anchor="middle">
+    <text x="250" y="388">1</text><text x="380" y="388">2</text><text x="510" y="388">3</text>
+  </g>
+
+  <!-- parabola -->
+  <polyline points="120,370 185,363 250,342 315,307 380,258 445,195 510,118 562,46" fill="none" stroke="#4f46e5" stroke-width="3"/>
+  <text x="150" y="330" font-size="13.5" font-weight="700" fill="#4f46e5">f(x)=x²</text>
+
+  <!-- tangents -->
+  <line x1="185" y1="370" x2="315" y2="314" stroke="#16a34a" stroke-width="2.5"/>
+  <circle cx="250" cy="342" r="5" fill="#1f2937"/>
+  <text x="243" y="332" font-size="12.5" font-weight="700" fill="#16a34a" text-anchor="end">f′(1)=2</text>
+
+  <line x1="315" y1="314" x2="445" y2="202" stroke="#ea580c" stroke-width="2.5"/>
+  <circle cx="380" cy="258" r="5" fill="#1f2937"/>
+  <text x="373" y="250" font-size="12.5" font-weight="700" fill="#ea580c" text-anchor="end">f′(2)=4</text>
+
+  <line x1="445" y1="202" x2="575" y2="34" stroke="#dc2626" stroke-width="2.5"/>
+  <circle cx="510" cy="118" r="5" fill="#1f2937"/>
+  <text x="503" y="110" font-size="12.5" font-weight="700" fill="#dc2626" text-anchor="end">f′(3)=6</text>
+
+  <!-- panel -->
+  <rect x="600" y="90" width="110" height="150" rx="10" fill="#0f172a"/>
+  <text x="655" y="116" font-size="12.5" font-family="monospace" fill="#86efac" text-anchor="middle">x → f′=2x</text>
+  <text x="655" y="150" font-size="13" font-family="monospace" fill="#e2e8f0" text-anchor="middle">1 → 2</text>
+  <text x="655" y="176" font-size="13" font-family="monospace" fill="#e2e8f0" text-anchor="middle">2 → 4</text>
+  <text x="655" y="202" font-size="13" font-family="monospace" fill="#e2e8f0" text-anchor="middle">3 → 6</text>
+  <text x="655" y="228" font-size="11" font-family="monospace" fill="#a5b4fc" text-anchor="middle">всегда ×2</text>
+
+  <rect x="120" y="392" width="590" height="26" rx="8" fill="#fef9c3" stroke="#eab308" stroke-width="1.5"/>
+  <text x="136" y="410" font-size="12.5" fill="#713f12">💡 В точке 0 парабола лежит ровно (наклон 0). Дальше — круче, и ровно вдвое от x.</text>
+</svg>
