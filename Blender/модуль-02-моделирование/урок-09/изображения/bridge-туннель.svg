@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 420" font-family="'Segoe UI',Arial,sans-serif">
+  <rect width="880" height="420" fill="#16161f"/>
+  <text x="440" y="40" fill="#e8e8f0" font-size="24" font-weight="700" text-anchor="middle">Bridge Edge Loops: два кольца → переход</text>
+
+  <!-- ЛЕВО: два выделенных кольца -->
+  <g>
+    <text x="215" y="80" fill="#9a9ab0" font-size="16" font-weight="700" text-anchor="middle">1. Выдели два кольца краёв</text>
+    <!-- куб (иллюзия 3D) -->
+    <polygon points="110,130 260,130 320,100 170,100" fill="#2a2a3a" stroke="#50526a" stroke-width="2"/>
+    <polygon points="110,130 260,130 260,290 110,290" fill="#22222e" stroke="#50526a" stroke-width="2"/>
+    <polygon points="260,130 320,100 320,260 260,290" fill="#1c1c27" stroke="#50526a" stroke-width="2"/>
+    <!-- два отверстия с подсвеченными кольцами -->
+    <ellipse cx="160" cy="185" rx="26" ry="26" fill="#0e0e15" stroke="#ff7a1a" stroke-width="4">
+      <animate attributeName="stroke-opacity" values="0.4;1;0.4" dur="1.8s" repeatCount="indefinite"/>
+    </ellipse>
+    <ellipse cx="160" cy="245" rx="26" ry="26" fill="#0e0e15" stroke="#ff7a1a" stroke-width="4">
+      <animate attributeName="stroke-opacity" values="0.4;1;0.4" dur="1.8s" begin="0.4s" repeatCount="indefinite"/>
+    </ellipse>
+    <text x="215" y="320" fill="#ff7a1a" font-size="14" font-weight="700" text-anchor="middle">Alt+ЛКМ  +  Shift+Alt+ЛКМ</text>
+  </g>
+
+  <!-- стрелка -->
+  <g>
+    <line x1="360" y1="195" x2="470" y2="195" stroke="#5be38f" stroke-width="4"/>
+    <polygon points="470,185 492,195 470,205" fill="#5be38f"/>
+    <text x="425" y="178" fill="#5be38f" font-size="14" font-weight="700" text-anchor="middle">Bridge</text>
+  </g>
+
+  <!-- ПРАВО: туннель -->
+  <g>
+    <text x="665" y="80" fill="#9a9ab0" font-size="16" font-weight="700" text-anchor="middle">2. Edge → Bridge Edge Loops</text>
+    <polygon points="560,130 710,130 770,100 620,100" fill="#2a2a3a" stroke="#50526a" stroke-width="2"/>
+    <polygon points="560,130 710,130 710,290 560,290" fill="#22222e" stroke="#50526a" stroke-width="2"/>
+    <polygon points="710,130 770,100 770,260 710,290" fill="#1c1c27" stroke="#50526a" stroke-width="2"/>
+    <!-- стенки туннеля -->
+    <path d="M585,185 Q635,215 585,245 L635,245 Q685,215 635,185 Z" fill="#3a6ea5" fill-opacity="0.55" stroke="#7fb3e8" stroke-width="2">
+      <animate attributeName="fill-opacity" values="0;0.55" dur="1s" repeatCount="indefinite"/>
+    </path>
+    <ellipse cx="610" cy="215" rx="26" ry="38" fill="#0e0e15" stroke="#7fb3e8" stroke-width="3"/>
+    <text x="665" y="330" fill="#7fb3e8" font-size="15" font-weight="700" text-anchor="middle">сквозной туннель 🎉</text>
+  </g>
+
+  <text x="440" y="378" fill="#c7c7d6" font-size="16" text-anchor="middle">Так делают ручки, трубки, уши-наушники, антенны и переходы между секциями.</text>
+  <text x="440" y="404" fill="#8a8a9c" font-size="13" text-anchor="middle">Важно: выделены ровно ДВА замкнутых кольца именно КРАЁВ (у дырок), а не грани.</text>
+</svg>
