@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 480" font-family="'Segoe UI', Arial, sans-serif">
+<rect x="0" y="0" width="720" height="480" rx="16" fill="#f8fafc" stroke="#e2e8f0" stroke-width="2"/>
+<text x="360" y="34" text-anchor="middle" font-size="22" font-weight="700" fill="#1e293b">Скелет страницы из семантических тегов</text>
+<rect x="30" y="52" width="660" height="404" rx="10" fill="#ffffff" stroke="#cbd5e1" stroke-width="2"/>
+<rect x="30" y="52" width="660" height="26" rx="10" fill="#e2e8f0"/>
+<circle cx="48" cy="65" r="5" fill="#f87171"/>
+<circle cx="64" cy="65" r="5" fill="#fbbf24"/>
+<circle cx="80" cy="65" r="5" fill="#34d399"/>
+<rect x="44" y="88" width="632" height="44" rx="8" fill="#dbeafe" stroke="#3b82f6" stroke-width="2"/>
+<text x="360" y="116" text-anchor="middle" font-size="15" font-weight="700" fill="#334155">header — шапка (логотип, название)</text>
+<rect x="44" y="138" width="632" height="30" rx="8" fill="#ede9fe" stroke="#8b5cf6" stroke-width="2"/>
+<text x="360" y="159" text-anchor="middle" font-size="15" font-weight="700" fill="#334155">nav — меню (навигация)</text>
+<rect x="44" y="176" width="632" height="208" rx="8" fill="none" stroke="#0ea5e9" stroke-width="2" stroke-dasharray="6 5"/>
+<text x="54" y="196" font-size="14" font-weight="700" fill="#0ea5e9" font-family="'Consolas','Courier New',monospace">main</text>
+<rect x="56" y="200" width="400" height="176" rx="8" fill="#ffffff" stroke="#10b981" stroke-width="2"/>
+<text x="66" y="220" font-size="14" font-weight="700" fill="#10b981" font-family="'Consolas','Courier New',monospace">section</text>
+<rect x="70" y="226" width="372" height="64" rx="8" fill="#eef2ff" stroke="#6366f1" stroke-width="2"/>
+<text x="256" y="264" text-anchor="middle" font-size="15" font-weight="700" fill="#334155">article — новость</text>
+<rect x="70" y="300" width="372" height="64" rx="8" fill="#eef2ff" stroke="#6366f1" stroke-width="2"/>
+<text x="256" y="338" text-anchor="middle" font-size="15" font-weight="700" fill="#334155">article — новость</text>
+<rect x="472" y="200" width="192" height="176" rx="8" fill="#fef9c3" stroke="#ca8a04" stroke-width="2"/>
+<text x="482" y="220" font-size="14" font-weight="700" fill="#ca8a04" font-family="'Consolas','Courier New',monospace">aside</text>
+<text x="568" y="290" text-anchor="middle" font-size="13" fill="#854d0e">сбоку:</text>
+<text x="568" y="310" text-anchor="middle" font-size="13" fill="#854d0e">похожее,</text>
+<text x="568" y="330" text-anchor="middle" font-size="13" fill="#854d0e">реклама</text>
+<rect x="44" y="392" width="632" height="40" rx="8" fill="#f1f5f9" stroke="#64748b" stroke-width="2"/>
+<text x="360" y="418" text-anchor="middle" font-size="15" font-weight="700" fill="#334155">footer — подвал (© контакты)</text>
+<text x="360" y="470" text-anchor="middle" font-size="13" fill="#94a3b8">Те же «коробки», что и div, но с понятными именами. Вид задаём потом через CSS.</text>
+</svg>

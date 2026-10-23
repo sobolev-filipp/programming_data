@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Викторина — Урок 2: Перенос и шрифты</title>
+<style>
+  :root{
+    --bg1:#14b8a6; --bg2:#6366f1; --card:#ffffff; --ink:#1f2937;
+    --accent:#6366f1; --ok:#16a34a; --bad:#dc2626; --soft:#e5e9ff;
+  }
+  *{box-sizing:border-box;font-family:"Segoe UI",system-ui,sans-serif}
+  body{margin:0;min-height:100vh;display:flex;align-items:center;justify-content:center;
+    background:linear-gradient(135deg,var(--bg1),var(--bg2));padding:20px;color:var(--ink)}
+  .app{background:var(--card);width:min(760px,100%);border-radius:24px;
+    box-shadow:0 25px 60px rgba(0,0,0,.35);padding:34px 34px 28px;position:relative;overflow:hidden}
+  h1{margin:0 0 6px;font-size:26px;text-align:center}
+  .sub{text-align:center;color:#64748b;margin-bottom:22px;font-size:15px}
+  .bar{height:10px;background:var(--soft);border-radius:99px;overflow:hidden;margin-bottom:18px}
+  .bar>i{display:block;height:100%;width:0;background:var(--accent);transition:.4s}
+  .meta{display:flex;justify-content:space-between;font-size:14px;color:#64748b;margin-bottom:14px}
+  .q{font-size:22px;font-weight:700;margin:6px 0 20px;line-height:1.3}
+  .q code{background:#0f172a;color:#e2e8f0;padding:2px 8px;border-radius:6px;font-size:19px}
+  .opts{display:grid;gap:12px}
+  .opt{border:2px solid #e2e8f0;background:#fff;border-radius:14px;padding:15px 18px;font-size:18px;
+    text-align:left;cursor:pointer;transition:.15s;display:flex;align-items:center;gap:12px}
+  .opt:hover{border-color:var(--accent);background:var(--soft);transform:translateY(-2px)}
+  .opt b{background:var(--soft);color:var(--accent);width:30px;height:30px;border-radius:8px;
+    display:flex;align-items:center;justify-content:center;font-size:15px;flex:0 0 auto}
+  .opt span code{background:#0f172a;color:#e2e8f0;padding:1px 6px;border-radius:5px;font-size:16px}
+  .opt.ok{border-color:var(--ok);background:#dcfce7}
+  .opt.ok b{background:var(--ok);color:#fff}
+  .opt.bad{border-color:var(--bad);background:#fee2e2}
+  .opt.bad b{background:var(--bad);color:#fff}
+  .opt:disabled{cursor:default;transform:none}
+  .fb{margin-top:16px;padding:14px 16px;border-radius:12px;font-size:16px;display:none;line-height:1.4}
+  .fb.show{display:block}
+  .fb.good{background:#dcfce7;color:#166534}
+  .fb.no{background:#fee2e2;color:#991b1b}
+  .fb code{background:#0f172a;color:#e2e8f0;padding:1px 6px;border-radius:5px}
+  .btn{margin-top:18px;width:100%;padding:15px;border:0;border-radius:14px;background:var(--accent);
+    color:#fff;font-size:18px;font-weight:700;cursor:pointer;display:none}
+  .btn.show{display:block}
+  .btn:hover{filter:brightness(1.08)}
+  .center{text-align:center}
+  .score{font-size:64px;font-weight:800;margin:10px 0}
+  .emoji{font-size:70px}
+  .hint{color:#94a3b8;font-size:13px;text-align:center;margin-top:14px}
+</style>
+</head>
+<body>
+<div class="app" id="app"></div>
+<script>
+// Урок 2 М2: перенос/выравнивание flex + шрифты + 🔁 повтор У1/М1 + смешные + на подумать.
+// Длина варианта НЕ выдаёт правильный ответ (часть длинных вариантов — неверные).
+const QUESTIONS = [
+  {q:"Что делает <code>flex-wrap: wrap</code>?",
+   a:["Сжимает все карточки в один тесный ряд","Переносит не влезшие элементы на новую строку","Удаляет карточки, что не влезли","Прячет контейнер целиком"],c:1,
+   e:"wrap разрешает перенос: не влезли — на новую строку, ряд превращается в сетку."},
+  {q:"Кому пишут <code>flex-wrap</code>?",
+   a:["Контейнеру-родителю","Каждой карточке по отдельности","В секции &lt;head&gt;","В файле шрифта"],c:0,
+   e:"flex-wrap — свойство контейнера, как и display:flex."},
+  {q:"Чем <code>align-content</code> отличается от <code>align-items</code>?",
+   a:["Это одно и то же свойство с разными именами","align-content двигает ряды, items — один ряд","align-items работает только с текстом","align-content задаёт цвет"],c:1,
+   e:"align-items — один ряд поперёк; align-content — несколько рядов вместе (при переносе)."},
+  {q:"Что делает <code>order</code>?",
+   a:["Автоматически сортирует карточки по алфавиту","Меняет порядок на экране","Нумерует все карточки по кругу","Удаляет первый элемент"],c:1,
+   e:"order меняет визуальный порядок, не трогая HTML. order:-1 — в начало."},
+  {q:"Свойства <code>order</code> и <code>align-self</code> пишут...",
+   a:["контейнеру","ребёнку (самому элементу)","в &lt;head&gt;","в CSS-файле шрифтов"],c:1,
+   e:"Это свойства отдельного ребёнка, а не контейнера."},
+  {q:"Как подключить шрифт с Google Fonts (первый шаг)?",
+   a:["Вставить &lt;link&gt; в &lt;head&gt;","Просто сразу написать font-family в стилях","Скачать шрифт на флешку","Перезагрузить браузер"],c:0,
+   e:"Сначала подключить (&lt;link&gt;), потом применить (font-family). Оба шага нужны."},
+  {q:"Что задаёт свойство <code>font-family</code>?",
+   a:["Размер текста","Шрифт текста","Цвет текста","Толщину текста"],c:1,
+   e:"font-family — шрифт. Размер — font-size, толщина — font-weight."},
+  {q:"Зачем <code>sans-serif</code> в конце стека шрифтов?",
+   a:["Запасной шрифт, если основной не загрузится","Чтобы весь текст на странице стал жирным сам","Нужно для красоты","Обязательный тег"],c:0,
+   e:"Семейство в конце — страховка: если шрифт не загрузился, текст не исчезнет."},
+  {q:"<code>font-weight: 700</code> — это...",
+   a:["Очень тонкие буквы","Жирный (bold)","Наклонный курсив","Размер букв 700 пикселей"],c:1,
+   e:"700 = жирный (bold). 400 — обычный; шкала 100–900."},
+  {q:"🔁 Урок 1: как сделать «идеальный центр»?",
+   a:["Поставить text-align:center и отступы","justify + align center","Добавить margin сверху побольше","vertical-align:middle"],c:1,
+   e:"display:flex; justify-content:center; align-items:center — центр и по гор., и по верт."},
+  {q:"🔁 Модуль 1: как подключить внешний CSS?",
+   a:["Тегом &lt;link&gt; в &lt;head&gt;","Просто создать файл style.css в папке проекта","Написать тег &lt;css&gt; в body","Через import внизу страницы"],c:0,
+   e:"&lt;link rel=\"stylesheet\" href=\"style.css\"&gt; в &lt;head&gt;."},
+  {q:"😄 Карточки сжались в тонкую полоску в один ряд. Что добавить?",
+   a:["flex-wrap: wrap","Побольше карточек","Тег &lt;br&gt; между ними","Увеличить шрифт заголовка"],c:0,
+   e:"flex-wrap: wrap разрешит перенос — карточки встанут в нормальную сетку."},
+  {q:"😄 Подключил шрифт, а жирный выходит «кривой». Почему?",
+   a:["Начертание 700 не подключено","Этот шрифт сломан и не чинится никак","Браузер слишком старый для шрифтов","Текста на странице маловато"],c:0,
+   e:"Жирное начертание надо выбрать на Google Fonts, иначе браузер подделает его криво."},
+  {q:"🤔 Почему не стоит ставить 5 разных шрифтов на страницу?",
+   a:["Станет пёстро и нечитаемо","Пять шрифтов строго запрещены правилами CSS","Браузер от этого сломается","Это незаконно"],c:0,
+   e:"Правило: 1 шрифт для заголовков + 1 для текста. Больше — каша и тяжёлая загрузка."},
+];
+
+let i=0, score=0, locked=false;
+const app=document.getElementById('app');
+
+function shuffle(){for(let k=QUESTIONS.length-1;k>0;k--){const j=Math.floor(Math.random()*(k+1));[QUESTIONS[k],QUESTIONS[j]]=[QUESTIONS[j],QUESTIONS[k]];}for(const Q of QUESTIONS){const cc=Q.a[Q.c];for(let k=Q.a.length-1;k>0;k--){const j=Math.floor(Math.random()*(k+1));[Q.a[k],Q.a[j]]=[Q.a[j],Q.a[k]];}Q.c=Q.a.indexOf(cc);}}
+shuffle();
+
+function render(){
+  const Q=QUESTIONS[i];
+  app.innerHTML=`
+    <h1>🔁✍️ Перенос и шрифты</h1>
+    <div class="sub">Викторина по уроку 2 · Модуль 2 · WEB</div>
+    <div class="bar"><i style="width:${(i/QUESTIONS.length)*100}%"></i></div>
+    <div class="meta"><span>Вопрос ${i+1} из ${QUESTIONS.length}</span><span>⭐ Очки: ${score}</span></div>
+    <div class="q">${Q.q}</div>
+    <div class="opts" id="opts">
+      ${Q.a.map((t,n)=>`<button class="opt" data-n="${n}"><b>${n+1}</b><span>${t}</span></button>`).join('')}
+    </div>
+    <div class="fb" id="fb"></div>
+    <button class="btn" id="next">${i===QUESTIONS.length-1?'Показать результат →':'Следующий вопрос →'}</button>
+    <div class="hint">Можно отвечать клавишами 1–4</div>`;
+  locked=false;
+  document.querySelectorAll('.opt').forEach(b=>b.onclick=()=>choose(+b.dataset.n));
+  document.getElementById('next').onclick=next;
+}
+
+function choose(n){
+  if(locked) return; locked=true;
+  const Q=QUESTIONS[i];
+  const opts=[...document.querySelectorAll('.opt')];
+  opts.forEach(b=>b.disabled=true);
+  opts[Q.c].classList.add('ok');
+  const fb=document.getElementById('fb');
+  if(n===Q.c){ score++; fb.className='fb show good'; fb.innerHTML='✅ Верно! '+Q.e; }
+  else { opts[n].classList.add('bad'); fb.className='fb show no'; fb.innerHTML='❌ Не совсем. '+Q.e; }
+  document.querySelector('.meta').children[1].textContent='⭐ Очки: '+score;
+  document.getElementById('next').classList.add('show');
+}
+
+function next(){ i++; if(i<QUESTIONS.length) render(); else result(); }
+
+function result(){
+  const pct=Math.round(score/QUESTIONS.length*100);
+  let em,msg;
+  if(pct===100){em='🏆';msg='Идеально! Сетки и шрифты — под контролем! 🎴';}
+  else if(pct>=70){em='🎉';msg='Отлично! Перенос и шрифты понимаешь уверенно.';}
+  else if(pct>=40){em='👍';msg='Неплохо! Повтори: flex-wrap:wrap; шрифт сначала подключить, потом применить.';}
+  else {em='💪';msg='Начало положено! Загляни в самоучитель — там по шагам.';}
+  app.innerHTML=`
+    <div class="center">
+      <div class="emoji">${em}</div>
+      <h1>Готово!</h1>
+      <div class="score">${score} / ${QUESTIONS.length}</div>
+      <div class="sub">${msg}</div>
+      <button class="btn show" id="again">🔁 Пройти заново</button>
+    </div>`;
+  document.getElementById('again').onclick=()=>{i=0;score=0;shuffle();render();};
+}
+
+document.addEventListener('keydown',e=>{
+  if(['1','2','3','4'].includes(e.key)){ const b=document.querySelector(`.opt[data-n="${+e.key-1}"]`); if(b&&!b.disabled) choose(+e.key-1); }
+  if(e.key==='Enter'){ const nb=document.getElementById('next'); if(nb&&nb.classList.contains('show')) next(); }
+});
+
+render();
+</script>
+</body>
+</html>

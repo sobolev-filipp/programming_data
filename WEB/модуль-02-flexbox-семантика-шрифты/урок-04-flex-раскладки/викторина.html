@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Викторина — Урок 4: Flex-раскладки</title>
+<style>
+  :root{
+    --bg1:#f59e0b; --bg2:#6366f1; --card:#ffffff; --ink:#1f2937;
+    --accent:#6366f1; --ok:#16a34a; --bad:#dc2626; --soft:#e5e9ff;
+  }
+  *{box-sizing:border-box;font-family:"Segoe UI",system-ui,sans-serif}
+  body{margin:0;min-height:100vh;display:flex;align-items:center;justify-content:center;
+    background:linear-gradient(135deg,var(--bg1),var(--bg2));padding:20px;color:var(--ink)}
+  .app{background:var(--card);width:min(760px,100%);border-radius:24px;
+    box-shadow:0 25px 60px rgba(0,0,0,.35);padding:34px 34px 28px;position:relative;overflow:hidden}
+  h1{margin:0 0 6px;font-size:26px;text-align:center}
+  .sub{text-align:center;color:#64748b;margin-bottom:22px;font-size:15px}
+  .bar{height:10px;background:var(--soft);border-radius:99px;overflow:hidden;margin-bottom:18px}
+  .bar>i{display:block;height:100%;width:0;background:var(--accent);transition:.4s}
+  .meta{display:flex;justify-content:space-between;font-size:14px;color:#64748b;margin-bottom:14px}
+  .q{font-size:22px;font-weight:700;margin:6px 0 20px;line-height:1.3}
+  .q code{background:#0f172a;color:#e2e8f0;padding:2px 8px;border-radius:6px;font-size:19px}
+  .opts{display:grid;gap:12px}
+  .opt{border:2px solid #e2e8f0;background:#fff;border-radius:14px;padding:15px 18px;font-size:18px;
+    text-align:left;cursor:pointer;transition:.15s;display:flex;align-items:center;gap:12px}
+  .opt:hover{border-color:var(--accent);background:var(--soft);transform:translateY(-2px)}
+  .opt b{background:var(--soft);color:var(--accent);width:30px;height:30px;border-radius:8px;
+    display:flex;align-items:center;justify-content:center;font-size:15px;flex:0 0 auto}
+  .opt span code{background:#0f172a;color:#e2e8f0;padding:1px 6px;border-radius:5px;font-size:16px}
+  .opt.ok{border-color:var(--ok);background:#dcfce7}
+  .opt.ok b{background:var(--ok);color:#fff}
+  .opt.bad{border-color:var(--bad);background:#fee2e2}
+  .opt.bad b{background:var(--bad);color:#fff}
+  .opt:disabled{cursor:default;transform:none}
+  .fb{margin-top:16px;padding:14px 16px;border-radius:12px;font-size:16px;display:none;line-height:1.4}
+  .fb.show{display:block}
+  .fb.good{background:#dcfce7;color:#166534}
+  .fb.no{background:#fee2e2;color:#991b1b}
+  .fb code{background:#0f172a;color:#e2e8f0;padding:1px 6px;border-radius:5px}
+  .btn{margin-top:18px;width:100%;padding:15px;border:0;border-radius:14px;background:var(--accent);
+    color:#fff;font-size:18px;font-weight:700;cursor:pointer;display:none}
+  .btn.show{display:block}
+  .btn:hover{filter:brightness(1.08)}
+  .center{text-align:center}
+  .score{font-size:64px;font-weight:800;margin:10px 0}
+  .emoji{font-size:70px}
+  .hint{color:#94a3b8;font-size:13px;text-align:center;margin-top:14px}
+</style>
+</head>
+<body>
+<div class="app" id="app"></div>
+<script>
+// Урок 4 М2: flex-паттерны + весь flex + 🔁 повтор У1-У3 + смешные + на подумать.
+// Длина варианта НЕ выдаёт правильный ответ.
+const QUESTIONS = [
+  {q:"Из чего собирают большие макеты?",
+   a:["Из одного огромного контейнера сразу","Из вложенных flex-блоков","Из таблиц","Из одних картинок"],c:1,
+   e:"Страница — это вложенные flex-блоки: каждый кусок — свой display:flex."},
+  {q:"Как прижать подвал к низу страницы?",
+   a:["body в column, main flex:1","Поставить подвалу margin-top: 1000px вручную","position: bottom","Много раз нажать Enter"],c:0,
+   e:"body: min-height:100vh; display:flex; flex-direction:column; и main { flex:1 }."},
+  {q:"В горизонтальной карточке картинке задают...",
+   a:["flex: 1, пусть растёт сильнее всех","flex-shrink: 0","display: none","order: 5"],c:1,
+   e:"flex-shrink: 0 — картинку не сжимать; текст рядом берёт flex: 1."},
+  {q:"При <code>flex-direction: column</code> что делает <code>justify-content</code>?",
+   a:["Двигает по вертикали","Двигает по горизонтали","Ничего","Красит фон столбика красным"],c:0,
+   e:"В column оси меняются ролями: justify-content идёт по вертикали."},
+  {q:"Что занимает всё оставшееся место в карточке?",
+   a:["Элемент с flex: 1","Элемент с flex-shrink: 0","Самый первый по счёту элемент","Картинка"],c:0,
+   e:"flex: 1 заставляет элемент занять всё свободное место."},
+  {q:"Как оттолкнуть кнопку в самый конец ряда?",
+   a:["margin-left: auto","text-align: right","float: right","Добавить 20 пробелов подряд перед ней"],c:0,
+   e:"margin-left: auto во флексе отодвигает элемент в конец ряда."},
+  {q:"Что такое вложенный flex?",
+   a:["flex внутри flex","Строго запрещённый и опасный приём","Один flex на всю страницу сразу","Flex без детей"],c:0,
+   e:"Флекс-контейнер внутри другого флекс-контейнера. Так собирают интерфейсы."},
+  {q:"Медиа-объект (комментарий) — это раскладка...",
+   a:["Аватар слева + текст справа","Только одна картинка","Таблица из десяти строк","Видео на весь экран без границ"],c:0,
+   e:"Аватар (flex-shrink:0) слева, текст (flex:1) справа. Везде в соцсетях."},
+  {q:"🔁 Урок 3: что значит <code>flex: 1</code>?",
+   a:["Делить место поровну","Ширина ровно 1px","Одна колонка строго","Спрятать элемент полностью со страницы"],c:0,
+   e:"flex: 1 — расти и делить свободное место поровну."},
+  {q:"🔁 Урок 2: что делает <code>flex-wrap: wrap</code>?",
+   a:["Переносит на новую строку","Красит рамку","Удаляет лишнее","Запрещает перенос строк полностью"],c:0,
+   e:"wrap переносит не влезшие элементы на новую строку."},
+  {q:"🔁 Урок 1: какой тег — шапка страницы?",
+   a:["&lt;header&gt;","&lt;head&gt;","&lt;top&gt;","Любой div в самом верху страницы"],c:0,
+   e:"&lt;header&gt; — смысловая шапка. &lt;head&gt; — служебная часть."},
+  {q:"😄 Подвал прилип к середине короткой страницы. Что сделать?",
+   a:["body в column + main flex:1","Добавить 50 пустых строк","Уменьшить шрифт подвала до нуля","Ничего, так и должно быть"],c:0,
+   e:"Липкий подвал: body в column, main { flex:1 } — подвал уедет вниз."},
+  {q:"😄 Аватар в комментарии стал овалом-блинчиком. Почему?",
+   a:["Сжался — нужен flex-shrink: 0","Аватары всегда овальные по умолчанию","Браузер вообще не умеет рисовать круги","Рядом маловато текста"],c:0,
+   e:"Без flex-shrink:0 аватар сжимается по ширине и теряет круглую форму."},
+  {q:"🤔 Зачем разбивать страницу на вложенные flex-блоки?",
+   a:["Каждым блоком проще управлять отдельно","Иначе сайт вообще не откроется в браузере","Этого требует закон о сайтах","Чтобы было больше кода"],c:0,
+   e:"Разбивка на блоки = контроль: каждый кусок верстается и меняется сам по себе."},
+];
+
+let i=0, score=0, locked=false;
+const app=document.getElementById('app');
+
+function shuffle(){for(let k=QUESTIONS.length-1;k>0;k--){const j=Math.floor(Math.random()*(k+1));[QUESTIONS[k],QUESTIONS[j]]=[QUESTIONS[j],QUESTIONS[k]];}for(const Q of QUESTIONS){const cc=Q.a[Q.c];for(let k=Q.a.length-1;k>0;k--){const j=Math.floor(Math.random()*(k+1));[Q.a[k],Q.a[j]]=[Q.a[j],Q.a[k]];}Q.c=Q.a.indexOf(cc);}}
+shuffle();
+
+function render(){
+  const Q=QUESTIONS[i];
+  app.innerHTML=`
+    <h1>🧩 Flex-раскладки</h1>
+    <div class="sub">Викторина по уроку 4 · Модуль 2 · WEB</div>
+    <div class="bar"><i style="width:${(i/QUESTIONS.length)*100}%"></i></div>
+    <div class="meta"><span>Вопрос ${i+1} из ${QUESTIONS.length}</span><span>⭐ Очки: ${score}</span></div>
+    <div class="q">${Q.q}</div>
+    <div class="opts" id="opts">
+      ${Q.a.map((t,n)=>`<button class="opt" data-n="${n}"><b>${n+1}</b><span>${t}</span></button>`).join('')}
+    </div>
+    <div class="fb" id="fb"></div>
+    <button class="btn" id="next">${i===QUESTIONS.length-1?'Показать результат →':'Следующий вопрос →'}</button>
+    <div class="hint">Можно отвечать клавишами 1–4</div>`;
+  locked=false;
+  document.querySelectorAll('.opt').forEach(b=>b.onclick=()=>choose(+b.dataset.n));
+  document.getElementById('next').onclick=next;
+}
+
+function choose(n){
+  if(locked) return; locked=true;
+  const Q=QUESTIONS[i];
+  const opts=[...document.querySelectorAll('.opt')];
+  opts.forEach(b=>b.disabled=true);
+  opts[Q.c].classList.add('ok');
+  const fb=document.getElementById('fb');
+  if(n===Q.c){ score++; fb.className='fb show good'; fb.innerHTML='✅ Верно! '+Q.e; }
+  else { opts[n].classList.add('bad'); fb.className='fb show no'; fb.innerHTML='❌ Не совсем. '+Q.e; }
+  document.querySelector('.meta').children[1].textContent='⭐ Очки: '+score;
+  document.getElementById('next').classList.add('show');
+}
+
+function next(){ i++; if(i<QUESTIONS.length) render(); else result(); }
+
+function result(){
+  const pct=Math.round(score/QUESTIONS.length*100);
+  let em,msg;
+  if(pct===100){em='🏆';msg='Идеально! Flexbox собран в конструктор! 🧩';}
+  else if(pct>=70){em='🎉';msg='Отлично! Паттерны и вложенный flex — освоены.';}
+  else if(pct>=40){em='👍';msg='Неплохо! Повтори: 4 паттерна и липкий подвал.';}
+  else {em='💪';msg='Начало положено! Загляни в самоучитель и поиграй в тренажёр.';}
+  app.innerHTML=`
+    <div class="center">
+      <div class="emoji">${em}</div>
+      <h1>Готово!</h1>
+      <div class="score">${score} / ${QUESTIONS.length}</div>
+      <div class="sub">${msg}</div>
+      <button class="btn show" id="again">🔁 Пройти заново</button>
+    </div>`;
+  document.getElementById('again').onclick=()=>{i=0;score=0;shuffle();render();};
+}
+
+document.addEventListener('keydown',e=>{
+  if(['1','2','3','4'].includes(e.key)){ const b=document.querySelector(`.opt[data-n="${+e.key-1}"]`); if(b&&!b.disabled) choose(+e.key-1); }
+  if(e.key==='Enter'){ const nb=document.getElementById('next'); if(nb&&nb.classList.contains('show')) next(); }
+});
+
+render();
+</script>
+</body>
+</html>

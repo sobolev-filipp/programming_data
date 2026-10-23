@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;700&family=Montserrat&display=swap" rel="stylesheet">
+<title>Ценовые тарифы — пример урока</title>
+<style>
+  /* В уроке заголовочный шрифт подключают своим файлом через @font-face:
+     @font-face { font-family:"Display"; src:url("fonts/display.woff2"); font-display:swap; }
+     Здесь для рабочего примера взят Oswald с Google Fonts. */
+  body { font-family: "Montserrat", sans-serif; background: #0f172a; color: #e2e8f0; margin: 0; padding: 34px 20px; }
+  h1 { font-family: "Oswald", sans-serif; font-weight: 700; text-align: center; font-size: 34px; margin: 0 0 26px; letter-spacing: 1px; }
+
+  .plans {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+    align-items: stretch;
+    max-width: 960px;
+    margin: 0 auto;
+  }
+  .plan {
+    flex: 1;                 /* делят ширину поровну */
+    min-width: 220px;
+    max-width: 320px;
+    background: #1e293b;
+    border-radius: 16px;
+    padding: 26px 22px;
+    text-align: center;
+  }
+  .plan.pro {
+    flex: 1.4;               /* популярный — шире */
+    border: 2px solid #38bdf8;
+  }
+  .plan h3 { font-family: "Oswald", sans-serif; font-weight: 500; margin: 0 0 10px; font-size: 22px; }
+  .price   { font-size: 42px; font-weight: 800; color: #38bdf8; margin: 8px 0; }
+  .plan p  { margin: 6px 0; color: #cbd5e1; }
+  .btn {
+    display: inline-block; margin-top: 14px; padding: 10px 22px; border-radius: 10px;
+    background: #38bdf8; color: #0f172a; text-decoration: none; font-weight: 700;
+  }
+</style>
+</head>
+<body>
+    <h1>Выбери тариф</h1>
+    <section class="plans">
+        <article class="plan">
+            <h3>Старт</h3>
+            <p class="price">0 ₽</p>
+            <p>Базовые функции</p>
+            <p>1 проект</p>
+            <a href="#" class="btn">Выбрать</a>
+        </article>
+        <article class="plan pro">
+            <h3>Про ⭐</h3>
+            <p class="price">299 ₽</p>
+            <p>Всё включено</p>
+            <p>Безлимит проектов</p>
+            <a href="#" class="btn">Выбрать</a>
+        </article>
+        <article class="plan">
+            <h3>Команда</h3>
+            <p class="price">799 ₽</p>
+            <p>До 10 человек</p>
+            <p>Общие проекты</p>
+            <a href="#" class="btn">Выбрать</a>
+        </article>
+    </section>
+</body>
+</html>

@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Страница из flex-паттернов — пример урока</title>
+<style>
+  body { min-height: 100vh; display: flex; flex-direction: column; margin: 0;
+         font-family: "Segoe UI", system-ui, sans-serif; background: #0f172a; color: #e2e8f0; }
+
+  /* Паттерн 1: шапка */
+  .top { display: flex; justify-content: space-between; align-items: center; padding: 16px 24px; background: #1e293b; }
+  .logo { font-weight: 800; font-size: 20px; }
+  .menu { display: flex; gap: 18px; }
+  .menu a { color: #e2e8f0; text-decoration: none; font-weight: 600; }
+  .menu a:hover { color: #38bdf8; }
+
+  main { flex: 1; padding: 24px; max-width: 760px; width: 100%; margin: 0 auto; box-sizing: border-box; }
+  h1 { font-size: 26px; }
+
+  /* Паттерн 2: горизонтальная карточка */
+  .card-h { display: flex; gap: 16px; align-items: center; background: #1e293b; border-radius: 14px; padding: 16px; margin-bottom: 16px; }
+  .cover { flex-shrink: 0; width: 110px; height: 72px; border-radius: 10px; background: linear-gradient(135deg,#6366f1,#38bdf8); }
+  .body { flex: 1; }
+  .body h3 { margin: 0 0 4px; }
+  .body p { margin: 0 0 8px; color: #cbd5e1; }
+  .btn { display: inline-block; padding: 8px 18px; border-radius: 8px; background: #38bdf8; color: #0f172a; text-decoration: none; font-weight: 700; }
+
+  /* Паттерн 3: медиа-объект (комментарий) */
+  .comment { display: flex; gap: 12px; background: #1e293b; border-radius: 12px; padding: 14px; margin-bottom: 12px; }
+  .avatar { flex-shrink: 0; width: 44px; height: 44px; border-radius: 50%; background: #f59e0b; }
+  .comment .text { flex: 1; }
+  .comment strong { color: #38bdf8; }
+
+  /* Паттерн 4: подвал внизу */
+  footer { text-align: center; padding: 16px; background: #1e293b; color: #94a3b8; }
+</style>
+</head>
+<body>
+    <header class="top">
+        <div class="logo">🎮 GameHub</div>
+        <nav class="menu"><a href="#">Лента</a><a href="#">Топ</a><a href="#">Профиль</a></nav>
+    </header>
+
+    <main>
+        <h1>Новинки</h1>
+
+        <article class="card-h">
+            <div class="cover"></div>
+            <div class="body"><h3>Space Run</h3><p>Космический раннер с таблицей рекордов.</p><a class="btn" href="#">Играть</a></div>
+        </article>
+        <article class="card-h">
+            <div class="cover"></div>
+            <div class="body"><h3>Dungeon Cat</h3><p>Пиксельное приключение кота-героя.</p><a class="btn" href="#">Играть</a></div>
+        </article>
+
+        <h1>Отзывы</h1>
+        <div class="comment">
+            <div class="avatar"></div>
+            <div class="text"><strong>NightFox</strong><p>Space Run — топ! Залипаю каждый вечер.</p></div>
+        </div>
+        <div class="comment">
+            <div class="avatar"></div>
+            <div class="text"><strong>PixelCat</strong><p>Dungeon Cat милый и сложный одновременно.</p></div>
+        </div>
+    </main>
+
+    <footer><p>© 2026 GameHub · Собрано из flex-паттернов на уроке</p></footer>
+</body>
+</html>

@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 420" font-family="Segoe UI, Arial, sans-serif">
+  <rect x="0" y="0" width="720" height="420" fill="#f8fafc" rx="16"/>
+  <text x="360" y="38" text-anchor="middle" font-size="22" font-weight="700" fill="#1e293b">display: flex — две оси</text>
+  <text x="360" y="64" text-anchor="middle" font-size="15" fill="#475569">контейнер выстраивает детей вдоль главной оси</text>
+
+  <!-- flex container -->
+  <rect x="90" y="110" width="540" height="150" rx="14" fill="#e0e7ff" stroke="#6366f1" stroke-width="2"/>
+  <text x="110" y="134" font-size="14" fill="#4338ca">контейнер (display: flex)</text>
+
+  <!-- three items -->
+  <rect x="120" y="150" width="120" height="90" rx="10" fill="#6366f1"/>
+  <text x="180" y="201" text-anchor="middle" font-size="18" font-weight="700" fill="#ffffff">1</text>
+  <rect x="300" y="150" width="120" height="90" rx="10" fill="#6366f1"/>
+  <text x="360" y="201" text-anchor="middle" font-size="18" font-weight="700" fill="#ffffff">2</text>
+  <rect x="480" y="150" width="120" height="90" rx="10" fill="#6366f1"/>
+  <text x="540" y="201" text-anchor="middle" font-size="18" font-weight="700" fill="#ffffff">3</text>
+
+  <!-- main axis arrow (horizontal) -->
+  <defs>
+    <marker id="ah" markerWidth="12" markerHeight="12" refX="9" refY="5" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#dc2626"/>
+    </marker>
+    <marker id="av" markerWidth="12" markerHeight="12" refX="9" refY="5" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#0891b2"/>
+    </marker>
+  </defs>
+  <line x1="120" y1="300" x2="600" y2="300" stroke="#dc2626" stroke-width="3" marker-end="url(#ah)"/>
+  <text x="360" y="328" text-anchor="middle" font-size="16" font-weight="700" fill="#dc2626">главная ось → justify-content</text>
+
+  <!-- cross axis arrow (vertical) -->
+  <line x1="56" y1="150" x2="56" y2="240" stroke="#0891b2" stroke-width="3" marker-end="url(#av)"/>
+  <text x="40" y="300" font-size="16" font-weight="700" fill="#0891b2" transform="rotate(90 40 300)">поперечная ось → align-items</text>
+
+  <text x="360" y="372" text-anchor="middle" font-size="14" fill="#475569">justify-content двигает по главной оси, align-items — по поперечной</text>
+  <text x="360" y="396" text-anchor="middle" font-size="14" fill="#475569">gap задаёт промежутки между детьми</text>
+</svg>

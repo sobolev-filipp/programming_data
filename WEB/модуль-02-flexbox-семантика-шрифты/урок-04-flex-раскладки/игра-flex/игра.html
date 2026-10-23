@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Выстрой отряд — flex-тренажёр</title>
+<style>
+  :root{ --accent:#6366f1; --ink:#1f2937; --soft:#eef2ff; --ok:#16a34a; }
+  *{box-sizing:border-box;font-family:"Segoe UI",system-ui,sans-serif}
+  body{margin:0;min-height:100vh;background:linear-gradient(135deg,#0ea5e9,#6366f1);color:var(--ink);
+    padding:20px;display:flex;align-items:flex-start;justify-content:center}
+  .wrap{width:min(980px,100%);display:grid;grid-template-columns:1fr 320px;gap:18px}
+  @media(max-width:820px){ .wrap{grid-template-columns:1fr} }
+  .card{background:#fff;border-radius:20px;box-shadow:0 20px 50px rgba(0,0,0,.3);padding:22px}
+  h1{margin:0 0 2px;font-size:24px}
+  .sub{color:#64748b;font-size:14px;margin-bottom:14px}
+  .meta{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;font-size:14px;color:#475569}
+  .goal{background:var(--soft);border-radius:12px;padding:12px 14px;margin-bottom:14px;font-size:15px}
+  .goal b{color:var(--accent)}
+
+  /* игровое поле: наложены две flex-раскладки — цель (призрак) и игрок */
+  .stage{position:relative;height:320px;border:2px dashed #cbd5e1;border-radius:14px;background:
+    repeating-linear-gradient(0deg,#f8fafc,#f8fafc 39px,#eef2ff 39px,#eef2ff 40px),
+    repeating-linear-gradient(90deg,#f8fafc,#f8fafc 39px,#eef2ff 39px,#eef2ff 40px);overflow:hidden}
+  .field{position:absolute;inset:0;padding:12px;display:flex}
+  .field.target .tok{background:transparent;border:3px dashed #94a3b8;color:#94a3b8}
+  .field.player .tok{background:var(--accent);color:#fff;box-shadow:0 6px 14px rgba(99,102,241,.4)}
+  .tok{width:48px;height:48px;border-radius:12px;display:flex;align-items:center;justify-content:center;
+    font-size:24px;font-weight:800;transition:.35s}
+
+  .controls{margin-top:14px;display:grid;gap:10px}
+  .ctl label{font-size:13px;font-weight:700;color:#475569;display:block;margin-bottom:4px}
+  .ctl .opts{display:flex;flex-wrap:wrap;gap:6px}
+  .ctl button{border:2px solid #e2e8f0;background:#fff;border-radius:9px;padding:6px 10px;font-size:13px;cursor:pointer;font-family:monospace}
+  .ctl button.on{border-color:var(--accent);background:var(--soft);color:var(--accent);font-weight:700}
+  .ctl button:hover{border-color:var(--accent)}
+
+  .row{display:flex;gap:10px;margin-top:14px}
+  .btn{flex:1;padding:12px;border:0;border-radius:12px;font-size:15px;font-weight:700;cursor:pointer}
+  .btn.primary{background:var(--accent);color:#fff}
+  .btn.ghost{background:#eef2ff;color:var(--accent)}
+  .fb{margin-top:12px;padding:12px 14px;border-radius:12px;font-size:14px;display:none}
+  .fb.show{display:block}
+  .fb.ok{background:#dcfce7;color:#166534}
+  .fb.no{background:#fee2e2;color:#991b1b}
+
+  /* правая колонка */
+  .side h2{font-size:17px;margin:0 0 8px}
+  .side p,.side li{font-size:14px;color:#334155;line-height:1.5}
+  .side code{background:#0f172a;color:#e2e8f0;padding:1px 6px;border-radius:5px;font-size:13px}
+  .side table{width:100%;border-collapse:collapse;font-size:13px}
+  .side td{padding:4px 0;vertical-align:top}
+  .side td:first-child{color:var(--accent);font-family:monospace;white-space:nowrap;padding-right:8px}
+  details{margin-top:12px}
+  summary{cursor:pointer;font-weight:700;color:var(--accent)}
+  .done{text-align:center;padding:20px}
+  .done .big{font-size:64px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="card" id="game"></div>
+  <div class="card side">
+    <h2>🧭 Как это работает</h2>
+    <p>У поля включён <code>display: flex</code>. Твоя задача — подобрать свойства, чтобы <b>синие бойцы</b> встали ровно на <b>пунктирные места</b>.</p>
+    <table>
+      <tr><td>justify-content</td><td>двигает вдоль главной оси</td></tr>
+      <tr><td>align-items</td><td>выравнивает поперёк</td></tr>
+      <tr><td>gap</td><td>промежутки между бойцами</td></tr>
+      <tr><td>flex-direction</td><td>row — в ряд, column — в столбик</td></tr>
+    </table>
+    <details><summary>📄 Шпаргалка значений</summary>
+      <p><code>justify-content</code>: flex-start · center · flex-end · space-between · space-around · space-evenly</p>
+      <p><code>align-items</code>: flex-start · center · flex-end</p>
+      <p><code>flex-direction</code>: row · column. При <code>column</code> оси меняются ролями!</p>
+    </details>
+    <p style="margin-top:12px;color:#64748b;font-size:13px">💡 Открывай через Live Server или двойным кликом по файлу — нужен настоящий браузер.</p>
+  </div>
+</div>
+
+<script>
+const LEVELS = [
+  { n:3, goal:"Собери отряд <b>по центру</b> (по горизонтали).",
+    active:["justify"], sol:{justify:"center"} },
+  { n:3, goal:"Отправь отряд <b>к правому краю</b>.",
+    active:["justify"], sol:{justify:"flex-end"} },
+  { n:3, goal:"Прижми отряд <b>к низу</b> поля.",
+    active:["align"], sol:{align:"flex-end"} },
+  { n:3, goal:"Поставь отряд <b>в центр</b> поля (и по горизонтали, и по вертикали).",
+    active:["justify","align"], sol:{justify:"center",align:"center"} },
+  { n:3, goal:"Поставь отряд в <b>правый нижний угол</b>.",
+    active:["justify","align"], sol:{justify:"flex-end",align:"flex-end"} },
+  { n:3, goal:"Раздвинь бойцов <b>по краям</b>, промежутки поровну между ними.",
+    active:["justify"], sol:{justify:"space-between"} },
+  { n:4, goal:"Выстрой бойцов <b>в столбик</b> (сверху вниз).",
+    active:["dir"], sol:{dir:"column"} },
+  { n:4, goal:"Столбик бойцов <b>по центру</b> поля по горизонтали.",
+    active:["dir","align"], sol:{dir:"column",align:"center"} },
+  { n:3, goal:"Распредели бойцов так, чтобы <b>вокруг каждого</b> был равный отступ.",
+    active:["justify"], sol:{justify:"space-around"} },
+  { n:4, goal:"Столбик в <b>нижнем</b> крае, бойцы прижаты <b>вправо</b>.",
+    active:["dir","justify","align"], sol:{dir:"column",justify:"flex-end",align:"flex-end"} },
+];
+
+const VALUES = {
+  dir:["row","column"],
+  justify:["flex-start","center","flex-end","space-between","space-around","space-evenly"],
+  align:["flex-start","center","flex-end"],
+  gap:["0","16px","40px"],
+};
+const LABEL = { dir:"flex-direction", justify:"justify-content", align:"align-items", gap:"gap" };
+
+let li=0, state={};
+const game=document.getElementById('game');
+
+function defaults(){ return { dir:"row", justify:"flex-start", align:"flex-start", gap:"0" }; }
+
+function render(){
+  const L=LEVELS[li];
+  state=defaults();
+  game.innerHTML=`
+    <h1>🪖 Выстрой отряд</h1>
+    <div class="sub">flex-тренажёр · Модуль 2 · WEB</div>
+    <div class="meta"><span>Уровень ${li+1} из ${LEVELS.length}</span><span>Цель задана пунктиром</span></div>
+    <div class="goal">🎯 ${L.goal}</div>
+    <div class="stage">
+      <div class="field target" id="target"></div>
+      <div class="field player" id="player"></div>
+    </div>
+    <div class="controls" id="controls"></div>
+    <div class="fb" id="fb"></div>
+    <div class="row">
+      <button class="btn ghost" id="reset">↺ Сбросить</button>
+      <button class="btn primary" id="check">Проверить ✓</button>
+    </div>`;
+  // target field uses the solution (merged over defaults)
+  const tgt=Object.assign(defaults(), L.sol);
+  applyField(document.getElementById('target'), tgt, L.n, true);
+  renderControls();
+  applyPlayer();
+  document.getElementById('check').onclick=check;
+  document.getElementById('reset').onclick=()=>{state=defaults();renderControls();applyPlayer();hideFb();};
+}
+
+function renderControls(){
+  const L=LEVELS[li];
+  const c=document.getElementById('controls');
+  c.innerHTML=L.active.map(prop=>`
+    <div class="ctl">
+      <label>${LABEL[prop]}</label>
+      <div class="opts">
+        ${VALUES[prop].map(v=>`<button data-prop="${prop}" data-val="${v}" class="${state[prop]===v?'on':''}">${v}</button>`).join('')}
+      </div>
+    </div>`).join('');
+  c.querySelectorAll('button').forEach(b=>b.onclick=()=>{
+    state[b.dataset.prop]=b.dataset.val; renderControls(); applyPlayer(); hideFb();
+  });
+}
+
+function applyField(el, props, n, ghost){
+  el.style.flexDirection=props.dir;
+  el.style.justifyContent=props.justify;
+  el.style.alignItems=props.align;
+  el.style.gap=props.gap;
+  el.innerHTML="";
+  for(let k=0;k<n;k++){ const t=document.createElement('div'); t.className='tok'; t.textContent=ghost?'':'★'; el.appendChild(t); }
+}
+
+function applyPlayer(){ applyField(document.getElementById('player'), state, LEVELS[li].n, false); }
+
+function check(){
+  const L=LEVELS[li];
+  const ok=L.active.every(p=>state[p]===L.sol[p]);
+  const fb=document.getElementById('fb');
+  if(ok){
+    fb.className='fb show ok';
+    fb.innerHTML='✅ Отлично! Отряд построен. '+(li<LEVELS.length-1?'Следующий уровень…':'Это был последний!');
+    setTimeout(()=>{ li++; if(li<LEVELS.length) render(); else done(); }, 900);
+  } else {
+    fb.className='fb show no';
+    fb.innerHTML='❌ Пока не совпало. Сравни синих бойцов с пунктиром и поправь свойства.';
+  }
+}
+function hideFb(){ const fb=document.getElementById('fb'); if(fb) fb.className='fb'; }
+
+function done(){
+  game.innerHTML=`<div class="done">
+    <div class="big">🏆</div>
+    <h1>Все 10 уровней пройдены!</h1>
+    <p class="sub">Ты уверенно управляешь Flexbox: justify-content, align-items, gap и flex-direction.</p>
+    <div class="row"><button class="btn primary" id="again">🔁 Играть снова</button></div>
+  </div>`;
+  document.getElementById('again').onclick=()=>{li=0;render();};
+}
+
+render();
+</script>
+</body>
+</html>

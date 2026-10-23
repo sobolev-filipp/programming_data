@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Каркас сайта с навбаром — пример урока</title>
+<style>
+  body { font-family: "Segoe UI", system-ui, sans-serif; margin: 0; color: #1e293b; background: #ffffff; }
+
+  /* Шапка: логотип слева, меню справа, по центру высоты (flex) */
+  .top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 24px;
+    background: #4f46e5;
+    color: #fff;
+  }
+  .logo { font-size: 22px; font-weight: 800; }
+
+  /* Меню: ссылки в ряд с промежутками */
+  .menu { display: flex; gap: 22px; }
+  .menu a { color: #fff; text-decoration: none; font-weight: 600; }
+  .menu a:hover { text-decoration: underline; }
+
+  main { padding: 24px; max-width: 900px; }
+  h2 { margin-top: 0; }
+  article {
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    padding: 16px;
+    margin: 12px 0;
+    background: #f8fafc;
+  }
+  article h3 { margin: 0 0 6px; color: #4f46e5; }
+  aside {
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    padding: 16px;
+    margin: 12px 0;
+    background: #fef9c3;
+  }
+  aside h3 { margin-top: 0; }
+  footer { background: #f1f5f9; text-align: center; padding: 16px; color: #475569; }
+</style>
+</head>
+<body>
+    <header class="top">
+        <div class="logo">🎮 GameZone</div>
+        <nav class="menu">
+            <a href="#">Главная</a>
+            <a href="#">Игры</a>
+            <a href="#">Контакты</a>
+        </nav>
+    </header>
+
+    <main>
+        <section>
+            <h2>🔥 Новинки</h2>
+
+            <article>
+                <h3>Space Run</h3>
+                <p>Космический раннер с таблицей рекордов. Беги, уворачивайся, собирай кристаллы.</p>
+            </article>
+
+            <article>
+                <h3>Dungeon Cat</h3>
+                <p>Пиксельное приключение кота-героя в подземельях, полных загадок.</p>
+            </article>
+        </section>
+
+        <aside>
+            <h3>📌 Смотри также</h3>
+            <ul>
+                <li><a href="#">Топ-10 игр года</a></li>
+                <li><a href="#">Гайд для новичка</a></li>
+            </ul>
+        </aside>
+    </main>
+
+    <footer>
+        <p>© 2026 GameZone · Сделано на уроке</p>
+    </footer>
+</body>
+</html>

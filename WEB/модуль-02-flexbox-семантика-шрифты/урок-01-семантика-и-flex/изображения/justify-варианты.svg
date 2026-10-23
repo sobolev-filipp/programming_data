@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 460" font-family="Segoe UI, Arial, sans-serif">
+  <rect x="0" y="0" width="720" height="460" fill="#f8fafc" rx="16"/>
+  <text x="360" y="36" text-anchor="middle" font-size="22" font-weight="700" fill="#1e293b">justify-content — куда сдвинуть по ряду</text>
+
+  <!-- flex-start -->
+  <text x="40" y="86" font-size="15" font-weight="700" fill="#4338ca">flex-start (по умолчанию)</text>
+  <rect x="40" y="96" width="640" height="70" rx="10" fill="#e0e7ff" stroke="#6366f1" stroke-width="2"/>
+  <rect x="54" y="110" width="80" height="42" rx="8" fill="#6366f1"/>
+  <rect x="144" y="110" width="80" height="42" rx="8" fill="#6366f1"/>
+  <rect x="234" y="110" width="80" height="42" rx="8" fill="#6366f1"/>
+
+  <!-- center -->
+  <text x="40" y="206" font-size="15" font-weight="700" fill="#4338ca">center</text>
+  <rect x="40" y="216" width="640" height="70" rx="10" fill="#e0e7ff" stroke="#6366f1" stroke-width="2"/>
+  <rect x="226" y="230" width="80" height="42" rx="8" fill="#6366f1"/>
+  <rect x="316" y="230" width="80" height="42" rx="8" fill="#6366f1"/>
+  <rect x="406" y="230" width="80" height="42" rx="8" fill="#6366f1"/>
+
+  <!-- space-between -->
+  <text x="40" y="326" font-size="15" font-weight="700" fill="#4338ca">space-between (поровну между)</text>
+  <rect x="40" y="336" width="640" height="70" rx="10" fill="#e0e7ff" stroke="#6366f1" stroke-width="2"/>
+  <rect x="54" y="350" width="80" height="42" rx="8" fill="#6366f1"/>
+  <rect x="320" y="350" width="80" height="42" rx="8" fill="#6366f1"/>
+  <rect x="586" y="350" width="80" height="42" rx="8" fill="#6366f1"/>
+
+  <text x="360" y="442" text-anchor="middle" font-size="14" fill="#475569">ещё есть flex-end, space-around, space-evenly</text>
+</svg>

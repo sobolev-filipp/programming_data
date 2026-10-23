@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 740 480" font-family="Segoe UI, Arial, sans-serif">
+  <rect x="0" y="0" width="740" height="480" rx="16" fill="#f8fafc"/>
+  <text x="370" y="34" text-anchor="middle" font-size="22" font-weight="700" fill="#1e293b">4 типовые раскладки на Flexbox</text>
+
+  <!-- dividers -->
+  <line x1="370" y1="54" x2="370" y2="456" stroke="#e2e8f0" stroke-width="2"/>
+  <line x1="40" y1="255" x2="700" y2="255" stroke="#e2e8f0" stroke-width="2"/>
+
+  <!-- 1. Navbar -->
+  <text x="56" y="80" font-size="15" font-weight="700" fill="#4338ca">1. Шапка: логотип ← → меню</text>
+  <text x="56" y="100" font-size="12" fill="#475569">justify-content: space-between; align-items: center</text>
+  <rect x="56" y="112" width="280" height="56" rx="10" fill="#e0e7ff" stroke="#6366f1" stroke-width="2"/>
+  <circle cx="86" cy="140" r="14" fill="#6366f1"/>
+  <rect x="210" y="132" width="40" height="16" rx="5" fill="#6366f1"/>
+  <rect x="258" y="132" width="40" height="16" rx="5" fill="#6366f1"/>
+  <rect x="306" y="132" width="22" height="16" rx="5" fill="#6366f1"/>
+
+  <!-- 2. Horizontal card -->
+  <text x="412" y="80" font-size="15" font-weight="700" fill="#4338ca">2. Карточка: фото + текст</text>
+  <text x="412" y="100" font-size="12" fill="#475569">display: flex; align-items: center; gap</text>
+  <rect x="412" y="112" width="280" height="70" rx="10" fill="#e0e7ff" stroke="#6366f1" stroke-width="2"/>
+  <rect x="424" y="124" width="60" height="46" rx="8" fill="#6366f1"/>
+  <rect x="498" y="130" width="150" height="12" rx="4" fill="#6366f1"/>
+  <rect x="498" y="150" width="110" height="10" rx="4" fill="#a5b4fc"/>
+
+  <!-- 3. Media object (avatar + text) -->
+  <text x="56" y="285" font-size="15" font-weight="700" fill="#4338ca">3. Комментарий: аватар + текст</text>
+  <text x="56" y="305" font-size="12" fill="#475569">аватар flex-shrink: 0; текст flex: 1</text>
+  <rect x="56" y="317" width="280" height="80" rx="10" fill="#e0e7ff" stroke="#6366f1" stroke-width="2"/>
+  <circle cx="90" cy="357" r="20" fill="#6366f1"/>
+  <rect x="122" y="332" width="200" height="12" rx="4" fill="#6366f1"/>
+  <rect x="122" y="352" width="190" height="10" rx="4" fill="#a5b4fc"/>
+  <rect x="122" y="368" width="150" height="10" rx="4" fill="#a5b4fc"/>
+
+  <!-- 4. Sticky footer -->
+  <text x="412" y="285" font-size="15" font-weight="700" fill="#4338ca">4. Подвал прижат вниз</text>
+  <text x="412" y="305" font-size="12" fill="#475569">контейнер column; main flex: 1</text>
+  <rect x="412" y="317" width="150" height="130" rx="10" fill="#e0e7ff" stroke="#6366f1" stroke-width="2"/>
+  <rect x="424" y="329" width="126" height="22" rx="5" fill="#6366f1"/>
+  <text x="487" y="390" text-anchor="middle" font-size="12" fill="#6366f1">main (flex: 1)</text>
+  <rect x="424" y="415" width="126" height="20" rx="5" fill="#6366f1"/>
+
+  <text x="628" y="360" font-size="13" fill="#475569">min-height:</text>
+  <text x="628" y="378" font-size="13" fill="#475569">100vh</text>
+  <text x="628" y="404" font-size="13" fill="#475569">подвал</text>
+  <text x="628" y="422" font-size="13" fill="#475569">внизу</text>
+</svg>

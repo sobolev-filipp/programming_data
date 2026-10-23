@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 440" font-family="Segoe UI, Arial, sans-serif">
+  <rect x="0" y="0" width="720" height="440" rx="16" fill="#f8fafc"/>
+  <text x="360" y="36" text-anchor="middle" font-size="22" font-weight="700" fill="#1e293b">flex-wrap — перенос на новую строку</text>
+
+  <!-- NOWRAP -->
+  <text x="40" y="82" font-size="16" font-weight="700" fill="#dc2626">flex-wrap: nowrap (по умолчанию)</text>
+  <text x="40" y="104" font-size="13" fill="#475569">карточки сжимаются в один ряд — становятся узкими и некрасивыми</text>
+  <rect x="40" y="116" width="640" height="88" rx="10" fill="#fee2e2" stroke="#dc2626" stroke-width="2"/>
+  <g fill="#f87171">
+    <rect x="52" y="130" width="96" height="60" rx="8"/>
+    <rect x="156" y="130" width="96" height="60" rx="8"/>
+    <rect x="260" y="130" width="96" height="60" rx="8"/>
+    <rect x="364" y="130" width="96" height="60" rx="8"/>
+    <rect x="468" y="130" width="96" height="60" rx="8"/>
+    <rect x="572" y="130" width="96" height="60" rx="8"/>
+  </g>
+
+  <!-- WRAP -->
+  <text x="40" y="250" font-size="16" font-weight="700" fill="#16a34a">flex-wrap: wrap</text>
+  <text x="40" y="272" font-size="13" fill="#475569">не влезли — переносятся на новую строку, сохраняя удобный размер</text>
+  <rect x="40" y="284" width="640" height="140" rx="10" fill="#dcfce7" stroke="#16a34a" stroke-width="2"/>
+  <g fill="#4ade80">
+    <rect x="56" y="298" width="140" height="48" rx="8"/>
+    <rect x="212" y="298" width="140" height="48" rx="8"/>
+    <rect x="368" y="298" width="140" height="48" rx="8"/>
+    <rect x="524" y="298" width="140" height="48" rx="8"/>
+    <rect x="56" y="360" width="140" height="48" rx="8"/>
+    <rect x="212" y="360" width="140" height="48" rx="8"/>
+  </g>
+</svg>
