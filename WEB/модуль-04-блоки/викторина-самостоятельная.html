@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Викторина с оценкой — Модуль 4: Блоки и оформление</title>
+<style>
+  :root{
+    --bg1:#4f46e5; --bg2:#db2777; --card:#ffffff; --ink:#1f2937;
+    --accent:#4f46e5; --ok:#16a34a; --bad:#dc2626; --soft:#e0e7ff;
+  }
+  *{box-sizing:border-box;font-family:"Segoe UI",system-ui,sans-serif}
+  body{margin:0;min-height:100vh;display:flex;align-items:center;justify-content:center;
+    background:linear-gradient(135deg,var(--bg1),var(--bg2));padding:20px;color:var(--ink)}
+  .app{background:var(--card);width:min(760px,100%);border-radius:24px;
+    box-shadow:0 25px 60px rgba(0,0,0,.35);padding:34px 34px 28px;position:relative;overflow:hidden}
+  h1{margin:0 0 6px;font-size:24px;text-align:center}
+  .sub{text-align:center;color:#64748b;margin-bottom:22px;font-size:15px}
+  .bar{height:10px;background:var(--soft);border-radius:99px;overflow:hidden;margin-bottom:18px}
+  .bar>i{display:block;height:100%;width:0;background:var(--accent);transition:.4s}
+  .meta{display:flex;justify-content:space-between;font-size:14px;color:#64748b;margin-bottom:14px}
+  .q{font-size:21px;font-weight:700;margin:6px 0 20px;line-height:1.3}
+  .q code{background:#0f172a;color:#e2e8f0;padding:2px 8px;border-radius:6px;font-size:18px}
+  .opts{display:grid;gap:12px}
+  .opt{border:2px solid #e2e8f0;background:#fff;border-radius:14px;padding:14px 18px;font-size:17px;
+    text-align:left;cursor:pointer;transition:.15s;display:flex;align-items:center;gap:12px}
+  .opt:hover{border-color:var(--accent);background:var(--soft);transform:translateY(-2px)}
+  .opt b{background:var(--soft);color:var(--accent);width:30px;height:30px;border-radius:8px;
+    display:flex;align-items:center;justify-content:center;font-size:15px;flex:0 0 auto}
+  .opt span code{background:#0f172a;color:#e2e8f0;padding:1px 6px;border-radius:5px;font-size:15px}
+  .opt.ok{border-color:var(--ok);background:#dcfce7}
+  .opt.ok b{background:var(--ok);color:#fff}
+  .opt.bad{border-color:var(--bad);background:#fee2e2}
+  .opt.bad b{background:var(--bad);color:#fff}
+  .opt:disabled{cursor:default;transform:none}
+  .fb{margin-top:16px;padding:14px 16px;border-radius:12px;font-size:15px;display:none;line-height:1.4}
+  .fb.show{display:block}
+  .fb.good{background:#dcfce7;color:#166534}
+  .fb.no{background:#fee2e2;color:#991b1b}
+  .fb code{background:#0f172a;color:#e2e8f0;padding:1px 6px;border-radius:5px}
+  .btn{margin-top:18px;width:100%;padding:15px;border:0;border-radius:14px;background:var(--accent);
+    color:#fff;font-size:18px;font-weight:700;cursor:pointer;display:none}
+  .btn.show{display:block}
+  .btn:hover{filter:brightness(1.08)}
+  .center{text-align:center}
+  .grade{font-size:92px;font-weight:800;margin:6px 0;line-height:1}
+  .scoreline{font-size:20px;color:#475569;margin-bottom:6px}
+  .emoji{font-size:64px}
+  .hint{color:#94a3b8;font-size:13px;text-align:center;margin-top:14px}
+</style>
+</head>
+<body>
+<div class="app" id="app"></div>
+<script>
+// Викторина С ОЦЕНКОЙ по всему Модулю 4 (box-model, outline/радиусы, картинки/тени/фоны, градиенты) + повтор flex.
+// Длина варианта НЕ выдаёт правильный ответ (проверено скриптом).
+const QUESTIONS = [
+  {q:"Из скольких слоёв состоит блочная модель?",a:["Четыре","Два","Десять","Один"],c:0,e:"content, padding, border, margin."},
+  {q:"Что такое padding?",a:["Внутренний отступ","Отступ снаружи между блоками","Рамка","Тень"],c:0,e:"padding — между содержимым и рамкой."},
+  {q:"Что такое margin?",a:["Внешний отступ","Воздух внутри под фоном","Цвет","Шрифт"],c:0,e:"margin — отступ снаружи, между блоками."},
+  {q:"Что делает <code>box-sizing: border-box</code>?",a:["padding и border входят в width","рисует жирную рамку вокруг блока","убирает padding","добавляет тень"],c:0,e:"С border-box ширина не раздувается."},
+  {q:"Что делает <code>margin: 0 auto</code>?",a:["Центрирует блок","Полностью убирает блок со страницы","Красит фон","Делает рамку"],c:0,e:"Центрирует блок с заданной шириной по горизонтали."},
+  {q:"Что такое схлопывание отступов?",a:["Берётся больший margin","margin всегда складываются полностью","padding исчезает совсем","ошибка браузера"],c:0,e:"Вертикальные margin соседей не складываются — берётся больший."},
+  {q:"Чем смотрят блочную модель в браузере?",a:["DevTools (F12)","специальным Word-ом","калькулятором","блокнотом"],c:0,e:"DevTools показывает слои блока."},
+
+  {q:"Как сделать «таблетку» любой высоты?",a:["border-radius: 999px","маленький радиус 5px","border: round","radius: 50%"],c:0,e:"Большой радиус даёт полукруглые края."},
+  {q:"Радиус вложенного блока (чтобы углы совпали)?",a:["внешний − padding","такой же, как внешний","внешний + padding","всегда ноль"],c:0,e:"Внутренний = внешний − padding."},
+  {q:"Главное отличие outline от border?",a:["не занимает место","обычно немного толще","только красный","они одинаковые"],c:0,e:"outline рисуется поверх — не двигает соседей."},
+  {q:"Для чего в первую очередь нужен outline?",a:["обводка при :focus","красивый фон блока","тени","текст"],c:0,e:"outline показывает выбор с клавиатуры."},
+  {q:"<code>border-radius: 50%</code> даёт круг, если блок...",a:["квадратный","любой формы блок","широкий","высокий"],c:0,e:"Круг — только у квадрата (ширина = высота)."},
+  {q:"Можно ли писать <code>outline: none</code> у кнопок?",a:["нельзя без замены","да, всегда можно смело","только по вторникам","outline не бывает"],c:0,e:"Иначе с клавиатуры не видно выбор."},
+  {q:"Фокус, который срабатывает при Tab, но не при клике?",a:[":focus-visible",":hover при наведении",":active",":visited"],c:0,e:":focus-visible — обводка только с клавиатуры."},
+
+  {q:"Что делает <code>object-fit: cover</code>?",a:["заполняет без искажений","растягивает и сильно искажает фото","уменьшает","убирает"],c:0,e:"cover заполняет блок без искажений, лишнее обрезает."},
+  {q:"Какое значение object-fit искажает картинку?",a:["fill","cover","contain","none"],c:0,e:"fill растягивает под блок, искажая."},
+  {q:"Что делает <code>aspect-ratio: 16/9</code>?",a:["держит пропорцию","красит фон в яркий цвет","обрезает текст","добавляет тень"],c:0,e:"Держит пропорцию блока."},
+  {q:"Каким должен быть цвет тени (box-shadow)?",a:["полупрозрачный rgba","сплошной чёрный цвет везде","ярко-красный","белый"],c:0,e:"Полупрозрачная тень ложится естественно."},
+  {q:"Что делает <code>inset</code> в box-shadow?",a:["тень внутрь блока","полностью убирает тень совсем","красит рамку","повторяет фон"],c:0,e:"inset рисует тень внутрь."},
+  {q:"Чем ставят картинку фоном блока?",a:["background-image: url()","обычным тегом img в разметке","object-fit","content"],c:0,e:"background-image: url(...) — фон."},
+  {q:"Как запретить повтор фона плиткой?",a:["background-repeat: no-repeat","просто поставить где-то repeat off","background-size: 0","no-tile"],c:0,e:"no-repeat убирает повтор."},
+  {q:"Зачем карточке <code>overflow: hidden</code>?",a:["обрезает обложку по углам","нужно для мягкой красивой тени","для текста","для фона"],c:0,e:"Обрезает обложку по скруглённым углам."},
+
+  {q:"Градиент в CSS — это...",a:["фон с переходом цветов","яркий цвет текста на странице","рамка","тень"],c:0,e:"Градиент — это фон."},
+  {q:"Какой градиент идёт по прямой?",a:["linear-gradient","radial-gradient по кругу","conic-gradient","flat-gradient"],c:0,e:"linear — прямая линия."},
+  {q:"Какой градиент расходится из центра?",a:["radial-gradient","linear-gradient прямой","conic-gradient","side-gradient"],c:0,e:"radial — из центра."},
+  {q:"Как покрасить текст градиентом?",a:["background-clip: text","просто color: gradient задать","text-gradient","fill: gradient"],c:0,e:"background + background-clip: text + color: transparent."},
+  {q:"Чем делают «матовое стекло»?",a:["backdrop-filter: blur()","просто opacity сделать поменьше","filter: gray","box-shadow"],c:0,e:"backdrop-filter: blur() + rgba-фон."},
+
+  {q:"🔁 Модуль 2: что ставит блоки в ряд?",a:["display: flex","float: left всегда","display: block","в ряд ставит text-align"],c:0,e:"display: flex — дети контейнера в ряд."},
+  {q:"🔁 Модуль 2: чем задают промежутки во флексе?",a:["gap","margin каждому вручную по кругу","padding контейнера","border между ними"],c:0,e:"gap — промежутки между детьми flex."},
+];
+
+let i=0, score=0, locked=false;
+const app=document.getElementById('app');
+
+function shuffle(){for(let k=QUESTIONS.length-1;k>0;k--){const j=Math.floor(Math.random()*(k+1));[QUESTIONS[k],QUESTIONS[j]]=[QUESTIONS[j],QUESTIONS[k]];}for(const Q of QUESTIONS){const cc=Q.a[Q.c];for(let k=Q.a.length-1;k>0;k--){const j=Math.floor(Math.random()*(k+1));[Q.a[k],Q.a[j]]=[Q.a[j],Q.a[k]];}Q.c=Q.a.indexOf(cc);}}
+shuffle();
+
+function render(){
+  const Q=QUESTIONS[i];
+  app.innerHTML=`
+    <h1>🧩 Викторина с оценкой · Модуль 4</h1>
+    <div class="sub">Блочная модель и оформление · ответь честно</div>
+    <div class="bar"><i style="width:${(i/QUESTIONS.length)*100}%"></i></div>
+    <div class="meta"><span>Вопрос ${i+1} из ${QUESTIONS.length}</span><span>⭐ Верно: ${score}</span></div>
+    <div class="q">${Q.q}</div>
+    <div class="opts" id="opts">
+      ${Q.a.map((t,n)=>`<button class="opt" data-n="${n}"><b>${n+1}</b><span>${t}</span></button>`).join('')}
+    </div>
+    <div class="fb" id="fb"></div>
+    <button class="btn" id="next">${i===QUESTIONS.length-1?'Узнать оценку →':'Следующий вопрос →'}</button>
+    <div class="hint">Можно отвечать клавишами 1–4</div>`;
+  locked=false;
+  document.querySelectorAll('.opt').forEach(b=>b.onclick=()=>choose(+b.dataset.n));
+  document.getElementById('next').onclick=next;
+}
+
+function choose(n){
+  if(locked) return; locked=true;
+  const Q=QUESTIONS[i];
+  const opts=[...document.querySelectorAll('.opt')];
+  opts.forEach(b=>b.disabled=true);
+  opts[Q.c].classList.add('ok');
+  const fb=document.getElementById('fb');
+  if(n===Q.c){ score++; fb.className='fb show good'; fb.innerHTML='✅ Верно! '+Q.e; }
+  else { opts[n].classList.add('bad'); fb.className='fb show no'; fb.innerHTML='❌ Не совсем. '+Q.e; }
+  document.querySelector('.meta').children[1].textContent='⭐ Верно: '+score;
+  document.getElementById('next').classList.add('show');
+}
+
+function next(){ i++; if(i<QUESTIONS.length) render(); else result(); }
+
+function result(){
+  const pct=Math.round(score/QUESTIONS.length*100);
+  let grade,color,msg,em;
+  if(pct>=90){ grade=5; color='#16a34a'; em='🏆'; msg='Отлично! Модуль 4 освоен на пятёрку.'; }
+  else if(pct>=70){ grade=4; color='#2563eb'; em='🎉'; msg='Хорошо! Пара тем на повтор — и будет «5».'; }
+  else if(pct>=50){ grade=3; color='#d97706'; em='👍'; msg='Удовлетворительно. Загляни в итого.md слабых тем.'; }
+  else { grade=2; color='#dc2626'; em='💪'; msg='Нужно повторить модуль. Пройди уроки и попробуй снова.'; }
+  app.innerHTML=`
+    <div class="center">
+      <div class="emoji">${em}</div>
+      <div class="scoreline">Правильно ${score} из ${QUESTIONS.length} · ${pct}%</div>
+      <div class="grade" style="color:${color}">${grade}</div>
+      <div class="sub">${msg}</div>
+      <button class="btn show" id="again">🔁 Пройти заново</button>
+    </div>`;
+  document.getElementById('again').onclick=()=>{i=0;score=0;shuffle();render();};
+}
+
+document.addEventListener('keydown',e=>{
+  if(['1','2','3','4'].includes(e.key)){ const b=document.querySelector(`.opt[data-n="${+e.key-1}"]`); if(b&&!b.disabled) choose(+e.key-1); }
+  if(e.key==='Enter'){ const nb=document.getElementById('next'); if(nb&&nb.classList.contains('show')) next(); }
+});
+
+render();
+</script>
+</body>
+</html>
