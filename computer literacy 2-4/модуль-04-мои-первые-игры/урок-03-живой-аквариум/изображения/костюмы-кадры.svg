@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 580 300" font-family="'Segoe UI',system-ui,sans-serif">
+  <rect x="0" y="0" width="580" height="300" fill="#f7f9fc"/>
+  <text x="290" y="34" font-size="20" font-weight="800" fill="#1f2937" text-anchor="middle">👗 Костюмы = кадры анимации</text>
+  <text x="290" y="56" font-size="13" fill="#64748b" text-anchor="middle">Быстрая смена двух поз = рыбка машет плавником</text>
+
+  <!-- frame 1 -->
+  <g transform="translate(70,80)">
+    <rect x="0" y="0" width="160" height="150" rx="14" fill="#dff1ff" stroke="#4c97ff" stroke-width="3"/>
+    <text x="80" y="26" font-size="14" font-weight="700" fill="#2f6fd0" text-anchor="middle">костюм 1</text>
+    <g transform="translate(80,90)">
+      <ellipse cx="0" cy="0" rx="30" ry="18" fill="#ff8c42"/>
+      <circle cx="18" cy="-5" r="3.5" fill="#1f2937"/>
+      <path d="M-28 0 l-20 -14 l0 28 z" fill="#ff6f1f"/>
+      <path d="M-2 -18 q12 -12 20 -4" stroke="#ff6f1f" stroke-width="5" fill="none"/>
+    </g>
+  </g>
+
+  <!-- arrow -->
+  <g transform="translate(262,155)">
+    <path d="M0 0 l40 0" stroke="#4cbb5c" stroke-width="6" stroke-linecap="round"/>
+    <path d="M52 0 l-16 -9 l0 18 z" fill="#4cbb5c"/>
+    <path d="M52 -34 l-40 0" stroke="#4cbb5c" stroke-width="6" stroke-linecap="round"/>
+    <path d="M0 -34 l16 -9 l0 18 z" fill="#4cbb5c"/>
+    <text x="26" y="24" font-size="12" font-weight="700" fill="#2e9e52" text-anchor="middle">смена</text>
+  </g>
+
+  <!-- frame 2 (tail/fin different) -->
+  <g transform="translate(350,80)">
+    <rect x="0" y="0" width="160" height="150" rx="14" fill="#dff1ff" stroke="#9966ff" stroke-width="3"/>
+    <text x="80" y="26" font-size="14" font-weight="700" fill="#7a4fd6" text-anchor="middle">костюм 2</text>
+    <g transform="translate(80,90)">
+      <ellipse cx="0" cy="0" rx="30" ry="18" fill="#ff8c42"/>
+      <circle cx="18" cy="-5" r="3.5" fill="#1f2937"/>
+      <path d="M-28 0 l-20 -7 l0 14 z" fill="#ff6f1f"/>
+      <path d="M-2 -18 q12 -6 20 2" stroke="#ff6f1f" stroke-width="5" fill="none"/>
+    </g>
+  </g>
+
+  <text x="290" y="276" font-size="13" fill="#16a34a" font-weight="700" text-anchor="middle">🐠 «следующий костюм» + «ждать 0.2» = рыбка машет плавником</text>
+</svg>

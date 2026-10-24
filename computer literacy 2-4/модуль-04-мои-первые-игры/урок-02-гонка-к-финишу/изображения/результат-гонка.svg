@@ -1,0 +1,63 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 420" font-family="'Segoe UI',system-ui,sans-serif">
+  <defs>
+    <linearGradient id="grass" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#d6f0c0"/><stop offset="1" stop-color="#eaf7df"/>
+    </linearGradient>
+  </defs>
+  <rect x="0" y="0" width="720" height="420" fill="#f5f7fb"/>
+  <text x="24" y="36" font-size="24" font-weight="700" fill="#1f2937">🏁 Игра «Гонка к финишу»</text>
+  <text x="24" y="60" font-size="14" fill="#64748b">Жук едет за мышкой, рисует трассу пером и спешит к финишу!</text>
+
+  <!-- field -->
+  <rect x="24" y="78" width="470" height="314" rx="16" fill="url(#grass)" stroke="#cbd5e1" stroke-width="2"/>
+
+  <!-- track (pen trail) -->
+  <path id="track" d="M90 340 C 210 340 190 150 330 170 S 470 350 440 210 S 470 120 460 120" fill="none" stroke="#ff5a8a" stroke-width="8" stroke-linecap="round" opacity="0.85"/>
+
+  <!-- start marker -->
+  <circle cx="90" cy="340" r="9" fill="#4c97ff"/><text x="90" y="366" font-size="11" fill="#475569" text-anchor="middle">старт</text>
+
+  <!-- finish flag at path end (460,120) -->
+  <g transform="translate(460,120)">
+    <line x1="0" y1="0" x2="0" y2="-40" stroke="#333" stroke-width="3"/>
+    <g>
+      <rect x="0" y="-40" width="12" height="8" fill="#333"/><rect x="12" y="-40" width="12" height="8" fill="#fff"/><rect x="24" y="-40" width="12" height="8" fill="#333"/>
+      <rect x="0" y="-32" width="12" height="8" fill="#fff"/><rect x="12" y="-32" width="12" height="8" fill="#333"/><rect x="24" y="-32" width="12" height="8" fill="#fff"/>
+    </g>
+    <text x="4" y="18" font-size="11" fill="#475569" text-anchor="middle">финиш</text>
+  </g>
+
+  <!-- beetle driving the track -->
+  <g>
+    <animateMotion dur="5s" repeatCount="indefinite" rotate="auto"
+      path="M90 340 C 210 340 190 150 330 170 S 470 350 440 210 S 470 120 460 120"/>
+    <text x="0" y="0" font-size="34" text-anchor="middle" dominant-baseline="central">🐞</text>
+  </g>
+
+  <!-- mouse cursor near finish (guides) -->
+  <g transform="translate(486,96)">
+    <path d="M0 0 l0 24 l6 -6 l5 10 l5 -2 l-5 -10 l8 0 z" fill="#1f2937" stroke="#fff" stroke-width="1.5"/>
+  </g>
+
+  <!-- Финиш! bubble flashes near end -->
+  <g transform="translate(410,96)">
+    <animate attributeName="opacity" values="0;0;0;1;1;0" keyTimes="0;0.7;0.82;0.85;0.97;1" dur="5s" repeatCount="indefinite"/>
+    <rect x="0" y="0" width="92" height="30" rx="14" fill="#fff" stroke="#22c55e" stroke-width="2"/>
+    <path d="M18 30 l-6 12 l18 -12 z" fill="#fff" stroke="#22c55e" stroke-width="2"/>
+    <text x="46" y="20" font-size="15" font-weight="800" fill="#16a34a" text-anchor="middle">Финиш! 🏁</text>
+  </g>
+
+  <!-- SCRIPT preview -->
+  <g transform="translate(516,96)" font-size="12.5" font-weight="700" fill="#fff">
+    <text x="0" y="-6" font-size="13" font-weight="700" fill="#475569">Скрипт жука:</text>
+    <path d="M0 2 q0 -8 8 -8 l48 0 q5 5 10 0 l56 0 q8 0 8 8 l0 16 l-130 0 z" fill="#f5b800"/>
+    <text x="10" y="13" fill="#3d2f00">когда 🚩 нажат</text>
+    <rect x="0" y="26" width="178" height="24" rx="6" fill="#0fbd8c"/><text x="8" y="42">очистить · опустить перо</text>
+    <rect x="0" y="52" width="178" height="26" rx="6" fill="#ff8c1a"/><text x="10" y="69">всегда</text>
+    <rect x="0" y="78" width="12" height="96" fill="#ff8c1a"/>
+    <rect x="14" y="80" width="164" height="26" rx="6" fill="#4c97ff"/><text x="22" y="97" font-size="11">повернуться к мышке</text>
+    <rect x="14" y="108" width="164" height="26" rx="6" fill="#4c97ff"/><text x="22" y="125">идти 4 шага</text>
+    <rect x="14" y="136" width="164" height="38" rx="6" fill="#59c059"/><text x="22" y="151" font-size="11">если касается Финиш?</text><text x="32" y="167" font-size="10">говорить «Финиш!» · стоп</text>
+    <rect x="0" y="174" width="178" height="12" rx="6" fill="#ff8c1a"/>
+  </g>
+</svg>

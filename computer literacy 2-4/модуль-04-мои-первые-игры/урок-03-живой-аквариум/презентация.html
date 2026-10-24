@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Урок 13 — Костюмы и анимация: игра «Живой аквариум»</title>
+<style>
+  :root{--ink:#1f2a52;--yellow:#ffd23f;--blue:#4c97ff;--green:#4cbb5c;--pink:#ff7ab6;--purple:#9966ff;--orange:#ff8c1a;--sens:#59c059;}
+  *{box-sizing:border-box;margin:0;padding:0;font-family:'Comic Sans MS','Segoe UI',system-ui,sans-serif;}
+  html,body{height:100%;}
+  body{background:#0e2a44;overflow:hidden;color:var(--ink);}
+  .slide{position:fixed;inset:0;display:none;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:5vh 6vw;}
+  .slide.active{display:flex;animation:pop .4s ease;}
+  @keyframes pop{from{opacity:0;transform:scale(.96)}to{opacity:1;transform:scale(1)}}
+  .art{font-size:clamp(70px,16vh,150px);line-height:1;margin:10px 0 4px;}
+  h1{font-size:clamp(30px,6.5vh,64px);color:#fff;text-shadow:0 4px 0 rgba(0,0,0,.15);}
+  h2{font-size:clamp(26px,5.2vh,50px);color:#fff;margin-bottom:8px;}
+  p{font-size:clamp(20px,3.6vh,34px);color:#fff;max-width:24ch;margin-top:10px;line-height:1.35;}
+  .card{background:#fff;border-radius:30px;padding:4vh 5vw;max-width:980px;box-shadow:0 16px 40px rgba(0,0,0,.3);}
+  .card h2,.card p,.card h1{color:var(--ink);text-shadow:none;}
+  .steps{list-style:none;text-align:left;font-size:clamp(19px,3.4vh,31px);color:var(--ink);margin-top:10px;}
+  .steps li{margin:11px 0;display:flex;gap:14px;align-items:center;}
+  .bignum{display:inline-flex;min-width:44px;height:44px;padding:0 10px;border-radius:14px;background:var(--orange);color:#fff;
+    align-items:center;justify-content:center;font-weight:bold;font-size:22px;}
+  .frames{display:flex;gap:10px;justify-content:center;margin-top:12px;flex-wrap:wrap;}
+  .frame{background:#fff;border-radius:16px;padding:0 16px;min-width:clamp(66px,11vh,110px);height:clamp(60px,10vh,88px);display:flex;align-items:center;justify-content:center;font-size:clamp(28px,5vh,46px);box-shadow:0 8px 18px rgba(0,0,0,.2);}
+  .blk{border-radius:10px;color:#fff;padding:9px 16px;font-size:clamp(16px,2.8vh,24px);box-shadow:0 5px 0 rgba(0,0,0,.18);margin:3px 0;}
+  .blk.ev{background:var(--yellow);color:#6b4e00;}.blk.mv{background:var(--blue);}.blk.lk{background:var(--purple);}.blk.ctl{background:var(--orange);}.blk.sens{background:var(--sens);}
+  .stack{display:inline-flex;flex-direction:column;gap:3px;margin-top:10px;}
+  .nav{position:fixed;bottom:14px;right:18px;display:flex;gap:10px;align-items:center;z-index:10;}
+  .nav button{border:none;background:rgba(255,255,255,.9);border-radius:12px;font-size:24px;width:52px;height:46px;cursor:pointer;}
+  .nav button:active{transform:translateY(2px);}
+  .counter{position:fixed;bottom:20px;left:18px;color:#fff;font-size:18px;opacity:.7;z-index:10;}
+  .tag{position:fixed;top:16px;left:20px;color:#fff;opacity:.65;font-size:17px;z-index:10;}
+  .hintkey{position:fixed;top:16px;right:20px;color:#fff;opacity:.55;font-size:15px;z-index:10;}
+  @media(max-width:600px){.hintkey{display:none;}}
+</style>
+</head>
+<body>
+<div class="tag">🐠 Урок 13 · Модуль 4 «Мои первые игры»</div>
+<div class="hintkey">← → или пробел листают слайды</div>
+<div id="deck"></div>
+<div class="counter" id="counter"></div>
+<div class="nav">
+  <button onclick="go(-1)">◀</button>
+  <button onclick="go(1)">▶</button>
+</div>
+
+<script>
+const BIP = `<svg viewBox="0 0 120 130" width="130" height="140" xmlns="http://www.w3.org/2000/svg">
+  <line x1="60" y1="18" x2="60" y2="8" stroke="#4c97ff" stroke-width="5"/><circle cx="60" cy="7" r="7" fill="#ffd23f"/>
+  <rect x="22" y="22" width="76" height="62" rx="20" fill="#ffd23f"/>
+  <rect x="33" y="34" width="54" height="32" rx="13" fill="#1f2a52"/>
+  <circle cx="50" cy="50" r="8" fill="#4c97ff"/><circle cx="72" cy="50" r="8" fill="#4c97ff"/>
+  <circle cx="50" cy="50" r="3.5" fill="#fff"/><circle cx="72" cy="50" r="3.5" fill="#fff"/>
+  <path d="M49 73 q11 9 22 0" stroke="#1f2a52" stroke-width="4" fill="none" stroke-linecap="round"/>
+  <rect x="34" y="88" width="52" height="30" rx="14" fill="#4c97ff"/>
+  <rect x="12" y="92" width="16" height="9" rx="4" fill="#ffd23f"/><rect x="92" y="92" width="16" height="9" rx="4" fill="#ffd23f"/>
+</svg>`;
+
+const SLIDES = [
+  {bg:['#4aa3e0','#0fbd8c'], html:`${BIP}<h1>Игра «Живой аквариум»! 🐠</h1><p>Оживим рыбок — пусть плавают и машут плавниками, а акула охотится за мышкой!</p>`},
+  {bg:['#0fbd8c','#4c97ff'], html:`<div class="art">🐠🐠🦈</div><h2>Во что играем</h2><p>Рыбки плавают и машут плавниками, ты ведёшь акулу мышкой — она ловит рыбок!</p></div>`},
+  {bg:['#4c97ff','#9966ff'], html:`<div class="card"><h2>🆕 Костюмы = кадры</h2><p>У рыбки несколько <b>костюмов</b> — поз-кадров. Быстрая смена кадров = движение, как в мультике!</p>
+     <div class="frames"><div class="frame">🐠</div><div class="frame">🐟</div></div></div>`},
+  {bg:['#9966ff','#4cbb5c'], html:`<div class="card"><h2>🧪 Фокус — «следующий костюм»</h2><p>🟪 «следующий костюм» меняет позу рыбки. Клик — новый кадр!</p></div>`},
+  {bg:['#4cbb5c','#9966ff'], html:`<div class="card"><h2>⚠️ Не забудь «ждать»!</h2><p>Без паузы плавник <b>мерцает</b>. «всегда [следующий костюм + ждать 0.2]» — красивый взмах.</p></div>`},
+  {bg:['#4c97ff','#0fbd8c'], html:`<div class="card"><h2>🐠 Рыбка плавает и машет</h2>
+     <div class="stack">
+       <div class="blk ev">когда ▶ нажат</div>
+       <div class="blk mv">способ вращения ←→</div>
+       <div class="blk ctl">всегда</div>
+       <div class="blk mv" style="margin-left:22px">идти 3 + если на краю оттолкнуться</div>
+       <div class="blk lk" style="margin-left:22px">следующий костюм</div>
+       <div class="blk ctl" style="margin-left:22px">ждать 0.2</div>
+     </div></div>`},
+  {bg:['#0fbd8c','#ff8c1a'], html:`<div class="art">🐠🐠🐠</div><h1>Стайка!</h1><p>Правый клик → «Дублировать» 2–3 раза. Каждой рыбке своя «ждать» — целый аквариум!</p>`},
+  {bg:['#ff8c1a','#4c97ff'], html:`<div class="card"><h2>🦈 Доп-вау: акула за мышкой</h2>
+     <div class="stack"><div class="blk ev">когда ▶ нажат</div><div class="blk ctl">всегда</div><div class="blk mv" style="margin-left:22px">повернуться к мышке + идти</div><div class="blk lk" style="margin-left:22px">следующий костюм + ждать</div></div></div>`},
+  {bg:['#59c059','#4c97ff'], html:`<div class="card"><h2>🎣 Ловля рыбки</h2><p>В рыбку: 🟩 «если касается (Shark)? → говорить Ой! + в случайную позицию». Акула коснулась — рыбка удирает!</p></div>`},
+  {bg:['#9966ff','#4cbb5c'], html:`<div class="card"><h2>🤔 Запомни</h2>
+     <ul class="steps">
+       <li><span class="bignum">1</span> анимация = смена <b>костюмов</b></li>
+       <li><span class="bignum">2</span> «ждать» = скорость плавника</li>
+       <li><span class="bignum">3</span> «дублировать» = стайка</li>
+     </ul></div>`},
+  {bg:['#ff8c1a','#9966ff'], html:`<div class="art">🎞❓</div><h1>Игра «Продолжи анимацию»</h1><p>Угадай следующий кадр и продолжи киноленту!</p>`},
+  {bg:['#4c97ff','#0fbd8c'], html:`<div class="art">⌨️🔤</div><h1>Тренажёр печати</h1><p>Три режима, уровень 13!</p>`},
+  {bg:['#0fbd8c','#4aa3e0'], html:`${BIP}<div class="art">🐠🦈🎉</div><h1>Ты — мультипликатор!</h1><p>Викторина и звёзды ⭐</p>`},
+];
+
+const deck=document.getElementById('deck');
+SLIDES.forEach((s,i)=>{
+  const d=document.createElement('div');
+  d.className='slide'; d.id='s'+i;
+  d.style.background=`linear-gradient(135deg,${s.bg[0]},${s.bg[1]})`;
+  d.innerHTML=s.html;
+  deck.appendChild(d);
+});
+let cur=0;
+function show(n){
+  document.getElementById('s'+cur).classList.remove('active');
+  cur=Math.max(0,Math.min(SLIDES.length-1,n));
+  document.getElementById('s'+cur).classList.add('active');
+  document.getElementById('counter').textContent=(cur+1)+' / '+SLIDES.length;
+}
+function go(step){show(cur+step);}
+show(0);
+document.addEventListener('keydown',e=>{
+  if(e.key==='ArrowRight'||e.key===' '||e.key==='ArrowDown'){e.preventDefault();go(1);}
+  if(e.key==='ArrowLeft'||e.key==='ArrowUp'){e.preventDefault();go(-1);}
+  if(e.key==='Home')show(0);
+  if(e.key==='End')show(SLIDES.length-1);
+});
+document.addEventListener('click',e=>{if(!e.target.closest('.nav'))go(1);});
+</script>
+</body>
+</html>
