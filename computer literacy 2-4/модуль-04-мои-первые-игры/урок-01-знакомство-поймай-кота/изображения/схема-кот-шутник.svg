@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 620 300" font-family="'Segoe UI',system-ui,sans-serif">
+  <rect x="0" y="0" width="620" height="300" fill="#f7f9fc"/>
+  <text x="24" y="30" font-size="19" font-weight="800" fill="#1f2937">🎭 Доп-вау — «Кот-шутник» (клик = случайный трюк)</text>
+  <text x="24" y="52" font-size="13" fill="#64748b">Отдельный скрипт на клик. Случайное число = каждый раз новый фокус.</text>
+
+  <g font-size="13" font-weight="700" fill="#ffffff">
+    <path d="M24 72 q0 -10 10 -10 l70 0 q6 6 12 0 l80 0 q10 0 10 10 l0 20 l-192 0 z" fill="#f5b800"/>
+    <text x="34" y="87" fill="#3d2f00">когда этот спрайт нажат</text>
+    <rect x="24" y="92" width="300" height="32" rx="6" fill="#4c97ff"/><text x="34" y="112" font-size="11">повернуть ↻ (случайное число 0–360)</text>
+    <rect x="24" y="126" width="300" height="32" rx="6" fill="#9966ff"/><text x="34" y="146" font-size="11">изменить эффект цвет на (случайное 0–100)</text>
+    <rect x="24" y="160" width="300" height="30" rx="6" fill="#9966ff"/><text x="34" y="179">говорить «Мяу-ха-ха!» 1 сек</text>
+  </g>
+
+  <!-- random die hint -->
+  <g transform="translate(360,92)">
+    <rect x="0" y="0" width="60" height="60" rx="10" fill="#59c059"/>
+    <circle cx="16" cy="16" r="5" fill="#fff"/><circle cx="44" cy="16" r="5" fill="#fff"/><circle cx="30" cy="30" r="5" fill="#fff"/><circle cx="16" cy="44" r="5" fill="#fff"/><circle cx="44" cy="44" r="5" fill="#fff"/>
+    <text x="30" y="80" font-size="11" fill="#475569" text-anchor="middle" font-weight="700">🎲 случайное</text>
+    <text x="30" y="94" font-size="11" fill="#475569" text-anchor="middle" font-weight="700">число (Операторы)</text>
+  </g>
+
+  <!-- legend -->
+  <g font-size="12" font-weight="600" fill="#475569" transform="translate(460,96)">
+    <text x="0" y="0" font-size="13" font-weight="700" fill="#334155">Цвета:</text>
+    <rect x="0" y="12" width="16" height="16" rx="4" fill="#f5b800"/><text x="22" y="25">События</text>
+    <rect x="0" y="34" width="16" height="16" rx="4" fill="#4c97ff"/><text x="22" y="47">Движение</text>
+    <rect x="0" y="56" width="16" height="16" rx="4" fill="#9966ff"/><text x="22" y="69">Внешний вид</text>
+    <rect x="0" y="78" width="16" height="16" rx="4" fill="#59c059"/><text x="22" y="91">Операторы</text>
+  </g>
+
+  <text x="24" y="224" font-size="12" fill="#16a34a" font-weight="700">👆 Щёлкни по коту → он крутится, меняет цвет и шутит — каждый раз по-новому!</text>
+  <text x="24" y="250" font-size="12" fill="#94a3b8">💡 Блок «случайное число» вставляют В ОКОШКО другого блока (в угол поворота, в эффект).</text>
+</svg>

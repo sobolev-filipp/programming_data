@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 300" font-family="'Segoe UI',system-ui,sans-serif">
+  <rect x="0" y="0" width="640" height="300" fill="#f5f7fb"/>
+  <text x="320" y="30" font-size="20" font-weight="800" fill="#1f2937" text-anchor="middle">🎮 Примеры своей игры с управлением — а игра у тебя СВОЯ!</text>
+  <text x="320" y="52" font-size="13" fill="#64748b" text-anchor="middle">Героем управляешь стрелками: собирай добычу, избегай опасность</text>
+
+  <!-- panel 1: crab -->
+  <g transform="translate(20,70)">
+    <rect x="0" y="0" width="195" height="200" rx="12" fill="#eaf7ff" stroke="#cbd5e1"/>
+    <text x="97" y="24" font-size="14" font-weight="700" fill="#2f6fd0" text-anchor="middle">🦀 Краб и ракушки</text>
+    <text x="60" y="100" font-size="34" text-anchor="middle">🦀</text>
+    <text x="140" y="80" font-size="26" text-anchor="middle">🐚</text>
+    <text x="130" y="140" font-size="24" text-anchor="middle">🌊</text>
+    <text x="97" y="180" font-size="11" fill="#475569" text-anchor="middle">собирай 🐚 · беги от 🌊</text>
+  </g>
+
+  <!-- panel 2: plane -->
+  <g transform="translate(228,70)">
+    <rect x="0" y="0" width="185" height="200" rx="12" fill="#eef6ff" stroke="#cbd5e1"/>
+    <text x="92" y="24" font-size="14" font-weight="700" fill="#2f6fd0" text-anchor="middle">✈️ Самолёт и облака</text>
+    <text x="55" y="95" font-size="30" text-anchor="middle">✈️</text>
+    <text x="135" y="80" font-size="24" text-anchor="middle">☁️</text>
+    <text x="120" y="150" font-size="22" text-anchor="middle">🌩</text>
+    <text x="92" y="182" font-size="11" fill="#475569" text-anchor="middle">лови ☁️ · не задень 🌩</text>
+  </g>
+
+  <!-- panel 3: mouse -->
+  <g transform="translate(426,70)">
+    <rect x="0" y="0" width="194" height="200" rx="12" fill="#fff6e8" stroke="#cbd5e1"/>
+    <text x="97" y="24" font-size="14" font-weight="700" fill="#b8860b" text-anchor="middle">🐭 Мышка и сыр</text>
+    <text x="55" y="100" font-size="30" text-anchor="middle">🐭</text>
+    <text x="140" y="85" font-size="26" text-anchor="middle">🧀</text>
+    <text x="135" y="150" font-size="26" text-anchor="middle">🐱</text>
+    <text x="97" y="182" font-size="11" fill="#475569" text-anchor="middle">собирай 🧀 · беги от 🐱</text>
+  </g>
+</svg>

@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Игра — Звездолов</title>
+<style>
+  :root{--ink:#1f2a52;--yellow:#ffd23f;--blue:#4c97ff;--green:#4cbb5c;--red:#ff6b6b;--purple:#9966ff;}
+  *{box-sizing:border-box;font-family:'Comic Sans MS','Segoe UI',system-ui,sans-serif;margin:0;padding:0;}
+  body{min-height:100vh;background:linear-gradient(135deg,#4c97ff,#9966ff);display:flex;align-items:center;justify-content:center;padding:14px;color:var(--ink);}
+  .wrap{width:min(760px,100%);background:#fff;border-radius:26px;box-shadow:0 18px 50px rgba(0,0,0,.3);padding:18px 20px 22px;position:relative;overflow:hidden;}
+  h1{text-align:center;color:#2f6fd0;font-size:27px;margin:2px 0;}
+  .sub{text-align:center;color:#7a86a8;font-size:16px;margin-bottom:10px;}
+  .hud{display:flex;justify-content:space-around;align-items:center;background:#eaf2ff;border-radius:16px;padding:8px 10px;font-size:19px;font-weight:bold;margin-bottom:10px;}
+  .stage{position:relative;height:340px;background:radial-gradient(circle at 50% 30%,#2a3b7a,#121a3a);border-radius:16px;overflow:hidden;border:3px solid #2b3b6b;}
+  .star,.bomb{position:absolute;font-size:30px;transform:translate(-50%,-50%);will-change:top;}
+  #basket{position:absolute;bottom:8px;font-size:44px;transform:translateX(-50%);}
+  .msg{text-align:center;font-size:19px;font-weight:bold;min-height:26px;margin-top:8px;color:var(--ink);}
+  .controls{display:flex;gap:14px;justify-content:center;margin-top:10px;}
+  .ctrl{background:var(--blue);color:#fff;border:none;border-radius:14px;font-size:28px;width:84px;height:52px;cursor:pointer;box-shadow:0 4px 0 rgba(0,0,0,.18);}
+  .ctrl:active{transform:translateY(3px);box-shadow:0 1px 0 rgba(0,0,0,.18);}
+  .start{background:var(--yellow);color:#6b4e00;border:none;border-radius:16px;padding:16px 30px;font-size:24px;font-weight:bold;cursor:pointer;display:block;margin:14px auto;}
+  .hint{text-align:center;color:#9aa4bf;font-size:14px;margin-top:10px;}
+  .stars{font-size:48px;text-align:center;letter-spacing:4px;}
+  .stage.flash{animation:flash .35s;}
+  @keyframes flash{0%,100%{filter:none}50%{filter:brightness(1.3) saturate(1.4)}}
+  .hidden{display:none !important;}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>🧺 Звездолов</h1>
+
+  <div id="intro">
+    <p class="sub">Лови падающие звёзды ⭐ корзиной, уворачивайся от бомб 💣! Управляй стрелками ← →.</p>
+    <button class="start" onclick="startGame()">▶ Играть!</button>
+    <p class="hint">Клавиши ← → двигают корзину (или кнопки внизу). 3 жизни, игра разгоняется!</p>
+  </div>
+
+  <div id="game" class="hidden">
+    <div class="hud">
+      <span>⭐ <b id="score">0</b></span>
+      <span id="lives">❤️❤️❤️</span>
+    </div>
+    <div class="stage" id="stage">
+      <div id="basket">🧺</div>
+    </div>
+    <div class="controls">
+      <button class="ctrl" onmousedown="hold('L',1)" onmouseup="hold('L',0)" onmouseleave="hold('L',0)" ontouchstart="hold('L',1)" ontouchend="hold('L',0)">◀</button>
+      <button class="ctrl" onmousedown="hold('R',1)" onmouseup="hold('R',0)" onmouseleave="hold('R',0)" ontouchstart="hold('R',1)" ontouchend="hold('R',0)">▶</button>
+    </div>
+    <div class="msg" id="msg"></div>
+  </div>
+
+  <div id="over" class="hidden">
+    <h1>Игра окончена! 🎉</h1>
+    <div class="stars" id="starsres"></div>
+    <p class="sub" id="finalscore"></p>
+    <p class="sub" id="praise"></p>
+    <button class="start" onclick="location.reload()">↺ Ещё разок</button>
+  </div>
+</div>
+
+<script>
+let state='intro', score=0, lives=3;
+let basketX=0, stageW=0, stageH=0, items=[], last=0, spawnT=0, elapsed=0, rafId=0;
+const keys={L:false,R:false};
+
+function stage(){ return document.getElementById('stage'); }
+function hold(dir,on){ if(dir==='L')keys.L=!!on; if(dir==='R')keys.R=!!on; }
+
+function startGame(){
+  score=0; lives=3; items=[]; elapsed=0; spawnT=0; last=0;
+  document.getElementById('intro').classList.add('hidden');
+  document.getElementById('game').classList.remove('hidden');
+  const s=stage(); stageW=s.clientWidth; stageH=s.clientHeight;
+  basketX=stageW/2; placeBasket();
+  updateHud();
+  state='play';
+  rafId=requestAnimationFrame(loop);
+}
+function updateHud(){
+  document.getElementById('score').textContent=score;
+  document.getElementById('lives').textContent='❤️'.repeat(lives)+'🖤'.repeat(Math.max(0,3-lives));
+}
+function placeBasket(){ const b=document.getElementById('basket'); b.style.left=basketX+'px'; }
+
+function spawn(){
+  const isBomb = Math.random() < Math.min(0.3, 0.12+elapsed/60000);  // more bombs over time
+  const el=document.createElement('div');
+  el.className=isBomb?'bomb':'star';
+  el.textContent=isBomb?'💣':'⭐';
+  const x=20+Math.random()*(stageW-40);
+  el.style.left=x+'px'; el.style.top='-20px';
+  stage().appendChild(el);
+  const speed=0.10+elapsed/90000 + Math.random()*0.04; // px/ms, grows slowly
+  items.push({el,x,y:-20,type:isBomb?'bomb':'star',speed});
+}
+
+function loop(ts){
+  if(state!=='play'){ return; }
+  if(!last) last=ts;
+  const dt=Math.min(50, ts-last); last=ts; elapsed+=dt;
+  // move basket
+  const bSpeed=0.5*dt;
+  if(keys.L) basketX-=bSpeed;
+  if(keys.R) basketX+=bSpeed;
+  basketX=Math.max(24,Math.min(stageW-24,basketX)); placeBasket();
+  // spawn
+  spawnT-=dt;
+  const spawnEvery=Math.max(520, 1100-elapsed/120); // faster over time
+  if(spawnT<=0){ spawn(); spawnT=spawnEvery; }
+  // move items
+  const catchY=stageH-30;
+  for(let i=items.length-1;i>=0;i--){
+    const it=items[i];
+    it.y += it.speed*dt;
+    it.el.style.top=it.y+'px';
+    // catch check near bottom
+    if(it.y>=catchY && it.y<=catchY+26 && Math.abs(it.x-basketX)<42){
+      if(it.type==='star'){ score++; updateHud(); flashMsg('+1 ⭐'); }
+      else { loseLife(); }
+      removeItem(i); continue;
+    }
+    if(it.y>stageH+30){ removeItem(i); } // missed, off screen
+  }
+  rafId=requestAnimationFrame(loop);
+}
+
+function removeItem(i){ const it=items[i]; if(it&&it.el&&it.el.parentNode) it.el.parentNode.removeChild(it.el); items.splice(i,1); }
+
+function flashMsg(t){ document.getElementById('msg').textContent=t; }
+
+function loseLife(){
+  lives--; updateHud();
+  const s=stage(); s.classList.remove('flash'); void s.offsetWidth; s.classList.add('flash');
+  flashMsg('💥 Бомба! −1 жизнь');
+  if(lives<=0) gameOver();
+}
+
+function gameOver(){
+  state='over';
+  // clear items
+  items.forEach(it=>{ if(it.el&&it.el.parentNode) it.el.parentNode.removeChild(it.el); }); items=[];
+  document.getElementById('game').classList.add('hidden');
+  document.getElementById('over').classList.remove('hidden');
+  let st = score>=30?5 : score>=20?4 : score>=12?3 : score>=5?2 : 1;
+  document.getElementById('starsres').textContent='⭐'.repeat(st)+'☆'.repeat(5-st);
+  document.getElementById('finalscore').textContent='Поймано звёзд: '+score;
+  document.getElementById('praise').textContent = score>=20?'Ты мастер-звездолов! 🏆' : score>=10?'Отличная реакция! 👏' : 'Молодец, тренируйся ещё! 💪';
+}
+
+document.addEventListener('keydown',e=>{
+  if(e.key==='ArrowLeft'){ keys.L=true; e.preventDefault(); }
+  if(e.key==='ArrowRight'){ keys.R=true; e.preventDefault(); }
+});
+document.addEventListener('keyup',e=>{
+  if(e.key==='ArrowLeft') keys.L=false;
+  if(e.key==='ArrowRight') keys.R=false;
+});
+</script>
+</body>
+</html>

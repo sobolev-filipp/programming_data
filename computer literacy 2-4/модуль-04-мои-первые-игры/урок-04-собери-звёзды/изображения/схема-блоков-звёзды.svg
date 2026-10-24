@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 360" font-family="'Segoe UI',system-ui,sans-serif">
+  <rect x="0" y="0" width="720" height="360" fill="#f7f9fc"/>
+  <text x="24" y="30" font-size="20" font-weight="800" fill="#1f2937">🧩 Итоговая схема — игра «Собери звёзды»</text>
+  <text x="24" y="52" font-size="13" fill="#64748b">Управление ракетой (4 стрелки) + звезда (прыгает и ловится).</text>
+
+  <!-- rocket: 4 arrow scripts -->
+  <text x="24" y="80" font-size="13" font-weight="700" fill="#334155">🚀 Ракета — управление (4 скрипта)</text>
+  <g font-size="12" font-weight="700" fill="#ffffff">
+    <path d="M24 90 q0 -9 9 -9 l64 0 q5 5 10 0 l20 0 q9 0 9 9 l0 16 l-112 0 z" fill="#f5b800"/>
+    <text x="33" y="103" fill="#3d2f00">когда ↑ нажата</text>
+    <rect x="24" y="106" width="136" height="24" rx="6" fill="#4c97ff"/><text x="32" y="122">изменить y на 10</text>
+
+    <path d="M24 140 q0 -9 9 -9 l64 0 q5 5 10 0 l20 0 q9 0 9 9 l0 16 l-112 0 z" fill="#f5b800"/>
+    <text x="33" y="153" fill="#3d2f00">когда ↓ нажата</text>
+    <rect x="24" y="156" width="136" height="24" rx="6" fill="#4c97ff"/><text x="32" y="172">изменить y на -10</text>
+
+    <path d="M180 90 q0 -9 9 -9 l64 0 q5 5 10 0 l20 0 q9 0 9 9 l0 16 l-112 0 z" fill="#f5b800"/>
+    <text x="189" y="103" fill="#3d2f00">когда → нажата</text>
+    <rect x="180" y="106" width="136" height="24" rx="6" fill="#4c97ff"/><text x="188" y="122">изменить x на 10</text>
+
+    <path d="M180 140 q0 -9 9 -9 l64 0 q5 5 10 0 l20 0 q9 0 9 9 l0 16 l-112 0 z" fill="#f5b800"/>
+    <text x="189" y="153" fill="#3d2f00">когда ← нажата</text>
+    <rect x="180" y="156" width="136" height="24" rx="6" fill="#4c97ff"/><text x="188" y="172">изменить x на -10</text>
+  </g>
+  <text x="24" y="206" font-size="12" fill="#16a34a" font-weight="700">▶ Ракета ездит во все стороны по стрелкам 🎮</text>
+
+  <!-- star scripts -->
+  <text x="370" y="80" font-size="13" font-weight="700" fill="#334155">⭐ Звезда — прыгает и ловится</text>
+  <g font-size="12" font-weight="700" fill="#ffffff">
+    <path d="M370 90 q0 -9 9 -9 l50 0 q5 5 10 0 l56 0 q9 0 9 9 l0 16 l-134 0 z" fill="#f5b800"/>
+    <text x="379" y="103" fill="#3d2f00">когда 🚩 нажат</text>
+    <rect x="370" y="106" width="300" height="24" rx="6" fill="#ff8c1a"/><text x="378" y="122">всегда</text>
+    <rect x="370" y="130" width="12" height="52" fill="#ff8c1a"/>
+    <rect x="384" y="132" width="286" height="22" rx="5" fill="#4c97ff"/><text x="392" y="148" font-size="11">перейти в случайную позицию</text>
+    <rect x="384" y="156" width="286" height="22" rx="5" fill="#ff8c1a"/><text x="392" y="172" font-size="11">ждать 2 секунды</text>
+    <rect x="370" y="180" width="300" height="12" rx="6" fill="#ff8c1a"/>
+
+    <path d="M370 200 q0 -9 9 -9 l50 0 q5 5 10 0 l56 0 q9 0 9 9 l0 16 l-134 0 z" fill="#f5b800"/>
+    <text x="379" y="213" fill="#3d2f00">когда 🚩 нажат</text>
+    <rect x="370" y="216" width="300" height="24" rx="6" fill="#ff8c1a"/><text x="378" y="232">всегда</text>
+    <rect x="370" y="240" width="12" height="70" fill="#ff8c1a"/>
+    <rect x="384" y="242" width="286" height="66" rx="6" fill="#59c059"/>
+    <text x="392" y="260" font-size="11">если &lt;касается (Rocketship)?&gt; то</text>
+    <rect x="398" y="266" width="262" height="18" rx="4" fill="#9966ff"/><text x="406" y="279" font-size="10">говорить «+1!» 0.3 сек</text>
+    <rect x="398" y="286" width="262" height="18" rx="4" fill="#4c97ff"/><text x="406" y="299" font-size="10">перейти в случайную позицию</text>
+  </g>
+
+  <!-- legend -->
+  <g font-size="11.5" font-weight="600" fill="#475569" transform="translate(24,228)">
+    <text x="0" y="0" font-weight="700" fill="#334155">Цвета:</text>
+    <rect x="0" y="10" width="14" height="14" rx="3" fill="#f5b800"/><text x="19" y="21">События</text>
+    <rect x="0" y="30" width="14" height="14" rx="3" fill="#4c97ff"/><text x="19" y="41">Движение</text>
+    <rect x="0" y="50" width="14" height="14" rx="3" fill="#ff8c1a"/><text x="19" y="61">Управление</text>
+    <rect x="0" y="70" width="14" height="14" rx="3" fill="#9966ff"/><text x="19" y="81">Внешний вид</text>
+    <rect x="0" y="90" width="14" height="14" rx="3" fill="#59c059"/><text x="19" y="101">Сенсоры</text>
+  </g>
+  <text x="24" y="346" font-size="12" fill="#94a3b8">💡 y — вверх/вниз, x — влево/вправо. ⚠️ Стрелки — на РАКЕТЕ, не на звезде. 🔇 «+1!» — надписью.</text>
+</svg>
