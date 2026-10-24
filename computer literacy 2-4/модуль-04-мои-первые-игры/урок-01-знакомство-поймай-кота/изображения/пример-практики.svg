@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 300" font-family="'Segoe UI',system-ui,sans-serif">
+  <rect x="0" y="0" width="640" height="300" fill="#f5f7fb"/>
+  <text x="320" y="30" font-size="20" font-weight="800" fill="#1f2937" text-anchor="middle">🎯 Примеры своей ловилки — а игра у тебя СВОЯ!</text>
+  <text x="320" y="52" font-size="13" fill="#64748b" text-anchor="middle">Герой прыгает по случайным местам → лови его кликом</text>
+
+  <!-- panel 1: butterfly -->
+  <g transform="translate(20,70)">
+    <rect x="0" y="0" width="195" height="200" rx="12" fill="#eaf7ff" stroke="#cbd5e1"/>
+    <text x="97" y="24" font-size="14" font-weight="700" fill="#7a4fd6" text-anchor="middle">🦋 Поймай бабочку</text>
+    <text x="55" y="95" font-size="34" text-anchor="middle">🦋</text>
+    <text x="140" y="130" font-size="30" text-anchor="middle">🦋</text>
+    <g fill="#ffd23f"><path d="M150 95 l3 8 l8 -1 l-6 6 l2 8 l-7 -4 l-7 4 l2 -8 l-6 -6 l8 1 z"/></g>
+    <text x="97" y="180" font-size="11" fill="#475569" text-anchor="middle">порхает → клик = поймал</text>
+  </g>
+
+  <!-- panel 2: balloons -->
+  <g transform="translate(228,70)">
+    <rect x="0" y="0" width="185" height="200" rx="12" fill="#eaf7ff" stroke="#cbd5e1"/>
+    <text x="92" y="24" font-size="14" font-weight="700" fill="#2f6fd0" text-anchor="middle">🎈 Лопни шарики</text>
+    <text x="55" y="100" font-size="36" text-anchor="middle">🎈</text>
+    <text x="130" y="140" font-size="30" text-anchor="middle">🎈</text>
+    <g transform="translate(55,100)"><text x="0" y="0" font-size="14" fill="#ff5a8a" text-anchor="middle" font-weight="800">Бабах!</text></g>
+    <text x="92" y="182" font-size="11" fill="#475569" text-anchor="middle">клик → лопнул (эффект)</text>
+  </g>
+
+  <!-- panel 3: stars -->
+  <g transform="translate(426,70)">
+    <rect x="0" y="0" width="194" height="200" rx="12" fill="#241546" stroke="#cbd5e1"/>
+    <text x="97" y="24" font-size="14" font-weight="700" fill="#ffd23f" text-anchor="middle">⭐ Собери звёзды</text>
+    <g fill="#ffd23f">
+      <path d="M50 80 l6 14 l15 -1 l-11 10 l4 14 l-14 -8 l-14 8 l4 -14 l-11 -10 l15 1 z"/>
+      <path d="M135 130 l5 12 l13 -1 l-10 9 l3 12 l-11 -7 l-12 7 l3 -12 l-9 -9 l13 1 z"/>
+    </g>
+    <circle cx="90" cy="150" r="3" fill="#fff"/><circle cx="160" cy="80" r="2" fill="#fff"/>
+    <text x="97" y="182" font-size="11" fill="#c9bdf0" text-anchor="middle">телепорт → лови звезду</text>
+  </g>
+</svg>

@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 340" font-family="'Segoe UI',system-ui,sans-serif">
+  <rect x="0" y="0" width="760" height="340" fill="#f7f9fc"/>
+  <text x="24" y="30" font-size="20" font-weight="800" fill="#1f2937">🧩 Итоговая схема — игра «Поймай кота»</text>
+  <text x="24" y="52" font-size="13" fill="#64748b">Два скрипта работают вместе. Цвет блока = раздел палитры.</text>
+
+  <!-- SCRIPT 1 -->
+  <text x="24" y="82" font-size="14" font-weight="700" fill="#334155">🐾 Кот убегает (прыгает сам)</text>
+  <g font-size="13" font-weight="700" fill="#ffffff">
+    <path d="M24 92 q0 -10 10 -10 l56 0 q6 6 12 0 l90 0 q10 0 10 10 l0 20 l-178 0 z" fill="#f5b800"/>
+    <text x="34" y="107" fill="#3d2f00">когда 🚩 нажат</text>
+    <rect x="24" y="112" width="252" height="28" rx="6" fill="#ff8c1a"/><text x="34" y="131">всегда</text>
+    <rect x="24" y="140" width="14" height="66" fill="#ff8c1a"/>
+    <rect x="40" y="142" width="236" height="30" rx="6" fill="#4c97ff"/><text x="50" y="161" font-size="12">перейти в случайную позицию</text>
+    <rect x="40" y="174" width="236" height="30" rx="6" fill="#ff8c1a"/><text x="50" y="193">ждать 1 секунду</text>
+    <rect x="24" y="206" width="252" height="14" rx="6" fill="#ff8c1a"/>
+  </g>
+  <text x="24" y="246" font-size="12" fill="#16a34a" font-weight="700">▶ Кот прыгает по сцене каждую секунду 🐾</text>
+
+  <!-- SCRIPT 2 -->
+  <text x="430" y="82" font-size="14" font-weight="700" fill="#334155">👆 Поймал (реакция на клик)</text>
+  <g font-size="13" font-weight="700" fill="#ffffff">
+    <path d="M430 92 q0 -10 10 -10 l70 0 q6 6 12 0 l80 0 q10 0 10 10 l0 20 l-192 0 z" fill="#f5b800"/>
+    <text x="440" y="107" fill="#3d2f00">когда этот спрайт нажат</text>
+    <rect x="430" y="112" width="230" height="30" rx="6" fill="#9966ff"/><text x="440" y="131">говорить «Поймал!» 0.5 сек</text>
+    <rect x="430" y="144" width="230" height="30" rx="6" fill="#9966ff"/><text x="440" y="163">следующий костюм</text>
+  </g>
+  <text x="430" y="198" font-size="12" fill="#16a34a" font-weight="700">👆 Клик по коту → 💬 «Поймал!» + смена позы</text>
+
+  <!-- legend -->
+  <g font-size="12" font-weight="600" fill="#475569" transform="translate(430,218)">
+    <text x="0" y="0" font-size="13" font-weight="700" fill="#334155">Цвета = разделы:</text>
+    <rect x="0" y="12" width="16" height="16" rx="4" fill="#f5b800"/><text x="22" y="25">События</text>
+    <rect x="0" y="34" width="16" height="16" rx="4" fill="#4c97ff"/><text x="22" y="47">Движение</text>
+    <rect x="150" y="12" width="16" height="16" rx="4" fill="#9966ff"/><text x="172" y="25">Внешний вид</text>
+    <rect x="150" y="34" width="16" height="16" rx="4" fill="#ff8c1a"/><text x="172" y="47">Управление</text>
+  </g>
+
+  <text x="24" y="300" font-size="12" fill="#94a3b8">💡 Два скрипта работают ОДНОВРЕМЕННО: один гоняет кота, другой ловит по клику.</text>
+  <text x="24" y="322" font-size="12" fill="#94a3b8">⚠️ Без «ждать» кот мелькает — не поймать. 🔇 Радость от поимки — надписью, без звука.</text>
+</svg>
