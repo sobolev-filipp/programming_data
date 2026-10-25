@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Истина или ложь — тренажёр (Урок 3 C#)</title>
+<style>
+  :root{ --bg1:#512bd4; --bg2:#9b6dff; --card:#fff; --ink:#1f2937; --accent:#512bd4;
+    --ok:#16a34a; --bad:#dc2626; --soft:#ede9fe; }
+  *{box-sizing:border-box;font-family:"Segoe UI",system-ui,sans-serif}
+  body{margin:0;min-height:100vh;display:flex;align-items:center;justify-content:center;
+    background:linear-gradient(135deg,var(--bg1),var(--bg2));padding:20px;color:var(--ink)}
+  .app{background:var(--card);width:min(760px,100%);border-radius:24px;
+    box-shadow:0 25px 60px rgba(0,0,0,.35);padding:30px 30px 26px;overflow:hidden}
+  h1{margin:0 0 4px;font-size:25px;text-align:center}
+  .sub{text-align:center;color:#64748b;margin-bottom:16px;font-size:14px}
+  .bar{height:10px;background:var(--soft);border-radius:99px;overflow:hidden;margin-bottom:14px}
+  .bar>i{display:block;height:100%;width:0;background:var(--accent);transition:.4s}
+  .meta{display:flex;justify-content:space-between;font-size:14px;color:#64748b;margin-bottom:16px}
+  .streak{color:#b45309;font-weight:700}
+  .card-val{background:#0f172a;border-radius:16px;padding:34px 18px;text-align:center;margin-bottom:8px}
+  .card-val .lead{color:#94a3b8;font-size:13px;margin-bottom:12px}
+  .card-val code{color:#e2e8f0;font-size:27px;font-weight:700;font-family:Consolas,"Courier New",monospace}
+  .bins{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:14px}
+  .bin{border:2px solid #e2e8f0;background:#fff;border-radius:14px;padding:18px 6px;cursor:pointer;
+    transition:.15s;text-align:center;font-size:20px;font-weight:700}
+  .bin:hover{border-color:var(--accent);background:var(--soft);transform:translateY(-3px)}
+  .bin.t{color:var(--ok)} .bin.f{color:var(--bad)}
+  .bin.ok{border-color:var(--ok);background:#dcfce7}
+  .bin.bad{border-color:var(--bad);background:#fee2e2}
+  .bin:disabled{cursor:default;transform:none}
+  .fb{margin-top:14px;padding:13px 15px;border-radius:12px;font-size:15px;display:none;line-height:1.4}
+  .fb.show{display:block}.fb.good{background:#dcfce7;color:#166534}.fb.no{background:#fee2e2;color:#991b1b}
+  .fb code{background:#0f172a;color:#e2e8f0;padding:1px 6px;border-radius:5px}
+  .btn{margin-top:16px;width:100%;padding:14px;border:0;border-radius:14px;background:var(--accent);
+    color:#fff;font-size:17px;font-weight:700;cursor:pointer;display:none}
+  .btn.show{display:block}.btn:hover{filter:brightness(1.08)}
+  .center{text-align:center}.score{font-size:60px;font-weight:800;margin:6px 0}.emoji{font-size:64px}
+  .rules{background:var(--soft);border-radius:12px;padding:12px 15px;font-size:13.5px;color:#4c1d95;margin-bottom:14px;line-height:1.45}
+</style>
+</head>
+<body>
+<div class="app" id="app"></div>
+<script>
+// Тренажёр по уроку 3: определи, истинно ли условие. Операторы ==, !=, >, <, %, &&, ||, !
+const ROUNDS = [
+  {c:"7 > 3",               v:true,  e:"7 действительно больше 3."},
+  {c:"5 == 5",              v:true,  e:"Равно — == проверяет равенство."},
+  {c:"5 != 5",              v:false, e:"!= это «не равно»; 5 равно 5 → ложь."},
+  {c:"10 % 2 == 0",         v:true,  e:"10 делится на 2 без остатка → чётное."},
+  {c:"7 % 2 == 0",          v:false, e:"7 % 2 = 1 (нечётное) → условие ложно."},
+  {c:"3 > 1 && 2 > 5",      v:false, e:"&& (И): нужно ОБА. 2 > 5 ложно → всё ложно."},
+  {c:"3 > 1 || 2 > 5",      v:true,  e:"|| (ИЛИ): хватит одного. 3 > 1 истинно."},
+  {c:"!(5 > 2)",            v:false, e:"5 > 2 истинно, ! переворачивает → ложь."},
+  {c:"\"кот\" == \"Кот\"", v:false, e:"Регистр важен: «к» и «К» — разные символы."},
+  {c:"4 >= 4",              v:true,  e:">= это «больше или равно»; 4 равно 4 → истина."},
+  {c:"8 < 8",               v:false, e:"< это строго меньше; 8 не меньше 8."},
+  {c:"15 % 5 == 0 && 15 > 10", v:true, e:"15 делится на 5 И больше 10 — оба истинны."},
+  {c:"!(3 == 3)",           v:false, e:"3 == 3 истинно, ! делает ложь."},
+  {c:"2 + 2 == 4",          v:true,  e:"Сначала 2+2=4, потом сравнение → истина."},
+  {c:"5 > 3 || 1 > 9",      v:true,  e:"ИЛИ: 5 > 3 уже истинно, второго не нужно."},
+  {c:"10 != 10 || 2 < 1",   v:false, e:"Оба ложны (10 равно 10; 2 не меньше 1) → ложь."},
+  {c:"20 % 3 == 2",         v:true,  e:"20 % 3 = 2 (остаток). Проверь: 3·6=18, остаток 2."},
+  {c:"9 >= 10",             v:false, e:"9 не больше и не равно 10 → ложь."},
+];
+let order=[], i=0, score=0, streak=0, best=0, locked=false;
+const app=document.getElementById('app');
+
+function start(){
+  order=[...Array(ROUNDS.length).keys()];
+  for(let k=order.length-1;k>0;k--){const j=Math.floor(Math.random()*(k+1));[order[k],order[j]]=[order[j],order[k]];}
+  i=0;score=0;streak=0;best=0;render();
+}
+function render(){
+  const Q=ROUNDS[order[i]];
+  app.innerHTML=`
+    <h1>⚖️ Истина или ложь?</h1>
+    <div class="sub">Урок 3 · условие верно или нет? Операторы ==, !=, &gt;, &lt;, %, &amp;&amp;, ||, !</div>
+    ${i===0?`<div class="rules">Подсказка: <code>==</code> равно · <code>!=</code> не равно · <code>%</code> остаток · <code>&amp;&amp;</code> И (нужно оба) · <code>||</code> ИЛИ (хватит одного) · <code>!</code> НЕ (переворот).</div>`:''}
+    <div class="bar"><i style="width:${(i/ROUNDS.length)*100}%"></i></div>
+    <div class="meta"><span>Условие ${i+1} из ${ROUNDS.length}</span><span>⭐ ${score} · <span class="streak">🔥 ${streak}</span></span></div>
+    <div class="card-val"><div class="lead">верно ли это условие?</div><code>${Q.c.replace(/</g,'&lt;').replace(/&lt;=/g,'&lt;=')}</code></div>
+    <div class="bins" id="bins">
+      <button class="bin t" data-v="true">✔ Истина (true)</button>
+      <button class="bin f" data-v="false">✘ Ложь (false)</button>
+    </div>
+    <div class="fb" id="fb"></div>
+    <button class="btn" id="next">${i===ROUNDS.length-1?'Итог →':'Дальше →'}</button>`;
+  locked=false;
+  document.querySelectorAll('.bin').forEach(b=>b.onclick=()=>choose(b.dataset.v==="true"));
+  document.getElementById('next').onclick=next;
+}
+function choose(val){
+  if(locked)return;locked=true;
+  const Q=ROUNDS[order[i]];
+  const bins=[...document.querySelectorAll('.bin')];
+  bins.forEach(b=>{b.disabled=true; if((b.dataset.v==="true")===Q.v)b.classList.add('ok');});
+  const fb=document.getElementById('fb');
+  if(val===Q.v){score++;streak++;best=Math.max(best,streak);fb.className='fb show good';
+    fb.innerHTML='✅ Верно! '+Q.e+(streak>=3?` 🔥 Серия ${streak}!`:'');}
+  else{streak=0;bins.find(b=>(b.dataset.v==="true")===val).classList.add('bad');
+    fb.className='fb show no';fb.innerHTML='❌ Мимо. '+Q.e;}
+  document.getElementById('next').classList.add('show');
+}
+function next(){i++; if(i<ROUNDS.length)render(); else result();}
+function result(){
+  const pct=Math.round(score/ROUNDS.length*100);
+  let em,msg;
+  if(pct===100){em='🏆';msg='Идеально! Логику условий ты щёлкаешь как орешки.';}
+  else if(pct>=70){em='🎉';msg='Отлично! &&, || и % почти не путаешь.';}
+  else if(pct>=40){em='👍';msg='Неплохо! Повтори && (оба) и || (хватит одного).';}
+  else {em='💪';msg='Ещё заход! Загляни в итого.md про операторы сравнения.';}
+  app.innerHTML=`<div class="center"><div class="emoji">${em}</div><h1>Готово!</h1>
+      <div class="score">${score} / ${ROUNDS.length}</div>
+      <div class="sub">${msg}<br>Лучшая серия: 🔥 ${best}</div>
+      <button class="btn show" id="again">🔁 Играть снова</button></div>`;
+  document.getElementById('again').onclick=start;
+}
+document.addEventListener('keydown',e=>{
+  const bins=document.querySelectorAll('.bin');
+  if(e.key==='1'||e.key.toLowerCase()==='t'){if(bins[0]&&!bins[0].disabled)choose(true);}
+  if(e.key==='2'||e.key.toLowerCase()==='f'){if(bins[1]&&!bins[1].disabled)choose(false);}
+  if(e.key==='Enter'){const nb=document.getElementById('next'); if(nb&&nb.classList.contains('show'))next();}
+});
+start();
+</script>
+</body>
+</html>

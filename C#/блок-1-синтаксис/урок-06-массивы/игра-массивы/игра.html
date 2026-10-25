@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Индекс-мастер — тренажёр массивов (Урок 6 C#)</title>
+<style>
+  :root{ --bg1:#512bd4; --bg2:#9b6dff; --card:#fff; --ink:#1f2937; --accent:#512bd4;
+    --ok:#16a34a; --bad:#dc2626; --soft:#ede9fe; }
+  *{box-sizing:border-box;font-family:"Segoe UI",system-ui,sans-serif}
+  body{margin:0;min-height:100vh;display:flex;align-items:center;justify-content:center;
+    background:linear-gradient(135deg,var(--bg1),var(--bg2));padding:20px;color:var(--ink)}
+  .app{background:var(--card);width:min(760px,100%);border-radius:24px;
+    box-shadow:0 25px 60px rgba(0,0,0,.35);padding:30px 30px 26px;overflow:hidden}
+  h1{margin:0 0 4px;font-size:24px;text-align:center}
+  .sub{text-align:center;color:#64748b;margin-bottom:16px;font-size:14px}
+  .bar{height:10px;background:var(--soft);border-radius:99px;overflow:hidden;margin-bottom:14px}
+  .bar>i{display:block;height:100%;width:0;background:var(--accent);transition:.4s}
+  .meta{display:flex;justify-content:space-between;font-size:14px;color:#64748b;margin-bottom:16px}
+  .streak{color:#b45309;font-weight:700}
+  .card-val{background:#0f172a;border-radius:16px;padding:26px 18px;text-align:center;margin-bottom:8px}
+  .card-val .lead{color:#94a3b8;font-size:13px;margin-bottom:12px}
+  .card-val code{color:#e2e8f0;font-size:20px;font-weight:700;font-family:Consolas,"Courier New",monospace;word-break:break-all}
+  .bins{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px}
+  @media(max-width:520px){.bins{grid-template-columns:1fr}}
+  .bin{border:2px solid #e2e8f0;background:#fff;border-radius:14px;padding:14px 10px;cursor:pointer;
+    transition:.15s;text-align:center;font-size:17px;font-family:Consolas,monospace;font-weight:700}
+  .bin:hover{border-color:var(--accent);background:var(--soft);transform:translateY(-2px)}
+  .bin.ok{border-color:var(--ok);background:#dcfce7}
+  .bin.bad{border-color:var(--bad);background:#fee2e2}
+  .bin:disabled{cursor:default;transform:none}
+  .fb{margin-top:14px;padding:13px 15px;border-radius:12px;font-size:15px;display:none;line-height:1.4}
+  .fb.show{display:block}.fb.good{background:#dcfce7;color:#166534}.fb.no{background:#fee2e2;color:#991b1b}
+  .fb code{background:#0f172a;color:#e2e8f0;padding:1px 6px;border-radius:5px}
+  .btn{margin-top:16px;width:100%;padding:14px;border:0;border-radius:14px;background:var(--accent);
+    color:#fff;font-size:17px;font-weight:700;cursor:pointer;display:none}
+  .btn.show{display:block}.btn:hover{filter:brightness(1.08)}
+  .center{text-align:center}.score{font-size:60px;font-weight:800;margin:6px 0}.emoji{font-size:64px}
+</style>
+</head>
+<body>
+<div class="app" id="app"></div>
+<script>
+// Тренажёр по уроку 6: массивы, индексы, готовые методы.
+const ROUNDS = [
+  {q:'int[] a = {10, 20, 30};\na[1]', a:["10","20","30","1"], c:1, e:"Индекс 1 — второй элемент (счёт с 0) → 20."},
+  {q:'int[] a = {5, 8, 3, 1};\na.Length', a:["3","4","5","1"], c:1, e:"В массиве 4 элемента; Length — их количество."},
+  {q:'int[] a = {7, 4, 9};\na[a.Length - 1]', a:["7","4","9","ошибка"], c:2, e:"Length-1 = 2 — последний элемент → 9."},
+  {q:'int[] a = {3, 1, 2};\nArray.Sort(a);\na[0]', a:["3","1","2","0"], c:1, e:"После сортировки: 1,2,3 → первый 1."},
+  {q:'new[]{4, 7, 2}.Max()', a:["2","4","7","13"], c:2, e:"Max — наибольший элемент → 7."},
+  {q:'new[]{4, 7, 2}.Sum()', a:["7","11","13","2"], c:2, e:"Sum — сумма всех: 4+7+2 = 13."},
+  {q:'new[]{2, 4, 6}.Min()', a:["2","4","6","12"], c:0, e:"Min — наименьший элемент → 2."},
+  {q:'int[] a = {1, 2, 3};\na[3]', a:["3","0","1","выход за границу"], c:3, e:"Индексы 0..2; a[3] — за границей (ошибка)."},
+  {q:'int[] a = {10, 20};\na.Length', a:["1","2","10","20"], c:1, e:"Два элемента → Length = 2."},
+  {q:'int[] a = {9, 1, 5};\nArray.Sort(a);\na[a.Length - 1]', a:["1","5","9","3"], c:2, e:"После сортировки 1,5,9 → последний 9 (это максимум)."},
+  {q:'string[] s = {"кот","пёс"};\ns[0]', a:["«кот»","«пёс»","0","2"], c:0, e:"Индекс 0 — первый элемент → «кот»."},
+  {q:'new[]{3, 3, 3}.Sum()', a:["3","6","9","0"], c:2, e:"3+3+3 = 9."},
+];
+let order=[], i=0, score=0, streak=0, best=0, locked=false;
+const app=document.getElementById('app');
+function esc(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;');}
+function start(){
+  order=[...Array(ROUNDS.length).keys()];
+  for(let k=order.length-1;k>0;k--){const j=Math.floor(Math.random()*(k+1));[order[k],order[j]]=[order[j],order[k]];}
+  i=0;score=0;streak=0;best=0;render();
+}
+function render(){
+  const Q=ROUNDS[order[i]];
+  app.innerHTML=`
+    <h1>🔢 Индекс-мастер</h1>
+    <div class="sub">Урок 6 · массивы, индексы и готовые методы</div>
+    <div class="bar"><i style="width:${(i/ROUNDS.length)*100}%"></i></div>
+    <div class="meta"><span>Пример ${i+1} из ${ROUNDS.length}</span><span>⭐ ${score} · <span class="streak">🔥 ${streak}</span></span></div>
+    <div class="card-val"><div class="lead">что получится?</div><code>${esc(Q.q).replace(/\n/g,'<br>')}</code></div>
+    <div class="bins" id="bins">
+      ${Q.a.map((t,n)=>`<button class="bin" data-n="${n}">${esc(t)}</button>`).join('')}
+    </div>
+    <div class="fb" id="fb"></div>
+    <button class="btn" id="next">${i===ROUNDS.length-1?'Итог →':'Дальше →'}</button>`;
+  locked=false;
+  document.querySelectorAll('.bin').forEach(b=>b.onclick=()=>choose(+b.dataset.n));
+  document.getElementById('next').onclick=next;
+}
+function choose(n){
+  if(locked)return;locked=true;
+  const Q=ROUNDS[order[i]];
+  const bins=[...document.querySelectorAll('.bin')];
+  bins.forEach(b=>{b.disabled=true; if(+b.dataset.n===Q.c)b.classList.add('ok');});
+  const fb=document.getElementById('fb');
+  if(n===Q.c){score++;streak++;best=Math.max(best,streak);fb.className='fb show good';
+    fb.innerHTML='✅ Верно! '+Q.e+(streak>=3?` 🔥 Серия ${streak}!`:'');}
+  else{streak=0;bins[n].classList.add('bad');fb.className='fb show no';fb.innerHTML='❌ Мимо. '+Q.e;}
+  document.getElementById('next').classList.add('show');
+}
+function next(){i++; if(i<ROUNDS.length)render(); else result();}
+function result(){
+  const pct=Math.round(score/ROUNDS.length*100);
+  let em,msg;
+  if(pct===100){em='🏆';msg='Идеально! Индексы и методы массива — твоя стихия.';}
+  else if(pct>=70){em='🎉';msg='Отлично! Счёт с нуля и Max/Sum не подводят.';}
+  else if(pct>=40){em='👍';msg='Неплохо! Помни: индексы 0..Length-1, последний — Length-1.';}
+  else {em='💪';msg='Ещё заход! Загляни в итого.md про массивы.';}
+  app.innerHTML=`<div class="center"><div class="emoji">${em}</div><h1>Готово!</h1>
+      <div class="score">${score} / ${ROUNDS.length}</div>
+      <div class="sub">${msg}<br>Лучшая серия: 🔥 ${best}</div>
+      <button class="btn show" id="again">🔁 Играть снова</button></div>`;
+  document.getElementById('again').onclick=start;
+}
+document.addEventListener('keydown',e=>{
+  if(['1','2','3','4'].includes(e.key)){const b=document.querySelector(`.bin[data-n="${+e.key-1}"]`); if(b&&!b.disabled)choose(+e.key-1);}
+  if(e.key==='Enter'){const nb=document.getElementById('next'); if(nb&&nb.classList.contains('show'))next();}
+});
+start();
+</script>
+</body>
+</html>
