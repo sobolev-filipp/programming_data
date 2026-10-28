@@ -1,0 +1,62 @@
+<svg viewBox="0 0 800 420" xmlns="http://www.w3.org/2000/svg" font-family="'Segoe UI',system-ui,sans-serif">
+  <rect width="800" height="420" fill="#f7f9fc"/>
+  <text x="400" y="36" text-anchor="middle" font-size="23" font-weight="700" fill="#1f2937">Фильтрация: df[df['age'] &gt;= 15]</text>
+  <text x="400" y="60" text-anchor="middle" font-size="14.5" fill="#64748b">условие делает столбец True/False (маску), df[маска] оставляет только строки True</text>
+
+  <!-- step 1: table -->
+  <text x="120" y="92" text-anchor="middle" font-size="14" font-weight="700" fill="#475569">1. таблица</text>
+  <g font-size="14">
+    <rect x="40" y="100" width="40" height="28" fill="#f1f5f9" stroke="#94a3b8"/><rect x="80" y="100" width="90" height="28" fill="#e0e7ff" stroke="#4f46e5"/><text x="60" y="119" text-anchor="middle" font-weight="700" fill="#475569" font-size="12">idx</text><text x="125" y="119" text-anchor="middle" font-weight="700" fill="#4338ca">age</text>
+    <g fill="#1f2937">
+      <rect x="40" y="128" width="40" height="28" fill="#f8fafc" stroke="#e2e8f0"/><rect x="80" y="128" width="90" height="28" fill="#fff" stroke="#e2e8f0"/><text x="60" y="147" text-anchor="middle" font-weight="700" fill="#475569">0</text><text x="125" y="147" text-anchor="middle">15</text>
+      <rect x="40" y="156" width="40" height="28" fill="#f8fafc" stroke="#e2e8f0"/><rect x="80" y="156" width="90" height="28" fill="#fff" stroke="#e2e8f0"/><text x="60" y="175" text-anchor="middle" font-weight="700" fill="#475569">1</text><text x="125" y="175" text-anchor="middle">14</text>
+      <rect x="40" y="184" width="40" height="28" fill="#f8fafc" stroke="#e2e8f0"/><rect x="80" y="184" width="90" height="28" fill="#fff" stroke="#e2e8f0"/><text x="60" y="203" text-anchor="middle" font-weight="700" fill="#475569">2</text><text x="125" y="203" text-anchor="middle">16</text>
+      <rect x="40" y="212" width="40" height="28" fill="#f8fafc" stroke="#e2e8f0"/><rect x="80" y="212" width="90" height="28" fill="#fff" stroke="#e2e8f0"/><text x="60" y="231" text-anchor="middle" font-weight="700" fill="#475569">3</text><text x="125" y="231" text-anchor="middle">17</text>
+    </g>
+  </g>
+
+  <path d="M185 185 L225 185" stroke="#4f46e5" stroke-width="3" marker-end="url(#a2)"/>
+  <defs><marker id="a2" markerWidth="10" markerHeight="10" refX="7" refY="3" orient="auto"><path d="M0 0 L7 3 L0 6 Z" fill="#4f46e5"/></marker></defs>
+  <text x="205" y="175" text-anchor="middle" font-size="12" fill="#64748b">age&gt;=15</text>
+
+  <!-- step 2: mask -->
+  <text x="320" y="92" text-anchor="middle" font-size="14" font-weight="700" fill="#475569">2. маска (True/False)</text>
+  <g font-size="14">
+    <rect x="250" y="100" width="40" height="28" fill="#f1f5f9" stroke="#94a3b8"/><rect x="290" y="100" width="110" height="28" fill="#fef9c3" stroke="#eab308"/><text x="270" y="119" text-anchor="middle" font-weight="700" fill="#475569" font-size="12">idx</text><text x="345" y="119" text-anchor="middle" font-weight="700" fill="#854d0e">age&gt;=15</text>
+    <rect x="250" y="128" width="40" height="28" fill="#f8fafc" stroke="#e2e8f0"/><rect x="290" y="128" width="110" height="28" fill="#dcfce7" stroke="#86efac"/><text x="270" y="147" text-anchor="middle" font-weight="700" fill="#475569">0</text><text x="345" y="147" text-anchor="middle" fill="#15803d" font-weight="700">True</text>
+    <rect x="250" y="156" width="40" height="28" fill="#f8fafc" stroke="#e2e8f0"/><rect x="290" y="156" width="110" height="28" fill="#fee2e2" stroke="#fca5a5"/><text x="270" y="175" text-anchor="middle" font-weight="700" fill="#475569">1</text><text x="345" y="175" text-anchor="middle" fill="#b91c1c" font-weight="700">False</text>
+    <rect x="250" y="184" width="40" height="28" fill="#f8fafc" stroke="#e2e8f0"/><rect x="290" y="184" width="110" height="28" fill="#dcfce7" stroke="#86efac"/><text x="270" y="203" text-anchor="middle" font-weight="700" fill="#475569">2</text><text x="345" y="203" text-anchor="middle" fill="#15803d" font-weight="700">True</text>
+    <rect x="250" y="212" width="40" height="28" fill="#f8fafc" stroke="#e2e8f0"/><rect x="290" y="212" width="110" height="28" fill="#dcfce7" stroke="#86efac"/><text x="270" y="231" text-anchor="middle" font-weight="700" fill="#475569">3</text><text x="345" y="231" text-anchor="middle" fill="#15803d" font-weight="700">True</text>
+  </g>
+
+  <path d="M415 185 L455 185" stroke="#4f46e5" stroke-width="3" marker-end="url(#a2)"/>
+  <text x="435" y="175" text-anchor="middle" font-size="12" fill="#64748b">df[маска]</text>
+
+  <!-- step 3: result -->
+  <text x="560" y="92" text-anchor="middle" font-size="14" font-weight="700" fill="#15803d">3. остались только True</text>
+  <g font-size="14">
+    <rect x="480" y="100" width="40" height="28" fill="#f1f5f9" stroke="#94a3b8"/><rect x="520" y="100" width="90" height="28" fill="#dcfce7" stroke="#16a34a" stroke-width="2"/><text x="500" y="119" text-anchor="middle" font-weight="700" fill="#475569" font-size="12">idx</text><text x="565" y="119" text-anchor="middle" font-weight="700" fill="#15803d">age</text>
+    <g fill="#166534">
+      <rect x="480" y="128" width="40" height="28" fill="#f0fdf4" stroke="#bbf7d0"/><rect x="520" y="128" width="90" height="28" fill="#fff" stroke="#bbf7d0"/><text x="500" y="147" text-anchor="middle" font-weight="700" fill="#15803d">0</text><text x="565" y="147" text-anchor="middle">15</text>
+      <rect x="480" y="156" width="40" height="28" fill="#f0fdf4" stroke="#bbf7d0"/><rect x="520" y="156" width="90" height="28" fill="#fff" stroke="#bbf7d0"/><text x="500" y="175" text-anchor="middle" font-weight="700" fill="#15803d">2</text><text x="565" y="175" text-anchor="middle">16</text>
+      <rect x="480" y="184" width="40" height="28" fill="#f0fdf4" stroke="#bbf7d0"/><rect x="520" y="184" width="90" height="28" fill="#fff" stroke="#bbf7d0"/><text x="500" y="203" text-anchor="middle" font-weight="700" fill="#15803d">3</text><text x="565" y="203" text-anchor="middle">17</text>
+    </g>
+    <text x="565" y="233" text-anchor="middle" font-size="12.5" fill="#64748b" font-style="italic">строка 1 (14) отброшена</text>
+  </g>
+
+  <!-- several conditions note -->
+  <rect x="640" y="100" width="135" height="140" rx="10" fill="#e0e7ff" stroke="#4f46e5" stroke-width="2"/>
+  <text x="707" y="124" text-anchor="middle" font-size="13" font-weight="700" fill="#4338ca">Несколько</text>
+  <text x="707" y="142" text-anchor="middle" font-size="13" font-weight="700" fill="#4338ca">условий:</text>
+  <text x="707" y="168" text-anchor="middle" font-size="15" fill="#4338ca" font-family="monospace">&amp; — И</text>
+  <text x="707" y="190" text-anchor="middle" font-size="15" fill="#4338ca" font-family="monospace">| — ИЛИ</text>
+  <text x="707" y="212" text-anchor="middle" font-size="15" fill="#4338ca" font-family="monospace">~ — НЕ</text>
+  <text x="707" y="232" text-anchor="middle" font-size="11.5" fill="#4338ca">каждое — в скобках</text>
+
+  <!-- tip -->
+  <rect x="60" y="300" width="680" height="100" rx="10" fill="#fef9c3" stroke="#eab308" stroke-width="2"/>
+  <text x="80" y="328" font-size="14.5" font-weight="700" fill="#854d0e">💬 Простыми словами:</text>
+  <text x="80" y="352" font-size="14" fill="#854d0e">Маска — это «галочки»: напротив каждой строки стоит True (подходит) или False (нет).</text>
+  <text x="80" y="374" font-size="14" fill="#854d0e">Pandas оставляет строки с галочкой True. ⚠️ Пишем <tspan font-family="monospace" fill="#b45309">&amp;</tspan> и <tspan font-family="monospace" fill="#b45309">|</tspan>, НЕ <tspan font-family="monospace" fill="#b45309">and</tspan>/<tspan font-family="monospace" fill="#b45309">or</tspan>:</text>
+  <text x="80" y="394" font-size="14" fill="#854d0e">обычные and/or умеют сравнить только одно значение, а у нас целый столбец галочек.</text>
+</svg>

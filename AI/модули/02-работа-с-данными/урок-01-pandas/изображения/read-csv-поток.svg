@@ -1,0 +1,57 @@
+<svg viewBox="0 0 780 400" xmlns="http://www.w3.org/2000/svg" font-family="'Segoe UI',system-ui,sans-serif">
+  <rect width="780" height="400" fill="#f7f9fc"/>
+  <text x="390" y="38" text-anchor="middle" font-size="23" font-weight="700" fill="#1f2937">Откуда берём данные: CSV → pd.read_csv() → таблица</text>
+  <text x="390" y="63" text-anchor="middle" font-size="14.5" fill="#64748b">файл по ссылке в интернете (или созданный нами) превращается в DataFrame</text>
+
+  <!-- CSV text -->
+  <rect x="30" y="95" width="230" height="180" rx="10" fill="#0f172a"/>
+  <text x="45" y="120" font-size="13" fill="#64748b" font-family="monospace">students.csv</text>
+  <text x="45" y="148" font-size="14" fill="#a5b4fc" font-family="monospace">name,age,grade</text>
+  <text x="45" y="172" font-size="14" fill="#e2e8f0" font-family="monospace">Иван,15,4.2</text>
+  <text x="45" y="196" font-size="14" fill="#e2e8f0" font-family="monospace">Мария,14,4.7</text>
+  <text x="45" y="220" font-size="14" fill="#e2e8f0" font-family="monospace">Пётр,16,3.8</text>
+  <text x="45" y="256" font-size="12.5" fill="#86efac" font-family="monospace">значения через запятую</text>
+
+  <!-- arrow + function -->
+  <g>
+    <rect x="290" y="150" width="200" height="72" rx="12" fill="#e0e7ff" stroke="#4f46e5" stroke-width="2.5"/>
+    <text x="390" y="180" text-anchor="middle" font-size="16" font-weight="700" fill="#4338ca" font-family="monospace">pd.read_csv(…)</text>
+    <text x="390" y="204" text-anchor="middle" font-size="13" fill="#4338ca">читает и разбирает файл</text>
+    <path d="M260 185 L288 185" stroke="#4f46e5" stroke-width="3" marker-end="url(#ar)"/>
+    <path d="M490 185 L520 185" stroke="#4f46e5" stroke-width="3" marker-end="url(#ar)"/>
+  </g>
+  <defs><marker id="ar" markerWidth="10" markerHeight="10" refX="7" refY="3" orient="auto"><path d="M0 0 L7 3 L0 6 Z" fill="#4f46e5"/></marker></defs>
+
+  <!-- DataFrame result -->
+  <g font-size="14">
+    <rect x="525" y="110" width="45" height="30" fill="#f1f5f9" stroke="#94a3b8" stroke-width="2"/>
+    <rect x="570" y="110" width="90" height="30" fill="#e0e7ff" stroke="#4f46e5" stroke-width="2"/>
+    <rect x="660" y="110" width="45" height="30" fill="#e0e7ff" stroke="#4f46e5" stroke-width="2"/>
+    <rect x="705" y="110" width="55" height="30" fill="#e0e7ff" stroke="#4f46e5" stroke-width="2"/>
+    <text x="547" y="131" text-anchor="middle" font-weight="700" fill="#475569" font-size="12">idx</text>
+    <text x="615" y="131" text-anchor="middle" font-weight="700" fill="#4338ca">name</text>
+    <text x="682" y="131" text-anchor="middle" font-weight="700" fill="#4338ca">age</text>
+    <text x="732" y="131" text-anchor="middle" font-weight="700" fill="#4338ca" font-size="12">grade</text>
+    <g fill="#1f2937">
+      <rect x="525" y="140" width="45" height="28" fill="#f8fafc" stroke="#e2e8f0"/><text x="547" y="160" text-anchor="middle" font-weight="700" fill="#475569">0</text>
+      <rect x="570" y="140" width="90" height="28" fill="#fff" stroke="#e2e8f0"/><text x="615" y="160" text-anchor="middle">Иван</text>
+      <rect x="660" y="140" width="45" height="28" fill="#fff" stroke="#e2e8f0"/><text x="682" y="160" text-anchor="middle">15</text>
+      <rect x="705" y="140" width="55" height="28" fill="#fff" stroke="#e2e8f0"/><text x="732" y="160" text-anchor="middle">4.2</text>
+      <rect x="525" y="168" width="45" height="28" fill="#f8fafc" stroke="#e2e8f0"/><text x="547" y="188" text-anchor="middle" font-weight="700" fill="#475569">1</text>
+      <rect x="570" y="168" width="90" height="28" fill="#fff" stroke="#e2e8f0"/><text x="615" y="188" text-anchor="middle">Мария</text>
+      <rect x="660" y="168" width="45" height="28" fill="#fff" stroke="#e2e8f0"/><text x="682" y="188" text-anchor="middle">14</text>
+      <rect x="705" y="168" width="55" height="28" fill="#fff" stroke="#e2e8f0"/><text x="732" y="188" text-anchor="middle">4.7</text>
+      <rect x="525" y="196" width="45" height="28" fill="#f8fafc" stroke="#e2e8f0"/><text x="547" y="216" text-anchor="middle" font-weight="700" fill="#475569">2</text>
+      <rect x="570" y="196" width="90" height="28" fill="#fff" stroke="#e2e8f0"/><text x="615" y="216" text-anchor="middle">Пётр</text>
+      <rect x="660" y="196" width="45" height="28" fill="#fff" stroke="#e2e8f0"/><text x="682" y="216" text-anchor="middle">16</text>
+      <rect x="705" y="196" width="55" height="28" fill="#fff" stroke="#e2e8f0"/><text x="732" y="216" text-anchor="middle">3.8</text>
+    </g>
+    <text x="640" y="244" text-anchor="middle" font-size="13" fill="#64748b" font-style="italic">DataFrame — готов к работе</text>
+  </g>
+
+  <!-- tip: two sources -->
+  <rect x="40" y="300" width="700" height="84" rx="10" fill="#fef9c3" stroke="#eab308" stroke-width="2"/>
+  <text x="60" y="326" font-size="14.5" font-weight="700" fill="#854d0e">💡 На наших уроках (Google Colab) данные берём двумя способами:</text>
+  <text x="60" y="350" font-size="13.5" fill="#854d0e">1) создаём таблицу прямо в коде из словаря — <tspan font-family="monospace" fill="#b45309">pd.DataFrame({...})</tspan>;</text>
+  <text x="60" y="372" font-size="13.5" fill="#854d0e">2) грузим готовый CSV по ссылке — <tspan font-family="monospace" fill="#b45309">pd.read_csv("https://…/iris.csv")</tspan>. Ничего качать на компьютер не нужно.</text>
+</svg>

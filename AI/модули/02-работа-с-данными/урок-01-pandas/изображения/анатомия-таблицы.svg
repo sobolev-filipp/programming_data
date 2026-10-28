@@ -1,0 +1,75 @@
+<svg viewBox="0 0 760 470" xmlns="http://www.w3.org/2000/svg" font-family="'Segoe UI',system-ui,sans-serif">
+  <rect width="760" height="470" fill="#f7f9fc"/>
+  <text x="380" y="40" text-anchor="middle" font-size="24" font-weight="700" fill="#1f2937">DataFrame — это таблица: строки и столбцы</text>
+  <text x="380" y="66" text-anchor="middle" font-size="15" fill="#64748b">как лист Excel или классный журнал</text>
+
+  <!-- Table -->
+  <g>
+    <!-- header row -->
+    <rect x="230" y="110" width="90" height="42" fill="#e0e7ff" stroke="#4f46e5" stroke-width="2"/>
+    <rect x="320" y="110" width="150" height="42" fill="#e0e7ff" stroke="#4f46e5" stroke-width="2"/>
+    <rect x="470" y="110" width="90" height="42" fill="#e0e7ff" stroke="#4f46e5" stroke-width="2"/>
+    <rect x="560" y="110" width="90" height="42" fill="#e0e7ff" stroke="#4f46e5" stroke-width="2"/>
+    <text x="275" y="137" text-anchor="middle" font-size="16" font-weight="700" fill="#4338ca">index</text>
+    <text x="395" y="137" text-anchor="middle" font-size="16" font-weight="700" fill="#4338ca">name</text>
+    <text x="515" y="137" text-anchor="middle" font-size="16" font-weight="700" fill="#4338ca">age</text>
+    <text x="605" y="137" text-anchor="middle" font-size="16" font-weight="700" fill="#4338ca">grade</text>
+
+    <!-- data rows -->
+    <g font-size="16" fill="#1f2937">
+      <!-- row 0 -->
+      <rect x="230" y="152" width="90" height="40" fill="#eef2ff" stroke="#c7d2fe"/>
+      <rect x="320" y="152" width="150" height="40" fill="#fff" stroke="#c7d2fe"/>
+      <rect x="470" y="152" width="90" height="40" fill="#fff" stroke="#c7d2fe"/>
+      <rect x="560" y="152" width="90" height="40" fill="#fff" stroke="#c7d2fe"/>
+      <text x="275" y="178" text-anchor="middle" font-weight="700" fill="#4338ca">0</text>
+      <text x="395" y="178" text-anchor="middle">Иван</text>
+      <text x="515" y="178" text-anchor="middle">15</text>
+      <text x="605" y="178" text-anchor="middle">4.2</text>
+      <!-- row 1 (highlighted) -->
+      <rect x="230" y="192" width="90" height="40" fill="#eef2ff" stroke="#c7d2fe"/>
+      <rect x="320" y="192" width="150" height="40" fill="#dcfce7" stroke="#16a34a" stroke-width="2"/>
+      <rect x="470" y="192" width="90" height="40" fill="#dcfce7" stroke="#16a34a" stroke-width="2"/>
+      <rect x="560" y="192" width="90" height="40" fill="#dcfce7" stroke="#16a34a" stroke-width="2"/>
+      <text x="275" y="218" text-anchor="middle" font-weight="700" fill="#4338ca">1</text>
+      <text x="395" y="218" text-anchor="middle">Мария</text>
+      <text x="515" y="218" text-anchor="middle">14</text>
+      <text x="605" y="218" text-anchor="middle">4.7</text>
+      <!-- row 2 -->
+      <rect x="230" y="232" width="90" height="40" fill="#eef2ff" stroke="#c7d2fe"/>
+      <rect x="320" y="232" width="150" height="40" fill="#fff" stroke="#c7d2fe"/>
+      <rect x="470" y="232" width="90" height="40" fill="#fff" stroke="#c7d2fe"/>
+      <rect x="560" y="232" width="90" height="40" fill="#fff" stroke="#c7d2fe"/>
+      <text x="275" y="258" text-anchor="middle" font-weight="700" fill="#4338ca">2</text>
+      <text x="395" y="258" text-anchor="middle">Пётр</text>
+      <text x="515" y="258" text-anchor="middle">16</text>
+      <text x="605" y="258" text-anchor="middle">3.8</text>
+    </g>
+
+    <!-- column frame (orange) around 'age' column, no overlap with numbers -->
+    <rect x="468" y="108" width="94" height="166" rx="6" fill="none" stroke="#ea580c" stroke-width="2.5"/>
+  </g>
+
+  <!-- column callout (orange), below the table -->
+  <rect x="415" y="296" width="300" height="56" rx="10" fill="#ffedd5" stroke="#ea580c" stroke-width="2"/>
+  <text x="565" y="319" text-anchor="middle" font-size="14" font-weight="700" fill="#c2410c">СТОЛБЕЦ (Series)</text>
+  <text x="565" y="340" text-anchor="middle" font-size="13" fill="#9a3412">одна характеристика у всех строк</text>
+  <line x1="515" y1="274" x2="515" y2="296" stroke="#ea580c" stroke-width="2"/>
+
+  <!-- row callout (green) -->
+  <rect x="15" y="192" width="200" height="56" rx="10" fill="#dcfce7" stroke="#16a34a" stroke-width="2"/>
+  <text x="115" y="215" text-anchor="middle" font-size="14" font-weight="700" fill="#15803d">СТРОКА</text>
+  <text x="115" y="236" text-anchor="middle" font-size="13" fill="#166534">один объект (один ученик)</text>
+  <line x1="215" y1="212" x2="320" y2="212" stroke="#16a34a" stroke-width="2"/>
+
+  <!-- index callout (indigo) -->
+  <rect x="15" y="100" width="200" height="56" rx="10" fill="#e0e7ff" stroke="#4f46e5" stroke-width="2"/>
+  <text x="115" y="123" text-anchor="middle" font-size="14" font-weight="700" fill="#4338ca">index — метка строки</text>
+  <text x="115" y="144" text-anchor="middle" font-size="13" fill="#4338ca">по умолчанию 0, 1, 2…</text>
+  <line x1="215" y1="128" x2="275" y2="152" stroke="#4f46e5" stroke-width="2"/>
+
+  <!-- tip (two lines) -->
+  <rect x="60" y="388" width="640" height="64" rx="10" fill="#fef9c3" stroke="#eab308" stroke-width="2"/>
+  <text x="380" y="414" text-anchor="middle" font-size="14.5" fill="#854d0e">💡 Клетка на пересечении строки и столбца — это одно значение (ячейка).</text>
+  <text x="380" y="436" text-anchor="middle" font-size="14.5" fill="#854d0e">Например, у строки 1, столбца grade стоит значение 4.7</text>
+</svg>

@@ -1,0 +1,69 @@
+<svg viewBox="0 0 760 430" xmlns="http://www.w3.org/2000/svg" font-family="'Segoe UI',system-ui,sans-serif">
+  <rect width="760" height="430" fill="#f7f9fc"/>
+  <text x="380" y="40" text-anchor="middle" font-size="24" font-weight="700" fill="#1f2937">DataFrame = несколько Series рядом</text>
+  <text x="380" y="66" text-anchor="middle" font-size="15" fill="#64748b">каждый столбец — это отдельная Series, у всех общий индекс</text>
+
+  <!-- three separate series -->
+  <g font-size="15">
+    <!-- name series -->
+    <rect x="70" y="110" width="110" height="34" fill="#ffedd5" stroke="#ea580c" stroke-width="2"/>
+    <text x="125" y="133" text-anchor="middle" font-weight="700" fill="#c2410c">name</text>
+    <rect x="70" y="144" width="110" height="30" fill="#fff" stroke="#fdba74"/><text x="125" y="165" text-anchor="middle" fill="#1f2937">Иван</text>
+    <rect x="70" y="174" width="110" height="30" fill="#fff" stroke="#fdba74"/><text x="125" y="195" text-anchor="middle" fill="#1f2937">Мария</text>
+    <rect x="70" y="204" width="110" height="30" fill="#fff" stroke="#fdba74"/><text x="125" y="225" text-anchor="middle" fill="#1f2937">Пётр</text>
+
+    <!-- age series -->
+    <rect x="200" y="110" width="80" height="34" fill="#dcfce7" stroke="#16a34a" stroke-width="2"/>
+    <text x="240" y="133" text-anchor="middle" font-weight="700" fill="#15803d">age</text>
+    <rect x="200" y="144" width="80" height="30" fill="#fff" stroke="#86efac"/><text x="240" y="165" text-anchor="middle" fill="#1f2937">15</text>
+    <rect x="200" y="174" width="80" height="30" fill="#fff" stroke="#86efac"/><text x="240" y="195" text-anchor="middle" fill="#1f2937">14</text>
+    <rect x="200" y="204" width="80" height="30" fill="#fff" stroke="#86efac"/><text x="240" y="225" text-anchor="middle" fill="#1f2937">16</text>
+
+    <!-- grade series -->
+    <rect x="300" y="110" width="80" height="34" fill="#e0e7ff" stroke="#4f46e5" stroke-width="2"/>
+    <text x="340" y="133" text-anchor="middle" font-weight="700" fill="#4338ca">grade</text>
+    <rect x="300" y="144" width="80" height="30" fill="#fff" stroke="#c7d2fe"/><text x="340" y="165" text-anchor="middle" fill="#1f2937">4.2</text>
+    <rect x="300" y="174" width="80" height="30" fill="#fff" stroke="#c7d2fe"/><text x="340" y="195" text-anchor="middle" fill="#1f2937">4.7</text>
+    <rect x="300" y="204" width="80" height="30" fill="#fff" stroke="#c7d2fe"/><text x="340" y="225" text-anchor="middle" fill="#1f2937">3.8</text>
+  </g>
+  <text x="225" y="262" text-anchor="middle" font-size="14" fill="#64748b">три отдельные Series…</text>
+
+  <text x="420" y="180" font-size="40" fill="#4f46e5">→</text>
+
+  <!-- combined DataFrame -->
+  <g font-size="15">
+    <rect x="480" y="110" width="50" height="34" fill="#f1f5f9" stroke="#94a3b8" stroke-width="2"/>
+    <rect x="530" y="110" width="110" height="34" fill="#ffedd5" stroke="#ea580c" stroke-width="2"/>
+    <rect x="640" y="110" width="50" height="34" fill="#dcfce7" stroke="#16a34a" stroke-width="2"/>
+    <rect x="690" y="110" width="55" height="34" fill="#e0e7ff" stroke="#4f46e5" stroke-width="2"/>
+    <text x="505" y="133" text-anchor="middle" font-weight="700" fill="#475569" font-size="13">idx</text>
+    <text x="585" y="133" text-anchor="middle" font-weight="700" fill="#c2410c">name</text>
+    <text x="665" y="133" text-anchor="middle" font-weight="700" fill="#15803d">age</text>
+    <text x="717" y="133" text-anchor="middle" font-weight="700" fill="#4338ca" font-size="13">grade</text>
+
+    <g fill="#1f2937">
+      <rect x="480" y="144" width="50" height="30" fill="#f8fafc" stroke="#cbd5e1"/><text x="505" y="165" text-anchor="middle" font-weight="700" fill="#475569">0</text>
+      <rect x="530" y="144" width="110" height="30" fill="#fff" stroke="#e2e8f0"/><text x="585" y="165" text-anchor="middle">Иван</text>
+      <rect x="640" y="144" width="50" height="30" fill="#fff" stroke="#e2e8f0"/><text x="665" y="165" text-anchor="middle">15</text>
+      <rect x="690" y="144" width="55" height="30" fill="#fff" stroke="#e2e8f0"/><text x="717" y="165" text-anchor="middle">4.2</text>
+
+      <rect x="480" y="174" width="50" height="30" fill="#f8fafc" stroke="#cbd5e1"/><text x="505" y="195" text-anchor="middle" font-weight="700" fill="#475569">1</text>
+      <rect x="530" y="174" width="110" height="30" fill="#fff" stroke="#e2e8f0"/><text x="585" y="195" text-anchor="middle">Мария</text>
+      <rect x="640" y="174" width="50" height="30" fill="#fff" stroke="#e2e8f0"/><text x="665" y="195" text-anchor="middle">14</text>
+      <rect x="690" y="174" width="55" height="30" fill="#fff" stroke="#e2e8f0"/><text x="717" y="195" text-anchor="middle">4.7</text>
+
+      <rect x="480" y="204" width="50" height="30" fill="#f8fafc" stroke="#cbd5e1"/><text x="505" y="225" text-anchor="middle" font-weight="700" fill="#475569">2</text>
+      <rect x="530" y="204" width="110" height="30" fill="#fff" stroke="#e2e8f0"/><text x="585" y="225" text-anchor="middle">Пётр</text>
+      <rect x="640" y="204" width="50" height="30" fill="#fff" stroke="#e2e8f0"/><text x="665" y="225" text-anchor="middle">16</text>
+      <rect x="690" y="204" width="55" height="30" fill="#fff" stroke="#e2e8f0"/><text x="717" y="225" text-anchor="middle">3.8</text>
+    </g>
+  </g>
+  <text x="612" y="262" text-anchor="middle" font-size="14" fill="#64748b">…поставили рядом → DataFrame</text>
+
+  <!-- tip -->
+  <rect x="80" y="300" width="600" height="110" rx="10" fill="#fef9c3" stroke="#eab308" stroke-width="2"/>
+  <text x="100" y="328" font-size="14.5" font-weight="700" fill="#854d0e">💬 Простыми словами:</text>
+  <text x="100" y="352" font-size="14" fill="#854d0e">DataFrame — это целая таблица (лист Excel). Один её столбец, вынутый отдельно</text>
+  <text x="100" y="374" font-size="14" fill="#854d0e">(например <tspan font-family="monospace" fill="#b45309">df['age']</tspan>), — это Series. То есть DataFrame состоит из Series,</text>
+  <text x="100" y="396" font-size="14" fill="#854d0e">как книга — из страниц. У всех столбцов общий индекс слева (0, 1, 2…).</text>
+</svg>

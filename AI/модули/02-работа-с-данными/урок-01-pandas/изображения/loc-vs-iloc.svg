@@ -1,0 +1,63 @@
+<svg viewBox="0 0 780 430" xmlns="http://www.w3.org/2000/svg" font-family="'Segoe UI',system-ui,sans-serif">
+  <rect width="780" height="430" fill="#f7f9fc"/>
+  <text x="390" y="36" text-anchor="middle" font-size="23" font-weight="700" fill="#1f2937">loc и iloc — в чём разница</text>
+  <text x="390" y="60" text-anchor="middle" font-size="14.5" fill="#64748b">оба берут строки, но срез считают по-разному</text>
+
+  <!-- iloc side -->
+  <text x="195" y="95" text-anchor="middle" font-size="17" font-weight="700" fill="#ea580c" font-family="monospace">df.iloc[1:4]</text>
+  <text x="195" y="117" text-anchor="middle" font-size="13" fill="#9a3412">по НОМЕРУ (как в Python/NumPy)</text>
+  <g font-size="15">
+    <!-- rows 0..4 -->
+    <g>
+      <rect x="110" y="130" width="50" height="30" fill="#f1f5f9" stroke="#94a3b8"/><rect x="160" y="130" width="110" height="30" fill="#fff" stroke="#cbd5e1"/>
+      <text x="135" y="151" text-anchor="middle" font-weight="700" fill="#475569">0</text><text x="215" y="151" text-anchor="middle" fill="#1f2937">Иван</text>
+    </g>
+    <!-- 1,2,3 selected -->
+    <g>
+      <rect x="110" y="160" width="50" height="30" fill="#ffedd5" stroke="#ea580c" stroke-width="2"/><rect x="160" y="160" width="110" height="30" fill="#ffedd5" stroke="#ea580c" stroke-width="2"/>
+      <text x="135" y="181" text-anchor="middle" font-weight="700" fill="#c2410c">1</text><text x="215" y="181" text-anchor="middle" fill="#9a3412">Мария</text>
+      <rect x="110" y="190" width="50" height="30" fill="#ffedd5" stroke="#ea580c" stroke-width="2"/><rect x="160" y="190" width="110" height="30" fill="#ffedd5" stroke="#ea580c" stroke-width="2"/>
+      <text x="135" y="211" text-anchor="middle" font-weight="700" fill="#c2410c">2</text><text x="215" y="211" text-anchor="middle" fill="#9a3412">Пётр</text>
+      <rect x="110" y="220" width="50" height="30" fill="#ffedd5" stroke="#ea580c" stroke-width="2"/><rect x="160" y="220" width="110" height="30" fill="#ffedd5" stroke="#ea580c" stroke-width="2"/>
+      <text x="135" y="241" text-anchor="middle" font-weight="700" fill="#c2410c">3</text><text x="215" y="241" text-anchor="middle" fill="#9a3412">Ольга</text>
+    </g>
+    <g>
+      <rect x="110" y="250" width="50" height="30" fill="#f1f5f9" stroke="#94a3b8"/><rect x="160" y="250" width="110" height="30" fill="#fff" stroke="#cbd5e1"/>
+      <text x="135" y="271" text-anchor="middle" font-weight="700" fill="#475569">4</text><text x="215" y="271" text-anchor="middle" fill="#1f2937">Алина</text>
+    </g>
+  </g>
+  <rect x="110" y="296" width="200" height="54" rx="10" fill="#ffedd5" stroke="#ea580c" stroke-width="2"/>
+  <text x="210" y="318" text-anchor="middle" font-size="14" font-weight="700" fill="#c2410c">= 3 строки: 1, 2, 3</text>
+  <text x="210" y="339" text-anchor="middle" font-size="13" fill="#9a3412">правая граница 4 НЕ входит</text>
+
+  <!-- divider -->
+  <line x1="390" y1="90" x2="390" y2="360" stroke="#cbd5e1" stroke-width="2" stroke-dasharray="6 5"/>
+
+  <!-- loc side -->
+  <text x="585" y="95" text-anchor="middle" font-size="17" font-weight="700" fill="#4338ca" font-family="monospace">df.loc[1:4]</text>
+  <text x="585" y="117" text-anchor="middle" font-size="13" fill="#4338ca">по МЕТКЕ (как в Excel)</text>
+  <g font-size="15">
+    <g>
+      <rect x="500" y="130" width="50" height="30" fill="#f1f5f9" stroke="#94a3b8"/><rect x="550" y="130" width="110" height="30" fill="#fff" stroke="#cbd5e1"/>
+      <text x="525" y="151" text-anchor="middle" font-weight="700" fill="#475569">0</text><text x="605" y="151" text-anchor="middle" fill="#1f2937">Иван</text>
+    </g>
+    <g>
+      <rect x="500" y="160" width="50" height="30" fill="#e0e7ff" stroke="#4f46e5" stroke-width="2"/><rect x="550" y="160" width="110" height="30" fill="#e0e7ff" stroke="#4f46e5" stroke-width="2"/>
+      <text x="525" y="181" text-anchor="middle" font-weight="700" fill="#4338ca">1</text><text x="605" y="181" text-anchor="middle" fill="#3730a3">Мария</text>
+      <rect x="500" y="190" width="50" height="30" fill="#e0e7ff" stroke="#4f46e5" stroke-width="2"/><rect x="550" y="190" width="110" height="30" fill="#e0e7ff" stroke="#4f46e5" stroke-width="2"/>
+      <text x="525" y="211" text-anchor="middle" font-weight="700" fill="#4338ca">2</text><text x="605" y="211" text-anchor="middle" fill="#3730a3">Пётр</text>
+      <rect x="500" y="220" width="50" height="30" fill="#e0e7ff" stroke="#4f46e5" stroke-width="2"/><rect x="550" y="220" width="110" height="30" fill="#e0e7ff" stroke="#4f46e5" stroke-width="2"/>
+      <text x="525" y="241" text-anchor="middle" font-weight="700" fill="#4338ca">3</text><text x="605" y="241" text-anchor="middle" fill="#3730a3">Ольга</text>
+      <rect x="500" y="250" width="50" height="30" fill="#e0e7ff" stroke="#4f46e5" stroke-width="2"/><rect x="550" y="250" width="110" height="30" fill="#e0e7ff" stroke="#4f46e5" stroke-width="2"/>
+      <text x="525" y="271" text-anchor="middle" font-weight="700" fill="#4338ca">4</text><text x="605" y="271" text-anchor="middle" fill="#3730a3">Алина</text>
+    </g>
+  </g>
+  <rect x="480" y="296" width="210" height="54" rx="10" fill="#e0e7ff" stroke="#4f46e5" stroke-width="2"/>
+  <text x="585" y="318" text-anchor="middle" font-size="14" font-weight="700" fill="#4338ca">= 4 строки: 1, 2, 3, 4</text>
+  <text x="585" y="339" text-anchor="middle" font-size="13" fill="#3730a3">метка 4 ВХОДИТ!</text>
+
+  <!-- tip -->
+  <rect x="60" y="372" width="660" height="48" rx="10" fill="#fef9c3" stroke="#eab308" stroke-width="2"/>
+  <text x="390" y="394" text-anchor="middle" font-size="14" font-weight="700" fill="#854d0e">💡 Запомнить: iloc — i от integer (номер), как NumPy — правая граница не входит.</text>
+  <text x="390" y="413" text-anchor="middle" font-size="14" fill="#854d0e">loc — от label (метка), как в Excel — обе границы входят.</text>
+</svg>
