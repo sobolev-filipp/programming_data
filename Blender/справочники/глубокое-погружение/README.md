@@ -17,7 +17,8 @@
 | [Инструменты редактирования меша](инструменты-меша.md) | Extrude/Inset/Bevel/Loop Cut/Knife/Bridge/Spin/Merge — все опции (`F9`) | ✅ |
 | [Точность: привязки, Pivot, ориентации, 3D-курсор](точность.md) | Snap, Transform Pivot/Orientation, числовой ввод | ✅ |
 | [Нормали и сглаживание](нормали-сглаживание.md) | Shade Smooth/Flat, Auto Smooth, перевёрнутые нормали, Weighted Normal | ✅ |
-| [Чистка и «здоровье» меша](чистка-меша.md) | Merge by Distance, Delete vs Dissolve, non-manifold, n-gons | ✅ |
+| [Чистка и «здоровье» меша](чистка-меша.md) | Merge by Distance, Delete vs Dissolve, non-manifold, n-gons, ремонт топологии по ситуациям (с инфографиками) | ✅ |
+| [Оптимизация модели (low-poly, вес)](оптимизация.md) | полигонбюджет/LOD, Decimate/Weld/Remesh, оптимизация скачанной модели по шагам (с инфографиками) | ✅ |
 | [Модификаторы: стек и порядок](модификаторы-стек.md) | как работает стек, почему порядок решает (Mirror→SubSurf), Apply, маски-группы | ✅ |
 | [Кривые (Bezier, NURBS, профили)](кривые.md) | ручки-handles, Bevel/Taper/профиль, кривая↔меш, пути движения | ✅ |
 
