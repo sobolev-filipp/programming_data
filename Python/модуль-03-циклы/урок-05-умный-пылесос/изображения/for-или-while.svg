@@ -1,35 +1,66 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 400" font-family="'Segoe UI',system-ui,sans-serif">
-  <rect x="0" y="0" width="800" height="400" fill="#f7f9fc"/>
-  <text x="400" y="34" font-size="23" font-weight="700" fill="#1f2937" text-anchor="middle">🤔 for или while? Смотри, знаешь ли ты длину</text>
-  <text x="400" y="58" font-size="14" fill="#64748b" text-anchor="middle">Знаешь, сколько шагов → for. Не знаешь (едешь «до стены») → while + сенсор.</text>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 820 440" font-family="'Segoe UI',system-ui,sans-serif">
+  <rect x="0" y="0" width="820" height="440" fill="#f7f9fc"/>
+  <text x="410" y="34" font-size="23" font-weight="700" fill="#1f2937" text-anchor="middle">🤔 Комната КАЖДЫЙ РАЗ разная — считать шаги нельзя</text>
+  <text x="410" y="58" font-size="14" fill="#64748b" text-anchor="middle">Старт пылесоса, длина мусора и стены меняются при запуске. Спасают сенсоры: едь «до стены».</text>
 
-  <!-- FOR panel -->
+  <!-- LEFT: три разные комнаты для ОДНОГО задания -->
   <g transform="translate(40,84)">
-    <rect x="0" y="0" width="350" height="280" rx="14" fill="#fff" stroke="#0d9488" stroke-width="2"/>
-    <text x="175" y="30" font-size="17" font-weight="800" fill="#0d9488" text-anchor="middle">for — длина ИЗВЕСТНА</text>
-    <text x="24" y="62" font-size="14" fill="#334155">«Ровно 9 клеток вправо»</text>
-    <rect x="20" y="76" width="310" height="80" rx="10" fill="#0f172a"/>
-    <text x="38" y="104" font-size="15" font-family="monospace" fill="#5eead4">for i in range(9):</text>
-    <text x="70" y="128" font-size="15" font-family="monospace" fill="#e2e8f0">right()</text>
-    <text x="70" y="148" font-size="15" font-family="monospace" fill="#e2e8f0">clean()</text>
-    <text x="24" y="186" font-size="13.5" fill="#64748b">Считаешь шаги заранее.</text>
-    <text x="24" y="212" font-size="13.5" fill="#64748b">Диагональ, столбец, блок фиксированного</text>
-    <text x="24" y="230" font-size="13.5" fill="#64748b">размера — тоже for.</text>
-    <text x="24" y="262" font-size="13" fill="#94a3b8">⚠️ Ошибёшься в числе — выедешь за стену.</text>
+    <rect x="0" y="0" width="420" height="320" rx="14" fill="#fff" stroke="#0d9488" stroke-width="2"/>
+    <text x="210" y="28" font-size="17" font-weight="800" fill="#0d9488" text-anchor="middle">Одно задание «ряд вправо» — 3 запуска</text>
+
+    <!-- запуск 1: старт col2, мусор 3..9, стена — край -->
+    <text x="26" y="72" font-size="14" font-weight="700" fill="#334155">1)</text>
+    <rect x="56" y="52" width="300" height="30" fill="#fff" stroke="#cbd5e1" stroke-width="1.5"/>
+    <line x1="86" y1="52" x2="86" y2="82" stroke="#eef2f7"/><line x1="116" y1="52" x2="116" y2="82" stroke="#eef2f7"/><line x1="146" y1="52" x2="146" y2="82" stroke="#eef2f7"/><line x1="176" y1="52" x2="176" y2="82" stroke="#eef2f7"/><line x1="206" y1="52" x2="206" y2="82" stroke="#eef2f7"/><line x1="236" y1="52" x2="236" y2="82" stroke="#eef2f7"/><line x1="266" y1="52" x2="266" y2="82" stroke="#eef2f7"/><line x1="296" y1="52" x2="296" y2="82" stroke="#eef2f7"/><line x1="326" y1="52" x2="326" y2="82" stroke="#eef2f7"/>
+    <circle cx="131" cy="67" r="6" fill="#b0b0b0"/><circle cx="161" cy="67" r="6" fill="#b0b0b0"/><circle cx="191" cy="67" r="6" fill="#b0b0b0"/><circle cx="221" cy="67" r="6" fill="#b0b0b0"/><circle cx="251" cy="67" r="6" fill="#b0b0b0"/><circle cx="281" cy="67" r="6" fill="#b0b0b0"/><circle cx="311" cy="67" r="6" fill="#b0b0b0"/><circle cx="341" cy="67" r="6" fill="#b0b0b0"/>
+    <circle cx="101" cy="67" r="11" fill="#a855f7" stroke="#6b21a8" stroke-width="2"/>
+
+    <!-- запуск 2: старт col0, стена внутри col6, мусор 1..5 -->
+    <text x="26" y="148" font-size="14" font-weight="700" fill="#334155">2)</text>
+    <rect x="56" y="128" width="300" height="30" fill="#fff" stroke="#cbd5e1" stroke-width="1.5"/>
+    <line x1="86" y1="128" x2="86" y2="158" stroke="#eef2f7"/><line x1="116" y1="128" x2="116" y2="158" stroke="#eef2f7"/><line x1="146" y1="128" x2="146" y2="158" stroke="#eef2f7"/><line x1="176" y1="128" x2="176" y2="158" stroke="#eef2f7"/><line x1="206" y1="128" x2="206" y2="158" stroke="#eef2f7"/><line x1="266" y1="128" x2="266" y2="158" stroke="#eef2f7"/><line x1="296" y1="128" x2="296" y2="158" stroke="#eef2f7"/><line x1="326" y1="128" x2="326" y2="158" stroke="#eef2f7"/>
+    <rect x="236" y="128" width="30" height="30" fill="#4b5563"/>
+    <circle cx="101" cy="143" r="6" fill="#b0b0b0"/><circle cx="131" cy="143" r="6" fill="#b0b0b0"/><circle cx="161" cy="143" r="6" fill="#b0b0b0"/><circle cx="191" cy="143" r="6" fill="#b0b0b0"/><circle cx="221" cy="143" r="6" fill="#b0b0b0"/>
+    <circle cx="71" cy="143" r="11" fill="#a855f7" stroke="#6b21a8" stroke-width="2"/>
+
+    <!-- запуск 3: старт col0, стена внутри col5, мусор 1..4 -->
+    <text x="26" y="224" font-size="14" font-weight="700" fill="#334155">3)</text>
+    <rect x="56" y="204" width="300" height="30" fill="#fff" stroke="#cbd5e1" stroke-width="1.5"/>
+    <line x1="86" y1="204" x2="86" y2="234" stroke="#eef2f7"/><line x1="116" y1="204" x2="116" y2="234" stroke="#eef2f7"/><line x1="146" y1="204" x2="146" y2="234" stroke="#eef2f7"/><line x1="176" y1="204" x2="176" y2="234" stroke="#eef2f7"/><line x1="236" y1="204" x2="236" y2="234" stroke="#eef2f7"/><line x1="266" y1="204" x2="266" y2="234" stroke="#eef2f7"/><line x1="296" y1="204" x2="296" y2="234" stroke="#eef2f7"/><line x1="326" y1="204" x2="326" y2="234" stroke="#eef2f7"/>
+    <rect x="206" y="204" width="30" height="30" fill="#4b5563"/>
+    <circle cx="101" cy="219" r="6" fill="#b0b0b0"/><circle cx="131" cy="219" r="6" fill="#b0b0b0"/><circle cx="161" cy="219" r="6" fill="#b0b0b0"/><circle cx="191" cy="219" r="6" fill="#b0b0b0"/>
+    <circle cx="71" cy="219" r="11" fill="#a855f7" stroke="#6b21a8" stroke-width="2"/>
+
+    <text x="26" y="266" font-size="13" fill="#64748b">Старт, длина мусора и стены — каждый раз на новом месте.</text>
+    <!-- легенда -->
+    <circle cx="36" cy="292" r="8" fill="#a855f7" stroke="#6b21a8" stroke-width="2"/>
+    <text x="50" y="297" font-size="12.5" fill="#475569">пылесос</text>
+    <circle cx="140" cy="292" r="6" fill="#b0b0b0"/>
+    <text x="152" y="297" font-size="12.5" fill="#475569">мусор</text>
+    <rect x="224" y="285" width="14" height="14" fill="#4b5563"/>
+    <text x="244" y="297" font-size="12.5" fill="#475569">стена</text>
   </g>
 
-  <!-- WHILE panel -->
-  <g transform="translate(410,84)">
-    <rect x="0" y="0" width="350" height="280" rx="14" fill="#fff" stroke="#7c3aed" stroke-width="2"/>
-    <text x="175" y="30" font-size="17" font-weight="800" fill="#7c3aed" text-anchor="middle">while — длина НЕизвестна</text>
-    <text x="24" y="62" font-size="14" fill="#334155">«Вправо, ПОКА не упрёшься в стену»</text>
-    <rect x="20" y="76" width="310" height="80" rx="10" fill="#0f172a"/>
-    <text x="38" y="104" font-size="15" font-family="monospace" fill="#c4b5fd">while not wall_right:</text>
-    <text x="70" y="128" font-size="15" font-family="monospace" fill="#e2e8f0">right()</text>
-    <text x="70" y="148" font-size="15" font-family="monospace" fill="#e2e8f0">clean()</text>
-    <text x="24" y="186" font-size="13.5" fill="#64748b">Едешь, пока сенсор не скажет «стена».</text>
-    <text x="24" y="212" font-size="13.5" fill="#64748b">Не нужно считать клетки — сам</text>
-    <text x="24" y="230" font-size="13.5" fill="#64748b">остановишься у стены.</text>
-    <text x="24" y="262" font-size="13" fill="#94a3b8">✅ Работает в комнате любой ширины.</text>
+  <!-- RIGHT: два способа -->
+  <g transform="translate(480,84)">
+    <text x="150" y="22" font-size="16" font-weight="800" fill="#334155" text-anchor="middle">Два способа — один верный</text>
+
+    <!-- for -->
+    <rect x="0" y="34" width="300" height="118" rx="12" fill="#fff" stroke="#dc2626" stroke-width="2"/>
+    <rect x="16" y="50" width="268" height="30" rx="7" fill="#0f172a"/>
+    <text x="30" y="71" font-size="15" font-family="monospace" fill="#fca5a5">for i in range(9):</text>
+    <text x="20" y="102" font-size="13.5" fill="#b91c1c">✕ число 9 подходит не всякой комнате:</text>
+    <text x="20" y="122" font-size="13.5" fill="#b91c1c">узкая — врежется в стену,</text>
+    <text x="20" y="142" font-size="13.5" fill="#b91c1c">широкая — не доедет до конца.</text>
+
+    <!-- while -->
+    <rect x="0" y="170" width="300" height="118" rx="12" fill="#fff" stroke="#0d9488" stroke-width="2"/>
+    <rect x="16" y="186" width="268" height="30" rx="7" fill="#0f172a"/>
+    <text x="30" y="207" font-size="15" font-family="monospace" fill="#5eead4">while not wall_right:</text>
+    <text x="20" y="238" font-size="13.5" fill="#0f766e">✓ едет до стены и сам</text>
+    <text x="20" y="258" font-size="13.5" fill="#0f766e">останавливается — верно в</text>
+    <text x="20" y="278" font-size="13.5" fill="#0f766e">любой комнате (и у внутр. стены).</text>
   </g>
+
+  <text x="410" y="430" font-size="13" font-style="italic" fill="#0d9488" text-anchor="middle">💡 Длину угадать нельзя — спроси у сенсора «есть ли стена?» и едь, пока её нет.</text>
 </svg>
