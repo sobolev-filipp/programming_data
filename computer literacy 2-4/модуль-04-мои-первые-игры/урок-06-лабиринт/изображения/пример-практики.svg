@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 300" font-family="'Segoe UI',system-ui,sans-serif">
+  <rect x="0" y="0" width="640" height="300" fill="#f5f7fb"/>
+  <text x="320" y="30" font-size="20" font-weight="800" fill="#1f2937" text-anchor="middle">🧩 Примеры своего лабиринта — а лабиринт у тебя свой!</text>
+  <text x="320" y="52" font-size="13" fill="#64748b" text-anchor="middle">Нарисуй стены, веди героя стрелками к выходу</text>
+
+  <!-- panel 1: mouse -->
+  <g transform="translate(20,70)">
+    <rect x="0" y="0" width="195" height="200" rx="12" fill="#6b4a2a"/>
+    <path d="M30 170 L30 60 L150 60 L150 150" fill="none" stroke="#f0e2cf" stroke-width="18" stroke-linecap="round"/>
+    <circle cx="30" cy="170" r="9" fill="#9aa0a6"/><text x="150" y="150" font-size="20" text-anchor="middle">🧀</text>
+    <text x="97" y="192" font-size="12" font-weight="700" fill="#fff" text-anchor="middle">🐭 Мышка к сыру</text>
+  </g>
+
+  <!-- panel 2: robot -->
+  <g transform="translate(228,70)">
+    <rect x="0" y="0" width="185" height="200" rx="12" fill="#2b3b6b"/>
+    <path d="M28 165 L28 50 L95 50 L95 120 L145 120" fill="none" stroke="#cfe0ff" stroke-width="16" stroke-linecap="round"/>
+    <text x="28" y="172" font-size="20" text-anchor="middle">🤖</text><circle cx="145" cy="120" r="9" fill="#37c871"/>
+    <text x="92" y="192" font-size="12" font-weight="700" fill="#fff" text-anchor="middle">🤖 Робот на базу</text>
+  </g>
+
+  <!-- panel 3: fish -->
+  <g transform="translate(426,70)">
+    <rect x="0" y="0" width="194" height="200" rx="12" fill="#1f6b6b"/>
+    <path d="M30 60 L30 160 L140 160 L140 70" fill="none" stroke="#d8fff7" stroke-width="18" stroke-linecap="round"/>
+    <text x="30" y="68" font-size="20" text-anchor="middle">🐠</text><circle cx="140" cy="70" r="9" fill="#ffd23f"/>
+    <text x="97" y="192" font-size="12" font-weight="700" fill="#fff" text-anchor="middle">🐠 Рыбка из рифа</text>
+  </g>
+</svg>

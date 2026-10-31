@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 360" font-family="'Segoe UI',system-ui,sans-serif">
+  <rect x="0" y="0" width="720" height="360" fill="#f7f9fc"/>
+  <text x="24" y="30" font-size="20" font-weight="800" fill="#1f2937">🧩 Итоговая схема — игра «Лабиринт»</text>
+  <text x="24" y="52" font-size="13" fill="#64748b">Управление стрелками + «касается цвета» для стен и выхода.</text>
+
+  <!-- arrows -->
+  <text x="24" y="80" font-size="13" font-weight="700" fill="#334155">🎮 Управление (4 скрипта)</text>
+  <g font-size="12" font-weight="700" fill="#ffffff">
+    <path d="M24 90 q0 -9 9 -9 l56 0 q5 5 10 0 l20 0 q9 0 9 9 l0 16 l-104 0 z" fill="#f5b800"/>
+    <text x="33" y="103" fill="#3d2f00">когда ↑ нажата</text>
+    <rect x="24" y="106" width="128" height="24" rx="6" fill="#4c97ff"/><text x="32" y="122">изменить y на 8</text>
+    <path d="M172 90 q0 -9 9 -9 l56 0 q5 5 10 0 l20 0 q9 0 9 9 l0 16 l-104 0 z" fill="#f5b800"/>
+    <text x="181" y="103" fill="#3d2f00">когда → нажата</text>
+    <rect x="172" y="106" width="128" height="24" rx="6" fill="#4c97ff"/><text x="180" y="122">изменить x на 8</text>
+    <text x="24" y="150" font-size="11" fill="#94a3b8" font-weight="500">…и так ↓ (y -8) и ← (x -8)</text>
+  </g>
+
+  <!-- walls/exit -->
+  <text x="360" y="80" font-size="13" font-weight="700" fill="#334155">🧱 Стены и выход (по цвету)</text>
+  <g font-size="12" font-weight="700" fill="#ffffff">
+    <path d="M360 90 q0 -9 9 -9 l50 0 q5 5 10 0 l56 0 q9 0 9 9 l0 16 l-134 0 z" fill="#f5b800"/>
+    <text x="369" y="103" fill="#3d2f00">когда 🚩 нажат</text>
+    <rect x="360" y="106" width="300" height="24" rx="6" fill="#4c97ff"/><text x="368" y="122" font-size="11">перейти в x:(старт) y:(старт)</text>
+    <rect x="360" y="130" width="300" height="24" rx="6" fill="#ff8c1a"/><text x="368" y="146">всегда</text>
+    <rect x="360" y="154" width="12" height="130" fill="#ff8c1a"/>
+    <!-- if wall -->
+    <rect x="374" y="156" width="286" height="56" rx="6" fill="#59c059"/>
+    <text x="382" y="172" font-size="11">если &lt;касается цвета 🟦 синий?&gt; то</text>
+    <rect x="388" y="178" width="264" height="28" rx="4" fill="#4c97ff"/><text x="394" y="196" font-size="10">говорить «Ой!» · перейти в начало</text>
+    <!-- if exit -->
+    <rect x="374" y="216" width="286" height="56" rx="6" fill="#59c059"/>
+    <text x="382" y="232" font-size="11">если &lt;касается цвета 🟡 золотой?&gt; то</text>
+    <rect x="388" y="238" width="264" height="28" rx="4" fill="#9966ff"/><text x="394" y="256" font-size="10">говорить «Победа! 🎉» · остановить всё</text>
+    <rect x="360" y="276" width="300" height="12" rx="6" fill="#ff8c1a"/>
+  </g>
+
+  <!-- legend -->
+  <g font-size="11.5" font-weight="600" fill="#475569" transform="translate(24,172)">
+    <text x="0" y="0" font-weight="700" fill="#334155">Цвета:</text>
+    <rect x="0" y="10" width="14" height="14" rx="3" fill="#f5b800"/><text x="19" y="21">События</text>
+    <rect x="0" y="30" width="14" height="14" rx="3" fill="#4c97ff"/><text x="19" y="41">Движение</text>
+    <rect x="0" y="50" width="14" height="14" rx="3" fill="#ff8c1a"/><text x="19" y="61">Управление</text>
+    <rect x="0" y="70" width="14" height="14" rx="3" fill="#59c059"/><text x="19" y="81">Сенсоры/если</text>
+    <rect x="0" y="90" width="14" height="14" rx="3" fill="#9966ff"/><text x="19" y="101">Внешний вид</text>
+  </g>
+
+  <text x="24" y="330" font-size="12" fill="#94a3b8">💡 Фон-лабиринт рисуем сами; стены/выход узнаём «касается цвета». ⚠️ Стены потолще, цвет — пипеткой. 🔇 Надписью.</text>
+</svg>

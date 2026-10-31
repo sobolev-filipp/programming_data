@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Игра — Лабиринт</title>
+<style>
+  :root{--ink:#1f2a52;--yellow:#ffd23f;--blue:#4c97ff;--green:#4cbb5c;--red:#ff6b6b;}
+  *{box-sizing:border-box;font-family:'Comic Sans MS','Segoe UI',system-ui,sans-serif;margin:0;padding:0;}
+  body{min-height:100vh;background:linear-gradient(135deg,#4c97ff,#9966ff);display:flex;align-items:center;justify-content:center;padding:14px;color:var(--ink);}
+  .wrap{width:min(640px,100%);background:#fff;border-radius:26px;box-shadow:0 18px 50px rgba(0,0,0,.3);padding:18px 20px 22px;position:relative;overflow:hidden;}
+  h1{text-align:center;color:#3a52c6;font-size:27px;margin:2px 0;}
+  .sub{text-align:center;color:#7a86a8;font-size:16px;margin-bottom:10px;}
+  .hud{display:flex;justify-content:space-around;align-items:center;background:#eef2ff;border-radius:16px;padding:8px 10px;font-size:19px;font-weight:bold;margin-bottom:10px;}
+  .stage{position:relative;width:100%;aspect-ratio:15/11;background:#12205a;border-radius:14px;overflow:hidden;}
+  .wall{position:absolute;background:#3f5bd6;}
+  #exit{position:absolute;background:radial-gradient(circle,#ffe88a,#ffd23f);border-radius:50%;}
+  #dot{position:absolute;background:radial-gradient(circle at 35% 30%,#ffd0a0,#ff8c42);border-radius:50%;z-index:3;transition:left .07s, top .07s;}
+  .controls{display:flex;flex-direction:column;align-items:center;gap:6px;margin-top:10px;}
+  .row{display:flex;gap:8px;}
+  .ctrl{background:var(--blue);color:#fff;border:none;border-radius:12px;font-size:22px;width:56px;height:44px;cursor:pointer;box-shadow:0 4px 0 rgba(0,0,0,.18);}
+  .ctrl:active{transform:translateY(3px);box-shadow:0 1px 0 rgba(0,0,0,.18);}
+  .msg{text-align:center;font-size:19px;font-weight:bold;min-height:26px;margin-top:8px;color:var(--ink);}
+  .start{background:var(--yellow);color:#6b4e00;border:none;border-radius:16px;padding:16px 30px;font-size:24px;font-weight:bold;cursor:pointer;display:block;margin:14px auto;}
+  .hint{text-align:center;color:#9aa4bf;font-size:14px;margin-top:10px;}
+  .stars{font-size:48px;text-align:center;letter-spacing:4px;}
+  .hidden{display:none !important;}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>🧩 Лабиринт</h1>
+
+  <div id="intro">
+    <p class="sub">Проведи огонёк 🔥 стрелками ← ↑ ↓ → к выходу 🚪. Сколько лабиринтов пройдёшь за минуту?</p>
+    <button class="start" onclick="startGame()">▶ Играть!</button>
+    <p class="hint">Клавиши-стрелки или кнопки внизу. В стену не пройдёшь — ищи путь!</p>
+  </div>
+
+  <div id="game" class="hidden">
+    <div class="hud">
+      <span>🏆 <b id="score">0</b></span>
+      <span>⏱ <b id="time">60</b></span>
+    </div>
+    <div class="stage" id="stage"></div>
+    <div class="controls">
+      <div class="row"><button class="ctrl" onclick="move(0,-1)">↑</button></div>
+      <div class="row"><button class="ctrl" onclick="move(-1,0)">←</button><button class="ctrl" onclick="move(0,1)">↓</button><button class="ctrl" onclick="move(1,0)">→</button></div>
+    </div>
+    <div class="msg" id="msg"></div>
+  </div>
+
+  <div id="over" class="hidden">
+    <h1>Время вышло! 🎉</h1>
+    <div class="stars" id="starsres"></div>
+    <p class="sub" id="finalscore"></p>
+    <p class="sub" id="praise"></p>
+    <button class="start" onclick="location.reload()">↺ Ещё разок</button>
+  </div>
+</div>
+
+<script>
+const COLS=15, ROWS=11;
+let state='intro', score=0, timeLeft=60;
+let grid=[], dc=1, dr=1, cell=20, timerId=0;
+
+// --- maze generator (recursive backtracker) ---
+function genMaze(){
+  grid=[]; for(let r=0;r<ROWS;r++){ grid.push(new Array(COLS).fill(1)); }
+  function carve(r,c){
+    grid[r][c]=0;
+    const dirs=[[0,-2],[0,2],[-2,0],[2,0]];
+    for(let i=dirs.length-1;i>0;i--){ const j=Math.random()*(i+1)|0; [dirs[i],dirs[j]]=[dirs[j],dirs[i]]; }
+    for(const [dr2,dc2] of dirs){
+      const nr=r+dr2, nc=c+dc2;
+      if(nr>0&&nr<ROWS-1&&nc>0&&nc<COLS-1&&grid[nr][nc]===1){
+        grid[r+dr2/2][c+dc2/2]=0; carve(nr,nc);
+      }
+    }
+  }
+  carve(1,1);
+  grid[1][1]=0; grid[ROWS-2][COLS-2]=0;
+}
+
+function render(){
+  const s=document.getElementById('stage'); s.innerHTML='';
+  const w=s.clientWidth||450, h=s.clientHeight||330;
+  cell=Math.min(w/COLS, h/ROWS);
+  for(let r=0;r<ROWS;r++) for(let c=0;c<COLS;c++){
+    if(grid[r][c]===1){ const d=document.createElement('div'); d.className='wall';
+      d.style.left=(c*cell)+'px'; d.style.top=(r*cell)+'px'; d.style.width=Math.ceil(cell)+'px'; d.style.height=Math.ceil(cell)+'px';
+      s.appendChild(d); }
+  }
+  const ex=document.createElement('div'); ex.id='exit';
+  ex.style.left=((COLS-2)*cell+cell*0.15)+'px'; ex.style.top=((ROWS-2)*cell+cell*0.15)+'px';
+  ex.style.width=(cell*0.7)+'px'; ex.style.height=(cell*0.7)+'px'; s.appendChild(ex);
+  const dot=document.createElement('div'); dot.id='dot'; s.appendChild(dot);
+  placeDot();
+}
+function placeDot(){
+  const dot=document.getElementById('dot'); if(!dot) return;
+  dot.style.width=(cell*0.66)+'px'; dot.style.height=(cell*0.66)+'px';
+  dot.style.left=(dc*cell+cell*0.17)+'px'; dot.style.top=(dr*cell+cell*0.17)+'px';
+}
+
+function newMaze(){ genMaze(); dr=1; dc=1; render(); }
+
+function startGame(){
+  score=0; timeLeft=60; state='play';
+  document.getElementById('intro').classList.add('hidden');
+  document.getElementById('game').classList.remove('hidden');
+  document.getElementById('score').textContent=0;
+  document.getElementById('time').textContent=60;
+  newMaze();
+  timerId=setInterval(tick,1000);
+}
+function tick(){
+  if(state!=='play') return;
+  timeLeft--; document.getElementById('time').textContent=timeLeft;
+  if(timeLeft<=0) gameOver();
+}
+
+function move(ddc,ddr){
+  if(state!=='play') return;
+  const nr=dr+ddr, nc=dc+ddc;
+  if(nr<0||nr>=ROWS||nc<0||nc>=COLS) return;
+  if(grid[nr][nc]===1) return;  // wall blocks
+  dr=nr; dc=nc; placeDot();
+  if(dr===ROWS-2 && dc===COLS-2){
+    score++; document.getElementById('score').textContent=score;
+    document.getElementById('msg').textContent='🚪 Выход! +1 — новый лабиринт!';
+    newMaze();
+  }
+}
+
+function gameOver(){
+  state='over'; clearInterval(timerId);
+  document.getElementById('game').classList.add('hidden');
+  document.getElementById('over').classList.remove('hidden');
+  let st = score>=8?5 : score>=5?4 : score>=3?3 : score>=1?2 : 1;
+  document.getElementById('starsres').textContent='⭐'.repeat(st)+'☆'.repeat(5-st);
+  document.getElementById('finalscore').textContent='Пройдено лабиринтов: '+score;
+  document.getElementById('praise').textContent = score>=5?'Ты мастер лабиринтов! 🏆' : score>=2?'Отлично находишь путь! 👏' : 'Молодец, тренируйся ещё! 💪';
+}
+
+document.addEventListener('keydown',e=>{
+  if(state!=='play') return;
+  if(e.key==='ArrowUp'){ move(0,-1); e.preventDefault(); }
+  if(e.key==='ArrowDown'){ move(0,1); e.preventDefault(); }
+  if(e.key==='ArrowLeft'){ move(-1,0); e.preventDefault(); }
+  if(e.key==='ArrowRight'){ move(1,0); e.preventDefault(); }
+});
+</script>
+</body>
+</html>
