@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Игра — Яблокопад</title>
+<style>
+  :root{--ink:#1f2a52;--yellow:#ffd23f;--blue:#4c97ff;--green:#4cbb5c;--red:#ff6b6b;}
+  *{box-sizing:border-box;font-family:'Comic Sans MS','Segoe UI',system-ui,sans-serif;margin:0;padding:0;}
+  body{min-height:100vh;background:linear-gradient(135deg,#4cbb5c,#4c97ff);display:flex;align-items:center;justify-content:center;padding:14px;color:var(--ink);}
+  .wrap{width:min(760px,100%);background:#fff;border-radius:26px;box-shadow:0 18px 50px rgba(0,0,0,.3);padding:18px 20px 22px;position:relative;overflow:hidden;}
+  h1{text-align:center;color:#2e9e52;font-size:27px;margin:2px 0;}
+  .sub{text-align:center;color:#7a86a8;font-size:16px;margin-bottom:10px;}
+  .hud{display:flex;justify-content:space-around;align-items:center;background:#eafbe8;border-radius:16px;padding:8px 10px;font-size:19px;font-weight:bold;margin-bottom:10px;}
+  .stage{position:relative;height:360px;background:linear-gradient(#bfe3ff,#eaf7df);border-radius:16px;overflow:hidden;border:3px solid #cfe3ff;}
+  .ground{position:absolute;left:0;right:0;bottom:0;height:26px;background:#8fd16a;}
+  .item{position:absolute;font-size:40px;transform:translate(-50%,-50%);cursor:pointer;user-select:none;will-change:top;}
+  .msg{text-align:center;font-size:19px;font-weight:bold;min-height:26px;margin-top:8px;color:var(--ink);}
+  .start{background:var(--yellow);color:#6b4e00;border:none;border-radius:16px;padding:16px 30px;font-size:24px;font-weight:bold;cursor:pointer;display:block;margin:14px auto;}
+  .hint{text-align:center;color:#9aa4bf;font-size:14px;margin-top:10px;}
+  .stars{font-size:48px;text-align:center;letter-spacing:4px;}
+  .stage.flash{animation:flash .35s;}
+  @keyframes flash{0%,100%{filter:none}50%{background:#ffd0d0}}
+  .hidden{display:none !important;}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>🍎 Яблокопад</h1>
+
+  <div id="intro">
+    <p class="sub">Кликай по спелым яблокам 🍎 (+1), но НЕ кликай червивые 🐛 (−жизнь)! Лови хорошее, пропускай плохое.</p>
+    <button class="start" onclick="startGame()">▶ Играть!</button>
+    <p class="hint">Жми по яблокам мышкой. 3 жизни, игра разгоняется!</p>
+  </div>
+
+  <div id="game" class="hidden">
+    <div class="hud">
+      <span>🍎 <b id="score">0</b></span>
+      <span id="lives">❤️❤️❤️</span>
+    </div>
+    <div class="stage" id="stage"><div class="ground"></div></div>
+    <div class="msg" id="msg"></div>
+  </div>
+
+  <div id="over" class="hidden">
+    <h1>Игра окончена! 🎉</h1>
+    <div class="stars" id="starsres"></div>
+    <p class="sub" id="finalscore"></p>
+    <p class="sub" id="praise"></p>
+    <button class="start" onclick="location.reload()">↺ Ещё разок</button>
+  </div>
+</div>
+
+<script>
+let state='intro', score=0, lives=3;
+let stageW=0, stageH=0, items=[], last=0, spawnT=0, elapsed=0, rafId=0;
+
+function stage(){ return document.getElementById('stage'); }
+
+function startGame(){
+  score=0; lives=3; items=[]; elapsed=0; spawnT=0; last=0;
+  document.getElementById('intro').classList.add('hidden');
+  document.getElementById('game').classList.remove('hidden');
+  const s=stage(); stageW=s.clientWidth; stageH=s.clientHeight;
+  updateHud();
+  state='play';
+  rafId=requestAnimationFrame(loop);
+}
+function updateHud(){
+  document.getElementById('score').textContent=score;
+  document.getElementById('lives').textContent='❤️'.repeat(lives)+'🖤'.repeat(Math.max(0,3-lives));
+}
+function flashMsg(t){ document.getElementById('msg').textContent=t; }
+
+function spawn(){
+  const isWorm = Math.random() < Math.min(0.32, 0.15+elapsed/70000);
+  const el=document.createElement('div');
+  el.className='item'; el.textContent=isWorm?'🐛':'🍎';
+  const x=24+Math.random()*(stageW-48);
+  el.style.left=x+'px'; el.style.top='-20px';
+  const it={el,x,y:-20,type:isWorm?'worm':'apple',speed:0.09+elapsed/120000+Math.random()*0.03,done:false};
+  el.onclick=()=>clickItem(it);
+  stage().appendChild(el);
+  items.push(it);
+}
+
+function clickItem(it){
+  if(state!=='play'||it.done) return;
+  it.done=true;
+  if(it.type==='apple'){ score++; updateHud(); flashMsg('+1 🍎'); }
+  else { loseLife('🐛 Червяк! −1 жизнь'); }
+  removeItemObj(it);
+}
+
+function loop(ts){
+  if(state!=='play'){ return; }
+  if(!last) last=ts;
+  const dt=Math.min(50, ts-last); last=ts; elapsed+=dt;
+  spawnT-=dt;
+  const spawnEvery=Math.max(560, 1150-elapsed/120);
+  if(spawnT<=0){ spawn(); spawnT=spawnEvery; }
+  const groundY=stageH-30;
+  for(let i=items.length-1;i>=0;i--){
+    const it=items[i]; if(it.done){ continue; }
+    it.y += it.speed*dt; it.el.style.top=it.y+'px';
+    if(it.y>groundY){ // hit ground: apple missed (ok), worm gone (ok)
+      removeItemObj(it);
+    }
+  }
+  rafId=requestAnimationFrame(loop);
+}
+
+function removeItemObj(it){
+  const i=items.indexOf(it); if(i>=0) items.splice(i,1);
+  if(it.el&&it.el.parentNode) it.el.parentNode.removeChild(it.el);
+}
+
+function loseLife(t){
+  lives--; updateHud();
+  const s=stage(); s.classList.remove('flash'); void s.offsetWidth; s.classList.add('flash');
+  flashMsg(t||'−1 жизнь');
+  if(lives<=0) gameOver();
+}
+
+function gameOver(){
+  state='over';
+  items.slice().forEach(removeItemObj);
+  document.getElementById('game').classList.add('hidden');
+  document.getElementById('over').classList.remove('hidden');
+  let st = score>=28?5 : score>=18?4 : score>=10?3 : score>=4?2 : 1;
+  document.getElementById('starsres').textContent='⭐'.repeat(st)+'☆'.repeat(5-st);
+  document.getElementById('finalscore').textContent='Поймано яблок: '+score;
+  document.getElementById('praise').textContent = score>=18?'Ты повелитель яблок! 🏆' : score>=9?'Отличная реакция! 👏' : 'Молодец, тренируйся ещё! 💪';
+}
+</script>
+</body>
+</html>
