@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Викторина — Костюмы и анимация</title>
+<title>Викторина — Лови яблоки</title>
 <style>
   :root{--bg1:#9966ff; --bg2:#ff8c1a; --card:#ffffff; --ink:#1f2a52;
     --yellow:#ffd23f; --blue:#4c97ff; --green:#4cbb5c; --red:#ff7a7a; --soft:#f1ecfe;--purple:#9966ff;}
@@ -80,10 +80,16 @@
 
 <script>
 const QUESTIONS = [
+  { pic:"🧬", q:"Как из одного спрайта сделать много яблок?",
+    a:["Блоком «создать клон себя»","Нарисовать сто спрайтов руками"], c:0 },
+  { pic:"🐣", q:"Какой блок даёт команды копии?",
+    a:["«когда я начинаю как клон»","обычный блок «когда флажок нажат»"], c:0 },
+  { pic:"🗑️", q:"Зачем клон нужно удалять?",
+    a:["Чтобы они не копились","Чтобы сменить ему костюм"], c:0 },
   { pic:"🔀", q:"Что делает блок «если … иначе»?",
-    a:["Выбирает одно из двух","Красит сцену"], c:0 },
+    a:["Выбирает одно из двух","Красит всю сцену"], c:0 },
   { pic:"⬇️", q:"Как заставить яблоко падать?",
-    a:["«изменить y на минус» в цикле","«очистить»"], c:0 },
+    a:["«изменить y на минус» в цикле","Блоком «очистить»"], c:0 },
   { pic:"🧺", q:"Чем проверить, что яблоко в корзине?",
     a:["Блоком «касается …?»","Блоком «ждать»"], c:0 },
   { pic:"🟠", q:"Где хранятся жизни и очки?",
@@ -155,8 +161,8 @@ function showResult(){
   const starCount=Math.max(1,Math.round(correct/total*5));
   document.getElementById('stars').textContent='⭐'.repeat(starCount)+'☆'.repeat(5-starCount);
   document.getElementById('score').textContent='Правильных ответов: '+correct+' из '+total;
-  let praise = correct===total ? 'Идеально! Ты мастер анимации! 🏆'
-            : correct>=total*0.6 ? 'Здорово! Ты отлично понял костюмы! 👏'
+  let praise = correct===total ? 'Идеально! Ты повелитель клонов! 🏆'
+            : correct>=total*0.6 ? 'Здорово! Ты отлично понял клоны! 👏'
             : 'Молодец, что старался! В следующий раз будет ещё лучше! 💪';
   document.getElementById('praise').textContent=praise;
 }
