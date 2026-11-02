@@ -1,0 +1,50 @@
+<svg viewBox="0 0 780 400" xmlns="http://www.w3.org/2000/svg" font-family="'Segoe UI',system-ui,sans-serif">
+  <rect width="780" height="400" fill="#f7f9fc"/>
+  <text x="390" y="36" text-anchor="middle" font-size="23" font-weight="700" fill="#1f2937">Как сосчитать пропуски: isna() → sum()</text>
+  <text x="390" y="60" text-anchor="middle" font-size="14.5" fill="#64748b">NaN = «здесь нет данных». isna() ставит галочку True, sum() их складывает</text>
+
+  <!-- column age -->
+  <text x="110" y="92" text-anchor="middle" font-size="13.5" font-weight="700" fill="#475569">столбец age</text>
+  <g font-size="14">
+    <rect x="55" y="100" width="45" height="30" fill="#f1f5f9" stroke="#94a3b8"/><rect x="100" y="100" width="75" height="30" fill="#e0e7ff" stroke="#4f46e5"/>
+    <text x="77" y="120" text-anchor="middle" font-weight="700" fill="#475569" font-size="12">idx</text><text x="137" y="120" text-anchor="middle" font-weight="700" fill="#4338ca">age</text>
+    <g fill="#1f2937">
+      <rect x="55" y="130" width="45" height="28" fill="#f8fafc" stroke="#e2e8f0"/><rect x="100" y="130" width="75" height="28" fill="#fff" stroke="#e2e8f0"/><text x="77" y="149" text-anchor="middle" font-weight="700" fill="#475569">0</text><text x="137" y="149" text-anchor="middle">22</text>
+      <rect x="55" y="158" width="45" height="28" fill="#f8fafc" stroke="#e2e8f0"/><rect x="100" y="158" width="75" height="28" fill="#fef9c3" stroke="#eab308" stroke-width="2"/><text x="77" y="177" text-anchor="middle" font-weight="700" fill="#475569">1</text><text x="137" y="177" text-anchor="middle" fill="#a16207" font-weight="700">NaN</text>
+      <rect x="55" y="186" width="45" height="28" fill="#f8fafc" stroke="#e2e8f0"/><rect x="100" y="186" width="75" height="28" fill="#fff" stroke="#e2e8f0"/><text x="77" y="205" text-anchor="middle" font-weight="700" fill="#475569">2</text><text x="137" y="205" text-anchor="middle">16</text>
+      <rect x="55" y="214" width="45" height="28" fill="#f8fafc" stroke="#e2e8f0"/><rect x="100" y="214" width="75" height="28" fill="#fef9c3" stroke="#eab308" stroke-width="2"/><text x="77" y="233" text-anchor="middle" font-weight="700" fill="#475569">3</text><text x="137" y="233" text-anchor="middle" fill="#a16207" font-weight="700">NaN</text>
+    </g>
+  </g>
+
+  <path d="M185 185 L235 185" stroke="#4f46e5" stroke-width="3" marker-end="url(#n)"/>
+  <defs><marker id="n" markerWidth="10" markerHeight="10" refX="7" refY="3" orient="auto"><path d="M0 0 L7 3 L0 6 Z" fill="#4f46e5"/></marker></defs>
+  <text x="210" y="175" text-anchor="middle" font-size="12.5" fill="#64748b">.isna()</text>
+
+  <!-- mask -->
+  <text x="320" y="92" text-anchor="middle" font-size="13.5" font-weight="700" fill="#475569">маска: где NaN?</text>
+  <g font-size="14">
+    <rect x="245" y="100" width="45" height="30" fill="#f1f5f9" stroke="#94a3b8"/><rect x="290" y="100" width="120" height="30" fill="#fef9c3" stroke="#eab308"/>
+    <text x="267" y="120" text-anchor="middle" font-weight="700" fill="#475569" font-size="12">idx</text><text x="350" y="120" text-anchor="middle" font-weight="700" fill="#854d0e">isna()</text>
+    <rect x="245" y="130" width="45" height="28" fill="#f8fafc" stroke="#e2e8f0"/><rect x="290" y="130" width="120" height="28" fill="#fee2e2" stroke="#fca5a5"/><text x="267" y="149" text-anchor="middle" font-weight="700" fill="#475569">0</text><text x="350" y="149" text-anchor="middle" fill="#b91c1c" font-weight="700">False</text>
+    <rect x="245" y="158" width="45" height="28" fill="#f8fafc" stroke="#e2e8f0"/><rect x="290" y="158" width="120" height="28" fill="#dcfce7" stroke="#86efac"/><text x="267" y="177" text-anchor="middle" font-weight="700" fill="#475569">1</text><text x="350" y="177" text-anchor="middle" fill="#15803d" font-weight="700">True</text>
+    <rect x="245" y="186" width="45" height="28" fill="#f8fafc" stroke="#e2e8f0"/><rect x="290" y="186" width="120" height="28" fill="#fee2e2" stroke="#fca5a5"/><text x="267" y="205" text-anchor="middle" font-weight="700" fill="#475569">2</text><text x="350" y="205" text-anchor="middle" fill="#b91c1c" font-weight="700">False</text>
+    <rect x="245" y="214" width="45" height="28" fill="#f8fafc" stroke="#e2e8f0"/><rect x="290" y="214" width="120" height="28" fill="#dcfce7" stroke="#86efac"/><text x="267" y="233" text-anchor="middle" font-weight="700" fill="#475569">3</text><text x="350" y="233" text-anchor="middle" fill="#15803d" font-weight="700">True</text>
+  </g>
+
+  <path d="M420 185 L470 185" stroke="#4f46e5" stroke-width="3" marker-end="url(#n)"/>
+  <text x="445" y="175" text-anchor="middle" font-size="12.5" fill="#64748b">.sum()</text>
+
+  <!-- count -->
+  <text x="575" y="92" text-anchor="middle" font-size="13.5" font-weight="700" fill="#15803d">сколько пропусков</text>
+  <rect x="490" y="150" width="170" height="70" rx="12" fill="#dcfce7" stroke="#16a34a" stroke-width="2.5"/>
+  <text x="575" y="180" text-anchor="middle" font-size="16" fill="#15803d">True=1, False=0</text>
+  <text x="575" y="208" text-anchor="middle" font-size="20" font-weight="800" fill="#15803d">→ 2 пропуска</text>
+
+  <!-- code + tip -->
+  <rect x="55" y="266" width="605" height="46" rx="8" fill="#0f172a"/>
+  <text x="70" y="295" font-size="15" font-family="monospace" fill="#e2e8f0">df['age'].isna().sum()   <tspan fill="#86efac"># 2</tspan>      df.isna().sum()  <tspan fill="#86efac"># по всем столбцам сразу</tspan></text>
+
+  <rect x="55" y="324" width="605" height="60" rx="10" fill="#fef9c3" stroke="#eab308" stroke-width="2"/>
+  <text x="75" y="349" font-size="14" fill="#854d0e"><tspan font-weight="700">💡 Фокус:</tspan> True считается как 1, а False как 0 — поэтому сумма галочек = число пропусков.</text>
+  <text x="75" y="372" font-size="13.5" fill="#854d0e">🎯 Зачем: сразу видно, какие столбцы «дырявые» и что с ними решать — чинить или убирать.</text>
+</svg>

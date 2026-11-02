@@ -1,0 +1,47 @@
+<svg viewBox="0 0 780 470" xmlns="http://www.w3.org/2000/svg" font-family="'Segoe UI',system-ui,sans-serif">
+  <rect width="780" height="470" fill="#f7f9fc"/>
+  <text x="390" y="36" text-anchor="middle" font-size="23" font-weight="700" fill="#1f2937">Пропуски: удалить или заполнить?</text>
+  <text x="390" y="60" text-anchor="middle" font-size="14.5" fill="#64748b">главное решение урока — зависит от того, СКОЛЬКО пропусков и ВАЖЕН ли столбец</text>
+
+  <!-- start -->
+  <rect x="300" y="82" width="180" height="46" rx="12" fill="#e0e7ff" stroke="#4f46e5" stroke-width="2.5"/>
+  <text x="390" y="104" text-anchor="middle" font-size="14" font-weight="700" fill="#4338ca">Смотрим долю пропусков</text>
+  <text x="390" y="122" text-anchor="middle" font-size="12.5" fill="#4338ca">df.isna().sum() / len(df)</text>
+
+  <!-- three branches -->
+  <path d="M340 128 L150 165" stroke="#94a3b8" stroke-width="2"/>
+  <path d="M390 128 L390 165" stroke="#94a3b8" stroke-width="2"/>
+  <path d="M440 128 L630 165" stroke="#94a3b8" stroke-width="2"/>
+
+  <!-- branch 1: few -->
+  <rect x="35" y="168" width="230" height="110" rx="12" fill="#dcfce7" stroke="#16a34a" stroke-width="2"/>
+  <text x="150" y="192" text-anchor="middle" font-size="14" font-weight="700" fill="#15803d">Пропусков МАЛО</text>
+  <text x="150" y="210" text-anchor="middle" font-size="12.5" fill="#166534">(пара строк, напр. 0.2%)</text>
+  <text x="150" y="234" text-anchor="middle" font-size="12.5" fill="#166534">→ удалить ЭТИ строки</text>
+  <text x="150" y="258" text-anchor="middle" font-size="13" font-family="monospace" fill="#15803d">dropna(subset=['col'])</text>
+
+  <!-- branch 2: medium -->
+  <rect x="275" y="168" width="230" height="110" rx="12" fill="#fef9c3" stroke="#eab308" stroke-width="2"/>
+  <text x="390" y="192" text-anchor="middle" font-size="14" font-weight="700" fill="#a16207">Пропусков СРЕДНЕ</text>
+  <text x="390" y="210" text-anchor="middle" font-size="12.5" fill="#854d0e">(напр. 20%, столбец важен)</text>
+  <text x="390" y="234" text-anchor="middle" font-size="12.5" fill="#854d0e">→ ЗАПОЛНИТЬ значением</text>
+  <text x="390" y="258" text-anchor="middle" font-size="13" font-family="monospace" fill="#a16207">fillna(медиана / мода)</text>
+
+  <!-- branch 3: many -->
+  <rect x="515" y="168" width="230" height="110" rx="12" fill="#fee2e2" stroke="#dc2626" stroke-width="2"/>
+  <text x="630" y="192" text-anchor="middle" font-size="14" font-weight="700" fill="#b91c1c">Пропусков ОЧЕНЬ МНОГО</text>
+  <text x="630" y="210" text-anchor="middle" font-size="12.5" fill="#991b1b">(напр. 77% — толку мало)</text>
+  <text x="630" y="234" text-anchor="middle" font-size="12.5" fill="#991b1b">→ удалить ВЕСЬ столбец</text>
+  <text x="630" y="258" text-anchor="middle" font-size="13" font-family="monospace" fill="#b91c1c">drop(columns=['col'])</text>
+
+  <!-- warning about dropna() -->
+  <rect x="120" y="300" width="540" height="56" rx="10" fill="#fff" stroke="#dc2626" stroke-width="2"/>
+  <text x="390" y="323" text-anchor="middle" font-size="13.5" font-weight="700" fill="#b91c1c">⚠️ Просто df.dropna() (без subset) выбросит ВСЕ строки с любым пропуском!</text>
+  <text x="390" y="343" text-anchor="middle" font-size="13" fill="#991b1b">На «Титанике» так из 891 строки осталось бы 183 — потеряли бы почти всё.</text>
+
+  <!-- tip -->
+  <rect x="60" y="370" width="660" height="88" rx="10" fill="#fef9c3" stroke="#eab308" stroke-width="2"/>
+  <text x="80" y="396" font-size="14.5" font-weight="700" fill="#854d0e">💬 Простое правило:</text>
+  <text x="80" y="420" font-size="14" fill="#854d0e">мало дыр — убери эти строки; дыр среднее, но столбец нужен — заполни «типичным»</text>
+  <text x="80" y="441" font-size="14" fill="#854d0e">значением; столбец почти пустой — выброси его целиком. Каждый выбор меняет данные!</text>
+</svg>
