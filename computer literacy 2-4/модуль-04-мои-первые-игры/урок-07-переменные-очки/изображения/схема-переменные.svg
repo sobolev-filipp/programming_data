@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 660 300" font-family="'Segoe UI',system-ui,sans-serif">
+  <rect x="0" y="0" width="660" height="300" fill="#f7f9fc"/>
+  <text x="24" y="30" font-size="20" font-weight="800" fill="#1f2937">🟠 Переменная — коробочка для числа</text>
+  <text x="24" y="52" font-size="13" fill="#64748b">Три действия: задать (положить), изменить на (прибавить/убавить), показать (галочка).</text>
+
+  <!-- the box -->
+  <g>
+    <rect x="30" y="86" width="170" height="150" rx="14" fill="#fff" stroke="#ff7a00" stroke-width="3"/>
+    <text x="115" y="112" font-size="14" font-weight="700" fill="#b45309" text-anchor="middle">коробочка «очки»</text>
+    <rect x="66" y="128" width="98" height="64" rx="10" fill="#fff3e0" stroke="#ffb866"/>
+    <text x="115" y="176" font-size="42" font-weight="800" fill="#ff7a00" text-anchor="middle">7</text>
+    <text x="115" y="216" font-size="12" fill="#64748b" text-anchor="middle">внутри — число</text>
+  </g>
+
+  <!-- three actions -->
+  <g font-size="12.5" font-weight="700" fill="#fff">
+    <text x="250" y="104" font-size="13" font-weight="700" fill="#334155">① задать — положить число:</text>
+    <rect x="250" y="112" width="250" height="26" rx="7" fill="#ff7a00"/><text x="262" y="130">задать (очки) = 0</text>
+
+    <text x="250" y="162" font-size="13" font-weight="700" fill="#334155">② изменить на — прибавить/убавить:</text>
+    <rect x="250" y="170" width="250" height="26" rx="7" fill="#ff7a00"/><text x="262" y="188">изменить (очки) на 1</text>
+
+    <text x="250" y="220" font-size="13" font-weight="700" fill="#334155">③ показать — галочка у переменной:</text>
+    <rect x="250" y="228" width="250" height="26" rx="7" fill="#eef2ff" stroke="#c7d2fe"/>
+    <rect x="258" y="234" width="14" height="14" rx="3" fill="#2e9e52"/><text x="278" y="246" fill="#334155" font-weight="700" font-size="12">☑ очки — видно на сцене</text>
+  </g>
+
+  <text x="24" y="282" font-size="12" fill="#94a3b8">💡 Очки, жизни, время, рекорд — всё это числа, которые меняются по ходу игры. Храни их в переменных.</text>
+</svg>

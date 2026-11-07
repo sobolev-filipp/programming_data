@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 230" font-family="'Segoe UI',system-ui,sans-serif">
+  <rect x="0" y="0" width="560" height="230" fill="#f7f9fc"/>
+  <text x="24" y="30" font-size="18" font-weight="800" fill="#1f2937">🏆 Доп-вау: переменная «рекорд»</text>
+  <text x="24" y="50" font-size="12.5" fill="#64748b">Если очки больше рекорда — рекорд становится равен очкам. Лучший счёт запоминается.</text>
+
+  <g font-size="12" font-weight="700" fill="#ffffff">
+    <rect x="24" y="66" width="512" height="54" rx="8" fill="#ffab19"/>
+    <text x="36" y="86" fill="#3d2f00">если &lt;очки &gt; рекорд&gt; то</text>
+    <rect x="44" y="92" width="300" height="22" rx="5" fill="#ff7a00"/><text x="52" y="107">задать рекорд = очки</text>
+    <rect x="352" y="92" width="176" height="22" rx="5" fill="#9966ff"/><text x="360" y="107">говорить «Новый рекорд!»</text>
+  </g>
+
+  <g>
+    <rect x="24" y="134" width="245" height="70" rx="10" fill="#fff" stroke="#cbd5e1"/>
+    <text x="146" y="156" font-size="13" font-weight="700" fill="#334155" text-anchor="middle">очки: 7</text>
+    <text x="146" y="182" font-size="12" fill="#64748b" text-anchor="middle">счёт этой игры — сбрасывается</text>
+  </g>
+  <g>
+    <rect x="291" y="134" width="245" height="70" rx="10" fill="#fff8e8" stroke="#ffcf66"/>
+    <text x="413" y="156" font-size="13" font-weight="700" fill="#b45309" text-anchor="middle">рекорд: 7 🏆</text>
+    <text x="413" y="182" font-size="12" fill="#8a6d3b" text-anchor="middle">лучший счёт — НЕ сбрасывается</text>
+  </g>
+</svg>

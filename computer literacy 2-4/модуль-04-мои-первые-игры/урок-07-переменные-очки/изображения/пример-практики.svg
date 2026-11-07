@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 300" font-family="'Segoe UI',system-ui,sans-serif">
+  <rect x="0" y="0" width="640" height="300" fill="#f5f7fb"/>
+  <text x="320" y="30" font-size="20" font-weight="800" fill="#1f2937" text-anchor="middle">🟠 Переменные — а проект у тебя свой!</text>
+  <text x="320" y="52" font-size="13" fill="#64748b" text-anchor="middle">Число, которое меняется: копилка, счёт за время, шкала-полоска</text>
+
+  <!-- panel 1: coin clicker -->
+  <g transform="translate(20,70)">
+    <rect x="0" y="0" width="195" height="200" rx="12" fill="#fff6e0" stroke="#f0cf8a"/>
+    <text x="97" y="24" font-size="14" font-weight="700" fill="#b8860b" text-anchor="middle">🪙 Копилка-кликер</text>
+    <text x="97" y="105" font-size="56" text-anchor="middle">🪙</text>
+    <rect x="40" y="128" width="115" height="30" rx="8" fill="#fff" stroke="#f0cf8a"/>
+    <text x="97" y="149" font-size="16" font-weight="800" fill="#b8860b" text-anchor="middle">монеты: 12</text>
+    <text x="97" y="184" font-size="11" fill="#475569" text-anchor="middle">клик — монета +1</text>
+  </g>
+
+  <!-- panel 2: timed score -->
+  <g transform="translate(228,70)">
+    <rect x="0" y="0" width="185" height="200" rx="12" fill="#e9f3ff" stroke="#a9ccf6"/>
+    <text x="92" y="24" font-size="14" font-weight="700" fill="#2b6fd6" text-anchor="middle">⏱ Собери за время</text>
+    <text x="55" y="95" font-size="26" text-anchor="middle">⭐</text>
+    <text x="125" y="110" font-size="26" text-anchor="middle">⭐</text>
+    <rect x="30" y="128" width="125" height="30" rx="8" fill="#fff" stroke="#a9ccf6"/>
+    <text x="92" y="149" font-size="14" font-weight="800" fill="#2b6fd6" text-anchor="middle">очки 8 · время 5</text>
+    <text x="92" y="184" font-size="11" fill="#475569" text-anchor="middle">две переменные сразу</text>
+  </g>
+
+  <!-- panel 3: bar / scale -->
+  <g transform="translate(426,70)">
+    <rect x="0" y="0" width="194" height="200" rx="12" fill="#eafaf0" stroke="#9fe0b6"/>
+    <text x="97" y="24" font-size="14" font-weight="700" fill="#2e9e52" text-anchor="middle">📊 Шкала-полоска</text>
+    <rect x="40" y="46" width="30" height="120" rx="8" fill="#d9f2e2"/>
+    <rect x="40" y="96" width="30" height="70" rx="8" fill="#37c871"/>
+    <text x="120" y="120" font-size="16" font-weight="800" fill="#2e9e52">70</text>
+    <text x="97" y="184" font-size="11" fill="#475569" text-anchor="middle">число растит полоску</text>
+  </g>
+</svg>

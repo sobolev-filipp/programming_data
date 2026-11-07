@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Игра — Космошутер</title>
+<style>
+  :root{--ink:#1f2a52;--yellow:#ffd23f;--blue:#4c97ff;--green:#4cbb5c;--red:#ff6b6b;}
+  *{box-sizing:border-box;font-family:'Comic Sans MS','Segoe UI',system-ui,sans-serif;margin:0;padding:0;}
+  body{min-height:100vh;background:linear-gradient(135deg,#0c1430,#2b5bd6);display:flex;align-items:center;justify-content:center;padding:14px;color:var(--ink);}
+  .wrap{width:min(560px,100%);background:#fff;border-radius:26px;box-shadow:0 18px 50px rgba(0,0,0,.3);padding:18px 20px 22px;position:relative;overflow:hidden;}
+  h1{text-align:center;color:#2b6fd6;font-size:27px;margin:2px 0;}
+  .sub{text-align:center;color:#7a86a8;font-size:16px;margin-bottom:10px;}
+  .hud{display:flex;justify-content:space-around;align-items:center;background:#eef2ff;border-radius:16px;padding:8px 10px;font-size:19px;font-weight:bold;margin-bottom:10px;}
+  canvas{display:block;width:100%;background:#0c1430;border-radius:14px;touch-action:none;}
+  .btns{display:flex;justify-content:center;gap:8px;margin-top:10px;}
+  .ctrl{background:var(--blue);color:#fff;border:none;border-radius:12px;font-size:20px;min-width:58px;height:46px;cursor:pointer;box-shadow:0 4px 0 rgba(0,0,0,.18);padding:0 14px;}
+  .ctrl.fire{background:var(--red);}
+  .ctrl:active{transform:translateY(3px);box-shadow:0 1px 0 rgba(0,0,0,.18);}
+  .start{background:var(--yellow);color:#6b4e00;border:none;border-radius:16px;padding:16px 30px;font-size:24px;font-weight:bold;cursor:pointer;display:block;margin:14px auto;}
+  .hint{text-align:center;color:#9aa4bf;font-size:14px;margin-top:10px;}
+  .stars{font-size:48px;text-align:center;letter-spacing:4px;}
+  .hidden{display:none !important;}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>🚀 Космошутер</h1>
+
+  <div id="intro">
+    <p class="sub">Летай кораблём (← →), стреляй (пробел или 🔥) по астероидам. Сбил — очко, врезался — минус жизнь!</p>
+    <button class="start" onclick="startGame()">▶ Играть!</button>
+    <p class="hint">Клавиши ← → и пробел, или кнопки внизу. Три жизни.</p>
+  </div>
+
+  <div id="game" class="hidden">
+    <div class="hud">
+      <span>🏆 <b id="score">0</b></span>
+      <span>❤ <b id="lives">3</b></span>
+    </div>
+    <canvas id="cv" width="520" height="400"></canvas>
+    <div class="btns">
+      <button class="ctrl" onpointerdown="press('L',true)" onpointerup="press('L',false)" onpointerleave="press('L',false)">◀</button>
+      <button class="ctrl fire" onpointerdown="shoot()">🔥</button>
+      <button class="ctrl" onpointerdown="press('R',true)" onpointerup="press('R',false)" onpointerleave="press('R',false)">▶</button>
+    </div>
+    <div class="sub" id="msg" style="min-height:20px;margin-top:8px;"></div>
+  </div>
+
+  <div id="over" class="hidden">
+    <h1>Игра окончена! 🎉</h1>
+    <div class="stars" id="starsres"></div>
+    <p class="sub" id="finalscore"></p>
+    <p class="sub" id="praise"></p>
+    <button class="start" onclick="location.reload()">↺ Ещё разок</button>
+  </div>
+</div>
+
+<script>
+const cv=document.getElementById('cv'), ctx=cv.getContext('2d');
+const W=cv.width, H=cv.height;
+let state='intro', score=0, lives=3;
+let ship, bullets, rocks, keys, frame, cool, raf=0;
+
+function startGame(){
+  state='play'; score=0; lives=3; frame=0; cool=0;
+  ship={x:W/2, y:H-34, w:34};
+  bullets=[]; rocks=[]; keys={L:false,R:false};
+  document.getElementById('intro').classList.add('hidden');
+  document.getElementById('game').classList.remove('hidden');
+  document.getElementById('score').textContent=0;
+  document.getElementById('lives').textContent=3;
+  cancelAnimationFrame(raf);
+  loop();
+}
+
+function loop(){
+  if(state!=='play') return;
+  update();
+  draw();
+  raf=requestAnimationFrame(loop);
+}
+
+function shoot(){
+  if(state!=='play') return;
+  if(cool>0) return;
+  bullets.push({x:ship.x, y:ship.y-18});
+  cool=10;
+}
+
+function update(){
+  frame++; if(cool>0) cool--;
+  // move ship
+  if(keys.L) ship.x-=6;
+  if(keys.R) ship.x+=6;
+  ship.x=Math.max(18,Math.min(W-18,ship.x));
+  // bullets up
+  for(const b of bullets) b.y-=9;
+  bullets=bullets.filter(b=>b.y>-10);
+  // spawn rocks
+  if(frame%45===0) rocks.push({x:30+Math.random()*(W-60), y:-20, r:16+Math.random()*10, vy:2+Math.random()*1.5});
+  // move rocks
+  for(const r of rocks) r.y+=r.vy;
+  // collisions bullet-rock
+  for(const r of rocks){
+    for(const b of bullets){
+      if(!r.dead && !b.dead){
+        const dx=r.x-b.x, dy=r.y-b.y;
+        if(dx*dx+dy*dy < (r.r+5)*(r.r+5)){ r.dead=true; b.dead=true; score++; }
+      }
+    }
+    // rock hits ship
+    if(!r.dead && r.y+r.r>ship.y-10 && Math.abs(r.x-ship.x)<r.r+16){ r.dead=true; lives--; document.getElementById('msg').textContent='Бум! −1 жизнь'; }
+  }
+  bullets=bullets.filter(b=>!b.dead);
+  rocks=rocks.filter(r=>!r.dead && r.y<H+30);
+  document.getElementById('score').textContent=score;
+  document.getElementById('lives').textContent=Math.max(0,lives);
+  if(lives<=0){ gameOver(); }
+}
+
+function draw(){
+  ctx.clearRect(0,0,W,H);
+  // stars
+  ctx.fillStyle='#24335e';
+  for(let i=0;i<30;i++){ ctx.fillRect((i*53+ (frame*0.3))%W, (i*71)%H, 2,2); }
+  // bullets
+  ctx.fillStyle='#ffe14d';
+  for(const b of bullets) ctx.fillRect(b.x-3,b.y-10,6,16);
+  // rocks
+  ctx.fillStyle='#9a8468'; ctx.strokeStyle='#6f5d47'; ctx.lineWidth=2;
+  for(const r of rocks){ ctx.beginPath(); ctx.arc(r.x,r.y,r.r,0,7); ctx.fill(); ctx.stroke(); }
+  // ship
+  ctx.fillStyle='#4cc3ff';
+  ctx.beginPath(); ctx.moveTo(ship.x,ship.y-18); ctx.lineTo(ship.x+16,ship.y+14); ctx.lineTo(ship.x-16,ship.y+14); ctx.closePath(); ctx.fill();
+}
+
+function gameOver(){
+  state='over'; cancelAnimationFrame(raf);
+  document.getElementById('game').classList.add('hidden');
+  document.getElementById('over').classList.remove('hidden');
+  let st = score>=20?5 : score>=12?4 : score>=6?3 : score>=2?2 : 1;
+  document.getElementById('starsres').textContent='⭐'.repeat(st)+'☆'.repeat(5-st);
+  document.getElementById('finalscore').textContent='Сбито астероидов: '+score;
+  document.getElementById('praise').textContent = score>=12?'Ты ас космоса! 🏆' : score>=5?'Отличная стрельба! 👏' : 'Молодец, тренируйся ещё! 💪';
+}
+
+function press(dir,on){ if(state==='play') keys[dir]=on; }
+document.addEventListener('keydown',e=>{
+  if(state!=='play') return;
+  if(e.key==='ArrowLeft'){ keys.L=true; e.preventDefault(); }
+  if(e.key==='ArrowRight'){ keys.R=true; e.preventDefault(); }
+  if(e.key===' '){ shoot(); e.preventDefault(); }
+});
+document.addEventListener('keyup',e=>{
+  if(e.key==='ArrowLeft') keys.L=false;
+  if(e.key==='ArrowRight') keys.R=false;
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 780 450" font-family="'Segoe UI',system-ui,sans-serif">
+  <rect x="0" y="0" width="780" height="450" fill="#f7f9fc"/>
+  <text x="24" y="30" font-size="20" font-weight="800" fill="#1f2937">🧩 Схема блоков — игра «Космошутер»</text>
+  <text x="24" y="52" font-size="13" fill="#64748b">Два завода клонов: корабль штампует пули (вверх), астероид — врагов (вниз).</text>
+
+  <!-- ship -->
+  <text x="24" y="84" font-size="13" font-weight="700" fill="#334155">🚀 Корабль — летит и стреляет</text>
+  <g font-size="11.5" font-weight="700" fill="#ffffff">
+    <path d="M24 94 q0 -9 9 -9 l56 0 q5 5 10 0 l20 0 q9 0 9 9 l0 15 l-104 0 z" fill="#f5b800"/>
+    <text x="32" y="107" fill="#3d2f00">когда → / ← нажата</text>
+    <rect x="24" y="109" width="210" height="22" rx="6" fill="#4c97ff"/><text x="32" y="124">изменить x на 15 / -15</text>
+    <path d="M24 135 q0 -9 9 -9 l150 0 q5 5 10 0 l10 0 q9 0 9 9 l0 15 l-188 0 z" fill="#f5b800"/>
+    <text x="32" y="148" fill="#3d2f00">когда пробел нажат</text>
+    <rect x="24" y="150" width="210" height="22" rx="6" fill="#ff8c1a"/><text x="32" y="165">(пуля) создать клон себя</text>
+  </g>
+
+  <!-- bullet -->
+  <text x="24" y="206" font-size="13" font-weight="700" fill="#334155">🟡 Пуля-клон — летит вверх</text>
+  <g font-size="11.5" font-weight="700" fill="#ffffff">
+    <path d="M24 216 q0 -9 9 -9 l150 0 q5 5 10 0 l10 0 q9 0 9 9 l0 15 l-188 0 z" fill="#ff8c1a"/>
+    <text x="32" y="229">когда я начинаю как клон</text>
+    <rect x="24" y="231" width="210" height="22" rx="6" fill="#ff8c1a"/><text x="32" y="246">повторить 20</text>
+    <rect x="24" y="253" width="12" height="46" fill="#ff8c1a"/>
+    <rect x="40" y="255" width="194" height="20" rx="5" fill="#4c97ff"/><text x="48" y="269" font-size="11">изменить y на 15</text>
+    <rect x="40" y="277" width="194" height="20" rx="5" fill="#ffab19"/><text x="48" y="291" font-size="10.5">если касается Астероид → удалить клон</text>
+    <rect x="24" y="299" width="210" height="22" rx="5" fill="#ff8c1a"/><text x="32" y="314">удалить этот клон</text>
+  </g>
+
+  <!-- asteroid -->
+  <text x="300" y="84" font-size="13" font-weight="700" fill="#334155">🪨 Астероид-клон — падает, даёт очко или отнимает жизнь</text>
+  <g font-size="11.5" font-weight="700" fill="#ffffff">
+    <path d="M300 94 q0 -9 9 -9 l150 0 q5 5 10 0 l20 0 q9 0 9 9 l0 15 l-198 0 z" fill="#ff8c1a"/>
+    <text x="308" y="107">когда я начинаю как клон</text>
+    <rect x="300" y="109" width="456" height="22" rx="6" fill="#4c97ff"/><text x="308" y="124">показаться · перейти наверх (случайный x)</text>
+    <rect x="300" y="133" width="456" height="22" rx="6" fill="#ff8c1a"/><text x="308" y="148">всегда</text>
+    <rect x="300" y="155" width="12" height="190" fill="#ff8c1a"/>
+    <rect x="314" y="157" width="442" height="22" rx="5" fill="#4c97ff"/><text x="322" y="172">изменить y на -4</text>
+    <rect x="314" y="181" width="442" height="40" rx="6" fill="#ffab19"/>
+    <text x="322" y="197" fill="#3d2f00">если касается Пуля →</text>
+    <rect x="330" y="200" width="418" height="18" rx="4" fill="#ff7a00"/><text x="338" y="213" font-size="10.5">изменить очки на 1 · удалить этот клон</text>
+    <rect x="314" y="223" width="442" height="40" rx="6" fill="#ffab19"/>
+    <text x="322" y="239" fill="#3d2f00">если касается Корабль →</text>
+    <rect x="330" y="242" width="418" height="18" rx="4" fill="#ff7a00"/><text x="338" y="255" font-size="10.5">изменить жизни на -1 · удалить этот клон</text>
+    <rect x="314" y="265" width="442" height="20" rx="5" fill="#ff8c1a"/><text x="322" y="279" font-size="11">если y &lt; -180 → удалить этот клон</text>
+    <rect x="300" y="289" width="456" height="10" rx="5" fill="#ff8c1a"/>
+  </g>
+
+  <!-- legend -->
+  <g font-size="11.5" font-weight="600" fill="#475569" transform="translate(24,360)">
+    <text x="0" y="0" font-weight="700" fill="#334155">Цвета блоков:</text>
+    <rect x="0" y="10" width="13" height="13" rx="3" fill="#f5b800"/><text x="18" y="21">События</text>
+    <rect x="96" y="10" width="13" height="13" rx="3" fill="#4c97ff"/><text x="114" y="21">Движение</text>
+    <rect x="196" y="10" width="13" height="13" rx="3" fill="#ff8c1a"/><text x="214" y="21">Управление / клоны</text>
+    <rect x="0" y="32" width="13" height="13" rx="3" fill="#ffab19"/><text x="18" y="43">если…то</text>
+    <rect x="96" y="32" width="13" height="13" rx="3" fill="#9966ff"/><text x="114" y="43">Внешний вид</text>
+    <rect x="196" y="32" width="13" height="13" rx="3" fill="#ff7a00"/><text x="214" y="43">Переменные</text>
+  </g>
+
+  <text x="24" y="438" font-size="12" fill="#94a3b8">💡 Пуля + астероид встретились → оба удаляются, +1 очко. Астероид + корабль → −1 жизнь. Удаляй клоны! 🔇 Надписью.</text>
+</svg>

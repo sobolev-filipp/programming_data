@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 360" font-family="'Segoe UI',system-ui,sans-serif">
+  <defs>
+    <radialGradient id="ball" cx="35%" cy="30%"><stop offset="0%" stop-color="#fff5cc"/><stop offset="100%" stop-color="#ffcf33"/></radialGradient>
+  </defs>
+  <rect x="0" y="0" width="480" height="360" rx="14" fill="#16233f"/>
+  <rect x="8" y="8" width="464" height="344" rx="10" fill="none" stroke="#2e4472" stroke-width="3"/>
+
+  <!-- HUD -->
+  <text x="26" y="40" font-size="19" font-weight="800" fill="#ffd23f">🏆 Очки: 7</text>
+  <text x="330" y="40" font-size="19" font-weight="800" fill="#ff8c8c">❤❤❤</text>
+
+  <!-- ball bouncing -->
+  <circle r="12" fill="url(#ball)">
+    <animateMotion dur="3.2s" repeatCount="indefinite"
+      path="M240 90 L390 210 L150 300 L60 170 L240 90"/>
+  </circle>
+
+  <!-- paddle follows along the bottom -->
+  <g>
+    <rect x="-45" y="312" width="90" height="16" rx="8" fill="#4cc3ff">
+      <animateTransform attributeName="transform" type="translate" dur="3.2s" repeatCount="indefinite"
+        values="210 0; 330 0; 120 0; 150 0; 210 0" keyTimes="0;0.25;0.5;0.75;1"/>
+    </rect>
+  </g>
+
+  <text x="240" y="346" font-size="13" fill="#8ea2cf" text-anchor="middle">Двигай ракетку мышкой — отбивай мяч, копи очки</text>
+</svg>

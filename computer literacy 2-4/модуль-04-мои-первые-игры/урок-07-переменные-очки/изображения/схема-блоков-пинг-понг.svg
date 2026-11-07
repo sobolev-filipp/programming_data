@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 780 440" font-family="'Segoe UI',system-ui,sans-serif">
+  <rect x="0" y="0" width="780" height="440" fill="#f7f9fc"/>
+  <text x="24" y="30" font-size="20" font-weight="800" fill="#1f2937">🧩 Схема блоков — игра «Пинг-понг со счётом»</text>
+  <text x="24" y="52" font-size="13" fill="#64748b">Мяч скачет и отбивается; ракетка едет за мышкой; очки и жизни — в переменных.</text>
+
+  <!-- paddle -->
+  <text x="24" y="84" font-size="13" font-weight="700" fill="#334155">🏓 Ракетка — едет за мышкой</text>
+  <g font-size="11.5" font-weight="700" fill="#ffffff">
+    <path d="M24 94 q0 -9 9 -9 l54 0 q5 5 10 0 l56 0 q9 0 9 9 l0 15 l-138 0 z" fill="#f5b800"/>
+    <text x="32" y="107" fill="#3d2f00">когда 🚩 нажат</text>
+    <rect x="24" y="109" width="210" height="22" rx="6" fill="#ff8c1a"/><text x="32" y="124">всегда</text>
+    <rect x="24" y="131" width="12" height="26" fill="#ff8c1a"/>
+    <rect x="40" y="133" width="194" height="22" rx="5" fill="#4c97ff"/><text x="48" y="148">перейти x:(x мыши) y:-130</text>
+    <rect x="24" y="157" width="210" height="10" rx="5" fill="#ff8c1a"/>
+  </g>
+
+  <!-- variables -->
+  <text x="24" y="206" font-size="13" font-weight="700" fill="#334155">🟠 Переменные</text>
+  <g font-size="11.5" font-weight="700" fill="#ffffff">
+    <rect x="24" y="214" width="100" height="26" rx="7" fill="#ff7a00"/><text x="74" y="231" text-anchor="middle">очки</text>
+    <rect x="134" y="214" width="100" height="26" rx="7" fill="#ff7a00"/><text x="184" y="231" text-anchor="middle">жизни</text>
+    <text x="24" y="262" font-size="12" fill="#64748b" font-weight="600">считают удары и промахи, видны на сцене</text>
+  </g>
+
+  <!-- ball -->
+  <text x="300" y="84" font-size="13" font-weight="700" fill="#334155">⚪ Мяч — скачет, считает удары и промахи</text>
+  <g font-size="11.5" font-weight="700" fill="#ffffff">
+    <path d="M300 94 q0 -9 9 -9 l50 0 q5 5 10 0 l56 0 q9 0 9 9 l0 15 l-134 0 z" fill="#f5b800"/>
+    <text x="308" y="107" fill="#3d2f00">когда 🚩 нажат</text>
+    <rect x="300" y="109" width="456" height="22" rx="6" fill="#ff7a00"/><text x="308" y="124">задать очки = 0 · задать жизни = 3</text>
+    <rect x="300" y="133" width="456" height="22" rx="6" fill="#4c97ff"/><text x="308" y="148">перейти x:0 y:0 · указать направление 170</text>
+    <rect x="300" y="157" width="456" height="22" rx="6" fill="#ff8c1a"/><text x="308" y="172">всегда</text>
+    <rect x="300" y="179" width="12" height="238" fill="#ff8c1a"/>
+    <rect x="314" y="181" width="442" height="22" rx="5" fill="#4c97ff"/><text x="322" y="196">идти 7 · если на краю, оттолкнуться</text>
+    <!-- hit paddle -->
+    <rect x="314" y="205" width="442" height="46" rx="6" fill="#ffab19"/>
+    <text x="322" y="221" fill="#3d2f00">если &lt;касается Ракетка?&gt; то</text>
+    <rect x="330" y="227" width="418" height="20" rx="4" fill="#ff7a00"/><text x="338" y="241" font-size="11">изменить очки на 1 · отбить вверх · идти 12</text>
+    <!-- miss -->
+    <rect x="314" y="253" width="442" height="46" rx="6" fill="#ffab19"/>
+    <text x="322" y="269" fill="#3d2f00">если &lt;y &lt; -150&gt; то</text>
+    <rect x="330" y="275" width="418" height="20" rx="4" fill="#9966ff"/><text x="338" y="289" font-size="11">Мимо! · изменить жизни на -1 · мяч в центр</text>
+    <!-- game over -->
+    <rect x="314" y="301" width="442" height="22" rx="5" fill="#ff7a00"/><text x="322" y="316" font-size="11">если жизни = 0 → говорить «Конец!» · остановить всё</text>
+    <rect x="300" y="327" width="456" height="10" rx="5" fill="#ff8c1a"/>
+  </g>
+
+  <!-- legend -->
+  <g font-size="11.5" font-weight="600" fill="#475569" transform="translate(24,360)">
+    <text x="0" y="0" font-weight="700" fill="#334155">Цвета блоков:</text>
+    <rect x="0" y="10" width="13" height="13" rx="3" fill="#f5b800"/><text x="18" y="21">События</text>
+    <rect x="96" y="10" width="13" height="13" rx="3" fill="#4c97ff"/><text x="114" y="21">Движение</text>
+    <rect x="196" y="10" width="13" height="13" rx="3" fill="#ff8c1a"/><text x="214" y="21">Управление</text>
+    <rect x="0" y="32" width="13" height="13" rx="3" fill="#ffab19"/><text x="18" y="43">если…то</text>
+    <rect x="96" y="32" width="13" height="13" rx="3" fill="#9966ff"/><text x="114" y="43">Внешний вид</text>
+    <rect x="196" y="32" width="13" height="13" rx="3" fill="#ff7a00"/><text x="214" y="43">Переменные</text>
+  </g>
+
+  <text x="24" y="428" font-size="12" fill="#94a3b8">💡 Отбил ракеткой → +1 очко. Пролетел мимо вниз → −1 жизнь. Жизни = 0 → стоп. 🔇 Надписью.</text>
+</svg>

@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 360" font-family="'Segoe UI',system-ui,sans-serif">
+  <defs>
+    <radialGradient id="glow" cx="50%" cy="40%"><stop offset="0%" stop-color="#2a3a66"/><stop offset="100%" stop-color="#0c1430"/></radialGradient>
+  </defs>
+  <rect x="0" y="0" width="480" height="360" rx="14" fill="url(#glow)"/>
+  <!-- stars -->
+  <g fill="#ffffff" opacity="0.8">
+    <circle cx="40" cy="60" r="1.6"/><circle cx="120" cy="40" r="1.2"/><circle cx="300" cy="70" r="1.6"/>
+    <circle cx="420" cy="50" r="1.2"/><circle cx="220" cy="110" r="1.4"/><circle cx="380" cy="150" r="1.2"/>
+    <circle cx="70" cy="160" r="1.3"/><circle cx="440" cy="200" r="1.5"/>
+  </g>
+
+  <!-- HUD -->
+  <text x="22" y="34" font-size="18" font-weight="800" fill="#ffd23f">🏆 Очки: 9</text>
+  <text x="360" y="34" font-size="18" font-weight="800" fill="#ff8c8c">❤❤❤</text>
+
+  <!-- asteroids falling -->
+  <g fill="#9a8468" stroke="#6f5d47" stroke-width="2">
+    <circle cx="150" cy="120" r="18">
+      <animate attributeName="cy" values="-20;380" dur="3s" repeatCount="indefinite"/>
+    </circle>
+    <circle cx="330" cy="60" r="14">
+      <animate attributeName="cy" values="-20;380" dur="3.8s" begin="1s" repeatCount="indefinite"/>
+    </circle>
+  </g>
+
+  <!-- bullets going up -->
+  <g fill="#ffe14d">
+    <rect x="236" y="250" width="6" height="18" rx="3">
+      <animate attributeName="y" values="250;-20" dur="1s" repeatCount="indefinite"/>
+    </rect>
+    <rect x="236" y="250" width="6" height="18" rx="3">
+      <animate attributeName="y" values="250;-20" dur="1s" begin="0.5s" repeatCount="indefinite"/>
+    </rect>
+  </g>
+
+  <!-- ship -->
+  <g>
+    <polygon points="239,284 258,320 220,320" fill="#4cc3ff" stroke="#2b8fd0" stroke-width="2">
+      <animateTransform attributeName="transform" type="translate" dur="2.6s" repeatCount="indefinite"
+        values="0 0; 70 0; -70 0; 0 0" keyTimes="0;0.33;0.66;1"/>
+    </polygon>
+  </g>
+
+  <text x="240" y="346" font-size="13" fill="#9fb0d6" text-anchor="middle">Стрелки — лети, пробел — стреляй по астероидам</text>
+</svg>
