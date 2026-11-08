@@ -73,73 +73,273 @@ dotnet nuget locals all --clear   # очистить кэш пакетов NuGet
 
 ---
 
-## 📱 MAUI (Блоки 2–3)
+## 📱 MAUI (Блоки 2–3) — подробно
 
-Приложения с окном (кнопки, поля, списки) для Windows/Android/Mac/iOS из одного кода.
+Приложения с окном (кнопки, поля, списки) для Windows/Android/Mac/iOS из **одного** кода. Ниже — всё по шагам, с упором на Mac (у преподавателя), где капризов больше.
 
-### 0. Установить MAUI workload (один раз)
+### 1. Установить MAUI workload (один раз)
 
-**Windows:** в **Visual Studio Installer** отметить workload **«Разработка мобильных приложений на .NET»** (*.NET Multi-platform App UI development*). Без него не будет шаблона проекта.
+**🪟 Windows:** в **Visual Studio Installer** отметить workload **«Разработка мобильных приложений на .NET»** (*.NET Multi-platform App UI development*). Без него не будет шаблона проекта.
 
-**Mac:**
+**🍎 Mac:**
 ```bash
-sudo dotnet workload install maui --source https://api.nuget.org/v3/index.json
-xcode-select --install     # инструменты Xcode (для сборки под Apple)
+sudo dotnet workload install maui          # сам MAUI (все платформы Apple + Android)
+xcode-select --install                     # инструменты командной строки Xcode
+dotnet workload list                       # проверка: ждём maui-*, android, ios, maccatalyst
 ```
-Проверить установленные workload'ы: `dotnet workload list` (ждём `maui-windows`/`maccatalyst`/`android`/`ios`).
+Плюс установи **Xcode** из App Store (нужен для сборки под Mac/iPhone, не только command-line tools).
 
-### 1. Создать проект
+### 2. Создать проект
 
 | | Как |
 |--|-----|
-| 🪟 Windows | Создание проекта → шаблон **.NET MAUI App** → имя → .NET 10.0 |
-| 🍎 Mac | `dotnet new maui -o MyApp` затем `cd MyApp` |
+| 🪟 Windows | **Создание проекта** → шаблон **.NET MAUI App** → имя → **.NET 10.0** → Создать |
+| 🍎 Mac | `dotnet new maui -o MyApp` → `cd MyApp` → `code .` (открыть в VS Code) |
 
-### 2. Структура проекта (что важно)
+### 3. Структура проекта (что важно)
 
 - **`MainPage.xaml`** — внешность главного экрана (XAML);
 - **`MainPage.xaml.cs`** — логика экрана (C#, code-behind);
-- `App.xaml` / `App.xaml.cs` — глобальные ресурсы, старт;
-- `AppShell.xaml` — какая страница открывается первой;
-- `MauiProgram.cs` — «мотор» приложения;
-- `Platforms/` — платформенные файлы; `Resources/` — картинки/шрифты/цвета.
+- `App.xaml` / `App.xaml.cs` — глобальные ресурсы (цвета, стили), старт;
+- `AppShell.xaml` — «оболочка»: какая страница открывается первой;
+- `MauiProgram.cs` — «мотор» приложения (регистрация шрифтов, сервисов);
+- `Platforms/` — платформенные файлы (Android/iOS/MacCatalyst/Windows); `Resources/` — картинки (`Resources/Images`), шрифты, цвета, иконка.
+- **`ИмяПроекта.csproj`** — файл настроек проекта (платформы, версия, id) — см. §6.
 
 90% работы — в `MainPage.xaml` и `MainPage.xaml.cs`.
 
-### 3. Запустить
+### 4. Запуск — подробно
 
-| | Как |
-|--|-----|
-| 🪟 Windows | платформа **Windows Machine** → ▶ / **F5** (быстрее всего); Android — через Диспетчер устройств Android |
-| 🍎 Mac | `dotnet build -t:Run -f net10.0-maccatalyst` (маковое окно) |
+**🪟 Windows (ученики):**
+1. Вверху рядом с ▶ выбери платформу **Windows Machine** (самый быстрый способ проверки).
+2. Нажми **▶ (Start)** / **F5**. Первый запуск долгий (до пары минут) — нормально.
+3. Для телефона: **Android** — выбрать эмулятор в «Диспетчере устройств Android» (Android Device Manager), затем ▶. Эмулятор ставится через Visual Studio Installer (компонент Android SDK/Emulator).
 
-Первый запуск долгий (до пары минут) — нормально.
-
-### 4. Настройки `.csproj` под нужную платформу
-
-```xml
-<TargetFramework>net10.0-maccatalyst</TargetFramework>
-<RuntimeIdentifiers>maccatalyst-arm64</RuntimeIdentifiers>
-<TargetFrameworks Condition="$([MSBuild]::IsOSPlatform('windows'))">$(TargetFrameworks);net10.0-windows10.0.19041.0</TargetFrameworks>
-```
-
-### 5. Добавить ещё одну страницу (для навигации, урок 13)
-
-Нужен шаблон `VijayAnand.MauiTemplates`:
+**🍎 Mac (преподаватель):**
 ```bash
-dotnet new install VijayAnand.MauiTemplates
-dotnet new maui-page -n MyPage -o Pages    # -n имя, -o папка
-```
-На Windows: **Add → New Item → .NET MAUI ContentPage (XAML)**.
+# запуск как МАКОВОГО окна (быстрее всего проверять):
+dotnet build -t:Run -f net10.0-maccatalyst
 
-### 6. Если «капризничает» (Mac)
+# запуск на СИМУЛЯТОРЕ iPhone (нужен Xcode + симулятор):
+dotnet build -t:Run -f net10.0-ios
+```
+- `-t:Run` — собрать **и сразу запустить**;
+- `-f net10.0-maccatalyst` — под какую платформу (маковое окно); `net10.0-ios` — айфон-симулятор.
+- Первый запуск долгий — подтягиваются пакеты и идёт сборка через Xcode.
+
+> 💡 Если проект многоплатформенный (несколько `TargetFrameworks`), флаг `-f` **обязателен** — он говорит, под что собирать. Без него будет ошибка «нужно указать один TargetFramework».
+
+### 5. 🔄 Обновления (ОБЯЗАТЕЛЬНО после выхода новых macOS / iOS / Xcode)
+
+> ⚠️ **Частая боль на Mac:** вышла новая версия **macOS / iOS**, обновился **Xcode** — и `dotnet build` начинает сыпать ошибками. Причина почти всегда одна: **Xcode и .NET-workload'ы рассинхронизировались** с новой системой. Лечение — обновить обе стороны. Делай по порядку:
+
 ```bash
+# 1. Обнови Xcode из App Store до версии под новую macOS/iOS. Затем:
+sudo xcode-select -s /Applications/Xcode.app   # указать .NET на (новый) Xcode
+sudo xcodebuild -license accept                # принять лицензию Xcode (после обновления обязательно)
+xcodebuild -runFirstLaunch                     # доустановить компоненты Xcode
+
+# 2. Обнови .NET SDK (если вышел новый — с dotnet.microsoft.com), затем workload'ы MAUI:
+dotnet workload update                         # ← главное: подтягивает workload'ы под новый SDK/ОС
+
+# 3. Если всё ещё ругается — почини/переустанови workload:
+sudo dotnet workload repair
+# или начисто:  sudo dotnet workload install maui
+
+# 4. Почисти проект и пересобери:
 rm -rf bin obj
 dotnet restore
-dotnet build -t:Rebuild
+dotnet build -t:Run -f net10.0-maccatalyst
 ```
 
-> На Windows (ученики) многое делается кнопками в Visual Studio: **▶ Run**, менеджер NuGet, добавление страницы через **Add → New Item**.
+Проверки состояния:
+```bash
+xcode-select -p         # должен показать путь к Xcode (напр. /Applications/Xcode.app/Contents/Developer)
+dotnet --version        # версия SDK
+dotnet workload list    # установленные workload'ы и их версии
+```
+
+> 💡 **Правило:** после каждого крупного обновления Apple — сначала обнови **Xcode**, прими лицензию, потом `dotnet workload update`, потом `rm -rf bin obj` + пересборка. Это снимает 90% «вдруг перестало собираться».
+
+### 6. 🐞 Ошибки при запуске — таблица
+
+| Симптом / сообщение | Причина | Как починить |
+|---------------------|---------|--------------|
+| `Xcode.app ... could not be found` / `xcodebuild exited with code 1` (Mac) | .NET не видит Xcode / не настроен | `sudo xcode-select -s /Applications/Xcode.app`, затем `sudo xcodebuild -license accept`, `xcodebuild -runFirstLaunch` |
+| `You must accept the license agreement` (Mac) | не принята лицензия Xcode (часто после обновления) | `sudo xcodebuild -license accept` |
+| сборка сломалась **после обновления macOS/iOS** | устарел Xcode / рассинхрон workload | см. §5 «Обновления»: обнови Xcode + `dotnet workload update` |
+| `workload ... not installed` / `NETSDK1147` | нет нужного workload после обновления SDK | `dotnet workload update`, затем `dotnet workload install maui` |
+| `current .NET SDK does not support targeting ...` | версия SDK не совпала с таргетом | обнови .NET SDK и `dotnet workload update` |
+| `Specify a single TargetFramework` | в проекте несколько платформ, не указан `-f` | добавь флаг, напр. `-f net10.0-maccatalyst` |
+| `Unable to find a valid ... simulator` / нет симулятора iPhone | не установлен симулятор iOS | Xcode → **Settings → Platforms** → скачать iOS Simulator |
+| первый запуск «завис» на пару минут | нормальная первая сборка (тянет пакеты) | подождать, **не** прерывать |
+| `NU1101` / `unable to load the service index` | нет интернета при восстановлении пакетов | проверь сеть → `dotnet restore` |
+| бесконечные непонятные ошибки после правок | «грязные» bin/obj/кэш | `rm -rf bin obj`, `dotnet nuget locals all --clear`, `sudo dotnet workload repair`, пересобрать |
+| (🪟 Windows) нет шаблона **.NET MAUI App** | не поставлен workload | Visual Studio Installer → **Modify** → отметить **.NET MAUI** |
+| (🪟 Windows) приложение не стартует на телефоне | не выбран/не создан эмулятор Android | Android Device Manager → создать устройство → выбрать его у ▶ |
+
+### 7. Настройки `.csproj` — где писать и что значат
+
+**Где:** файл **`ИмяПроекта.csproj`** в корне проекта (в VS Code виден в дереве; в Visual Studio — двойной клик по имени проекта). Это обычный XML. Все настройки — внутри блока **`<PropertyGroup>`**.
+
+Главные строки и что они значат:
+- **`<TargetFrameworks>`** — список платформ, под которые собираем (через `;`). Именно отсюда берутся имена для флага `-f`.
+- **`<OutputType>Exe</OutputType>`** — это приложение (а не библиотека).
+- **`<UseMaui>true</UseMaui>`** — включает MAUI.
+- **`<ApplicationTitle>`** — имя приложения под иконкой; **`<ApplicationId>`** — уникальный id (как `com.school.myapp`); **`<ApplicationVersion>`** — номер сборки.
+- **`<SupportedOSPlatformVersion ...>`** — минимальная версия каждой ОС.
+
+<details>
+<summary>📄 <b>Полный пример <code>.csproj</code> MAUI-приложения</b> (кликни)</summary>
+
+```xml
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <!-- платформы: имена отсюда идут во флаг -f при запуске -->
+    <TargetFrameworks>net10.0-android;net10.0-ios;net10.0-maccatalyst</TargetFrameworks>
+    <!-- Windows добавляем ТОЛЬКО когда собираем на Windows -->
+    <TargetFrameworks Condition="$([MSBuild]::IsOSPlatform('windows'))">$(TargetFrameworks);net10.0-windows10.0.19041.0</TargetFrameworks>
+
+    <OutputType>Exe</OutputType>
+    <RootNamespace>MyApp</RootNamespace>
+    <UseMaui>true</UseMaui>
+    <SingleProject>true</SingleProject>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+
+    <!-- как приложение называется и опознаётся -->
+    <ApplicationTitle>MyApp</ApplicationTitle>
+    <ApplicationId>com.school.myapp</ApplicationId>
+    <ApplicationVersion>1</ApplicationVersion>
+
+    <!-- минимальные версии ОС -->
+    <SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios'">15.0</SupportedOSPlatformVersion>
+    <SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'maccatalyst'">15.0</SupportedOSPlatformVersion>
+    <SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'">21.0</SupportedOSPlatformVersion>
+    <SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">10.0.17763.0</SupportedOSPlatformVersion>
+  </PropertyGroup>
+
+</Project>
+```
+> Обычно `.csproj` создаётся шаблоном **сам** и трогать его не нужно. Правим, только если хотим убрать лишние платформы (например оставить один `net10.0-maccatalyst`, чтобы быстрее собиралось на Mac) или поменять имя/id приложения.
+</details>
+
+### 8. Как создать новую страницу (экран)
+
+Приложение может иметь несколько экранов. Каждый экран = **два файла**: `Имя.xaml` (внешность) + `Имя.xaml.cs` (логика) — как `MainPage`.
+
+**🪟 Windows (Visual Studio):** правый клик по проекту → **Add → New Item → .NET MAUI ContentPage (XAML)** → имя, напр. `SecondPage` → Add. Создадутся оба файла.
+
+**🍎 Mac (VS Code):** проще всего — поставить шаблоны и выполнить команду:
+```bash
+dotnet new install VijayAnand.MauiTemplates    # один раз
+dotnet new maui-page -n SecondPage             # создаст SecondPage.xaml + .cs
+```
+Или **вручную** создать два файла (см. полный пример ниже).
+
+<details>
+<summary>📄 <b>Полный код новой страницы</b> <code>SecondPage.xaml</code> + <code>SecondPage.xaml.cs</code> (кликни)</summary>
+
+**`SecondPage.xaml`:**
+```xml
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MyApp.SecondPage"
+             Title="Вторая страница">
+    <VerticalStackLayout Padding="24" Spacing="16" VerticalOptions="Center">
+        <Label Text="Это вторая страница 👋" FontSize="24" HorizontalOptions="Center" />
+        <Button Text="Назад" Clicked="OnBackClicked" />
+    </VerticalStackLayout>
+</ContentPage>
+```
+
+**`SecondPage.xaml.cs`:**
+```csharp
+namespace MyApp;   // ← имя как у проекта (см. RootNamespace в .csproj)
+
+public partial class SecondPage : ContentPage
+{
+    public SecondPage()
+    {
+        InitializeComponent();
+    }
+
+    private async void OnBackClicked(object? sender, EventArgs e)
+    {
+        await Navigation.PopAsync();   // вернуться на предыдущую страницу
+    }
+}
+```
+
+**Как открыть её с первой страницы** (из `MainPage.xaml.cs`, по кнопке):
+```csharp
+private async void OnOpenSecond(object? sender, EventArgs e)
+{
+    await Navigation.PushAsync(new SecondPage());   // показать вторую страницу
+}
+```
+> ⚠️ `x:Class` в XAML и `namespace` в `.cs` должны совпадать с именем проекта (`MyApp` в примере). Подробно про навигацию между страницами — в уроке 13 блока 2.
+</details>
+
+### 9. Полный код примера (минимальное рабочее приложение «Счётчик»)
+
+<details>
+<summary>📄 <b><code>MainPage.xaml</code> + <code>MainPage.xaml.cs</code></b> (кликни)</summary>
+
+**`MainPage.xaml`:**
+```xml
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MyApp.MainPage">
+    <VerticalStackLayout Padding="30" Spacing="20" VerticalOptions="Center">
+        <Label Text="Мой счётчик" FontSize="28" HorizontalOptions="Center" />
+        <Label x:Name="CountLabel" Text="0" FontSize="60" HorizontalOptions="Center" />
+        <Button Text="+1" Clicked="OnPlusClicked" />
+        <Button Text="Сброс" Clicked="OnResetClicked" />
+    </VerticalStackLayout>
+</ContentPage>
+```
+
+**`MainPage.xaml.cs`:**
+```csharp
+namespace MyApp;
+
+public partial class MainPage : ContentPage
+{
+    int count = 0;
+
+    public MainPage()
+    {
+        InitializeComponent();
+    }
+
+    private void OnPlusClicked(object? sender, EventArgs e)
+    {
+        count++;
+        CountLabel.Text = count.ToString();
+    }
+
+    private void OnResetClicked(object? sender, EventArgs e)
+    {
+        count = 0;
+        CountLabel.Text = count.ToString();
+    }
+}
+```
+</details>
+
+### 10. Если «капризничает» (быстрая чистка)
+```bash
+rm -rf bin obj                       # удалить служебные папки сборки
+dotnet restore                       # восстановить пакеты
+dotnet build -t:Rebuild              # пересобрать с нуля
+```
+Не помогло → раздел §5 «Обновления» (обнови Xcode + `dotnet workload update` + `workload repair`).
+
+> На Windows (ученики) многое делается кнопками Visual Studio: **▶ Run**, менеджер NuGet, добавление страницы через **Add → New Item**.
 
 ---
 
