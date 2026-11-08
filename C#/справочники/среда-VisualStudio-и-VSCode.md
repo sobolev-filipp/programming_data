@@ -161,6 +161,49 @@ dotnet workload list    # установленные workload'ы и их вер�
 
 > 💡 **Правило:** после каждого крупного обновления Apple — сначала обнови **Xcode**, прими лицензию, потом `dotnet workload update`, потом `rm -rf bin obj` + пересборка. Это снимает 90% «вдруг перестало собираться».
 
+### 5а. ⚠️ Главное правило: Xcode и MAUI-workload должны совпадать по версии
+
+> Это **самая частая причина** «вдруг не собирается под Mac/iPhone», и `dotnet workload update` её **не всегда** лечит. Разберём отдельно.
+
+Каждый MAUI-workload собран под **конкретную** версию Xcode. Несовпадение в **любую** сторону = ошибка сборки:
+
+```
+This version of .NET for MacCatalyst (26.2.xxxxx) requires Xcode 26.2.
+The current version of Xcode is 27.0. Either install Xcode 26.2,
+or use a different version of .NET for MacCatalyst.
+```
+
+Читается так: *«установленный workload хочет Xcode 26.2, а у тебя стоит 27.0 — почини одно из двух»*. Бывает и наоборот (workload новее установленного Xcode).
+
+**Почему `dotnet workload update` иногда не помогает.** Версия workload'а привязана к **ветке SDK**: `10.0.1xx`, `10.0.4xx` и т.д. `workload update` подтягивает новое только **внутри текущей ветки**. Поддержка свежего Xcode может появиться лишь в **более новой ветке SDK** — тогда сначала надо обновить сам **.NET SDK**.
+
+**Как подобрать правильную связку (Xcode → .NET):**
+1. Узнай точную версию своего Xcode: `xcodebuild -version` (например `Xcode 27.0`).
+2. Посмотри таблицу соответствия: [whichversionofxcodeformaui.com](https://whichversionofxcodeformaui.com/) и релизы [dotnet/macios](https://github.com/dotnet/macios/releases) — там указано, какой **SDK** и какой **набор workload'ов** (`--version X.Y.Z.W`) идут под твой Xcode.
+3. Поставь нужную ветку SDK (если надо) и **закрепи** workload под свой Xcode по точной версии:
+
+```bash
+sudo dotnet workload install maui --version 10.0.401.1   # пример: набор под Xcode 27.0
+dotnet workload list                                     # проверь: MacCatalyst/iOS = нужная версия
+```
+
+> `--version` ставит **весь набор** workload'ов фиксированной версии — это и есть способ «прицелиться» ровно в свой Xcode, а не хватать «самое новое» (которое может требовать Xcode ещё новее).
+
+**📌 Рабочий пример (Xcode 27.0, ноябрь 2026):**
+```bash
+# было: SDK 10.0.101 + workload под Xcode 26.2 → ошибка выше
+# 1) скачать и поставить .NET 10 SDK ветки 10.0.4xx:
+open "https://dotnet.microsoft.com/download/dotnet/10.0"
+# 2) workload ровно под Xcode 27.0:
+sudo dotnet workload install maui --version 10.0.401.1
+# 3) проверка и чистая пересборка:
+dotnet workload list
+rm -rf bin obj && dotnet build -t:Run -f net10.0-maccatalyst
+```
+> Соответствия на тот момент: Xcode **27.0** ↔ SDK `10.0.401`/`10.0.402`, workload `10.0.401.1`. Для Xcode **27.1** — workload `10.0.402.1`. Xcode **27.2** на .NET 10 (MAUI) ещё **не** поддерживался — для него ждём MAUI 11. Поэтому гнаться за «самым новым Xcode» не стоит: держи Xcode той версии, под которую уже есть workload.
+
+> 🐞 **Отдельная засада после Xcode 27:** даже если сборка прошла, приложение может **падать при запуске** (iOS/macOS 27) — из-за нового UIKit Scene Lifecycle. Проекты, созданные **старым** шаблоном, этого не знают. Лечение: пересоздать проект свежим `dotnet new maui` (новый шаблон уже учитывает), либо добавить `SceneDelegate` + запись `UIApplicationSceneManifest` (см. [.NET Blog: UIKit scene lifecycle](https://devblogs.microsoft.com/dotnet/migrate-dotnet-maui-apps-uikit-scene-lifecycle/)).
+
 ### 6. 🐞 Ошибки при запуске — таблица
 
 | Симптом / сообщение | Причина | Как починить |
@@ -168,6 +211,9 @@ dotnet workload list    # установленные workload'ы и их вер�
 | `Xcode.app ... could not be found` / `xcodebuild exited with code 1` (Mac) | .NET не видит Xcode / не настроен | `sudo xcode-select -s /Applications/Xcode.app`, затем `sudo xcodebuild -license accept`, `xcodebuild -runFirstLaunch` |
 | `You must accept the license agreement` (Mac) | не принята лицензия Xcode (часто после обновления) | `sudo xcodebuild -license accept` |
 | сборка сломалась **после обновления macOS/iOS** | устарел Xcode / рассинхрон workload | см. §5 «Обновления»: обнови Xcode + `dotnet workload update` |
+| `requires Xcode 26.2. The current version of Xcode is 27.0` (или любые другие несовпадающие номера) | **версия workload не совпала с версией Xcode** (в любую сторону) | см. §5а: поставь SDK/`workload` ровно под свой Xcode — `sudo dotnet workload install maui --version X.Y.Z.W` |
+| `open -a … .app ... exited with code 1` / `MSB3073` при `-t:Run` | `.app` **не собрался** (ошибку спрятала инкрементальная сборка), а `open` пытается запустить несуществующее | сделай чистую сборку `rm -rf bin obj && dotnet build -f net10.0-maccatalyst` — увидишь настоящую причину (часто §5а) |
+| приложение собралось, но **падает сразу при запуске** (Xcode/iOS 27) | старый шаблон без UIKit Scene Lifecycle | пересоздай `dotnet new maui` или добавь `SceneDelegate` (§5а, засада после Xcode 27) |
 | `workload ... not installed` / `NETSDK1147` | нет нужного workload после обновления SDK | `dotnet workload update`, затем `dotnet workload install maui` |
 | `current .NET SDK does not support targeting ...` | версия SDK не совпала с таргетом | обнови .NET SDK и `dotnet workload update` |
 | `Specify a single TargetFramework` | в проекте несколько платформ, не указан `-f` | добавь флаг, напр. `-f net10.0-maccatalyst` |
