@@ -1,0 +1,69 @@
+<svg viewBox="0 0 780 430" xmlns="http://www.w3.org/2000/svg" font-family="'Segoe UI',system-ui,sans-serif">
+  <rect width="780" height="430" fill="#f7f9fc"/>
+  <text x="390" y="34" text-anchor="middle" font-size="22" font-weight="700" fill="#1f2937">Тепловая карта корреляций — как читать</text>
+  <text x="390" y="57" text-anchor="middle" font-size="14" fill="#64748b">цвет клетки = сила связи между двумя признаками (из урока 1.6)</text>
+
+  <!-- heatmap grid 4x4 -->
+  <g font-size="13">
+    <!-- column labels -->
+    <text x="215" y="92" text-anchor="middle" font-size="12" fill="#475569">Survived</text>
+    <text x="275" y="92" text-anchor="middle" font-size="12" fill="#475569">Pclass</text>
+    <text x="335" y="92" text-anchor="middle" font-size="12" fill="#475569">Age</text>
+    <text x="395" y="92" text-anchor="middle" font-size="12" fill="#475569">Fare</text>
+    <!-- row labels -->
+    <text x="175" y="118" text-anchor="end" font-size="12" fill="#475569">Survived</text>
+    <text x="175" y="148" text-anchor="end" font-size="12" fill="#475569">Pclass</text>
+    <text x="175" y="178" text-anchor="end" font-size="12" fill="#475569">Age</text>
+    <text x="175" y="208" text-anchor="end" font-size="12" fill="#475569">Fare</text>
+
+    <!-- row Survived -->
+    <rect x="185" y="100" width="60" height="30" fill="#b91c1c"/><text x="215" y="120" text-anchor="middle" fill="#fff" font-weight="700">1.0</text>
+    <rect x="245" y="100" width="60" height="30" fill="#93c5fd"/><text x="275" y="120" text-anchor="middle" fill="#1e3a8a">-0.34</text>
+    <rect x="305" y="100" width="60" height="30" fill="#eff6ff"/><text x="335" y="120" text-anchor="middle" fill="#334155">-0.08</text>
+    <rect x="365" y="100" width="60" height="30" fill="#fca5a5"/><text x="395" y="120" text-anchor="middle" fill="#7f1d1d">0.26</text>
+    <!-- row Pclass -->
+    <rect x="185" y="130" width="60" height="30" fill="#93c5fd"/><text x="215" y="150" text-anchor="middle" fill="#1e3a8a">-0.34</text>
+    <rect x="245" y="130" width="60" height="30" fill="#b91c1c"/><text x="275" y="150" text-anchor="middle" fill="#fff" font-weight="700">1.0</text>
+    <rect x="305" y="130" width="60" height="30" fill="#bfdbfe"/><text x="335" y="150" text-anchor="middle" fill="#1e3a8a">-0.37</text>
+    <rect x="365" y="130" width="60" height="30" fill="#2563eb"/><text x="395" y="150" text-anchor="middle" fill="#fff" font-weight="700">-0.55</text>
+    <!-- row Age -->
+    <rect x="185" y="160" width="60" height="30" fill="#eff6ff"/><text x="215" y="180" text-anchor="middle" fill="#334155">-0.08</text>
+    <rect x="245" y="160" width="60" height="30" fill="#bfdbfe"/><text x="275" y="180" text-anchor="middle" fill="#1e3a8a">-0.37</text>
+    <rect x="305" y="160" width="60" height="30" fill="#b91c1c"/><text x="335" y="180" text-anchor="middle" fill="#fff" font-weight="700">1.0</text>
+    <rect x="365" y="160" width="60" height="30" fill="#fde8e8"/><text x="395" y="180" text-anchor="middle" fill="#334155">0.10</text>
+    <!-- row Fare -->
+    <rect x="185" y="190" width="60" height="30" fill="#fca5a5"/><text x="215" y="210" text-anchor="middle" fill="#7f1d1d">0.26</text>
+    <rect x="245" y="190" width="60" height="30" fill="#2563eb"/><text x="275" y="210" text-anchor="middle" fill="#fff" font-weight="700">-0.55</text>
+    <rect x="305" y="190" width="60" height="30" fill="#fde8e8"/><text x="335" y="210" text-anchor="middle" fill="#334155">0.10</text>
+    <rect x="365" y="190" width="60" height="30" fill="#b91c1c"/><text x="395" y="210" text-anchor="middle" fill="#fff" font-weight="700">1.0</text>
+  </g>
+
+  <!-- diagonal callout -->
+  <path d="M430 115 L470 115" stroke="#4f46e5" stroke-width="2" marker-end="url(#h)"/>
+  <defs><marker id="h" markerWidth="10" markerHeight="10" refX="7" refY="3" orient="auto"><path d="M0 0 L7 3 L0 6 Z" fill="#4f46e5"/></marker></defs>
+  <rect x="472" y="98" width="290" height="46" rx="8" fill="#e0e7ff" stroke="#4f46e5" stroke-width="1.5"/>
+  <text x="485" y="117" font-size="12.5" fill="#4338ca">Диагональ всегда 1.0 — признак связан</text>
+  <text x="485" y="134" font-size="12.5" fill="#4338ca">сам с собой. Её игнорируем.</text>
+
+  <!-- strongest callout -->
+  <path d="M430 205 L470 205" stroke="#2563eb" stroke-width="2" marker-end="url(#h2)"/>
+  <defs><marker id="h2" markerWidth="10" markerHeight="10" refX="7" refY="3" orient="auto"><path d="M0 0 L7 3 L0 6 Z" fill="#2563eb"/></marker></defs>
+  <rect x="472" y="186" width="290" height="46" rx="8" fill="#dbeafe" stroke="#2563eb" stroke-width="1.5"/>
+  <text x="485" y="205" font-size="12.5" fill="#1e40af">Яркая клетка (−0.55) = сильная связь:</text>
+  <text x="485" y="222" font-size="12.5" fill="#1e40af">1 класс дороже. Это и есть находка.</text>
+
+  <!-- color legend -->
+  <text x="185" y="252" font-size="12.5" font-weight="700" fill="#475569">Шкала цвета:</text>
+  <rect x="280" y="242" width="40" height="16" fill="#2563eb"/><text x="300" y="272" text-anchor="middle" font-size="11" fill="#475569">−1</text>
+  <rect x="320" y="242" width="40" height="16" fill="#eff6ff"/><text x="340" y="272" text-anchor="middle" font-size="11" fill="#475569">0</text>
+  <rect x="360" y="242" width="40" height="16" fill="#b91c1c"/><text x="380" y="272" text-anchor="middle" font-size="11" fill="#475569">+1</text>
+  <text x="415" y="254" font-size="12" fill="#64748b">синий = «минус», белый = нет связи, красный = «плюс»</text>
+
+  <!-- tip -->
+  <rect x="60" y="292" width="660" height="124" rx="10" fill="#fef9c3" stroke="#eab308" stroke-width="2"/>
+  <text x="80" y="317" font-size="14.5" font-weight="700" fill="#854d0e">💬 Как читать за 5 секунд:</text>
+  <text x="80" y="341" font-size="13.5" fill="#854d0e">1. По строкам и столбцам — одни и те же признаки. Клетка = корреляция пары (из урока 1.6).</text>
+  <text x="80" y="363" font-size="13.5" fill="#854d0e">2. Диагональ (1.0) пропускаем. Карта симметрична: A↔B то же, что B↔A.</text>
+  <text x="80" y="385" font-size="13.5" fill="#854d0e">3. Ищем ЯРКИЕ клетки — сильные связи. Бледные (около 0) — связи нет.</text>
+  <text x="80" y="407" font-size="13.5" fill="#854d0e">🎯 Зачем: ярко окрашенные пары подсказывают, какие признаки важны для ML-модели.</text>
+</svg>

@@ -1,0 +1,37 @@
+<svg viewBox="0 0 780 380" xmlns="http://www.w3.org/2000/svg" font-family="'Segoe UI',system-ui,sans-serif">
+  <rect width="780" height="380" fill="#f7f9fc"/>
+  <text x="390" y="38" text-anchor="middle" font-size="23" font-weight="700" fill="#1f2937">Две библиотеки для графиков</text>
+  <text x="390" y="62" text-anchor="middle" font-size="14.5" fill="#64748b">Matplotlib — основа, Seaborn — красивая надстройка поверх неё</text>
+
+  <!-- matplotlib card -->
+  <rect x="50" y="90" width="310" height="210" rx="14" fill="#e0e7ff" stroke="#4f46e5" stroke-width="2"/>
+  <text x="205" y="120" text-anchor="middle" font-size="18" font-weight="700" fill="#4338ca">Matplotlib</text>
+  <text x="205" y="144" text-anchor="middle" font-size="13.5" fill="#4338ca">«кисти и холст» — рисует что угодно</text>
+  <rect x="75" y="158" width="260" height="30" rx="7" fill="#0f172a"/>
+  <text x="88" y="179" font-size="13" font-family="monospace" fill="#e2e8f0">import matplotlib.pyplot as plt</text>
+  <text x="205" y="210" text-anchor="middle" font-size="13" fill="#4338ca">✔ мощная и гибкая</text>
+  <text x="205" y="232" text-anchor="middle" font-size="13" fill="#4338ca">✔ полный контроль над графиком</text>
+  <text x="205" y="254" text-anchor="middle" font-size="13" fill="#6366f1">− многословная (много команд)</text>
+  <text x="205" y="283" text-anchor="middle" font-size="12.5" fill="#4338ca" font-style="italic">plt.plot, plt.scatter, plt.bar, plt.hist</text>
+
+  <!-- seaborn card -->
+  <rect x="420" y="90" width="310" height="210" rx="14" fill="#dcfce7" stroke="#16a34a" stroke-width="2"/>
+  <text x="575" y="120" text-anchor="middle" font-size="18" font-weight="700" fill="#15803d">Seaborn</text>
+  <text x="575" y="144" text-anchor="middle" font-size="13.5" fill="#166534">готовые красивые шаблоны</text>
+  <rect x="445" y="158" width="260" height="30" rx="7" fill="#0f172a"/>
+  <text x="458" y="179" font-size="13" font-family="monospace" fill="#e2e8f0">import seaborn as sns</text>
+  <text x="575" y="210" text-anchor="middle" font-size="13" fill="#166534">✔ красиво «из коробки»</text>
+  <text x="575" y="232" text-anchor="middle" font-size="13" fill="#166534">✔ дружит с таблицами Pandas</text>
+  <text x="575" y="254" text-anchor="middle" font-size="13" fill="#16a34a">✔ график статистики — в одну строку</text>
+  <text x="575" y="283" text-anchor="middle" font-size="12.5" fill="#166534" font-style="italic">sns.heatmap, sns.scatterplot, sns.histplot</text>
+
+  <!-- arrow built-on -->
+  <path d="M420 230 L360 230" stroke="#16a34a" stroke-width="3" marker-end="url(#ms)"/>
+  <defs><marker id="ms" markerWidth="11" markerHeight="11" refX="7" refY="3" orient="auto"><path d="M0 0 L8 3 L0 6 Z" fill="#16a34a"/></marker></defs>
+  <text x="390" y="222" text-anchor="middle" font-size="11" fill="#16a34a">построен на</text>
+
+  <!-- tip -->
+  <rect x="80" y="320" width="620" height="48" rx="10" fill="#fef9c3" stroke="#eab308" stroke-width="2"/>
+  <text x="390" y="342" text-anchor="middle" font-size="14" font-weight="700" fill="#854d0e">💬 Простыми словами:</text>
+  <text x="390" y="361" text-anchor="middle" font-size="13.5" fill="#854d0e">Seaborn — это «Matplotlib с готовым дизайном». На практике используют оба: Seaborn — быстро и красиво, Matplotlib — донастроить.</text>
+</svg>

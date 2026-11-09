@@ -1,0 +1,70 @@
+<svg viewBox="0 0 780 515" xmlns="http://www.w3.org/2000/svg" font-family="'Segoe UI',system-ui,sans-serif">
+<rect width="780" height="515" fill="#f7f9fc"/>
+<text x="390" y="34" text-anchor="middle" font-size="22" font-weight="700" fill="#1f2937">Квартет Анскомба: одинаковые числа — разные графики</text>
+<text x="390" y="57" text-anchor="middle" font-size="13.5" fill="#64748b">у всех 4 наборов среднее, разброс и корреляция (r≈0.82) ОДИНАКОВЫ, а картинки — совсем разные</text>
+<rect x="40" y="95" width="330" height="204" rx="10" fill="#e0e7ff" stroke="#4f46e5" stroke-width="2"/>
+<text x="205.0" y="117" text-anchor="middle" font-size="14" font-weight="700" fill="#4f46e5">I — обычная связь</text>
+<line x1="68" y1="277" x2="358" y2="277" stroke="#94a3b8" stroke-width="1.5"/>
+<line x1="68" y1="127" x2="68" y2="277" stroke="#94a3b8" stroke-width="1.5"/>
+<circle cx="192" cy="202" r="4.5" fill="#4f46e5" fill-opacity="0.75"/>
+<circle cx="156" cy="215" r="4.5" fill="#4f46e5" fill-opacity="0.75"/>
+<circle cx="244" cy="207" r="4.5" fill="#4f46e5" fill-opacity="0.75"/>
+<circle cx="174" cy="192" r="4.5" fill="#4f46e5" fill-opacity="0.75"/>
+<circle cx="209" cy="198" r="4.5" fill="#4f46e5" fill-opacity="0.75"/>
+<circle cx="262" cy="178" r="4.5" fill="#4f46e5" fill-opacity="0.75"/>
+<circle cx="121" cy="212" r="4.5" fill="#4f46e5" fill-opacity="0.75"/>
+<circle cx="86" cy="249" r="4.5" fill="#4f46e5" fill-opacity="0.75"/>
+<circle cx="227" cy="166" r="4.5" fill="#4f46e5" fill-opacity="0.75"/>
+<circle cx="139" cy="242" r="4.5" fill="#4f46e5" fill-opacity="0.75"/>
+<circle cx="103" cy="231" r="4.5" fill="#4f46e5" fill-opacity="0.75"/>
+<text x="205.0" y="293" text-anchor="middle" font-size="12" fill="#4f46e5">линия видна</text>
+<rect x="410" y="95" width="330" height="204" rx="10" fill="#ffedd5" stroke="#ea580c" stroke-width="2"/>
+<text x="575.0" y="117" text-anchor="middle" font-size="14" font-weight="700" fill="#ea580c">II — кривая (парабола)</text>
+<line x1="438" y1="277" x2="728" y2="277" stroke="#94a3b8" stroke-width="1.5"/>
+<line x1="438" y1="127" x2="438" y2="277" stroke="#94a3b8" stroke-width="1.5"/>
+<circle cx="562" cy="188" r="4.5" fill="#ea580c" fill-opacity="0.75"/>
+<circle cx="526" cy="200" r="4.5" fill="#ea580c" fill-opacity="0.75"/>
+<circle cx="614" cy="193" r="4.5" fill="#ea580c" fill-opacity="0.75"/>
+<circle cx="544" cy="192" r="4.5" fill="#ea580c" fill-opacity="0.75"/>
+<circle cx="579" cy="186" r="4.5" fill="#ea580c" fill-opacity="0.75"/>
+<circle cx="632" cy="201" r="4.5" fill="#ea580c" fill-opacity="0.75"/>
+<circle cx="491" cy="225" r="4.5" fill="#ea580c" fill-opacity="0.75"/>
+<circle cx="456" cy="263" r="4.5" fill="#ea580c" fill-opacity="0.75"/>
+<circle cx="597" cy="188" r="4.5" fill="#ea580c" fill-opacity="0.75"/>
+<circle cx="509" cy="211" r="4.5" fill="#ea580c" fill-opacity="0.75"/>
+<circle cx="473" cy="243" r="4.5" fill="#ea580c" fill-opacity="0.75"/>
+<text x="575.0" y="293" text-anchor="middle" font-size="12" fill="#ea580c">связь НЕ линейная</text>
+<rect x="40" y="300" width="330" height="204" rx="10" fill="#dcfce7" stroke="#16a34a" stroke-width="2"/>
+<text x="205.0" y="322" text-anchor="middle" font-size="14" font-weight="700" fill="#16a34a">III — выброс вверх</text>
+<line x1="68" y1="482" x2="358" y2="482" stroke="#94a3b8" stroke-width="1.5"/>
+<line x1="68" y1="332" x2="68" y2="482" stroke="#94a3b8" stroke-width="1.5"/>
+<circle cx="192" cy="414" r="4.5" fill="#16a34a" fill-opacity="0.75"/>
+<circle cx="156" cy="422" r="4.5" fill="#16a34a" fill-opacity="0.75"/>
+<circle cx="244" cy="348" r="4.5" fill="#16a34a" fill-opacity="0.75"/>
+<circle cx="174" cy="418" r="4.5" fill="#16a34a" fill-opacity="0.75"/>
+<circle cx="209" cy="409" r="4.5" fill="#16a34a" fill-opacity="0.75"/>
+<circle cx="262" cy="396" r="4.5" fill="#16a34a" fill-opacity="0.75"/>
+<circle cx="121" cy="431" r="4.5" fill="#16a34a" fill-opacity="0.75"/>
+<circle cx="86" cy="440" r="4.5" fill="#16a34a" fill-opacity="0.75"/>
+<circle cx="227" cy="405" r="4.5" fill="#16a34a" fill-opacity="0.75"/>
+<circle cx="139" cy="427" r="4.5" fill="#16a34a" fill-opacity="0.75"/>
+<circle cx="103" cy="435" r="4.5" fill="#16a34a" fill-opacity="0.75"/>
+<text x="205.0" y="498" text-anchor="middle" font-size="12" fill="#16a34a">одна точка портит</text>
+<rect x="410" y="300" width="330" height="204" rx="10" fill="#fee2e2" stroke="#dc2626" stroke-width="2"/>
+<text x="575.0" y="322" text-anchor="middle" font-size="14" font-weight="700" fill="#dc2626">IV — всё в столбик</text>
+<line x1="438" y1="482" x2="728" y2="482" stroke="#94a3b8" stroke-width="1.5"/>
+<line x1="438" y1="332" x2="438" y2="482" stroke="#94a3b8" stroke-width="1.5"/>
+<circle cx="526" cy="425" r="4.5" fill="#dc2626" fill-opacity="0.75"/>
+<circle cx="526" cy="435" r="4.5" fill="#dc2626" fill-opacity="0.75"/>
+<circle cx="526" cy="411" r="4.5" fill="#dc2626" fill-opacity="0.75"/>
+<circle cx="526" cy="396" r="4.5" fill="#dc2626" fill-opacity="0.75"/>
+<circle cx="526" cy="401" r="4.5" fill="#dc2626" fill-opacity="0.75"/>
+<circle cx="526" cy="419" r="4.5" fill="#dc2626" fill-opacity="0.75"/>
+<circle cx="526" cy="441" r="4.5" fill="#dc2626" fill-opacity="0.75"/>
+<circle cx="720" cy="351" r="4.5" fill="#dc2626" fill-opacity="0.75"/>
+<circle cx="526" cy="438" r="4.5" fill="#dc2626" fill-opacity="0.75"/>
+<circle cx="526" cy="408" r="4.5" fill="#dc2626" fill-opacity="0.75"/>
+<circle cx="526" cy="421" r="4.5" fill="#dc2626" fill-opacity="0.75"/>
+<text x="575.0" y="498" text-anchor="middle" font-size="12" fill="#dc2626">один выброс создаёт r</text>
+<rect x="60" y="500" width="0" height="0"/>
+</svg>
