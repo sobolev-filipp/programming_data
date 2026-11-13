@@ -1,1 +1,343 @@
-<!doctype html><html lang="ru"><meta charset="utf-8"><title>Макеты — викторина</title><style>body{font:18px system-ui;max-width:720px;margin:30px auto;padding:16px}fieldset{margin:12px 0}button{padding:12px}</style><h1>Проверка знаний</h1><form id="quiz"><fieldset><legend>1. Какой стек располагает элементы столбиком?</legend><label><input type="radio" name="q1" value="1">VerticalStackLayout</label><br><label><input type="radio" name="q1" value="0">HorizontalStackLayout</label></fieldset><fieldset><legend>2. Что задаёт Spacing?</legend><label><input type="radio" name="q2" value="0">Внешний отступ</label><br><label><input type="radio" name="q2" value="1">Промежутки между элементами</label></fieldset><fieldset><legend>3. Что задаёт Padding?</legend><label><input type="radio" name="q3" value="1">Внутренний отступ</label><br><label><input type="radio" name="q3" value="0">Цвет</label></fieldset><fieldset><legend>4. Что задаёт Margin?</legend><label><input type="radio" name="q4" value="0">Размер текста</label><br><label><input type="radio" name="q4" value="1">Внешний отступ</label></fieldset><fieldset><legend>5. Сколько непосредственных элементов у Border?</legend><label><input type="radio" name="q5" value="1">Один</label><br><label><input type="radio" name="q5" value="0">Сколько угодно</label></fieldset><fieldset><legend>6. Как скрыть контейнер?</legend><label><input type="radio" name="q6" value="0">Spacing = 0</label><br><label><input type="radio" name="q6" value="1">IsVisible = false</label></fieldset><fieldset><legend>7. Как назвать элемент для C#?</legend><label><input type="radio" name="q7" value="1">x:Name</label><br><label><input type="radio" name="q7" value="0">Text</label></fieldset><fieldset><legend>8. Что делает ScrollView?</legend><label><input type="radio" name="q8" value="0">Создаёт рамку</label><br><label><input type="radio" name="q8" value="1">Прокручивает содержимое</label></fieldset><fieldset><legend>9. Как расположить портрет рядом с именем?</legend><label><input type="radio" name="q9" value="1">HorizontalStackLayout</label><br><label><input type="radio" name="q9" value="0">VerticalStackLayout</label></fieldset><fieldset><legend>10. Что делает ! у bool?</legend><label><input type="radio" name="q10" value="0">Увеличивает число</label><br><label><input type="radio" name="q10" value="1">Меняет значение на противоположное</label></fieldset><button type="submit">Проверить</button></form><p id="result"></p><script>document.getElementById("quiz").onsubmit=e=>{e.preventDefault();let n=0;for(const v of new FormData(e.target).values())n+=Number(v);document.getElementById("result").textContent=`Верно: ${n} из 10`;};</script></html>
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Викторина — Урок 2: Макеты — Карточка персонажа</title>
+<style>
+  :root{
+    --bg1:#075985; --bg2:#14b8a6; --card:#ffffff; --ink:#1f2937;
+    --accent:#075985; --ok:#16a34a; --bad:#dc2626; --soft:#e0f2fe;
+  }
+  *{box-sizing:border-box;font-family:"Segoe UI",system-ui,sans-serif}
+  body{margin:0;min-height:100vh;display:flex;align-items:center;justify-content:center;
+    background:linear-gradient(135deg,var(--bg1),var(--bg2));padding:20px;color:var(--ink)}
+  .app{background:var(--card);width:min(760px,100%);border-radius:24px;
+    box-shadow:0 25px 60px rgba(0,0,0,.35);padding:34px 34px 28px;position:relative;overflow:hidden}
+  h1{margin:0 0 6px;font-size:26px;text-align:center}
+  .sub{text-align:center;color:#64748b;margin-bottom:22px;font-size:15px}
+  .bar{height:10px;background:var(--soft);border-radius:99px;overflow:hidden;margin-bottom:18px}
+  .bar>i{display:block;height:100%;width:0;background:var(--accent);transition:.4s}
+  .meta{display:flex;justify-content:space-between;font-size:14px;color:#64748b;margin-bottom:14px}
+  .q{font-size:22px;font-weight:700;margin:6px 0 20px;line-height:1.3}
+  .q code{background:#0f172a;color:#e2e8f0;padding:2px 8px;border-radius:6px;font-size:19px}
+  .opts{display:grid;gap:12px}
+  .opt{border:2px solid #e2e8f0;background:#fff;border-radius:14px;padding:15px 18px;font-size:18px;
+    text-align:left;cursor:pointer;transition:.15s;display:flex;align-items:center;gap:12px}
+  .opt:hover{border-color:var(--accent);background:var(--soft);transform:translateY(-2px)}
+  .opt b{background:var(--soft);color:var(--accent);width:30px;height:30px;border-radius:8px;
+    display:flex;align-items:center;justify-content:center;font-size:15px;flex:0 0 auto}
+  .opt span code{background:#0f172a;color:#e2e8f0;padding:1px 6px;border-radius:5px;font-size:16px}
+  .opt.ok{border-color:var(--ok);background:#dcfce7}
+  .opt.ok b{background:var(--ok);color:#fff}
+  .opt.bad{border-color:var(--bad);background:#fee2e2}
+  .opt.bad b{background:var(--bad);color:#fff}
+  .opt:disabled{cursor:default;transform:none}
+  .fb{margin-top:16px;padding:14px 16px;border-radius:12px;font-size:16px;display:none;line-height:1.4}
+  .fb.show{display:block}
+  .fb.good{background:#dcfce7;color:#166534}
+  .fb.no{background:#fee2e2;color:#991b1b}
+  .fb code{background:#0f172a;color:#e2e8f0;padding:1px 6px;border-radius:5px}
+  .btn{margin-top:18px;width:100%;padding:15px;border:0;border-radius:14px;background:var(--accent);
+    color:#fff;font-size:18px;font-weight:700;cursor:pointer;display:none}
+  .btn.show{display:block}
+  .btn:hover{filter:brightness(1.08)}
+  .center{text-align:center}
+  .score{font-size:64px;font-weight:800;margin:10px 0}
+  .emoji{font-size:70px}
+  .hint{color:#94a3b8;font-size:13px;text-align:center;margin-top:14px}
+</style>
+</head>
+<body>
+<div class="app" id="app"></div>
+<script>
+const QUESTIONS = [
+  {
+    "q": "Какой контейнер располагает элементы в ряд?",
+    "a": [
+      "HorizontalStackLayout",
+      "VerticalStackLayout",
+      "ScrollView",
+      "Border"
+    ],
+    "c": 0,
+    "e": "HorizontalStackLayout располагает дочерние элементы горизонтально."
+  },
+  {
+    "q": "Какой контейнер располагает элементы друг под другом?",
+    "a": [
+      "VerticalStackLayout",
+      "HorizontalStackLayout",
+      "Border",
+      "ScrollView"
+    ],
+    "c": 0,
+    "e": "VerticalStackLayout строит вертикальный список."
+  },
+  {
+    "q": "Что задаёт Padding?",
+    "a": [
+      "Отступ внутри контейнера",
+      "Отступ снаружи контейнера",
+      "Расстояние между детьми",
+      "Толщину рамки контейнера"
+    ],
+    "c": 0,
+    "e": "Padding отделяет содержимое от края контейнера."
+  },
+  {
+    "q": "Что задаёт Margin?",
+    "a": [
+      "Отступ снаружи элемента",
+      "Отступ внутри элемента",
+      "Расстояние между детьми",
+      "Толщину рамки элемента"
+    ],
+    "c": 0,
+    "e": "Margin отделяет элемент от соседей."
+  },
+  {
+    "q": "Что задаёт Spacing в StackLayout?",
+    "a": [
+      "Промежутки между детьми",
+      "Отступы вокруг контейнера",
+      "Отступы внутри рамки",
+      "Размеры дочерних элементов"
+    ],
+    "c": 0,
+    "e": "Spacing задаёт расстояние между соседними элементами."
+  },
+  {
+    "q": "Как разместить элемент по центру горизонтально?",
+    "a": [
+      "HorizontalOptions=\"Center\"",
+      "VerticalOptions=\"Center\"",
+      "HorizontalOptions=\"Start\"",
+      "HorizontalOptions=\"Fill\""
+    ],
+    "c": 0,
+    "e": "HorizontalOptions управляет положением по горизонтали."
+  },
+  {
+    "q": "Что означает HorizontalOptions=\"Fill\"?",
+    "a": [
+      "Занять доступную ширину",
+      "Занять доступную высоту",
+      "Прижаться к левому краю",
+      "Выровняться по центру"
+    ],
+    "c": 0,
+    "e": "Fill растягивает элемент по соответствующей оси."
+  },
+  {
+    "q": "Какой элемент создаёт рамку вокруг карточки?",
+    "a": [
+      "Border",
+      "Label",
+      "ScrollView",
+      "Image"
+    ],
+    "c": 0,
+    "e": "Border оформляет границу и фон содержимого."
+  },
+  {
+    "q": "Какое свойство Border задаёт цвет рамки?",
+    "a": [
+      "Stroke",
+      "BackgroundColor",
+      "StrokeThickness",
+      "Padding"
+    ],
+    "c": 0,
+    "e": "Stroke задаёт кисть границы."
+  },
+  {
+    "q": "Какое свойство задаёт толщину рамки?",
+    "a": [
+      "StrokeThickness",
+      "CornerRadius",
+      "WidthRequest",
+      "Spacing"
+    ],
+    "c": 0,
+    "e": "StrokeThickness определяет толщину границы."
+  },
+  {
+    "q": "Где указывают RoundRectangle для Border?",
+    "a": [
+      "Border.StrokeShape",
+      "Border.Content",
+      "Border.Stroke",
+      "Border.Padding"
+    ],
+    "c": 0,
+    "e": "StrokeShape определяет форму рамки."
+  },
+  {
+    "q": "Какое свойство RoundRectangle скругляет углы?",
+    "a": [
+      "CornerRadius",
+      "StrokeThickness",
+      "HeightRequest",
+      "Margin"
+    ],
+    "c": 0,
+    "e": "CornerRadius задаёт радиус скругления."
+  },
+  {
+    "q": "Сколько непосредственных элементов содержит Border?",
+    "a": [
+      "Один элемент",
+      "Два элемента",
+      "Три элемента",
+      "Любое количество"
+    ],
+    "c": 0,
+    "e": "Для нескольких элементов вложите контейнер в Border."
+  },
+  {
+    "q": "Как добавить прокрутку длинной страницы?",
+    "a": [
+      "ScrollView",
+      "Border",
+      "HorizontalStackLayout",
+      "Image"
+    ],
+    "c": 0,
+    "e": "ScrollView позволяет прокручивать содержимое."
+  },
+  {
+    "q": "Как разместить портрет рядом с именем?",
+    "a": [
+      "HorizontalStackLayout",
+      "VerticalStackLayout",
+      "ScrollView",
+      "Border"
+    ],
+    "c": 0,
+    "e": "Горизонтальный контейнер подходит для портрета и текста рядом."
+  },
+  {
+    "q": "Как скрыть сразу весь блок навыков?",
+    "a": [
+      "SkillsLayout.IsVisible = false;",
+      "SkillsLayout.IsEnabled = false;",
+      "SkillsLayout.Spacing = 0;",
+      "SkillsLayout.Opacity = 1;"
+    ],
+    "c": 0,
+    "e": "IsVisible скрывает контейнер вместе с содержимым."
+  },
+  {
+    "q": "Как изменить внутренний отступ из C#?",
+    "a": [
+      "HeroBorder.Padding = new Thickness(8);",
+      "HeroBorder.Margin = new Thickness(8);",
+      "HeroBorder.StrokeThickness = 8;",
+      "HeroBorder.WidthRequest = 8;"
+    ],
+    "c": 0,
+    "e": "Padding принимает значение Thickness."
+  },
+  {
+    "q": "Что делает выражение small ? 6 : 14?",
+    "a": [
+      "Выбирает 6 или 14",
+      "Складывает 6 и 14",
+      "Сравнивает 6 и 14",
+      "Умножает 6 на 14"
+    ],
+    "c": 0,
+    "e": "При true результат 6, иначе 14."
+  },
+  {
+    "q": "Как изменить расстояние между элементами из C#?",
+    "a": [
+      "HeroLayout.Spacing = 6;",
+      "HeroLayout.Padding = 6;",
+      "HeroLayout.Margin = 6;",
+      "HeroLayout.WidthRequest = 6;"
+    ],
+    "c": 0,
+    "e": "Spacing меняет промежутки между дочерними элементами."
+  },
+  {
+    "q": "Что означает Padding=\"10,20\"?",
+    "a": [
+      "10 по бокам, 20 сверху и снизу",
+      "20 по бокам, 10 сверху и снизу",
+      "10 слева, 20 справа",
+      "10 сверху, 20 снизу"
+    ],
+    "c": 0,
+    "e": "Два числа задают горизонтальный и вертикальный отступы."
+  }
+];
+
+let i=0, score=0, locked=false;
+const app=document.getElementById('app');
+
+function shuffle(){for(let k=QUESTIONS.length-1;k>0;k--){const j=Math.floor(Math.random()*(k+1));[QUESTIONS[k],QUESTIONS[j]]=[QUESTIONS[j],QUESTIONS[k]];}for(const Q of QUESTIONS){const cc=Q.a[Q.c];for(let k=Q.a.length-1;k>0;k--){const j=Math.floor(Math.random()*(k+1));[Q.a[k],Q.a[j]]=[Q.a[j],Q.a[k]];}Q.c=Q.a.indexOf(cc);}}
+shuffle();
+
+function render(){
+  const Q=QUESTIONS[i];
+  app.innerHTML=`
+    <h1>Макеты — Карточка персонажа</h1>
+    <div class="sub">Викторина по уроку 2 · C# + MAUI</div>
+    <div class="bar"><i style="width:${(i/QUESTIONS.length)*100}%"></i></div>
+    <div class="meta"><span>Вопрос ${i+1} из ${QUESTIONS.length}</span><span>Очки: ${score}</span></div>
+    <div class="q">${Q.q}</div>
+    <div class="opts" id="opts">
+      ${Q.a.map((t,n)=>`<button class="opt" data-n="${n}"><b>${n+1}</b><span>${t}</span></button>`).join('')}
+    </div>
+    <div class="fb" id="fb"></div>
+    <button class="btn" id="next">${i===QUESTIONS.length-1?'Показать результат →':'Следующий вопрос →'}</button>
+    <div class="hint">Можно отвечать клавишами 1–4</div>`;
+  locked=false;
+  document.querySelectorAll('.opt').forEach(b=>b.onclick=()=>choose(+b.dataset.n));
+  document.getElementById('next').onclick=next;
+}
+
+function choose(n){
+  if(locked) return; locked=true;
+  const Q=QUESTIONS[i];
+  const opts=[...document.querySelectorAll('.opt')];
+  opts.forEach(b=>b.disabled=true);
+  opts[Q.c].classList.add('ok');
+  const fb=document.getElementById('fb');
+  if(n===Q.c){ score++; fb.className='fb show good'; fb.innerHTML='Верно! '+Q.e; }
+  else { opts[n].classList.add('bad'); fb.className='fb show no'; fb.innerHTML='Не совсем. '+Q.e; }
+  document.querySelector('.meta').children[1].textContent='Очки: '+score;
+  document.getElementById('next').classList.add('show');
+}
+
+function next(){ i++; if(i<QUESTIONS.length) render(); else result(); }
+
+function result(){
+  const pct=Math.round(score/QUESTIONS.length*100);
+  let em,msg;
+  if(pct===100){em='';msg='Все ответы верны.';}
+  else if(pct>=70){em='';msg='Хороший результат. Разбери вопросы, в которых ошибся.';}
+  else if(pct>=40){em='';msg='Повтори свойства и примеры из урока.';}
+  else {em='';msg='Вернись к самоучителю и попробуй снова.';}
+  app.innerHTML=`
+    <div class="center">
+      
+      <h1>Готово!</h1>
+      <div class="score">${score} / ${QUESTIONS.length}</div>
+      <div class="sub">${msg}</div>
+      <button class="btn show" id="again">Пройти заново</button>
+    </div>`;
+  document.getElementById('again').onclick=()=>{i=0;score=0;shuffle();render();};
+}
+
+document.addEventListener('keydown',e=>{
+  if(['1','2','3','4'].includes(e.key)){ const b=document.querySelector(`.opt[data-n="${+e.key-1}"]`); if(b&&!b.disabled) choose(+e.key-1); }
+  if(e.key==='Enter'){ const nb=document.getElementById('next'); if(nb&&nb.classList.contains('show')) { e.preventDefault(); next(); } }
+});
+
+render();
+</script>
+</body>
+</html>
