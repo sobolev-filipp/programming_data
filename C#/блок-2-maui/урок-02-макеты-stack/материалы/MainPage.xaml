@@ -1,33 +1,32 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
- xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
- x:Class="HeroCard.MainPage" BackgroundColor="#EEF2F7">
- <ScrollView>
-  <VerticalStackLayout Padding="24" Spacing="16" MaximumWidthRequest="480" HorizontalOptions="Fill">
-   <Label Text="Гильдия искателей" FontSize="28" FontAttributes="Bold" TextColor="#17243A" />
-   <Border x:Name="HeroBorder" BackgroundColor="White" Stroke="#CBD5E1" StrokeThickness="2" Padding="16">
-    <Border.StrokeShape><RoundRectangle CornerRadius="20" /></Border.StrokeShape>
-    <VerticalStackLayout x:Name="HeroLayout" Spacing="14">
-     <HorizontalStackLayout Spacing="12">
-      <Image Source="hero.png" WidthRequest="84" HeightRequest="84" Aspect="AspectFit" />
-      <VerticalStackLayout Spacing="4" VerticalOptions="Center">
-       <Label Text="Лира" FontSize="24" FontAttributes="Bold" TextColor="#17243A" />
-       <Label Text="Следопыт" TextColor="#475569" />
-      </VerticalStackLayout>
-     </HorizontalStackLayout>
-     <HorizontalStackLayout Spacing="10">
-      <Label Text="Уровень:" TextColor="#475569" />
-      <Label Text="7" FontAttributes="Bold" TextColor="#17243A" />
-     </HorizontalStackLayout>
-     <Label x:Name="StatusLabel" Text="Готова к походу" TextColor="#166534" />
-     <VerticalStackLayout x:Name="DetailsPanel" Spacing="6" IsVisible="False">
-      <Label Text="Оружие: лук" TextColor="#17243A" />
-      <Label Text="Навык: разведка" TextColor="#17243A" />
-     </VerticalStackLayout>
-     <Button x:Name="DetailsButton" Text="Показать навыки" Clicked="OnDetailsClicked" BackgroundColor="#315B9B" TextColor="White" />
-    </VerticalStackLayout>
-   </Border>
-   <Button Text="Сменить оформление" Clicked="OnThemeClicked" />
-  </VerticalStackLayout>
- </ScrollView>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="ShipApp.MainPage" BackgroundColor="#EAF2FF">
+    <ScrollView>
+        <VerticalStackLayout Padding="20" Spacing="16">
+            <Label Text="Конструктор корабля" FontSize="28" FontAttributes="Bold" TextColor="#18304D" />
+            <Border Stroke="#A6BDE0" StrokeThickness="2" Padding="16" BackgroundColor="White">
+                <Border.StrokeShape><RoundRectangle CornerRadius="18" /></Border.StrokeShape>
+                <VerticalStackLayout Spacing="10">
+                    <Image x:Name="ShipImage" Source="ship_scout.png" HeightRequest="150" Aspect="AspectFit" />
+                    <Label x:Name="ShipTitle" Text="Без названия" FontSize="24" TextColor="#18304D" />
+                    <HorizontalStackLayout Spacing="12">
+                        <Label Text="Стоимость:" TextColor="#18304D" />
+                        <Label x:Name="PriceLabel" Text="1000" TextColor="#18304D" FontAttributes="Bold" />
+                    </HorizontalStackLayout>
+                    <BoxView HeightRequest="2" Color="#A6BDE0" />
+                    <Label x:Name="InfoLabel" Text="Разведчик" TextColor="#18304D" />
+                </VerticalStackLayout>
+            </Border>
+            <Label Text="Название" TextColor="#18304D" />
+            <Entry x:Name="NameEntry" Placeholder="Например, Орион" MaxLength="24" TextChanged="OnNameChanged" TextColor="#18304D" />
+            <Label Text="Тип корабля" TextColor="#18304D" />
+            <Picker x:Name="TypePicker" Title="Выбери тип" SelectedIndexChanged="OnTypeChanged" TextColor="#18304D">
+                <Picker.Items><x:String>Разведчик</x:String><x:String>Грузовой</x:String><x:String>Истребитель</x:String></Picker.Items>
+            </Picker>
+            <HorizontalStackLayout Spacing="8">
+                <CheckBox x:Name="ShieldCheck" CheckedChanged="OnShieldChanged" />
+                <Label Text="Щит (+300)" VerticalOptions="Center" TextColor="#18304D" />
+            </HorizontalStackLayout>
+            <Button Text="Сбросить настройки" Clicked="OnResetClicked" />
+        </VerticalStackLayout>
+    </ScrollView>
 </ContentPage>

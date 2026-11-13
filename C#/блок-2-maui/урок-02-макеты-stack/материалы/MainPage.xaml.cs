@@ -1,31 +1,40 @@
-namespace HeroCard;
-
+using System;
+using Microsoft.Maui.Controls;
+namespace ShipApp;
 public partial class MainPage : ContentPage
 {
-    bool compact = false;
-
+    private bool ready;
     public MainPage()
     {
         InitializeComponent();
+        TypePicker.SelectedIndex = 0;
+        ready = true;
+        UpdateShip();
     }
-
-    private void OnDetailsClicked(object sender, EventArgs e)
+    private void UpdateShip()
     {
-        DetailsPanel.IsVisible = !DetailsPanel.IsVisible;
-        DetailsButton.Text = DetailsPanel.IsVisible ? "Скрыть навыки" : "Показать навыки";
+        if (!ready) return;
+        string name = NameEntry.Text?.Trim() ?? "";
+        ShipTitle.Text = name.Length == 0 ? "Без названия" : name;
+        int index = TypePicker.SelectedIndex;
+        int price = 1000;
+        string type = "Разведчик";
+        string image = "ship_scout.png";
+        if (index == 1) { price = 1500; type = "Грузовой"; image = "ship_cargo.png"; }
+        else if (index == 2) { price = 2000; type = "Истребитель"; image = "ship_fighter.png"; }
+        if (ShieldCheck.IsChecked) price += 300;
+        ShipImage.Source = image;
+        InfoLabel.Text = type + (ShieldCheck.IsChecked ? " · со щитом" : " · без щита");
+        PriceLabel.Text = price.ToString();
     }
-
-    private void OnThemeClicked(object sender, EventArgs e)
+    private void OnNameChanged(object sender, TextChangedEventArgs e) { UpdateShip(); }
+    private void OnTypeChanged(object sender, EventArgs e) { UpdateShip(); }
+    private void OnShieldChanged(object sender, CheckedChangedEventArgs e) { UpdateShip(); }
+    private void OnResetClicked(object sender, EventArgs e)
     {
-        compact = !compact;
-        ApplyLayout(compact);
-    }
-
-    private void ApplyLayout(bool small)
-    {
-        HeroLayout.Spacing = small ? 6 : 14;
-        HeroBorder.Padding = new Thickness(small ? 8 : 16);
-        HeroBorder.BackgroundColor = small ? Color.FromArgb("#E0F2FE") : Colors.White;
-        StatusLabel.Text = small ? "Компактный режим" : "Готова к походу";
+        NameEntry.Text = "";
+        TypePicker.SelectedIndex = 0;
+        ShieldCheck.IsChecked = false;
+        UpdateShip();
     }
 }

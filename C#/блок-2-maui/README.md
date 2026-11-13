@@ -7,7 +7,7 @@
 | Урок | Совместный проект | Новое | Самостоятельная практика | Статус |
 |---|---|---|---|---|
 | 1 | [Моё настроение](урок-01-введение-maui-счётчик/урок.md) | Label, Button, Image, Clicked, x:Name | Печенье с предсказанием, магазин зелий | Переработан |
-| 2 | [Карточка игрового персонажа](урок-02-макеты-stack/урок.md) | VerticalStackLayout, HorizontalStackLayout, Border, Margin, Padding, Spacing, ScrollView | Посадочный талон, панель космической станции | Переработан |
+| 2 | [Конструктор космического корабля](урок-02-макеты-stack/урок.md) | VerticalStackLayout, HorizontalStackLayout, Border, Margin, Padding, Spacing, ScrollView | Посадочный талон, панель космической станции | Переработан |
 | 3 | Калькулятор | Grid, Auto, *, RowSpan, ColumnSpan, sender | Пульт лифта, игровое поле | Запланирован |
 | 4 | Генератор билетов в кино | Entry, Editor, TextChanged, TryParse | Конвертер, генератор приглашений | Запланирован |
 | 5 | Конструктор пиццы | Picker, RadioButton, CheckBox | Комплектация велосипеда, выбор экскурсии | Запланирован |
