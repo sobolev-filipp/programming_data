@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 260" font-family="'Comfortaa','Nunito',sans-serif">
+  <rect width="900" height="260" rx="20" fill="#FFF8EE"/>
+  <text x="450" y="38" text-anchor="middle" font-size="22" font-weight="700" fill="#2A2140">Пример: кадры улыбки (от спокойного лица к улыбке)</text>
+
+  <!-- Frame 1: neutral -->
+  <g transform="translate(95,145)">
+    <circle r="62" fill="#FFD23F" stroke="#E0A800" stroke-width="4"/>
+    <circle cx="-22" cy="-12" r="8" fill="#2A2140"/>
+    <circle cx="22" cy="-12" r="8" fill="#2A2140"/>
+    <line x1="-20" y1="26" x2="20" y2="26" stroke="#2A2140" stroke-width="7" stroke-linecap="round"/>
+    <text x="0" y="98" text-anchor="middle" font-size="16" fill="#7C5CFF" font-weight="700">кадр 1</text>
+  </g>
+
+  <!-- Frame 2: small smile -->
+  <g transform="translate(265,145)">
+    <circle r="62" fill="#FFD23F" stroke="#E0A800" stroke-width="4"/>
+    <circle cx="-22" cy="-12" r="8" fill="#2A2140"/>
+    <circle cx="22" cy="-12" r="8" fill="#2A2140"/>
+    <path d="M -22 22 Q 0 34 22 22" fill="none" stroke="#2A2140" stroke-width="7" stroke-linecap="round"/>
+    <text x="0" y="98" text-anchor="middle" font-size="16" fill="#7C5CFF" font-weight="700">кадр 2</text>
+  </g>
+
+  <!-- Frame 3: bigger smile -->
+  <g transform="translate(435,145)">
+    <circle r="62" fill="#FFD23F" stroke="#E0A800" stroke-width="4"/>
+    <circle cx="-22" cy="-12" r="8" fill="#2A2140"/>
+    <circle cx="22" cy="-12" r="8" fill="#2A2140"/>
+    <path d="M -26 18 Q 0 46 26 18" fill="none" stroke="#2A2140" stroke-width="7" stroke-linecap="round"/>
+    <text x="0" y="98" text-anchor="middle" font-size="16" fill="#7C5CFF" font-weight="700">кадр 3</text>
+  </g>
+
+  <!-- Frame 4: big open smile -->
+  <g transform="translate(605,145)">
+    <circle r="62" fill="#FFD23F" stroke="#E0A800" stroke-width="4"/>
+    <path d="M -30 -14 Q -22 -22 -14 -14" fill="none" stroke="#2A2140" stroke-width="6" stroke-linecap="round"/>
+    <path d="M 14 -14 Q 22 -22 30 -14" fill="none" stroke="#2A2140" stroke-width="6" stroke-linecap="round"/>
+    <path d="M -28 12 Q 0 50 28 12 Z" fill="#2A2140"/>
+    <path d="M -16 30 Q 0 40 16 30" fill="#FF6B8B"/>
+    <text x="0" y="98" text-anchor="middle" font-size="16" fill="#7C5CFF" font-weight="700">кадр 4</text>
+  </g>
+
+  <!-- Frame 5: wink -->
+  <g transform="translate(790,145)">
+    <circle r="62" fill="#FFD23F" stroke="#E0A800" stroke-width="4"/>
+    <circle cx="-22" cy="-12" r="8" fill="#2A2140"/>
+    <path d="M 12 -12 Q 22 -18 32 -12" fill="none" stroke="#2A2140" stroke-width="6" stroke-linecap="round"/>
+    <path d="M -26 18 Q 0 46 26 18" fill="none" stroke="#2A2140" stroke-width="7" stroke-linecap="round"/>
+    <text x="0" y="98" text-anchor="middle" font-size="16" fill="#12B8A6" font-weight="700">подмигнул</text>
+  </g>
+</svg>
