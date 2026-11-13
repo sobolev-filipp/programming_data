@@ -1,23 +1,20 @@
-<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="CounterApp.MainPage">
-
-    <VerticalStackLayout Padding="30" Spacing="20" VerticalOptions="Center">
-
-        <Label Text="Мой счётчик"
-               FontSize="32"
-               HorizontalOptions="Center" />
-
-        <Label x:Name="CountLabel"
-               Text="0"
-               FontSize="80"
-               HorizontalOptions="Center" />
-
-        <Button Text="+1" Clicked="OnPlusClicked" />
-        <Button Text="-1" Clicked="OnMinusClicked" />
-        <Button Text="Сброс" Clicked="OnResetClicked" />
-
-    </VerticalStackLayout>
-
+             x:Class="MoodApp.MainPage"
+             BackgroundColor="#FFF4D6">
+    <ScrollView>
+        <VerticalStackLayout Padding="24" Spacing="14">
+            <Label Text="Моё настроение" FontSize="30" FontAttributes="Bold"
+                   TextColor="#26334A" HorizontalTextAlignment="Center" />
+            <Image x:Name="MoodImage" Source="mood_happy.png" HeightRequest="180" Aspect="AspectFit" />
+            <Label x:Name="MoodLabel" Text="Как проходит твой день?" FontSize="24"
+                   TextColor="#26334A" HorizontalTextAlignment="Center" />
+            <Label x:Name="AdviceLabel" Text="Выбери настроение ниже" FontSize="16"
+                   TextColor="#26334A" HorizontalTextAlignment="Center" />
+            <Button Text="Радостное" Clicked="OnHappyClicked" BackgroundColor="#FFD66B" TextColor="#26334A" CornerRadius="16" />
+            <Button Text="Спокойное" Clicked="OnCalmClicked" BackgroundColor="#9ADDDC" TextColor="#26334A" CornerRadius="16" />
+            <Button Text="Грустное" Clicked="OnSadClicked" BackgroundColor="#B9B1F5" TextColor="#26334A" CornerRadius="16" />
+            <Button Text="Случайное" Clicked="OnRandomClicked" BackgroundColor="#26334A" TextColor="White" CornerRadius="16" />
+        </VerticalStackLayout>
+    </ScrollView>
 </ContentPage>

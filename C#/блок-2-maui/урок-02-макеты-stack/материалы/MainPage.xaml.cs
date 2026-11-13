@@ -1,22 +1,31 @@
-namespace ProfileCard;
+namespace HeroCard;
 
 public partial class MainPage : ContentPage
 {
-    int likes = 0;                       // число лайков, помнит значение всё время работы
+    bool compact = false;
 
     public MainPage()
     {
-        InitializeComponent();           // «оживляет» XAML: создаёт LikesLabel, Card и кнопки
+        InitializeComponent();
     }
 
-    private void OnLikeClicked(object? sender, EventArgs e)
+    private void OnDetailsClicked(object sender, EventArgs e)
     {
-        likes++;                              // +1 лайк
-        LikesLabel.Text = likes.ToString();   // показать новое число в метке
+        DetailsPanel.IsVisible = !DetailsPanel.IsVisible;
+        DetailsButton.Text = DetailsPanel.IsVisible ? "Скрыть навыки" : "Показать навыки";
     }
 
-    private void OnSpaceClicked(object? sender, EventArgs e)
+    private void OnThemeClicked(object sender, EventArgs e)
     {
-        Card.Spacing = 40;                    // раздвинуть всё содержимое карточки из кода
+        compact = !compact;
+        ApplyLayout(compact);
+    }
+
+    private void ApplyLayout(bool small)
+    {
+        HeroLayout.Spacing = small ? 6 : 14;
+        HeroBorder.Padding = new Thickness(small ? 8 : 16);
+        HeroBorder.BackgroundColor = small ? Color.FromArgb("#E0F2FE") : Colors.White;
+        StatusLabel.Text = small ? "Компактный режим" : "Готова к походу";
     }
 }

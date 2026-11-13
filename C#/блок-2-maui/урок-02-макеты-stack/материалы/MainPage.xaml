@@ -1,41 +1,33 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="ProfileCard.MainPage"
-             BackgroundColor="#F0F4FF">
-
-    <!-- Внешняя стопка: всё содержимое карточки столбиком, по центру экрана -->
-    <VerticalStackLayout x:Name="Card" Padding="24" Spacing="18" VerticalOptions="Center">
-
-        <!-- Шапка: аватар слева + (имя над ролью) справа. Вложенные стеки! -->
-        <HorizontalStackLayout Spacing="16" HorizontalOptions="Center">
-            <Label Text="🦊" FontSize="64" VerticalOptions="Center" />
-            <VerticalStackLayout Spacing="2" VerticalOptions="Center">
-                <Label Text="Алиса" FontSize="28" FontAttributes="Bold" />
-                <Label Text="Гейм-дизайнер" FontSize="16" TextColor="Gray" />
-            </VerticalStackLayout>
-        </HorizontalStackLayout>
-
-        <!-- Строки информации: подпись и значение в ряд -->
-        <HorizontalStackLayout Spacing="8">
-            <Label Text="Город:" FontSize="18" />
-            <Label Text="Казань" FontSize="18" FontAttributes="Bold" />
-        </HorizontalStackLayout>
-
-        <HorizontalStackLayout Spacing="8">
-            <Label Text="Любит:" FontSize="18" />
-            <Label Text="платформеры" FontSize="18" FontAttributes="Bold" />
-        </HorizontalStackLayout>
-
-        <!-- Кнопка лайка со счётчиком (повтор урока 1) -->
-        <HorizontalStackLayout Spacing="10" HorizontalOptions="Center">
-            <Button Text="❤ Лайк" Clicked="OnLikeClicked" />
-            <Label x:Name="LikesLabel" Text="0" FontSize="24" VerticalOptions="Center" />
-        </HorizontalStackLayout>
-
-        <!-- Меняем макет из кода: раздвигаем карточку -->
-        <Button Text="Просторнее" Clicked="OnSpaceClicked" HorizontalOptions="Center" />
-
+ xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+ x:Class="HeroCard.MainPage" BackgroundColor="#EEF2F7">
+ <ScrollView>
+  <VerticalStackLayout Padding="24" Spacing="16" MaximumWidthRequest="480" HorizontalOptions="Fill">
+   <Label Text="Гильдия искателей" FontSize="28" FontAttributes="Bold" TextColor="#17243A" />
+   <Border x:Name="HeroBorder" BackgroundColor="White" Stroke="#CBD5E1" StrokeThickness="2" Padding="16">
+    <Border.StrokeShape><RoundRectangle CornerRadius="20" /></Border.StrokeShape>
+    <VerticalStackLayout x:Name="HeroLayout" Spacing="14">
+     <HorizontalStackLayout Spacing="12">
+      <Image Source="hero.png" WidthRequest="84" HeightRequest="84" Aspect="AspectFit" />
+      <VerticalStackLayout Spacing="4" VerticalOptions="Center">
+       <Label Text="Лира" FontSize="24" FontAttributes="Bold" TextColor="#17243A" />
+       <Label Text="Следопыт" TextColor="#475569" />
+      </VerticalStackLayout>
+     </HorizontalStackLayout>
+     <HorizontalStackLayout Spacing="10">
+      <Label Text="Уровень:" TextColor="#475569" />
+      <Label Text="7" FontAttributes="Bold" TextColor="#17243A" />
+     </HorizontalStackLayout>
+     <Label x:Name="StatusLabel" Text="Готова к походу" TextColor="#166534" />
+     <VerticalStackLayout x:Name="DetailsPanel" Spacing="6" IsVisible="False">
+      <Label Text="Оружие: лук" TextColor="#17243A" />
+      <Label Text="Навык: разведка" TextColor="#17243A" />
+     </VerticalStackLayout>
+     <Button x:Name="DetailsButton" Text="Показать навыки" Clicked="OnDetailsClicked" BackgroundColor="#315B9B" TextColor="White" />
     </VerticalStackLayout>
-
+   </Border>
+   <Button Text="Сменить оформление" Clicked="OnThemeClicked" />
+  </VerticalStackLayout>
+ </ScrollView>
 </ContentPage>
