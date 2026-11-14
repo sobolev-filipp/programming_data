@@ -15,7 +15,7 @@
 #   Какой именно срез — придумай сам, глядя, ГДЕ лежит мусор.
 #
 # НОМЕР ЗАДАНИЯ — переменная TASK ниже (1..14). Описания всех заданий — в практика.md.
-# Внизу окно напишет «ЧИСТО!» или сколько мусора осталось.
+# Внизу окно сообщит результат: успех только без пропусков и лишних клеток.
 # Запускать на КОМПЬЮТЕРЕ (PyCharm/VS Code).
 
 import turtle
@@ -79,11 +79,15 @@ def _make_trash(task):
 
 
 _trash = set()
+_extra = set()  # лишние закрашенные клетки
+_target = set()  # исходные клетки с мусором
 
 
 def _draw_room(task):
-    global _trash
-    _trash = set(_make_trash(task))
+    global _trash, _target
+    _target = set(_make_trash(task))
+    _trash = _target.copy()
+    _extra.clear()
     for i in range(N):
         _square(_cx(i), _Y, 40, "#f1f5f9", "#cbd5e1")
         _pen.goto(_cx(i), _Y - 44)
@@ -108,6 +112,8 @@ def clean(i):
     _vac.goto(_cx(i), _Y)
     _square(_cx(i), _Y, 40, "#bfdbfe", "#2563eb")   # клетка убрана
     _pen.goto(_cx(i), _Y); _pen.dot(12, "#2563eb")
+    if i not in _target:
+        _extra.add(i)
     _trash.discard(i)
     turtle.update(); time.sleep(_STEP_DELAY)
 
@@ -118,13 +124,17 @@ def _report():
         _pen.pencolor("#dc2626")
         _pen.write("ВЫЕХАЛ ЗА РЯД! Проверь границы среза.",
                    align="center", font=("Arial", 14, "bold"))
+    elif _extra:
+        _pen.pencolor("#dc2626")
+        _pen.write("Задание не выполнено! Лишних клеток: " + str(len(_extra)),
+                   align="center", font=("Arial", 14, "bold"))
     elif len(_trash) == 0:
         _pen.pencolor("#16a34a")
         _pen.write("ЧИСТО! Срез выбран верно.",
                    align="center", font=("Arial", 16, "bold"))
     else:
         _pen.pencolor("#dc2626")
-        _pen.write("Осталось мусора: " + str(len(_trash)),
+        _pen.write("Задание не выполнено! Осталось мусора: " + str(len(_trash)),
                    align="center", font=("Arial", 14, "bold"))
     turtle.update()
 

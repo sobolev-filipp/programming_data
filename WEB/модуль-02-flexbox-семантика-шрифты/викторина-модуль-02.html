@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Проверь себя — Модуль 2 (с оценкой)</title>
+<style>
+  :root{
+    --bg1:#4f46e5; --bg2:#7c3aed; --card:#ffffff; --ink:#1f2937;
+    --accent:#4f46e5; --ok:#16a34a; --bad:#dc2626; --soft:#eef2ff;
+  }
+  *{box-sizing:border-box;font-family:"Segoe UI",system-ui,sans-serif}
+  body{margin:0;min-height:100vh;display:flex;align-items:center;justify-content:center;
+    background:linear-gradient(135deg,var(--bg1),var(--bg2));padding:20px;color:var(--ink)}
+  .app{background:var(--card);width:min(780px,100%);border-radius:24px;
+    box-shadow:0 25px 60px rgba(0,0,0,.35);padding:34px 34px 28px;position:relative;overflow:hidden}
+  h1{margin:0 0 6px;font-size:25px;text-align:center}
+  .sub{text-align:center;color:#64748b;margin-bottom:20px;font-size:15px}
+  .bar{height:10px;background:var(--soft);border-radius:99px;overflow:hidden;margin-bottom:16px}
+  .bar>i{display:block;height:100%;width:0;background:var(--accent);transition:.4s}
+  .meta{display:flex;justify-content:space-between;font-size:14px;color:#64748b;margin-bottom:14px}
+  .q{font-size:21px;font-weight:700;margin:6px 0 20px;line-height:1.35}
+  .q code{background:#0f172a;color:#e2e8f0;padding:2px 8px;border-radius:6px;font-size:18px}
+  .opts{display:grid;gap:12px}
+  .opt{border:2px solid #e2e8f0;background:#fff;border-radius:14px;padding:14px 16px;font-size:17px;
+    text-align:left;cursor:pointer;transition:.15s;display:flex;align-items:center;gap:12px}
+  .opt:hover{border-color:var(--accent);background:var(--soft);transform:translateY(-2px)}
+  .opt b{background:var(--soft);color:var(--accent);width:30px;height:30px;border-radius:8px;
+    display:flex;align-items:center;justify-content:center;font-size:15px;flex:0 0 auto}
+  .opt span code{background:#0f172a;color:#e2e8f0;padding:1px 6px;border-radius:5px;font-size:15px}
+  .opt.ok{border-color:var(--ok);background:#dcfce7}
+  .opt.ok b{background:var(--ok);color:#fff}
+  .opt.bad{border-color:var(--bad);background:#fee2e2}
+  .opt.bad b{background:var(--bad);color:#fff}
+  .opt:disabled{cursor:default;transform:none}
+  .fb{margin-top:16px;padding:14px 16px;border-radius:12px;font-size:16px;display:none;line-height:1.4}
+  .fb.show{display:block}
+  .fb.good{background:#dcfce7;color:#166534}
+  .fb.no{background:#fee2e2;color:#991b1b}
+  .fb code{background:#0f172a;color:#e2e8f0;padding:1px 6px;border-radius:5px}
+  .btn{margin-top:18px;width:100%;padding:15px;border:0;border-radius:14px;background:var(--accent);
+    color:#fff;font-size:18px;font-weight:700;cursor:pointer;display:none}
+  .btn.show{display:block}
+  .btn:hover{filter:brightness(1.08)}
+  .center{text-align:center}
+  .emoji{font-size:64px}
+  .gradeword{font-size:14px;color:#64748b;text-transform:uppercase;letter-spacing:3px;margin-top:6px}
+  .grade{font-size:92px;font-weight:800;line-height:1;margin:2px 0}
+  .score{font-size:20px;font-weight:700;margin:6px 0 2px}
+  .hint{color:#94a3b8;font-size:13px;text-align:center;margin-top:14px}
+</style>
+</head>
+<body>
+<div class="app" id="app"></div>
+<script>
+/* Итоговая викторина модуля 2. Вопросы и варианты перемешиваются. */
+const QUESTIONS = [
+  {
+    "q": "Какой тег обозначает шапку сайта?",
+    "a": [
+      "&lt;header&gt;",
+      "&lt;head&gt;",
+      "&lt;main&gt;",
+      "&lt;footer&gt;"
+    ],
+    "c": 0,
+    "e": "header — видимая смысловая шапка; head содержит настройки документа."
+  },
+  {
+    "q": "Какой тег подходит для основного меню?",
+    "a": [
+      "&lt;nav&gt;",
+      "&lt;aside&gt;",
+      "&lt;article&gt;",
+      "&lt;section&gt;"
+    ],
+    "c": 0,
+    "e": "nav обозначает блок навигации по сайту или странице."
+  },
+  {
+    "q": "Где разместить главное содержимое страницы?",
+    "a": [
+      "В &lt;main&gt;",
+      "В &lt;head&gt;",
+      "В &lt;footer&gt;",
+      "В &lt;nav&gt;"
+    ],
+    "c": 0,
+    "e": "main содержит основное содержание страницы, а не повторяющуюся навигацию."
+  },
+  {
+    "q": "Какой тег подходит для самостоятельной новости?",
+    "a": [
+      "&lt;article&gt;",
+      "&lt;span&gt;",
+      "&lt;nav&gt;",
+      "&lt;aside&gt;"
+    ],
+    "c": 0,
+    "e": "article — самостоятельная единица содержания; section объединяет материал по теме."
+  },
+  {
+    "q": "Как обозначить тематический раздел с заголовком?",
+    "a": [
+      "&lt;section&gt;",
+      "&lt;span&gt;",
+      "&lt;head&gt;",
+      "&lt;img&gt;"
+    ],
+    "c": 0,
+    "e": "section группирует содержание одной темы, обычно с заголовком."
+  },
+  {
+    "q": "Какой тег подходит для дополнительного блока с похожими статьями?",
+    "a": [
+      "&lt;aside&gt;",
+      "&lt;main&gt;",
+      "&lt;header&gt;",
+      "&lt;title&gt;"
+    ],
+    "c": 0,
+    "e": "aside содержит дополнительную информацию, связанную с основным содержанием."
+  },
+  {
+    "q": "Как правильно обозначить подпись внутри &lt;figure&gt;?",
+    "a": [
+      "&lt;figcaption&gt;",
+      "&lt;caption&gt;",
+      "&lt;label&gt;",
+      "&lt;title&gt;"
+    ],
+    "c": 0,
+    "e": "figcaption — подпись к содержимому figure."
+  },
+  {
+    "q": "У контейнера .menu три дочерние ссылки. Куда записать display: flex?",
+    "a": [
+      "В правило .menu",
+      "В правило .menu a",
+      "В каждый тег a отдельно",
+      "В правило для всех ссылок сайта"
+    ],
+    "c": 0,
+    "e": "Flexbox управляет непосредственными детьми контейнера. Поэтому свойство задают родителю."
+  },
+  {
+    "q": "Как направлена главная ось при flex-direction: row?",
+    "a": [
+      "Горизонтально",
+      "Вертикально",
+      "По диагонали",
+      "Зависит от высоты блока"
+    ],
+    "c": 0,
+    "e": "В обычном горизонтальном режиме письма row направляет главную ось вдоль строки."
+  },
+  {
+    "q": "Какое свойство выравнивает элементы вдоль главной оси?",
+    "a": [
+      "justify-content",
+      "align-items",
+      "align-self",
+      "flex-wrap"
+    ],
+    "c": 0,
+    "e": "justify-content распределяет свободное место вдоль главной оси."
+  },
+  {
+    "q": "Как выровнять элементы по вертикали в обычном flex-ряду?",
+    "a": [
+      "align-items: center",
+      "justify-content: center",
+      "text-align: center",
+      "align-content: center"
+    ],
+    "c": 0,
+    "e": "В row поперечная ось вертикальная; align-items выравнивает элементы по ней."
+  },
+  {
+    "q": "Как разнести логотип и меню к противоположным краям flex-ряда?",
+    "a": [
+      "justify-content: space-between",
+      "justify-content: center",
+      "align-items: stretch",
+      "justify-content: space-around"
+    ],
+    "c": 0,
+    "e": "space-between распределяет свободное место между элементами, крайние стоят у краёв."
+  },
+  {
+    "q": "Что делает gap: 20px в flex-контейнере?",
+    "a": [
+      "Задаёт промежутки между элементами",
+      "Добавляет внешний отступ контейнеру",
+      "Добавляет внутренний отступ по краям",
+      "Устанавливает ширину каждого элемента"
+    ],
+    "c": 0,
+    "e": "gap задаёт промежутки между элементами и рядами, но не отступ по внешним краям."
+  },
+  {
+    "q": "Как разрешить карточкам переходить на следующий ряд?",
+    "a": [
+      "flex-wrap: wrap",
+      "flex-wrap: nowrap",
+      "flex-direction: column",
+      "align-items: stretch"
+    ],
+    "c": 0,
+    "e": "wrap разрешает перенос, когда элементы не помещаются в строку."
+  },
+  {
+    "q": "Что делает align-content в многострочном flex-контейнере?",
+    "a": [
+      "Распределяет ряды по поперечной оси",
+      "Выравнивает текст внутри каждой карточки",
+      "Меняет порядок элементов внутри ряда",
+      "Распределяет элементы вдоль главной оси"
+    ],
+    "c": 0,
+    "e": "align-content работает с flex-линиями при разрешённом переносе; для заметного эффекта нужно свободное место."
+  },
+  {
+    "q": "Как изменить поперечное выравнивание только одной карточки?",
+    "a": [
+      "align-self",
+      "align-items",
+      "justify-content",
+      "align-content"
+    ],
+    "c": 0,
+    "e": "align-self задают отдельному flex-элементу; оно переопределяет align-items для него."
+  },
+  {
+    "q": "У карточек order: 0, 2, -1. Какая окажется первой?",
+    "a": [
+      "С order: -1",
+      "С order: 2",
+      "С order: 0",
+      "Та, у которой больше ширина"
+    ],
+    "c": 0,
+    "e": "Меньшее значение order располагается раньше визуально. HTML-порядок при этом не меняется."
+  },
+  {
+    "q": "Что означает font-family: \"Inter\", Arial, sans-serif?",
+    "a": [
+      "Список шрифтов по приоритету",
+      "Три шрифта одновременно в одном слове",
+      "Три размера одного шрифта",
+      "Три варианта насыщенности"
+    ],
+    "c": 0,
+    "e": "Браузер выбирает первый доступный подходящий шрифт, затем запасные."
+  },
+  {
+    "q": "Зачем в конце списка шрифтов указывают sans-serif?",
+    "a": [
+      "Запасное семейство без засечек",
+      "Чтобы сделать весь текст жирным",
+      "Чтобы загрузить шрифт из интернета",
+      "Чтобы увеличить расстояние между буквами"
+    ],
+    "c": 0,
+    "e": "Общее семейство служит запасным вариантом, если названные шрифты недоступны."
+  },
+  {
+    "q": "Как подключить Google Fonts способом из урока?",
+    "a": [
+      "Добавить link в head и указать font-family",
+      "Указать только название в font-size",
+      "Добавить img с адресом файла шрифта",
+      "Записать название шрифта в title"
+    ],
+    "c": 0,
+    "e": "link загружает таблицу стилей сервиса, а font-family применяет выбранный шрифт."
+  },
+  {
+    "q": "Какое значение font-weight обычно соответствует жирному начертанию?",
+    "a": [
+      "700",
+      "400",
+      "100",
+      "300"
+    ],
+    "c": 0,
+    "e": "700 соответствует bold, 400 — normal."
+  },
+  {
+    "q": "Как сделать текст курсивным?",
+    "a": [
+      "font-style: italic",
+      "font-weight: italic",
+      "font-family: italic",
+      "text-align: italic"
+    ],
+    "c": 0,
+    "e": "font-style управляет начертанием, в том числе italic."
+  },
+  {
+    "q": "Какое свойство позволяет flex-элементу занять свободное место?",
+    "a": [
+      "flex-grow",
+      "flex-shrink",
+      "flex-basis",
+      "flex-wrap"
+    ],
+    "c": 0,
+    "e": "flex-grow определяет долю свободного места, которую получает элемент."
+  },
+  {
+    "q": "Два элемента имеют flex-basis: 0 и flex-grow: 1. Как они поделят свободное место при одинаковых ограничениях?",
+    "a": [
+      "Поровну",
+      "Первый получит всё место",
+      "Второй будет вдвое шире",
+      "Оба сохранят нулевую ширину"
+    ],
+    "c": 0,
+    "e": "Одинаковые коэффициенты роста делят свободное место поровну при одинаковых условиях."
+  },
+  {
+    "q": "Как запретить сжатие аватара во flex-ряду?",
+    "a": [
+      "flex-shrink: 0",
+      "flex-grow: 0",
+      "flex-basis: 0",
+      "flex-wrap: nowrap"
+    ],
+    "c": 0,
+    "e": "flex-shrink: 0 запрещает уменьшение элемента алгоритмом Flexbox."
+  },
+  {
+    "q": "Что задаёт flex-basis?",
+    "a": [
+      "Базовый размер вдоль главной оси",
+      "Максимальную высоту всего контейнера",
+      "Промежуток между соседними элементами",
+      "Коэффициент увеличения элемента"
+    ],
+    "c": 0,
+    "e": "flex-basis — исходный размер для расчёта гибких размеров."
+  },
+  {
+    "q": "В каком порядке записывают три значения свойства flex?",
+    "a": [
+      "grow, shrink, basis",
+      "basis, shrink, grow",
+      "shrink, grow, basis",
+      "grow, basis, shrink"
+    ],
+    "c": 0,
+    "e": "Например, flex: 1 1 200px означает рост 1, сжатие 1, базовый размер 200px."
+  },
+  {
+    "q": "Что означает flex: 0 0 200px?",
+    "a": [
+      "Базовый размер 200px без роста и сжатия",
+      "Рост на 200px при любом размере окна",
+      "Ширина 200px с обязательным сжатием",
+      "Минимальная высота 200px без ограничений"
+    ],
+    "c": 0,
+    "e": "Нулевые grow и shrink отключают гибкое изменение базового размера; другие ограничения CSS могут влиять на итоговый размер."
+  },
+  {
+    "q": "Как ограничить минимальную ширину карточки?",
+    "a": [
+      "min-width",
+      "max-width",
+      "flex-grow",
+      "font-size"
+    ],
+    "c": 0,
+    "e": "min-width задаёт нижнюю границу ширины. Вместе с wrap помогает переносить карточки."
+  },
+  {
+    "q": "Как ограничить ширину блока сверху, чтобы он не стал слишком широким?",
+    "a": [
+      "max-width",
+      "min-width",
+      "flex-shrink",
+      "align-self"
+    ],
+    "c": 0,
+    "e": "max-width задаёт верхнюю границу ширины."
+  },
+  {
+    "q": "Как объявить локальный шрифт в CSS?",
+    "a": [
+      "@font-face",
+      "@media",
+      "font-style",
+      "@keyframes"
+    ],
+    "c": 0,
+    "e": "В @font-face указывают имя семейства и источник файла через src: url(...)."
+  },
+  {
+    "q": "Файл style.css лежит в корне, шрифт — в fonts/inter.woff2. Как записать путь?",
+    "a": [
+      "url(\"fonts/inter.woff2\")",
+      "url(\"../inter.woff2\")",
+      "url(\"style.css/inter.woff2\")",
+      "url(\"inter.woff2\")"
+    ],
+    "c": 0,
+    "e": "Относительный путь в CSS считается от расположения самого CSS-файла."
+  },
+  {
+    "q": "В шапке логотип и меню стоят рядом, а ссылки внутри меню тоже должны быть в ряд. Что сделать?",
+    "a": [
+      "Задать flex шапке и меню",
+      "Задать flex только каждой ссылке",
+      "Задать flex только логотипу",
+      "Задать flex только всему body"
+    ],
+    "c": 0,
+    "e": "Вложенный Flexbox: шапка управляет логотипом и меню, меню управляет ссылками."
+  },
+  {
+    "q": "Как расположить картинку слева, а описание справа в горизонтальной карточке?",
+    "a": [
+      "Задать flex общему контейнеру",
+      "Задать flex только картинке",
+      "Задать text-align: right картинке",
+      "Задать flex только абзацу"
+    ],
+    "c": 0,
+    "e": "Общий родитель управляет двумя дочерними блоками; тексту можно дать flex: 1, картинке — flex-shrink: 0."
+  },
+  {
+    "q": "Что представляет собой медиа-объект из урока?",
+    "a": [
+      "Небольшая картинка рядом с текстом",
+      "Фоновое видео на всю страницу",
+      "Таблица с несколькими колонками",
+      "Меню из одних текстовых ссылок"
+    ],
+    "c": 0,
+    "e": "Медиа-объект — повторяемая раскладка, например аватар и имя с описанием."
+  },
+  {
+    "q": "При flex-direction: column какое свойство распределяет элементы по вертикали?",
+    "a": [
+      "justify-content",
+      "align-items",
+      "align-self",
+      "font-family"
+    ],
+    "c": 0,
+    "e": "В column главная ось вертикальная, поэтому justify-content работает по вертикали."
+  },
+  {
+    "q": "Как оставить подвал у нижнего края окна, если контента мало?",
+    "a": [
+      "body: flex в column, min-height: 100vh; main: flex: 1",
+      "body: flex в row; footer: flex: 1",
+      "main: display: none; footer: width: 100%",
+      "body: text-align: center; footer: height: 100vh"
+    ],
+    "c": 0,
+    "e": "Вертикальный flex-контейнер высотой минимум с окно позволяет main занять свободное место и отодвинуть footer вниз."
+  },
+  {
+    "q": "Карточка — flex-контейнер в column. Как отодвинуть кнопку вниз при разной длине описаний?",
+    "a": [
+      "margin-top: auto",
+      "margin-left: auto",
+      "align-self: center",
+      "text-align: center"
+    ],
+    "c": 0,
+    "e": "Автоматический верхний отступ поглощает свободное место вдоль вертикальной оси и отодвигает кнопку вниз."
+  }
+];
+
+let i=0, score=0, locked=false;
+const app=document.getElementById('app');
+
+function shuffle(){for(let k=QUESTIONS.length-1;k>0;k--){const j=Math.floor(Math.random()*(k+1));[QUESTIONS[k],QUESTIONS[j]]=[QUESTIONS[j],QUESTIONS[k]];}for(const Q of QUESTIONS){const cc=Q.a[Q.c];for(let k=Q.a.length-1;k>0;k--){const j=Math.floor(Math.random()*(k+1));[Q.a[k],Q.a[j]]=[Q.a[j],Q.a[k]];}Q.c=Q.a.indexOf(cc);}}
+shuffle();
+
+function render(){
+  const Q=QUESTIONS[i];
+  app.innerHTML=`
+    <h1>Проверь себя: весь Модуль 2</h1>
+    <div class="sub">Семантика, Flexbox и шрифты · в конце выставим оценку</div>
+    <div class="bar"><i style="width:${(i/QUESTIONS.length)*100}%"></i></div>
+    <div class="meta"><span>Вопрос ${i+1} из ${QUESTIONS.length}</span><span>Верных: ${score}</span></div>
+    <div class="q">${Q.q}</div>
+    <div class="opts" id="opts">
+      ${Q.a.map((t,n)=>`<button class="opt" data-n="${n}"><b>${n+1}</b><span>${t}</span></button>`).join('')}
+    </div>
+    <div class="fb" id="fb"></div>
+    <button class="btn" id="next">${i===QUESTIONS.length-1?'Показать оценку →':'Следующий вопрос →'}</button>
+    <div class="hint">Можно отвечать клавишами 1–4</div>`;
+  locked=false;
+  document.querySelectorAll('.opt').forEach(b=>b.onclick=()=>choose(+b.dataset.n));
+  document.getElementById('next').onclick=next;
+}
+
+function choose(n){
+  if(locked) return; locked=true;
+  const Q=QUESTIONS[i];
+  const opts=[...document.querySelectorAll('.opt')];
+  opts.forEach(b=>b.disabled=true);
+  opts[Q.c].classList.add('ok');
+  const fb=document.getElementById('fb');
+  if(n===Q.c){ score++; fb.className='fb show good'; fb.innerHTML='Верно! '+Q.e; }
+  else { opts[n].classList.add('bad'); fb.className='fb show no'; fb.innerHTML='Не совсем. '+Q.e; }
+  document.querySelector('.meta').children[1].textContent='Верных: '+score;
+  document.getElementById('next').classList.add('show');
+}
+
+function next(){ i++; if(i<QUESTIONS.length) render(); else result(); }
+
+function result(){
+  const pct=Math.round(score/QUESTIONS.length*100);
+  let grade,em,msg,color;
+  if(pct>=90){grade=5;color='#16a34a';msg='Отлично! Ты уверенно знаешь весь второй модуль.';}
+  else if(pct>=70){grade=4;color='#16a34a';msg='Хорошо! Темы освоены — повтори пару мелочей, и будет 5.';}
+  else if(pct>=50){grade=3;color='#f59e0b';msg='Нормально. Загляни в итого.md и справочник по слабым темам и попробуй ещё.';}
+  else {grade=2;color='#dc2626';msg='Пока рановато. Повтори уроки модуля и пройди викторину снова — всё получится!';}
+  app.innerHTML=`
+    <div class="center">
+      
+      <div class="gradeword">Твоя оценка</div>
+      <div class="grade" style="color:${color}">${grade}</div>
+      <div class="score">${score} из ${QUESTIONS.length} верных · ${pct}%</div>
+      <div class="sub">${msg}</div>
+      <button class="btn show" id="again">Пройти заново</button>
+    </div>`;
+  document.getElementById('again').onclick=()=>{i=0;score=0;shuffle();render();};
+}
+
+document.addEventListener('keydown',e=>{
+  if(['1','2','3','4'].includes(e.key)){ const b=document.querySelector(`.opt[data-n="${+e.key-1}"]`); if(b&&!b.disabled) choose(+e.key-1); }
+  if(e.key==='Enter'){ const nb=document.getElementById('next'); if(nb&&nb.classList.contains('show')){e.preventDefault();next();} }
+});
+
+render();
+</script>
+</body>
+</html>
