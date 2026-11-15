@@ -5,6 +5,32 @@
 
 ---
 
+## Быстрая шпаргалка: команды запуска и пересборки
+
+Все команды выполняем в терминале из папки проекта, где находится файл `.csproj`. Перед повторным запуском сохрани изменения в C# и XAML и закрой старое окно приложения (на Mac — `Cmd+Q`).
+
+| Команда | Для чего нужна |
+|---|---|
+| `dotnet restore` | Восстановить зависимости NuGet. Не компилирует приложение. |
+| `dotnet build` | Собрать проект. Для многоплатформенного MAUI лучше указать платформу через `-f`. |
+| `dotnet run` | Собрать и запустить консольное приложение. |
+| `dotnet build -f net10.0-maccatalyst` | Собрать MAUI-приложение для Mac после изменений в коде. |
+| `dotnet run -f net10.0-maccatalyst` | Собрать и запустить MAUI-приложение на Mac (если поддерживается текущим SDK/workload). |
+| `dotnet build -t:Run -f net10.0-maccatalyst` | Собрать и запустить MAUI-приложение как окно Mac Catalyst. Основной вариант для курса. |
+| `dotnet build -t:Rebuild -f net10.0-maccatalyst` | Полностью пересобрать приложение для Mac, если обычной сборки недостаточно. |
+| `open bin/Debug/net10.0-maccatalyst/maccatalyst-arm64/Pr1.app` | Открыть уже собранное приложение `Pr1` на Mac с Apple Silicon. Не пересобирает код. |
+| `dotnet build -t:Run -f net10.0-ios` | Собрать и запустить приложение на настроенном симуляторе iPhone. |
+| `dotnet clean -f net10.0-maccatalyst` | Очистить результаты сборки для Mac. |
+| `rm -rf bin obj` | Удалить служебные папки сборки на Mac, если обычная пересборка не помогла. Затем выполнить `dotnet restore` и сборку. |
+| `F5` (Visual Studio, Windows Machine) | Собрать, развернуть и запустить приложение на Windows с отладкой. |
+| Build → Rebuild Solution (Visual Studio) | Полностью пересобрать решение на Windows; затем F5 для запуска. |
+
+**После изменения кода:** сохрани файлы и выполни `dotnet build -t:Run -f net10.0-maccatalyst`. Если нужно только собрать проект, используй `dotnet build -f net10.0-maccatalyst`, а затем `open` для готового приложения.
+
+**Важно:** `Pr1.app` — пример имени приложения. Подставь имя своего пакета `.app` и фактический путь сборки. На Intel Mac папка может называться `maccatalyst-x64`. Найти пакет можно командой `find bin -name "*.app" -type d`. Если проект не собрался или не подписался, команда `open` проблему не исправит. Для iOS в проекте должен быть указан `net10.0-ios`, а для Mac — `net10.0-maccatalyst`.
+
+---
+
 ## 0. Выбрать совместимую версию SDK и IDE
 
 | Целевая версия | Минимальная Visual Studio | Применение |
@@ -64,11 +90,11 @@ Visual Studio для Mac закрыт, поэтому на Mac работаем 
 ### Консольное приложение — три главные команды
 ```bash
 dotnet new console      # создать новое консольное приложение
-dotnet restore          # пересобрать/восстановить файлы проекта
+dotnet restore          # восстановить зависимости проекта
 dotnet run              # скомпилировать и запустить
 ```
 - `dotnet new console` создаёт проект с файлом `Program.cs`.
-- `dotnet restore` подтягивает зависимости и пересобирает служебные файлы (полезно, если проект «не видит» пакеты).
+- `dotnet restore` подтягивает зависимости и обновляет служебные файлы NuGet (не компилирует приложение) (полезно, если проект «не видит» пакеты).
 - `dotnet run` компилирует и запускает.
 
 > Можно создать проект в отдельной папке: `dotnet new console -o MyApp`, затем `cd MyApp` и `dotnet run`.
@@ -76,8 +102,8 @@ dotnet run              # скомпилировать и запустить
 ### Если что-то сломалось (чистка)
 ```bash
 rm -rf bin obj          # удалить служебные папки сборки
-dotnet restore          # и пересобрать заново
-dotnet clean            # очистить кэш сборки
+dotnet restore          # восстановить зависимости
+dotnet build            # собрать заново
 dotnet nuget locals all --clear   # очистить кэш пакетов NuGet
 ```
 
@@ -114,7 +140,7 @@ dotnet workload list                       # проверка: ждём maui-*, 
 - `AppShell.xaml` — «оболочка»: какая страница открывается первой;
 - `MauiProgram.cs` — «мотор» приложения (регистрация шрифтов, сервисов);
 - `Platforms/` — платформенные файлы (Android/iOS/MacCatalyst/Windows); `Resources/` — картинки (`Resources/Images`), шрифты, цвета, иконка.
-- **`ИмяПроекта.csproj`** — файл настроек проекта (платформы, версия, id) — см. §6.
+- **`ИмяПроекта.csproj`** — файл настроек проекта (платформы, версия, id) — см. §7.
 
 90% работы — в `MainPage.xaml` и `MainPage.xaml.cs`.
 
@@ -133,11 +159,53 @@ dotnet build -t:Run -f net10.0-maccatalyst
 # запуск на СИМУЛЯТОРЕ iPhone (нужен Xcode + симулятор):
 dotnet build -t:Run -f net10.0-ios
 ```
-- `-t:Run` — собрать **и сразу запустить**;
+- `-t:Run` — запустить цель Run; для надёжной проверки изменений сначала явно собери проект (см. ниже);
 - `-f net10.0-maccatalyst` — под какую платформу (маковое окно); `net10.0-ios` — айфон-симулятор.
 - Первый запуск долгий — подтягиваются пакеты и идёт сборка через Xcode.
 
 > 💡 Если проект многоплатформенный (несколько `TargetFrameworks`), флаг `-f` **обязателен** — он говорит, под что собирать. Без него будет ошибка «нужно указать один TargetFramework».
+
+#### Как обновить приложение после изменения кода на Mac
+
+Сохрани изменённые файлы (`Cmd+S`), закрой старое окно приложения (`Cmd+Q`), затем в терминале из папки с `.csproj` выполни:
+
+```bash
+# 1. Собрать изменённый проект для Mac Catalyst:
+dotnet build -f net10.0-maccatalyst
+
+# 2. Если сборка успешна, запустить новую версию:
+dotnet build -t:Run -f net10.0-maccatalyst
+```
+
+Для симулятора iPhone — останови предыдущий запуск, сохрани файлы и выполни:
+
+```bash
+dotnet build -f net10.0-ios
+dotnet build -t:Run -f net10.0-ios
+```
+
+В проекте должна быть соответствующая платформа в `TargetFrameworks`. Для iOS нужен установленный симулятор; при необходимости укажи конкретное устройство. Обычная сборка использует результаты предыдущей сборки и компилирует изменённые части. `restore` отдельно нужен при изменении зависимостей или после удаления `obj`; обычный `build` выполняет восстановление автоматически.
+
+Если изменения не появились или сборка использует старые результаты, сделай полную пересборку:
+
+```bash
+dotnet build -t:Rebuild -f net10.0-maccatalyst
+dotnet build -t:Run -f net10.0-maccatalyst
+```
+
+Для iOS замени фреймворк на `net10.0-ios`. Если и это не помогло, закрой приложение и очисти только служебные папки проекта:
+
+```bash
+rm -rf bin obj
+dotnet restore
+dotnet build -f net10.0-maccatalyst
+# Только после успешной сборки:
+dotnet build -t:Run -f net10.0-maccatalyst
+```
+
+Не нужно удалять `bin` и `obj` после каждой правки. Если сборка завершилась ошибкой, сначала исправь её, а не запускай старое приложение.
+
+На Windows сохрани файлы, останови отладку (`Shift+F5`) и нажми F5. Для полной пересборки используй **Build → Rebuild Solution**.
 
 ## 4а. Windows: стандартный MAUI-проект не запускается (инструкция для преподавателя)
 
@@ -174,6 +242,54 @@ dotnet workload list
 ### Шаг 3. Включаем режим разработчика
 
 Если Visual Studio просит включить Developer Mode, открой параметры Windows и найди «Для разработчиков» / Developer Mode. Включи режим разработчика, подтверди запрос. В Windows 11 расположение зависит от версии системы (например, System → For developers или System → Advanced). Если настройка заблокирована политикой школы, обращаемся к администратору, не обходим ограничения.
+
+### Шаг 3а. Ошибка DEP0840 после включения режима разработчика
+
+На некоторых школьных компьютерах после включения Developer Mode появляется сообщение:
+
+```text
+DEP0840: Для проекта требуются пакеты
+MicrosoftCorporationII.WinAppRuntime.Main.1.5_8wekyb3d8bbwe
+MicrosoftCorporationII.WinAppRuntime.Singleton_8wekyb3d8bbwe
+версии >= 5001.214.1843.0.
+```
+
+Это ошибка развёртывания Windows-приложения, а не ошибка C# или XAML. Режим разработчика разрешает установку и отладку пакетов, но не заменяет Windows App Runtime — компоненты, необходимые приложениям WinUI 3 (в том числе MAUI для Windows). Visual Studio не смогла установить или обнаружить нужные пакеты.
+
+**Решение для данного сообщения:** установить Windows App Runtime ветки 1.5. Минимальная указанная версия MSIX соответствует Windows App SDK 1.5.6; можно использовать более поздний выпуск этой же ветки, например 1.5.9 (MSIX 5001.373.1736.0). Установка только более новой ветки 1.6/1.8/2.x не гарантирует наличие требуемого пакета Main.1.5.
+
+1. Останови отладку и закрой Visual Studio.
+2. Открой официальный [архив Windows App SDK](https://learn.microsoft.com/windows/apps/windows-app-sdk/downloads-archive), найди **Windows App SDK 1.5 → 1.5.9 → Runtime downloads → Installer (x64)** для обычного 64-разрядного школьного ПК. Для ARM64 или x86 выбери соответствующую архитектуру (проверь «Тип системы» в параметрах Windows и платформу проекта).
+3. Запусти скачанный `WindowsAppRuntimeInstall.exe` из учётной записи, в которой ученик запускает проект. Если установка требует повышения прав или запрещена политикой школы, обратись к администратору. Установщик содержит Framework, Main, Singleton и DDLM; отдельно искать случайные MSIX в интернете не нужно.
+4. Проверь результат установки: в PowerShell из папки загрузок можно запустить установщик с ожиданием завершения:
+
+```powershell
+$p = Start-Process -FilePath ".\WindowsAppRuntimeInstall.exe" -Wait -PassThru
+$p.ExitCode
+```
+
+Код 0 означает успешное завершение. При другом коде сохрани сообщение установщика. Не отключай защиту Windows и не меняй политики школы ради установки.
+
+5. Проверь регистрацию пакетов в учётной записи ученика:
+
+```powershell
+Get-AppxPackage -Name 'MicrosoftCorporationII.WinAppRuntime.Main.1.5' |
+    Select-Object Name, Version, Architecture, Status
+Get-AppxPackage -Name 'MicrosoftCorporationII.WinAppRuntime.Singleton' |
+    Select-Object Name, Version, Architecture, Status
+Get-AppxPackage -Name 'Microsoft.WindowsAppRuntime.1.5' |
+    Select-Object Name, Version, Architecture, Status
+```
+
+Для Main и Singleton проверь версию не ниже `5001.214.1843.0`, статус и наличие пакетов. Если вывод пустой, пакет не зарегистрирован для текущего пользователя. Администратор может дополнительно проверить `Get-AppxPackage -AllUsers` (в повышенном PowerShell), но наличие пакета у другого пользователя не гарантирует запуск у ученика.
+
+6. Открой Visual Studio, выбери Windows Machine, выполни **Build → Rebuild Solution**, затем F5. Проверь стандартный счётчик.
+
+Если DEP0840 остаётся, проверь точный текст новой ошибки, архитектуру проекта, результат установщика и журнал **Output → Deploy**. При блокировке установки администратор может проверить журнал AppXDeployment-Server в Event Viewer. Не добавляй произвольную версию `Microsoft.WindowsAppSDK` в NuGet и не отключай упаковку MSIX только ради обхода ошибки.
+
+> Ветка Windows App SDK 1.5 уже не поддерживается. Это временное решение для старых школьных проектов; для основного курса следует обновить IDE/MAUI и использовать соответствующую поддерживаемую среду выполнения. Для другого номера версии в DEP0840 подбирай именно указанную ветку и минимальную версию.
+
+Источники: [версии и номера MSIX](https://github.com/microsoft/WindowsAppSDK/wiki/WinAppSDK-Released-Artifacts), [официальные установщики](https://learn.microsoft.com/windows/apps/windows-app-sdk/downloads-archive), [компоненты Runtime и установка](https://learn.microsoft.com/windows/apps/windows-app-sdk/deploy-unpackaged-apps).
 
 ### Шаг 4. Проверяем развёртывание (Deploy)
 
@@ -219,6 +335,7 @@ dotnet build -f net9.0-windows10.0.19041.0
 | NU1101 / NU1301 | Источники NuGet, сеть, прокси, версии пакетов. |
 | Требуется Deploy | Configuration Manager и правильный профиль запуска. |
 | Требуется Developer Mode | Настройки Windows и права администратора. |
+| DEP0840 / WinAppRuntime.Main / Singleton | Установить нужную ветку Windows App Runtime, проверить регистрацию пакетов (шаг 3а). |
 
 ### Как работать преподавателю на Mac, если класс пока на .NET 9
 
@@ -242,7 +359,7 @@ dotnet build -f net9.0-windows10.0.19041.0
 
 ```bash
 # 1. Проверь совместимость Xcode с workload (см. §5а), затем установи подходящую версию Xcode:
-sudo xcode-select -s /Applications/Xcode.app   # указать .NET на (новый) Xcode
+sudo xcode-select -s /Applications/Xcode.app/Contents/Developer   # указать .NET на (новый) Xcode
 sudo xcodebuild -license accept                # принять лицензию Xcode (после обновления обязательно)
 xcodebuild -runFirstLaunch                     # доустановить компоненты Xcode
 
@@ -311,15 +428,71 @@ rm -rf bin obj && dotnet build -t:Run -f net10.0-maccatalyst
 
 > 🐞 **Отдельная засада после Xcode 27:** даже если сборка прошла, приложение может **падать при запуске** (iOS/macOS 27) — из-за нового UIKit Scene Lifecycle. Проекты, созданные **старым** шаблоном, этого не знают. Лечение: пересоздать проект свежим `dotnet new maui` (новый шаблон уже учитывает), либо добавить `SceneDelegate` + запись `UIApplicationSceneManifest` (см. [.NET Blog: UIKit scene lifecycle](https://devblogs.microsoft.com/dotnet/migrate-dotnet-maui-apps-uikit-scene-lifecycle/)).
 
+### 5б. Mac Catalyst: ошибка codesign — resource fork / Finder information
+
+В проверенном журнале проекта ProjectApp восстановление зависимостей прошло, но сборка завершилась ошибкой `/usr/bin/codesign`:
+
+```text
+resource fork, Finder information, or similar detritus not allowed
+```
+
+Ранее `dotnet build -t:Run -f net10.0-maccatalyst` выдавал MSB3073 с командой `open -a ...ProjectApp.app`. Отдельная чистая сборка выявила ошибку подписывания. Это не доказательство несовместимости Xcode или ошибки C#; пакет приложения содержит запрещённые расширенные атрибуты. В данном случае очистка исходной папки `xattr -cr .` и удаление `bin/obj` уже были выполнены, но ошибка повторилась. Источник повторного появления атрибутов пока не установлен.
+
+**Шаг 1. Проверить пакет после неудачной сборки.** Из папки проекта (пример для Apple Silicon, Debug):
+
+```bash
+APP="bin/Debug/net10.0-maccatalyst/maccatalyst-arm64/ProjectApp.app"
+xattr -lr "$APP" | grep -E 'FinderInfo|ResourceFork'
+```
+
+Подставь имя своего приложения и фактический путь (на Intel возможен `maccatalyst-x64`). Если путь неизвестен: `find bin -type d -name '*.app'`. Атрибуты `com.apple.FinderInfo` и `com.apple.ResourceFork` запрещены при подписывании. Полный список можно посмотреть через `xattr -lr "$APP"`.
+
+**Шаг 2. Очистить готовый пакет и повторить сборку без удаления bin/obj.**
+
+```bash
+xattr -cr "$APP"
+dotnet build -f net10.0-maccatalyst
+```
+
+Если сборка успешна, проверь подпись и запусти:
+
+```bash
+codesign --verify --deep --strict --verbose=2 "$APP"
+open "$APP"
+```
+
+Не открывай содержимое `.app` через Finder во время диагностики: Finder может добавлять метаданные. Команда `xattr -cr` удаляет все расширенные атрибуты, поэтому применяй её только к учебному проекту или его пакету, не ко всему домашнему каталогу.
+
+**Шаг 3. Если атрибуты появляются снова — проверить чистую локальную копию.** В нашем случае проект находился в Documents, в пути с кириллицей и `#`. Это допустимые символы, но для диагностики исключаем особенности пути и возможную синхронизацию Documents через iCloud. Из исходной папки проекта:
+
+```bash
+mkdir -p ~/Projects/ProjectApp
+rsync -av --exclude='bin' --exclude='obj' --exclude='.DS_Store' --exclude='._*' ./ ~/Projects/ProjectApp/
+cd ~/Projects/ProjectApp
+pwd
+xattr -cr .
+rm -rf bin obj
+dotnet restore
+dotnet build -f net10.0-maccatalyst
+```
+
+Используй новую пустую папку назначения, чтобы не смешивать разные проекты. Старый проект не удаляй. После успешной сборки выполни `dotnet build -t:Run -f net10.0-maccatalyst`. Если ошибка осталась, снова проверь атрибуты пакета и сохрани вывод: возможно, метаданные копируются из ресурсов, NuGet или других компонентов сборки. Не отключай codesign и не переустанавливай SDK без дополнительных признаков неисправности.
+
+Для проверки только Mac Catalyst можно временно оставить в `.csproj` один `<TargetFrameworks>net10.0-maccatalyst</TargetFrameworks>`, без повторного добавления этой платформы. Это упрощает диагностику, но само по себе не устраняет запрещённые атрибуты. Для запуска iOS верни соответствующую платформу.
+
+Источник: [Apple QA1940 — Resource fork, Finder information, or similar detritus not allowed](https://developer.apple.com/library/archive/qa/qa1940/_index.html).
+
 ### 6. 🐞 Ошибки при запуске — таблица
 
 | Симптом / сообщение | Причина | Как починить |
 |---------------------|---------|--------------|
-| `Xcode.app ... could not be found` / `xcodebuild exited with code 1` (Mac) | .NET не видит Xcode / не настроен | `sudo xcode-select -s /Applications/Xcode.app`, затем `sudo xcodebuild -license accept`, `xcodebuild -runFirstLaunch` |
+| `Xcode.app ... could not be found` / `xcodebuild exited with code 1` (Mac) | .NET не видит Xcode / не настроен | `sudo xcode-select -s /Applications/Xcode.app/Contents/Developer`, затем `sudo xcodebuild -license accept`, `xcodebuild -runFirstLaunch` |
 | `You must accept the license agreement` (Mac) | не принята лицензия Xcode (часто после обновления) | `sudo xcodebuild -license accept` |
 | сборка сломалась **после обновления macOS/iOS** | устарел Xcode / рассинхрон workload | см. §5 «Обновления»: обнови Xcode + `dotnet workload update` |
 | `requires Xcode 26.2. The current version of Xcode is 27.0` (или любые другие несовпадающие номера) | **версия workload не совпала с версией Xcode** (в любую сторону) | см. §5а: поставь SDK/`workload` ровно под свой Xcode — `sudo dotnet workload install maui --version X.Y.Z.W` |
-| `open -a … .app ... exited with code 1` / `MSB3073` при `-t:Run` | `.app` **не собрался** (ошибку спрятала инкрементальная сборка), а `open` пытается запустить несуществующее | сделай чистую сборку `rm -rf bin obj && dotnet build -f net10.0-maccatalyst` — увидишь настоящую причину (часто §5а) |
+| `open -a … .app ... exited with code 1` / `MSB3073` при `-t:Run` | команда запуска завершилась ошибкой; пакет может отсутствовать, быть неподписанным или не запускаться | отдельно `dotnet build -f net10.0-maccatalyst`; при необходимости чистая сборка; затем `open` и проверка подписи (§5б) |
+| `codesign: resource fork, Finder information, or similar detritus not allowed` | запрещённые расширенные атрибуты пакета | проверить `xattr -lr`, очистить пакет, проверить локальную копию (§5б) |
+| `DEP0840` / `WinAppRuntime.Main.1.5` / `Singleton` (Windows) | отсутствует или не зарегистрирована нужная версия Windows App Runtime | установить соответствующий Runtime и проверить пакеты (§4а, шаг 3а) |
 | приложение собралось, но **падает сразу при запуске** (Xcode/iOS 27) | старый шаблон без UIKit Scene Lifecycle | пересоздай `dotnet new maui` или добавь `SceneDelegate` (§5а, засада после Xcode 27) |
 | `workload ... not installed` / `NETSDK1147` | нет нужного workload после обновления SDK | `dotnet workload update`, затем `dotnet workload install maui` |
 | `current .NET SDK does not support targeting ...` | версия SDK не совпала с таргетом | обнови .NET SDK и `dotnet workload update` |
@@ -488,9 +661,10 @@ public partial class MainPage : ContentPage
 ```bash
 rm -rf bin obj                       # удалить служебные папки сборки
 dotnet restore                       # восстановить пакеты
-dotnet build -t:Rebuild              # пересобрать с нуля
+dotnet build -t:Rebuild -f net10.0-maccatalyst  # пересобрать для Mac
+dotnet build -t:Run -f net10.0-maccatalyst      # запустить после успешной сборки
 ```
-Не помогло → раздел §5 «Обновления» (обнови Xcode + `dotnet workload update` + `workload repair`).
+Не помогло → смотри первую ошибку сборки: несовместимость Xcode — §5а; ошибка codesign — §5б; Windows DEP0840 — §4а. Не обновляй инструменты вслепую.
 
 > На Windows (ученики) многое делается кнопками Visual Studio: **▶ Run**, менеджер NuGet, добавление страницы через **Add → New Item**.
 

@@ -4,7 +4,9 @@
         <VerticalStackLayout Padding="20" Spacing="16">
             <Label Text="Конструктор корабля" FontSize="28" FontAttributes="Bold" TextColor="#18304D" />
             <Border Stroke="#A6BDE0" StrokeThickness="2" Padding="16" BackgroundColor="White">
-                <Border.StrokeShape><RoundRectangle CornerRadius="18" /></Border.StrokeShape>
+                <Border.StrokeShape>
+                    <RoundRectangle CornerRadius="18" />
+                </Border.StrokeShape>
                 <VerticalStackLayout Spacing="10">
                     <Image x:Name="ShipImage" Source="ship_scout.png" HeightRequest="150" Aspect="AspectFit" />
                     <Label x:Name="ShipTitle" Text="Без названия" FontSize="24" TextColor="#18304D" />
@@ -17,13 +19,17 @@
                 </VerticalStackLayout>
             </Border>
             <Label Text="Название" TextColor="#18304D" />
-            <Entry x:Name="NameEntry" Placeholder="Например, Орион" MaxLength="24" TextChanged="OnNameChanged" TextColor="#18304D" />
+            <Entry x:Name="NameEntry" Placeholder="Например, Орион" MaxLength="24" TextChanged="OnNameChanged" TextColor="#18304D" BackgroundColor="White" PlaceholderColor="#52657D" />
             <Label Text="Тип корабля" TextColor="#18304D" />
-            <Picker x:Name="TypePicker" Title="Выбери тип" SelectedIndexChanged="OnTypeChanged" TextColor="#18304D">
-                <Picker.Items><x:String>Разведчик</x:String><x:String>Грузовой</x:String><x:String>Истребитель</x:String></Picker.Items>
+            <Picker x:Name="TypePicker" Title="Выбери тип" SelectedIndexChanged="OnTypeChanged" TextColor="#18304D" BackgroundColor="White" TitleColor="#52657D">
+                <Picker.Items>
+                    <x:String>Разведчик</x:String>
+                    <x:String>Грузовой</x:String>
+                    <x:String>Истребитель</x:String>
+                </Picker.Items>
             </Picker>
             <HorizontalStackLayout Spacing="8">
-                <CheckBox x:Name="ShieldCheck" CheckedChanged="OnShieldChanged" />
+                <CheckBox x:Name="ShieldCheck" CheckedChanged="OnShieldChanged" Color="#285B9C" />
                 <Label Text="Щит (+300)" VerticalOptions="Center" TextColor="#18304D" />
             </HorizontalStackLayout>
             <Button Text="Сбросить настройки" Clicked="OnResetClicked" />

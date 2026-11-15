@@ -1,20 +1,31 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="MoodApp.MainPage"
-             BackgroundColor="#FFF4D6">
+             BackgroundColor="LightGreen">
     <ScrollView>
         <VerticalStackLayout Padding="24" Spacing="14">
             <Label Text="Моё настроение" FontSize="30" FontAttributes="Bold"
                    TextColor="#26334A" HorizontalTextAlignment="Center" />
-            <Image x:Name="MoodImage" Source="mood_happy.png" HeightRequest="180" Aspect="AspectFit" />
-            <Label x:Name="MoodLabel" Text="Как проходит твой день?" FontSize="24"
+            <Image x:Name="MoodImage" Source="mood_happy.png"
+                   HeightRequest="180" Aspect="AspectFit" />
+            <Label x:Name="MoodLabel" Text="Радостное" FontSize="24"
                    TextColor="#26334A" HorizontalTextAlignment="Center" />
-            <Label x:Name="AdviceLabel" Text="Выбери настроение ниже" FontSize="16"
-                   TextColor="#26334A" HorizontalTextAlignment="Center" />
-            <Button Text="Радостное" Clicked="OnHappyClicked" BackgroundColor="#FFD66B" TextColor="#26334A" CornerRadius="16" />
-            <Button Text="Спокойное" Clicked="OnCalmClicked" BackgroundColor="#9ADDDC" TextColor="#26334A" CornerRadius="16" />
-            <Button Text="Грустное" Clicked="OnSadClicked" BackgroundColor="#B9B1F5" TextColor="#26334A" CornerRadius="16" />
-            <Button Text="Случайное" Clicked="OnRandomClicked" BackgroundColor="#26334A" TextColor="White" CornerRadius="16" />
+            <Button Text="Радостное" x:Name="HappyBtn"
+                    BackgroundColor="LightGreen" TextColor="#26334A"
+                    FontSize="18" CornerRadius="10" Clicked="MoodBtn"
+                    BorderColor="White" BorderWidth="1" />
+            <Button Text="Спокойное" x:Name="CalmBtn"
+                    BackgroundColor="LightBlue" TextColor="#26334A"
+                    FontSize="18" CornerRadius="10" Clicked="MoodBtn"
+                    BorderColor="White" BorderWidth="1" />
+            <Button Text="Грустное" x:Name="SadBtn"
+                    BackgroundColor="LightGray" TextColor="#26334A"
+                    FontSize="18" CornerRadius="10" Clicked="MoodBtn"
+                    BorderColor="White" BorderWidth="1" />
+            <Button Text="Гнев" x:Name="AngryBtn"
+                    BackgroundColor="LightCoral" TextColor="#26334A"
+                    FontSize="18" CornerRadius="10" Clicked="MoodBtn"
+                    BorderColor="White" BorderWidth="1" />
         </VerticalStackLayout>
     </ScrollView>
 </ContentPage>
