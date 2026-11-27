@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Викторина — City Pizza: перспектива и фото</title>
+<style>
+  :root{
+    --bg1:#4c1d95; --bg2:#f59e0b; --card:#ffffff; --ink:#1e293b;
+    --accent:#7c3aed; --ok:#16a34a; --bad:#dc2626; --soft:#ede9fe;
+  }
+  *{box-sizing:border-box;font-family:"Segoe UI",system-ui,sans-serif}
+  body{margin:0;min-height:100vh;display:flex;align-items:center;justify-content:center;
+    background:linear-gradient(135deg,var(--bg1),var(--bg2));padding:20px;color:var(--ink)}
+  .app{background:var(--card);width:min(760px,100%);border-radius:24px;
+    box-shadow:0 25px 60px rgba(0,0,0,.35);padding:34px 34px 28px;position:relative;overflow:hidden}
+  h1{margin:0 0 6px;font-size:26px;text-align:center}
+  .sub{text-align:center;color:#64748b;margin-bottom:22px;font-size:15px}
+  .bar{height:10px;background:var(--soft);border-radius:99px;overflow:hidden;margin-bottom:18px}
+  .bar>i{display:block;height:100%;width:0;background:var(--accent);transition:.4s}
+  .meta{display:flex;justify-content:space-between;font-size:14px;color:#64748b;margin-bottom:14px}
+  .q{font-size:22px;font-weight:700;margin:6px 0 20px;line-height:1.3}
+  .opts{display:grid;gap:12px}
+  .opt{border:2px solid #e2e8f0;background:#fff;border-radius:14px;padding:15px 18px;font-size:18px;
+    text-align:left;cursor:pointer;transition:.15s;display:flex;align-items:center;gap:12px}
+  .opt:hover{border-color:var(--accent);background:var(--soft);transform:translateY(-2px)}
+  .opt b{background:var(--soft);color:var(--accent);width:30px;height:30px;border-radius:8px;
+    display:flex;align-items:center;justify-content:center;font-size:15px;flex:0 0 auto}
+  .opt.ok{border-color:var(--ok);background:#dcfce7}
+  .opt.ok b{background:var(--ok);color:#fff}
+  .opt.bad{border-color:var(--bad);background:#fee2e2}
+  .opt.bad b{background:var(--bad);color:#fff}
+  .opt:disabled{cursor:default;transform:none}
+  .fb{margin-top:16px;padding:14px 16px;border-radius:12px;font-size:16px;display:none;line-height:1.4}
+  .fb.show{display:block}
+  .fb.good{background:#dcfce7;color:#166534}
+  .fb.no{background:#fee2e2;color:#991b1b}
+  .btn{margin-top:18px;width:100%;padding:15px;border:0;border-radius:14px;background:var(--accent);
+    color:#fff;font-size:18px;font-weight:700;cursor:pointer;display:none}
+  .btn.show{display:block}
+  .btn:hover{filter:brightness(1.08)}
+  .center{text-align:center}
+  .score{font-size:64px;font-weight:800;margin:10px 0}
+  .emoji{font-size:70px}
+  .hint{color:#94a3b8;font-size:13px;text-align:center;margin-top:14px}
+</style>
+</head>
+<body>
+<div class="app" id="app"></div>
+<script>
+const QUESTIONS=[{"q": "Какой инструмент переносит объект в перспективу?", "a": ["V — выделение", "Shift+V", "T — ввод текста", "A — отдельные узлы"], "c": 1, "e": "Обычное V не заменяет перспективное выделение."}, {"q": "Какая плоскость нужна для верха коробки?", "a": ["Левая1", "Правая3", "Горизонтальная2", "Без активной плоскости4"], "c": 2, "e": "Горизонтальная плоскость — верх коробки."}, {"q": "Что подготовить перед проекцией?", "a": ["Отдельные фотографии", "Новый файл для каждой точки", "Два одинаковых заголовка", "Целую группу"], "c": 3, "e": "Все части пиццы должны перемещаться вместе."}, {"q": "Что делает Ctrl+Y?", "a": ["Показывает контуры", "Экспортирует растровую копию", "Создаёт новое окно программы", "Встраивает связанное изображение"], "c": 0, "e": "Повторное нажатие вернёт обычный вид."}, {"q": "Какой командой помещают PSD в открытый AI?", "a": ["Файл → Открыть", "Файл → Поместить", "Объект → Разгруппировать", "Просмотр → Контуры"], "c": 1, "e": "Place добавляет картинку в текущий документ."}, {"q": "Что означает Link?", "a": ["Фотография стала вектором", "Фотография удалена из макета", "Связь с файлом", "Автоматически созданы монтажные области"], "c": 2, "e": "Внешний PSD нужен, пока изображение связано."}, {"q": "Что делает Embed?", "a": ["Меняет направление сетки", "Переводит фото в кривые", "Удаляет исходный PSD с диска", "Встраивает копию"], "c": 3, "e": "Картинка хранится внутри AI, но остаётся растром."}, {"q": "Кусочек оказался под крышкой. Что проверить?", "a": ["Порядок объектов", "Название рабочего документа", "Размер текста заголовка", "Цвет интерфейса программы"], "c": 0, "e": "На передний план исправляет перекрытие, не наклон."}, {"q": "Почему начинка вылезает за сыр?", "a": ["Недостаточно слов в названии", "Нет нужной маски", "Не выбран шрифт заголовка", "Слишком много монтажных областей"], "c": 1, "e": "Отдельная копия сыра служит маской для начинки."}, {"q": "Пицца стоит как вывеска. В чём причина?", "a": ["Слишком большая фотография", "Слишком короткое имя группы", "Неверная плоскость", "Слишком светлая обводка коробки"], "c": 2, "e": "Верни плоскую копию и выбери горизонтальную2."}, {"q": "Тостер здесь ни при чём: пицца разлетелась на кружки. Что забыли?", "a": ["Увеличить шрифт вывески", "Включить режим просмотра контуров", "Поменять расширение рабочего файла", "Сгруппировать"], "c": 3, "e": "Проекцию применяем к целой группе."}, {"q": "Помидор стал плоской наклейкой на крышке. Что случилось?", "a": ["Его поместили на сетку", "Его назвали слишком коротким именем", "Его сохранили рядом с файлом документа", "Ему выбрали слишком тёмную заливку"], "c": 0, "e": "Рядом с коробкой фото размещаем обычной V."}, {"q": "Пицца огромная, но лежит правильно. Что исправлять?", "a": ["Число шрифтов в документе", "Размер группы", "Формат исходного PSD-файла", "Количество окон в городе"], "c": 1, "e": "Подгоняем группу инструментом перспективного выделения."}, {"q": "Зачем сохранить плоскую копию?", "a": ["Чтобы заменить фотографию", "Чтобы закрыть панель Связи", "Для повторной попытки", "Чтобы отключить все монтажные области"], "c": 2, "e": "Не наслаивай случайные преобразования на неудачную проекцию."}, {"q": "Как добавить ещё один экземпляр салями из Symbols?", "a": ["Удалить панель со всеми образцами", "Нарисовать каждый ломтик заново", "Изменить сетку перспективы целиком", "Перетащить символ на сыр"], "c": 3, "e": "Перетащи миниатюру символа из панели Symbols на страницу. Для расстановки выбери инструмент «Выделение» (V)."}, {"q": "Откуда считать выбор плоскости2?", "a": ["Из виджета перспективы", "Из номера последнего сохранения", "Из количества монтажных областей", "Из порядка слоёв с фотографиями"], "c": 0, "e": "Номер плоскости и номер монтажной области — разные вещи."}];
+
+let i=0, score=0, locked=false;
+const app=document.getElementById('app');
+
+function shuffle(){for(let k=QUESTIONS.length-1;k>0;k--){const j=Math.floor(Math.random()*(k+1));[QUESTIONS[k],QUESTIONS[j]]=[QUESTIONS[j],QUESTIONS[k]];}for(const Q of QUESTIONS){const cc=Q.a[Q.c];for(let k=Q.a.length-1;k>0;k--){const j=Math.floor(Math.random()*(k+1));[Q.a[k],Q.a[j]]=[Q.a[j],Q.a[k]];}Q.c=Q.a.indexOf(cc);}}
+shuffle();
+
+function render(){
+  const Q=QUESTIONS[i];
+  app.innerHTML=`
+    <h1>City Pizza: перспектива и фото</h1>
+    <div class="sub">Викторина по уроку «City Pizza»</div>
+    <div class="bar"><i style="width:${(i/QUESTIONS.length)*100}%"></i></div>
+    <div class="meta"><span>Вопрос ${i+1} из ${QUESTIONS.length}</span><span>⭐ Очки: ${score}</span></div>
+    <div class="q">${Q.q}</div>
+    <div class="opts" id="opts">
+      ${Q.a.map((t,n)=>`<button class="opt" data-n="${n}"><b>${n+1}</b><span>${t}</span></button>`).join('')}
+    </div>
+    <div class="fb" id="fb"></div>
+    <button class="btn" id="next">${i===QUESTIONS.length-1?'Показать результат →':'Следующий вопрос →'}</button>
+    <div class="hint">Можно отвечать клавишами 1–4</div>`;
+  locked=false;
+  document.querySelectorAll('.opt').forEach(b=>b.onclick=()=>choose(+b.dataset.n));
+  document.getElementById('next').onclick=next;
+}
+
+function choose(n){
+  if(locked) return; locked=true;
+  const Q=QUESTIONS[i];
+  const opts=[...document.querySelectorAll('.opt')];
+  opts.forEach(b=>b.disabled=true);
+  opts[Q.c].classList.add('ok');
+  const fb=document.getElementById('fb');
+  if(n===Q.c){ score++; fb.className='fb show good'; fb.textContent='✅ Верно! '+Q.e; }
+  else { opts[n].classList.add('bad'); fb.className='fb show no'; fb.textContent='❌ Не совсем. '+Q.e; }
+  document.querySelector('.meta').children[1].textContent='⭐ Очки: '+score;
+  document.getElementById('next').classList.add('show');
+}
+
+function next(){ if(!locked) return; i++; if(i<QUESTIONS.length) render(); else result(); }
+
+function result(){
+  const pct=Math.round(score/QUESTIONS.length*100);
+  let em,msg;
+  if(pct===100){em='🏆';msg='Идеально! City Pizza: перспектива и фото — под контролем! 🃏';}
+  else if(pct>=70){em='🎉';msg='Отлично! Автолейаут, размеры и переходы — под контролем.';}
+  else if(pct>=40){em='👍';msg='Неплохо! Запомни: проверь выделение и порядок исходных фигур.';}
+  else {em='💪';msg='Начало есть! Повтори операции и выделение фигур.';}
+  app.innerHTML=`
+    <div class="center">
+      <div class="emoji">${em}</div>
+      <h1>Готово!</h1>
+      <div class="score">${score} / ${QUESTIONS.length}</div>
+      <div class="sub">${msg}</div>
+      <button class="btn show" id="again">🔁 Пройти заново</button>
+    </div>`;
+  document.getElementById('again').onclick=()=>{i=0;score=0;shuffle();render();};
+}
+
+document.addEventListener('keydown',e=>{
+  if(['1','2','3','4'].includes(e.key)){ const b=document.querySelector(`.opt[data-n="${+e.key-1}"]`); if(b&&!b.disabled) choose(+e.key-1); }
+  if(e.key==='Enter'){ const nb=document.getElementById('next'); if(nb&&nb.classList.contains('show')) next(); }
+});
+
+render();
+</script>
+</body>
+</html>
